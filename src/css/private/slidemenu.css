@@ -1,0 +1,53 @@
+.urbangreymenu{
+width: 140px; /*largura menu*/
+}
+ 
+.urbangreymenu .headerbar{
+font: bold 13px Verdana;
+color: white;
+background: #606060;
+margin-bottom: 0; /*se preciso, coloque margem entre o título do menu e o conteúdo*/
+text-transform: uppercase;
+padding: 7px 0 7px 31px; /*31px é o espaço à esquerda do título do menu*/
+}
+ 
+.urbangreymenu .headerbar a{
+text-decoration: none;
+color: white;
+display: block;
+}
+ 
+.urbangreymenu ul{ /* reseta listas */
+list-style-type: none;
+margin: 0;
+padding: 0;
+}
+ 
+.urbangreymenu li { /*reseta ítens de lista */
+padding:0px;
+text-indent:0px;
+}
+ 
+.urbangreymenu ul li{
+padding-bottom: 2px; /*espaço entre cada ítem de lista*/
+}
+ 
+.urbangreymenu ul li a{
+font: normal 12px Arial;
+color: black;
+background: #E9E9E9;
+display: block;
+padding: 5px 0;
+line-height: 17px;
+padding-left: 8px;
+text-decoration: none;
+}
+ 
+.urbangreymenu ul li a:visited{
+color: black;
+}
+ 
+.urbangreymenu ul li a:hover{
+color: white;
+background: black;
+}

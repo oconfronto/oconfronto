@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  mysql:
+    image: mysql/mysql-server:5.7.37
+    restart: always
+    environment:
+      MYSQL_DATABASE: database
+      MYSQL_USER: usuariosql
+      MYSQL_PASSWORD: senhasql
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+    - 3306:3306
+    - 33060:33060
+    volumes:
+    - ./src/init.sql:/docker-entrypoint-initdb.d/init.sql 
+  legacy-php:
+    depends_on:
+    - mysql
+    image: orsolin/docker-php-5.3-apache
+    volumes:
+    - ./src:/var/www/html
+    ports:
+    - "5000:80"

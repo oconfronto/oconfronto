@@ -1,0 +1,75 @@
+html{
+    background:url('../images/bg.jpg') no-repeat center center;
+    min-height:100%;
+    background-size:cover;
+    background-color:#000000;
+}
+
+body{
+    /* Workaround for some mobile browsers */
+    min-height:100%;font-family: 'KlavikaBoldBold', sans-serif;font-size:12px;color:#fff;
+}
+
+a{
+    color: #FFFFFF;
+}
+
+#box{
+    width:360px;
+    position:absolute;
+    right:10%;
+    top:215px;
+}
+
+
+#certo{display:block;float:right;background:url(../images/ok.png);width:15px;height:16px;}
+#erro{display:block;float:right;background:url(../images/erro.png);width:15px;height:16px;}
+
+#barra-top{background:url(../images/barra-top.png);margin-left:3px;margin-right:3px;margin-top:-3px;height:30px;}
+#reg{display:block;background:url(../images/registrar.png);width:170px;float:left;height:30px;}
+#reg:hover{display:block;background:url(../images/registrar-hover.png);width:170px;height:30px;}
+#entrar{display:block;background:url(../images/entrar.png);width:184px;float:right;height:30px;}
+#entrar:hover{display:block;background:url(../images/entrar-hover.png);width:184px;float:right;height:30px;}
+#log{display:block;background:url(../images/sair.png) right;width:170px;float:left;height:30px;}
+#log:hover{display:block;background:url(../images/sair-hover.png) right;width:170px;float:left;height:30px;}
+#char{display:block;background:url(../images/conta.png);width:184px;float:right;height:30px;}
+#char:hover{display:block;background:url(../images/conta-hover.png);width:184px;float:right;height:30px;}
+
+.inp{background:url(../images/inp.png) center;width:200px;height:24px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+    color:#ffef8f;
+    font-weight: bold;
+    padding-left:20px;
+    border:0px;
+}
+
+#bg{
+    background:#efa362;margin:3px;height:260px;margin-top:-16px;
+}
+
+/* botoes */
+.reg{width:210px;height:45px;background:url(../images/botoes/reg.png);border:0px;}
+.reg:hover{width:210px;height:45px;background:url(../images/botoes/reg-hover.png);border:0px;}
+.ent{width:210px;height:45px;background:url(../images/botoes/ent.png);border:0px;}
+.ent:hover{width:210px;height:45px;background:url(../images/botoes/ent-hover.png);border:0px;}
+.enviar{width:210px;height:45px;background:url(../images/botoes/enviar.png);border:0px;}
+.enviar:hover{width:210px;height:45px;background:url(../images/botoes/enviar-hover.png);border:0px;}
+.personagem{width:210px;height:45px;background:url(../images/botoes/criar.png);border:0px;}
+.personagem:hover{width:210px;height:45px;background:url(../images/botoes/criar-hover.png);border:0px;}
+.atualizar{width:210px;height:45px;background:url(../images/botoes/atualizar.png);border:0px;}
+.atualizar:hover{width:210px;height:45px;background:url(../images/botoes/atualizar-hover.png);border:0px;}
+
+.bg-baixo{width:360px;height:6px;background:url(../images/bg-baixo.png);border:0px;}
+.bg-top{width:360px;height:6px;background:url(../images/bg-top.png);border:0px;}
+.bg-fundo{width:360px;min-height:100%;background:url(../images/bg-fundo.png);border:0px;padding-bottom:1px;}
+#barra-vermelha{font-family: 'KlavikaBoldBold', sans-serif;font-size:12px;
+    padding-top:3px;color:#ffef8f;background:url(../images/barra-vermelha.png);bottom:-3;margin:3px;width:98.6%;position:relative;height:60px;
+}
+#aviso-a{font-family: 'KlavikaBoldBold', sans-serif;font-size:12px;padding-left:10px;color:#ffffff;width:96%;margin-top:-1px;margin-left:2px;display:block;background:#003a3b;font-weight: bold;padding:5px;}
+#aviso-v{font-family: 'KlavikaBoldBold', sans-serif;font-size:12px;padding-left:10px;color:#ffffff;width:96%;margin-top:-1px;margin-left:2px;display:block;background:#320000;font-weight: bold;padding:5px;}
+
+td {
+    vertical-align:middle;
+}

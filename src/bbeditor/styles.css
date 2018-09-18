@@ -1,0 +1,33 @@
+.toolbar {
+background: #D9B066;
+padding: 4px 0px;
+width: 100%;
+margin: 0px;
+
+
+}
+
+.button {
+margin: 1px 3px;
+background-color: #fff;
+border: 1px solid #e0e0e0;
+}
+
+.button:hover {
+/*
+opacity:.60;
+filter: alpha(opacity=60); 
+-moz-opacity: 0.60;
+*/
+border: 1px solid #000;
+}
+
+.ed {
+	width: 100%;
+	border-left: 6px solid #B9892F;
+	border-right: 1px solid #B9892F;
+	border-top: 1px solid #B9892F;
+	border-bottom: 1px solid #B9892F;
+	background-color: #FDF5E6;
+  	font-weight: bold;
+}
