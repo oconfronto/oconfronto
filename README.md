@@ -1,7 +1,7 @@
 # O Confronto
 
 <p align="center">
-    <img src="src/images/topo.jpg">
+    <img src="https://github.com/user-attachments/assets/373feda8-d769-47ab-bcfd-aa54a413fd54">
 </p>
 
 ## Pré-requisitos
