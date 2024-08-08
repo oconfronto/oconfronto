@@ -1532,6 +1532,23 @@ CREATE TABLE IF NOT EXISTS `cron` (
 -- --------------------------------------------------------
 
 --
+-- Extraindo dados da tabela `cron`
+--
+
+INSERT INTO `cron` (`name`, `value`) VALUES
+('reset_last', '1319566657'),
+('reset_time', '60'),
+('revive_last', '1228961728'),
+('revive_time', '1800'),
+('interest_last', '1319566354'),
+('interest_time', '86400'),
+('died_last', '1230776435'),
+('died_time', '86400');
+
+-- --------------------------------------------------------
+
+
+--
 -- Table structure for table `duels`
 --
 
