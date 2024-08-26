@@ -48,7 +48,8 @@ if($diff >= $cron['interest_time'])
 
 		$upo = ceil($flog['level'] - $flog['last_level']);
 		if ($upo == 1){
-		$plural = "nível";
+
+      $plural = "nível";
 		}else{
 		$plural = "níveis";
 		}
@@ -229,7 +230,8 @@ while($newhunt = $updategeralhunt->fetchrow())
 
 
 	$db->execute("update `players` set `gold`=`gold`+?, `energy`=`energy`/?, `hp`=`hp`/? where `id`=?", array($autohuntgold, ceil (($newhunt['hunttime'] + 1) * 1.2), ceil(($newhunt['hunttime'] + 2) / 2.5), $newhunt['player_id']));
-    	$huntlog = "Sua caça(" . $automname . ") terminou! Voc&ecirc; recebeu <b>" . ceil((($autommtexp) * 20) * $newhunt['hunttime']) . " pontos de experi&ecirc;ncia</b> e <b>" . $autohuntgold . " moedas de ouro</b>.";
+
+  $huntlog = "Sua caça(" . $automname . ") terminou! Voc&ecirc; recebeu <b>" . ceil((($autommtexp) * 20) * $newhunt['hunttime']) . " pontos de experi&ecirc;ncia</b> e <b>" . $autohuntgold . " moedas de ouro</b>.";
 	addlog($newhunt['player_id'], $huntlog, $db);
 }
     
