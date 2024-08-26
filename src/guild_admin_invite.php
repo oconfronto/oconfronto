@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "AdministraÁ„o do Cl„");
+define("PAGENAME", "Administra√ß√£o do Cl√£");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 include("checkguild.php");
@@ -21,9 +21,9 @@ include("templates/private_header.php");
 
 //Guild Leader Admin check
 if (($player->username != $guild['leader']) and ($player->username != $guild['vice'])) {
-    echo "VocÍ n„o pode acessar esta p·gina. <a href=\"home.php\">Voltar</a>.";
+    echo "Voc√™ n√£o pode acessar esta p√°gina. <a href=\"home.php\">Voltar</a>.";
 } elseif ($guild['members'] >= ($guild['maxmembers'])) {
-    echo "Seu cl„ j· est· grande demais! (max. " . $guild['maxmembers'] . " membros).<br/><a href=\"guild_admin.php\">Voltar</a>.";
+    echo "Seu cl√£ j√° est√° grande demais! (max. " . $guild['maxmembers'] . " membros).<br/><a href=\"guild_admin.php\">Voltar</a>.";
 } else {
 //If username is set
 if (isset($_GET['username']) && ($_GET['submit'])) {
@@ -32,16 +32,16 @@ if (isset($_GET['username']) && ($_GET['submit'])) {
 	$member = $query->fetchrow();
 	
     if ($query->recordcount() == 0) {
-    	$errmsg .= "<center><b>Este usu·rio n„o existe!</b></center>";
+    	$errmsg .= "<center><b>Este usu√°rio n√£o existe!</b></center>";
     	$error = 1;
    	} else if ($member['serv'] != $guild['serv']) {
-   		$errmsg .= "<center><b>Este usu·rio pertence a outro servidor.</b></center>";
+   		$errmsg .= "<center><b>Este usu√°rio pertence a outro servidor.</b></center>";
    		$error = 1;
    	} else if ($member['reino'] != $guild['reino']) {
-   		$errmsg .= "<center><b>Este usu·rio pertence a outro reino.</b></center>";
+   		$errmsg .= "<center><b>Este usu√°rio pertence a outro reino.</b></center>";
    		$error = 1;
    	} else if ($member['guild'] != NULL) {
-   		$errmsg .= "<center><b>VocÍ n„o pode convidar um usu·rio que est· em outro cl„!</b></center>";
+   		$errmsg .= "<center><b>Voc√™ n√£o pode convidar um usu√°rio que est√° em outro cl√£!</b></center>";
    		$error = 1;
     } else {	//Insert user invite into guild_invites table
     			$insert['player_id'] = $member['id'];
@@ -49,12 +49,12 @@ if (isset($_GET['username']) && ($_GET['submit'])) {
     			$query = $db->autoexecute('guild_invites', $insert, 'INSERT');
     			
     			if (!$query) {
-    				$errmsg .= "<center><b>N„o foi possivel convidar o usu·rio! Provavelmete ele j· est· convidado.</b></center>";
+    				$errmsg .= "<center><b>N√£o foi possivel convidar o usu√°rio! Provavelmete ele j√° est√° convidado.</b></center>";
     			}
     			else {
-    				$logmsg = "Est„o te convidando para participar do cl„: <b><a href=\"guild_profile.php?id=" . $guild['id'] . "\">" . $guild['name'] . "</a></b>. <b><a href=\"guild_join.php?id=" . $guild['id'] . "\">Participar</a>.<br/>O custo para participar deste cl„ È de " . $guild['price'] . " de ouro.</a></b>";
+    				$logmsg = "Est√°o te convidando para participar do cl√£: <b><a href=\"guild_profile.php?id=" . $guild['id'] . "\">" . $guild['name'] . "</a></b>. <b><a href=\"guild_join.php?id=" . $guild['id'] . "\">Participar</a>.<br/>O custo para participar deste cl√£ √© de " . $guild['price'] . " de ouro.</a></b>";
 					addlog($member['id'], $logmsg, $db);
-    				$msg .= "<center><b>VocÍ convidou $username para o cl„.</b></center>";
+    				$msg .= "<center><b>Voc√™ convidou $username para o cl√£.</b></center>";
     			}
     	   }
 	}
@@ -62,9 +62,9 @@ if (isset($_GET['username']) && ($_GET['submit'])) {
 ?>
 
 <fieldset>
-<legend><b><?=$guild['name']?> :: Convidar usu·rios</b></legend>
+<legend><b><?=$guild['name']?> :: Convidar usu√°rios</b></legend>
 <form method="GET" action="guild_admin_invite.php">
-<b>Usu·rio:</b> <input type="text" name="username" size="20"/> <input  type="submit" name="submit" value="Convidar">
+<b>Usu√°rio:</b> <input type="text" name="username" size="20"/> <input  type="submit" name="submit" value="Convidar">
 </form></fieldset>
 <a href="guild_admin.php">Voltar</a>.
 

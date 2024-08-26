@@ -37,8 +37,8 @@ if ($_GET['start'])
             }
             exit;
         } else {
-            if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=ISO-8859-1",true); }
-            echo "Desafio não encontrado.<br/><a href=\"duel.php\">Voltar</a>.";
+            if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=utf-8",true); }
+            echo "Desafio n√£o encontrado.<br/><a href=\"duel.php\">Voltar</a>.";
             if (!$_GET['nolayout']){ include("templates/private_footer.php"); }
             exit;
         }
@@ -94,40 +94,40 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
     if (($luta['status'] != 'z') and ($luta['status'] != 's')) {
         if (($player->hp <= 0) and ($type != 99))
         {
-            if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=ISO-8859-1",true); }
-            echo "Voc&ecirc; está morto! <a href=\"duel.php\"/>Voltar</a>.";
+            if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=utf-8",true); }
+            echo "Voc&ecirc; est√° morto! <a href=\"duel.php\"/>Voltar</a>.";
             if (!$_GET['nolayout']){ include("templates/private_footer.php"); }
             exit;
         }
         
         if (($player->energy < 10) and ($type != 99))
         {
-            if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=ISO-8859-1",true); }
-            echo "Voc&ecirc; não tem energia suficiente! <a href=\"duel.php\"/>Voltar</a>.";
+            if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=utf-8",true); }
+            echo "Voc&ecirc; n√£o tem energia suficiente! <a href=\"duel.php\"/>Voltar</a>.";
             if (!$_GET['nolayout']){ include("templates/private_footer.php"); }
             exit;
         }
         
         if (($enemy->energy < 10) and ($type != 99))
         {
-            if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=ISO-8859-1",true); }
-            echo "Seu inimigo não tem energia suficiente! <a href=\"duel.php\"/>Voltar</a>.";
+            if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=utf-8",true); }
+            echo "Seu inimigo n√£o tem energia suficiente! <a href=\"duel.php\"/>Voltar</a>.";
             if (!$_GET['nolayout']){ include("templates/private_footer.php"); }
             exit;
         }
         
         if (($enemy->hp <= 0) and ($type != 99))
         {
-            if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=ISO-8859-1",true); }
-            echo "Este usuário está morto! <a href=\"duel.php\"/>Voltar</a>.";
+            if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=utf-8",true); }
+            echo "Este usu√°rio est√° morto! <a href=\"duel.php\"/>Voltar</a>.";
             if (!$_GET['nolayout']){ include("templates/private_footer.php"); }
             exit;
         }
         
         if (($enemy->ban > time()) and ($type != 99))
         {
-            if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=ISO-8859-1",true); }
-            echo "Este usuário está banido! <a href=\"duel.php\"/>Voltar</a>.";
+            if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=utf-8",true); }
+            echo "Este usu√°rio est√° banido! <a href=\"duel.php\"/>Voltar</a>.";
             if (!$_GET['nolayout']){ include("templates/private_footer.php"); }
             break;
         }
@@ -137,8 +137,8 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
         if ($type != 99) {
             if ((($checkenyrowk == t) or ($checkenyhunt == t)) and ($enemy->tour == 'f'))
             {
-                if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=ISO-8859-1",true); }
-                echo "Voc&ecirc; não encontrou o usuário " . $enemy->username . "! Ele deve estar trabalhando ou caçando. <a href=\"duel.php\">Voltar</a>.";
+                if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=utf-8",true); }
+                echo "Voc&ecirc; n√£o encontrou o usu√°rio " . $enemy->username . "! Ele deve estar trabalhando ou ca√ßando. <a href=\"duel.php\">Voltar</a>.";
                 if (!$_GET['nolayout']){ include("templates/private_footer.php"); }
                 break;
             }
@@ -146,8 +146,8 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
         
         $duelCheckOnline = $db->execute("select `id` from `user_online` where `player_id`=?", array($enemy->id));
         if (($duelCheckOnline->recordcount() == 0) and ($type != 99)) {
-            if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=ISO-8859-1",true); }
-            echo "" . $enemy->username . " está offline e não pode duelar. <a href=\"duel.php\">Voltar</a>.";
+            if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=utf-8",true); }
+            echo "" . $enemy->username . " est√° offline e n√£o pode duelar. <a href=\"duel.php\">Voltar</a>.";
             if (!$_GET['nolayout']){ include("templates/private_footer.php"); }
             break;
         }
@@ -163,14 +163,14 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
     {
         unset($_SESSION['statusduellog']);
         if ($luta['timeout'] > time()) {
-            if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=ISO-8859-1",true); }
+            if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=utf-8",true); }
             echo "<script type=\"text/javascript\">";
             echo "setTimeout(function() { Ajax('duel.php?luta=true&nolayout=true', 'battle'); }, 1000);";
             echo "</script>";
             
             echo "<div id=\"swap\"></div><div id=\"battle\">";
                 echo showAlert("<table width=\"100%\"><tr><td width=\"50%\" align=\"left\">Aguardando oponente...</td><td width=\"50%\" align=\"right\">( " . ($luta['timeout'] - time()) . " )</td></tr></table>");
-                echo "<br/><center><i>Seu oponente deve estar online, e aceitar o desafio nos próximos 45 segundos.</i></center>";
+                echo "<br/><center><i>Seu oponente deve estar online, e aceitar o desafio nos pr√≥ximos 45 segundos.</i></center>";
             echo "</div>";
             if (!$_GET['nolayout']){ include("templates/private_footer.php"); }
             
@@ -180,7 +180,7 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
             echo "javascript_countdown.init('" . ($luta['timeout'] - time()) . "', 'counter');";
             echo "</script>";
             
-            echo "<br/><center><i>Seu oponente deve estar online, e aceitar o desafio nos próximos 45 segundos.</i></center>";
+            echo "<br/><center><i>Seu oponente deve estar online, e aceitar o desafio nos pr√≥ximos 45 segundos.</i></center>";
             include("templates/private_footer.php"); */
             exit;
         } else {
@@ -638,7 +638,7 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
         if ($expwin + $player->exp >= maxExp($player->level)) //Player gained a level!
         {
             //Update player, gained a level
-            $depoput .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><u><b>Voc&ecirc; passou de nível!</b></u></div>";
+            $depoput .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><u><b>Voc&ecirc; passou de n√≠vel!</b></u></div>";
             $newexp = $expwin + $player->exp - maxExp($player->level);
             
             $db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", array(maxMana($player->level, $player->extramana), maxMana($player->level, $player->extramana), $player->id));
@@ -680,7 +680,7 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
         }
     }
     
-    if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=ISO-8859-1",true); }
+    if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=utf-8",true); }
         echo "<script type=\"text/javascript\">";
         echo "setTimeout(function() { Ajax('duel.php?luta=true&nolayout=true', 'battle'); }, 1500);";
         echo "</script>";
@@ -716,25 +716,25 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
                                 $showMagia = $luta['e_magia'];
                                 $showTurnos = $luta['e_turnos'];
                             }
-                            if (($showMagia == '1') and ($showTurnos > 0)) //reforço
+                            if (($showMagia == '1') and ($showTurnos > 0)) //refor√ßo
                             {
-                                echo "Força + 15% ( " . $showTurnos . " turnos )";
+                                echo "For√ßa + 15% ( " . $showTurnos . " turnos )";
                             }
                             elseif (($showMagia == '2') and ($showTurnos > 0)) //agressivo
                             {
-                                echo "Força + 45% / Resistência - 15% ( " . $showTurnos . " turnos )";
+                                echo "For√ßa + 45% / Resist√™ncia - 15% ( " . $showTurnos . " turnos )";
                             }
                             elseif (($showMagia == '6') and ($showTurnos > 0)) //defesa
                             {
-                                echo "Feitiço de defesa ( " . $showTurnos . " turnos )";
+                                echo "Feiti√ßo de defesa ( " . $showTurnos . " turnos )";
                             }
                             elseif (($showMagia == '7') and ($showTurnos > 0)) //
                             {
-                                echo "Resistência + 20% ( " . $showTurnos . " turnos )";
+                                echo "Resist√™ncia + 20% ( " . $showTurnos . " turnos )";
                             }
                             elseif (($showMagia == '10') and ($showTurnos > 0)) //escudo
                             {
-                                echo "Escudo mêstico ( " . $showTurnos . " turnos )";
+                                echo "Escudo m√≠stico ( " . $showTurnos . " turnos )";
                             }
                             elseif (($showMagia == '11') and ($showTurnos > 0)) //agressivo
                             {
@@ -742,7 +742,7 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
                             }
                             elseif (($showMagia == '12') and ($showTurnos > 0)) //agressivo
                             {
-                                echo "Força + 35% ( " . $showTurnos . " turnos )";
+                                echo "For√ßa + 35% ( " . $showTurnos . " turnos )";
                             }
                 
                         echo "</td>";
@@ -777,25 +777,25 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
                                 $showMagia = $luta['e_magia'];
                                 $showTurnos = $luta['e_turnos'];
                             }
-                            if (($showMagia == '1') and ($showTurnos > 0)) //reforço
+                            if (($showMagia == '1') and ($showTurnos > 0)) //refor√ßo
                             {
-                                echo "Força + 15% ( " . $showTurnos . " turnos )";
+                                echo "For√ßa + 15% ( " . $showTurnos . " turnos )";
                             }
                             elseif (($showMagia == '2') and ($showTurnos > 0)) //agressivo
                             {
-                                echo "Força + 45% / Resistência - 15% ( " . $showTurnos . " turnos )";
+                                echo "For√ßa + 45% / Resist√™ncia - 15% ( " . $showTurnos . " turnos )";
                             }
                             elseif (($showMagia == '6') and ($showTurnos > 0)) //defesa
                             {
-                                echo "Feitiço de defesa ( " . $showTurnos . " turnos )";
+                                echo "Feiti√ßo de defesa ( " . $showTurnos . " turnos )";
                             }
                             elseif (($showMagia == '7') and ($showTurnos > 0)) //
                             {
-                                echo "Resistência + 20% ( " . $showTurnos . " turnos )";
+                                echo "Resist√™ncia + 20% ( " . $showTurnos . " turnos )";
                             }
                             elseif (($showMagia == '10') and ($showTurnos > 0)) //escudo
                             {
-                                echo "Escudo mêstico ( " . $showTurnos . " turnos )";
+                                echo "Escudo m√≠stico ( " . $showTurnos . " turnos )";
                             }
                             elseif (($showMagia == '11') and ($showTurnos > 0)) //agressivo
                             {
@@ -803,7 +803,7 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
                             }
                             elseif (($showMagia == '12') and ($showTurnos > 0)) //agressivo
                             {
-                                echo "Força + 35% ( " . $showTurnos . " turnos )";
+                                echo "For√ßa + 35% ( " . $showTurnos . " turnos )";
                             }
                 
                         echo "</font></td>";
@@ -850,11 +850,11 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
                 {
                     if ($lado == 1) {
                         echo "<font color=\"blue\">";
-                        echo "Voc&ecirc; lançou o feitiço " . $log[2] . ".";
+                        echo "Voc&ecirc; lan√£ou o feiti√ßo " . $log[2] . ".";
                         echo "</font>";
                     } else {
                         echo "<font color=\"purple\">";
-                        echo "" . $log[1] . " lançou o feitiço " . $log[2] . ".";
+                        echo "" . $log[1] . " lan√£ou o feiti√ßo " . $log[2] . ".";
                         echo "</font>";
                     }
                 } 
@@ -862,11 +862,11 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
                 {
                     if ($lado == 1) {
                         echo "<font color=\"black\">";
-                        echo "Voc&ecirc; tentou lançar um feitiço mas está sem mana sufuciente.";
+                        echo "Voc&ecirc; tentou lan√ßar um feiti√ßo mas est√° sem mana sufuciente.";
                         echo "</font>";
                     } else {
                         echo "<font color=\"black\">";
-                        echo "" . $log[1] . " tentou te lançar um feitiço mas está sem mana sufuciente.";
+                        echo "" . $log[1] . " tentou te lan√ßar um feiti√ßo mas est√° sem mana sufuciente.";
                         echo "</font>";
                     }
                 } 
@@ -874,7 +874,7 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
                 {
                     if ($lado == 1) {
                         echo "<font color=\"black\">";
-                        echo "Voc&ecirc; não pode ativar um feitiço passivo enquanto outro está ativo.";
+                        echo "Voc&ecirc; n√£o pode ativar um feiti√ßo passivo enquanto outro est√° ativo.";
                         echo "</font>";
                     }
                 }
@@ -882,11 +882,11 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
                 {
                     if ($lado == 1) {
                         echo "<font color=\"black\">";
-                        echo "Voc&ecirc; tentou lançar um feitiço em  " . $log[2] . " mas errou!";
+                        echo "Voc&ecirc; tentou lan√ßar um feiti√ßo em  " . $log[2] . " mas errou!";
                         echo "</font>";
                     } else {
                         echo "<font color=\"black\">";
-                        echo "" . $log[1] . " tentou te lançar um feitiço mas errou!";
+                        echo "" . $log[1] . " tentou te lan√ßar um feiti√ßo mas errou!";
                         echo "</font>";
                     }
                 }
@@ -1028,7 +1028,7 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
 }
     
 include("checkhp.php");
-if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=ISO-8859-1",true); }
+if (!$_GET['nolayout']){ include("templates/private_header.php"); } else { header("Content-Type: text/html; charset=utf-8",true); }
 if ($_GET['remove'])
 {
     $checkDuelRemove = $db->execute("select `id` from `duels` where `status`='w' and `id`=? and (`p_id`=? or `e_id`=?)", array($_GET['remove'], $player->id, $player->id));
@@ -1036,7 +1036,7 @@ if ($_GET['remove'])
         $db->execute("delete from `duels` where `id`=? and (`p_id`=? or `e_id`=?)", array($_GET['remove'], $player->id, $player->id));
         echo showAlert("Desafio removido com sucesso.", "green");
     } else {
-        echo showAlert("Este desafio não existe.", "red");
+        echo showAlert("Este desafio n√£o existe.", "red");
     }
 }
     
@@ -1049,13 +1049,13 @@ if ($_POST['desafiar'])
     
     if ((!$_POST['username']) or ($_POST['username'] == null))
     {
-        echo showAlert("Digite o nome do jogador que você deseja desafiar.", "red");
+        echo showAlert("Digite o nome do jogador que voc√™ deseja desafiar.", "red");
     }
     else if ($checkEnemy->recordcount() == 0) {
-        echo showAlert("O jogador " . $_POST['username'] . " não existe.", "red");
+        echo showAlert("O jogador " . $_POST['username'] . " n√£o existe.", "red");
     }
     else if ($player->id == $getEnemyId) {
-        echo showAlert("Voc&ecirc; não pode desafiar voc&ecirc; mesmo.", "red");
+        echo showAlert("Voc&ecirc; n√£o pode desafiar voc&ecirc; mesmo.", "red");
     } else {
         $checkDuel = $db->execute("select `id` from `duels` where `status`='w' and ((`p_id`=? and `e_id`=?) or (`p_id`=? and `e_id`=?))", array($player->id, $getEnemyId, $getEnemyId, $player->id));
         if ($checkDuel->recordcount() == 0) {
@@ -1068,17 +1068,17 @@ if ($_POST['desafiar'])
             
             echo showAlert("Proposta de desafio enviada.", "green");
         } else {
-            echo showAlert("Já existe um desafio entre você e " . $_POST['username'] . " pendente.", "red");
+            echo showAlert("J√° existe um desafio entre voc√™ e " . $_POST['username'] . " pendente.", "red");
         }
     }
 }
     
 if ($_GET['error'] == 'noresponse')
 {
-    echo showAlert("Seu oponente não aceitou o desafio no per&ecirc;odo determinado.", "red");
+    echo showAlert("Seu oponente n√£o aceitou o desafio no per&ecirc;odo determinado.", "red");
 }
 	
-echo "<center><i>Duelos são a melhor maneira de se provar quem é o melhor guerreiro,<br/>eles podem lhe ajudar a ganhar grandes quantias de experiência, mas você não consigirá ganhar ouro por aqui.</i></center><br/>";
+echo "<center><i>Duelos s√£o a melhor maneira de se provar quem √© o melhor guerreiro,<br/>eles podem lhe ajudar a ganhar grandes quantias de experi√™ncia, mas voc√™ n√£o conseguir√° ganhar ouro por aqui.</i></center><br/>";
     
     echo "<script type=\"text/javascript\">";
     echo "setTimeout(function() { Ajax('showduels.php?header=true', 'showduels'); }, 2500);";
@@ -1092,7 +1092,7 @@ echo "<br/><br/><form method=\"POST\" action=\"duel.php\">";
 echo "<table width=\"95%\" align=\"center\" style=\"background-color: #FFFDE0;\">";
 echo "<tr><td align=\"center\" bgcolor=\"#E1CBA4\" colspan=\"3\"><b>Desafiar jogador</b></td></tr>";
 echo "<tr style=\"background-color: #FFFDE0;\">";
-echo "<th width=\"30%\" align=\"center\"><b>Usuário</b>:</th>";
+echo "<th width=\"30%\" align=\"center\"><b>Usu√°rio</b>:</th>";
 echo "<th width=\"40%\" align=\"center\"><input type=\"text\" name=\"username\" size=\"30\" /></th>";
 echo "<th width=\"30%\" align=\"center\"><input type=\"submit\" name=\"desafiar\" value=\"Desafiar\" /></th>";
 echo "</tr>";

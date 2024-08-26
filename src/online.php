@@ -4,7 +4,7 @@ define("PAGENAME", "Chat");
 $player = check_user($secret_key, $db);
 
 if ($_GET['act'] == 'showmsg'){
-	header('Content-type: text/html; charset=iso-8859-1');
+	header('Content-type: text/html; charset=utf-8');
 
 		$check = $db->execute("select * from `pending` where `pending_id`=31 and `player_id`=?", array($player->id));
 		if ($check->recordcount() == 0){
@@ -31,7 +31,7 @@ if ($_GET['act'] == 'showmsg'){
 
 			if ($getmsgs->recordcount() == 0) {
 				if ((($player->guild == NULL) or ($player->guild == 0)) and ($user['pending_status'] == 'cla')) {
-					echo "<font size=\"1\"><center><b>Voc&ecirc; n„o possui um cl„.</center></font>";
+					echo "<font size=\"1\"><center><b>Voc&ecirc; n√£o possui um cl√£.</center></font>";
 				} else {
 					echo "<font size=\"1\"><center><b>Nenhuma mensagem recente.</center></font>";
 				}
@@ -177,7 +177,7 @@ function submitMsg(){
 					if ($user['pending_status'] == 'reino') {
 						echo "Chat do Reino";
 					} else {
-						echo "Chat do Cl„";
+						echo "Chat do Cl√£";
 					}
 				}
 
@@ -197,7 +197,7 @@ function submitMsg(){
 	echo "<tr><td width=\"35%\">";
 
 		echo "<table width=\"100%\">";
-			echo "<tr><td class=\"brown\" width=\"100%\"><center><b>ConfiguraÁıes</b></center></td></tr>";
+			echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Configura√ß√µes</b></center></td></tr>";
 			echo "<tr class=\"off\"><td>";
 
 			echo "<form method=\"POST\" action=\"online.php\">";
@@ -209,18 +209,18 @@ function submitMsg(){
 				if ($check->recordcount() == 0){
 					echo "<option value=\"onl\" selected=\"selected\">Online</option>";
 					echo "<option value=\"ocp\">Ocupado</option>";
-					echo "<option value=\"inv\">InvisÌvel</option>";
+					echo "<option value=\"inv\">Invis√≠vel</option>";
 				}else{
 					$user = $check->fetchrow();
 
 					if ($user['pending_status'] == 'ocp') {
 						echo "<option value=\"onl\">Online</option>";
 						echo "<option value=\"ocp\" selected=\"selected\">Ocupado</option>";
-						echo "<option value=\"inv\">InvisÌvel</option>";
+						echo "<option value=\"inv\">Invis√≠vel</option>";
 					} else {
 						echo "<option value=\"onl\">Online</option>";
 						echo "<option value=\"ocp\">Ocupado</option>";
-						echo "<option value=\"inv\" selected=\"selected\">InvisÌvel</option>";
+						echo "<option value=\"inv\" selected=\"selected\">Invis√≠vel</option>";
 					}
 					
 				}
@@ -235,18 +235,18 @@ function submitMsg(){
 				if ($check->recordcount() == 0){
 					echo "<option value=\"chat\" selected=\"selected\">Geral</option>";
 					echo "<option value=\"reino\">Reino</option>";
-					echo "<option value=\"cla\">Cl„</option>";
+					echo "<option value=\"cla\">Cl√£</option>";
 				}else{
 					$user = $check->fetchrow();
 
 					if ($user['pending_status'] == 'reino') {
 						echo "<option value=\"chat\">Geral</option>";
 						echo "<option value=\"reino\" selected=\"selected\">Reino</option>";
-						echo "<option value=\"cla\">Cl„</option>";
+						echo "<option value=\"cla\">Cl√£</option>";
 					} else {
 						echo "<option value=\"chat\">Geral</option>";
 						echo "<option value=\"reino\">Reino</option>";
-						echo "<option value=\"cla\" selected=\"selected\">Cl„</option>";
+						echo "<option value=\"cla\" selected=\"selected\">Cl√£</option>";
 					}
 
 				}
@@ -257,7 +257,7 @@ function submitMsg(){
 
 			echo "</td></tr>";
 		echo "</table>";
-	echo "<center><font size=\"1px\"><b><a href=\"mail.php?act=ignore\">Usu·rios Ignorados</a></b></font></center>";
+	echo "<center><font size=\"1px\"><b><a href=\"mail.php?act=ignore\">Usu√°rios Ignorados</a></b></font></center>";
 
 	echo "</td>";
 	echo "<td width=\"65%\">";
@@ -267,14 +267,14 @@ function submitMsg(){
 
 				$check = $db->execute("select * from `pending` where `pending_id`=31 and `player_id`=?", array($player->id));
 				if ($check->recordcount() == 0){
-					echo "Usu·rios online";
+					echo "Usu√°rios online";
 				}else{
 					$user = $check->fetchrow();
 
 					if ($user['pending_status'] == 'reino') {
-						echo "Usu·rios do reino online";
+						echo "Usu√°rios do reino online";
 					} else {
-						echo "Usu·rios do cl„ online";
+						echo "Usu√°rios do cl√£ online";
 					}
 				}
 

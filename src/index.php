@@ -45,7 +45,7 @@
         }
         elseif ($tentativas > 9)
         {
-            $errormsg = "Você errou sua senha 10 vezes seguidas. Aguarde 30 minutos para poder tentar novamente.";
+            $errormsg = "VocÃª errou sua senha 10 vezes seguidas. Aguarde 30 minutos para poder tentar novamente.";
             $showerror = 3;
             $error = 1;
         }

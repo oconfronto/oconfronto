@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "AdministraÁ„o do Cl„");
+define("PAGENAME", "Administra√ß√£o do Cl√£");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 include("checkguild.php");
@@ -23,7 +23,7 @@ $price = (500 * $guild['members']);
 
 //Guild Leader Admin check
 if (($player->username != $guild['leader']) and ($player->username != $guild['vice'])) {
-    echo "<p />VocÍ n„o pode acessar esta p·gina.<p />";
+    echo "<p />Voc√™ n√£o pode acessar esta p√°gina.<p />";
     echo "<a href=\"home.php\">Principal</a><p />";
 } else {
 
@@ -49,44 +49,44 @@ $maximodedias = ($guild['pagopor'] + ($arredonda * 86400)) - time();
 $price2 = ceil($price * $_POST['days']);
 
 	if (!$_POST['days']){
-    	$errmsg .= "VocÍ precisa preencher todos os campos.";
+    	$errmsg .= "Voc√™ precisa preencher todos os campos.";
     	$error = 1;
    	}
 	else if(!is_numeric($_POST['days'])){
-    	$errmsg .= "Este n˙mero de dias n„o È v·lido.";
+    	$errmsg .= "Este n√∫mero de dias n√£o √© v√°lido.";
     	$error = 1;
    	}
 	else if($arredonda < 1){
-    	$errmsg .= "Este n˙mero de dias n„o È v·lido.";
+    	$errmsg .= "Este n√∫mero de dias n√£o √© v√°lido.";
     	$error = 1;
    	}
 	else if($price2 > $guild['gold']){
-    	$errmsg .= "Seu cl„ n„o possui ouro suficiente para pagar por " . $arredonda . " dia(s).";
+    	$errmsg .= "Seu cl√£ n√£o possui ouro suficiente para pagar por " . $arredonda . " dia(s).";
     	$error = 1;
    	}
 	elseif($maximodedias > 5183999){
-    	$errmsg .= "VocÍ n„o pode deixar sue cl„ pago por mais de 60 dias.";
+    	$errmsg .= "Voc√™ n√£o pode deixar sue cl√£ pago por mais de 60 dias.";
     	$error = 1;
    	}
 
 		if ($error == 0){
 		$tempoadicional = $guild['pagopor'] + ($arredonda * 86400);
 		$query = $db->execute("update `guilds` set `gold`=?, `pagopor`=? where `id`=?", array($guild['gold'] - $price2, $tempoadicional, $guild['id']));
-		$msg .= "Seu cl„ acaba de ser pago por mais " . $arredonda . " dia(s).";
+		$msg .= "Seu cl√£ acaba de ser pago por mais " . $arredonda . " dia(s).";
 		}
 }
 
 ?>
 <?=$msg?><font color=red><?=$errmsg?></font>
 <fieldset>
-<legend><b><?=$guild['name']?> :: Pagar pelo cl„</b></legend>
+<legend><b><?=$guild['name']?> :: Pagar pelo cl√£</b></legend>
 <form method="POST" action="guild_admin_pay.php">
 <b>Pagar por mais:</b> <input type="text" name="days" size="3" maxlength="3"/> dias.<p />
 <input type="submit" name="submit" value="Pagar"> Cada dia custa <b><?=$price?> de ouro</b>.
 </form>
 </fieldset>
-<b>Este cl„ est· pago por:</b> <?=$valortempo2;?> <?=$auxiliar2;?>.<br>
-Ele ser· deletado se o tempo acabar e vocÍ n„o pagar mais.
+<b>Este cl√£ est√° pago por:</b> <?=$valortempo2;?> <?=$auxiliar2;?>.<br>
+Ele ser√° deletado se o tempo acabar e voc√™ n√£o pagar mais.
 
 <?php
 }

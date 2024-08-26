@@ -130,7 +130,8 @@ else
 echo "</div>";
 ?></td>
 
-<td>&nbsp;</td>
+<td style="padding: 5px;text-align: center;"><a href="inventory.php"><img src="images/bag.gif" ></a></td>
+<!-- <td>&nbsp;</td> -->
 
 </tr><tr>
 <td><?php

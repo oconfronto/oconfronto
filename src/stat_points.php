@@ -12,7 +12,7 @@ $antigaforca = "Pontaria";
 }
 else if ($player->voc == 'knight')
 {
-$antigaforca = "Força";
+$antigaforca = "For√ßa";
 }
 else if ($player->voc == 'mage')
 {
@@ -39,7 +39,7 @@ $antigaforca = "Magia";
 		{
 			include("templates/private_header.php");
 			echo "<fieldset><legend><b>Treinador</b></legend>\n";
-			echo "<i><font color=\"red\">Voc&ecirc; não tem ouro!</i><br>\n";
+			echo "<i><font color=\"red\">Voc&ecirc; n√£o tem ouro!</i><br>\n";
 			echo '<a href="home.php">Voltar.</a>';
                         echo "</fieldset>\n";
 			include("templates/private_footer.php");
@@ -110,7 +110,7 @@ $antigaforca = "Magia";
         $player = check_user($secret_key, $db); //Get new stats
         include("templates/private_header.php");
         echo "<fieldset><legend><b>Treinador</b></legend>\n";
-        echo "<i>Pronto, suas magias foram resetadas e voc&ecirc; ganhou " . $player->level . " pontos mêsticos!.<br/></i>\n";
+        echo "<i>Pronto, suas magias foram resetadas e voc&ecirc; ganhou " . $player->level . " pontos m√≠sticos!.<br/></i>\n";
         echo '<a href="home.php">Voltar.</a>';
         echo "</fieldset>\n";
         include("templates/private_footer.php");
@@ -126,8 +126,8 @@ $antigaforca = "Magia";
 		{
 		include("templates/private_header.php");
 		echo "<b>Treinador:</b><br />";
-		echo "<i>Desculpe, mas voc&ecirc; não tem nenhum ponto de status para utilizar.<br />";
-		echo "Por favor, volte quando voc&ecirc; passar de nível.</i><br/><a href=\"home.php\">Voltar</a>.";
+		echo "<i>Desculpe, mas voc&ecirc; n√£o tem nenhum ponto de status para utilizar.<br />";
+		echo "Por favor, volte quando voc&ecirc; passar de n√≠vel.</i><br/><a href=\"home.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		$error = 1;
 		exit;
@@ -135,7 +135,7 @@ $antigaforca = "Magia";
 
 		if (!is_numeric($_GET['for'])) {
 		include("templates/private_header.php");
-		echo "O valor " . $_GET['for'] . " não é válido! <a href=\"stat_points.php\">Voltar</a>.";
+		echo "O valor " . $_GET['for'] . " n√£o √© v√°lido! <a href=\"stat_points.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		$error = 1;
 		exit;
@@ -143,7 +143,7 @@ $antigaforca = "Magia";
 
 		if (!is_numeric($_GET['vit'])) {
 		include("templates/private_header.php");
-		echo "O valor " . $_GET['vit'] . " não é válido! <a href=\"stat_points.php\">Voltar</a>.";
+		echo "O valor " . $_GET['vit'] . " n√£o √© v√°lido! <a href=\"stat_points.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		$error = 1;
 		exit;
@@ -151,7 +151,7 @@ $antigaforca = "Magia";
 
 		if (!is_numeric($_GET['agi'])) {
 		include("templates/private_header.php");
-		echo "O valor " . $_GET['agi'] . " não é válido! <a href=\"stat_points.php\">Voltar</a>.";
+		echo "O valor " . $_GET['agi'] . " n√£o √© v√°lido! <a href=\"stat_points.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		$error = 1;
 		exit;
@@ -159,7 +159,7 @@ $antigaforca = "Magia";
 
 		if (!is_numeric($_GET['res'])) {
 		include("templates/private_header.php");
-		echo "O valor " . $_GET['res'] . " não é válido! <a href=\"stat_points.php\">.";
+		echo "O valor " . $_GET['res'] . " n√£o √© v√°lido! <a href=\"stat_points.php\">.";
 		include("templates/private_footer.php");
 		$error = 1;
 		exit;
@@ -212,7 +212,7 @@ $antigaforca = "Magia";
 
 		if ($total > $player->stat_points){
 		include("templates/private_header.php");
-		echo "Voc&ecirc; não possui pontos de status suficientes! <a href=\"stat_points.php\">Voltar</a>.";
+		echo "Voc&ecirc; n√£o possui pontos de status suficientes! <a href=\"stat_points.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		$error = 1;
 		exit;
@@ -227,7 +227,7 @@ $antigaforca = "Magia";
 
 		if ($total > $player->stat_points){
 		include("templates/private_header.php");
-		echo "Voc&ecirc; não possui pontos de status suficientes! <a href=\"stat_points.php\">Voltar</a>.";
+		echo "Voc&ecirc; n√£o possui pontos de status suficientes! <a href=\"stat_points.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		$error = 1;
 		exit;
@@ -276,16 +276,16 @@ include("templates/private_header.php");
 $tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=3 and `player_id`=?", array($player->id));
 if ($tutorial->recordcount() > 0){
 	if ($player->stat_points > 0){
-		echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">Antes de começar a lutar, voc&ecirc; deve distribuir seus pontos de status.<br/><font size=\"1px\">Voc&ecirc; começa com 5 pontos, e ganhará mais 3 pontos de status a cada nível que obter.</font><br/><br/> Começe focando seus pontos em força e resist&ecirc;ncia, mas não esqueça que sua agilidade e vitalidade também são importantes.</td><th><font size=\"1px\"><a href=\"start.php?act=4\">Próximo</a></font></th></tr></table>", "white", "left");
+		echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">Antes de come√ßar a lutar, voc&ecirc; deve distribuir seus pontos de status.<br/><font size=\"1px\">Voc&ecirc; come√ßa com 5 pontos, e ganhar√° mais 3 pontos de status a cada n√≠vel que obter.</font><br/><br/> Comece focando seus pontos em for√ßa e resist&ecirc;ncia, mas n√£o esque√ßa que sua agilidade e vitalidade tamb√©m s√£o importantes.</td><th><font size=\"1px\"><a href=\"start.php?act=4\">Pr√≥ximo</a></font></th></tr></table>", "white", "left");
 	}else{
-		echo showAlert("”timo, <a href=\"start.php?act=4\">clique aqui</a> para continuar seu tutorial.", "green");
+		echo showAlert("√≥timo, <a href=\"start.php?act=4\">clique aqui</a> para continuar seu tutorial.", "green");
 	}
 }
 
 if ($player->stat_points > 0){
 	echo showAlert("Voc&ecirc; tem " . $player->stat_points . " ponto de status dispon&iacute;veis.", "green", "center", NULL, "pontos");
 } else {
-	echo showAlert("Voc&ecirc; não possui mais pontos de status dispon&iacute;veis.", "yellow", "center", NULL, "pontos");
+	echo showAlert("Voc&ecirc; n√£o possui mais pontos de status dispon&iacute;veis.", "yellow", "center", NULL, "pontos");
 }
 ?>
 
@@ -293,7 +293,7 @@ if ($player->stat_points > 0){
 <fieldset><legend><b>Status</b></legend>
 <table>
 <tr><td style="vertical-align:middle"><b><?=$antigaforca?>:</b> <?=$player->strength?></td><td style="vertical-align:middle">+ <input type="text" id="checkStatus1" name="for" value="0" size="4" maxlength="4"/><input id="buttonAdd1" value="+" type="button"> <input id="buttonSub1" value="-" type="button" disabled="true"><img src="images/help.gif" title="header=[<?=$antigaforca?>] body=[Aumenta seu poder de ataque.]"> <?php echo $msg1; ?></td></tr>
-<tr><td style="vertical-align:middle"><b>Vitalidade:</b> <?=$player->vitality?></td><td style="vertical-align:middle">+ <input type="text" id="checkStatus2" name="vit" value="0" size="4" maxlength="4"/><input id="buttonAdd2" value="+" type="button"> <input id="buttonSub2" value="-" type="button" disabled="true"><img src="images/help.gif" title="header=[Vitalidade] body=[Adiciona +20 ‡ sua vida e +5 pontos ‡ sua mana total.]"> <?php echo $msg2; ?></td></tr>
+<tr><td style="vertical-align:middle"><b>Vitalidade:</b> <?=$player->vitality?></td><td style="vertical-align:middle">+ <input type="text" id="checkStatus2" name="vit" value="0" size="4" maxlength="4"/><input id="buttonAdd2" value="+" type="button"> <input id="buttonSub2" value="-" type="button" disabled="true"><img src="images/help.gif" title="header=[Vitalidade] body=[Adiciona +20 √° sua vida e +5 pontos √° sua mana total.]"> <?php echo $msg2; ?></td></tr>
 <tr><td style="vertical-align:middle"><b>Agilidade:</b> <?=$player->agility?></td><td style="vertical-align:middle">+ <input type="text" id="checkStatus3" name="agi" value="0" size="4" maxlength="4"/><input id="buttonAdd3" value="+" type="button"> <input id="buttonSub3" value="-" type="button" disabled="true"><img src="images/help.gif" title="header=[Agilidade] body=[Desvia de ataques de inimigos e da ataques multiplos com mais facilidade.]"> <?php echo $msg3; ?></td></tr>
 <tr><td style="vertical-align:middle"><b>Resist&ecirc;ncia:</b> <?=$player->resistance?></td><td style="vertical-align:middle">+ <input type="text" id="checkStatus4" name="res" value="0" size="4" maxlength="4"/><input id="buttonAdd4" value="+" type="button"> <input id="buttonSub4" value="-" type="button" disabled="true"><img src="images/help.gif" title="header=[Resist&ecirc;ncia] body=[Aumenta sua defesa.]"> <?php echo $msg4; ?></td></tr>
 </table>
@@ -304,7 +304,7 @@ if ($player->stat_points > 0){
 <?php
 if ($tutorial->recordcount() == 0){
 echo "<fieldset><legend><b>Treinador</b></legend>";
-echo "<i>Voc&ecirc; gostaria de redistribuir todos seus pontos de status e pontos mêsticos por " . $cost . " moedas de ouro?<br/>";
+echo "<i>Voc&ecirc; gostaria de redistribuir todos seus pontos de status e pontos m√≠sticos por " . $cost . " moedas de ouro?<br/>";
 echo "<table width=\"100%\" border=\"0\"><tr>";
 echo "<td width=\"50%\"><a href=\"home.php\">Voltar</a></td>";
 echo "<td width=\"50%\" align=\"right\"><a href=\"stat_points.php?act=reset\">Sim</a></td>";

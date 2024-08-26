@@ -8,7 +8,7 @@ $idf = "".$randextraid."".$acc->id."".$randextraid.""
 <input type="hidden" name="moeda" value="BRL">
 
 <input type="hidden" name="item_id_1" value="1">
-<input type="hidden" name="item_descr_1" value="Créditos">
+<input type="hidden" name="item_descr_1" value="CrÃ©ditos">
 
 <input type="hidden" name="item_valor_1" value="1">
 <input type="hidden" name="item_frete_1" value="0">
@@ -18,7 +18,7 @@ $idf = "".$randextraid."".$acc->id."".$randextraid.""
 <tr bgcolor="#505050" class="white">
 </tr>
 <tr>
-<td width="10%">ID Único:</td>
+<td width="10%">ID Ãºnico:</td>
 <td><strong><?php echo $idf; ?></strong></td>
 </tr>
 <tr>

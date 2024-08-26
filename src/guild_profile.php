@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Clã");
+define("PAGENAME", "Cl√£");
 $player = check_user($secret_key, $db);
 include("bbcode.php");
 include("checkbattle.php");
@@ -44,7 +44,7 @@ echo "<ul class=\"tabs\">";
 	echo "<li><a href=\"#tab2\">Membros</a></li>";
 	echo "<li><a href=\"#tab3\">Aliados</a></li>";
 	echo "<li><a href=\"#tab4\">Inimigos</a></li>";
-	echo "<li><a href=\"#tab5\">Estatêsticas</a></li>";
+	echo "<li><a href=\"#tab5\">Estat√°sticas</a></li>";
 echo "</ul>";
 
 
@@ -74,7 +74,7 @@ echo "<div class=\"tab_container\">";
 <td width="35%">
 <?php
 if (($guild['vice'] == NULL) or ($guild['vice'] == '')){
-echo "Ninguém";
+echo "Ningu√©m";
 }else{
 echo "<a href=\"profile.php?id=" . $guild['vice'] . "\">" . $guild['vice'] . "</a></td>";
 }
@@ -103,7 +103,7 @@ $contvitoria = $db->execute("select `id` from `pwar` where ((`status`='g' and `g
 ?>
 </td>
 
-<td width="20%"><b>Vitórias:</b></td>
+<td width="20%"><b>Vit√≥rias:</b></td>
 <td width="25%"><?php echo $contvitoria->recordcount(); ?></td>
 </tr>
 
@@ -115,7 +115,7 @@ $contvitoria = $db->execute("select `id` from `pwar` where ((`status`='g' and `g
 $mes = date("M", $guild['registered']);
 $mes_ano["Jan"] = "Janeiro";
 $mes_ano["Feb"] = "Fevereiro";
-$mes_ano["Mar"] = "Março";
+$mes_ano["Mar"] = "Mar√ßo";
 $mes_ano["Apr"] = "Abril";
 $mes_ano["May"] = "Maio";
 $mes_ano["Jun"] = "Junho";
@@ -148,7 +148,7 @@ $contderrota = $db->execute("select `id` from `pwar` where ((`status`='e' and `g
 echo "<p> ";
 if ($guild['blurb'] == NULL or $guild['blurb'] == '')
 {
-echo "Sem descrição.";
+echo "Sem descri√ß√£o.";
 }
 else
 {
@@ -166,11 +166,11 @@ echo "</p>";
 ?>
 <table width="100%" border="0">
 <tr>
-<th width="30%"><b>Usuário</b></td>
-<th width="15%"><b>nível</b></td>
-<th width="25%"><b>Vocação</b></td>
+<th width="30%"><b>Usu√°rio</b></td>
+<th width="15%"><b>n√≠vel</b></td>
+<th width="25%"><b>Voca√ß√£o</b></td>
 <th width="15%"><b>Status</b></td>
-<th width="20%"><b>Opções</b></td>
+<th width="20%"><b>Op√ß√µes</b></td>
 </tr>
 <?php
 //Select all members ordered by level (highest first, members table also doubles as rankings table)
@@ -189,7 +189,7 @@ while($member = $query->fetchrow())
 
 	echo "<td>";
 if ($member['voc'] == 'archer' and $member['promoted'] == 'f'){
-echo "Caçador";
+echo "Ca√ßador";
 } else if ($member['voc'] == 'knight' and $member['promoted'] == 'f'){
 echo "Espadachim";
 } else if ($member['voc'] == 'mage' and $member['promoted'] == 'f'){
@@ -236,12 +236,12 @@ $bool = ($bool==1)?2:1;
 		echo "<br/>";
 		$alyquery = $db->execute("select `aled_na` from `guild_aliance` where `guild_na`=?", array($guild['id']));
 		if ($alyquery->recordcount() < 1) {
-		echo "<center><b>O clã " . $guild['name'] . " não tem alianças.</b></center><br/>";
+		echo "<center><b>O cl√£ " . $guild['name'] . " n√£o tem alian√ßas.</b></center><br/>";
 		}else{
 			while($aly = $alyquery->fetchrow())
 			{
 			$allyname = $db->GetOne("select `name` from `guilds` where `id`=?", array($aly['aled_na']));
-			echo "<center><b>O clã " . $guild['name'] . " possui alianças com o clã <a href=\"guild_profile.php?id=" . $aly['aled_na'] . "\">" . $allyname . "</a>.</b></center><br/>";
+			echo "<center><b>O cl√£ " . $guild['name'] . " possui alian√ßas com o cl√£ <a href=\"guild_profile.php?id=" . $aly['aled_na'] . "\">" . $allyname . "</a>.</b></center><br/>";
 			}
 		}
 
@@ -250,12 +250,12 @@ $bool = ($bool==1)?2:1;
 
 		$enyquery = $db->execute("select `enemy_na` from `guild_enemy` where `guild_na`=?", array($guild['id']));
 		if ($enyquery->recordcount() < 1) {
-		echo "<br/><center><b>O clã " . $guild['name'] . " não tem inimigos.</b></center><br/>";
+		echo "<br/><center><b>O cl√£ " . $guild['name'] . " n√£o tem inimigos.</b></center><br/>";
 		}else{
 			while($eny = $enyquery->fetchrow())
 			{
 			$ennyname = $db->GetOne("select `name` from `guilds` where `id`=?", array($eny['enemy_na']));
-			echo "<br/><center><b>O clã " . $guild['name'] . " é inimigo do clã <a href=\"guild_profile.php?id=" . $eny['enemy_na'] . "\">" . $ennyname . "</a>.</b></center><br/>";
+			echo "<br/><center><b>O cl√£ " . $guild['name'] . " √© inimigo do cl√£ <a href=\"guild_profile.php?id=" . $eny['enemy_na'] . "\">" . $ennyname . "</a>.</b></center><br/>";
 			}
 		}
 
@@ -264,10 +264,10 @@ $bool = ($bool==1)?2:1;
 		echo "<div id=\"tab5\" class=\"tab_content\">";
 
 			echo "<table width=\"100%\" border=\"0\">";
-			echo "<tr class=\"row1\"><td><b>Média de nível:</b></td><td>" . ceil($totallevel) . "</td></tr>";
-			echo "<tr class=\"row2\"><td><b>Média de ouro:</b></td><td>" . ceil($totalgold) . "</td></tr>";
-			echo "<tr class=\"row1\"><td><b>Média de usuários mortos:</b></td><td>" . ceil($totalbattles) . "</td></tr>";
-			echo "<tr class=\"row2\"><td><b>Média de monstros mortos:</b></td><td>" . ceil($totalmonsters) . "</td></tr>";
+			echo "<tr class=\"row1\"><td><b>M√©dia de n√≠vel:</b></td><td>" . ceil($totallevel) . "</td></tr>";
+			echo "<tr class=\"row2\"><td><b>M√©dia de ouro:</b></td><td>" . ceil($totalgold) . "</td></tr>";
+			echo "<tr class=\"row1\"><td><b>M√©dia de usu√°rios mortos:</b></td><td>" . ceil($totalbattles) . "</td></tr>";
+			echo "<tr class=\"row2\"><td><b>M√©dia de monstros mortos:</b></td><td>" . ceil($totalmonsters) . "</td></tr>";
 			echo "</table>";
 	echo "</div>";
 echo "</div>";

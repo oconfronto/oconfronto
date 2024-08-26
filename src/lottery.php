@@ -27,7 +27,7 @@ if ($setting->$unc3 == t)
 
 	if ($setting->$unc2 > 1000){
 	$query = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", array($setting->$unc2, $ipwpwpwpa['player_id']));
-		$logmsg = "Você ganhou na loteria e <b>" . $setting->$unc2 . " de ouro</b> foram depositados na sua conta bancária.";
+		$logmsg = "VocÃª ganhou na loteria e <b>" . $setting->$unc2 . " de ouro</b> foram depositados na sua conta bancÃ¡ria.";
 		addlog($ipwpwpwpa['player_id'], $logmsg, $db);
 		$premiorecebido = "" . $setting->$unc2 . " de ouro";
 	}else{
@@ -42,7 +42,7 @@ if ($setting->$unc3 == t)
 			$db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", array(40, 30, 40, 30, $ringid));
 		}
 
-		$logmsg = "Você ganhou na loteria e recebeu um/uma <b>" . $ioeowkewttttee['name'] . "</b>.";
+		$logmsg = "VocÃª ganhou na loteria e recebeu um/uma <b>" . $ioeowkewttttee['name'] . "</b>.";
 		addlog($ipwpwpwpa['player_id'], $logmsg, $db);
 		$premiorecebido = $ioeowkewttttee['name'];
 	}
@@ -80,7 +80,7 @@ if ($medalha7->recordcount() < 1) {
 
 		if (!is_numeric($_POST['amount'])) {
 		include("templates/private_header.php");
-		echo "O valor " . $_POST['for'] . " não é válido! <a href=\"lottery.php\">Voltar</a>.";
+		echo "O valor " . $_POST['for'] . " nÃ£o Ã© vÃ¡lido! <a href=\"lottery.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		$error = 1;
 		exit;
@@ -88,7 +88,7 @@ if ($medalha7->recordcount() < 1) {
 
 		if ($_POST['amount'] < 1){
 		include("templates/private_header.php");
-		echo "Você precisa digitar quantias maiores que 0! <a href=\"lottery.php\">Voltar</a>.";
+		echo "VocÃª precisa digitar quantias maiores que 0! <a href=\"lottery.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		$error = 1;
 		exit;
@@ -96,7 +96,7 @@ if ($medalha7->recordcount() < 1) {
 
 		if ($_POST['amount'] > 99){
 		include("templates/private_header.php");
-		echo "Você pode comprar até 99 tickes por vez! <a href=\"lottery.php\">Voltar</a>.";
+		echo "VocÃª pode comprar atÃ© 99 tickes por vez! <a href=\"lottery.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		$error = 1;
 		exit;
@@ -106,7 +106,7 @@ if ($medalha7->recordcount() < 1) {
 	
 		if ($total > $player->gold){
 		include("templates/private_header.php");
-		echo "Você não possui ouro sufficiente! <a href=\"lottery.php\">Voltar</a>.";
+		echo "VocÃª nÃ£o possui ouro sufficiente! <a href=\"lottery.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		$error = 1;
 		exit;
@@ -131,7 +131,7 @@ if ($medalha7->recordcount() < 1) {
 
 
 			include("templates/private_header.php");
-			echo "Você comprou " . $_POST['amount'] . " ticket(s) por " . $total . " de ouro. <a href=\"lottery.php\">Voltar</a>.";
+			echo "VocÃª comprou " . $_POST['amount'] . " ticket(s) por " . $total . " de ouro. <a href=\"lottery.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			exit;
 		}
@@ -153,7 +153,7 @@ if ($medalha7->recordcount() < 1) {
 	echo "<fieldset><legend><b>Loteria</b></legend>\n";
 	echo "<table>";
 	echo "<tr>";
-	echo "<td><b>Prêmio:</b></td>";
+	echo "<td><b>PrÃªmio:</b></td>";
 	echo "<td>" . $premio . "</td>";
 	echo "</tr>";
 
@@ -169,7 +169,7 @@ if ($medalha7->recordcount() < 1) {
 	echo "</tr>";
 
 	echo "<tr>";
-	echo "<td><b>Preço por Ticket:</b></td>";
+	echo "<td><b>PreÃ§o por Ticket:</b></td>";
 	echo "<td>" . $setting->$unc4 . "</td>";
 	echo "</tr>";
 
@@ -183,7 +183,7 @@ if ($medalha7->recordcount() < 1) {
 	echo "<br/><br/>";
 
 
-	echo "<i>Compre tickets de loteria.<br/>Se seu ticket for sorteado você ganhará:</i> ";
+	echo "<i>Compre tickets de loteria.<br/>Se seu ticket for sorteado vocÃª ganharÃ¡:</i> ";
 	
 	if ($premiotype == 2){
 	echo "<b>" . $premio . "</b>.";
@@ -217,7 +217,7 @@ if ($medalha7->recordcount() < 1) {
 	echo "</b>";
 	echo $itchecked['effectiveness'];
 	echo "<td width=\"30%\">";
-	echo "<b>Vocação:</b> ";
+	echo "<b>VocaÃ§Ã£o:</b> ";
 if ($itchecked['voc'] == 1 and $itchecked['needpromo'] == 'f')
 {
 echo "Arqueiro";
@@ -244,7 +244,7 @@ echo "Feiticeiro";
 }
 elseif ($itchecked['voc'] == 0 and $itchecked['needpromo'] == 't')
 {
-echo "Vocações superiores";
+echo "VocaÃ§Ãµes superiores";
 }
 else{
 echo "Todas";
@@ -255,11 +255,11 @@ echo "Todas";
 
 if ($itchecked['needlvl'] > 1)
 {
-echo "<center><b><font color=\"red\">Você precisa ter nível " . $itchecked['needlvl'] . " ou mais para usar este item.</font></b></center>";
+echo "<center><b><font color=\"red\">VocÃª precisa ter nÃ­vel " . $itchecked['needlvl'] . " ou mais para usar este item.</font></b></center>";
 }
 if ($itchecked['needring'] == 't')
 {
-echo "<center><b><font color=\"red\">Para usar este item você precisa estar usando um Jeweled Ring.</font></b></center>";
+echo "<center><b><font color=\"red\">Para usar este item vocÃª precisa estar usando um Jeweled Ring.</font></b></center>";
 }
 	echo "</fieldset>";
 }
@@ -271,27 +271,27 @@ echo "<center><b><font color=\"red\">Para usar este item você precisa estar usan
 	echo "</fieldset>";
 
 	$getlottocount = $db->execute("select `id` from `lotto` where `player_id`=?", array($player->id));
-	echo " <b>Cada ticket custa:</b> " . $setting->$unc4 . " de ouro | <b>Você já comprou:</b> " . $getlottocount->recordcount() . " tickets.";
+	echo " <b>Cada ticket custa:</b> " . $setting->$unc4 . " de ouro | <b>VocÃª jÃ¡ comprou:</b> " . $getlottocount->recordcount() . " tickets.";
 
 	include("templates/private_footer.php");
 	exit;
 	}else{
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>A loteria está fechada</b></legend>\n";
+	echo "<fieldset><legend><b>A loteria estÃ¡ fechada</b></legend>\n";
 
 	echo "<table>";
 	echo "<tr>";
-	echo "<td><b>Último ganhador:</b></td>";
+	echo "<td><b>Ãºltimo ganhador:</b></td>";
 	echo "<td>" . $setting->$unc1 . "</td>";
 	echo "</tr>";
 
 	echo "<tr>";
-	echo "<td><b>Prêmio recebido:</b></td>";
+	echo "<td><b>PrÃªmio recebido:</b></td>";
 	echo "<td>" . $setting->$unc7 . "</td>";
 	echo "</tr>";
 	echo "</table>";
 	echo "</fieldset>";
-	echo "<br/><center><i>A loteria abrirá automaticamente todas as Terças-Feiras.</i></center>";
+	echo "<br/><center><i>A loteria abrirÃ¡ automaticamente todas as TerÃ§as-Feiras.</i></center>";
 	include("templates/private_footer.php");
 	exit;
 }

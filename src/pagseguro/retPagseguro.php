@@ -1,6 +1,6 @@
 <?php
 include("../config.php");
-header('Content-Type: text/html; charset=ISO-8859-1');
+header('Content-Type: text/html; charset=utf-8');
 
 define('TOKEN', 'D829224E7F6243F89AF1EC852054B457');
 
@@ -52,7 +52,7 @@ class PagSeguroNpi {
 if (count($_POST) > 0) {
 	
 	
-	// POST recebido, indica que é a requisição do NPI.
+	// POST recebido, indica que Ã© a requisiÃ§Ã£o do NPI.
 	$npi = new PagSeguroNpi();
 	$result = $npi->notificationPost();
 	
@@ -110,7 +110,7 @@ if (count($_POST) > 0) {
 		} else {
 			mysql_query("UPDATE `pagsegurotransacoes` SET status = 'ERRO #1' WHERE `TransacaoID` = '$transacaoID'");
 		}
-			mysql_query("UPDATE `pagsegurotransacoes` SET status = 'Créditos Adicionados' WHERE `TransacaoID` = '$transacaoID'");
+			mysql_query("UPDATE `pagsegurotransacoes` SET status = 'CrÃ©ditos Adicionados' WHERE `TransacaoID` = '$transacaoID'");
 	}else{
 	mysql_query("UPDATE `pagsegurotransacoes` SET status = 'ERRO #2' WHERE `TransacaoID` = '$transacaoID'");
 	}
@@ -120,7 +120,7 @@ if (count($_POST) > 0) {
 	}
 	
 	if($_POST['StatusTransacao'] == 'Em Analise') {
-		mysql_query("UPDATE `pagsegurotransacoes` SET status = 'Pagamento aprovado, em análise pelo PagSeguro' WHERE `TransacaoID` = '$transacaoID'");
+		mysql_query("UPDATE `pagsegurotransacoes` SET status = 'Pagamento aprovado, em anÃ¡lise pelo PagSeguro' WHERE `TransacaoID` = '$transacaoID'");
 	}
 	
 	if($_POST['StatusTransacao'] == 'Cancelado') {
@@ -128,14 +128,14 @@ if (count($_POST) > 0) {
 	}
 	
 	} else if ($result == "FALSO") {
-		//O post não foi validado pelo PagSeguro.
+		//O post nÃ£o foi validado pelo PagSeguro.
 	} else {
-		//Erro na integração com o PagSeguro.
+		//Erro na integraÃ§Ã£o com o PagSeguro.
 	}
 	
 } else {
-	// POST não recebido, indica que a requisição é o retorno do Checkout PagSeguro.
-	// No término do checkout o usuário é redirecionado para este bloco.
+	// POST nÃ£o recebido, indica que a requisiÃ§Ã£o Ã© o retorno do Checkout PagSeguro.
+	// No tÃ©rmino do checkout o usuÃ¡rio Ã© redirecionado para este bloco.
 	?>
     <h3>Obrigado por efetuar a compra.</h3>
     <?php

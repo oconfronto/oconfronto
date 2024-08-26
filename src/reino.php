@@ -11,12 +11,12 @@ if ((($reino['poll'] + 604800) < time()) and ($reino['imperador'] > 0)) {
 
 	$query = $db->execute("select `id` from `players` where `reino`=?", array($reino['id']));
 	while($member = $query->fetchrow()) {
-		$logmsg = "O reinado de uma semana de " . showName($reino['imperador'], &$db, 'off') . " acabou, e as eleições para novo imperador estão abertas.";
+		$logmsg = "O reinado de uma semana de " . showName($reino['imperador'], &$db, 'off') . " acabou, e as elei√ß√µes para novo imperador est√£o abertas.";
 		addlog($member['id'], $logmsg, $db);
 	}
 
 	$insert['reino'] = $reino['id'];
-	$insert['log'] = "O reinado de uma semana de " . showName($reino['imperador'], &$db, 'off') . " acabou, e as eleições para novo imperador estão abertas.";
+	$insert['log'] = "O reinado de uma semana de " . showName($reino['imperador'], &$db, 'off') . " acabou, e as elei√ß√µes para novo imperador est√£o abertas.";
 	$insert['time'] = time();
 	$db->autoexecute('log_reino', $insert, 'INSERT');
 
@@ -39,11 +39,11 @@ include("templates/private_header.php");
                                 
                                 echo showAlert("Voto efetuado com sucesso!", "green");
                             }else{
-                                echo showAlert("Este usu·rio n„o È candidato ‡ imperador.", "red");
+                                echo showAlert("Este usu√°rio n√£o √© candidato √° imperador.", "red");
                             }
 
                         }else{
-                                echo showAlert("VocÍêj· votou nestas eleições.", "red");
+                                echo showAlert("Voc√™ j√° votou nestas elei√ß√µes.", "red");
                         }
                 }
             }
@@ -66,7 +66,7 @@ echo "<table width=\"100%\">";
 				echo "<tr><td><b>Membros:</b></td><td>" . $query->recordcount() . " guerreiros</td></tr>";
 				echo "<tr><td><b>Imperador:</b></td><td>". showName($reino['imperador'], &$db, 'off') . "</td></tr>";
 				echo "<tr><td><b>Ouro nos cofres:</b></td><td>" . $reino['ouro'] . " moedas de ouro</td></tr>";
-				echo "<tr><td><b>Pontuação:</b></td><td>";
+				echo "<tr><td><b>Pontua√ß√£o:</b></td><td>";
 
 					while($points = $query->fetchrow()) {
 						$totalpoints = $totalpoints + ($points['kills'] * 20) + ($points['level'] * 50) - ($points['akills'] * 15);
@@ -85,12 +85,12 @@ echo "<br/>";
 
 	if ($reino['imperador'] == $player->id){
 		echo "<table width=\"100%\">";
-			echo "<tr><td class=\"brown\" width=\"100%\"><center><b>AdministraÁ„o - " . $reino['nome'] . "</b></center></td></tr>";
+			echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Administra√ß√£o - " . $reino['nome'] . "</b></center></td></tr>";
 			echo "<tr><td>";
 				echo "<table width=\"100%\" style=\"text-align: center; font-weight: bold;\">";
-					echo "<td class=\"on\"><font size=\"1px\"><a href=\"reino_gates.php\">Abrir Portões</a></font></td>";
+					echo "<td class=\"on\"><font size=\"1px\"><a href=\"reino_gates.php\">Abrir Port√µes</a></font></td>";
 					echo "<td class=\"on\"><font size=\"1px\"><a href=\"reino_tax.php\">Ajustar Impostos</a></font></td>";
-					echo "<td class=\"on\"><font size=\"1px\"><a href=\"reino_work.php\">BÙnus Salariais</a></font></td>";
+					echo "<td class=\"on\"><font size=\"1px\"><a href=\"reino_work.php\">B√¥nus Salariais</a></font></td>";
 					echo "<td class=\"on\"><font size=\"1px\"><a href=\"create_topic.php?category=reino\">Postar Mensagem</a></font></td>";
 				echo "</table>";
 			echo "</tr></td>";
@@ -103,7 +103,7 @@ echo "<table width=\"100%\">";
 
 	if ($reino['imperador'] != 0){
 		echo "<table width=\"100%\">";
-		echo "<tr><td class=\"brown\" width=\"100%\"><center><b>PossÌveis sucessores do Imperador</b></center></td></tr>";
+		echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Poss√≠veis sucessores do Imperador</b></center></td></tr>";
 
 			echo "<td class=\"salmon\"><ul>";
 			$query = $db->execute("select `username` from `players` where `reino`=? order by `uptime`+(`posts` * 420)+(`akills` * 30)-(`kills` * 10) desc limit 5", array($player->reino));
@@ -116,7 +116,7 @@ echo "<table width=\"100%\">";
 		echo "</table>";
 
 		$temponext = ceil((($reino['poll'] + 604800) - time()) / 86400);
-		echo "<center><font size=\"1px\">" . $temponext . " dia(s) para a prÛxima eleiÁ„o.</font></center>";
+		echo "<center><font size=\"1px\">" . $temponext . " dia(s) para a pr√≥xima elei√ß√£o.</font></center>";
 	} else {
 
 		if (($reino['imperador'] == 0) and (time() > $reino['poll'])){
@@ -134,16 +134,16 @@ echo "<table width=\"100%\">";
 
 			$query = $db->execute("select `id` from `players` where `id`!=? and `reino`=?", array($total['vote_id'], $reino['id']));
 			while($member = $query->fetchrow()) {
-				$logmsg = "". showName($total['vote_id'], &$db, 'off') . " agora é o novo Imperador do Reino.";
+				$logmsg = "". showName($total['vote_id'], &$db, 'off') . " agora √© o novo Imperador do Reino.";
 				addlog($member['id'], $logmsg, $db);
 			}
 
-			$logmsg = "ParabÈns, vocÍ foi eleito Imperador do Reino. <a href=\"reino.php\">Clique aqui</a> para acessar a administração do mesmo.";
+			$logmsg = "Parab√©ns, voc√™ foi eleito Imperador do Reino. <a href=\"reino.php\">Clique aqui</a> para acessar a administra√ß√£o do mesmo.";
 			addlog($total['vote_id'], $logmsg, $db);
 		}
 
 		echo "<table width=\"100%\">";
-		echo "<tr><td class=\"brown\" width=\"100%\"><center><b>EleiÁ„o do novo Imperador</b></center></td></tr>";
+		echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Elei√ß√£o do novo Imperador</b></center></td></tr>";
 			echo "<td class=\"salmon\">";
 			
 		$votes = $db->execute("select * from `reino_tovote` where `reino_id`=?", array($reino['id']));
@@ -197,7 +197,7 @@ echo "<table width=\"100%\">";
 			$tempo = "" . $uptime . " dia(s) e " . $extra . " hora(s)";
 		}
 
-		echo "<center><font size=\"1px\">" . $tempo . " para o término da eleição.</font></center>";
+		echo "<center><font size=\"1px\">" . $tempo . " para o t√©rmino da elei√ß√£o.</font></center>";
 
 	}
 
@@ -205,7 +205,7 @@ echo "<table width=\"100%\">";
 	echo "<td width=\"55%\">";
 
 echo "<table width=\"100%\">";
-	echo "<tr><td class=\"brown\" width=\"100%\"><center><b>⁄ltimas Atividades</b></center></td></tr>";
+	echo "<tr><td class=\"brown\" width=\"100%\"><center><b>√∫ltimas Atividades</b></center></td></tr>";
 
 	$query = $db->execute("select * from `log_reino` where `reino`=? order by `time` desc limit 5", array($player->reino));
 	if ($query->recordcount() > 0)
@@ -216,16 +216,16 @@ echo "<table width=\"100%\">";
 			$valortempo = time() - $log['time'];
 			if ($valortempo < 60){
 				$valortempo = $valortempo;
-				$auxiliar = "segundo(s) atrás.";
+				$auxiliar = "segundo(s) atr√°s.";
 			}else if($valortempo < 3600){
 				$valortempo = ceil($valortempo / 60);
-				$auxiliar = "minuto(s) atrás.";
+				$auxiliar = "minuto(s) atr√°s.";
 			}else if($valortempo < 86400){
 				$valortempo = ceil($valortempo / 3600);
-				$auxiliar = "hora(s) atrás.";
+				$auxiliar = "hora(s) atr√°s.";
 			}else if($valortempo < 86400){
 				$valortempo = ceil($valortempo / 86400);
-				$auxiliar = "dia(s) atrás.";
+				$auxiliar = "dia(s) atr√°s.";
 			}
 
 		echo "<tr>";

@@ -11,6 +11,10 @@ include('adodb/adodb.inc.php'); //Include adodb files
 $db = &ADONewConnection('mysql'); //Connect to database
 $conn = $db->Connect($config_server, $config_username, $config_password, $config_database); //Select table
 
+// Define o charset para utf8
+$db->Execute("SET NAMES 'utf8'");
+$db->Execute("SET CHARACTER SET 'utf8'");
+
 $db->SetFetchMode(ADODB_FETCH_ASSOC); //Fetch associative arrays
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC; //Fetch associative arrays
 //$db->debug = true; //Debug

@@ -4,10 +4,10 @@ define("PAGENAME", "Loja VIP");
 $acc = check_acc($secret_key, $db);
 $player = check_user($secret_key, $db);
 
-if (($player->id != 1) and ($player->id != 13) and ($player->id != 40))
+if (true)
 {
     include("templates/private_header.php");
-    echo "<i><center>A loja Vip ainda está fechada.<br/>Tente novamente amanha.</center></i>\n";
+    echo "<i><center>A loja Vip ainda est√° fechada.<br/>Tente novamente amanha.</center></i>\n";
     include("templates/private_footer.php");
     exit;
 }
@@ -16,7 +16,7 @@ switch($_GET['act'])
     case "credits":
         if (!$_GET['id']) {
             include("templates/private_header.php");
-            echo "Escolha um valor válido de créditos para comprar. <a href=\"vip.php\">Voltar.</a>\n";
+            echo "Escolha um valor v√°lido de cr√©ditos para comprar. <a href=\"vip.php\">Voltar.</a>\n";
             include("templates/private_footer.php");
             break;
         }
@@ -47,17 +47,17 @@ switch($_GET['act'])
             $code = '<form target="pagseguro" action="https://pagseguro.uol.com.br/checkout/v2/cart.html?action=add" method="post"><input type="hidden" name="itemCode" value="79B4DE180E0E8C8AA4703F943695B729" />';
         } else {
             include("templates/private_header.php");
-            echo "Escolha um valor válido de créditos para comprar. <a href=\"vip.php\">Voltar.</a>\n";
+            echo "Escolha um valor v√°lido de cr√©ditos para comprar. <a href=\"vip.php\">Voltar.</a>\n";
             include("templates/private_footer.php");
             break;
         }
         
         include("templates/private_header.php");
-            echo "<br/><center>Você está prestes a realizar uma doação de <b>R$ " . $cost . "</b>, obtendo uma recompensa de <b>" . $numero . " créditos</b>.<br/>Ao efetuar o pagamento, utilize o email de sua conta na página do Pagseguro, e depois disso, por favor envie-nos o comprovante no fim da transação.</center>";
+            echo "<br/><center>Voc√™ est√° prestes a realizar uma doa√ß√£o de <b>R$ " . $cost . "</b>, obtendo uma recompensa de <b>" . $numero . " cr√©ditos</b>.<br/>Ao efetuar o pagamento, utilize o email de sua conta na p√°gina do Pagseguro, e depois disso, por favor envie-nos o comprovante no fim da transa√ß√£o.</center>";
         echo "<p><center>";
         echo '<!-- INICIO FORMULARIO BOTAO PAGSEGURO -->';
         echo $code;
-        echo '<input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/pagamentos/205x30-pagar-laranja.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />';
+        echo '<input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/pagamentos/205x30-pagar-laranja.gif" name="submit" alt="Pague com PagSeguro - √© r√°pido, gr√°tis e seguro!" />';
         echo '</form>';
         echo '<!-- FINAL FORMULARIO BOTAO PAGSEGURO -->';
         echo "</center></p>";
@@ -68,7 +68,7 @@ switch($_GET['act'])
         if ($player->vip < time())
         {
             include("templates/private_header.php");
-            echo "Você não é VIP. <a href=\"vip.php\">Voltar.</a>\n";
+            echo "Voc√™ n√£o √© VIP. <a href=\"vip.php\">Voltar.</a>\n";
             include("templates/private_footer.php");
             break;
         }
@@ -80,13 +80,13 @@ switch($_GET['act'])
             $db->autoexecute('other', $insert, 'INSERT');
             
             include("templates/private_header.php");
-            echo "Sua VIP agora está oculta. <a href=\"vip.php\">Voltar.</a>\n";
+            echo "Sua VIP agora est√° oculta. <a href=\"vip.php\">Voltar.</a>\n";
             include("templates/private_footer.php");
             break;
         } else {
             $db->execute("delete from `other` where `value`=? and `player_id`=?", array(hidevip, $player->acc_id));
             include("templates/private_header.php");
-            echo "Sua VIP não está mais oculta. <a href=\"vip.php\">Voltar.</a>\n";
+            echo "Sua VIP n√£o est√° mais oculta. <a href=\"vip.php\">Voltar.</a>\n";
             include("templates/private_footer.php");
             break;
         }
@@ -95,7 +95,7 @@ switch($_GET['act'])
 	case "vip":
         if (($_GET['days'] != 7) and ($_GET['days'] != 30)) {
             include("templates/private_header.php");
-            echo "Tempo de duração inválido. <a href=\"vip.php\">Voltar.</a>\n";
+            echo "Tempo de dura√ß√£o inv√°lido. <a href=\"vip.php\">Voltar.</a>\n";
             include("templates/private_footer.php");
             break;
         }
@@ -109,7 +109,7 @@ switch($_GET['act'])
         if ($acc->creditos < $cost)
         {
             include("templates/private_header.php");
-            echo "Você não possui créditos suficientes. <a href=\"vip.php\">Voltar.</a>\n";
+            echo "Voc√™ n√£o possui cr√©ditos suficientes. <a href=\"vip.php\">Voltar.</a>\n";
             include("templates/private_footer.php");
             break;
         } else {
@@ -120,14 +120,14 @@ switch($_GET['act'])
                 $db->execute("update `players` set `vip`=? where `acc_id`=?", array(time() + (86400 * $_GET['days']), $player->acc_id));
                 
                 include("templates/private_header.php");
-                echo "Parabéns, sua VIP agora está ativa. <a href=\"home.php\">Voltar.</a>\n";
+                echo "Parab√©ns, sua VIP agora est√° ativa. <a href=\"home.php\">Voltar.</a>\n";
                 include("templates/private_footer.php");
                 break;
             } else {
                 include("templates/private_header.php");
                 echo "<table border=\"0px\" width=\"100%\"><tr>";
                 echo "<th width=\"120px\"><center><a href=\"vip.php\" id=\"link\" style='color:#fff;text-align:center;' class=\"normal\"><b>Voltar</b></a></center></th>";
-                echo "<td><center><p>Você está prestes a ativar os benefícios VIP em sua conta por <b>" . $_GET['days'] . " dias</b>,<br/>totalizando um valor de <b>" . $cost . " créditos</b>.</p></center></td>";
+                echo "<td><center><p>Voc√™ est√° prestes a ativar os benef√≠cios VIP em sua conta por <b>" . $_GET['days'] . " dias</b>,<br/>totalizando um valor de <b>" . $cost . " cr√©ditos</b>.</p></center></td>";
                 echo "<th width=\"120px\" align=\"right\"><center><a href=\"vip.php?act=vip&days=" . $_GET['days'] . "&confirm=true\" style='color:#fff;text-align:center;' id=\"link\" class=\"neg\"><b>Confirmar</b></a></center></th>";
                 echo "</tr></table>";
                 include("templates/private_footer.php");
@@ -139,7 +139,7 @@ switch($_GET['act'])
 	case "buy":
         if (!$_GET['id']) {
             include("templates/private_header.php");
-            echo "Este item não está a venda na loja VIP. <a href=\"vip.php\">Voltar.</a>\n";
+            echo "Este item n√£o est√° a venda na loja VIP. <a href=\"vip.php\">Voltar.</a>\n";
             include("templates/private_footer.php");
             break;
         }
@@ -148,7 +148,7 @@ switch($_GET['act'])
 		if ($item->recordcount() == 0)
 		{
             include("templates/private_header.php");
-            echo "Este item não está a venda na loja VIP. <a href=\"vip.php\">Voltar.</a>\n";
+            echo "Este item n√£o est√° a venda na loja VIP. <a href=\"vip.php\">Voltar.</a>\n";
             include("templates/private_footer.php");
             break;
 		}
@@ -160,7 +160,7 @@ switch($_GET['act'])
         if ($acc->creditos < $item['price'])
         {
             include("templates/private_header.php");
-            echo "Você não possui créditos suficientes. <a href=\"vip.php\">Voltar.</a>\n";
+            echo "Voc√™ n√£o possui cr√©ditos suficientes. <a href=\"vip.php\">Voltar.</a>\n";
             include("templates/private_footer.php");
             break;
         } else {
@@ -189,7 +189,7 @@ switch($_GET['act'])
                 include("templates/private_header.php");
                 echo "<table border=\"0px\" width=\"100%\"><tr>";
                 echo "<th width=\"120px\"><center><a href=\"vip.php\" id=\"link\" style='color:#fff;text-align:center;' class=\"normal\"><b>Voltar</b></a></center></th>";
-                echo "<td><center><p>Você está prestes a comprar <b>" . $item['name'] . "</b>,<br/>por um valor de <b>" . $item['price'] . " créditos</b>.</p></center></td>";
+                echo "<td><center><p>Voc√™ est√° prestes a comprar <b>" . $item['name'] . "</b>,<br/>por um valor de <b>" . $item['price'] . " cr√©ditos</b>.</p></center></td>";
                 echo "<th width=\"120px\" align=\"right\"><center><a href=\"vip.php?act=buy&id=" . $_GET['id'] . "&confirm=true\" style='color:#fff;text-align:center;' id=\"link\" class=\"neg\"><b>Confirmar</b></a></center></th>";
                 echo "</tr></table>";
                 include("templates/private_footer.php");
@@ -200,86 +200,86 @@ switch($_GET['act'])
 	
 	default:
 	include("templates/private_header.php");
-		echo "<i><center>Voc&ecirc; pode adiquirir itens ˙nicos e muito especias no jogo atravÈz desta loja VIP. Para adiquirir os itens voc&ecirc; vai precisar· de crÈditos, que podem ser obtidos após realizar doações ao jogo. Sua doação será investida na manutenção e administração do jogo. Lembre-se que você está realizando uma colaboração com o jogo, e não poderemos devolver seu dinheiro no caso do projeto O Confronto acabar.</center></i><br />\n";
+		echo "<i><center>Voc&ecirc; pode adiquirir itens √∫nicos e muito especias no jogo atrav√©z desta loja VIP. Para adiquirir os itens voc&ecirc; vai precisar√° de cr√©ditos, que podem ser obtidos ap√≥s realizar doa√ß√µes ao jogo. Sua doa√ß√£o ser√° investida na manuten√ß√£o e administra√ß√£o do jogo. Lembre-se que voc√™ est√° realizando uma colabora√ß√£o com o jogo, e n√£o poderemos devolver seu dinheiro no caso do projeto O Confronto acabar.</center></i><br />\n";
 			echo "<fieldset>\n";
-			echo "<legend><b>CrÈditos Especiais</b></legend>\n";
+			echo "<legend><b>Cr√©ditos Especiais</b></legend>\n";
 				echo "<table width=\"100%\">\n";
 				echo "<tr><td width=\"10%\">";
 					echo "<center><img src=\"images/itens/vgold1.gif\"/></center>";
 				echo "</td>";
 				echo "<td width=\"35%\">";
-					echo "Ganhe 15 CrÈditos";
+					echo "Ganhe 15 Cr√©ditos";
 				echo "</td>";
 				echo "<td width=\"35%\">";
-					echo "<b>Ao doar:</b> R$ 7,00 <font size=\"1px\">(Bônus 0%)</font>";
+					echo "<b>Ao doar:</b> R$ 7,00 <font size=\"1px\">(B√¥nus 0%)</font>";
 				echo "</td>";
 				echo "<td width=\"20%\">";
-					echo "<center><a href=\"vip.php?act=credits&id=1\">Mais informações.</a></center>";
+					echo "<center><a href=\"vip.php?act=credits&id=1\">Mais informa√ß√µes.</a></center>";
 				echo "</td></tr>";
 
 				echo "<tr><td width=\"10%\">";
 					echo "<center><img src=\"images/itens/vgold2.gif\"/></center>";
 				echo "</td>";
 				echo "<td width=\"35%\">";
-					echo "Ganhe 25 CrÈditos";
+					echo "Ganhe 25 Cr√©ditos";
 				echo "</td>";
 				echo "<td width=\"35%\">";
-					echo "<b>Ao doar:</b> R$ 10,25 <font size=\"1px\">(Bônus 10%)</font>";
+					echo "<b>Ao doar:</b> R$ 10,25 <font size=\"1px\">(B√¥nus 10%)</font>";
 				echo "</td>";
 				echo "<td width=\"20%\">";
-					echo "<center><a href=\"vip.php?act=credits&id=2\">Mais informações.</a></center>";
+					echo "<center><a href=\"vip.php?act=credits&id=2\">Mais informa√ß√µes.</a></center>";
 				echo "</td></tr>";
 
 				echo "<tr><td width=\"10%\">";
 					echo "<center><img src=\"images/itens/vgold3.gif\"/></center>";
 				echo "</td>";
 				echo "<td width=\"35%\">";
-					echo "Ganhe 50 CrÈditos";
+					echo "Ganhe 50 Cr√©ditos";
 				echo "</td>";
 				echo "<td width=\"35%\">";
-					echo "<b>Ao doar:</b> R$ 18,50 <font size=\"1px\">(Bônus 20%)</font>";
+					echo "<b>Ao doar:</b> R$ 18,50 <font size=\"1px\">(B√¥nus 20%)</font>";
 				echo "</td>";
 				echo "<td width=\"20%\">";
-					echo "<center><a href=\"vip.php?act=credits&id=3\">Mais informações.</a></center>";
+					echo "<center><a href=\"vip.php?act=credits&id=3\">Mais informa√ß√µes.</a></center>";
 				echo "</td></tr>";
 
 				echo "<tr><td width=\"10%\">";
 					echo "<center><img src=\"images/itens/vgold4.gif\"/></center>";
 				echo "</td>";
 				echo "<td width=\"35%\">";
-					echo "Ganhe 75 CrÈditos";
+					echo "Ganhe 75 Cr√©ditos";
 				echo "</td>";
 				echo "<td width=\"35%\">";
-					echo "<b>Ao doar:</b> R$ 24,00 <font size=\"1px\">(Bônus 30%)</font>";
+					echo "<b>Ao doar:</b> R$ 24,00 <font size=\"1px\">(B√¥nus 30%)</font>";
 				echo "</td>";
 				echo "<td width=\"20%\">";
-					echo "<center><a href=\"vip.php?act=credits&id=4\">Mais informações.</a></center>";
+					echo "<center><a href=\"vip.php?act=credits&id=4\">Mais informa√ß√µes.</a></center>";
 				echo "</td></tr>";
 
 				echo "<tr><td width=\"10%\">";
 					echo "<center><img src=\"images/itens/vgold5.gif\"/></center>";
 				echo "</td>";
 				echo "<td width=\"35%\">";
-					echo "Ganhe 100 CrÈditos";
+					echo "Ganhe 100 Cr√©ditos";
 				echo "</td>";
 				echo "<td width=\"35%\">";
-					echo "<b>Ao doar:</b> R$ 30,00 <font size=\"1px\">(Bônus 35%)</font>";
+					echo "<b>Ao doar:</b> R$ 30,00 <font size=\"1px\">(B√¥nus 35%)</font>";
 				echo "</td>";
 				echo "<td width=\"20%\">";
-					echo "<center><a href=\"vip.php?act=credits&id=5\">Mais informações.</a></center>";
+					echo "<center><a href=\"vip.php?act=credits&id=5\">Mais informa√ß√µes.</a></center>";
 				echo "</td></tr>";
 
 			echo "</table></fieldset>\n<br />";
 			
 			echo "<fieldset>\n";
-			echo "<legend><b>Efetuar doaÁ„o</b></legend>\n";
+			echo "<legend><b>Efetuar doa√ß√£o</b></legend>\n";
 			include("pagseguro/pginclude.php");
 		
 			
 			echo "</table></fieldset>\n<br />";
 			
 			echo "<fieldset>\n";
-			echo "<legend><b>Ultimas TransaÁıes</b></legend>\n";
+			echo "<legend><b>Ultimas Transa√ß√µes</b></legend>\n";
 			?>
 			
 				
@@ -295,7 +295,7 @@ switch($_GET['act'])
 		<th align="center" bgcolor="#E1CBA4" width="20%">Tipo</th>
 		<th align="center" bgcolor="#E1CBA4" width="7%">Valor</th>
 		<th align="center" bgcolor="#E1CBA4" width="10%">Creditos</th>
-		<th align="center" bgcolor="#E1CBA4" width="10%">BÙnus</th>
+		<th align="center" bgcolor="#E1CBA4" width="10%">B√¥nus</th>
 		<th align="center" bgcolor="#E1CBA4" width="30%">Status</th>
 		<th align="center" bgcolor="#E1CBA4" width="15%">Data</th>
 		</tr>
@@ -326,7 +326,7 @@ switch($_GET['act'])
 		<?php
 		}
 		}else{
-		echo "<th>N„o foram encontradas transaÁıes em sua conta</th>";
+		echo "<th>N√£o foram encontradas transa√ß√µes em sua conta</th>";
 		}
 		?>
 		
@@ -337,29 +337,29 @@ switch($_GET['act'])
 			echo "</fieldset>\n<br />";
 
         echo "<table width=\"100%\" border=\"0\"><tr>";
-		echo "<td width=\"50%\">BenefÌcios disponÌveis:</td>";
-		echo "<td width=\"50%\" align=\"right\"><b>Seus crÈditos:</b> " . $acc->creditos . " crÈditos.</td>";
+		echo "<td width=\"50%\">Benef√≠cios dispon√≠veis:</td>";
+		echo "<td width=\"50%\" align=\"right\"><b>Seus cr√©ditos:</b> " . $acc->creditos . " cr√©ditos.</td>";
 		echo "</tr></table>";
         
         echo "<fieldset>\n";
         echo "<legend><b>Conta Vip</b></legend>\n";
-            echo "Transformando sua conta em uma conta vip trará benefícios à todos personagens em sua conta.<br/>";
+            echo "Transformando sua conta em uma conta vip trar√° benef√≠cios √° todos personagens em sua conta.<br/>";
             echo "<ul>";
-            echo "<li>10% de experiência ao matar monstros.</li>";
-            echo "<li>Benefícios de todos os reinos no mesmo personagem:";
+            echo "<li>10% de experi√™ncia ao matar monstros.</li>";
+            echo "<li>Benef√≠cios de todos os reinos no mesmo personagem:";
                 echo "<ul>";
-                    echo "<li>Itens e bebidas s„o 10% mais baratos</li>";
+                    echo "<li>Itens e bebidas s√£o 10% mais baratos</li>";
                     echo "<li>Magias requerem 5 pontos de mana a menos.</li>";
-                    echo "<li>Permite voc&ecirc; caÁar e trabalhar por 1 hora extra.</li>";
-                    echo "<li>BÙnus de vida de aproximadamente 8% aos seus membros.</li>";
+                    echo "<li>Permite voc&ecirc; ca√ßar e trabalhar por 1 hora extra.</li>";
+                    echo "<li>B√¥nus de vida de aproximadamente 8% aos seus membros.</li>";
                 echo "</ul>";
             echo "</li>";
-            echo "<li>Nível mínimo requerido por itens reduzido em 10 níveis.</li>";
-            echo "<li>Maior drop de items e poções nos monstros.</li>";
+            echo "<li>N√≠vel m√≠nimo requerido por itens reduzido em 10 n√≠veis.</li>";
+            echo "<li>Maior drop de items e po√ß√µes nos monstros.</li>";
             echo "<li>Nome destacado na cor Azul. <font size=\"1px\">(pode ser desabilitado)</font></li>";
             echo "</ul>";
             if ($player->vip > time()) {
-                echo "<div style=\"width:98%;align:center;text-align:center;\"><b>Sua conta vip já está ativa</b><br/><font size=\"1px\">" . ceil(($player->vip - time()) / 86400) . " dia(s) restante(s). ";
+                echo "<div style=\"width:98%;align:center;text-align:center;\"><b>Sua conta vip j√° est√° ativa</b><br/><font size=\"1px\">" . ceil(($player->vip - time()) / 86400) . " dia(s) restante(s). ";
                 $checkshowvip = $db->execute("select * from `other` where `value`=? and `player_id`=?", array(hidevip, $player->acc_id));
                 if ($checkshowvip->recordcount() < 1) {
                     echo "<a href=\"vip.php?act=hide\">Esconder status VIP</a>";
@@ -368,19 +368,19 @@ switch($_GET['act'])
                 }
                 echo "</font></div>";
             } else {
-                echo "<div style=\"width:98%;align:center;text-align:right;\"><b>7 dias</b>, por 7 crÈditos. <a href=\"vip.php?act=vip&days=7\">Mais informações</a><br/><b>30 dias</b>, por 22 crÈditos. <a href=\"vip.php?act=vip&days=30\">Mais informações</a></div>";
+                echo "<div style=\"width:98%;align:center;text-align:right;\"><b>7 dias</b>, por 7 cr√©ditos. <a href=\"vip.php?act=vip&days=7\">Mais informa√ß√µes</a><br/><b>30 dias</b>, por 22 cr√©ditos. <a href=\"vip.php?act=vip&days=30\">Mais informa√ß√µes</a></div>";
             }
         echo "</fieldset><br/>";
         
 		echo "<table width=\"100%\" border=\"0\"><tr>";
-		echo "<td width=\"50%\">Itens especiais disponÌveis:</td>";
-		echo "<td width=\"50%\" align=\"right\"><b>Seus crÈditos:</b> " . $acc->creditos . " crÈditos.</td>";
+		echo "<td width=\"50%\">Itens especiais dispon√≠veis:</td>";
+		echo "<td width=\"50%\" align=\"right\"><b>Seus cr√©ditos:</b> " . $acc->creditos . " cr√©ditos.</td>";
 		echo "</tr></table>";
 
 		$getitems = $db->execute("select * from `vip_shop` order by `type` desc, `price` asc");
 		if ($getitems->recordcount() == 0)
 		{
-			echo "<center><i>Nenhum item especial disponÌvel no momento.</i></center>";
+			echo "<center><i>Nenhum item especial dispon√≠vel no momento.</i></center>";
 		}
 		else
 		{
@@ -397,17 +397,17 @@ switch($_GET['act'])
 							$itimages .= "<img src=\"images/itens/" . $item['img'] . "\"/>";
 
 							if ($item['type'] == 'amulet'){
-								$itnames .= "" . $item['name'] . " <font size=\"1px\">(Vitalidade: " . $item['effectiveness'] . ", Nível " . $item['needlvl'] . "+)</font><br/>";
+								$itnames .= "" . $item['name'] . " <font size=\"1px\">(Vitalidade: " . $item['effectiveness'] . ", N√≠vel " . $item['needlvl'] . "+)</font><br/>";
 							}elseif ($item['type'] == 'boots') {
-								$itnames .= "" . $item['name'] . " <font size=\"1px\">(Agilidade: " . $item['effectiveness'] . ", Nível " . $item['needlvl'] . "+)</font><br/>";
+								$itnames .= "" . $item['name'] . " <font size=\"1px\">(Agilidade: " . $item['effectiveness'] . ", N√≠vel " . $item['needlvl'] . "+)</font><br/>";
 							}elseif ($item['type'] == 'weapon') {
-								$itnames .= "" . $item['name'] . " <font size=\"1px\">(Ataque: " . $item['effectiveness'] . ", Nível " . $item['needlvl'] . "+)</font><br/>";
+								$itnames .= "" . $item['name'] . " <font size=\"1px\">(Ataque: " . $item['effectiveness'] . ", N√≠vel " . $item['needlvl'] . "+)</font><br/>";
                             }elseif (($item['type'] == 'armor') or ($item['type'] == 'legs') or ($item['type'] == 'helmet')) {
-                                $itnames .= "" . $item['name'] . " <font size=\"1px\">(Defesa: " . $item['effectiveness'] . ", Nível " . $item['needlvl'] . "+)</font><br/>";
+                                $itnames .= "" . $item['name'] . " <font size=\"1px\">(Defesa: " . $item['effectiveness'] . ", N√≠vel " . $item['needlvl'] . "+)</font><br/>";
 							}elseif ($item['type'] == 'shield') {
-								$itnames .= "" . $item['name'] . " <font size=\"1px\">(Defesa: " . $item['effectiveness'] . ", Nível " . $item['needlvl'] . "+)<br/><i>Arqueiros n„o podem usar escudos</i>.</font><br/ >";
+								$itnames .= "" . $item['name'] . " <font size=\"1px\">(Defesa: " . $item['effectiveness'] . ", N√≠vel " . $item['needlvl'] . "+)<br/><i>Arqueiros n√£o podem usar escudos</i>.</font><br/ >";
 							}else{
-								$itnames .= "" . $item['name'] . " <font size=\"1px\">(Nível " . $item['needlvl'] . "+)<br/ ><i>" . $item['description'] . "</i></font><br/>";
+								$itnames .= "" . $item['name'] . " <font size=\"1px\">(N√≠vel " . $item['needlvl'] . "+)<br/ ><i>" . $item['description'] . "</i></font><br/>";
 							}
 
 							$itcount = $itcount + 1;
@@ -421,7 +421,7 @@ switch($_GET['act'])
 						echo "</td><td width=\"" . (75 - ($itcount * 6)) . "%\">";
 							echo $itnames;
 						echo "</td><td width=\"" . (100 - (($itcount * 6) + (75 - ($itcount * 6)))) . "%\">";
-							echo "<b>PreÁo:</b> " . $vipti['price'] . " crÈditos.<br />";
+							echo "<b>Pre√ßo:</b> " . $vipti['price'] . " cr√©ditos.<br />";
 							echo "<a href=\"vip.php?act=buy&id=" . $vipti['id'] . "\">Comprar</a><br />";
 						echo "</td></tr>";
 					echo "</table>\n";
@@ -438,7 +438,7 @@ switch($_GET['act'])
 						echo "</td><td width=\"69%\">";
 							echo "" . $vipti['value'] . " de moedas de ouro.";
 						echo "</td><td width=\"25%\">";
-							echo "<b>PreÁo:</b> " . $vipti['price'] . " crÈditos.<br />";
+							echo "<b>Pre√ßo:</b> " . $vipti['price'] . " cr√©ditos.<br />";
 							echo "<a href=\"vip.php?act=buy&id=" . $vipti['id'] . "\">Comprar</a><br />";
 						echo "</td></tr>";
 					echo "</table>\n";
@@ -450,7 +450,7 @@ switch($_GET['act'])
         
         if ($player->vip > time())
         {
-            echo "<center><p>Se você se tornar um usuário VIP poderá usar items de nível ".($player->level+10)." ou mais.</p></center>";
+            echo "<center><p>Se voc√™ se tornar um usu√°rio VIP poder√° usar items de n√≠vel ".($player->level+10)." ou mais.</p></center>";
         }
 
 	include("templates/private_footer.php");

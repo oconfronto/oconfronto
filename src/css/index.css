@@ -35,7 +35,8 @@ a{
 #char{display:block;background:url(../images/conta.png);width:184px;float:right;height:30px;}
 #char:hover{display:block;background:url(../images/conta-hover.png);width:184px;float:right;height:30px;}
 
-.inp{background:url(../images/inp.png) center;width:200px;height:24px;
+.inp{
+    background:url(../images/inp.png) center;width:200px;height:24px;    
     -moz-border-radius:3px;
     -webkit-border-radius:3px;
     border-radius:3px;
@@ -43,6 +44,13 @@ a{
     font-weight: bold;
     padding-left:20px;
     border:0px;
+}
+
+.inp option {
+    background: rgb(100,0,0);    
+    font-weight: bold;
+    padding-left: 20px;
+    border: 0px;
 }
 
 #bg{

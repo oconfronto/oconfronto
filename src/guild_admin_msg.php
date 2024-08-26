@@ -1,7 +1,7 @@
 <?php
 
 include("lib.php");
-define("PAGENAME", "Administração do Clã");
+define("PAGENAME", "AdministraÃ§Ã£o do ClÃ£");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 include("checkguild.php");
@@ -21,22 +21,22 @@ include("templates/private_header.php");
 
 //Guild Leader Admin check
 if (($player->username != $guild['leader']) and ($player->username != $guild['vice'])){
-	echo "Você não pode acessar esta página. <a href=\"home.php\">Voltar</a>.";
+	echo "VocÃª nÃ£o pode acessar esta pÃ¡gina. <a href=\"home.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 }elseif ($guild['msgs'] > 3){
-	echo "Seu clã já enviou mensagens demais hoje.<br>Máximo de 3 mensagens por dia. <a href=\"home.php\">Voltar</a>.";
+	echo "Seu clÃ£ jÃ¡ enviou mensagens demais hoje.<br>MÃ¡ximo de 3 mensagens por dia. <a href=\"home.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 }
 
 if ($_POST['submit']) {
 	if (!$_POST['subject']) {
-    		$errmsg .= "<font color=red>Você precisa adicionar um titulo para sua mensagem.</font>";
+    		$errmsg .= "<font color=red>VocÃª precisa adicionar um titulo para sua mensagem.</font>";
     		$error = 1;
 	}
 	if (!$_POST['body']) {
-    		$errmsg .= "<font color=red>Você precisa escrever uma mensagem.</font>";
+    		$errmsg .= "<font color=red>VocÃª precisa escrever uma mensagem.</font>";
     		$error = 1;
 	}
 	if (strlen($_POST['body']) > 5000) {
@@ -46,7 +46,7 @@ if ($_POST['submit']) {
 
 
 		if ($error == 0){
-				$mensagem = "<div style='width:100%; background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px' align='center'><font size=1><b>Esta mensagem foi enviada para todos os membros do clã: " . $guild['name'] . ".</b></font></div><br/>" . $_POST['body'] . "";
+				$mensagem = "<div style='width:100%; background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px' align='center'><font size=1><b>Esta mensagem foi enviada para todos os membros do clÃ£: " . $guild['name'] . ".</b></font></div><br/>" . $_POST['body'] . "";
 
 				$database = $db->execute("select `id` from `players` where `guild`=?", array($guild['id']));
   					while($member = $database->fetchrow()) {
@@ -64,7 +64,7 @@ if ($_POST['submit']) {
 <legend><b><?=$guild['name']?> :: Enviar mensagem</b></legend>
 <form method="POST" action="guild_admin_msg.php">
 <table width="100%" border="0">
-<tr><td width="20%"><b>Para:</b></td><td width="80%">Membros do Clã <?=$guild['name']?></td></tr>
+<tr><td width="20%"><b>Para:</b></td><td width="80%">Membros do ClÃ£ <?=$guild['name']?></td></tr>
 <tr><td width="20%"><b>Assunto:</b></td><td width="80%"><input type="text" name="subject"/></td></tr>
 <tr><td width="20%"><b>Mensagem:</b></td><td width="80%"><textarea name="body" rows="15" cols="50"></textarea></td></tr>
 <tr><td></td><td><input type="submit" value="Enviar" name="submit" /></td></tr>

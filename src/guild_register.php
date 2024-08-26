@@ -6,7 +6,7 @@
 /*************************************/
 
 include("lib.php");
-define("PAGENAME", "Criar Clã");
+define("PAGENAME", "Criar Cl√£");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 include("checkguild.php");
@@ -17,8 +17,8 @@ $goldcost = 200000;
 
 if ($player->guild != NULL) {
     include("templates/private_header.php");
-    echo "<fieldset><legend><b>Clãs</b></legend>\n";
-    echo "Você não pode ter mais de um clã.";
+    echo "<fieldset><legend><b>Cl√£s</b></legend>\n";
+    echo "Voc√™ n√£o pode ter mais de um cl√£.";
     echo "</fieldset>\n";
     echo "<a href=\"home.php\">Voltar</a>.";
     include("templates/private_footer.php");
@@ -27,8 +27,8 @@ if ($player->guild != NULL) {
 
 if ($player->gold < $goldcost) {
     include("templates/private_header.php");
-    echo "<fieldset><legend><b>Clãs</b></legend>\n";
-    echo "Você não tem ouro suficiente para criar um clã.<br/>Você precisa de <b>" . $goldcost . "</b> moedas de ouro.";
+    echo "<fieldset><legend><b>Cl√£s</b></legend>\n";
+    echo "Voc√™ n√£o tem ouro suficiente para criar um cl√£.<br/>Voc√™ precisa de <b>" . $goldcost . "</b> moedas de ouro.";
     echo "</fieldset>\n";
     echo "<a href=\"guild_listing.php\">Voltar</a>.";
     include("templates/private_footer.php");
@@ -55,53 +55,53 @@ $msg3 = "<font color=\"red\">";
 
     if (!$_POST['name']) {
         //Add to error message
-        $msg1 .= "Você precisa digitar um nome para o clã!<br />\n";
+        $msg1 .= "Voc√™ precisa digitar um nome para o cl√£!<br />\n";
         $error = 1;
     } else if (strlen($_POST['name']) < 3) {
         //Add to error message
-        $msg1 .= "O nome do seu clã deve ser maior que 3 caracteres!<br />\n";
+        $msg1 .= "O nome do seu cl√£ deve ser maior que 3 caracteres!<br />\n";
         $error = 1;
     } else if (strlen($_POST['name']) > 20) {
         //Add to error message
-        $msg1 .= "O nome do seu clã não pode ser maior que 20 caracteres!<br />\n";
+        $msg1 .= "O nome do seu cl√£ n√£o pode ser maior que 20 caracteres!<br />\n";
         $error = 1; 
     } else if (!preg_match("/^[A-Za-z[:space:]\-]+$/", $_POST['name']))
 	{
-	$msg1 .= "O nome de seu clã não pode conter <b>caracteres especiais!<br />\n";
+	$msg1 .= "O nome de seu cl√£ n√£o pode conter <b>caracteres especiais!<br />\n";
 	$error = 1; //Set error check
     } else if ($query->recordcount() > 0) {
-        $msg1 .= "Este nome já está sendo usado.<br />\n";
+        $msg1 .= "Este nome j√° est√° sendo usado.<br />\n";
         //Set error check
         $error = 1;
     } else if ($query2->recordcount() > 0) {
-        $msg1 .= "Este nome já está sendo usado.<br />\n";
+        $msg1 .= "Este nome j√° est√° sendo usado.<br />\n";
         //Set error check
         $error = 1;
     }
 
     if (!$_POST['tag']) {
         //Add to error message
-        $msg2 .= "Você precisa digitar uma tag para o clã!<br />\n";
+        $msg2 .= "Voc√™ precisa digitar uma tag para o cl√¢!<br />\n";
         $error = 1;
     } else if (strlen($_POST['tag']) < 2) {
-        $msg2 .= "A tag do seu clã deve conter de 2 ‡ 4 caracteres!<br />\n";
+        $msg2 .= "A tag do seu cl√£ deve conter de 2 √° 4 caracteres!<br />\n";
         //Set error check
         $error = 1;
 	} else if (strlen($_POST['tag']) > 4) {
-        $msg2 .= "A tag do seu clã deve conter de 2 ‡ 4 caracteres!<br />\n";
+        $msg2 .= "A tag do seu cl√£ deve conter de 2 √° 4 caracteres!<br />\n";
         //Set error check
         $error = 1;  
     } else if (!preg_match("/^[-_a-zA-Z0-9]+$/", $_POST['tag'])) {
-	$msg2 .= "A tag do seu clã não pode conter <b>caracteres especiais!<br />\n";
+	$msg2 .= "A tag do seu cl√£ n√£o pode conter <b>caracteres especiais!<br />\n";
 	$error = 1; //Set error check
     }
 
     if (!$_POST['blurb']) {
         //Add to error message
-        $msg3 .= "Você precisa digitar uma descrição para o clã!<br />\n";
+        $msg3 .= "Voc√™ precisa digitar uma descri√ß√£o para o cl√£!<br />\n";
         $error = 1;
     } else if (strlen($_POST['tag']) > 5000) {
-        $msg3 .= "A descrição do seu clã passou de 5000 caracteres!<br />\n";
+        $msg3 .= "A descri√ß√£o do seu cl√£ passou de 5000 caracteres!<br />\n";
         //Set error check
         $error = 1;  
     }
@@ -132,8 +132,8 @@ if ($error == 0) {
         $query = $db->execute("update `players` set `guild`=?, `gold`=? where `id`=?", array($insertid, $player->gold - $goldcost, $player->id));
         
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Clãs</b></legend>\n";
-	echo "Parabéns! Você acaba de criar um novo clã!";
+	echo "<fieldset><legend><b>Cl√£s</b></legend>\n";
+	echo "Parab√©ns! Voc√™ acaba de criar um novo cl√£!";
 	echo "</fieldset>\n";
 	echo "<a href=\"guild_listing.php\">Voltar</a>.";
 	include("templates/private_footer.php");
@@ -154,29 +154,29 @@ include("templates/private_header.php");
 
 <form method="POST" action="guild_register.php">
 <?php
-echo showAlert("Criar um clã custa " . $goldcost . " moedas de ouro.");
+echo showAlert("Criar um cl√£ custa " . $goldcost . " moedas de ouro.");
 ?>
 <table width="100%">
-<tr><td width="25%"><span class="style1"><b>Nome do clã</b>:</span></td>
+<tr><td width="25%"><span class="style1"><b>Nome do cl√£</b>:</span></td>
 <td><input name="name" type="text" value="<?=$_POST['name'];?>" /></td>
 </tr>
-<tr><td colspan="2"><span class="style1">Insira o nome desejado para o clã. <i>Ex: Dragon Killers</i><br />
+<tr><td colspan="2"><span class="style1">Insira o nome desejado para o cl√£. <i>Ex: Dragon Killers</i><br />
 <?=$msg1;?>
 <br />
 </span></td>
 </tr>
 
-<tr><td width="25%"><span class="style1"><b>Tag do clã</b>:</span></td>
+<tr><td width="25%"><span class="style1"><b>Tag do cl√£</b>:</span></td>
 <td><input name="tag" type="text" value="<?=$_POST['tag'];?>" /></td>
 </tr>
-<tr><td colspan="2"><span class="style1">Abreviação do seu clã. <i>Ex: DK</i><br />
+<tr><td colspan="2"><span class="style1">Abrevia√ß√£o do seu cl√£. <i>Ex: DK</i><br />
 <?=$msg2;?>
 <br />
 </span></td>
 </tr>
 
-<tr><td width="25%"><span class="style1"><b>Descrição do clã</b>:</span></td>
-<td><script>edToolbar('blurb'); </script><textarea name="blurb" id="blurb" rows="12" class="ed"><?=$_POST['blurb'];?></textarea><br>Máximo 5000 caracteres.<br />
+<tr><td width="25%"><span class="style1"><b>Descri√ß√£o do cl√£</b>:</span></td>
+<td><script>edToolbar('blurb'); </script><textarea name="blurb" id="blurb" rows="12" class="ed"><?=$_POST['blurb'];?></textarea><br>M√°ximo 5000 caracteres.<br />
 <?=$msg3;?>
 <br />
 </td>
@@ -184,7 +184,7 @@ echo showAlert("Criar um clã custa " . $goldcost . " moedas de ouro.");
 
 <tr>
 <td colspan="2" align="center">
-	<input type="submit" name="register" value="Criar Clã">
+	<input type="submit" name="register" value="Criar Cl√£">
 </td>
 <br />
 </tr>

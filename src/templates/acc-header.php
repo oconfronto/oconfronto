@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta http-equiv="Pragma" content="no-cache"/>
 	<meta http-equiv="Expires" content="-1"/>
 
@@ -27,10 +27,10 @@ $(function() {
 
 <Script Language=JavaScript>
 var nText = new Array()
-nText[0] = "<font size=\"1\">Escolha sua vocaÁ„o.</font>";
-nText[1] = "<font size=\"1\">Os Cavaleiros possuem uma grande defesa mas um baixo ataque.</font>";
-nText[2] = "<font size=\"1\">Os Magos s„o nivelados em ataque e defesa.</font>";
-nText[3] = "<font size=\"1\">Os Arqueiros possuem um bom ataque mas uma defesa fraca.</font>"
+nText[0] = "<div>Escolha sua vocação.</div>";
+nText[1] = "<div>Os Cavaleiros possuem uma grande defesa mas um baixo ataque.</div>";
+nText[2] = "<div>Os Magos são nivelados em ataque e defesa.</div>";
+nText[3] = "<div>Os Arqueiros possuem um bom ataque mas uma defesa fraca.</div>"
 function swapText(isList){
     txtIndex = isList.selectedIndex;
     document.getElementById('textDiv').innerHTML = nText[txtIndex];

@@ -1,6 +1,6 @@
 <?php
 	include("lib.php");
-	define("PAGENAME", "Informações Pessoais");
+	define("PAGENAME", "InformaÃ§Ãµes Pessoais");
 	$acc = check_acc($secret_key, $db);
 
 	include("templates/acc-header.php");
@@ -15,7 +15,7 @@ if ($_POST['submit']) {
 	}
 
 	else if (strlen($_POST['rlname']) < 3) {
-        $errmsg .= "Seu nome deve ter mais que três caracteres!";
+        $errmsg .= "Seu nome deve ter mais que trÃªs caracteres!";
         $error = 1;
 	}
 
@@ -62,7 +62,7 @@ if ($_POST['submit']) {
 
         $query = $db->execute("update `accounts` set `name`=?, `sex`=?, `remember`=? where `id`=?", array($_POST['rlname'], $sexx, $rememberr, $acc->id));
         echo "<span id=\"aviso-a\"></span>";
-        echo "<br/><p><center><b>Informações pessoais alteradas com sucesso! <a href=\"characters.php\">Voltar</a>.</b></center></p><br/>";
+        echo "<br/><p><center><b>InformaÃ§Ãµes pessoais alteradas com sucesso! <a href=\"characters.php\">Voltar</a>.</b></center></p><br/>";
         include("templates/acc-footer.php");
         exit;
     }
@@ -92,15 +92,15 @@ echo "<tr><td width=\"40%\"><b>Sexo</b>:</td><td><select name=\"sex\" class=\"in
 }
 
 if ($checkshowmail->recordcount() < 1){
-echo "<tr><td width=\"40%\"><b>Mostrar email</b>:</td><td><select name=\"showmail\" class=\"inp\"><option value=\"1\" selected=\"selected\">Não</option><option value=\"2\">Sim</option></select></td></tr>";
+echo "<tr><td width=\"40%\"><b>Mostrar email</b>:</td><td><select name=\"showmail\" class=\"inp\"><option value=\"1\" selected=\"selected\">NÃ£o</option><option value=\"2\">Sim</option></select></td></tr>";
 }else{
-echo "<tr><td width=\"40%\"><b>Mostrar email</b>:</td><td><select name=\"showmail\" class=\"inp\"><option value=\"1\">Não</option><option value=\"2\" selected=\"selected\">Sim</option></select></td></tr>";
+echo "<tr><td width=\"40%\"><b>Mostrar email</b>:</td><td><select name=\"showmail\" class=\"inp\"><option value=\"1\">NÃ£o</option><option value=\"2\" selected=\"selected\">Sim</option></select></td></tr>";
 }
 
 if ($acc->remember != t){
-echo "<tr><td width=\"40%\"><b>Lembrar Senha</b>:</td><td><select name=\"remember\" class=\"inp\"><option value=\"1\" selected=\"selected\">Não</option><option value=\"2\">Sim</option></select></td></tr>";
+echo "<tr><td width=\"40%\"><b>Lembrar Senha</b>:</td><td><select name=\"remember\" class=\"inp\"><option value=\"1\" selected=\"selected\">NÃ£o</option><option value=\"2\">Sim</option></select></td></tr>";
 }else{
-echo "<tr><td width=\"40%\"><b>Lembrar Senha</b>:</td><td><select name=\"remember\" class=\"inp\"><option value=\"1\">Não</option><option value=\"2\" selected=\"selected\">Sim</option></select></td></tr>";
+echo "<tr><td width=\"40%\"><b>Lembrar Senha</b>:</td><td><select name=\"remember\" class=\"inp\"><option value=\"1\">NÃ£o</option><option value=\"2\" selected=\"selected\">Sim</option></select></td></tr>";
 }
 
 ?>

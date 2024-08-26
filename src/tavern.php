@@ -19,15 +19,15 @@ switch($_GET['p'])
                 $quest = $query->fetchrow();
             }
                    
-            //verifica se a missão está disponível ou se foi completa
+            //verifica se a miss√£o est√° dispon√≠vel ou se foi completa
             $qStatus = $db->GetOne("select `quest_status` from `quests` where `player_id`=? and `quest_id`=?", array($player->id, $quest['id']));
             if ($qStatus == 90) {
-                $a = "Você já concluiu esta missão!";
+                $a = "Voc√™ j√° concluiu esta miss√£o!";
                 $b = "<center><a href=\"tavern.php?p=quests\">Voltar</a></center>";
             } else {
                 if (($quest['lvl'] > $player->level) or (($quest['to_lvl'] < $player->level) and ($quest['to_lvl'] > 0)))
                 {
-                    $a = "Você não possui o nível nescesário para esta missão!";
+                    $a = "Voc√™ n√£o possui o n√≠vel nesces√°rio para esta miss√£o!";
                     $b = "<center><a href=\"tavern.php?p=quests\">Voltar</a></center>";
                 } else if ($qStatus > 0) {
                     $query = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, $quest['id']));
@@ -36,12 +36,12 @@ switch($_GET['p'])
                     if ($_GET['pay'])
                     {
                         if ($player->gold - $quest['cost'] < 0){
-                            $a = "Voc&ecirc; n„o possui esta quantia de ouro!";
+                            $a = "Voc&ecirc; n√£o possui esta quantia de ouro!";
                             $b = "<a href=\"tavern.php?p=quests&start=".$quest['id']."\">Voltar</a>";
                         } else {
                             $db->execute("update `players` set `gold`=`gold`-? where `id`=?", array($quest['cost'], $player->id));
                             $db->execute("update `quests` set `pago`='t' where `id`=?", array($missao['id']));
-                            $a = "Você pagou " . $quest['cost'] . " moedas de ouro.";
+                            $a = "Voc√™ pagou " . $quest['cost'] . " moedas de ouro.";
                             $b = "<a href=\"tavern.php?p=quests&start=".$quest['id']."\">Continuar</a>";
                         }
                     } else {
@@ -50,16 +50,16 @@ switch($_GET['p'])
                 } else {
                     if (!$_GET['confirm'])
                     {
-                        $a = "Você realmente deseja iniciar essa missão?";
+                        $a = "Voc√™ realmente deseja iniciar essa miss√£o?";
                         $b = "<center><a href=\"tavern.php?p=quests&start=".$quest['id']."&confirm=true\">Continuar</a><br /><a href=\"tavern.php?p=quests\">Voltar</a></center>";
                     } else {
-                        //inicia missão
+                        //inicia miss√£o
                         $insert['player_id'] = $player->id;
                         $insert['quest_id'] = $quest['id'];
                         $insert['quest_status'] = 1;
                         $query = $db->autoexecute('quests', $insert, 'INSERT');
                         
-                        $a = "Você agora está participando da missão: <b>".$quest['name']."</b>.";
+                        $a = "Voc√™ agora est√° participando da miss√£o: <b>".$quest['name']."</b>.";
                         $b = "<center><a href=\"tavern.php?p=quests&start=".$quest['id']."\">Continuar</a></center>";
                     }
                 }
@@ -85,7 +85,7 @@ switch($_GET['p'])
         }
         echo "</p></center>";
 
-        echo "<center><i>A taverna é um ótimo local para encontrar pessoas e aceitar missões.</i></center><br />\n";
+        echo "<center><i>A taverna e um √≥timo local para encontrar pessoas e aceitar miss√µes.</i></center><br />\n";
         
         $query = $db->execute("select * from `allquests`");
         while ($quest = $query->fetchrow())
@@ -93,10 +93,10 @@ switch($_GET['p'])
             $q .= "<table width=\"100%\" border=\"0px\"><tr>";
             $q .= "<td width=\"70%\"><b>".$quest['name']."</b><br/><i>".$quest['desc']."</i><br/><br/></td>";
             
-            //verifica se a missão está disponível ou se foi completa
+            //verifica se a miss√£o est√° dispon√≠vel ou se foi completa
             $qStatus = $db->GetOne("select `quest_status` from `quests` where `player_id`=? and `quest_id`=?", array($player->id, $quest['id']));
             if ($qStatus == 90) {
-                $q .= "<td width=\"30%\" align=\"right\"><p><b>Concluída</b></p></td></tr>";
+                $q .= "<td width=\"30%\" align=\"right\"><p><b>Conclu√≠da</b></p></td></tr>";
             } else {
                 if (($quest['lvl'] > $player->level) or (($quest['to_lvl'] < $player->level) and ($quest['to_lvl'] > 0)))
                 {
@@ -110,7 +110,7 @@ switch($_GET['p'])
             
             $q .= "<tr><td width=\"70%\"><b>Recompensa:</b> ".$quest['prize'].".</td>";
             
-            //verifica se user tem o nível minimo
+            //verifica se user tem o n√≠vel minimo
             $q .= "<td width=\"30%\" align=\"right\">";
                 if (($quest['lvl'] > $player->level) or (($quest['to_lvl'] < $player->level) and ($quest['to_lvl'] > 0)))
                 {
@@ -120,9 +120,9 @@ switch($_GET['p'])
                 
                     if ($quest['to_lvl'] > 0)
                     {
-                        $q .= "Disponível entre o nível " . $quest['lvl'] . " e " . $quest['to_lvl'] . ".";
+                        $q .= "Dispon√≠vel entre o n√≠vel " . $quest['lvl'] . " e " . $quest['to_lvl'] . ".";
                     } else {
-                        $q .= "Disponível a partir do nível " . $quest['lvl'] . ".";
+                        $q .= "Dispon√≠vel a partir do n√≠vel " . $quest['lvl'] . ".";
                     }
                 if ($closered) {
                     $q .= "</font>";
@@ -148,13 +148,13 @@ switch($_GET['p'])
         }
         echo "</p></center>";
         
-        echo "<center><i>As tarefas são ativadas automaticamente, basta fazer seu objetivos após atiginir o nível mínimo nescesário.</i></center><br />\n";
+        echo "<center><i>As tarefas s√£o ativadas automaticamente, basta fazer seu objetivos ap√≥s atiginir o n√≠vel m√≠nimo nesces√°rio.</i></center><br />\n";
         
         echo "<table width=\"100%\">";
-        echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Lista de Tarefas</b><img src=\"images/help.gif\" title=\"header=[Tarefas] body=[<font size='1px'>Tarefas são maneiras divertidas de se beneficiar no jogo. Apenas siga alguma das tarefas abaixo e seja recompensado com ouro, itens ou até mesmo ponto de experi&ecirc;ncia!</font>]\"></center></td></tr>";
+        echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Lista de Tarefas</b><img src=\"images/help.gif\" title=\"header=[Tarefas] body=[<font size='1px'>Tarefas s√£o maneiras divertidas de se beneficiar no jogo. Apenas siga alguma das tarefas abaixo e seja recompensado com ouro, itens ou at√© mesmo ponto de experi&ecirc;ncia!</font>]\"></center></td></tr>";
         $gettasks = $db->execute("select * from `tasks` order by `needlvl` asc");
         if ($gettasks->recordcount() < 1){
-            echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa disponível.</font></center></td></tr>";
+            echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa dispon√≠vel.</font></center></td></tr>";
         }else{
             while($task = $gettasks->fetchrow())
             {
@@ -170,10 +170,10 @@ switch($_GET['p'])
                         $msg = "Matar " . $task['obj_value'] . " monstros.<br/>";
                     }elseif (($task['obj_type'] == 'pvp') and ($task['obj_extra'] == 0)){
                         $pcento = ceil(($player->kills / $task['obj_value']) * 100);
-                        $msg = "Matar " . $task['obj_value'] . " usuários.<br/>";
+                        $msg = "Matar " . $task['obj_value'] . " usu√°rios.<br/>";
                     }elseif ($task['obj_type'] == 'level'){
                         $pcento = ceil(($player->level / $task['obj_value']) * 100);
-                        $msg = "Alcançar o nível " . $task['obj_value'] . ".<br/>";
+                        $msg = "Alcan√ßar o n√≠vel " . $task['obj_value'] . ".<br/>";
                     }
                     
                     
@@ -187,19 +187,19 @@ switch($_GET['p'])
                     }
                     
                     if ($task['needlvl'] > $player->level) {
-                        echo "<tr><td class=\"red\" width=\"100%\"><table width=\"100%\" border=\"0\"><tr><td width=\"80%\"><font size=\"1px\">" . $msg . "" . $win . "</font></td><th width=\"20%\" align=\"right\"><font size=\"1px\">A partir do nível " . $task['needlvl'] . "</font></th></tr></table></td></tr>";
+                        echo "<tr><td class=\"red\" width=\"100%\"><table width=\"100%\" border=\"0\"><tr><td width=\"80%\"><font size=\"1px\">" . $msg . "" . $win . "</font></td><th width=\"20%\" align=\"right\"><font size=\"1px\">A partir do n√≠vel " . $task['needlvl'] . "</font></th></tr></table></td></tr>";
                     }
                     elseif ($pcento >= 100) {
-                        echo "<tr><td class=\"off\" style=\"background-color: #DBD5D7;\" width=\"100%\"><table width=\"100%\" border=\"0\"><tr><td width=\"80%\"><font size=\"1px\">" . $msg . "" . $win . "</font></td><th width=\"20%\" align=\"right\"><font size=\"1px\">Concluída</font></th></tr></table></td></tr>";
+                        echo "<tr><td class=\"off\" style=\"background-color: #DBD5D7;\" width=\"100%\"><table width=\"100%\" border=\"0\"><tr><td width=\"80%\"><font size=\"1px\">" . $msg . "" . $win . "</font></td><th width=\"20%\" align=\"right\"><font size=\"1px\">Conclu√≠da</font></th></tr></table></td></tr>";
                     } else {
-                        echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><table width=\"100%\" border=\"0\"><tr><td width=\"80%\"><font size=\"1px\">" . $msg . "" . $win . "</font></td><th width=\"20%\" align=\"right\"><font size=\"1px\">" . $pcento . "% concluída</font></th></tr></table></td></tr>";
+                        echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><table width=\"100%\" border=\"0\"><tr><td width=\"80%\"><font size=\"1px\">" . $msg . "" . $win . "</font></td><th width=\"20%\" align=\"right\"><font size=\"1px\">" . $pcento . "% conclu√≠da</font></th></tr></table></td></tr>";
                     }
                 }
             }
             
             $countcompleted = $db->execute("select `id` from `completed_tasks` where `player_id`=?", array($player->id));
             if ($gettasks->recordcount() == $countcompleted->recordcount()){
-                echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa disponível.</font></center></td></tr>";
+                echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa dispon√≠vel.</font></center></td></tr>";
             }
         }
 		echo "</table>";
@@ -212,7 +212,7 @@ switch($_GET['p'])
             if (!$_GET['id']){
                 include("templates/private_header.php");
                 echo "<b>Taverna:</b><br />\n";
-                echo "<i>Este item não está a venda.</i><br /><br />\n";
+                echo "<i>Este item n√£o est√° a venda.</i><br /><br />\n";
                 echo "<a href=\"tavern.php?p=bar\">Voltar</a>.";
                 include("templates/private_footer.php");
                 break;
@@ -222,7 +222,7 @@ switch($_GET['p'])
             if ($bebid->recordcount() != 1){
                 include("templates/private_header.php");
                 echo "<b>Taverna:</b><br />\n";
-                echo "<i>Este item não está a venda.</i><br /><br />\n";
+                echo "<i>Este item n√£o est√° a venda.</i><br /><br />\n";
                 echo "<a href=\"tavern.php?p=bar\">Voltar</a>.";
                 include("templates/private_footer.php");
                 break;
@@ -233,7 +233,7 @@ switch($_GET['p'])
             if (($buy['id'] == 182) and ($bebado->recordcount() == 0)) {
                 include("templates/private_header.php");
                 echo "<b>Taverna:</b><br />\n";
-                echo "<i>Você não está sob efeito de nenhuma bebida para tomar um Glass of Water.</i><br /><br />\n";
+                echo "<i>Voc√™ n√£o est√° sob efeito de nenhuma bebida para tomar um Glass of Water.</i><br /><br />\n";
                 echo "<a href=\"tavern.php?p=bar\">Voltar</a>.";
                 include("templates/private_footer.php");
                 break;
@@ -248,7 +248,7 @@ switch($_GET['p'])
             if ($itemprice > $player->gold){
                 include("templates/private_header.php");
                 echo "<b>Taverna:</b><br />\n";
-                echo "<i>Desculpe, mas você não pode pagar por isto!</i><br /><br />\n";
+                echo "<i>Desculpe, mas voc√™ n√£o pode pagar por isto!</i><br /><br />\n";
                 echo "<a href=\"tavern.php?p=bar\">Voltar</a>.";
                 include("templates/private_footer.php");
                 break;
@@ -287,18 +287,18 @@ switch($_GET['p'])
         }
         echo "</p></center>";
         
-        echo "<center><i>Bem-Vindo a Taverna. Tome uma bebida e sinta-se ‡ vontade.</i></center><br />";
+        echo "<center><i>Bem-Vindo a Taverna. Tome uma bebida e sinta-se √° vontade.</i></center><br />";
         $verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", array($player->id, time()));
         if ($verificpotion->recordcount() > 0){
             $selct = $verificpotion->fetchrow();
             $potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", array($selct['item_id']));
-            echo "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center>Se você tomar outra bebida o efeito do/da <b>" . $potname . "</b> irá acabar.</center></div>";
+            echo "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center>Se voc√™ tomar outra bebida o efeito do/da <b>" . $potname . "</b> ir√° acabar.</center></div>";
         }
         
         if ($player->reino == '1') {
-            echo showAlert("<i>Você tem 10% de desconto nas bebidas, pelo fato de ser um membro do reino Cathal.</i>");
+            echo showAlert("<i>Voc√™ tem 10% de desconto nas bebidas, pelo fato de ser um membro do reino Cathal.</i>");
         } elseif ($player->vip > time()) {
-            echo showAlert("<i>Você tem 10% de desconto nas bebidas, pelo fato de ser um membro vip.</i>");
+            echo showAlert("<i>Voc√™ tem 10% de desconto nas bebidas, pelo fato de ser um membro vip.</i>");
         }
         
         while ($item = $lista->fetchrow())
@@ -311,12 +311,12 @@ switch($_GET['p'])
             echo "</td><td width=\"74%\">";
             echo $item['description'] . "";
             if ($item['effectiveness'] >= 60){
-                echo " <b>Duração:</b> " . ($item['effectiveness'] / 60) . " hora(s).";
+                echo " <b>Dura√ß√£o:</b> " . ($item['effectiveness'] / 60) . " hora(s).";
             }elseif ($item['effectiveness'] > 1){
-                echo " <b>Duração:</b> " . $item['effectiveness'] . " minuto(s).";
+                echo " <b>Dura√ß√£o:</b> " . $item['effectiveness'] . " minuto(s).";
             }
             echo "</td><td width=\"20%\">";
-            echo "<b>Preço:</b> ";
+            echo "<b>Pre√ßo:</b> ";
             if (($player->reino == '1') or ($player->vip > time())) {
                 echo ceil($item['price'] * 0.9);
             } else {
@@ -326,16 +326,16 @@ switch($_GET['p'])
             echo "</td></tr>\n";
             if ($item['needlvl'] > 1){
                 if ($player->level < $item['needlvl']) {
-                    echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Você precisa ter nível " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
+                    echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Voc√™ precisa ter n√≠vel " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
                 }else{
-                    echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter nível " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
+                    echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Voc√™ precisa ter n√≠vel " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
                 }
             }
             if ($item['needpromo'] == "t"){
                 if ($player->promoted != "f") {
-                    echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter uma vocação superior para usar este item.</b></center></td></tr>\n";
+                    echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Voc√™ precisa ter uma voca√ß√£o superior para usar este item.</b></center></td></tr>\n";
                 }else{
-                    echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Você precisa ter uma vocação superior para usar este item.</b></center></td></tr>\n";
+                    echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Voc√™ precisa ter uma voca√ß√£o superior para usar este item.</b></center></td></tr>\n";
                 }
             }
             echo "</table>";

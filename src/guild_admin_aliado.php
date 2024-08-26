@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "AdministraÁ„o do Cl„");
+define("PAGENAME", "Administra√ß√£o do Cl√£");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 include("checkguild.php");
@@ -21,7 +21,7 @@ include("templates/private_header.php");
 
 //Guild Leader Admin check
 if (($player->username != $guild['leader']) and ($player->username != $guild['vice'])) {
-    echo "VocÍ n„o pode acessar esta p·gina.";
+    echo "Voc√™ n√£o pode acessar esta p√°gina.";
     echo "<br/><a href=\"home.php\">Voltar</a>.";
 } else {
 
@@ -34,10 +34,10 @@ $alynamme = $_GET['aled_na'];
 	$ccheckjaaly = $db->execute("select `id` from `guild_aliance` where `guild_na`=? and `aled_na`=?", array($guild['id'], $alynamme));
 	
 	if ($acheckcla->recordcount() != 1) {
-    		$errmsg .= "Este cl„ n„o existe!";
+    		$errmsg .= "Este cl√£ n√£o existe!";
    		$errorb = 1;
 	}elseif (($bcheckjaaly->recordcount() < 1) and ($ccheckjaaly->recordcount() < 1)) {
-    		$errmsg .= "Este cl„ n„o È um cl„ aliado!";
+    		$errmsg .= "Este cl√£ n√£o √© um cl√£ aliado!";
    		$errorb = 1;
 	}else{
 		if ($errorb == 0){
@@ -47,7 +47,7 @@ $alynamme = $_GET['aled_na'];
 			$log1 = $db->execute("select `id` from `players` where `guild`=?", array($alynamme));
 			while($p1 = $log1->fetchrow())
 			{
-    			$logmsg1 = "O cl„ <a href=\"guild_profile.php?id=". $guild['id'] ."\">". $guild['name'] ."</a> desfez as alianÁa que tinha com seu cl„.";
+    			$logmsg1 = "O cl√£ <a href=\"guild_profile.php?id=". $guild['id'] ."\">". $guild['name'] ."</a> desfez as alian√ßa que tinha com seu cl√£.";
 			addlog($p1['id'], $logmsg1, $db);
 			}
 
@@ -55,7 +55,7 @@ $alynamme = $_GET['aled_na'];
 			$log2 = $db->execute("select `id` from `players` where `guild`=?", array($guild['id']));
 			while($p2 = $log2->fetchrow())
 			{
-    			$logmsg2 = "Seu cl„ desfez as alianÁas que tinha com o cl„ <a href=\"guild_profile.php?id=". $alynamme ."\">". $msgallyname ."</a>.";
+    			$logmsg2 = "Seu cl√£ desfez as alian√ßas que tinha com o cl√£ <a href=\"guild_profile.php?id=". $alynamme ."\">". $msgallyname ."</a>.";
 			addlog($p2['id'], $logmsg2, $db);
 			}
 
@@ -64,7 +64,7 @@ $alynamme = $_GET['aled_na'];
 			$query = $db->execute("delete from `guild_paliance` where `guild_na`=? and `aled_na`=?", array($guild['id'], $alynamme));
 			$query = $db->execute("delete from `guild_paliance` where `guild_na`=? and `aled_na`=?", array($alynamme, $guild['id']));
 
-			$msg .= "As ligaÁıes com o cl„ " . $deletaaliancagname . " foram removidas com sucesso.";
+			$msg .= "As liga√ß√µes com o cl√£ " . $deletaaliancagname . " foram removidas com sucesso.";
 		}
 	}
 
@@ -77,16 +77,16 @@ $alynamme = $_GET['aled_na'];
 	$aliancaguildname = $db->GetOne("select `name` from `guilds` where `id`=?", array($_POST['gname']));
 
     if ($checkcla->recordcount() != 1) {
-    	$errmsg .= "Este cl„ n„o existe!";
+    	$errmsg .= "Este cl√£ n√£o existe!";
     	$error = 1;
    	} else if ($checkjaaly0->recordcount() > 0) {
-   		$errmsg .= "Uma solicitaÁ„o de alianÁa entre o seu cl„ e o cl„ " . $aliancaguildname . " j· est· pendente.";
+   		$errmsg .= "Uma solicita√ß√£o de alian√ßa entre o seu cl√£ e o cl√£ " . $aliancaguildname . " j√° est√° pendente.";
    		$error = 1;
    	} else if ($checkjaaly1->recordcount() > 0) {
-   		$errmsg .= "Este cl„ j· È um aliado!";
+   		$errmsg .= "Este cl√£ j√° √© um aliado!";
    		$error = 1;
    	} else if ($checkjaaly2->recordcount() > 0) {
-   		$errmsg .= "Este cl„ È um cl„ inimigo!";
+   		$errmsg .= "Este cl√£ √© um cl√£ inimigo!";
    		$error = 1;
 	} else {
 
@@ -94,7 +94,7 @@ $alynamme = $_GET['aled_na'];
    		$enyguild = $checkcla->fetchrow();
 
 			if ($guild['serv'] != $enyguild['serv']){
-			echo "Este cl„ pertence a outro servidor.";
+			echo "Este cl√£ pertence a outro servidor.";
   			echo "<br/><a href=\"guild_admin_aliado.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			exit;
@@ -109,13 +109,13 @@ $alynamme = $_GET['aled_na'];
 		$acpt = $db->autoexecute('guild_paliance', $insert, 'INSERT');
 		$acptid = $db->Insert_ID();
 
-    			$logmsg = "O cl„ <a href=\"guild_profile.php?id=". $guild['name'] ."\">". $guild['name'] ."</a> est· solicitando uma alianÁa com seu cl„. <a href=\"guild_admin_accept.php?id=" . $acptid . "\">Clique aqui</a> para aceitar.";
+    			$logmsg = "O cl√£ <a href=\"guild_profile.php?id=". $guild['name'] ."\">". $guild['name'] ."</a> est√° solicitando uma alian√ßa com seu cl√£. <a href=\"guild_admin_accept.php?id=" . $acptid . "\">Clique aqui</a> para aceitar.";
 			addlog($to1, $logmsg, $db);
 
-    			$logmsg2 = "O cl„ <a href=\"guild_profile.php?id=". $guild['name'] ."\">". $guild['name'] ."</a> est· solicitando uma alianÁa com seu cl„. <a href=\"guild_admin_accept.php?id=" . $acptid . "\">Clique aqui</a> para aceitar.";
+    			$logmsg2 = "O cl√£ <a href=\"guild_profile.php?id=". $guild['name'] ."\">". $guild['name'] ."</a> est√° solicitando uma alian√ßa com seu cl√£. <a href=\"guild_admin_accept.php?id=" . $acptid . "\">Clique aqui</a> para aceitar.";
 			addlog($to2, $logmsg2, $db);
 
-    			$msg .= "VocÍ solicitou uma alianÁa com o cl„ " . $enyguild['name'] . ". Se ela for aceita, vocÍ ser· informado.";
+    			$msg .= "Voc√™ solicitou uma alian√ßa com o cl√£ " . $enyguild['name'] . ". Se ela for aceita, voc√™ ser√° informado.";
 
 		}else{
    		$errmsg .= "Um erro desconhecido ocorreu.";
@@ -127,35 +127,35 @@ $alynamme = $_GET['aled_na'];
 ?>
 
 <fieldset>
-<legend><b><?=$guild['name']?> :: Cl„s Aliados</b></legend>
+<legend><b><?=$guild['name']?> :: Cl√£s Aliados</b></legend>
 <form method="POST" action="guild_admin_aliado.php">
-<b>Solicitar alianÁa com o cl„:</b> <?php $query = $db->execute("select `id`, `name` from `guilds` where `name`!=? and `serv`=?", array($guild['name'], $guild['serv']));
+<b>Solicitar alian√ßa com o cl√£:</b> <?php $query = $db->execute("select `id`, `name` from `guilds` where `name`!=? and `serv`=?", array($guild['name'], $guild['serv']));
 echo "<select name=\"gname\"><option value=''>Selecione</option>";
 while($result = $query->fetchrow()){
 echo "<option value=\"$result[id]\">$result[name]</option>";
 }
-echo "</select>"; ?> <input type="submit" name="submit" value="Solicitar AlianÁa">
+echo "</select>"; ?> <input type="submit" name="submit" value="Solicitar Alian√ßa">
 </form>
 </fieldset>
 <center><p /><font color=green><?=$msg?></font><p /></center>
 <center><p /><font color=red><?=$errmsg?></font><p /></center>
 <br/>
 <fieldset>
-<legend><b>Gerenciar AlianÁas</b></legend>
+<legend><b>Gerenciar Alian√ßas</b></legend>
 <?php
 $query0000 = $db->execute("select `aled_na` from `guild_aliance` where `guild_na`=? order by `aled_na` asc", array($guild['id']));
 $query0001 = $db->execute("select `aled_na` from `guild_paliance` where `guild_na`=? order by `aled_na` asc", array($guild['id']));
 $query0002 = $db->execute("select `id`, `guild_na` from `guild_paliance` where `aled_na`=? order by `aled_na` asc", array($guild['id']));
 
 if (($query0000->recordcount() < 1) and ($query0001->recordcount() < 1) and ($query0002->recordcount() < 1)) {
-echo "<p /><center>Seu cl„ n„o possui alianÁas.</center><p />";
+echo "<p /><center>Seu cl√£ n√£o possui alian√ßas.</center><p />";
 }else{
 	echo "<table width=\"100%\" border=\"0\">";
 	echo "<tr>";
-	echo "<th width=\"30%\"><b>Cl„</b></td>";
+	echo "<th width=\"30%\"><b>Cl√£</b></td>";
 	echo "<th width=\"15%\"><b>Membros</b></td>";
 	echo "<th width=\"25%\"><b>Status</b></td>";
-	echo "<th width=\"30%\"><b>OpÁıes</b></td>";
+	echo "<th width=\"30%\"><b>Op√ß√µes</b></td>";
 	echo "</tr>";
 
 	while($ali = $query0000->fetchrow()){
@@ -166,7 +166,7 @@ echo "<p /><center>Seu cl„ n„o possui alianÁas.</center><p />";
 			echo "<td><a href=\"guild_profile.php?id=" . $ali[aled_na] . "\"><b>" . $postgname . "</b></a></td>";
 			echo "<td>" . $postgmembers . "</td>";
 			echo "<td>Estado de paz.</td>";
-			echo "<td><font size=\"1px\"><a href=\"guild_admin_aliado.php?unaliance=true&aled_na=" . $ali[aled_na] . "\">Desfazer AlianÁa</a></font></td>";
+			echo "<td><font size=\"1px\"><a href=\"guild_admin_aliado.php?unaliance=true&aled_na=" . $ali[aled_na] . "\">Desfazer Alian√ßa</a></font></td>";
 		echo "</tr>";
 	}
 
@@ -178,7 +178,7 @@ echo "<p /><center>Seu cl„ n„o possui alianÁas.</center><p />";
 			echo "<td><a href=\"guild_profile.php?id=" . $ali[aled_na] . "\"><b>" . $postgname . "</b></a></td>";
 			echo "<td>" . $postgmembers . "</td>";
 			echo "<td>Estado de paz.</td>";
-			echo "<td><font size=\"1px\"><a href=\"guild_admin_aliado.php?unaliance=true&aled_na=" . $ali[aled_na] . "\">Remover solicitaÁ„o de alianÁa</a></font></td>";
+			echo "<td><font size=\"1px\"><a href=\"guild_admin_aliado.php?unaliance=true&aled_na=" . $ali[aled_na] . "\">Remover solicita√ß√£o de alian√ßa</a></font></td>";
 		echo "</tr>";
 	}
 
@@ -190,7 +190,7 @@ echo "<p /><center>Seu cl„ n„o possui alianÁas.</center><p />";
 			echo "<td><a href=\"guild_profile.php?id=" . $ali[aled_na] . "\"><b>" . $postgname . "</b></a></td>";
 			echo "<td>" . $postgmembers . "</td>";
 			echo "<td>Estado de paz.</td>";
-			echo "<td><font size=\"1px\"><a href=\"guild_admin_accept.php?id=" . $ali[id] . "\">Aceitar AlianÁa</a></font></td>";
+			echo "<td><font size=\"1px\"><a href=\"guild_admin_accept.php?id=" . $ali[id] . "\">Aceitar Alian√ßa</a></font></td>";
 		echo "</tr>";
 	}
 

@@ -36,8 +36,8 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<b>Ferreiro:</b><br />\n";
-		echo "<i>Desculpe, mas você não pode pagar por isto!</i><br /><br />\n";
-		echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+		echo "<i>Desculpe, mas vocÃª nÃ£o pode pagar por isto!</i><br /><br />\n";
+		echo "<a href=\"inventory.php\">Retornar ao inventÃ¡rio</a> | <a href=\"shop.php\">Retornar a loja</a>";
 		include("templates/private_footer.php");
 		break;
 		}
@@ -46,8 +46,8 @@ switch($_GET['act'])
 		{
 			include("templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
-			echo "<i>Desculpe, mas arqueiros não podem usar escudos!</i><br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+			echo "<i>Desculpe, mas arqueiros nÃ£o podem usar escudos!</i><br /><br />\n";
+			echo "<a href=\"inventory.php\">Retornar ao inventÃ¡rio</a> | <a href=\"shop.php\">Retornar a loja</a>";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -56,8 +56,8 @@ switch($_GET['act'])
 		{
 			include("templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
-			echo "<i>Desculpe, mas você não pode comprar esse tipo de item!</i><br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+			echo "<i>Desculpe, mas vocÃª nÃ£o pode comprar esse tipo de item!</i><br /><br />\n";
+			echo "<a href=\"inventory.php\">Retornar ao inventÃ¡rio</a> | <a href=\"shop.php\">Retornar a loja</a>";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -67,8 +67,8 @@ switch($_GET['act'])
 		{
 			include("templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
-			echo "<i>Desculpe, mas você não pode comprar esse tipo de item!</i><br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+			echo "<i>Desculpe, mas vocÃª nÃ£o pode comprar esse tipo de item!</i><br /><br />\n";
+			echo "<a href=\"inventory.php\">Retornar ao inventÃ¡rio</a> | <a href=\"shop.php\">Retornar a loja</a>";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -78,8 +78,8 @@ switch($_GET['act'])
 		{
 			include("templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
-			echo "<i>Desculpe, mas você não pode comprar esse tipo de item!</i><br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+			echo "<i>Desculpe, mas vocÃª nÃ£o pode comprar esse tipo de item!</i><br /><br />\n";
+			echo "<a href=\"inventory.php\">Retornar ao inventÃ¡rio</a> | <a href=\"shop.php\">Retornar a loja</a>";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -88,8 +88,8 @@ switch($_GET['act'])
 		{
 			include("templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
-			echo "<i>Desculpe, mas eu não vendo este tipo de item!</i><br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+			echo "<i>Desculpe, mas eu nÃ£o vendo este tipo de item!</i><br /><br />\n";
+			echo "<a href=\"inventory.php\">Retornar ao inventÃ¡rio</a> | <a href=\"shop.php\">Retornar a loja</a>";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -98,8 +98,8 @@ switch($_GET['act'])
 		{
 			include("templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
-			echo "<i>Desculpe, mas eu não vendo este tipo de item!</i><br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+			echo "<i>Desculpe, mas eu nÃ£o vendo este tipo de item!</i><br /><br />\n";
+			echo "<a href=\"inventory.php\">Retornar ao inventÃ¡rio</a> | <a href=\"shop.php\">Retornar a loja</a>";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -113,8 +113,8 @@ switch($_GET['act'])
 			{
 				include("templates/private_header.php");
 				echo "<b>Ferreiro:</b><br />\n";
-				echo "<i>Desculpe, mas eu não vendo este tipo de item!</i><br /><br />\n";
-				echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+				echo "<i>Desculpe, mas eu nÃ£o vendo este tipo de item!</i><br /><br />\n";
+				echo "<a href=\"inventory.php\">Retornar ao inventÃ¡rio</a> | <a href=\"shop.php\">Retornar a loja</a>";
 				include("templates/private_footer.php");
 				break;
 			}
@@ -134,7 +134,7 @@ switch($_GET['act'])
 			include("templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
 			echo "<i>Obrigado, aproveite sua nova <b>" . $item['name'] . "</b>!</i><br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+			echo "<a href=\"inventory.php\">Retornar ao inventÃ¡rio</a> | <a href=\"shop.php\">Retornar a loja</a>";
 			include("templates/private_footer.php");
 			break;
 
@@ -143,7 +143,7 @@ switch($_GET['act'])
 				include("templates/private_header.php");
 					if (!$_POST['id'])
 					{
-					echo "Você precisa selecionar algum item para vender.<br/><a href=\"inventory.php\">Voltar</a>.";
+					echo "VocÃª precisa selecionar algum item para vender.<br/><a href=\"inventory.php\">Voltar</a>.";
 					include("templates/private_footer.php");
 					break;
 					}
@@ -156,15 +156,15 @@ switch($_GET['act'])
 				$multipleitem = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", array($player->id, $msg));
 					if ($multipleitem->recordcount() == 0)
 					{
-					echo "Este item não te pertence.<br />";
+					echo "Este item nÃ£o te pertence.<br />";
 					}else{
 					$multisell = $multipleitem->fetchrow();
 						if ($multisell['status'] == 'equipped'){
-						echo "Você não pode vender um item que está em uso.<br />";
+						echo "VocÃª nÃ£o pode vender um item que estÃ¡ em uso.<br />";
 						}elseif ($multisell['type'] == 'stone'){
-						echo "Você não pode vender pedras.<br />";
+						echo "VocÃª nÃ£o pode vender pedras.<br />";
 						}elseif (($multisell['item_id'] == 111) or ($multisell['item_id'] == 116)){
-						echo "Você não pode vender este item, caso contrário não poderá terminar sua missão.<br />";
+						echo "VocÃª nÃ£o pode vender este item, caso contrÃ¡rio nÃ£o poderÃ¡ terminar sua missÃ£o.<br />";
 						}else{
 						if ($multisell['item_bonus'] > 10) {
 						$precodavenda = floor(($multisell['price']/2) + (($multisell['item_bonus']*$multisell['price'])/5) + 3000000);
@@ -210,7 +210,7 @@ switch($_GET['act'])
 				break;
 			}elseif (($_POST['comfirm']) and ($_POST['actione']) != 'vendeer'){
 				include("templates/private_header.php");
-				echo "Selecione uma ação.<br/><a href=\"inventory.php\">Voltar</a>.";
+				echo "Selecione uma aÃ§Ã£o.<br/><a href=\"inventory.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				break;
 			}elseif ($_POST['multiconfirm']){
@@ -221,16 +221,16 @@ switch($_GET['act'])
 					$multipleitem = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", array($player->id, $msg));
 					if ($multipleitem->recordcount() == 0)
 					{
-					echo "Este item não te pertence.<br />";
+					echo "Este item nÃ£o te pertence.<br />";
 					}else{
 					$multisell = $multipleitem->fetchrow();
 
 						if ($multisell['status'] == 'equipped'){
-						echo "Você não pode vender um item que está em uso.<br />";
+						echo "VocÃª nÃ£o pode vender um item que estÃ¡ em uso.<br />";
 						}elseif ($multisell['type'] == 'stone'){
-						echo "Você não pode vender pedras.<br />";
+						echo "VocÃª nÃ£o pode vender pedras.<br />";
 						}elseif (($multisell['item_id'] == 111) or ($multisell['item_id'] == 116)){
-						echo "Você não pode vender este item, caso contrário não poderá terminar sua missão.<br />";
+						echo "VocÃª nÃ£o pode vender este item, caso contrÃ¡rio nÃ£o poderÃ¡ terminar sua missÃ£o.<br />";
 						}else{
 				if ($multisell['item_bonus'] > 10) {
 				$precodavenda = floor(($multisell['price']/2) + (($multisell['item_bonus']*$multisell['price'])/5) + 3000000);
@@ -267,7 +267,7 @@ switch($_GET['act'])
 						}else{
 						$multisellres = " +<font color=\"red\">" . $multisell['res'] . "R</font>";
 						}
-					echo "Você vendeu seu/sua <b>" . $multisell['name'] . " +" . $multisell['item_bonus'] . "</b>" . $multisellfor . "" . $multisellvit . "" . $multisellagi . "" . $multisellres . " por <b>" . $precodavenda . "</b> de ouro.<br/>";
+					echo "VocÃª vendeu seu/sua <b>" . $multisell['name'] . " +" . $multisell['item_bonus'] . "</b>" . $multisellfor . "" . $multisellvit . "" . $multisellagi . "" . $multisellres . " por <b>" . $precodavenda . "</b> de ouro.<br/>";
 					}
 					}
 					}
@@ -290,7 +290,7 @@ switch($_GET['act'])
 		if ($query->recordcount() == 0)
 		{
 			include("templates/private_header.php");
-			echo "Este item não existe!";
+			echo "Este item nÃ£o existe!";
 			echo "<a href=\"inventory.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
@@ -305,7 +305,7 @@ switch($_GET['act'])
 
 		if (($sell['item_id'] == 111) or ($sell['item_id'] == 116)){
 			include("templates/private_header.php");
-			echo "Você não pode vender este item, caso contrário não poderá terminar sua missão.<br />\n";
+			echo "VocÃª nÃ£o pode vender este item, caso contrÃ¡rio nÃ£o poderÃ¡ terminar sua missÃ£o.<br />\n";
 			echo "<a href=\"inventory.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
@@ -313,7 +313,7 @@ switch($_GET['act'])
 
 		if ($sell['type'] == 'stone'){
 			include("templates/private_header.php");
-			echo "Você não pode vender pedras.<br />\n";
+			echo "VocÃª nÃ£o pode vender pedras.<br />\n";
 			echo "<a href=\"inventory.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
@@ -321,7 +321,7 @@ switch($_GET['act'])
 
 		if ($sell['status'] == 'equipped'){
 			include("templates/private_header.php");
-			echo "Você não pode vender um item que está em uso.<br />\n";
+			echo "VocÃª nÃ£o pode vender um item que estÃ¡ em uso.<br />\n";
 			echo "<a href=\"inventory.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
@@ -331,7 +331,7 @@ switch($_GET['act'])
 		if (!$_POST['sure'])
 		{
 			include("templates/private_header.php");
-			echo "Você tem certeza que quer vender o/a <b>" . $sell['name'] . "</b> por <b>" . $valordavenda . "</b> de ouro?<br /><br />\n";
+			echo "VocÃª tem certeza que quer vender o/a <b>" . $sell['name'] . "</b> por <b>" . $valordavenda . "</b> de ouro?<br /><br />\n";
 			echo "<form method=\"post\" action=\"shop.php?act=sell&id=" . $sell['id'] . "\">\n";
 			echo "<input type=\"submit\" name=\"sure\" value=\"Sim, tenho certeza!\" />\n";
 			echo "</form>\n";
@@ -349,8 +349,8 @@ switch($_GET['act'])
 		$player = check_user($secret_key, $db); //Get updated user info
 		
 		include("templates/private_header.php");
-		echo "Você vendeu seu/sua <b>" . $sell['name'] . "</b> por <b>" . $valordavenda . "</b> de ouro.<br /><br />\n";
-		echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+		echo "VocÃª vendeu seu/sua <b>" . $sell['name'] . "</b> por <b>" . $valordavenda . "</b> de ouro.<br /><br />\n";
+		echo "<a href=\"inventory.php\">Retornar ao inventÃ¡rio</a> | <a href=\"shop.php\">Retornar a loja</a>";
 		include("templates/private_footer.php");
 		}
 		break;
@@ -394,9 +394,9 @@ switch($_GET['act'])
 			}
 
 			if ($_GET['type'] == 'legs') {
-				echo "<option value=\"legs\" selected=\"selected\">Calças</option>\n";
+				echo "<option value=\"legs\" selected=\"selected\">CalÃ§as</option>\n";
 			} else {
-				echo "<option value=\"legs\">Calças</option>\n";
+				echo "<option value=\"legs\">CalÃ§as</option>\n";
 			}
 
 			if ($_GET['type'] == 'helmet') {
@@ -412,7 +412,7 @@ switch($_GET['act'])
 			}
 
 			echo "</select></th>";
-			echo "<th width=\"35%\">Preço de: <input type=\"text\" name=\"fromprice\" size=\"4\" value=\"" . stripslashes($_GET['fromprice']) . "\" /> à <input type=\"text\" name=\"toprice\" size=\"5\" value=\"" . stripslashes($_GET['toprice']) . "\" /></th>";
+			echo "<th width=\"35%\">PreÃ§o de: <input type=\"text\" name=\"fromprice\" size=\"4\" value=\"" . stripslashes($_GET['fromprice']) . "\" /> Ã  <input type=\"text\" name=\"toprice\" size=\"5\" value=\"" . stripslashes($_GET['toprice']) . "\" /></th>";
 
 			echo "<th width=\"30%\" align=\"right\"><input  id=\"link\" class=\"neg\" type=\"submit\" value=\"Procurar\" /></th>";
 		echo "</tr></table>";
@@ -461,7 +461,7 @@ switch($_GET['act'])
 		
 		$query = $db->execute($query, $values);
 
-		echo showAlert("<i>Você pode comprar items de nível " . ($player->level + 10) . " ou menos.</i>");
+		echo showAlert("<i>VocÃª pode comprar items de nÃ­vel " . ($player->level + 10) . " ou menos.</i>");
 
 			while($item = $query->fetchrow()) {
 				echo "<fieldset>\n";
@@ -486,25 +486,25 @@ switch($_GET['act'])
 				echo "</td><td width=\"20%\">";
 
 				if (($player->reino == '1') or ($player->vip > time())) {
-					echo "<b>Preço:</b> " . ceil($item['price'] * 0.9) . "<br />";
+					echo "<b>PreÃ§o:</b> " . ceil($item['price'] * 0.9) . "<br />";
 				} else {
-					echo "<b>Preço:</b> " . $item['price'] . "<br />";
+					echo "<b>PreÃ§o:</b> " . $item['price'] . "<br />";
 				}
 				echo "<a href=\"shop.php?act=buy&id=" . $item['id'] . "\">Comprar</a><br />";
 				echo "</td></tr>\n";
 
 				if ($item['needlvl'] > 1){
 					if ($player->level < $item['needlvl']) {
-						echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Você precisa ter nivel " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
+						echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>VocÃª precisa ter nivel " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
 					}else{
-					echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter nivel " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
+					echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>VocÃª precisa ter nivel " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
 					}
 				}
 				if ($item['needpromo'] == "t"){
 					if ($player->promoted != "f") {
-						echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter uma vocação superior para usar este item.</b></center></td></tr>\n";
+						echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>VocÃª precisa ter uma vocaÃ§Ã£o superior para usar este item.</b></center></td></tr>\n";
 					}else{
-						echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Você precisa ter uma vocação superior para usar este item.</b></center></td></tr>\n";
+						echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>VocÃª precisa ter uma vocaÃ§Ã£o superior para usar este item.</b></center></td></tr>\n";
 					}
 				}
 				echo "</table>";
@@ -512,15 +512,15 @@ switch($_GET['act'])
 			}
 
 			if ($player->reino == '1') {
-				echo showAlert("<i>Você tem 10% de desconto nos items, pelo fato de ser um membro do reino Cathal.</i>");
+				echo showAlert("<i>VocÃª tem 10% de desconto nos items, pelo fato de ser um membro do reino Cathal.</i>");
 			} elseif ($player->vip > time()) {
-				echo showAlert("<i>Você tem 10% de desconto nos items, pelo fato de ser um membro vip.</i>");
+				echo showAlert("<i>VocÃª tem 10% de desconto nos items, pelo fato de ser um membro vip.</i>");
 			}
 
 		} elseif (($_GET['type'] == 'shield') and ($player->voc == 'archer')) {
-			echo "<br/><p><i><center>Arqueiros não podem usar/comprar escudos.</center></i></p>";
+			echo "<br/><p><i><center>Arqueiros nÃ£o podem usar/comprar escudos.</center></i></p>";
 		} else {
-			echo "<br/><p><i><center>Selecione o tipo de item que você deseja procurar.</center></i></p>";
+			echo "<br/><p><i><center>Selecione o tipo de item que vocÃª deseja procurar.</center></i></p>";
 		}
 
 		include("templates/private_footer.php");

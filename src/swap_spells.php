@@ -1,7 +1,7 @@
 <?php
 include("lib.php");
 $player = check_user($secret_key, $db);
-header("Content-Type: text/html; charset=ISO-8859-1",true);
+header("Content-Type: text/html; charset=utf-8",true);
 
 if ($_GET['estender']) {
 	$magiascount = $db->execute("select * from `magias` where `player_id`=?", array($player->id));
@@ -15,7 +15,7 @@ if ($_GET['estender']) {
 			$db->execute("update `players` set `mana`=`maxmana`+2, `maxmana`=`maxmana`+2, `extramana`=`extramana`+2, `magic_points`=`magic_points`-1 where `id`=?", array($player->id));
 			$player = check_user($secret_key, $db);
 			echo "<br/><center><img src=\"images/man.png\"><img src=\"bargen.php?man\">"; if ($player->magic_points > 0){ echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_spells.php?estender=true', 'maxmana')\"><img src=\"images/addstat.png\" border=\"0px\"></a>"; }else{ echo "<img src=\"images/none.png\" border=\"0px\">"; } echo "</center>";
-			echo "<center><font size=\"1px\">Estenda 2 pontos da sua mana<br/>máxima por 1 ponto místico.<br/><br/><b>Você " . $player->magic_points . " tem ponto(s) místico(s).</b></font></center>";
+			echo "<center><font size=\"1px\">Estenda 2 pontos da sua mana<br/>mÃ¡xima por 1 ponto mÃ­stico.<br/><br/><b>VocÃª " . $player->magic_points . " tem ponto(s) mÃ­stico(s).</b></font></center>";
 			exit;
 		}
 	}
@@ -47,21 +47,21 @@ if ($_GET['estender']) {
 
 		$magic2 = $db->execute("select * from `magias` where `magia_id`=? and `player_id`=?", array($getid, $player->id));
 		if ($magic2->recordcount() > 0)	{
-			echo "Você já possui esse feitiço. <a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('showspells.php?voltar=true', 'comfirm')\">Voltar</a>.";
+			echo "VocÃª jÃ¡ possui esse feitiÃ§o. <a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('showspells.php?voltar=true', 'comfirm')\">Voltar</a>.";
 			exit;
 		}
 
     		$magia = $magic->fetchrow();
 
 		echo "<b>" . $magia['nome'] . ":</b> " . $magia['descri'] . "<br/>";
-		echo "Deseja comprar o feitiço <b>" . $magia['nome'] . "</b> por <b>" . $magia['cost'] . "</b> pontos místicos?<br/><br/>";
-		echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_spells.php?act=buy&spell=" . $getid . "&confirm=yes', 'comfirm')\">Sim</a> | <a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('showspells.php?voltar=true', 'comfirm')\">Não</a>";
+		echo "Deseja comprar o feitiÃ§o <b>" . $magia['nome'] . "</b> por <b>" . $magia['cost'] . "</b> pontos mÃ­sticos?<br/><br/>";
+		echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_spells.php?act=buy&spell=" . $getid . "&confirm=yes', 'comfirm')\">Sim</a> | <a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('showspells.php?voltar=true', 'comfirm')\">NÃ£o</a>";
 
 	} elseif (($_GET['spell']) and ($_GET['confirm'] == 'yes') and (is_numeric($_GET['spell'])) and ($magic->recordcount() == 1)) {
 
 		$magic2 = $db->execute("select * from `magias` where `magia_id`=? and `player_id`=?", array($getid, $player->id));
 		if ($magic2->recordcount() > 0)	{
-			echo "Você já possui esse feitiço. <a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('showspells.php?voltar=true', 'comfirm')\">Voltar</a>.";
+			echo "VocÃª jÃ¡ possui esse feitiÃ§o. <a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('showspells.php?voltar=true', 'comfirm')\">Voltar</a>.";
 			exit;
 		}
 
@@ -77,13 +77,13 @@ if ($_GET['estender']) {
 			$soma = $verifica1->recordcount() + $verifica2->recordcount() + $verifica3->recordcount() + $verifica4->recordcount() + $verifica5->recordcount();
 
 			if ($soma < 1){
-				echo "Você precisa comprar os feitiços anteriores antes de comprar o feitiço <b>" . $magia['nome'] . "</b>. <a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('showspells.php?voltar=true', 'comfirm')\">Voltar</a>.";
+				echo "VocÃª precisa comprar os feitiÃ§os anteriores antes de comprar o feitiÃ§o <b>" . $magia['nome'] . "</b>. <a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('showspells.php?voltar=true', 'comfirm')\">Voltar</a>.";
 				exit;
 			}
 		}
 
 			if ($magia['cost'] > $player->magic_points){
-				echo "Você não possui pontos místicos suficientes para comprar este feitiço.<br/>Você ganha 1 ponto místico a cada nível que passa. <a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('showspells.php?voltar=true', 'comfirm')\">Voltar</a>.";
+				echo "VocÃª nÃ£o possui pontos mÃ­sticos suficientes para comprar este feitiÃ§o.<br/>VocÃª ganha 1 ponto mÃ­stico a cada nÃ­vel que passa. <a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('showspells.php?voltar=true', 'comfirm')\">Voltar</a>.";
 				exit;
 			}
 
@@ -94,10 +94,10 @@ if ($_GET['estender']) {
 
 			$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=5 and `player_id`=?", array($player->id));
 			if (($getid == 4) and ($tutorial->recordcount() > 0)){
-				echo "Você acaba de comprar o feitiço <b>" . $magia['nome'] . "</b> por <b>" . $magia['cost'] . "</b> pontos místicos.<br/><a href=\"start.php?act=6\"><b>Continuar Tutorial</b></a>.";
+				echo "VocÃª acaba de comprar o feitiÃ§o <b>" . $magia['nome'] . "</b> por <b>" . $magia['cost'] . "</b> pontos mÃ­sticos.<br/><a href=\"start.php?act=6\"><b>Continuar Tutorial</b></a>.";
 				exit;
 			} else {
-				echo "Você acaba de comprar o feitiço <b>" . $magia['nome'] . "</b> por <b>" . $magia['cost'] . "</b> pontos místicos. <a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('showspells.php?voltar=true', 'comfirm')\">Voltar</a>.";
+				echo "VocÃª acaba de comprar o feitiÃ§o <b>" . $magia['nome'] . "</b> por <b>" . $magia['cost'] . "</b> pontos mÃ­sticos. <a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('showspells.php?voltar=true', 'comfirm')\">Voltar</a>.";
 				exit;
 			}
 	}

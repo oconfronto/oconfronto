@@ -34,7 +34,7 @@ switch($_GET['act'])
 		if ($seleciona_market['serv'] != $player->serv)
 		{
 		include("templates/private_header.php");
-		echo "Você não pode comprar itens de outro servidor. <a href=\"market.php\">Voltar</a>.";
+		echo "VocÃª nÃ£o pode comprar itens de outro servidor. <a href=\"market.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		exit;
 		}
@@ -42,7 +42,7 @@ switch($_GET['act'])
 		if ($seleciona_market['seller'] == $player->username)
 		{
 		include("templates/private_header.php");
-		echo "Você não pode comprar seus própios itens. <a href=\"market.php\">Voltar</a>.";
+		echo "VocÃª nÃ£o pode comprar seus prÃ³pios itens. <a href=\"market.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		exit;
 		}
@@ -50,7 +50,7 @@ switch($_GET['act'])
  		if ($seleciona_market['price'] > $player->gold)
 		{
 		include("templates/private_header.php");
-		echo "Você não possui dinheiro suficiente. <a href=\"market.php\">Voltar</a>.";
+		echo "VocÃª nÃ£o possui dinheiro suficiente. <a href=\"market.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		exit;
 		}
@@ -72,7 +72,7 @@ switch($_GET['act'])
 		$seleciona_seller = $seleciona_seller->fetchrow();
 		$query_seller_gold = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", array($seleciona_market['price'], $seleciona_seller['id']));
 
-		$logmsg = "Você vendeu um iten no mercado. <a href=\"profile.php?id=" . $player->username . "\">" . $player->username . "</a> comprou seu/sua " . $seleciona_market['name'] . " e você ganhou " . $seleciona_market['price'] . " de ouro.";
+		$logmsg = "VocÃª vendeu um iten no mercado. <a href=\"profile.php?id=" . $player->username . "\">" . $player->username . "</a> comprou seu/sua " . $seleciona_market['name'] . " e vocÃª ganhou " . $seleciona_market['price'] . " de ouro.";
 		addlog($seleciona_seller['id'], $logmsg, $db);
 
 		$query_delete=$db->execute("delete from `market` where `market_id`=?", array($market_id));
@@ -129,7 +129,7 @@ switch($_GET['act'])
 
 		include("templates/private_header.php");
 		echo "<form method=\"POST\" action=\"market_buy.php?act=confirm\">";
-		echo "<b>Você gostaria de comprar:</b><br />";
+		echo "<b>VocÃª gostaria de comprar:</b><br />";
 		$marketataque = $market['effectiveness'] + ($market['item_bonus']*2);
 		echo "<fieldset>\n<legend>";
 
@@ -185,19 +185,19 @@ switch($_GET['act'])
 		echo "</td><td width=\"80%\">";
 		echo $market['description'] . "\n<br />";
 		if (($market['type'] == 'ring') or ($market['type'] == 'potion') or ($market['type'] == 'addon')) {
-		echo "<b>Vocação:</b> ";
+		echo "<b>VocaÃ§Ã£o:</b> ";
 		}elseif ($market['type'] == 'amulet') {
-		echo "<b>Vitalidade:</b> " . $marketataque . " <b>Vocação:</b> ";
+		echo "<b>Vitalidade:</b> " . $marketataque . " <b>VocaÃ§Ã£o:</b> ";
 		}elseif ($market['type'] == 'weapon') {
-		echo "<b>Ataque:</b> " . $marketataque . " <b>Vocação:</b> ";
+		echo "<b>Ataque:</b> " . $marketataque . " <b>VocaÃ§Ã£o:</b> ";
 		}elseif ($market['type'] == 'boots') {
-		echo "<b>Agilidade:</b> " . $marketataque . " <b>Vocação:</b> ";
+		echo "<b>Agilidade:</b> " . $marketataque . " <b>VocaÃ§Ã£o:</b> ";
 		}else{
-		echo "<b>Defesa:</b> " . $marketataque . " <b>Vocação:</b> ";
+		echo "<b>Defesa:</b> " . $marketataque . " <b>VocaÃ§Ã£o:</b> ";
 		}
 				if ($market['voc'] == 1 and $market['needpromo'] == 'f')
 				{
-				echo "Caçador";
+				echo "CaÃ§ador";
 				}
 				elseif ($market['voc'] == 2 and $market['needpromo'] == 'f')
 				{
@@ -221,7 +221,7 @@ switch($_GET['act'])
 				}
 				elseif ($market['voc'] == 0 and $market['needpromo'] == 't')
 				{
-				echo "Vocações superiores";
+				echo "VocaÃ§Ãµes superiores";
 				}
 				elseif ($market['voc'] == 1 and $market['needpromo'] == 'p')
 				{
@@ -237,7 +237,7 @@ switch($_GET['act'])
 				}
 				elseif ($market['voc'] == 0 and $market['needpromo'] == 'p')
 				{
-				echo "Vocações supremas";
+				echo "VocaÃ§Ãµes supremas";
 				}else{
 				echo "Todas";
 					if ($market['type'] == 'shield'){
@@ -258,29 +258,29 @@ switch($_GET['act'])
 		if ($market['needlvl'] > 1){
 			if ($player->level < $market['needlvl'])
 			{
-			echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Você precisa ter nivel " . $market['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
+			echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>VocÃª precisa ter nivel " . $market['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
 			}else{
-			echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter nivel " . $market['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
+			echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>VocÃª precisa ter nivel " . $market['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
 			}
 		}
 		if ($market['needpromo'] == "t"){
 			if ($player->promoted != "f")
 			{
-			echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter uma vocação superior para usar este item.</b></center></td></tr>\n";
+			echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>VocÃª precisa ter uma vocaÃ§Ã£o superior para usar este item.</b></center></td></tr>\n";
 			}
 			else
 			{
-			echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Você precisa ter uma vocação superior para usar este item.</b></center></td></tr>\n";
+			echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>VocÃª precisa ter uma vocaÃ§Ã£o superior para usar este item.</b></center></td></tr>\n";
 			}
 		}
 		if ($market['needpromo'] == "p"){
 			if ($player->promoted == "p")
 			{
-			echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter uma vocação suprema para usar este item.</b></center></td></tr>\n";
+			echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>VocÃª precisa ter uma vocaÃ§Ã£o suprema para usar este item.</b></center></td></tr>\n";
 			}
 			else
 			{
-			echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Você precisa ter uma vocação suprema para usar este item.</b></center></td></tr>\n";
+			echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>VocÃª precisa ter uma vocaÃ§Ã£o suprema para usar este item.</b></center></td></tr>\n";
 			}
 		}
 		echo "</table>";

@@ -1,14 +1,14 @@
 <?php
 include("lib.php");
 $player = check_user($secret_key, $db);
-header("Content-Type: text/html; charset=ISO-8859-1",true);
+header("Content-Type: text/html; charset=utf-8",true);
 
 	$checabattalha = $db->execute("select * from `bixos` where `hp`<? and `player_id`=?", array(1, $player->id));
 	if ((($checabattalha->recordcount() == 1) or ($player->hp < 1)) and ($player->hp != $player->maxhp)) {
 
 	include("healcost.php");
 	if (($player->gold < $cost) and ($player->gold < 1)) {
-			echo showAlert("Você não possui ouro suficiente!", "red");
+			echo showAlert("VocÃª nÃ£o possui ouro suficiente!", "red");
 			exit;
 
 		}else{
@@ -22,7 +22,7 @@ header("Content-Type: text/html; charset=ISO-8859-1",true);
                 }
             }
 
-			echo showAlert("Você acaba de ser curado!");
+			echo showAlert("VocÃª acaba de ser curado!");
 			exit;
 		}
 	}

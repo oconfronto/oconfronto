@@ -34,13 +34,13 @@ $total_players = $db->getone("select count(ID) as `count` from `players` where `
 include("templates/private_header.php");
     
     if ($_GET['error']) {
-        echo showAlert("Usuário n‹o encontrado.", "red");
+        echo showAlert("UsuÃ¡rio nÃ£o encontrado.", "red");
     }
 
 echo "<form method=\"get\" action=\"members.php\">\n";
 echo "<table width=\"100%\" class=\"brown\"  style='border:1px solid #b6804e;height:28px;background:url(images/bg-barra-form.png) center;'><tr>";
 	echo "<td width=\"16%\"><center>";
-		echo "<b>Pág:</b>&nbsp;<select name=\"page\">";
+		echo "<b>PÃ¡g:</b>&nbsp;<select name=\"page\">";
 		$numpages = $total_players / $limit;
 			for ($i = 1; $i <= $numpages; $i++)
 			{
@@ -70,7 +70,7 @@ echo "<table width=\"100%\" class=\"brown\"  style='border:1px solid #b6804e;hei
 	$selecum = "selected";
 	}
 
-	echo "<td width=\"32%\"><center><b>Ordem:</b>&nbsp;<select name=\"orderby\"><option value=\"level\" " . $selecum . ">Nível</option><option value=\"gold\" " . $selecdois . ">Ouro</option><option value=\"kills\" " . $selectres . ">Assassinatos</option><option value=\"monsterkilled\" " . $selecquatro . ">Monstros mortos</option></select></center></td>";
+	echo "<td width=\"32%\"><center><b>Ordem:</b>&nbsp;<select name=\"orderby\"><option value=\"level\" " . $selecum . ">NÃ­vel</option><option value=\"gold\" " . $selecdois . ">Ouro</option><option value=\"kills\" " . $selectres . ">Assassinatos</option><option value=\"monsterkilled\" " . $selecquatro . ">Monstros mortos</option></select></center></td>";
 
 
 	if (!$_GET['reino']) {
@@ -129,10 +129,10 @@ if ($query->recordcount() > 0){
 echo "<br/><table width=\"100%\" border=\"0\">";
 echo "<tr>";
 echo "<th width=\"10%\"><b>Imagem</b></td>";
-echo "<th width=\"35%\"><b>Usuário</b></td>";
+echo "<th width=\"35%\"><b>UsuÃ¡rio</b></td>";
 echo "<th width=\"20%\"><b>Nivel</b></td>";
-echo "<th width=\"20%\"><b>Vocação</b></td>";
-echo "<th width=\"15%\"><b>Opções</b></td>";
+echo "<th width=\"20%\"><b>VocaÃ§Ã£o</b></td>";
+echo "<th width=\"15%\"><b>OpÃ§Ãµes</b></td>";
 echo "</tr>";
 
 $bool = 1;
@@ -165,7 +165,7 @@ while($member = $query->fetchrow())
 	echo "<td>";
 
 		if ($member['voc'] == 'archer' and $member['promoted'] == 'f'){
-		echo "Caçador";
+		echo "CaÃ§ador";
 		} else if ($member['voc'] == 'knight' and $member['promoted'] == 'f'){
 		echo "Espadachim";
 		} else if ($member['voc'] == 'mage' and $member['promoted'] == 'f'){
@@ -190,23 +190,23 @@ while($member = $query->fetchrow())
 }
 echo "</table>";
 }else{
-	echo "<br/><center><b>Nenhum usuário encontrado.</center><br/>";
+	echo "<br/><center><b>Nenhum usuÃ¡rio encontrado.</center><br/>";
 }
 
 echo "<table width=\"100%\" border=\"0\"><tr>";
 echo "<td width=\"50%\">";
-	echo ($page != 1)?"<a href=\"members.php?limit=" . $limit . "&page=" . ($page-1) . "&orderby=" . $_GET['orderby'] . "&reino=" . $_GET['reino'] . "&voctype=" . $_GET['voctype'] . "\"><b>Página anterior</b></a>":"<b>Página anterior</b>";
+	echo ($page != 1)?"<a href=\"members.php?limit=" . $limit . "&page=" . ($page-1) . "&orderby=" . $_GET['orderby'] . "&reino=" . $_GET['reino'] . "&voctype=" . $_GET['voctype'] . "\"><b>PÃ¡gina anterior</b></a>":"<b>PÃ¡gina anterior</b>";
 echo "</td>";
 echo "<td width=\"50%\" align=\"right\">";
-	echo (($total_players - ($limit * $page)) > 0)?"<a href=\"members.php?limit=" . $limit . "&page=" . ($page+1) . "&orderby=" . $_GET['orderby'] . "&reino=" . $_GET['reino'] . "&voctype=" . $_GET['voctype'] . "\"><b>Próxima página</b></a> ":"<b>Próxima página</b>";
+	echo (($total_players - ($limit * $page)) > 0)?"<a href=\"members.php?limit=" . $limit . "&page=" . ($page+1) . "&orderby=" . $_GET['orderby'] . "&reino=" . $_GET['reino'] . "&voctype=" . $_GET['voctype'] . "\"><b>PrÃ³xima pÃ¡gina</b></a> ":"<b>PrÃ³xima pÃ¡gina</b>";
 echo "</td>";
 echo "</tr></table>";
 
     echo "<br/><p><form method=\"get\" action=\"profile.php\">\n";
     echo "<table width=\"100%\" align=\"center\" class=\"salmon\">";
-    echo "<tr><td align=\"center\" bgcolor=\"#E1CBA4\" colspan=\"3\"><b>Procurar por usuário</b></td></tr>";
+    echo "<tr><td align=\"center\" bgcolor=\"#E1CBA4\" colspan=\"3\"><b>Procurar por usuÃ¡rio</b></td></tr>";
     echo "<tr class=\"salmon\">";
-    echo "<th width=\"30%\" align=\"center\"><b>Usuário</b>:</th>";
+    echo "<th width=\"30%\" align=\"center\"><b>UsuÃ¡rio</b>:</th>";
     echo "<th width=\"40%\" align=\"center\"><input type=\"text\" name=\"id\" size=\"30\" /></th>";
     echo "<th width=\"30%\" align=\"center\"><input id=\"link\" class=\"aff\" type=\"submit\" value=\"Procurar\" /></th>";
     echo "</tr>";

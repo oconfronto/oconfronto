@@ -2,7 +2,7 @@
 session_start();
 
 if ($_GET['header']) {
-	header('Content-type: text/html; charset=iso-8859-1');
+	header('Content-type: text/html; charset=utf-8');
     include("config.php");
     include("functions.php");
 }

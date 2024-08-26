@@ -18,7 +18,7 @@ while($dungeonInfo = $dungeonVerificaPremiacoes->fetchrow())
 	{
 		$db->execute("update `dungeon_status` set `fail`='2', `status`=? where `dungeon_id`=? and `player_id`=?", array((time() + 86400),$dungeonInfo['dungeon_id'], $player->id));
 		include("templates/private_header.php");
-		echo "O tempo para a dungeon " . $AllDungeonInfo['name'] . " se esgotou!<br/>Você deverá esperar 1 dia para participar dela novamente.";
+		echo "O tempo para a dungeon " . $AllDungeonInfo['name'] . " se esgotou!<br/>Voc√™ dever√° esperar 1 dia para participar dela novamente.";
         echo "<br/><a href=\"dungeon.php\">Continuar</a>.";
 		include("templates/private_footer.php");
 		exit;
@@ -28,9 +28,9 @@ while($dungeonInfo = $dungeonVerificaPremiacoes->fetchrow())
         $db->execute("update `dungeon_status` set `status`=90, `finish`=? where `dungeon_id`=? and `player_id`=?", array(time(), $dungeonInfo['dungeon_id'], $player->id));
         
 		include("templates/private_header.php");
-		echo "<b>Você completou a dungeon " . $AllDungeonInfo['name'] . ", parabéns guerreiro!</b><br/>";
-        echo "Você adiquiriu 1 dungeon point por completar esta arena.<br/>";
-		echo "<br/><i>Os seguintes prêmios foram adicionados ao seu inventário:</i><br/>";
+		echo "<b>Voc√™ completou a dungeon " . $AllDungeonInfo['name'] . ", parab√©ns guerreiro!</b><br/>";
+        echo "Voc√™ adiquiriu 1 dungeon point por completar esta arena.<br/>";
+		echo "<br/><i>Os seguintes pr√™mios foram adicionados ao seu invent√°rio:</i><br/>";
 		
 		echo "<ul>";
 
@@ -56,7 +56,7 @@ while($dungeonInfo = $dungeonVerificaPremiacoes->fetchrow())
                         }elseif ($item['type'] == 'weapon') {
                             echo "" . $item['name'] . " <font size=\"1px\">(Ataque: " . $item['effectiveness'] . ")</font><br/ >";
                         }elseif ($item['type'] == 'shield') {
-                            echo "" . $item['name'] . " <font size=\"1px\">(Defesa: " . $item['effectiveness'] . ")<br/ ><i>Arqueiros n„o podem usar escudos</i>.</font><br/ >";
+                            echo "" . $item['name'] . " <font size=\"1px\">(Defesa: " . $item['effectiveness'] . ")<br/ ><i>Arqueiros n√£o podem usar escudos</i>.</font><br/ >";
                         }else{
                             echo "" . $item['name'] . " <font size=\"1px\">(Defesa: " . $item['effectiveness'] . ")</font><br/ >";
                         }
@@ -88,7 +88,7 @@ if ($_GET['id']) {
                     if ($dungeonPoints >= $datta['level']) {
                         if (!$_GET['comfirm']) {
                             include("templates/private_header.php");
-                            echo showAlert("<table width=\"100%\"><tr><td>Você tem certeza que deseja participar da arena <b>" . $datta['name'] . "</b>?<br/>O guerreiro que for derrotado em uma da batalhas da arena será eliminado<br/>e não poderá repeti-la nas próximas 24 horas.<br/>Você terá de completa-la em no máximo " . ($datta['time'] / 60) . " minutos para receber seu prêmio.</td><td><center><p><a href=\"dungeon.php?id=" . $_GET['id'] . "&comfirm=true\">Participar</a><br/><a href=\"dungeon.php\"><font size=\"1px\">Voltar</font></a></p></center></td></tr></table>", "", "left");
+                            echo showAlert("<table width=\"100%\"><tr><td>Voc√™ tem certeza que deseja participar da arena <b>" . $datta['name'] . "</b>?<br/>O guerreiro que for derrotado em uma da batalhas da arena ser√° eliminado<br/>e n√£o poder√° repeti-la nas pr√≥ximas 24 horas.<br/>Voc√™ ter√° de completa-la em no m√°ximo " . ($datta['time'] / 60) . " minutos para receber seu pr√™mio.</td><td><center><p><a href=\"dungeon.php?id=" . $_GET['id'] . "&comfirm=true\">Participar</a><br/><a href=\"dungeon.php\"><font size=\"1px\">Voltar</font></a></p></center></td></tr></table>", "", "left");
                             include("templates/private_footer.php");
                             exit;
                         } else {
@@ -98,13 +98,13 @@ if ($_GET['id']) {
                             $query = $db->autoexecute('dungeon_status', $insert, 'INSERT');
                         
                             include("templates/private_header.php");
-                            echo showAlert("<table width=\"100%\"><tr><td>Você acaba de se inscrever na arena <b>" . $datta['name'] . "</b>.<br/>Boa sorte guerreiro.</td><td><center><p><a href=\"dungeon.php\">Continuar</a></p></center></td></tr></table>", "", "left");
+                            echo showAlert("<table width=\"100%\"><tr><td>Voc√™ acaba de se inscrever na arena <b>" . $datta['name'] . "</b>.<br/>Boa sorte guerreiro.</td><td><center><p><a href=\"dungeon.php\">Continuar</a></p></center></td></tr></table>", "", "left");
                             include("templates/private_footer.php");
                             exit;
                         }
                     } else {
                         include("templates/private_header.php");
-                        echo "Você não possui dungeon points suficientes para participar desta arena.";
+                        echo "Voc√™ n√£o possui dungeon points suficientes para participar desta arena.";
                         echo "<br/><a href=\"dungeon.php\">Voltar.</a>";
                         include("templates/private_footer.php");
                         exit;   
@@ -112,21 +112,21 @@ if ($_GET['id']) {
                     
                 } else {
                     include("templates/private_header.php");
-                    echo "Você deve aguardar para participar novamente desta arena.";
+                    echo "Voc√™ deve aguardar para participar novamente desta arena.";
                     echo "<br/><a href=\"dungeon.php\">Voltar.</a>";
                     include("templates/private_footer.php");
                     exit;  
                 }
             } else {
                 include("templates/private_header.php");
-                echo "Você já participou desta arena.";
+                echo "Voc√™ j√° participou desta arena.";
                 echo "<br/><a href=\"dungeon.php\">Voltar.</a>";
                 include("templates/private_footer.php");
                 exit;
             }
         } else {
             include("templates/private_header.php");
-            echo "Você já está participando de uma arena!";
+            echo "Voc√™ j√° est√° participando de uma arena!";
             echo "<br/><a href=\"dungeon.php\">Voltar.</a>";
             include("templates/private_footer.php");
             exit;
@@ -134,7 +134,7 @@ if ($_GET['id']) {
         
     } else {
         include("templates/private_header.php");
-        echo "Esta arena não está dispon&ecirc;vel no momento.";
+        echo "Esta arena n√£o est√° dispon&ecirc;vel no momento.";
         echo "<br/><a href=\"dungeon.php\">Voltar.</a>";
         include("templates/private_footer.php");
         exit;
@@ -146,18 +146,18 @@ if ($_GET['id']) {
         $getitems = $db->execute("select * from `dungeon` order by `level` asc");
 		if ($getitems->recordcount() == 0)
 		{
-			echo "<center><i>Nenhuma arena está dispon&ecirc;vel no momento.</i></center>";
+			echo "<center><i>Nenhuma arena est√° dispon&ecirc;vel no momento.</i></center>";
 		}
 		else
 		{
-            echo showAlert("Você já conquistou " . $dungeonPoints . " dungeon points.");
+            echo showAlert("Voc√™ j√° conquistou " . $dungeonPoints . " dungeon points.");
 			while ($vipti = $getitems->fetchrow())
 			{
                 echo "<table width=\"100%\">";
                 echo "<tr>";
                 echo "<td width=\"30%\" class=\"brown\"><b><center>" . $vipti['name'] . "</center></b></td>";
                 echo "<td width=\"35%\" class=\"brown\"><b>Monstros</b></td>";
-                echo "<td width=\"35%\" class=\"brown\"><b>Prêmio</b></td>";
+                echo "<td width=\"35%\" class=\"brown\"><b>Pr√™mio</b></td>";
                 echo "</tr>";
                 echo "<tr><td style=\"background-color: #FFFDE0;\">";
                 echo "<table width=\"100%\"><tr>";
@@ -201,15 +201,15 @@ if ($_GET['id']) {
                         $info = $dungeoncomfirma->fetchrow();
                         
                         if (($info['status'] >= $itcount) or ($checkverstatus['status'] == 90)) {
-                            echo "" . $itcount . "º <s>" . $item['username'] . " <font size=\"1px\">(N&ecirc;vel: " . $item['level'] . ")</font></s><br/ >";
+                            echo "" . $itcount . "¬∫ <s>" . $item['username'] . " <font size=\"1px\">(N&ecirc;vel: " . $item['level'] . ")</font></s><br/ >";
                         } elseif (($info['status'] + 1) < $itcount) {
-                            echo "<font color=\"gray\">" . $itcount . "º " . $item['username'] . " <font size=\"1px\">(N&ecirc;vel: " . $item['level'] . ")</font></font><br/ >";
+                            echo "<font color=\"gray\">" . $itcount . "¬∫ " . $item['username'] . " <font size=\"1px\">(N&ecirc;vel: " . $item['level'] . ")</font></font><br/ >";
                         } else {
-                            echo "" . $itcount . "º <a href=\"monster.php?act=attack&id=" . (((int)$item['id']) * $player->id) . "\">" . $item['username'] . "</a> <font size=\"1px\">(N&ecirc;vel: " . $item['level'] . ")</font><br/ >";
+                            echo "" . $itcount . "¬∫ <a href=\"monster.php?act=attack&id=" . (((int)$item['id']) * $player->id) . "\">" . $item['username'] . "</a> <font size=\"1px\">(N&ecirc;vel: " . $item['level'] . ")</font><br/ >";
                         }
                         
                     } else {
-                        echo "" . $itcount . "º " . $item['username'] . " <font size=\"1px\">(N&ecirc;vel: " . $item['level'] . ")</font><br/ >";
+                        echo "" . $itcount . "¬∫ " . $item['username'] . " <font size=\"1px\">(N&ecirc;vel: " . $item['level'] . ")</font><br/ >";
                     }
                     
                     $itcount = $itcount + 1;
@@ -233,7 +233,7 @@ if ($_GET['id']) {
                             }elseif ($item['type'] == 'weapon') {
                                 echo "" . $item['name'] . " <font size=\"1px\">(Ataque: " . $item['effectiveness'] . ")</font><br/ >";
                             }elseif ($item['type'] == 'shield') {
-                                echo "" . $item['name'] . " <font size=\"1px\">(Defesa: " . $item['effectiveness'] . ")<br/ ><i>Arqueiros n„o podem usar escudos</i>.</font><br/ >";
+                                echo "" . $item['name'] . " <font size=\"1px\">(Defesa: " . $item['effectiveness'] . ")<br/ ><i>Arqueiros n√£o podem usar escudos</i>.</font><br/ >";
                             }else{
                                 echo "" . $item['name'] . " <font size=\"1px\">(Defesa: " . $item['effectiveness'] . ")</font><br/ >";
                             }
@@ -255,27 +255,27 @@ if ($query1->recordcount() > 0)
 		$valortempo = time() - $log1['start'];
 		if ($valortempo < 60){
 		$valortempo2 = $valortempo;
-		$auxiliar2 = "segundo(s) atrás.";
+		$auxiliar2 = "segundo(s) atr√°s.";
 		}else if($valortempo < 3600){
 		$valortempo2 = floor($valortempo / 60);
-		$auxiliar2 = "minuto(s) atrás.";
+		$auxiliar2 = "minuto(s) atr√°s.";
 		}else if($valortempo < 86400){
 		$valortempo2 = floor($valortempo / 3600);
-		$auxiliar2 = "hora(s) atrás.";
+		$auxiliar2 = "hora(s) atr√°s.";
 		}else if($valortempo > 86400){
 		$valortempo2 = floor($valortempo / 86400);
-		$auxiliar2 = "dia(s) atrás.";
+		$auxiliar2 = "dia(s) atr√°s.";
 		}
         
         $DungeonLogName = $db->getone("select `name` from `dungeon` where `id`=?", array($log1['dungeon_id']));
 
 		echo "<tr>";
 		if ($log1['fail'] == '2'){
-		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">Você começou a dungeon: " . $DungeonLogName . ", porém não a completou em tempo suficiente.</font></div></td>";
+		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">Voc√™ come√ßou a dungeon: " . $DungeonLogName . ", por√©m n√£o a completou em tempo suficiente.</font></div></td>";
 		} elseif ($log1['fail'] == '1'){
-		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">Você morreu enquanto participava da " . $DungeonLogName . " e falhou na conquista pelo prêmio.</font></div></td>";
+		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">Voc√™ morreu enquanto participava da " . $DungeonLogName . " e falhou na conquista pelo pr√™mio.</font></div></td>";
 		} else {
-		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">Você finalizou a dungeon \"" . $DungeonLogName . "\" em " . ceil(($log1['finish'] - $log1['start']) / 60) . " minuto(s).</font></div></td>";
+		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">Voc√™ finalizou a dungeon \"" . $DungeonLogName . "\" em " . ceil(($log1['finish'] - $log1['start']) / 60) . " minuto(s).</font></div></td>";
 		}
 		echo "</tr>";
 	}
@@ -283,7 +283,7 @@ if ($query1->recordcount() > 0)
 else
 {
 	echo "<tr>";
-	echo "<td class=\"off\"><font size=\"1\">Você ainda não participou de nenhuma dungeon.</font></td>";
+	echo "<td class=\"off\"><font size=\"1\">Voc√™ ainda n√£o participou de nenhuma dungeon.</font></td>";
 	echo "</tr>";
 }
 echo "</table>";

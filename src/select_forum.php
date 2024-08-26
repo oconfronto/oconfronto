@@ -1,7 +1,7 @@
 <?php
 
 include("lib.php");
-define("PAGENAME", "Fórum");
+define("PAGENAME", "FÃ³rum");
 $player = check_user($secret_key, $db);
 
 include("checkforum.php");
@@ -30,14 +30,14 @@ $dtopictempo = ceil(time() - 10368000);
 <table width="98%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#CCCCCC">
 <tr>
 <td width="70%" align="center" bgcolor="#E1CBA4"><strong>Categoria</strong></td>
-<td width="15%" align="center" bgcolor="#E1CBA4"><strong>Tópicos</strong></td>
+<td width="15%" align="center" bgcolor="#E1CBA4"><strong>TÃ³picos</strong></td>
 <td width="15%" align="center" bgcolor="#E1CBA4"><strong>Respostas</strong></td>
 </tr>
 
 
 
 <tr class="off" onmouseover="this.className='on'" onmouseout="this.className='off'">
-<td><b><a href="main_forum.php?cat=noticias">Notícias</a></b><br/><font size="1">Esteja informado sobre os acontecimentos no jogo.</font></td>
+<td><b><a href="main_forum.php?cat=noticias">NotÃ­cias</a></b><br/><font size="1">Esteja informado sobre os acontecimentos no jogo.</font></td>
 <?php
 $totalreply = 0;
 $cate1 = $db->execute("select `reply` from `forum_question` where `category`=?", array(noticias));
@@ -53,7 +53,7 @@ $topicos1 = $cate1->recordcount();
 </tr>
 
 <tr class="off" onmouseover="this.className='on'" onmouseout="this.className='off'">
-<td><b><a href="main_forum.php?cat=reino">Reino</a></b><br/><font size="1">Participe das discussões promovidas pelo seu imperador.</font></td>
+<td><b><a href="main_forum.php?cat=reino">Reino</a></b><br/><font size="1">Participe das discussÃµes promovidas pelo seu imperador.</font></td>
 <?php
 $totalreply2 = 0;
 $cate2 = $db->execute("select `reply` from `forum_question` where `category`=? and `reino`=?", array(reino, $player->reino));
@@ -69,7 +69,7 @@ $topicos2 = $cate2->recordcount();
 </tr>
 
 <tr class="off" onmouseover="this.className='on'" onmouseout="this.className='off'">
-<td><b><a href="main_forum.php?cat=sugestoes">Sugestões</a></b><br/><font size="1">Poste aqui suas idéias para tornar o jogo  melhor.</font></td>
+<td><b><a href="main_forum.php?cat=sugestoes">SugestÃµes</a></b><br/><font size="1">Poste aqui suas idÃ©ias para tornar o jogo  melhor.</font></td>
 <?php
 $totalreply3 = 0;
 $cate3 = $db->execute("select `reply` from `forum_question` where `category`=?", array(sugestoes));
@@ -85,7 +85,7 @@ $topicos3 = $cate3->recordcount();
 </tr>
 
 <tr class="off" onmouseover="this.className='on'" onmouseout="this.className='off'">
-<td><b><a href="main_forum.php?cat=gangues">Clãs</a></b><br/><font size="1">Reuna membros ou encontre um clã através deste fórum.</font></td>
+<td><b><a href="main_forum.php?cat=gangues">ClÃ£s</a></b><br/><font size="1">Reuna membros ou encontre um clÃ£ atravÃ©s deste fÃ³rum.</font></td>
 <?php
 $totalreply4 = 0;
 $cate4 = $db->execute("select `reply` from `forum_question` where `category`=? and `serv`=?", array(gangues, $player->serv));
@@ -101,7 +101,7 @@ $topicos4 = $cate4->recordcount();
 </tr>
 
 <tr class="off" onmouseover="this.className='on'" onmouseout="this.className='off'">
-<td><b><a href="main_forum.php?cat=trade">Compro/Vendo</a></b><br/><font size="1">Venda seus itens em desuso e faça um dinheiro extra.</font></td>
+<td><b><a href="main_forum.php?cat=trade">Compro/Vendo</a></b><br/><font size="1">Venda seus itens em desuso e faÃ§a um dinheiro extra.</font></td>
 <?php
 $totalreply5 = 0;
 $cate5 = $db->execute("select `reply` from `forum_question` where `category`=? and `serv`=?", array(trade, $player->serv));
@@ -117,7 +117,7 @@ $topicos5 = $cate5->recordcount();
 </tr>
 
 <tr class="off" onmouseover="this.className='on'" onmouseout="this.className='off'">
-<td><b><a href="main_forum.php?cat=duvidas">Dúvidas</a></b><br/><font size="1">Esclareça suas dúvidas sobre o jogo aqui.</font></td>
+<td><b><a href="main_forum.php?cat=duvidas">DÃºvidas</a></b><br/><font size="1">EsclareÃ§a suas dÃºvidas sobre o jogo aqui.</font></td>
 <?php
 $totalreply6 = 0;
 $cate6 = $db->execute("select `reply` from `forum_question` where `category`=?", array(duvidas));
@@ -150,7 +150,7 @@ $topicos7 = $cate7->recordcount();
 
 
 <tr class="off" onmouseover="this.className='on'" onmouseout="this.className='off'">
-<td><b><a href="main_forum.php?cat=outros">Outros</a></b><br/><font size="1">Tópicos sobre o jogo que não se encaixam nas categorias acima.</font></td>
+<td><b><a href="main_forum.php?cat=outros">Outros</a></b><br/><font size="1">TÃ³picos sobre o jogo que nÃ£o se encaixam nas categorias acima.</font></td>
 <?php
 $totalreply8 = 0;
 $cate8 = $db->execute("select `reply` from `forum_question` where `category`=?", array(outros));
@@ -166,7 +166,7 @@ $topicos8 = $cate8->recordcount();
 </tr>
 
 <tr class="off" onmouseover="this.className='on'" onmouseout="this.className='off'">
-<td><b><a href="main_forum.php?cat=off">Off-Topic</a></b><br/><font size="1">Assuntos gerais sem relação ao jogo.</font></td>
+<td><b><a href="main_forum.php?cat=off">Off-Topic</a></b><br/><font size="1">Assuntos gerais sem relaÃ§Ã£o ao jogo.</font></td>
 <?php
 $totalreply9 = 0;
 $cate9 = $db->execute("select `reply` from `forum_question` where `category`=?", array(off));
@@ -188,7 +188,7 @@ $topicos9 = $cate9->recordcount();
 
 <table width="98%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#CCCCCC">
 <tr>
-<td width="100%" align="center" bgcolor="#E1CBA4"><strong>Últimas ações dos moderadores</strong></td>
+<td width="100%" align="center" bgcolor="#E1CBA4"><strong>Ãºltimas aÃ§Ãµes dos moderadores</strong></td>
 </tr>
 <?php
 $querymod = $db->execute("select * from `log_forum` where `type`=0 order by time desc limit 5");

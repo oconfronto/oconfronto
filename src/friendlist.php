@@ -18,12 +18,12 @@ if($_GET['add']){
 	$getfname = $db->GetOne("select `username` from `players` where `username`=?", array($_GET['add']));
 	if($getfname == $player->username){
 	include("templates/private_header.php");
-		echo "Voc&ecirc; não pode adicionar voc&ecirc; mesmo!<br><a href=\"friendlist.php\">Voltar ‡ lista de amigos</a> | <a href=\"members.php\">Voltar ‡ lista de membros</a>";
+		echo "Voc&ecirc; n√£o pode adicionar voc&ecirc; mesmo!<br><a href=\"friendlist.php\">Voltar √° lista de amigos</a> | <a href=\"members.php\">Voltar √° lista de membros</a>";
 	include("templates/private_footer.php");
 		exit;
 	}elseif($num_rows + 1 > $maxfriends){
 	include("templates/private_header.php");
-		echo "Voc&ecirc; atingiu o numero máximo de amigos!<br><a href=\"friendlist.php\">Voltar ‡ lista de amigos</a> | <a href=\"members.php\">Voltar ‡ lista de membros</a>";
+		echo "Voc&ecirc; atingiu o numero m√°ximo de amigos!<br><a href=\"friendlist.php\">Voltar √° lista de amigos</a> | <a href=\"members.php\">Voltar √° lista de membros</a>";
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -31,7 +31,7 @@ if($_GET['add']){
 	$quereya = $db->execute("select * from `friends` where `fname`=? and `uid`=?", array($_GET['add'], $player->acc_id));
 	if ($quereya->recordcount() > 0){
 	include("templates/private_header.php");
-	echo "Voc&ecirc; já tem este usuário na sua lista de amigos!<br><a href=\"friendlist.php\">Voltar ‡ lista de amigos</a> | <a href=\"members.php\">Voltar ‡ lista de membros</a>";
+	echo "Voc&ecirc; j√° tem este usu√°rio na sua lista de amigos!<br><a href=\"friendlist.php\">Voltar √° lista de amigos</a> | <a href=\"members.php\">Voltar √° lista de membros</a>";
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -39,7 +39,7 @@ if($_GET['add']){
 	$quereya = $db->execute("select `username` from `players` where `username`=?", array($_GET['add']));
 	if ($quereya->recordcount() == 0){
 	include("templates/private_header.php");
-	echo "Este usuário não existe!<br><a href=\"friendlist.php\">Voltar ‡ lista de amigos</a> | <a href=\"members.php\">Voltar ‡ lista de membros</a>";
+	echo "Este usu√°rio n√£o existe!<br><a href=\"friendlist.php\">Voltar √° lista de amigos</a> | <a href=\"members.php\">Voltar √° lista de membros</a>";
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -47,7 +47,7 @@ if($_GET['add']){
 	$amigoserver = $db->GetOne("select `serv` from `players` where `username`=?", array($_GET['add']));
 	if ($player->serv != $amigoserver){
 	include("templates/private_header.php");
-	echo "Este usuário pertence a outro servidor!<br><a href=\"friendlist.php\">Voltar ‡ lista de amigos</a> | <a href=\"members.php\">Voltar ‡ lista de membros</a>";
+	echo "Este usu√°rio pertence a outro servidor!<br><a href=\"friendlist.php\">Voltar √° lista de amigos</a> | <a href=\"members.php\">Voltar √° lista de membros</a>";
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -57,11 +57,11 @@ if($_GET['add']){
 		$asql="INSERT INTO `friends` (`uid` ,`fname`)VALUES ('$player->acc_id', '$add')";
 		$aresult=mysql_query($asql);
 			if($aresult){
-			echo "Amigo adicionado!<br><a href=\"friendlist.php\">Voltar ‡ lista de amigos</a> | <a href=\"members.php\">Voltar ‡ lista de membros</a>";
+			echo "Amigo adicionado!<br><a href=\"friendlist.php\">Voltar √° lista de amigos</a> | <a href=\"members.php\">Voltar √° lista de membros</a>";
 			include("templates/private_footer.php");
 			exit;
 			}else{
-			echo "Um erro desconhecido ocorreu!<br><a href=\"friendlist.php\">Voltar ‡ lista de amigos</a> | <a href=\"members.php\">Voltar ‡ lista de membros</a>";
+			echo "Um erro desconhecido ocorreu!<br><a href=\"friendlist.php\">Voltar √° lista de amigos</a> | <a href=\"members.php\">Voltar √° lista de membros</a>";
 			include("templates/private_footer.php");
 			exit;
 			}
@@ -86,7 +86,7 @@ $dsql2 = $db->execute("select * from `group_invite` where `group_id`=? and `invi
 	if ($dsql2->recordcount() > 0){
 	$deletaoconviti = $db->execute("DELETE FROM `group_invite` WHERE `group_id`=? AND `invited_id`=?", array($player->id, $_GET['deleteinvite']));
 	include("templates/private_header.php");
-	echo "Convite para grupo de caça removido.<br><a href=\"friendlist.php\">Voltar</a>.";
+	echo "Convite para grupo de ca√ßa removido.<br><a href=\"friendlist.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}else{
@@ -117,17 +117,17 @@ $dsql3 = $db->execute("select * from `groups` where `id`=? and `player_id`=?", a
 
 			if ($player->id == $_GET['deletedogrupo']){
 			include("templates/private_header.php");
-			echo "Voc&ecirc; não pode se expulsar do seu própio grupo.<br><a href=\"friendlist.php\">Voltar</a>.";
+			echo "Voc&ecirc; n√£o pode se expulsar do seu pr√≥pio grupo.<br><a href=\"friendlist.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			exit;
 			}
 
-		$logmsg = "<a href=\"profile.php?id=" . $player->username . "\">" . $player->username . "</a> te expulsou do grupo de caça.";
+		$logmsg = "<a href=\"profile.php?id=" . $player->username . "\">" . $player->username . "</a> te expulsou do grupo de ca√ßa.";
 		addlog($_GET['deletedogrupo'], $logmsg, $db);
 
 	$deletegrpomember = $db->execute("DELETE FROM `groups` WHERE `id`=? AND `player_id`=?", array($player->id, $_GET['deletedogrupo']));
 	include("templates/private_header.php");
-	echo "Usuário removido do seu grupo de caça.<br><a href=\"friendlist.php\">Voltar</a>.";
+	echo "Usu√°rio removido do seu grupo de ca√ßa.<br><a href=\"friendlist.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}else{
@@ -142,7 +142,7 @@ elseif ($_GET['addgroup']){
 	if ($verificaantesdegrupo1->recordcount() == 0)
 	{
 	include("templates/private_header.php");
-	echo "Amigo não encontrado!<br /><a href=\"friendlist.php\">Voltar</a>.";
+	echo "Amigo n√£o encontrado!<br /><a href=\"friendlist.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}else{
@@ -151,28 +151,28 @@ elseif ($_GET['addgroup']){
 
  	if ($player->level < 30){
 	include("templates/private_header.php");
-	echo "Seu nível é inferior ‡ 30. Apenas usuários de nível 30 ou mais podem criar grupos de caça.<br /><a href=\"friendlist.php\">Voltar</a>.";
+	echo "Seu n√≠vel √© inferior √° 30. Apenas usu√°rios de n√≠vel 30 ou mais podem criar grupos de ca√ßa.<br /><a href=\"friendlist.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}
 
  	if ($groupfriend['level'] < 30){
 	include("templates/private_header.php");
-	echo "O usuário que voc&ecirc; deseja convidar possui nível inferior ‡ 30.<br /><a href=\"friendlist.php\">Voltar</a>.";
+	echo "O usu√°rio que voc&ecirc; deseja convidar possui n√≠vel inferior √© 30.<br /><a href=\"friendlist.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}
 
  	if ($groupfriend['level'] > ($player->level + 30)){
 	include("templates/private_header.php");
-	echo "A diferença de nível entre voc&ecirc; e seu amigo é maior que 30 nêveis.<br /><a href=\"friendlist.php\">Voltar</a>.";
+	echo "A diferen√ßa de n√≠vel entre voc&ecirc; e seu amigo √© maior que 30 n√≠veis.<br /><a href=\"friendlist.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}
 
  	if ($groupfriend['level'] < ($player->level - 30)){
 	include("templates/private_header.php");
-	echo "A diferença de nível entre voc&ecirc; e seu amigo é maior que 30 nêveis.<br /><a href=\"friendlist.php\">Voltar</a>.";
+	echo "A diferen√ßa de n√≠vel entre voc&ecirc; e seu amigo √© maior que 30 n√≠veis.<br /><a href=\"friendlist.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -181,7 +181,7 @@ elseif ($_GET['addgroup']){
 	if ($checkseeamigo->recordcount() == 0)
 	{
 	include("templates/private_header.php");
-	echo "O usuário " . $groupfriend['username'] . " não é seu amigo.<br /><a href=\"friendlist.php\">Voltar</a>.";
+	echo "O usu√°rio " . $groupfriend['username'] . " n√£o √© seu amigo.<br /><a href=\"friendlist.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -190,7 +190,7 @@ elseif ($_GET['addgroup']){
 	if ($checkseteminvitegrupo->recordcount() > 0)
 	{
 	include("templates/private_header.php");
-	echo "Um convite já foi enviado ao seu amigo.<br /><a href=\"friendlist.php\">Voltar</a>.";
+	echo "Um convite j√° foi enviado ao seu amigo.<br /><a href=\"friendlist.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -199,7 +199,7 @@ elseif ($_GET['addgroup']){
 	if ($checksetemgrupo->recordcount() > 0)
 	{
 	include("templates/private_header.php");
-	echo "Seu amigo já está em um grupo de caça.<br /><a href=\"friendlist.php\">Voltar</a>.";
+	echo "Seu amigo j√° est√° em um grupo de ca√ßa.<br /><a href=\"friendlist.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -208,7 +208,7 @@ elseif ($_GET['addgroup']){
 	if ($checksevctemgrupo->recordcount() > 0)
 	{
 	include("templates/private_header.php");
-	echo "Voc&ecirc; já está em um grupo de caça. Para criar um novo grupo primeiro saia de seu grupo atual.<br /><a href=\"friendlist.php\">Voltar</a>.";
+	echo "Voc&ecirc; j√° est√° em um grupo de ca√ßa. Para criar um novo grupo primeiro saia de seu grupo atual.<br /><a href=\"friendlist.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -225,11 +225,11 @@ elseif ($_GET['addgroup']){
 		$insert['invited_id'] = $groupfriend['id'];
 		$mandaoconvittix = $db->autoexecute('group_invite', $insert, 'INSERT');
 
-			$logmsg = "<a href=\"profile.php?id=" . $player->username . "\">" . $player->username . "</a> está te convidando para fazer parte um grupo de caça. <a href=\"group_accept.php?id=" . $player->id . "\">Clique aqui</a> para aceitar.";
+			$logmsg = "<a href=\"profile.php?id=" . $player->username . "\">" . $player->username . "</a> est√° te convidando para fazer parte um grupo de ca√ßa. <a href=\"group_accept.php?id=" . $player->id . "\">Clique aqui</a> para aceitar.";
 			addlog($groupfriend['id'], $logmsg, $db);
 
 	include("templates/private_header.php");
-	echo "" . $groupfriend['username'] . " foi convidado para fazer parte do seu grupo de caça.<br /><a href=\"friendlist.php\">Voltar</a>.";
+	echo "" . $groupfriend['username'] . " foi convidado para fazer parte do seu grupo de ca√ßa.<br /><a href=\"friendlist.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 }
@@ -242,7 +242,7 @@ include("templates/private_header.php");
 $query = $db->execute("select `fname` from `friends` WHERE `uid`=? order by `fname` asc", array($player->acc_id));
 if ($query->recordcount() == 0)
 {
-	echo "<br/><center><b><font size=\"1\">VocÍ n„o tem amigos.</font></b></center><br/>";
+	echo "<br/><center><b><font size=\"1\">Voc√™ n√£o tem amigos.</font></b></center><br/>";
 	$zeroamigos = 5;
 }
 else
@@ -251,10 +251,10 @@ else
 	echo "<table width=\"100%\" border=\"0\">";
 	echo "<tr>";
 	echo "<th width=\"15%\"><b>Imagem</b></td>";
-	echo "<th width=\"25%\"><b>Usuário</b></td>";
-	echo "<th width=\"20%\"><b>nível</b></td>";
-	echo "<th width=\"20%\"><b>Vocação</b></td>";
-	echo "<th width=\"15%\"><b>Opções</b></td>";
+	echo "<th width=\"25%\"><b>Usu√°rio</b></td>";
+	echo "<th width=\"20%\"><b>n√≠vel</b></td>";
+	echo "<th width=\"20%\"><b>Voca√ß√£o</b></td>";
+	echo "<th width=\"15%\"><b>Op√ß√µes</b></td>";
 	echo "</tr>";
 
 	while($friend = $query->fetchrow())
@@ -282,7 +282,7 @@ else
 	echo "<td>" . $member['level'] . "</td>\n";
 	echo "<td>";
 if ($member['voc'] == 'archer' and $member['promoted'] == 'f'){
-echo "Caçador";
+echo "Ca√ßador";
 } else if ($member['voc'] == 'knight' and $member['promoted'] == 'f'){
 echo "Espadachim";
 } else if ($member['voc'] == 'mage' and $member['promoted'] == 'f'){
@@ -315,13 +315,13 @@ echo "<font size=\"1\"><b>Voc&ecirc; tem ".$num_rows." amigo(s)</b></font>";
 
 	echo "<br/><br/>\n";
 	echo "<fieldset>\n";
-	echo "<legend><b>Grupo de Caça</b></legend>\n";
+	echo "<legend><b>Grupo de Ca√ßa</b></legend>\n";
 	$procuraseugrupo = $db->execute("select * from `groups` WHERE `player_id`=?", array($player->id));
 		if ($procuraseugrupo->recordcount() == 0)
 		{
-		echo "<br/><center><b><font size=\"1\">Voc&ecirc; não possui um grupo de caça.</font></b></center><br/>";
+		echo "<br/><center><b><font size=\"1\">Voc&ecirc; n√£o possui um grupo de ca√ßa.</font></b></center><br/>";
  			if ($player->level < 30){
-			echo "<center><b><font size=\"1\">Apenas usuários de nível 30 ou mais podem criar grupos de caça.</font></b></center><br/>";
+			echo "<center><b><font size=\"1\">Apenas usu√°rios de n√≠vel 30 ou mais podem criar grupos de ca√ßa.</font></b></center><br/>";
 			}
 		}else{
 		$procuragrupoinfo = $procuraseugrupo->fetchrow();
@@ -329,11 +329,11 @@ echo "<font size=\"1\"><b>Voc&ecirc; tem ".$num_rows." amigo(s)</b></font>";
 
 	echo "<table width=\"100%\" border=\"0\">";
 	echo "<tr>";
-	echo "<th width=\"25%\"><b>Usuário</b></td>";
-	echo "<th width=\"10%\"><b>nível</b></td>";
+	echo "<th width=\"25%\"><b>Usu√°rio</b></td>";
+	echo "<th width=\"10%\"><b>n√≠vel</b></td>";
 	echo "<th width=\"10%\"><b>EXP</b></td>";
-	echo "<th width=\"35%\"><b>Informação</b></td>";
-	echo "<th width=\"20%\"><b>Opções</b></td>";
+	echo "<th width=\"35%\"><b>Informa√ß√£o</b></td>";
+	echo "<th width=\"20%\"><b>Op√ß√µes</b></td>";
 	echo "</tr>";
 
 	$listamembersgrupo = $db->execute("select groups.player_id, groups.exp, groups.kills, players.id, players.username, players.level from `groups`, `players` WHERE groups.id=? and players.id=groups.player_id", array($iddddoseugrupo));
@@ -388,13 +388,13 @@ echo "<font size=\"1\"><b>Voc&ecirc; tem ".$num_rows." amigo(s)</b></font>";
 	
 	if ($procuraseugrupo->recordcount() > 0)
 	{
-	echo "<center><font size=\"1\">Seu grupo já matou " . $totalgkills . " monstros.</font></center>";
+	echo "<center><font size=\"1\">Seu grupo j√° matou " . $totalgkills . " monstros.</font></center>";
 	}
 
 	echo "</fieldset>\n";
 	if ($procuraseugrupo->recordcount() > 0)
 	{
-	echo "<center><font size=\"1\">" . $listamembersgrupo->recordcount() . " usuário(s) no grupo. Máximo de 4 usuários.</font></center>";
+	echo "<center><font size=\"1\">" . $listamembersgrupo->recordcount() . " usu√°rio(s) no grupo. M√°ximo de 4 usu√°rios.</font></center>";
 	}
 
 
@@ -403,15 +403,15 @@ echo "<font size=\"1\"><b>Voc&ecirc; tem ".$num_rows." amigo(s)</b></font>";
 		{
 		echo "<br/><br/>";
 		echo "<fieldset>";
-		echo "<legend><b>Convites para grupos de Caça</b></legend>\n";
+		echo "<legend><b>Convites para grupos de Ca√ßa</b></legend>\n";
 
 	echo "<table width=\"100%\" border=\"0\">";
 	echo "<tr>";
 	echo "<th width=\"30%\"><b>Lider</b></td>";
-	echo "<th width=\"10%\"><b>nível</b></td>";
+	echo "<th width=\"10%\"><b>n√≠vel</b></td>";
 	echo "<th width=\"20%\"><b>Membros</b></td>";
-	echo "<th width=\"20%\"><b>Informação</b></td>";
-	echo "<th width=\"20%\"><b>Opções</b></td>";
+	echo "<th width=\"20%\"><b>Informa√ß√£o</b></td>";
+	echo "<th width=\"20%\"><b>Op√ß√µes</b></td>";
 	echo "</tr>";
 
 			while($convitex2 = $convitex1->fetchrow())
@@ -427,7 +427,7 @@ echo "<font size=\"1\"><b>Voc&ecirc; tem ".$num_rows." amigo(s)</b></font>";
 				if ($lidergorupmembis->recordcount() > 3){
 				echo "<td><font size=\"1\">Sem Vagas</font></td>";
 				}else{
-				echo "<td><font size=\"1\">Disponível</font></td>";
+				echo "<td><font size=\"1\">Dispon√≠vel</font></td>";
 				}
 				echo "<td><font size=\"1\"><a href=\"group_accept.php?id=". $convitex2['group_id'] ."\">Aceitar</a> / <a href=\"friendlist.php?deleteconvite=". $convitex2['group_id'] ."\">Recusar</a></font></td>";
 				echo "</tr>";
@@ -439,7 +439,7 @@ echo "<font size=\"1\"><b>Voc&ecirc; tem ".$num_rows." amigo(s)</b></font>";
 
 	echo "<br/><br/>\n";
 	echo "<fieldset>\n";
-	echo "<legend><b>Opções</b></legend>\n";
+	echo "<legend><b>Op√ß√µes</b></legend>\n";
 	echo "<form method=\"get\" action=\"friendlist.php\">\n";
 	echo "<table width=\"100%\">\n";
 	echo "<tr><td width=\"30%\"><b><font size=\"1\">Adicionar Amigo:</font></b></td>\n<td width=\"40%\"><input type=\"text\" name=\"add\" /></td>";
@@ -448,7 +448,7 @@ echo "<font size=\"1\"><b>Voc&ecirc; tem ".$num_rows." amigo(s)</b></font>";
 if (($zeroamigos != 5) and ($player->level > 29)){
 	if (($procuraseugrupo->recordcount() == 0) or (($procuraseugrupo->recordcount() != 0) and ($iddddoseugrupo == $player->id))){
 
-	echo "<tr><td width=\"30%\"><b><font size=\"1\">Adicionar Amigo no Grupo de Caça:</font></b></td>\n<td width=\"40%\">";
+	echo "<tr><td width=\"30%\"><b><font size=\"1\">Adicionar Amigo no Grupo de Ca√ßa:</font></b></td>\n<td width=\"40%\">";
 
 	$queryfriends = $db->execute("select `fname` from `friends` WHERE `uid`=?", array($player->acc_id));
 	echo "<select name=\"addgroup\"><option value=''>Selecione</option>";
