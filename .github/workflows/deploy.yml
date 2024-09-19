@@ -1,0 +1,30 @@
+name: Deploy
+
+on:
+  workflow_dispatch
+
+jobs:
+    build:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Configure SSH
+              run: |
+                mkdir -p ~/.ssh/
+                echo "$SSH_PRIVATE_KEY" > ../private.key
+                sudo chmod 600 ../private.key
+                cat >>~/.ssh/config <<END
+                Host production
+                  HostName $SSH_HOST
+                  User $SSH_USER
+                  IdentityFile $SSH_KEY_PATH
+                  StrictHostKeyChecking no
+                END
+              shell: bash
+              env:
+                SSH_PRIVATE_KEY: ${{secrets.DEPLOY_PRIVATE_KEY}}
+                SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+                SSH_USER: ${{ secrets.DEPLOY_USERNAME }}
+                SSH_HOST: ${{ secrets.DEPLOY_EXTERNAL_IP }}
+
+            - name: Deploy
+              run: ssh production "cd ${{ secrets.DEPLOY_APPLICATION_PATH }} && git stash && sudo docker compose stop -t 1 legacy-php && git pull && git stash apply && sudo docker compose up -d --build legacy-php"
