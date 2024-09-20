@@ -18,4 +18,15 @@ $db->Execute("SET CHARACTER SET 'utf8'");
 $db->SetFetchMode(ADODB_FETCH_ASSOC); //Fetch associative arrays
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC; //Fetch associative arrays
 //$db->debug = true; //Debug
+
+$smtp_host = "smtp.server.com";
+$has_smtp_auth = true;
+$smtp_username = "user@domain.com";
+$smtp_password = "suasenha";
+$smtp_security_method = "tls";
+$smtp_port = 587;
+
+$domain = 'ocrpg.net';
+$domain_url = 'http://ocrpg.net';
+
 ?>

@@ -22,7 +22,7 @@ class OCv2
 			return mysql_num_rows($query);
 		} else {
 			$query = mysql_query("SELECT * FROM $data WHERE $data2 $vll '$data3'")
-				or print (ERROR);
+				or print(ERROR);
 			if (empty($erro)) {
 				return mysql_num_rows($query);
 			}
@@ -46,7 +46,6 @@ class OCv2
 		$result2 = str_replace($virgula, "", $result);
 		return $result2;
 	}
-
 }
 // FIM DO MEU CODE LINDO //
 
@@ -438,7 +437,6 @@ function showName($name, &$db, $status = 'on', $link = 'on')
 
 
 				$subname_set = " [<font color=\"" . $pieces[1] . "\">" . $pieces[0] . "</font>]";
-
 			}
 		}
 		$closevip = false;
@@ -473,7 +471,6 @@ function showName($name, &$db, $status = 'on', $link = 'on')
 		if ($closevip) {
 			$return .= "</font>";
 		}
-
 	} else {
 		$return = "Ninguém";
 	}
@@ -490,4 +487,30 @@ function filtro($data)
 	$data = str_replace("([^0-9])", "", $data) . "";
 	return $data;
 }
+
+function send_mail($from_name, $mail_to, $subject, $body)
+{
+    include("config.php");
+	require("phpmailer/class.phpmailer.php");
+
+	$mail = new PHPMailer();
+	$mail->isSMTP();
+	$mail->Host = $smtp_host;
+	$mail->SMTPAuth = $has_smtp_auth;
+	$mail->Username = $smtp_username;
+	$mail->Password = $smtp_password;
+	$mail->SMTPSecure = $smtp_security_method;
+	$mail->Port = $smtp_port;
+
+	$mail->From = $smtp_username;
+	$mail->FromName = $from_name;
+	$mail->addAddress($mail_to);
+
+	$mail->isHTML(true);
+	$mail->Subject = $subject;
+	$mail->Body = $body;
+
+	return $mail->send();
+}
+
 ?>
