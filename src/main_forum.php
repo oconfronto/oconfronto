@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "F髍um");
+define("PAGENAME", "F贸rum");
 $player = check_user($secret_key, $db);
 
 include("checkforum.php");
@@ -21,15 +21,15 @@ if ((!$_GET['cat']) or (($_GET['cat'] != 'noticias') and ($_GET['cat'] != 'reino
 $cate = $_GET['cat'];
 
 if ($cate == 'gangues') {
-$categoria = "Cl鉺";
+$categoria = "Cl茫s";
 }elseif ($cate == 'trade') {
 $categoria = "Compro/Vendo";
 }elseif ($cate == 'noticias') {
-$categoria = "Not韈ias";
+$categoria = "Not铆cias";
 }elseif ($cate == 'sugestoes') {
-$categoria = "Sugest鮡s";
+$categoria = "Sugest玫es";
 }elseif ($cate == 'duvidas') {
-$categoria = "D鷙idas";
+$categoria = "D煤vidas";
 }elseif ($cate == 'fan') {
 $categoria = "Fanwork";
 }elseif ($cate == 'off') {
@@ -39,11 +39,11 @@ $categoria = $cate;
 }
 
 if ($_GET['success'] == 'true'){
-	echo showAlert("T髉ico postado com sucesso!");
+	echo showAlert("T贸pico postado com sucesso!");
 }
 
 
-echo "<b><font size=\"1\"><a href=\"select_forum.php\">F髍uns</a> -> <a href=\"main_forum.php?cat=" . $cate . "\">" . ucfirst($categoria) . "</a></font></b>";
+echo "<b><font size=\"1\"><a href=\"select_forum.php\">F贸runs</a> -> <a href=\"main_forum.php?cat=" . $cate . "\">" . ucfirst($categoria) . "</a></font></b>";
 
 
 if (isset($_GET['page']) and is_numeric($_GET['page']) and $page = $_GET['page']) {
@@ -71,10 +71,10 @@ $query = $db->execute($sqlStr, $values);
 
 echo "<table width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"3\" cellspacing=\"1\" bgcolor=\"#CCCCCC\">";
 echo "<tr>";
-echo "<th width=\"55%\" align=\"center\" bgcolor=\"#E1CBA4\">T髉ico</th>";
+echo "<th width=\"55%\" align=\"center\" bgcolor=\"#E1CBA4\">T贸pico</th>";
 echo "<th width=\"15%\" align=\"center\" bgcolor=\"#E1CBA4\">Visitas</th>";
 echo "<th width=\"15%\" align=\"center\" bgcolor=\"#E1CBA4\">Respostas</th>";
-echo "<th width=\"15%\" align=\"center\" bgcolor=\"#E1CBA4\"><font size=1>趌tima Postagem</font></th>";
+echo "<th width=\"15%\" align=\"center\" bgcolor=\"#E1CBA4\"><font size=1>煤ltima Postagem</font></th>";
 echo "</tr>";
 
 if ($aux['total'] > 0) {
@@ -101,7 +101,7 @@ if ($aux['total'] > 0) {
 
 			if ($rows['reply'] > 0){
 			$lastpostid = $db->GetOne("select SQL_CACHE `a_user_id` from `forum_answer` where `question_id`=? order by `a_datetime` DESC", array($rows['id']));
-				echo "<font size=\"1\">趌timo post por " . showName($lastpostid, $db) . "</font></td>";
+				echo "<font size=\"1\">煤ltimo post por " . showName($lastpostid, $db) . "</font></td>";
 			}else{
 				echo "<font size=\"1\">Iniciado por " . showName($rows['user_id'], $db) . "</font></td>";
 			}
@@ -113,11 +113,11 @@ if ($aux['total'] > 0) {
             }
  
 } else {
-	echo "<tr class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><td align=\"center\"><b>Nenhum t髉ico encontrado.</b></td><td align=\"center\">#</td><td align=\"center\">#</td><td align=\"center\">#</td></tr>";
+	echo "<tr class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><td align=\"center\"><b>Nenhum t贸pico encontrado.</b></td><td align=\"center\">#</td><td align=\"center\">#</td><td align=\"center\">#</td></tr>";
 }
 
 echo "<tr>";
-echo "<td colspan=\"5\" align=\"right\" bgcolor=\"#E1CBA4\"><a href=\"create_topic.php?category=" . $cate . "\"><strong>Criar novo T髉ico</strong> </a></td>";
+echo "<td colspan=\"5\" align=\"right\" bgcolor=\"#E1CBA4\"><a href=\"create_topic.php?category=" . $cate . "\"><strong>Criar novo T贸pico</strong> </a></td>";
 echo "</tr>";
 echo "</table>";
 

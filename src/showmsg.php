@@ -7,7 +7,7 @@ $otherwar = $db->execute("select * from `pwar` where `time`>? and (`status`='t' 
 
 if (($player->stat_points > 0) and ($msgtype == 1))
 {
-	echo "Voc&ecirc; tem " . $player->stat_points . " pontos de status disponÌveis! <a href=\"stat_points.php\">Clique aqui para utiliza-los</a>!";
+	echo "Voc&ecirc; tem " . $player->stat_points . " pontos de status dispon√≠veis! <a href=\"stat_points.php\">Clique aqui para utiliza-los</a>!";
 	$messaged = 1;
 }
 
@@ -15,62 +15,62 @@ elseif (($msgtype == 2) and ($messaged == 0))
 {
 	$lembrete = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`<90", array($player->id, 1));
 	if ($lembrete->recordcount() > 0 and $messaged == 0){
-	echo "<a href=\"promote.php\">Clique aqui</a> para continuar sua miss„o!";
+	echo "<a href=\"promote.php\">Clique aqui</a> para continuar sua miss√£o!";
 	$messaged = 1;
 	}
 	$lembrete2 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`<90", array($player->id, 2));
 	if ($lembrete2->recordcount() > 0 and $messaged == 0){
-	echo "<a href=\"quest1.php\">Clique aqui</a> para continuar sua miss„o!";
+	echo "<a href=\"quest1.php\">Clique aqui</a> para continuar sua miss√£o!";
 	$messaged = 1;
 	}
 	$lembrete4 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`!=90", array($player->id, 4));
 	if ($lembrete4->recordcount() > 0 and $messaged == 0){
-	echo "<a href=\"tavern.php?p=quests&start=4\">Clique aqui</a> para continuar sua miss„o!";
+	echo "<a href=\"tavern.php?p=quests&start=4\">Clique aqui</a> para continuar sua miss√£o!";
 	$messaged = 1;
 	}
 	$lembrete5 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`!=90", array($player->id, 5));
 	if ($lembrete5->recordcount() > 0 and $messaged == 0){
-	echo "<a href=\"tavern.php?p=quests&start=5\">Clique aqui</a> para continuar sua miss„o!";
+	echo "<a href=\"tavern.php?p=quests&start=5\">Clique aqui</a> para continuar sua miss√£o!";
 	$messaged = 1;
 	}
 	$lembrete7 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`!=90", array($player->id, 7));
 	if ($lembrete7->recordcount() > 0 and $messaged == 0){
-	echo "<a href=\"quest4.php\">Clique aqui</a> para continuar sua miss„o!";
+	echo "<a href=\"quest4.php\">Clique aqui</a> para continuar sua miss√£o!";
 	$messaged = 1;
 	}
 	$lembrete8 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`!=90", array($player->id, 9));
 	if ($lembrete8->recordcount() > 0 and $messaged == 0){
-	echo "<a href=\"quest5.php\">Clique aqui</a> para continuar sua miss„o!";
+	echo "<a href=\"quest5.php\">Clique aqui</a> para continuar sua miss√£o!";
 	$messaged = 1;
 	}
 	$lembrete9 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`!=90", array($player->id, 12));
 	if ($lembrete9->recordcount() > 0 and $messaged == 0){
-	echo "<a href=\"promo1.php\">Clique aqui</a> para continuar sua miss„o!";
+	echo "<a href=\"promo1.php\">Clique aqui</a> para continuar sua miss√£o!";
 	$messaged = 1;
 	}
 	$lembrete102 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`!=90", array($player->id, 13));
 	if ($lembrete102->recordcount() > 0 and $messaged == 0){
-	echo "<a href=\"quest6.php\">Clique aqui</a> para continuar sua miss„o!";
+	echo "<a href=\"quest6.php\">Clique aqui</a> para continuar sua miss√£o!";
 	$messaged = 1;
 	}
 	$lembrete10 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`!=90 and `quest_status`!=89", array($player->id, 14));
 	if ($lembrete10->recordcount() > 0 and $messaged == 0){
-	echo "<a href=\"quest6.php\">Clique aqui</a> para continuar sua miss„o!";
+	echo "<a href=\"quest6.php\">Clique aqui</a> para continuar sua miss√£o!";
 	$messaged = 1;
 	}
 	$lembrete11 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`!=90", array($player->id, 15));
 	if ($lembrete11->recordcount() > 0 and $messaged == 0){
-	echo "<a href=\"quest7.php\">Clique aqui</a> para continuar sua miss„o!";
+	echo "<a href=\"quest7.php\">Clique aqui</a> para continuar sua miss√£o!";
 	$messaged = 1;
 	}
 	$lembrete12 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`!=90", array($player->id, 17));
 	if ($lembrete12->recordcount() > 0 and $messaged == 0){
-	echo "<a href=\"quest8.php\">Clique aqui</a> para continuar sua miss„o!";
+	echo "<a href=\"quest8.php\">Clique aqui</a> para continuar sua miss√£o!";
 	$messaged = 1;
 	}
 	$lembrete13 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`!=90", array($player->id, 18));
 	if ($lembrete13->recordcount() > 0 and $messaged == 0){
-	echo "<a href=\"quest9.php\">Clique aqui</a> para continuar sua miss„o!";
+	echo "<a href=\"quest9.php\">Clique aqui</a> para continuar sua miss√£o!";
 	$messaged = 1;
 	}
 }
@@ -93,7 +93,7 @@ elseif (($msgtype == 3) and ($messaged == 0)){
 	$lottoavisoheader = "lottery_" . $player->serv . "";
 
 	if ($setting->$torneiovarificapelotier == y) {
-		echo "O <a href=\"tournament.php\">Torneio</a> comeÁou!";
+		echo "O <a href=\"tournament.php\">Torneio</a> come√ßou!";
 		$messaged = 1;
 	}else{
 	$sorteia = rand(1, 7);
@@ -147,7 +147,7 @@ elseif (($msgtype == 3) and ($messaged == 0)){
 			}
 
 			if ((($player->vip > time()) and ($reino['work'] > '0.15')) or ($player->vip < time())) {
-				echo "BÙnus salarial de " . ceil($reino['work'] * 100) . "% por " . $valortempo2 . " " . $auxiliar2 . ".";
+				echo "B√¥nus salarial de " . ceil($reino['work'] * 100) . "% por " . $valortempo2 . " " . $auxiliar2 . ".";
 				$messaged = 1;
 			}
 		}
@@ -171,7 +171,7 @@ elseif (($msgtype == 3) and ($messaged == 0)){
 			}
 
 			if ((($player->vip > time()) and ($reino['work'] > '0.15')) or ($player->vip < time())) {
-				echo "Os portıes do reino est„o abertos! <a href=\"monster.php\">Clique aqui</a> para lutar contra monstros especiais.";
+				echo "Os port√µes do reino est√£o abertos! <a href=\"monster.php\">Clique aqui</a> para lutar contra monstros especiais.";
 				$messaged = 1;
 			}
 		}
@@ -179,7 +179,7 @@ elseif (($msgtype == 3) and ($messaged == 0)){
 
 	if (strstr($_SERVER["HTTP_USER_AGENT"], "MSIE")) {
 		if ($sorteia == 7){
- 	   		echo "Seu navegador pode n„o suportar o jogo. Experimente Firefox ou Chrome.";
+ 	   		echo "Seu navegador pode n√£o suportar o jogo. Experimente Firefox ou Chrome.";
 			$messaged = 1;
 		}
 	}
@@ -192,14 +192,14 @@ elseif (($msgtype == 4) and ($messaged == 0)){
 	$imperador = $db->GetOne("select `imperador` from `reinos` where `id`=?", array($player->reino));
 	$time = $db->GetOne("select `poll` from `reinos` where `id`=?", array($player->reino));
 	if (($time > time()) and ($imperador == 0)){
- 		echo "Participe das eleiÁıes para novo Imperador. <a href=\"reino.php\">Clique aqui</a>.";
+ 		echo "Participe das elei√ß√µes para novo Imperador. <a href=\"reino.php\">Clique aqui</a>.";
 		$messaged = 1;
 
 	} elseif ($imperador > 0) {
 		$post = $db->execute("select `id` from `forum_question` where `category`='reino' and `postado`>? and `user_id`=? order by `postado` desc limit 1", array((time() - 172800), $imperador));
 		if ($post->recordcount() > 0) {
 			$selecter = $post->fetchrow();
- 			echo "<a href=\"view_topic.php?id=" . $selecter['id'] . "\">Clique aqui</a> e leia a ˙ltima mensagem do imperador.";
+ 			echo "<a href=\"view_topic.php?id=" . $selecter['id'] . "\">Clique aqui</a> e leia a √∫ltima mensagem do imperador.";
 			$messaged = 1;
 		}
 	}
@@ -227,16 +227,16 @@ elseif (($msgtype == 5) and ($gwar->recordcount() > 0) and ($messaged == 0)){
 		}
 
 	if ($war['time'] > time()){
- 		echo "O seu cl„ atacar· o cl„ " . $guildname . " em " . $valortempo . " " . $auxiliar . ". <a href=\"view_war.php?id=" . $war['id'] . "\">Clique aqui</a> para ver a guerra.";
+ 		echo "O seu cl√£ atacar√° o cl√£ " . $guildname . " em " . $valortempo . " " . $auxiliar . ". <a href=\"view_war.php?id=" . $war['id'] . "\">Clique aqui</a> para ver a guerra.";
 		$messaged = 1;
 	}elseif ($war['time'] < time()){
- 		echo "<a href=\"view_war.php?id=" . $war['id'] . "\">Clique aqui</a> e veja como seu cl„ se saiu na guerra contra o cl„ " . $guildname . ".";
+ 		echo "<a href=\"view_war.php?id=" . $war['id'] . "\">Clique aqui</a> e veja como seu cl√£ se saiu na guerra contra o cl√£ " . $guildname . ".";
 		$messaged = 1;
 	}elseif ($otherwar->recordcount() > 0){
 		$war = $otherwar->fetchrow();
 		$guildname = $db->GetOne("select `name` from `guilds` where `id`=?", array($war['guild_id']));
 		$enemyname = $db->GetOne("select `name` from `guilds` where `id`=?", array($war['enemy_id']));
- 		echo "O cl„ " . $guildname . " ir· atacar o cl„ " . $enemyname . " em " . $valortempo . " " . $auxiliar . ". <a href=\"view_war.php?id=" . $war['id'] . "\">Clique aqui</a> para ver a guerra.";
+ 		echo "O cl√£ " . $guildname . " ir√° atacar o cl√£ " . $enemyname . " em " . $valortempo . " " . $auxiliar . ". <a href=\"view_war.php?id=" . $war['id'] . "\">Clique aqui</a> para ver a guerra.";
 		$messaged = 1;
 	}
 }
@@ -259,10 +259,10 @@ $war = $otherwar->fetchrow();
 			$auxiliar = "hora(s)";
 		}
 
- 		echo "O cl„ " . $guildname . " ir· atacar o cl„ " . $enemyname . " em " . $valortempo . " " . $auxiliar . ". <a href=\"view_war.php?id=" . $war['id'] . "\">Clique aqui</a> para ver a guerra.";
+ 		echo "O cl√£ " . $guildname . " ir√° atacar o cl√£ " . $enemyname . " em " . $valortempo . " " . $auxiliar . ". <a href=\"view_war.php?id=" . $war['id'] . "\">Clique aqui</a> para ver a guerra.";
 		$messaged = 1;
 	}else{
- 		echo "O cl„ " . $guildname . " atacou o cl„ " . $enemyname . ". <a href=\"view_war.php?id=" . $war['id'] . "\">Clique aqui</a> e veja como foi a batalha.";
+ 		echo "O cl√£ " . $guildname . " atacou o cl√£ " . $enemyname . ". <a href=\"view_war.php?id=" . $war['id'] . "\">Clique aqui</a> e veja como foi a batalha.";
 		$messaged = 1;
 	}
 }
@@ -272,10 +272,10 @@ $war = $otherwar->fetchrow();
 		$mensagemespecial = rand(1, 3);
 		if ($mensagemespecial == 1) {
 			// echo "Adicione nosso aplicativo no Orkut! <a href=\"view_topic.php?id=1430\">Leia mais</a>.";
-            echo "Curta nossa página no facebook! <a href=\"http://facebook.com/ocrpg\" target=\"_blank\">Clique aqui</a>.";
+            echo "Curta nossa p√°gina no facebook! <a href=\"http://facebook.com/ocrpg\" target=\"_blank\">Clique aqui</a>.";
 		}elseif ($mensagemespecial == 2) {
-			// echo "Torneios e Loterias ser„o abertos semanalmente. <a href=\"view_topic.php?id=1215\">Leia mais</a>.";
-            echo "<a href=\"view_topic.php?id=1\">Clique aqui</a> e fique por dentro de todas as novidades da nova versão.";
+			// echo "Torneios e Loterias ser√£o abertos semanalmente. <a href=\"view_topic.php?id=1215\">Leia mais</a>.";
+            echo "<a href=\"view_topic.php?id=1\">Clique aqui</a> e fique por dentro de todas as novidades da nova vers√£o.";
 		}else{
 			// echo "Ganhe " . $setting->earn . " moedas de ouro a cada amigo convidado. <a href=\"earn.php\">Clique aqui</a>.";
             echo "Algum problema com o jogo? <a href=\"view_topic.php?id=2\">Clique aqui</a>.";

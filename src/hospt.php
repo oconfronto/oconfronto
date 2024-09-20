@@ -17,20 +17,20 @@ if ($_POST['submit']) {
 
     if ($player->level < 20) {
         include("templates/private_header.php");
-        echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-        echo "<i>Você só pode vender poções a partir do nível 20.<br/></i>";
+        echo "<fieldset><legend><b>Vender poÃ§Ãµes</b></legend>\n";
+        echo "<i>VocÃª sÃ³ pode vender poÃ§Ãµes a partir do nÃ­vel 20.<br/></i>";
         echo "</fieldset>\n";
-        echo '<a href="inventory.php">Voltar ao inventário.</a>';
+        echo '<a href="inventory.php">Voltar ao inventÃ¡rio.</a>';
         include("templates/private_footer.php");
         exit;
     }
 
 	if (!is_numeric($_POST['sellhp'])){
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-	echo "<i>O valor que você inseriu não é valido.<br/></i>";
+	echo "<fieldset><legend><b>Vender poÃ§Ãµes</b></legend>\n";
+	echo "<i>O valor que vocÃª inseriu nÃ£o Ã© valido.<br/></i>";
 	echo "</fieldset>\n";
-	echo '<a href="inventory.php">Voltar ao inventário.</a>';
+	echo '<a href="inventory.php">Voltar ao inventÃ¡rio.</a>';
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -38,30 +38,30 @@ if ($_POST['submit']) {
 
 	if (!is_numeric($_POST['sellbhp'])){
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-	echo "<i>O valor que você inseriu não é valido.<br/></i>";
+	echo "<fieldset><legend><b>Vender poÃ§Ãµes</b></legend>\n";
+	echo "<i>O valor que vocÃª inseriu nÃ£o Ã© valido.<br/></i>";
 	echo "</fieldset>\n";
-	echo '<a href="inventory.php">Voltar ao inventário.</a>';
+	echo '<a href="inventory.php">Voltar ao inventÃ¡rio.</a>';
 	include("templates/private_footer.php");
 	exit;
 	}
 
 	if (!is_numeric($_POST['sellep'])){
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-	echo "<i>O valor que você inseriu não é valido.<br/></i>";
+	echo "<fieldset><legend><b>Vender poÃ§Ãµes</b></legend>\n";
+	echo "<i>O valor que vocÃª inseriu nÃ£o Ã© valido.<br/></i>";
 	echo "</fieldset>\n";
-	echo '<a href="inventory.php">Voltar ao inventário.</a>';
+	echo '<a href="inventory.php">Voltar ao inventÃ¡rio.</a>';
 	include("templates/private_footer.php");
 	exit;
 	}
 
 	if (!is_numeric($_POST['sellmp'])){
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-	echo "<i>O valor que você inseriu não é valido.<br/></i>";
+	echo "<fieldset><legend><b>Vender poÃ§Ãµes</b></legend>\n";
+	echo "<i>O valor que vocÃª inseriu nÃ£o Ã© valido.<br/></i>";
 	echo "</fieldset>\n";
-	echo '<a href="inventory.php">Voltar ao inventário.</a>';
+	echo '<a href="inventory.php">Voltar ao inventÃ¡rio.</a>';
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -81,10 +81,10 @@ if ($_POST['submit']) {
 	$pocoesdevida = floor($_POST['sellhp']);
 	if ($pocoesdevida > $numerodepocoes){
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-	echo "<i>Você não possui " . $pocoesdevida . " poções de vida.<br/></i>";
+	echo "<fieldset><legend><b>Vender poÃ§Ãµes</b></legend>\n";
+	echo "<i>VocÃª nÃ£o possui " . $pocoesdevida . " poÃ§Ãµes de vida.<br/></i>";
 	echo "</fieldset>\n";
-	echo '<a href="inventory.php">Voltar ao inventário.</a>';
+	echo '<a href="inventory.php">Voltar ao inventÃ¡rio.</a>';
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -92,10 +92,10 @@ if ($_POST['submit']) {
 	$bigpocoesdevida = floor($_POST['sellbhp']);
 	if ($bigpocoesdevida > $numerodepocoes3){
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-	echo "<i>Você não possui " . $bigpocoesdevida . " poções grandes de vida.<br/></i>";
+	echo "<fieldset><legend><b>Vender poÃ§Ãµes</b></legend>\n";
+	echo "<i>VocÃª nÃ£o possui " . $bigpocoesdevida . " poÃ§Ãµes grandes de vida.<br/></i>";
 	echo "</fieldset>\n";
-	echo '<a href="inventory.php">Voltar ao inventário.</a>';
+	echo '<a href="inventory.php">Voltar ao inventÃ¡rio.</a>';
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -103,10 +103,10 @@ if ($_POST['submit']) {
 	$pocoesdeenergia = floor($_POST['sellep']);
 	if ($pocoesdeenergia > $numerodepocoes2){
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-	echo "<i>Você não possui " . $pocoesdeenergia . " poções de energia.<br/></i>";
+	echo "<fieldset><legend><b>Vender poÃ§Ãµes</b></legend>\n";
+	echo "<i>VocÃª nÃ£o possui " . $pocoesdeenergia . " poÃ§Ãµes de energia.<br/></i>";
 	echo "</fieldset>\n";
-	echo '<a href="inventory.php">Voltar ao inventário.</a>';
+	echo '<a href="inventory.php">Voltar ao inventÃ¡rio.</a>';
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -114,10 +114,10 @@ if ($_POST['submit']) {
 	$pocoesdemana = floor($_POST['sellmp']);
 	if ($pocoesdemana > $numerodepocoes4){
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-	echo "<i>Você não possui " . $pocoesdeenergia . " poções de mana.<br/></i>";
+	echo "<fieldset><legend><b>Vender poÃ§Ãµes</b></legend>\n";
+	echo "<i>VocÃª nÃ£o possui " . $pocoesdeenergia . " poÃ§Ãµes de mana.<br/></i>";
 	echo "</fieldset>\n";
-	echo '<a href="inventory.php">Voltar ao inventário.</a>';
+	echo '<a href="inventory.php">Voltar ao inventÃ¡rio.</a>';
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -140,14 +140,14 @@ if ($_POST['submit']) {
 	$query = $db->execute("update `players` set `gold`=? where `id`=?", array($player->gold + $ganha3, $player->id));
 
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-	echo "<i>Você vendeu " . $pocoesdevida . " poções de vida por " . number_format($ganha) . " de ouro.<br/></i>";
-	echo "<i>Você vendeu " . $bigpocoesdevida . " poções grandes de vida por " . number_format($ganha2) . " de ouro.<br/></i>";
-	echo "<i>Você vendeu " . $pocoesdeenergia . " poções de energia por " . number_format($ganha22) . " de ouro.<br/></i>";
-	echo "<i>Você vendeu " . $pocoesdemana . " poções de mana por " . number_format($ganha222) . " de ouro.<br/></i>";
-	echo "<i>Você faturou: " . number_format($ganha3) . " de ouro.<br/></i>";
+	echo "<fieldset><legend><b>Vender poÃ§Ãµes</b></legend>\n";
+	echo "<i>VocÃª vendeu " . $pocoesdevida . " poÃ§Ãµes de vida por " . number_format($ganha) . " de ouro.<br/></i>";
+	echo "<i>VocÃª vendeu " . $bigpocoesdevida . " poÃ§Ãµes grandes de vida por " . number_format($ganha2) . " de ouro.<br/></i>";
+	echo "<i>VocÃª vendeu " . $pocoesdeenergia . " poÃ§Ãµes de energia por " . number_format($ganha22) . " de ouro.<br/></i>";
+	echo "<i>VocÃª vendeu " . $pocoesdemana . " poÃ§Ãµes de mana por " . number_format($ganha222) . " de ouro.<br/></i>";
+	echo "<i>VocÃª faturou: " . number_format($ganha3) . " de ouro.<br/></i>";
 	echo "</fieldset>\n";
-	echo '<a href="inventory.php">Voltar ao inventário.</a>';
+	echo '<a href="inventory.php">Voltar ao inventÃ¡rio.</a>';
 	include("templates/private_footer.php");
 	exit;
 
@@ -174,10 +174,10 @@ if ($_GET['act'])
 	if($_GET['act'] == sell){
         if ($player->level < 20) {
             include("templates/private_header.php");
-            echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-            echo "<i>Você s— pode vender po›es a partir do n’vel 20.<br/></i>";
+            echo "<fieldset><legend><b>Vender poÃ§Ãµes</b></legend>\n";
+            echo "<i>VocÃª sÃ³ pode vender poÃ§Ãµes a partir do nÃ­vel 20.<br/></i>";
             echo "</fieldset>\n";
-            echo '<a href="inventory.php">Voltar ao inventário.</a>';
+            echo '<a href="inventory.php">Voltar ao inventÃ¡rio.</a>';
             include("templates/private_footer.php");
             exit;
         }
@@ -196,25 +196,25 @@ if ($_GET['act'])
 	$total = $numerodepocoes + $numerodepocoes2 + $numerodepocoes3 + $numerodepocoes4;
 	if ($total < 1){
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-	echo "<i>Você não possui poções para vender.<br/></i>";
+	echo "<fieldset><legend><b>Vender poÃ§Ãµes</b></legend>\n";
+	echo "<i>VocÃª nÃ£o possui poÃ§Ãµes para vender.<br/></i>";
 	echo "</fieldset>\n";
-	echo '<a href="inventory.php">Voltar ao inventário.</a>';
+	echo '<a href="inventory.php">Voltar ao inventÃ¡rio.</a>';
 	include("templates/private_footer.php");
 	exit;
 	}
 
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-	echo "<i>Você possui <b>" . $numerodepocoes . " poções de vida</b> e <b>" . $numerodepocoes2 . " poções de energia</b>.<br/></i>";
+	echo "<fieldset><legend><b>Vender poÃ§Ãµes</b></legend>\n";
+	echo "<i>VocÃª possui <b>" . $numerodepocoes . " poÃ§Ãµes de vida</b> e <b>" . $numerodepocoes2 . " poÃ§Ãµes de energia</b>.<br/></i>";
 	echo "<form method=\"POST\" action=\"hospt.php\">";
-	echo "Quero vender: <input type=\"text\" name=\"sellhp\" size=\"3\" value=\"0\"> poções de vida. (1,250 de ouro cada)<br/>";
-	echo "Quero vender: <input type=\"text\" name=\"sellbhp\" size=\"3\" value=\"0\"> poções grandes de vida. (2,000 de ouro cada)<br/>";
-	echo "Quero vender: <input type=\"text\" name=\"sellep\" size=\"3\" value=\"0\"> poções de energia. (2,000 de ouro cada)<br/>";
-	echo "Quero vender: <input type=\"text\" name=\"sellmp\" size=\"3\" value=\"0\"> poções de mana. (1,000 de ouro cada)";
+	echo "Quero vender: <input type=\"text\" name=\"sellhp\" size=\"3\" value=\"0\"> poÃ§Ãµes de vida. (1,250 de ouro cada)<br/>";
+	echo "Quero vender: <input type=\"text\" name=\"sellbhp\" size=\"3\" value=\"0\"> poÃ§Ãµes grandes de vida. (2,000 de ouro cada)<br/>";
+	echo "Quero vender: <input type=\"text\" name=\"sellep\" size=\"3\" value=\"0\"> poÃ§Ãµes de energia. (2,000 de ouro cada)<br/>";
+	echo "Quero vender: <input type=\"text\" name=\"sellmp\" size=\"3\" value=\"0\"> poÃ§Ãµes de mana. (1,000 de ouro cada)";
 	echo "<br/><br/><input type=\"submit\" name=\"submit\" value=\"Vender\">";
 	echo "</form></fieldset>\n";
-	echo '<a href="inventory.php">Voltar ao inventário.</a>';
+	echo '<a href="inventory.php">Voltar ao inventÃ¡rio.</a>';
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -226,9 +226,9 @@ if ($player->hp == $player->maxhp)
 	include("templates/private_header.php");
 echo "<fieldset style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;padding:0px;border:1px solid #b9892f;'>";
 echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
-    echo"<div style=\"float:left;width:80px;\"><img src=\"images/medalhas/hospital.png\" border=\"0\"></div>";
-    echo "<div><b>Bem vindo ao Hospital!</b><p>";
-	echo "<i>Você esta com a vida cheia! Você não precisa ser curado.</i><br/>\n";
+    echo"<div style=\"float:left;width:80px;\"></div>";
+    echo "<div style=\"padding-left:25px;\"><b>Bem vindo ao Hospital!</b><p>";
+	echo "<i>VocÃª esta com a vida cheia! VocÃª nÃ£o precisa ser curado.</i><br/>\n";
 	echo "</p></div></fieldset>";
 
 	echo "<table style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
@@ -243,7 +243,7 @@ echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5p
 		{
 			include("templates/private_header.php");
 			echo "<fieldset><legend><b>Hospital</b></legend>\n";
-			echo "<i>Você não possui ouro suficiente!</i><br>\n";
+			echo "<i>VocÃª nÃ£o possui ouro suficiente!</i><br>\n";
                         echo "</fieldset>\n";
 			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
 			include("templates/private_footer.php");
@@ -262,7 +262,7 @@ echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5p
 
 			include("templates/private_header.php");
 			echo "<fieldset><legend><b>Hospital</b></legend>\n";
-			echo "<i>Você acaba de ser curado!<br/></i>\n";
+			echo "<i>VocÃª acaba de ser curado!<br/></i>\n";
                         echo "</fieldset>\n";
 			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
 			include("templates/private_footer.php");
@@ -284,7 +284,7 @@ echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5p
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-		echo "<i>Você não pode usar esta poção.<br/></i>\n";
+		echo "<i>VocÃª nÃ£o pode usar esta poÃ§Ã£o.<br/></i>\n";
 		echo "</fieldset>\n";
 		echo '<a href="hospt.php">Retornar ao Hospital.</a>';
 		include("templates/private_footer.php");
@@ -296,7 +296,7 @@ echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5p
     		if ($potion['mark'] == t){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-		echo "<i>Você não pode usar um item que está a venda no mercado.<br/></i>\n";
+		echo "<i>VocÃª nÃ£o pode usar um item que estÃ¡ a venda no mercado.<br/></i>\n";
 		echo "</fieldset>\n";
 		echo '<a href="hospt.php">Retornar ao Hospital.</a>';
 		include("templates/private_footer.php");
@@ -306,7 +306,7 @@ echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5p
     		if (($potion['item_id'] != 136) and ($potion['item_id'] != 137) and ($potion['item_id'] != 148) and ($potion['item_id'] != 150)){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-		echo "<i>Este item não é uma poção.<br/></i>\n";
+		echo "<i>Este item nÃ£o Ã© uma poÃ§Ã£o.<br/></i>\n";
 		echo "</fieldset>\n";
 		echo '<a href="hospt.php">Retornar ao Hospital.</a>';
 		include("templates/private_footer.php");
@@ -319,9 +319,9 @@ echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5p
 	include("templates/private_header.php");
 echo "<fieldset style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;padding:0px;border:1px solid #b9892f;'>";
 echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
-    echo"<div style=\"float:left;width:80px;\"><img src=\"images/medalhas/hospital.png\" border=\"0\"></div>";
-    echo "<div><b>Bem vindo ao Hospital!</b><p>";
-	echo "<i>Você esta com a vida cheia! Você não precisa ser curado.</i><br/>\n";
+    echo"<div style=\"float:left;width:80px;\"></div>";
+    echo "<div style=\"padding-left:25px;\"><b>Bem vindo ao Hospital!</b><p>";
+	echo "<i>VocÃª esta com a vida cheia! VocÃª nÃ£o precisa ser curado.</i><br/>\n";
 	echo "</p></div></fieldset>";
 
 	echo "<table style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
@@ -343,7 +343,7 @@ echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5p
 			$player = check_user($secret_key, $db); //Get new stats
 			include("templates/private_header.php");
 			echo "<fieldset><legend><b>Hospital</b></legend>\n";
-			echo "<i>Você usou sua poção e recuperou " . $palavra . " sua vida.<br/></i>\n";
+			echo "<i>VocÃª usou sua poÃ§Ã£o e recuperou " . $palavra . " sua vida.<br/></i>\n";
                         echo "</fieldset>\n";
 			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
 			include("templates/private_footer.php");
@@ -358,9 +358,9 @@ echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5p
 	include("templates/private_header.php");
 echo "<fieldset style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;padding:0px;border:1px solid #b9892f;'>";
 echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
-    echo"<div style=\"float:left;width:80px;\"><img src=\"images/medalhas/hospital.png\" border=\"0\"></div>";
-    echo "<div><b>Bem vindo ao Hospital!</b><p>";
-	echo "<i>Você esta com a vida cheia! Você não precisa ser curado.</i><br/>\n";
+    echo"<div style=\"float:left;width:80px;\"></div>";
+    echo "<div style=\"padding-left:25px;\"><b>Bem vindo ao Hospital!</b><p>";
+	echo "<i>VocÃª esta com a vida cheia! VocÃª nÃ£o precisa ser curado.</i><br/>\n";
 	echo "</p></div></fieldset>";
 
 	echo "<table style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
@@ -387,7 +387,7 @@ echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5p
 			$player = check_user($secret_key, $db); //Get new stats
 			include("templates/private_header.php");
 			echo "<fieldset><legend><b>Hospital</b></legend>\n";
-			echo "<i>Você usou sua poção e recuperou " . $palavra . " sua vida.<br/></i>\n";
+			echo "<i>VocÃª usou sua poÃ§Ã£o e recuperou " . $palavra . " sua vida.<br/></i>\n";
                         echo "</fieldset>\n";
 			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
 			include("templates/private_footer.php");
@@ -401,7 +401,7 @@ if ($player->energy == $player->maxenergy)
 {
 	include("templates/private_header.php");
 	echo "<fieldset><legend><b>Hospital</b></legend>\n";
-	echo "<i>Você esta com a energia máxima! Você não precisa desta poção.</i><br/>\n";
+	echo "<i>VocÃª esta com a energia mÃ¡xima! VocÃª nÃ£o precisa desta poÃ§Ã£o.</i><br/>\n";
 	echo "</fieldset>\n";
 	echo '<a href="hospt.php">Retornar ao Hospital.</a>';
 	include("templates/private_footer.php");
@@ -419,7 +419,7 @@ if ($player->energy == $player->maxenergy)
 			$player = check_user($secret_key, $db); //Get new stats
 			include("templates/private_header.php");
 			echo "<fieldset><legend><b>Hospital</b></legend>\n";
-			echo "<i>Você usou sua poção e recuperou " . $palavra . " sua energia.<br/></i>\n";
+			echo "<i>VocÃª usou sua poÃ§Ã£o e recuperou " . $palavra . " sua energia.<br/></i>\n";
                         echo "</fieldset>\n";
 			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
 			include("templates/private_footer.php");
@@ -432,7 +432,7 @@ if ($player->mana == $player->maxmana)
 {
 	include("templates/private_header.php");
 	echo "<fieldset><legend><b>Hospital</b></legend>\n";
-	echo "<i>Você esta com a mana ao máximo! Você não precisa desta poção.</i><br/>\n";
+	echo "<i>VocÃª esta com a mana ao mÃ¡ximo! VocÃª nÃ£o precisa desta poÃ§Ã£o.</i><br/>\n";
 	echo "</fieldset>\n";
 	echo '<a href="hospt.php">Retornar ao Hospital.</a>';
 	include("templates/private_footer.php");
@@ -451,7 +451,7 @@ if ($player->mana == $player->maxmana)
 			$player = check_user($secret_key, $db); //Get new stats
 			include("templates/private_header.php");
 			echo "<fieldset><legend><b>Hospital</b></legend>\n";
-			echo "<i>Você usou sua poção e recuperou " . $palavra . " sua mana.<br/></i>\n";
+			echo "<i>VocÃª usou sua poÃ§Ã£o e recuperou " . $palavra . " sua mana.<br/></i>\n";
                         echo "</fieldset>\n";
 			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
 			include("templates/private_footer.php");
@@ -476,14 +476,14 @@ if ($player->mana == $player->maxmana)
 
 echo "<fieldset style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;padding:0px;border:1px solid #b9892f;'>";
 echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
-    echo"<div style=\"float:left;width:80px;\"><img src=\"images/medalhas/hospital.png\" border=\"0\"></div>";
-    echo "<div><b>Bem vindo ao Hospital!</b><p>";
+    echo"<div style=\"float:left;width:80px;\"></div>";
+    echo "<div style=\"padding-left:25px;\"><b>Bem vindo ao Hospital!</b><p>";
 		if (($player->gold < $cost) and ($player->gold != 0)){
-		echo "<i>Você não possui dinheiro suficiente para recuperar toda sua vida.<br/>Podemos ajuda-lo recuperando <b>" . number_format($cost2) . "</b> pontos de vida por <b>" . number_format($player->gold) . "</b> moedas de ouro.</i><br />";
+		echo "<i>VocÃª nÃ£o possui dinheiro suficiente para recuperar toda sua vida.<br/>Podemos ajuda-lo recuperando <b>" . number_format($cost2) . "</b> pontos de vida por <b>" . number_format($player->gold) . "</b> moedas de ouro.</i><br />";
 		}elseif($player->hp=$player->maxhp){
-		echo "<i>Sua vida está completa, Você não necessita de tratamento no momento.<br />";
+		echo "<i>Sua vida estÃ¡ completa, VocÃª nÃ£o necessita de tratamento no momento.<br />";
 		}else{
-		echo "<i>Recuperar toda sua vida irá lhe custar <b>" . number_format($cost) . "</b> moedas de ouro.</i><br />";
+		echo "<i>Recuperar toda sua vida irÃ¡ lhe custar <b>" . number_format($cost) . "</b> moedas de ouro.</i><br />";
 		}
 	echo "</p></div></fieldset>";
 

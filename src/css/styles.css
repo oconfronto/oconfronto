@@ -36,21 +36,22 @@
 		}
 	.cssmenu  li ul{
 		display:none;
+		border-radius: 15px !important;
 		height:auto;
 		padding:0px;
 		margin:0px;
-		border:0px;
+		border:0px;		
 		position:absolute;
 		width:200px;
 		z-index:200;
-        opacity:0.70;
+        opacity:0.90;
         filter:alpha(opacity=70);
 		}
 	.cssmenu  li:hover ul{
-		display:block;		
+		display:block;					
 		}
 	.cssmenu  li li {
-		display:block;
+		display:block;			
 		float:none;
 		margin:0px;
 		padding:0px;

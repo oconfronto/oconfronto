@@ -3,7 +3,7 @@
 	   		$("#gildie_armas").hide();
 	   		$("#gildie_armaduras").hide();
 	   		$("#gildie_botas").hide();
-	   		$("#gildie_calças").hide();
+	   		$("#gildie_calcas").hide();
 	   		$("#gildie_elmos").hide();
 			$("#gildie_escudos").hide();
 			$("#gildie_especiais").hide();
@@ -16,7 +16,7 @@
 	   		$("#gildie_armas tr:even").css("background-color", "");
 	   		$("#gildie_armaduras tr:even").css("background-color", "");
 	   		$("#gildie_botas tr:even").css("background-color", "");
-	   		$("#gildie_calças tr:even").css("background-color", "");
+	   		$("#gildie_calcas tr:even").css("background-color", "");
 	   		$("#gildie_elmos tr:even").css("background-color", "");
 			$("#gildie_escudos tr:even").css("background-color", "");
 			$("#gildie_especiais tr:even").css("background-color", "");
@@ -31,7 +31,7 @@
 	   		var armas = 0;
 	   		var armaduras = 0;
 	   		var botas = 0;
-	   		var calças = 0;
+	   		var calcas = 0;
 	   		var elmos = 0;
 			var escudos = 0;
 			var especiais = 0;
@@ -77,13 +77,13 @@
 	  			botas = botas+1;
 	  		}
 			
-			function ex_calças() {
-	  			if(calças%2==0) {
-	  				$("#gildie_calças").slideDown("slow");
+			function ex_calcas() {
+	  			if(calcas%2==0) {
+	  				$("#gildie_calcas").slideDown("slow");
 	  			} else {
-	  				$("#gildie_calças").slideUp("slow");
+	  				$("#gildie_calcas").slideUp("slow");
 	  			}
-	  			calças = calças+1;
+	  			calcas = calcas+1;
 	  		}
 			
 			function ex_elmos() {

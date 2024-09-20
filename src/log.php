@@ -13,7 +13,7 @@ $player = check_user($secret_key, $db);
 include("templates/private_header.php");
 
 echo "<table width=\"100%\">";
-echo "<tr><td align=\"center\" bgcolor=\"#E1CBA4\"><b>Logs de Usu·rio</b></td></tr>";
+echo "<tr><td align=\"center\" bgcolor=\"#E1CBA4\"><b>Logs de Usu√°rio</b></td></tr>";
 $query0 = $db->execute("select `id`, `msg`, `status`, `time` from `user_log` where `player_id`=? order by `time` desc limit 10", array($player->id));
 if ($query0->recordcount() > 0)
 {
@@ -24,16 +24,16 @@ if ($query0->recordcount() > 0)
 		$valortempo = time() - $log0['time'];
 		if ($valortempo < 60){
 		$valortempo2 = $valortempo;
-		$auxiliar2 = "segundo(s) atr·s.";
+		$auxiliar2 = "segundo(s) atr√°s.";
 		}else if($valortempo < 3600){
 		$valortempo2 = floor($valortempo / 60);
-		$auxiliar2 = "minuto(s) atr·s.";
+		$auxiliar2 = "minuto(s) atr√°s.";
 		}else if($valortempo < 86400){
 		$valortempo2 = floor($valortempo / 3600);
-		$auxiliar2 = "hora(s) atr·s.";
+		$auxiliar2 = "hora(s) atr√°s.";
 		}else if($valortempo > 86400){
 		$valortempo2 = floor($valortempo / 86400);
-		$auxiliar2 = "dia(s) atr·s.";
+		$auxiliar2 = "dia(s) atr√°s.";
 		}
 
 		echo "<tr>";
@@ -50,7 +50,7 @@ else
 echo "</table>";
 $count0 = $db->execute("select `id` from `user_log` where `player_id`=?", array($player->id));
 if ($count0->recordcount() > 10){
-echo "<center><font size=\"1\"><a href=\"#\" onclick=\"javascript:window.open('userlog.php', '_blank','top=100, left=100, height=350, width=520, status=no, menubar=no, resizable=no, scrollbars=yes, toolbar=no, location=no, directories=no');\">Exibir mais logs de usu·rio</a></font></center>";
+echo "<center><font size=\"1\"><a href=\"#\" onclick=\"javascript:window.open('userlog.php', '_blank','top=100, left=100, height=350, width=520, status=no, menubar=no, resizable=no, scrollbars=yes, toolbar=no, location=no, directories=no');\">Exibir mais logs de usu√°rio</a></font></center>";
 }
 echo "<br/><br/>";
 
@@ -67,16 +67,16 @@ if ($query1->recordcount() > 0)
 		$valortempo = time() - $log1['time'];
 		if ($valortempo < 60){
 		$valortempo2 = $valortempo;
-		$auxiliar2 = "segundo(s) atr·s.";
+		$auxiliar2 = "segundo(s) atr√°s.";
 		}else if($valortempo < 3600){
 		$valortempo2 = floor($valortempo / 60);
-		$auxiliar2 = "minuto(s) atr·s.";
+		$auxiliar2 = "minuto(s) atr√°s.";
 		}else if($valortempo < 86400){
 		$valortempo2 = floor($valortempo / 3600);
-		$auxiliar2 = "hora(s) atr·s.";
+		$auxiliar2 = "hora(s) atr√°s.";
 		}else if($valortempo > 86400){
 		$valortempo2 = floor($valortempo / 86400);
-		$auxiliar2 = "dia(s) atr·s.";
+		$auxiliar2 = "dia(s) atr√°s.";
 		}
 
 		echo "<tr>";
@@ -119,25 +119,25 @@ if ($query2->recordcount() > 0)
 		$valortempo = time() -  $trans['time'];
 		if ($valortempo < 60){
 		$valortempo2 = $valortempo;
-		$auxiliar2 = "segundo(s) atr·s.";
+		$auxiliar2 = "segundo(s) atr√°s.";
 		}else if($valortempo < 3600){
 		$valortempo2 = floor($valortempo / 60);
-		$auxiliar2 = "minuto(s) atr·s.";
+		$auxiliar2 = "minuto(s) atr√°s.";
 		}else if($valortempo < 86400){
 		$valortempo2 = floor($valortempo / 3600);
-		$auxiliar2 = "hora(s) atr·s.";
+		$auxiliar2 = "hora(s) atr√°s.";
 		}else if($valortempo > 86400){
 		$valortempo2 = floor($valortempo / 86400);
-		$auxiliar2 = "dia(s) atr·s.";
+		$auxiliar2 = "dia(s) atr√°s.";
 		}
 
 		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\">";
 		if ($trans['action'] == doou){
-		echo "<font size=\"1\">VocÍ enviou <b>" . $trans['value'] . "</b> de ouro para o cl„ <b><a href=\"guild_profile.php?id=" . $trans['name2'] . "\">" . $trans['name2'] . "</a></b></font></div></td>";
+		echo "<font size=\"1\">Voc√™ enviou <b>" . $trans['value'] . "</b> de ouro para o cl√£ <b><a href=\"guild_profile.php?id=" . $trans['name2'] . "\">" . $trans['name2'] . "</a></b></font></div></td>";
 		}elseif ($trans['action'] == ganhou){
-		echo "<font size=\"1\">VocÍ recebeu <b>" . $trans['value'] . "</b> de ouro para o cl„ <b><a href=\"guild_profile.php?id=" . $trans['name2'] . "\">" . $trans['name2'] . "</a></b></font></div></td>";
+		echo "<font size=\"1\">Voc√™ recebeu <b>" . $trans['value'] . "</b> de ouro para o cl√£ <b><a href=\"guild_profile.php?id=" . $trans['name2'] . "\">" . $trans['name2'] . "</a></b></font></div></td>";
 		}else{
-		echo "<font size=\"1\">VocÍ " . $trans['action'] . " <b>" . $trans['value'] . "</b> de ouro " . $auxiliar . " <b><a href=\"profile.php?id=" . $trans['name2'] . "\">" . $trans['name2'] . "</a></b></font></div></td>";
+		echo "<font size=\"1\">Voc√™ " . $trans['action'] . " <b>" . $trans['value'] . "</b> de ouro " . $auxiliar . " <b><a href=\"profile.php?id=" . $trans['name2'] . "\">" . $trans['name2'] . "</a></b></font></div></td>";
 		}
 
 		echo "</tr>";
@@ -179,16 +179,16 @@ if ($query3->recordcount() > 0)
 		$valortempo = time() -  $trans['time'];
 		if ($valortempo < 60){
 		$valortempo2 = $valortempo;
-		$auxiliar2 = "segundo(s) atr·s.";
+		$auxiliar2 = "segundo(s) atr√°s.";
 		}else if($valortempo < 3600){
 		$valortempo2 = floor($valortempo / 60);
-		$auxiliar2 = "minuto(s) atr·s.";
+		$auxiliar2 = "minuto(s) atr√°s.";
 		}else if($valortempo < 86400){
 		$valortempo2 = floor($valortempo / 3600);
-		$auxiliar2 = "hora(s) atr·s.";
+		$auxiliar2 = "hora(s) atr√°s.";
 		}else if($valortempo > 86400){
 		$valortempo2 = floor($valortempo / 86400);
-		$auxiliar2 = "dia(s) atr·s.";
+		$auxiliar2 = "dia(s) atr√°s.";
 		}
 
 		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\">";
@@ -197,7 +197,7 @@ if ($query3->recordcount() > 0)
 		}elseif ($trans['action'] == recuperou){
 		echo "<font size=\"1\">O administrador recuperou seu/sua <b>" . $trans['value'] . "</b> que estava com <b><a href=\"profile.php?id=" . $trans['name2'] . "\">" . $trans['name2'] . "</a></b></font></div></td>";
 		}else{
-		echo "<font size=\"1\">VocÍ " . $trans['action'] . " " . $trans['value'] . " " . $auxiliar . " <b><a href=\"profile.php?id=" . $trans['name2'] . "\">" . $trans['name2'] . "</a></b>" . $trans['aditional'] . "</font></div></td>";
+		echo "<font size=\"1\">Voc√™ " . $trans['action'] . " " . $trans['value'] . " " . $auxiliar . " <b><a href=\"profile.php?id=" . $trans['name2'] . "\">" . $trans['name2'] . "</a></b>" . $trans['aditional'] . "</font></div></td>";
 		}
 		echo "</tr>";
 	}
@@ -228,16 +228,16 @@ if ($query4->recordcount() > 0)
 		$valortempo = time() - $log0['time'];
 		if ($valortempo < 60){
 		$valortempo2 = $valortempo;
-		$auxiliar2 = "segundo(s) atr·s.";
+		$auxiliar2 = "segundo(s) atr√°s.";
 		}else if($valortempo < 3600){
 		$valortempo2 = floor($valortempo / 60);
-		$auxiliar2 = "minuto(s) atr·s.";
+		$auxiliar2 = "minuto(s) atr√°s.";
 		}else if($valortempo < 86400){
 		$valortempo2 = floor($valortempo / 3600);
-		$auxiliar2 = "hora(s) atr·s.";
+		$auxiliar2 = "hora(s) atr√°s.";
 		}else if($valortempo > 86400){
 		$valortempo2 = floor($valortempo / 86400);
-		$auxiliar2 = "dia(s) atr·s.";
+		$auxiliar2 = "dia(s) atr√°s.";
 		}
 
 		echo "<tr>";

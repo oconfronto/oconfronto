@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "AdministraÁ„o do Cl„");
+define("PAGENAME", "Administra√ß√£o do Cl√£");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 include("checkguild.php");
@@ -20,14 +20,14 @@ include("templates/private_header.php");
 
 //Guild Leader Admin check
 if (($player->username != $guild['leader']) and ($player->username != $guild['vice'])) {
-    echo "VocÍ n„o pode acessar esta p·gina.";
+    echo "Voc√™ n√£o pode acessar esta p√°gina.";
     echo "<br/><a href=\"home.php\">Voltar</a>.";
 } else {
 
 if ($_GET['cancel']){
 $gwar = $db->execute("select * from `pwar` where `id`=? and `status`='p' and `guild_id`=?", array($_GET['cancel'], $player->guild));
 	if ($gwar->recordcount() != 1){
-		echo "Pedido de guerra n„o encontrado.";
+		echo "Pedido de guerra n√£o encontrado.";
 		echo "<br/><a href=\"guild_admin_enemy.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		exit;
@@ -40,7 +40,7 @@ $gwar = $db->execute("select * from `pwar` where `id`=? and `status`='p' and `gu
 			$warguild = $warguild->fetchrow();
 		
 			$lider = $db->GetOne("select `id` from `players` where `username`=?", array($warguild['leader']));
-    			$logmsg = "O pedido de guerra contra o cl„ <b>" . $guild['name'] . "</b> foi retirado.";
+    			$logmsg = "O pedido de guerra contra o cl√£ <b>" . $guild['name'] . "</b> foi retirado.";
 			addlog($lider, $logmsg, $db);
 
 			if ($warguild['vice'] != NULL){
@@ -50,7 +50,7 @@ $gwar = $db->execute("select * from `pwar` where `id`=? and `status`='p' and `gu
 
 			$array1 = explode(", ",$war['players_guild']);
 			foreach ($array1 as $gplayer) {
-    				$logmsg = "O pedido de guerra contra o cl„ <b>" . $warguild['name'] . "</b> foi retirado.";
+    				$logmsg = "O pedido de guerra contra o cl√£ <b>" . $warguild['name'] . "</b> foi retirado.";
 				addlog($gplayer, $logmsg, $db);
 			}
 
@@ -66,10 +66,10 @@ $gwar = $db->execute("select * from `pwar` where `id`=? and `status`='p' and `gu
 	$ccheckjaaly = $db->execute("select `id` from `guild_enemy` where `guild_na`=? and `enemy_na`=?", array($guild['id'], $_GET['enemy_na']));
 	
 	if ($acheckcla->recordcount() != 1) {
-    		$errmsg .= "Este cl„ n„o existe!";
+    		$errmsg .= "Este cl√£ n√£o existe!";
    		$errorb = 1;
 	}elseif ($ccheckjaaly->recordcount() < 1) {
-    		$errmsg .= "Este cl„ n„o È um cl„ inimigo!";
+    		$errmsg .= "Este cl√£ n√£o √© um cl√£ inimigo!";
    		$errorb = 1;
 	}else{
 		if ($errorb == 0){
@@ -77,7 +77,7 @@ $gwar = $db->execute("select * from `pwar` where `id`=? and `status`='p' and `gu
 			$log1 = $db->execute("select `id` from `players` where `guild`=?", array($_GET['enemy_na']));
 			while($p1 = $log1->fetchrow())
 			{
-    			$logmsg1 = "O cl„ <a href=\"guild_profile.php?id=". $guild['id'] ."\">". $guild['name'] ."</a> n„o È mais um cl„ inimigo.";
+    			$logmsg1 = "O cl√£ <a href=\"guild_profile.php?id=". $guild['id'] ."\">". $guild['name'] ."</a> n√£o √© mais um cl√£ inimigo.";
 			addlog($p1['id'], $logmsg1, $db);
 			}
 
@@ -85,14 +85,14 @@ $gwar = $db->execute("select * from `pwar` where `id`=? and `status`='p' and `gu
 			$log2 = $db->execute("select `id` from `players` where `guild`=?", array($guild['id']));
 			while($p2 = $log2->fetchrow())
 			{
-    			$logmsg2 = "O cl„ <a href=\"guild_profile.php?id=". $_GET['enemy_na'] ."\">". $msglog2guild ."</a> n„o È mais um cl„ inimigo.";
+    			$logmsg2 = "O cl√£ <a href=\"guild_profile.php?id=". $_GET['enemy_na'] ."\">". $msglog2guild ."</a> n√£o √© mais um cl√£ inimigo.";
 			addlog($p2['id'], $logmsg2, $db);
 			}
 
 			$query = $db->execute("delete from `guild_enemy` where `guild_na`=? and `enemy_na`=?", array($guild['id'], $_GET['enemy_na']));
 			$query = $db->execute("delete from `guild_enemy` where `guild_na`=? and `enemy_na`=?", array($_GET['enemy_na'], $guild['id']));
 
-			$msg .= "O cl„ " . $msglog2guild . " foi removido da lista de inimigos.";
+			$msg .= "O cl√£ " . $msglog2guild . " foi removido da lista de inimigos.";
 		}
 	}
 
@@ -103,13 +103,13 @@ $gwar = $db->execute("select * from `pwar` where `id`=? and `status`='p' and `gu
 	$checkjaeny1 = $db->execute("select `id` from `guild_aliance` where `guild_na`=?", array($guild['id']));
 
     if ($checkcla->recordcount() == 0) {
-    	$errmsg .= "Este cl„ n„o existe!";
+    	$errmsg .= "Este cl√£ n√£o existe!";
     	$error = 1;
    	} else if ($checkjaeny0->recordcount() > 0) {
-   		$errmsg .= "Este cl„ j· est· marcado como inimigo!";
+   		$errmsg .= "Este cl√£ j√° est√° marcado como inimigo!";
    		$error = 1;
    	} else if ($checkjaeny1->recordcount() > 0) {
-   		$errmsg .= "Este cl„ È um cl„ aliado!";
+   		$errmsg .= "Este cl√£ √© um cl√£ aliado!";
    		$error = 1;
 	} else {
 
@@ -126,20 +126,20 @@ $gwar = $db->execute("select * from `pwar` where `id`=? and `status`='p' and `gu
 		$insert['time'] = time();
 		$query = $db->autoexecute('guild_enemy', $insert, 'INSERT');
 
-    			$msg .= "O cl„ " . $enyguild['name'] . " foi marcado como inimigo.";
+    			$msg .= "O cl√£ " . $enyguild['name'] . " foi marcado como inimigo.";
 
 
 			$log1 = $db->execute("select `id` from `players` where `guild`=?", array($guild['id']));
 			while($p1 = $log1->fetchrow())
 			{
-    			$logmsg1 = "O cl„ <a href=\"guild_profile.php?id=". $enyguild['id'] ."\">". $enyguild['name'] ."</a> foi marcado como cl„ inimigo.";
+    			$logmsg1 = "O cl√£ <a href=\"guild_profile.php?id=". $enyguild['id'] ."\">". $enyguild['name'] ."</a> foi marcado como cl√£ inimigo.";
 			addlog($p1['id'], $logmsg1, $db);
 			}
 
 			$log2 = $db->execute("select `id` from `players` where `guild`=?", array($enyguild['id']));
 			while($p2 = $log2->fetchrow())
 			{
-    			$logmsg2 = "O cl„ <a href=\"guild_profile.php?id=". $guild['id'] ."\">". $guild['name'] ."</a> foi marcado como cl„ inimigo.";
+    			$logmsg2 = "O cl√£ <a href=\"guild_profile.php?id=". $guild['id'] ."\">". $guild['name'] ."</a> foi marcado como cl√£ inimigo.";
 			addlog($p2['id'], $logmsg2, $db);
 			}
 
@@ -154,9 +154,9 @@ $gwar = $db->execute("select * from `pwar` where `id`=? and `status`='p' and `gu
 ?>
 
 <fieldset>
-<legend><b><?=$guild['name']?> :: Cl„s Inimigos</b></legend>
+<legend><b><?=$guild['name']?> :: Cl√£s Inimigos</b></legend>
 <form method="POST" action="guild_admin_enemy.php">
-<b>Adicionar o cl„:</b> <?php $query = $db->execute("select `id`, `name` from `guilds` where `id`!=?", array($player->guild));
+<b>Adicionar o cl√£:</b> <?php $query = $db->execute("select `id`, `name` from `guilds` where `id`!=?", array($player->guild));
 echo "<select name=\"gname\"><option value=''>Selecione</option>";
 while($result = $query->fetchrow()){
 echo "<option value=\"$result[id]\">$result[name]</option>";
@@ -173,15 +173,15 @@ echo "</select>"; ?> <input type="submit" name="submit" value="Adicionar Inimigo
 $query0000 = $db->execute("select `enemy_na` from `guild_enemy` where `guild_na`=? order by `enemy_na` asc", array($guild['id']));
 
 if ($query0000->recordcount() < 1) {
-echo "<p /><center>Seu cl„ n„o possui inimigos.</center><p />";
+echo "<p /><center>Seu cl√£ n√£o possui inimigos.</center><p />";
 }else{
 
 	echo "<table width=\"100%\" border=\"0\">";
 	echo "<tr>";
-	echo "<th width=\"30%\"><b>Cl„</b></td>";
+	echo "<th width=\"30%\"><b>Cl√£</b></td>";
 	echo "<th width=\"12%\"><b>Membros</b></td>";
 	echo "<th width=\"38%\"><b>Status</b></td>";
-	echo "<th width=\"20%\"><b>OpÁıes</b></td>";
+	echo "<th width=\"20%\"><b>Op√ß√µes</b></td>";
 	echo "</tr>";
 
 
@@ -198,9 +198,9 @@ echo "<p /><center>Seu cl„ n„o possui inimigos.</center><p />";
 				echo "<td><font size=\"1px\">";
 				while($war = $gwar->fetchrow()){
 					if ($war['status'] == 'g'){
-						echo "Derrotado pelo seu cl„ na guerra.<br/>";
+						echo "Derrotado pelo seu cl√£ na guerra.<br/>";
 					} elseif ($war['status'] == 'e'){
-						echo "Derrotou seu cl„ na guerra.<br/>";
+						echo "Derrotou seu cl√£ na guerra.<br/>";
 					} elseif ($war['status'] == 'p'){
 						echo "Pedido de guerra pendente. <a href=\"guild_admin_enemy.php?cancel=" . $war['id'] . "\">Cancelar</a>.<br/>";
 					}

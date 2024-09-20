@@ -42,7 +42,7 @@ include("templates/acc-header.php");
             $auxiliar2 = "dia(s)";
             }
 
-            echo "<span id=\"aviso-a\"><font size=\"1px\"><b>" . $change['pending_status'] . "</b> será transferido para a conta: <b>" . $coconta . "</b>.<br/>Ele será transferido em " . $valortempo2 . " " . $auxiliar2 . ", para cancelar o envio, <a href=\"transferchar.php?cancel=true\">clique aqui</a>.</font></span>";
+            echo "<span id=\"aviso-a\"><font size=\"1px\"><b>" . $change['pending_status'] . "</b> ser√° transferido para a conta: <b>" . $coconta . "</b>.<br/>Ele ser√° transferido em " . $valortempo2 . " " . $auxiliar2 . ", para cancelar o envio, <a href=\"transferchar.php?cancel=true\">clique aqui</a>.</font></span>";
             $aviso = 1;
         }
     }
@@ -85,13 +85,13 @@ include("templates/acc-header.php");
             $auxiliar2 = "dia(s)";
             }
 
-            echo "<span id=\"aviso-a\"><font size=\"1px\"><b>" . $change2['pending_status'] . "</b> será transferido para sua conta em " . $valortempo2 . " " . $auxiliar2 . ".</font></span>";
+            echo "<span id=\"aviso-a\"><font size=\"1px\"><b>" . $change2['pending_status'] . "</b> ser√° transferido para sua conta em " . $valortempo2 . " " . $auxiliar2 . ".</font></span>";
             $aviso = 1;
         }
     }
 
 
-    //verificar mudança de email
+    //verificar mudan√ßa de email
     $query04876 = $db->execute("select * from `pending` where `pending_id`=1 and `player_id`=?", array($acc->id));
     if ($query04876->recordcount() > 0)
     {
@@ -121,7 +121,7 @@ include("templates/acc-header.php");
             $auxiliar2 = "dia(s)";
             }
 
-            echo "<span id=\"aviso-a\"><font size=\"1px\">Foi solicitada a mudança de seu email para: <b>" . $change['pending_status'] . "</b><br/>Seu email será alterado em " . $valortempo2 . " " . $auxiliar2 . ".<br/>Se não quiser mais mudar de email <a href=\"changemail.php?act=cancel\">clique aqui</a>.</font></span>";
+            echo "<span id=\"aviso-a\"><font size=\"1px\">Foi solicitada a mudan√ßa de seu email para: <b>" . $change['pending_status'] . "</b><br/>Seu email ser√° alterado em " . $valortempo2 . " " . $auxiliar2 . ".<br/>Se n√£o quiser mais mudar de email <a href=\"changemail.php?act=cancel\">clique aqui</a>.</font></span>";
             $aviso = 1;
         }
     }
@@ -136,7 +136,7 @@ include("templates/acc-header.php");
             $query6 = $db->execute("update `promo` set `refs`=`refs`+1 where `player_id`=?", array($acc->ref));
             }
 			
-	//INSERINDO ITENS OU GOLD COM BASE QUE O EVENTO ESTEJA OU N√O ATIVADO, CONFORME A LISTA PR…-DEFINIDA BANCO DE DADOS.
+	//INSERINDO ITENS OU GOLD COM BASE QUE O EVENTO ESTEJA OU N√ÉO ATIVADO, CONFORME A LISTA PR√â-DEFINIDA BANCO DE DADOS.
 	//PESQUISANDO SE PLAYER FOI REALMENTE CONVIDADO
 	if($queryactivate1 = $db->execute("select * from `players_ref` where `id_p_c`=? ", array($acc->id))){;
 	
@@ -186,7 +186,7 @@ include("templates/acc-header.php");
 			$query7 = $db->execute("update `players` set `gold`=`gold`+?, `ref`=`ref`+1 where `id`=?", array($type_gold, $id_p_ref));
 		}
 		
-		// RETORNANDO INSER«√O NA TABELA PLAYERS_REF
+		// RETORNANDO INSER√á√ÉO NA TABELA PLAYERS_REF
 		$status = $db->execute("update `players_ref` set `date_end`=? where `id_p_c`=?", array(time(), $acc->id));
 	
 		}
@@ -205,7 +205,7 @@ include("templates/acc-header.php");
 
     $query = $db->execute("select `id`, `username`, `level`, `avatar`, `ban`, `serv` from `players` where `acc_id`=? order by `level` desc", array($acc->id));
     if ($query->recordcount() == 0) {
-        echo "<br/><p><center><b>Você ainda não possui nenhum personagem.</b></center></p><br/>";
+        echo "<br/><p><center><b>Voc√™ ainda n√£o possui nenhum personagem.</b></center></p><br/>";
     } else {
 
         if ($query->recordcount() <= 3) {
@@ -228,7 +228,7 @@ include("templates/acc-header.php");
                 if ($member['ban'] > time()){
                     echo "<tr><td><center><font size=\"1px\" color=\"red\"><b>Banido</b></font></center></td></tr>";
                 }else{
-                    echo "<tr><td><center><font size=\"1px\">nível " . $member['level'] . "</font></center></td></tr>";
+                    echo "<tr><td><center><font size=\"1px\">n√≠vel " . $member['level'] . "</font></center></td></tr>";
                 }
                 echo "</table></td>";
             }
@@ -253,7 +253,7 @@ include("templates/acc-header.php");
                         if ($member['ban'] > time()){
                             echo "<tr><td><center><font size=\"1px\" color=\"red\"><b>Banido</b></font></center></td></tr>";
                         }else{
-                            echo "<tr><td><center><font size=\"1px\">nível " . $member['level'] . "</font></center></td></tr>";
+                            echo "<tr><td><center><font size=\"1px\">n√≠vel " . $member['level'] . "</font></center></td></tr>";
                         }
                 echo "</table></li>";
             }

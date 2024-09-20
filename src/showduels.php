@@ -1,7 +1,7 @@
 <?php
 if ($_GET['header']) {
     include("lib.php");
-    header("Content-Type: text/html; charset=ISO-8859-1",true);
+    header("Content-Type: text/html; charset=utf-8",true);
     $player = check_user($secret_key, $db);
 }
 

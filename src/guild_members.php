@@ -8,7 +8,7 @@
 /*************************************/
 
 include("lib.php");
-define("PAGENAME", "Membros do Cl„");
+define("PAGENAME", "Membros do Cl√£");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 include("checkguild.php");
@@ -28,13 +28,13 @@ include("templates/private_header.php");
 ?>
 
 <fieldset>
-<legend><b>Membros do Cl„</b></legend>
+<legend><b>Membros do Cl√£</b></legend>
 <table width="100%" border="0">
 <tr>
-<th width="35%"><b>Usu·rio</b></td>
+<th width="35%"><b>Usu√°rio</b></td>
 <th width="15%"><b>Nivel</b></td>
 <th width="20%"><b>Status</b></td>
-<th width="30%"><b>OpÁıes</b></td>
+<th width="30%"><b>Op√ß√µes</b></td>
 </tr>
 <?php
 //Select all members ordered by level (highest first, members table also doubles as rankings table)

@@ -1,7 +1,7 @@
 <?php
 include("lib.php");
 include("bbcode.php");
-define("PAGENAME", "Clãs");
+define("PAGENAME", "Cl√£s");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 include("checkguild.php");
@@ -10,8 +10,8 @@ if ($player->hp <= 0)
 {
 	include("templates/private_header.php");
 	echo "<fieldset>";
-	echo "<legend><b>Você está morto!</b></legend>\n";
-	echo "Vá ao <a href=\"hospt.php\">hospital</a> ou espere 30 minutos.";
+	echo "<legend><b>Voc√™ est√° morto!</b></legend>\n";
+	echo "V√° ao <a href=\"hospt.php\">hospital</a> ou espere 30 minutos.";
 	include("templates/private_footer.php");
 	exit;
 }
@@ -21,7 +21,7 @@ $total_guilds = $db->getone("select count(ID) as `count` from `guilds`");
 include("templates/private_header.php");
 
 if (($player->guild == NULL) or ($player->guild == 0)) {
-	echo showAlert("<i>Ainda não possui um clã? Tente <a href=\"guild_register.php\"><b>criar o seu</b></a>.</i>", "white", "left");
+	echo showAlert("<i>Ainda n√£o possui um cl√£? Tente <a href=\"guild_register.php\"><b>criar o seu</b></a>.</i>", "white", "left");
 }
 
 echo "<table width=\"100%\">";
@@ -32,12 +32,12 @@ while ($war = $query->fetchrow()) {
 
 	if ($war['status'] == 'g'){
 		echo "<tr onclick=\"window.location.href='view_war.php?id=" . $war['id'] . "'\"><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\">";
-		echo "<center><font size=\"1px\"><b>O clã <a href=\"guild_profile.php?id=" . $war['guild_id'] . "\">" . $guildname . "</a> ganhou a batalha contra o clã <a href=\"guild_profile.php?id=" . $war['enemy_id'] . "\">" . $enyname . "</a> e ganhou " . $war['bet'] . " moedas de ouro.</b></font></center>";
+		echo "<center><font size=\"1px\"><b>O cl√£ <a href=\"guild_profile.php?id=" . $war['guild_id'] . "\">" . $guildname . "</a> ganhou a batalha contra o cl√£ <a href=\"guild_profile.php?id=" . $war['enemy_id'] . "\">" . $enyname . "</a> e ganhou " . $war['bet'] . " moedas de ouro.</b></font></center>";
 		echo "</td></tr>";
 
 	}elseif ($war['status'] == 'e'){
 		echo "<tr onclick=\"window.location.href='view_war.php?id=" . $war['id'] . "'\"><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\">";
-		echo "<center><font size=\"1px\"><b>O clã <a href=\"guild_profile.php?id=" . $war['enemy_id'] . "\">" . $enyname . "</a> ganhou a batalha contra o clã <a href=\"guild_profile.php?id=" . $war['guild_id'] . "\">" . $guildname . "</a> e ganhou " . $war['bet'] . " moedas de ouro.</b></font></center>";
+		echo "<center><font size=\"1px\"><b>O cl√£ <a href=\"guild_profile.php?id=" . $war['enemy_id'] . "\">" . $enyname . "</a> ganhou a batalha contra o cl√£ <a href=\"guild_profile.php?id=" . $war['guild_id'] . "\">" . $guildname . "</a> e ganhou " . $war['bet'] . " moedas de ouro.</b></font></center>";
 		echo "</td></tr>";
 
 	}elseif (($war['status'] == 't') and (time() < $war['time'])){
@@ -60,12 +60,12 @@ while ($war = $query->fetchrow()) {
 		}
 
 		echo "<tr onclick=\"window.location.href='view_war.php?id=" . $war['id'] . "'\"><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\">";
-		echo "<center><font size=\"1px\"><b>O clã <a href=\"guild_profile.php?id=" . $war['guild_id'] . "\">" . $guildname . "</a> declarou guerra contra o clã <a href=\"guild_profile.php?id=" . $war['enemy_id'] . "\">" . $enyname . "</a>.</b></font></center>";
-		echo "<center><font size=\"1px\"><b>A batalha entre " . ($i * 2) . " jogadores ocorrerá em " . $valortempo . " " . $auxiliar . " e conta com a aposta de " . $war['bet'] . " moedas de ouro.</b></font></center>";
+		echo "<center><font size=\"1px\"><b>O cl√£ <a href=\"guild_profile.php?id=" . $war['guild_id'] . "\">" . $guildname . "</a> declarou guerra contra o cl√£ <a href=\"guild_profile.php?id=" . $war['enemy_id'] . "\">" . $enyname . "</a>.</b></font></center>";
+		echo "<center><font size=\"1px\"><b>A batalha entre " . ($i * 2) . " jogadores ocorrer√° em " . $valortempo . " " . $auxiliar . " e conta com a aposta de " . $war['bet'] . " moedas de ouro.</b></font></center>";
 		echo "</td></tr>";
 	}else{
 		echo "<tr onclick=\"window.location.href='view_war.php?id=" . $war['id'] . "'\"><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\">";
-		echo "<center><font size=\"1px\"><b>Clique aqui e veja a guerra entre os clãs <a href=\"guild_profile.php?id=" . $war['guild_id'] . "\">" . $guildname . "</a> e <a href=\"guild_profile.php?id=" . $war['enemy_id'] . "\">" . $enyname . "</a>.</b></font></center>";
+		echo "<center><font size=\"1px\"><b>Clique aqui e veja a guerra entre os cl√£s <a href=\"guild_profile.php?id=" . $war['guild_id'] . "\">" . $guildname . "</a> e <a href=\"guild_profile.php?id=" . $war['enemy_id'] . "\">" . $enyname . "</a>.</b></font></center>";
 		echo "</td></tr>";
 	}
 }
@@ -73,7 +73,7 @@ echo "</table><br/>";
 
 $query = $db->execute("select * from `guilds` where `serv`=? order by `members` desc", array($player->serv));
 if ($query->recordcount() == 0) {
-	echo "<p><i><center>Nenhum clã registrado no momento.</center></i></p>";
+	echo "<p><i><center>Nenhum cl√£ registrado no momento.</center></i></p>";
 } else {
 while ($guild = $query->fetchrow()) {
 echo "<table width=\"100%\">";

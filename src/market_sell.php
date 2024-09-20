@@ -9,7 +9,7 @@ include("checkwork.php");
 if ($player->level < 15)
 {
 	include("templates/private_header.php");
-	echo "<i>Você precisa ter nível 15 ou mais para vender items.</i><br/>\n";
+	echo "<i>VocÃª precisa ter nÃ­vel 15 ou mais para vender items.</i><br/>\n";
 	echo '<a href="market.php">Voltar</a>.';
 	echo "</fieldset>";
 	include("templates/private_footer.php");
@@ -26,31 +26,31 @@ switch($_GET['act'])
 			$goooosdsfds = $gsadasdiiii->fetchrow();
 
 				if ($gsadasdiiii->recordcount() == 0){
-			 	echo "Você não possui este item.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "VocÃª nÃ£o possui este item.<br/><a href=\"market.php\">Voltar</a>.";
 			 	include("templates/private_footer.php");
 				break; 
 				}
 
 				if ($goooosdsfds['mark'] == t){
-			 	echo "Este item já está à venda!<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "Este item jÃ¡ estÃ¡ Ã¡ venda!<br/><a href=\"market.php\">Voltar</a>.";
 			 	include("templates/private_footer.php");
 				break; 
 				}
 
 				if ($goooosdsfds['status'] == 'equipped'){
-			 	echo "O item que você deseja vender está em uso. Desequipe-o e tente novamente.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "O item que vocÃª deseja vender estÃ¡ em uso. Desequipe-o e tente novamente.<br/><a href=\"market.php\">Voltar</a>.";
 			 	include("templates/private_footer.php");
 				break; 
 				}
 
 				if (($goooosdsfds['item_id'] == 111) or ($goooosdsfds['item_id'] == 116) or ($goooosdsfds['item_id'] == 163) or ($goooosdsfds['item_id'] == 168)){
-			 	echo "Você não pode vender este item.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "VocÃª nÃ£o pode vender este item.<br/><a href=\"market.php\">Voltar</a>.";
 			 	include("templates/private_footer.php");
 				break; 
 				}
 	
 				if ($goooosdsfds['type'] == 'stone'){
-			 	echo "Você não pode vender pedras no mercado.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "VocÃª nÃ£o pode vender pedras no mercado.<br/><a href=\"market.php\">Voltar</a>.";
 			 	include("templates/private_footer.php");
 				break; 
 				}
@@ -72,16 +72,16 @@ switch($_GET['act'])
 				}
 
 			?>
-			Então você quer vender seu iten? Ótimo! Me diga quando você quer por ele. Mas lembre-se, este mercado não funciona de graça, você tem que nos pagar 5% de comissão.<br /><br />
+			EntÃ£o vocÃª quer vender seu iten? Ã³timo! Me diga quando vocÃª quer por ele. Mas lembre-se, este mercado nÃ£o funciona de graÃ§a, vocÃª tem que nos pagar 5% de comissÃ£o.<br /><br />
 			<form method="POST" action="market_sell.php?act=confirm" >
 			<table>
 			<tr><td><b>Vender:</b></td><td><?php echo "" . $goooosdsfds['name'] . "" . $bonus1 . "" . $bonus2 . "" . $bonus3 . "" . $bonus4 . "" . $bonus5 . "";?></td></tr>
 			<input type="hidden" name="act" value="confirm">
 			<input type="hidden" name="item" value="<?php echo $_GET['item']; ?>">
-			<tr><td><b>Preço:</b></td><td><input type="text" name="price" size="15"></td></tr>
+			<tr><td><b>PreÃ§o:</b></td><td><input type="text" name="price" size="15"></td></tr>
 			<?php
 			if ($player->transpass != f){
-				echo "<tr><td><b>Senha de<br/>transferência:</b></td><td><input type=\"password\" name=\"passcode\" size=\"20\"/></td></tr>";
+				echo "<tr><td><b>Senha de<br/>transferÃªncia:</b></td><td><input type=\"password\" name=\"passcode\" size=\"20\"/></td></tr>";
 			}
 			?>
 			</table>
@@ -109,7 +109,7 @@ switch($_GET['act'])
 			if (strtolower($_POST['passcode']) != strtolower($player->transpass)){
 			include("templates/private_header.php");
 			echo "<fieldset><legend><b>Erro</b></legend>\n";
-        		echo "Sua senha de transferência está incorreta.<br />";
+        		echo "Sua senha de transferÃªncia estÃ¡ incorreta.<br />";
         		echo "<a href=\"market.php\">Voltar</a>.";
 			echo "</fieldset>";
         		include("templates/private_footer.php");
@@ -127,7 +127,7 @@ switch($_GET['act'])
 			$verificaall = $db->execute("select items.item_id, items.status, items.mark, items.item_bonus, items.for, items.vit, items.agi, items.res, blueprint_items.name, blueprint_items.type from `items`, `blueprint_items` where items.id=? and items.player_id=? and items.item_id=blueprint_items.id", array($_POST['item'], $player->id));
 				if ($verificaall->recordcount() == 0){
 				include("templates/private_header.php"); 
-			 	echo "Você não possui este item.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "VocÃª nÃ£o possui este item.<br/><a href=\"market.php\">Voltar</a>.";
 			 	include("templates/private_footer.php");
 				break; 
 				}
@@ -136,14 +136,14 @@ switch($_GET['act'])
 
 				if ($ver['mark'] == 't'){
 				include("templates/private_header.php"); 
-			 	echo "Este item já está no mercado.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "Este item jÃ¡ estÃ¡ no mercado.<br/><a href=\"market.php\">Voltar</a>.";
 			 	include("templates/private_footer.php");
 				break; 
 				}
 
 				if ($ver['status'] == 'equipped'){
 				include("templates/private_header.php"); 
-			 	echo "O item que você deseja vender está em uso. Desequipe-o e tente novamente.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "O item que vocÃª deseja vender estÃ¡ em uso. Desequipe-o e tente novamente.<br/><a href=\"market.php\">Voltar</a>.";
 			 	include("templates/private_footer.php");
 				break; 
 				}
@@ -154,7 +154,7 @@ switch($_GET['act'])
 
 			if (!$_POST['price']){
 				include("templates/private_header.php"); 
-			 	echo "Você precisa preencher todos os campos.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "VocÃª precisa preencher todos os campos.<br/><a href=\"market.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				break; 
 			}
@@ -162,7 +162,7 @@ switch($_GET['act'])
 			if (!is_numeric($_POST['price'])) 	
 			{
 				include("templates/private_header.php"); 
-			 	echo "O valor que você inseriu não é válido.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "O valor que vocÃª inseriu nÃ£o Ã© vÃ¡lido.<br/><a href=\"market.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				break; 
 			}
@@ -170,7 +170,7 @@ switch($_GET['act'])
 			if ($_POST['price'] < 100) 	
 			{
 				include("templates/private_header.php"); 
-			 	echo "O preço não pode ser menor que 100.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "O preÃ§o nÃ£o pode ser menor que 100.<br/><a href=\"market.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				break; 
 			}
@@ -179,7 +179,7 @@ switch($_GET['act'])
 			if ($_POST['price'] > 50000000) 	
 			{
 				include("templates/private_header.php"); 
-			 	echo "O preço não pode ser maior que 50 milhões.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "O preÃ§o nÃ£o pode ser maior que 50 milhÃµes.<br/><a href=\"market.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				break; 
 			}
@@ -191,7 +191,7 @@ switch($_GET['act'])
 			$fee=ceil($fee * 5);
 			if($price<=0){
 				include("templates/private_header.php"); 
-			 	echo "Desculpe, mas nós não permitimos que os usuários dêem itens. <a href=\"market.php\">Voltar</a>.";
+			 	echo "Desculpe, mas nÃ³s nÃ£o permitimos que os usuÃ¡rios dÃªem itens. <a href=\"market.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				break; 
 			}
@@ -199,7 +199,7 @@ switch($_GET['act'])
 				$gooooa = $gsassaaa->fetchrow();
 				include("templates/private_header.php"); 
 			?>
-			Você tem certeza que quer vender seu/sua <b><?php echo $gooooa['name']; ?> por <?php echo $price; ?> de ouro</b>? Você precisará nos pagar <b><?php echo $fee; ?> de ouro</b>, que é nossa comissão.<br/><br/>
+			VocÃª tem certeza que quer vender seu/sua <b><?php echo $gooooa['name']; ?> por <?php echo $price; ?> de ouro</b>? VocÃª precisarÃ¡ nos pagar <b><?php echo $fee; ?> de ouro</b>, que Ã© nossa comissÃ£o.<br/><br/>
 			<form method="post" action="market_sell.php?act=list">
 			<input type="hidden" name="item" value="<?php echo $item; ?>">
 			<input type="hidden" name="price" value="<?php echo $price; ?>">
@@ -224,7 +224,7 @@ switch($_GET['act'])
 			$verificaall = $db->execute("select items.item_id, items.status, items.mark, items.item_bonus, items.for, items.vit, items.agi, items.res, blueprint_items.name, blueprint_items.type from `items`, `blueprint_items` where items.id=? and items.player_id=? and items.item_id=blueprint_items.id", array($_POST['item'], $player->id));
 				if ($verificaall->recordcount() == 0){
 			include("templates/private_header.php"); 
-			 	echo "Você não possui este item.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "VocÃª nÃ£o possui este item.<br/><a href=\"market.php\">Voltar</a>.";
 			 	include("templates/private_footer.php");
 				break; 
 				}
@@ -233,14 +233,14 @@ switch($_GET['act'])
 
 				if ($ver['mark'] == 't'){
 				include("templates/private_header.php"); 
-			 	echo "Este item já está no mercado.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "Este item jÃ¡ estÃ¡ no mercado.<br/><a href=\"market.php\">Voltar</a>.";
 			 	include("templates/private_footer.php");
 				break; 
 				}
 
 				if ($ver['status'] == 'equipped'){
 				include("templates/private_header.php"); 
-			 	echo "O item que você deseja vender está em uso. Desequipe-o e tente novamente.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "O item que vocÃª deseja vender estÃ¡ em uso. Desequipe-o e tente novamente.<br/><a href=\"market.php\">Voltar</a>.";
 			 	include("templates/private_footer.php");
 				break; 
 				}
@@ -250,7 +250,7 @@ switch($_GET['act'])
 
 			if (!$_POST['price']){
 				include("templates/private_header.php"); 
-			 	echo "Você precisa preencher todos os campos.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "VocÃª precisa preencher todos os campos.<br/><a href=\"market.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				break; 
 			}
@@ -258,7 +258,7 @@ switch($_GET['act'])
 			if (!is_numeric($_POST['price'])) 	
 			{
 				include("templates/private_header.php"); 
-			 	echo "O valor que você inseriu não é válido.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "O valor que vocÃª inseriu nÃ£o Ã© vÃ¡lido.<br/><a href=\"market.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				break; 
 			}
@@ -266,7 +266,7 @@ switch($_GET['act'])
 			if ($_POST['price'] < 100) 	
 			{
 				include("templates/private_header.php"); 
-			 	echo "O preço não pode ser menor que 100.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "O preÃ§o nÃ£o pode ser menor que 100.<br/><a href=\"market.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				break; 
 			}
@@ -275,7 +275,7 @@ switch($_GET['act'])
 			if ($_POST['price'] > 50000000) 	
 			{
 				include("templates/private_header.php"); 
-			 	echo "O preço não pode ser maior que 50 milhões.<br/><a href=\"market.php\">Voltar</a>.";
+			 	echo "O preÃ§o nÃ£o pode ser maior que 50 milhÃµes.<br/><a href=\"market.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				break; 
 			}
@@ -288,7 +288,7 @@ switch($_GET['act'])
 
 			if($player->gold < $fee){
 			include("templates/private_header.php");
-			echo "Você não tem ouro para pagar nossa comissão.";	
+			echo "VocÃª nÃ£o tem ouro para pagar nossa comissÃ£o.";	
 			include("templates/private_footer.php");	
 			}else {
 				$insert['market_id'] = $item;
@@ -303,7 +303,7 @@ switch($_GET['act'])
 			$query03 = $db->execute("update `items` set `mark`='t', `status`='unequipped' where `id`=?", array($item));
 
 			include("templates/private_header.php");
-			echo "Agora seu item está disponivel no mercado! <a href=\"market.php\">Voltar</a>.";	
+			echo "Agora seu item estÃ¡ disponivel no mercado! <a href=\"market.php\">Voltar</a>.";	
 			include("templates/private_footer.php");
 
 			}
@@ -319,22 +319,22 @@ include("templates/private_header.php");
 $query = $db->execute("select * from blueprint_items order by blueprint_items.name asc");
 if ($query->recordcount() == 0)
 {
-	echo "<br /><b>Você não tem itens para vender.</b>";
+	echo "<br /><b>VocÃª nÃ£o tem itens para vender.</b>";
 }
 $abaioepa = $db->execute("select `id` from `items` where `player_id`=?", array($player->id));
 if ($abaioepa->recordcount() == 0)
 {
-	echo "<br /><b>Você não tem itens para vender.</b>";
+	echo "<br /><b>VocÃª nÃ£o tem itens para vender.</b>";
 	include("templates/private_footer.php");
 	exit;
 }
 else
 {
-	echo "<fieldset><legend><b>Quais itens você gostaria de vender?</b></legend>";
+	echo "<fieldset><legend><b>Quais itens vocÃª gostaria de vender?</b></legend>";
 	echo "<table width=\"100%\" border=\"0\">";
 	echo "<tr>";
 	echo "<th><b>Item</b></td>";
-	echo "<th><b>Ação</b></td>";
+	echo "<th><b>AÃ§Ã£o</b></td>";
 	echo "</tr>";
 	$gettheitemuniqid = $db->execute("select items.id, items.item_bonus, items.for, items.vit, items.agi, items.res, blueprint_items.name from `items`, `blueprint_items` where `player_id`=? and mark!='t' and items.item_id=blueprint_items.id order by blueprint_items.name asc", array($player->id));
 

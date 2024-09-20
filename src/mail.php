@@ -19,20 +19,20 @@ if ($_POST['sendmail'])
 	$query = $db->execute("select `id`, `gm_rank` from `players` where `username`=?", array($_POST['to']));
 	if ($query->recordcount() == 0)
 	{
-		$errormsg .= "Este usu·rio n„o existe!<br />";
+		$errormsg .= "Este usu√°rio n√£o existe!<br />";
 		$errors = 1;
 	}
 	$sendto = $query->fetchrow();
 
 	if (!$_POST['body'])
 	{
-		$errormsg .= "VocÍ precisa digitar uma mensagem!<br />";
+		$errormsg .= "Voc√™ precisa digitar uma mensagem!<br />";
 		$errors = 1;
 	}
 	if (($sendto['gm_rank'] > 10) and ($player->gm_rank < 2))
 	{
-		$errormsg .= "VocÍ n„o pode enviar mensagens diretamente para o administrador!<br />";
-		$errormsg .= "Se o assunto for sÈrio mande uma mensagem para um de nossos moderadores:<br/>";
+		$errormsg .= "Voc√™ n√£o pode enviar mensagens diretamente para o administrador!<br />";
+		$errormsg .= "Se o assunto for s√©rio mande uma mensagem para um de nossos moderadores:<br/>";
 		$query4 = $db->execute("select `username` from `players` where `gm_rank`>2 and `id`!=1 order by rand()");
 
 		while($member1 = $query4->fetchrow())
@@ -47,7 +47,7 @@ if ($_POST['sendmail'])
 	$ignorado = $db->execute("select * from `ignored` where `uid`=? and `bid`=?", array($sendto['id'], $player->id));
 	if ($ignorado->recordcount() > 0)
 	{
-		$errormsg .= "VocÍ est· sendo ignorado por este usu·rio e n„o poder· enviar mensagens para ele.<br />";
+		$errormsg .= "Voc√™ est√° sendo ignorado por este usu√°rio e n√£o poder√° enviar mensagens para ele.<br />";
 		$errors = 1;
 	}
 
@@ -73,7 +73,7 @@ if ($_POST['sendmail'])
 		}
 		else
 		{
-			$errormsg .= "Erro, a mensagem n„o pode ser enviada.";
+			$errormsg .= "Erro, a mensagem n√£o pode ser enviada.";
 			//Add to admin error log, or whatever, maybe for another version ;)
 		}
 	}
@@ -110,9 +110,9 @@ if ($_GET['act'] == "enviadas") {
 }
 
 if ($_GET['act'] == "ignore") {
-	echo "<a href=\"mail.php?act=ignore\"><b>Usu·rios ignorados</b></a> | ";
+	echo "<a href=\"mail.php?act=ignore\"><b>Usu√°rios ignorados</b></a> | ";
 } else {
-	echo "<a href=\"mail.php?act=ignore\">Usu·rios ignorados</a> | ";
+	echo "<a href=\"mail.php?act=ignore\">Usu√°rios ignorados</a> | ";
 }
 
 if ($_GET['act'] == "compose") {
@@ -131,7 +131,7 @@ switch($_GET['act'])
 		$query = $db->execute("select `id`, `gm_rank` from `players` where `username`=?", array($_POST['add']));
 		if ($query->recordcount() == 0)
 		{
-			echo "Este ususu·rio n„o existe!<br/><a href=\"mail.php?act=ignore\">Voltar</a>.";
+			echo "Este ususu√°rio n√£o existe!<br/><a href=\"mail.php?act=ignore\">Voltar</a>.";
 			include("templates/private_footer.php");
 			exit;
 		}else{
@@ -139,7 +139,7 @@ switch($_GET['act'])
 		}
 
 		if ($ignore['id'] == $player->id){
-			echo "VocÍ n„o pode ignorar vocÍ mesmo!<br><a href=\"mail.php?act=ignore\">Voltar</a>.";
+			echo "Voc√™ n√£o pode ignorar voc√™ mesmo!<br><a href=\"mail.php?act=ignore\">Voltar</a>.";
 			include("templates/private_footer.php");
 			exit;
 		}
@@ -147,7 +147,7 @@ switch($_GET['act'])
 
 		$query = $db->execute("select * from `ignored` where `bid`=? and `uid`=?", array($ignore['id'], $player->id));
 		if ($query->recordcount() > 0){
-			echo "VocÍ j· est· ignorando este usu·rio!<br><a href=\"mail.php?act=ignore\">Voltar</a>.";
+			echo "Voc√™ j√° est√° ignorando este usu√°rio!<br><a href=\"mail.php?act=ignore\">Voltar</a>.";
 			include("templates/private_footer.php");
 			exit;
 		}
@@ -171,7 +171,7 @@ switch($_GET['act'])
 	elseif ($_GET['delete']) {
 		$query = $db->execute("delete from `ignored` where `uid`=? and `bid`=?", array($player->id, $_GET['delete']));
 		if ($query) {
-			echo "Agora " . showName($_GET['delete'], &$db, 'off') . " n„o est· mais sendo ignorado!<br><a href=\"mail.php?act=ignore\">Voltar</a>.";
+			echo "Agora " . showName($_GET['delete'], &$db, 'off') . " n√£o est√° mais sendo ignorado!<br><a href=\"mail.php?act=ignore\">Voltar</a>.";
 			include("templates/private_footer.php");
 			exit;
 		}else{
@@ -182,12 +182,12 @@ switch($_GET['act'])
 	}
 
 	echo "<fieldset>";
-	echo "<legend><b>Usu·rios Ignorados</b></legend>";
+	echo "<legend><b>Usu√°rios Ignorados</b></legend>";
 
 		$query = $db->execute("select `bid` from `ignored` WHERE `uid`=?", array($player->id));
 		if ($query->recordcount() == 0)
 		{
-			echo "<p><center>VocÍ n„o est· ignorando ninguÈm.</center></p>";
+			echo "<p><center>Voc√™ n√£o est√° ignorando ningu√©m.</center></p>";
 		} else {
 
 			while($friend = $query->fetchrow())
@@ -201,16 +201,16 @@ switch($_GET['act'])
 	echo "</fieldset>";
 
 if ($query->recordcount() == 0) {
-	echo "<font size=\"1px\">VocÍ est· ignorando ".$query->recordcount()." usu·rio(s)</font>";
+	echo "<font size=\"1px\">Voc√™ est√° ignorando ".$query->recordcount()." usu√°rio(s)</font>";
 }
 
 	echo "<br/><br/>\n";
 	echo "<fieldset>\n";
-	echo "<legend><b>Ignorar Usu·rio</b></legend>\n";
+	echo "<legend><b>Ignorar Usu√°rio</b></legend>\n";
 	echo "<form method=\"POST\" action=\"mail.php?act=ignore\">\n";
 	echo "<table width=\"100%\">\n";
-	echo "<tr>\n<td width=\"20%\">Nome do usu·rio:</td>\n<td width=\"30%\"><input type=\"text\" name=\"add\" size=\"25\"/></td>";
-	echo "<td width=\"50%\"><input type=\"submit\" value=\"Ignorar Usu·rio\" /></td></tr>\n";
+	echo "<tr>\n<td width=\"20%\">Nome do usu√°rio:</td>\n<td width=\"30%\"><input type=\"text\" name=\"add\" size=\"25\"/></td>";
+	echo "<td width=\"50%\"><input type=\"submit\" value=\"Ignorar Usu√°rio\" /></td></tr>\n";
 	echo "</table>\n";
 	echo "</form>\n</fieldset>\n";
 break;
@@ -234,7 +234,7 @@ break;
                                 $mes = date("M", $msg['time']);
                                 $mes_ano["Jan"] = "Janeiro";
                                 $mes_ano["Feb"] = "Fevereiro";
-                                $mes_ano["Mar"] = "MarÁo";
+                                $mes_ano["Mar"] = "Mar√ßo";
                                 $mes_ano["Apr"] = "Abril";
                                 $mes_ano["May"] = "Maio";
                                 $mes_ano["Jun"] = "Junho";
@@ -317,13 +317,13 @@ break;
 				if ($query['count'] = 0)
 				{
 					//In case there are some funny guys out there ;)
-					echo "Esta(s) mensagem n„o pertence a vocÍ!";
+					echo "Esta(s) mensagem n√£o pertence a voc√™!";
 				}
 				else
 				{
 					if (!$_POST['deltwo'])
 					{
-						echo "VocÍ tem certeza que quer deletar esta(s) mensagem(s)?<br /><br />\n";
+						echo "Voc√™ tem certeza que quer deletar esta(s) mensagem(s)?<br /><br />\n";
 						echo "<form method=\"post\" action=\"mail.php?act=delete\">\n";
 						echo "<input type=\"hidden\" name=\"id\" value=\"" . $_POST['id'] . "\" />\n";
 						echo "<input type=\"hidden\" name=\"deltwo\" value=\"1\" />\n";
@@ -354,7 +354,7 @@ break;
 					if ($query['count'] = 0)
 					{
 						//In case there are some funny guys out there ;)
-						echo "Esta(s) mensagem(s) n„o pertence a vocÍ!";
+						echo "Esta(s) mensagem(s) n√£o pertence a voc√™!";
 						$delerror = 1;
 					}
 				}
@@ -362,7 +362,7 @@ break;
 				{
 					if (!$_POST['deltwo'])
 					{
-						echo "VocÍ tem certeza que quer deletar esta(s) mensagem(s)?<br /><br />\n";
+						echo "Voc√™ tem certeza que quer deletar esta(s) mensagem(s)?<br /><br />\n";
 						echo "<form method=\"post\" action=\"mail.php?act=delete\">\n";
 						foreach($_POST['id'] as $msg)
 						{
@@ -412,7 +412,7 @@ break;
                                 $mes = date("M", $msg['time']);
                                 $mes_ano["Jan"] = "Janeiro";
                                 $mes_ano["Feb"] = "Fevereiro";
-                                $mes_ano["Mar"] = "MarÁo";
+                                $mes_ano["Mar"] = "Mar√ßo";
                                 $mes_ano["Apr"] = "Abril";
                                 $mes_ano["May"] = "Maio";
                                 $mes_ano["Jun"] = "Junho";
@@ -477,7 +477,7 @@ break;
                                 $mes = date("M", $msg['time']);
                                 $mes_ano["Jan"] = "Janeiro";
                                 $mes_ano["Feb"] = "Fevereiro";
-                                $mes_ano["Mar"] = "MarÁo";
+                                $mes_ano["Mar"] = "Mar√ßo";
                                 $mes_ano["Apr"] = "Abril";
                                 $mes_ano["May"] = "Maio";
                                 $mes_ano["Jun"] = "Junho";

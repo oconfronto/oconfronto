@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Desfazer Cl„");
+define("PAGENAME", "Desfazer Cl√£");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 include("checkguild.php");
@@ -20,7 +20,7 @@ include("templates/private_header.php");
 if ($player->username != $guild['leader']) {
 	echo "<fieldset>";
 	echo "<legend><b>Acesso Negado</b></legend>";
-	echo "<p />VocÍ n„o pode acessar esta p·gina.<br/><br/>";
+	echo "<p />Voc√™ n√£o pode acessar esta p√°gina.<br/><br/>";
 	echo "<a href=\"home.php\">Principal</a>";
 	echo "</fieldset>";
 } else {
@@ -28,7 +28,7 @@ if ($player->username != $guild['leader']) {
 if ($_GET['act'] == "go") {
 		$query4 = $db->execute("select `id` from `players` where `guild`=?", array($guild['id']));
 		while($member = $query4->fetchrow()) {
-		$logmsg = "A gangue " . $guild['name'] . " foi deletada pelo lider do cl„.";
+		$logmsg = "A gangue " . $guild['name'] . " foi deletada pelo lider do cl√£.";
 		addlog($member['id'], $logmsg, $db);
 		}
 
@@ -43,17 +43,17 @@ if ($_GET['act'] == "go") {
 	$db->execute("update `players` set `guild`=? where `guild`=?", array(NULL, $guild['id']));
 
 	echo "<fieldset>";
-	echo "<legend><b>" . $guild['name'] . " :: Desfazer Cl„</b></legend>";
-        echo "Seu cl„ foi excluido com sucesso!<br/><br/>";
+	echo "<legend><b>" . $guild['name'] . " :: Desfazer Cl√£</b></legend>";
+        echo "Seu cl√£ foi excluido com sucesso!<br/><br/>";
         echo "<a href=\"home.php\">Principal</a>";
 	echo "</fieldset>";
 } else {
 echo "<fieldset>";
-echo "<legend><b>" . $guild['name'] . " :: Desfazer Cl„</b></legend>";
-echo "VocÍ tem certeza que quer excluir o cl„: " . $guild['name'] . "?<br/><br/>";
+echo "<legend><b>" . $guild['name'] . " :: Desfazer Cl√£</b></legend>";
+echo "Voc√™ tem certeza que quer excluir o cl√£: " . $guild['name'] . "?<br/><br/>";
 echo "<table width=\"100%\" border=\"0\"><tr>";
 echo "<td width=\"50%\"><a href=\"guild_admin.php\">Voltar</a></td>";
-echo "<td width=\"50%\" align=\"right\"><a href=\"guild_admin_disband.php?act=go\">Desfazer Cl„</a></td>";
+echo "<td width=\"50%\" align=\"right\"><a href=\"guild_admin_disband.php?act=go\">Desfazer Cl√£</a></td>";
 echo "</tr></table>";
 echo "</fieldset>";
 }

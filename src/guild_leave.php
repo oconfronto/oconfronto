@@ -1,6 +1,6 @@
 <?php 
 include("lib.php");
-define("PAGENAME", "Abandonar Clã");
+define("PAGENAME", "Abandonar ClÃ£");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 include("checkguild.php");
@@ -23,21 +23,21 @@ if ($_GET['act'] == "go") {
     	$query = $db->execute("update `guilds` set `members`=? where `id`=?", array($guild['members'] - 1, $player->guild));
         $query = $db->execute("update `players` set `guild`=? where `username`=?", array(NULL, $player->username));
 	echo "<fieldset>";
-	echo "<legend><b>" . $guild['name'] . " :: Abandonar Clã</b></legend>";
-        echo "Você abandonou seu clã com sucesso.<br />";
+	echo "<legend><b>" . $guild['name'] . " :: Abandonar ClÃ£</b></legend>";
+        echo "VocÃª abandonou seu clÃ£ com sucesso.<br />";
 	echo "</fieldset>";
         echo "<a href=\"home.php\">Principal</a>";
     } else {
 	echo "<fieldset>";
-	echo "<legend><b>" . $guild['name'] . " :: Abandonar Clã</b></legend>";
-      	echo "Você não pode abandonar este clã. Se você for o lider dele, deverá desfaze-lo primeiro. Se for o vice-lider, abandone seu cargo primeiro.<br />";
+	echo "<legend><b>" . $guild['name'] . " :: Abandonar ClÃ£</b></legend>";
+      	echo "VocÃª nÃ£o pode abandonar este clÃ£. Se vocÃª for o lider dele, deverÃ¡ desfaze-lo primeiro. Se for o vice-lider, abandone seu cargo primeiro.<br />";
 	echo "</fieldset>";
         echo "<a href=\"guild_home.php\">Voltar</a>";
     }
 } else {
 	echo "<fieldset>";
-	echo "<legend><b>" . $guild['name'] . " :: Abandonar Clã</b></legend>";
-	echo "Você tem certeza que quer abandonar seu clã?<br />";
+	echo "<legend><b>" . $guild['name'] . " :: Abandonar ClÃ£</b></legend>";
+	echo "VocÃª tem certeza que quer abandonar seu clÃ£?<br />";
 	echo "<table width=\"100%\" border=\"0\"><tr>";
 	echo "<td width=\"50%\"><a href=\"guild_home.php\">Voltar</a></td>";
 	echo "<td width=\"50%\" align=\"right\"><a href=\"guild_leave.php?act=go\">Abandonar</a></td>";

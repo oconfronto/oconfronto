@@ -28,9 +28,9 @@ include("checkmedals.php");
 	if ($tutorial->recordcount() > 0){
 		$tutorial = $db->execute("select * from `magias` where `magia_id`=? and `player_id`=?", array(4, $player->id));
 		if ($tutorial->recordcount() == 0){
-			echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">A cada nível que voc&ecirc; passa, voc&ecirc; ganha 1 <u>ponto mêstico</u>.<br/><font size=\"1px\">Com os pontos mêsticos voc&ecirc; pode treinar <u>novos feitiços</u>.</font><br/><br/>Agora, treine o feitiço <b>Cura</b> para continuar.</td><th><font size=\"1px\"><a href=\"start.php?act=6\">Próximo</a></font></th></tr></table>", "white", "left");
+			echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">A cada n√≠vel que voc&ecirc; passa, voc&ecirc; ganha 1 <u>ponto m√≠stico</u>.<br/><font size=\"1px\">Com os pontos m√≠sticos voc&ecirc; pode treinar <u>novos feiti√ßos</u>.</font><br/><br/>Agora, treine o feiti√ßo <b>Cura</b> para continuar.</td><th><font size=\"1px\"><a href=\"start.php?act=6\">Pr√≥ximo</a></font></th></tr></table>", "white", "left");
 		}else{
-			echo showAlert("”timo, <a href=\"start.php?act=6\">clique aqui</a> para continuar seu tutorial.", "green");
+			echo showAlert("√≥timo, <a href=\"start.php?act=6\">clique aqui</a> para continuar seu tutorial.", "green");
 		}
 	}
 
@@ -46,7 +46,7 @@ include("checkquest.php");
 							while($row2 = mysql_fetch_array($query3)) {
 								$item_name = $row2['name'];
 							}
-				echo showAlert("VocÍ acaba de ganhar o Item <u>" . $item_name . " +".$item_bonus."</u> do Evento Convide Amigos, ParabÈns !" ,"green");
+				echo showAlert("Voc√™ acaba de ganhar o Item <u>" . $item_name . " +".$item_bonus."</u> do Evento Convide Amigos, Parab√©ns !" ,"green");
 				$db->execute("update `items` set `item_event`=? where `id`=? ", array('0', $id));
 				}
 			}
@@ -62,10 +62,10 @@ echo "<table width=\"100%\">";
 			echo "<tr><td class=\"salmon\" height=\"80px\">";
                             echo "<table width=\"100%\">";
         
-                                echo "<tr><td width=\"20%\"><b>Vocação:</b></td><td width=\"55%\">";
+                                echo "<tr><td width=\"20%\"><b>Voca√ß√£o:</b></td><td width=\"55%\">";
     
                                 if ($player->voc == 'archer' and $player->promoted == 'f'){
-                                    echo "Caçador";
+                                    echo "Ca√ßador";
                                 } else if ($player->voc == 'knight' and $player->promoted == 'f'){
                                     echo "Espadachim";
                                 } else if ($player->voc == 'mage' and $player->promoted == 'f'){
@@ -95,7 +95,7 @@ echo "<table width=\"100%\">";
                                             echo "$i";
                                         $i++;
                                     }
-                                    echo "∫";
+                                    echo "¬∫";
                                     echo "</center>";
                                 echo "</th></tr>";
                                 
@@ -112,13 +112,13 @@ echo "<table width=\"100%\">";
                                 echo "</td></tr>";
                                 
 				$nomecla = $db->GetOne("select `name` from `guilds` where `id`=?", array($player->guild));
-				echo "<tr><td><b>Clã:</b></td><td>"; if ($nomecla != NULL){ echo "<a href=\"guild_home.php\">" . $nomecla . "</a>"; }else{ echo "Nenhum"; }
+				echo "<tr><td><b>Cl√£:</b></td><td>"; if ($nomecla != NULL){ echo "<a href=\"guild_home.php\">" . $nomecla . "</a>"; }else{ echo "Nenhum"; }
                                 echo "</td></tr>";
                                     
                                 $mes = date("M", $player->registered);
                                 $mes_ano["Jan"] = "Janeiro";
                                 $mes_ano["Feb"] = "Fevereiro";
-                                $mes_ano["Mar"] = "Março";
+                                $mes_ano["Mar"] = "Mar√ßo";
                                 $mes_ano["Apr"] = "Abril";
                                 $mes_ano["May"] = "Maio";
                                 $mes_ano["Jun"] = "Junho";
@@ -137,7 +137,7 @@ echo "<table width=\"100%\">";
                                         }else{
                                         echo "<tr><td class=\"on\">";
                                         }   
-                                    echo "<center><font size=\"1px\"><b>Pontos mêsticos:</b> " . $player->magic_points . "</font></center>";
+                                    echo "<center><font size=\"1px\"><b>Pontos m√≠sticos:</b> " . $player->magic_points . "</font></center>";
                                 echo "</td></tr>";
 			echo "<tr><td>";
 			echo "<br/><table width=\"100%\">";
@@ -153,7 +153,7 @@ echo "<table width=\"100%\">";
 	echo "</td>";
 	echo "<td width=\"40%\">";
 		echo "<table width=\"100%\">";
-			echo "<tr><td class=\"brown\" width=\"100%\" colspan=\"2\"><center><b>Pontos de Status</b><img src=\"images/help.gif\" title=\"header=[Pontos de Status] body=[<font size='1px'>São utilizados para aumentar sua agilidade, vitalidade, etc. A cada nível que voc&ecirc; passar voc&ecirc; ganha 3 pontos de status. Quando isso ocorrer não se esqueça de utiliza-los!</font>]\"></center></td></tr>";
+			echo "<tr><td class=\"brown\" width=\"100%\" colspan=\"2\"><center><b>Pontos de Status</b><img src=\"images/help.gif\" title=\"header=[Pontos de Status] body=[<font size='1px'>S√£o utilizados para aumentar sua agilidade, vitalidade, etc. A cada n√≠vel que voc&ecirc; passar voc&ecirc; ganha 3 pontos de status. Quando isso ocorrer n√£o se esque√ßa de utiliza-los!</font>]\"></center></td></tr>";
 			echo "<tr><td class=\"salmon\" height=\"80px\" colspan=\"2\"><div id=\"skills\">";
                 include("showskills.php");
 			echo "</div></td></tr>";
@@ -176,7 +176,7 @@ echo "<table width=\"100%\">";
 							echo "<br/><br/><center>Apenas jogadores que possuem todas as magias liberadas podem estender sua mana.</center><br/><br/>";
 						} else {
 							echo "<br/><center><img src=\"images/man.png\"><img src=\"bargen.php?man\">"; if ($player->magic_points > 0){ echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_spells.php?estender=true', 'maxmana')\"><img src=\"images/addstat.png\" border=\"0px\"></a>"; }else{ echo "<img src=\"images/none.png\" border=\"0px\">"; } echo "</center>";
-							echo "<center><font size=\"1px\">Estenda 2 pontos da sua mana<br/>máxima por 1 ponto mêstico.<br/><br/><b>Voc&ecirc; " . $player->magic_points . " tem ponto(s) mêstico(s).</b></font></center>";
+							echo "<center><font size=\"1px\">Estenda 2 pontos da sua mana<br/>m√°xima por 1 ponto m√≠stico.<br/><br/><b>Voc&ecirc; " . $player->magic_points . " tem ponto(s) m√≠stico(s).</b></font></center>";
 						}
 					echo "</div></td>";
 				echo "</tr>";
@@ -194,10 +194,10 @@ echo "<br/>";
 echo "<table width=\"100%\">";
 	echo "<tr><td width=\"50%\">";
 		echo "<table width=\"100%\">";
-    echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Tarefas e Missões</b><img src=\"images/help.gif\" title=\"header=[Tarefas] body=[<font size='1px'>Tarefas são maneiras divertidas de se beneficiar no jogo. Apenas siga alguma das tarefas abaixo e seja recompensado com ouro, itens ou até mesmo ponto de experi&ecirc;ncia!</font>]\"></center></td></tr>";
+    echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Tarefas e Miss√µes</b><img src=\"images/help.gif\" title=\"header=[Tarefas] body=[<font size='1px'>Tarefas s√£o maneiras divertidas de se beneficiar no jogo. Apenas siga alguma das tarefas abaixo e seja recompensado com ouro, itens ou at√© mesmo ponto de experi&ecirc;ncia!</font>]\"></center></td></tr>";
     $gettasks = $db->execute("select * from `tasks` where `needlvl`<=? order by `needlvl` asc", array($player->level));
     if ($gettasks->recordcount() < 1){
-        echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa disponível.</font></center></td></tr>";
+        echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa dispon√≠vel.</font></center></td></tr>";
     }else{
         $query = $db->execute("select * from `allquests`");
         while ($quest = $query->fetchrow())
@@ -205,7 +205,7 @@ echo "<table width=\"100%\">";
             $q .= "<table width=\"100%\" border=\"0px\"><tr>";
             $q .= "<td width=\"70%\"><b>".$quest['name']."</b><br/><i>".$quest['desc']."</i><br/><br/></td>";
             
-            //verifica se a missão está disponível ou se foi completa
+            //verifica se a miss√£o est√° dispon√≠vel ou se foi completa
             $qStatus = $db->GetOne("select `quest_status` from `quests` where `player_id`=? and `quest_id`=?", array($player->id, $quest['id']));
             if (($qStatus != 90) and ($quest['lvl'] <= $player->level)) 
             {
@@ -239,10 +239,10 @@ echo "<table width=\"100%\">";
                     $msg = "Matar " . $task['obj_value'] . " monstros.<br/>";
                 }elseif (($task['obj_type'] == 'pvp') and ($task['obj_extra'] == 0)){
                     $pcento = ceil(($player->kills / $task['obj_value']) * 100);
-                    $msg = "Matar " . $task['obj_value'] . " usuários.<br/>";
+                    $msg = "Matar " . $task['obj_value'] . " usu√°rios.<br/>";
                 }elseif ($task['obj_type'] == 'level'){
                     $pcento = ceil(($player->level / $task['obj_value']) * 100);
-                    $msg = "Alcançar o nível " . $task['obj_value'] . ".<br/>";
+                    $msg = "Alcan√ßar o n√≠vel " . $task['obj_value'] . ".<br/>";
                 }
                 
                 
@@ -261,7 +261,7 @@ echo "<table width=\"100%\">";
         
         $countcompleted = $db->execute("select `id` from `completed_tasks` where `player_id`=?", array($player->id));
         if ($gettasks->recordcount() == $countcompleted->recordcount()){
-            echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa disponível.</font></center></td></tr>";
+            echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa dispon√≠vel.</font></center></td></tr>";
         }
     }
     echo "</table>";
@@ -269,11 +269,11 @@ echo "<table width=\"100%\">";
 	echo "</td>";
 	echo "<td width=\"50%\">";
 		echo "<table width=\"100%\">";
-			echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Amigos</b><img src=\"images/help.gif\" title=\"header=[Amigos] body=[<font size='1px'>Seus amigos são importantes no jogo. Além de poder caçar com eles voc&ecirc; sempre ficará informado do que seu amigo está fazendo no jogo, portanto, vá logo para o chat ou o fórum do jogo e começe novas amizades!</font>]\"></center></td></tr>";
+			echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Amigos</b><img src=\"images/help.gif\" title=\"header=[Amigos] body=[<font size='1px'>Seus amigos s√£o importantes no jogo. Al√©m de poder ca√ßar com eles voc&ecirc; sempre ficar√° informado do que seu amigo est√° fazendo no jogo, portanto, v√° logo para o chat ou o f√≥rum do jogo e comece novas amizades!</font>]\"></center></td></tr>";
 			
 			$countfriends = $db->execute("select * from `friends` where `uid`=?", array($player->acc_id));
 			if ($countfriends->recordcount() == 0){
-				echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">VocÍ n„o tem amigos.</font></center></td></tr>";
+				echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Voc√™ n√£o tem amigos.</font></center></td></tr>";
 			}else{
 
 				$getflogs = $db->execute("select log_friends.log, log_friends.time from `log_friends`, `friends` where friends.uid=? and log_friends.fname=friends.fname order by log_friends.time desc limit 5", array($player->acc_id));
@@ -286,16 +286,16 @@ echo "<table width=\"100%\">";
 						$valortempo = time() -  $pfriend['time'];
 						if ($valortempo < 60){
 							$valortempo2 = $valortempo;
-							$auxiliar2 = "segundo(s) atrás.";
+							$auxiliar2 = "segundo(s) atr√°s.";
 						}else if($valortempo < 3600){
 							$valortempo2 = ceil($valortempo / 60);
-							$auxiliar2 = "minuto(s) atrás.";
+							$auxiliar2 = "minuto(s) atr√°s.";
 						}else if($valortempo < 86400){
 							$valortempo2 = ceil($valortempo / 3600);
-							$auxiliar2 = "hora(s) atrás.";
+							$auxiliar2 = "hora(s) atr√°s.";
 						}else if($valortempo > 86400){
 							$valortempo2 = ceil($valortempo / 86400);
-							$auxiliar2 = "dia(s) atrás.";
+							$auxiliar2 = "dia(s) atr√°s.";
 						}
 
 						echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><div title=\"header=[Log] body=[" . $valortempo2 . " " . $auxiliar2 . "]\"><font size=\"1px\">" . $pfriend['log'] . "</font></div></td></tr>";

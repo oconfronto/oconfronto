@@ -54,13 +54,13 @@ while($hours = $counthours->fetchrow())
 		$needlvl = 100;
 		$ganha = 2900 * (1 + $bonnus);
 	} elseif ($player->level >= 60){
-		$profic = "Artesão";
+		$profic = "ArtesÃ£o";
 		$nextprofic = "Ferreiro";
 		$needlvl = 80;
 		$ganha = 1000 * (1 + $bonnus);
 	} elseif ($player->level >= 40){
 		$profic = "Campones";
-		$nextprofic = "Artesão";
+		$nextprofic = "ArtesÃ£o";
 		$needlvl = 60;
 		$ganha = 450 * (1 + $bonnus);
 	} elseif ($player->level >= 1){
@@ -74,7 +74,7 @@ while($hours = $counthours->fetchrow())
 		include("templates/private_header.php");
 		echo "<fieldset>";
 		echo "<legend><b>Trabalho</b></legend>";
-		echo "Tem certeza que deseja abandonar seu trabalho? Se abandona-lo, não ganhará nada. ";
+		echo "Tem certeza que deseja abandonar seu trabalho? Se abandona-lo, nÃ£o ganharÃ¡ nada. ";
 		echo "<a href=\"work.php?act=remove\">Desejo abandonar o trabalho</a>.";
 		echo "</fieldset><br/><a href=\"home.php\">Principal</a>.";
 		include("templates/private_footer.php");
@@ -86,7 +86,7 @@ while($hours = $counthours->fetchrow())
 		include("templates/private_header.php");
 		echo "<fieldset>";
 		echo "<legend><b>Trabalho</b></legend>";
-		echo "Você abandonou seu trabalho.";
+		echo "VocÃª abandonou seu trabalho.";
 		echo "</fieldset><br/><a href=\"home.php\">Principal</a>.";
 		include("templates/private_footer.php");
 		exit;
@@ -112,7 +112,7 @@ if ((($player->reino != '2') and ($player->vip < time())) and ((($player->level 
 	include("templates/private_header.php");
 	echo "<fieldset>";
 	echo "<legend><b>Trabalhar</b></legend>";
-	echo "Você não pode trabalhar por tanto tempo.";
+	echo "VocÃª nÃ£o pode trabalhar por tanto tempo.";
 	echo "</fieldset><br /><a href=\"work.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
@@ -122,7 +122,7 @@ if ((($player->reino == '2') or ($player->vip > time())) and ((($player->level <
 	include("templates/private_header.php");
 	echo "<fieldset>";
 	echo "<legend><b>Trabalhar</b></legend>";
-	echo "Você não pode trabalhar por tanto tempo.";
+	echo "VocÃª nÃ£o pode trabalhar por tanto tempo.";
 	echo "</fieldset><br /><a href=\"work.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
@@ -133,7 +133,7 @@ if ((($player->reino == '2') or ($player->vip > time())) and ((($player->level <
 		include("templates/private_header.php");
 		echo "<fieldset>";
 		echo "<legend><b>Trabalhar</b></legend>";
-		echo "Você não pode trabalhar enquanto participa ou está inscrito em um torneio.";
+		echo "VocÃª nÃ£o pode trabalhar enquanto participa ou estÃ¡ inscrito em um torneio.";
 		echo "</fieldset><br /><a href=\"work.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		exit;
@@ -143,7 +143,7 @@ if ((($player->reino == '2') or ($player->vip > time())) and ((($player->level <
 		include("templates/private_header.php");
 		echo "<fieldset>";
 		echo "<legend><b>Trabalhar</b></legend>";
-		echo "Você anda trabalhando demais. O máximo permido por semana é de 72 horas.<br/>Você ainda pode trabalhar por " . (72 - $totaltime) . "h esta semana.";
+		echo "VocÃª anda trabalhando demais. O mÃ¡ximo permido por semana Ã© de 72 horas.<br/>VocÃª ainda pode trabalhar por " . (72 - $totaltime) . "h esta semana.";
 		echo "</fieldset><br /><a href=\"work.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		exit;
@@ -160,7 +160,7 @@ if ((($player->reino == '2') or ($player->vip > time())) and ((($player->level <
 		include("templates/private_header.php");
 		echo "<fieldset>";
 		echo "<legend><b>Trabalhar</b></legend>";
-		echo "Você começou a trabalhar como <b>" . $profic . "</b>, com o salário de <b>" . $ganha . " por hora</b>.<br/>Restam <b>" . $_POST['time'] . " hora(s)</b> para terminar seu trabalho.";
+		echo "VocÃª comeÃ§ou a trabalhar como <b>" . $profic . "</b>, com o salÃ¡rio de <b>" . $ganha . " por hora</b>.<br/>Restam <b>" . $_POST['time'] . " hora(s)</b> para terminar seu trabalho.";
 		echo "</fieldset><br /><a href=\"home.php\">Principal</a>.";
 		include("templates/private_footer.php");
 		exit;
@@ -170,13 +170,13 @@ include("templates/private_header.php");
 
 if ($player->level < 40){
 echo "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-echo "<center><font size=\"1\"><b>Personagens de nível inferior a 40 ganham salários extremamente baixos para evitar fraudes.</b></font></center>";
+echo "<center><font size=\"1\"><b>Personagens de nÃ­vel inferior a 40 ganham salÃ¡rios extremamente baixos para evitar fraudes.</b></font></center>";
 echo "</div>";
 } else {
 	if ($player->reino == '2') {
-		echo showAlert("<i>Você pode trabalhar por uma hora a mais, pelo fato de ser um membro do reino Eroda.</i>");
+		echo showAlert("<i>VocÃª pode trabalhar por uma hora a mais, pelo fato de ser um membro do reino Eroda.</i>");
 	} elseif ($player->vip > time()) {
-		echo showAlert("<i>Você pode trabalhar por uma hora a mais, pelo fato de ser um membro vip.</i>");
+		echo showAlert("<i>VocÃª pode trabalhar por uma hora a mais, pelo fato de ser um membro vip.</i>");
 	}
 }
 
@@ -200,9 +200,9 @@ echo "</div>";
 		}
 
 		if (($player->vip > time()) and ($reino['work'] < '0.15')) {
-			echo showAlert("<i>Sendo vip você também tem 15% de bônus salárial.</i>");
+			echo showAlert("<i>Sendo vip vocÃª tambÃ©m tem 15% de bÃ´nus salÃ¡rial.</i>");
 		} else {
-			echo showAlert("<i>Membros do seu reino ainda terão " . ceil($reino['work'] * 100) . "% de bônus salárial por " . $valortempo2 . " " . $auxiliar2 . ".</i>");
+			echo showAlert("<i>Membros do seu reino ainda terÃ£o " . ceil($reino['work'] * 100) . "% de bÃ´nus salÃ¡rial por " . $valortempo2 . " " . $auxiliar2 . ".</i>");
 		}
 	}
 
@@ -212,10 +212,10 @@ echo "<fieldset style='background:url(images/bg-fieldset.png);'>";
 echo "<legend><b>Trabalhar</b></legend>";
 echo "<table width=\"100%\" border=\"0\">";
 echo "<tr>";
-echo "<td width=\"15%\"><b>Profissão:</b></td>";
+echo "<td width=\"15%\"><b>ProfissÃ£o:</b></td>";
 echo "<td>" . $profic . ".<br/>";
 	if ($player->level < 180){
-	echo "<font size=\"1\">Ao atingir o nível " . $needlvl . " você será promovido a " . $nextprofic . ".</font></td>";
+	echo "<font size=\"1\">Ao atingir o nÃ­vel " . $needlvl . " vocÃª serÃ¡ promovido a " . $nextprofic . ".</font></td>";
 	}
 echo "</tr><tr>";
 echo "<td width=\"15%\"><b>Horas:</b></td>";
@@ -248,27 +248,27 @@ echo "</select>";
 
 	if ($player->level < 80){
 		if (($player->reino == '2') or ($player->vip > time())) {
-			echo " <font size=\"1\">Apartir do nível 80 você poderá trabalhar por 9h.</font>";
+			echo " <font size=\"1\">Apartir do nÃ­vel 80 vocÃª poderÃ¡ trabalhar por 9h.</font>";
 		} else {
-			echo " <font size=\"1\">Apartir do nível 80 você poderá trabalhar por 8h.</font>";
+			echo " <font size=\"1\">Apartir do nÃ­vel 80 vocÃª poderÃ¡ trabalhar por 8h.</font>";
 		}
 	} elseif ($player->level < 100){
 		if (($player->reino == '2') or ($player->vip > time())) {
-			echo " <font size=\"1\">Apartir do nível 100 você poderá trabalhar por 10h.</font>";
+			echo " <font size=\"1\">Apartir do nÃ­vel 100 vocÃª poderÃ¡ trabalhar por 10h.</font>";
 		} else {
-			echo " <font size=\"1\">Apartir do nível 100 você poderá trabalhar por 9h.</font>";
+			echo " <font size=\"1\">Apartir do nÃ­vel 100 vocÃª poderÃ¡ trabalhar por 9h.</font>";
 		}
 	} elseif ($player->level < 120){
 		if (($player->reino == '2') or ($player->vip > time())) {
-			echo " <font size=\"1\">Apartir do nível 120 você poderá trabalhar por 11h.</font>";
+			echo " <font size=\"1\">Apartir do nÃ­vel 120 vocÃª poderÃ¡ trabalhar por 11h.</font>";
 		} else {
-			echo " <font size=\"1\">Apartir do nível 120 você poderá trabalhar por 10h.</font>";
+			echo " <font size=\"1\">Apartir do nÃ­vel 120 vocÃª poderÃ¡ trabalhar por 10h.</font>";
 		}
 	} elseif ($player->level < 140){
 		if (($player->reino == '2') or ($player->vip > time())) {
-			echo " <font size=\"1\">Apartir do nível 140 você poderá trabalhar por 12h.</font>";
+			echo " <font size=\"1\">Apartir do nÃ­vel 140 vocÃª poderÃ¡ trabalhar por 12h.</font>";
 		} else {
-			echo " <font size=\"1\">Apartir do nível 140 você poderá trabalhar por 11h.</font>";
+			echo " <font size=\"1\">Apartir do nÃ­vel 140 vocÃª poderÃ¡ trabalhar por 11h.</font>";
 		}
 	}
 
@@ -277,13 +277,13 @@ echo "</fieldset>";
 
 echo "<table width=\"100%\" border=\"0\">";
 echo "<tr><td width=\"30%\"><input type=\"submit\" id='link' class='neg' name=\"submit\" value=\"Trabalhar\" /></td><td width=\"70%\" align=\"right\">";
-echo "<font size=\"1\"><b>Salário:</b> " . $ganha . " moedas de ouro por hora.</font><br/><font size=\"1\">Você ainda pode trabalhar por " . (72 - $totaltime) . "h esta semana.</font>";
+echo "<font size=\"1\"><b>SalÃ¡rio:</b> " . $ganha . " moedas de ouro por hora.</font><br/><font size=\"1\">VocÃª ainda pode trabalhar por " . (72 - $totaltime) . "h esta semana.</font>";
 
 echo "</td></tr></table></form>";
 echo "<br />";
 
 echo "<table width=\"100%\">";
-echo "<tr><td align=\"center\" bgcolor=\"#E1CBA4\"><b>Últimos Trabalhos</b></td></tr>";
+echo "<tr><td align=\"center\" bgcolor=\"#E1CBA4\"><b>Ãºltimos Trabalhos</b></td></tr>";
 $query1 = $db->execute("select * from `work` where `player_id`=? and `status`!='t' order by `start` desc limit 10", array($player->id));
 if ($query1->recordcount() > 0)
 {
@@ -292,23 +292,23 @@ if ($query1->recordcount() > 0)
 		$valortempo = time() - $log1['start'];
 		if ($valortempo < 60){
 		$valortempo2 = $valortempo;
-		$auxiliar2 = "segundo(s) atrás.";
+		$auxiliar2 = "segundo(s) atrÃ¡s.";
 		}else if($valortempo < 3600){
 		$valortempo2 = floor($valortempo / 60);
-		$auxiliar2 = "minuto(s) atrás.";
+		$auxiliar2 = "minuto(s) atrÃ¡s.";
 		}else if($valortempo < 86400){
 		$valortempo2 = floor($valortempo / 3600);
-		$auxiliar2 = "hora(s) atrás.";
+		$auxiliar2 = "hora(s) atrÃ¡s.";
 		}else if($valortempo > 86400){
 		$valortempo2 = floor($valortempo / 86400);
-		$auxiliar2 = "dia(s) atrás.";
+		$auxiliar2 = "dia(s) atrÃ¡s.";
 		}
 
 		echo "<tr>";
 		if ($log1['status'] == 'a'){
-		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">Você começou a trabalhar como " . $log1['worktype'] . " mas abandonou seu trabalho.</font></div></td>";
+		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">VocÃª comeÃ§ou a trabalhar como " . $log1['worktype'] . " mas abandonou seu trabalho.</font></div></td>";
 		}else{
-		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">Você trabalhou como " . $log1['worktype'] . " por " . $log1['worktime'] . " horas e ganhou " . ($log1['worktime'] * $log1['gold']) . " moedas de ouro.</font></div></td>";
+		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">VocÃª trabalhou como " . $log1['worktype'] . " por " . $log1['worktime'] . " horas e ganhou " . ($log1['worktime'] * $log1['gold']) . " moedas de ouro.</font></div></td>";
 		}
 		echo "</tr>";
 	}

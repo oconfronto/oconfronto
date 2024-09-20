@@ -29,21 +29,21 @@ include("templates/private_header.php");
 if ($profile['ban'] > time()) {
 	echo "<fieldset>";
 	echo "<legend><b>" . $profile['username'] . "</b></legend>";
-	echo "O usu·rio " . $profile['username'] . " foi banido.<br/>";
+	echo "O usu√°rio " . $profile['username'] . " foi banido.<br/>";
 		$time = ($profile['ban'] - time());
 		$time_remaining = ceil($time / 86400);
 	if ($time_remaining > 100){
-	echo "Este usu·rio foi banido permanentemente.";
+	echo "Este usu√°rio foi banido permanentemente.";
 	}else{
 	echo "Faltam " . $time_remaining . " dia(s) para o banimento terminar.";
 	}
 	echo "</fieldset>";
 	echo "<br/><br/>";
 	echo "<fieldset>";
-	echo "<legend><b>Coment·rios da administraÁ„o</b></legend>";
+	echo "<legend><b>Coment√°rios da administra√ß√£o</b></legend>";
 	$admincomments = $db->execute("select `msg` from `bans` where `player_id`=?", array($profile['id']));
  	if ($admincomments->recordcount() == 0) {
-	echo "Sem coment·rios da administraÁ„o.";
+	echo "Sem coment√°rios da administra√ß√£o.";
 	}else{
 	$mensagemdoamn = $admincomments->fetchrow();
 	echo $mensagemdoamn['msg'];
@@ -55,24 +55,24 @@ if ($profile['ban'] > time()) {
 
 if ($profile['gm_rank'] > 9) {
 echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-echo "<center><b>O usu·rio " . $profile['username'] . " È um dos administradores do jogo.</b></center>";
+echo "<center><b>O usu√°rio " . $profile['username'] . " √â um dos administradores do jogo.</b></center>";
 echo "</div>";
 }elseif ($profile['gm_rank'] > 2){
 echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-echo "<center><b>Este usu·rio È um moderador do jogo.</b></center>";
+echo "<center><b>Este usu√°rio √© um moderador do jogo.</b></center>";
 echo "</div>";
 } elseif ($profile['serv'] != $player->serv){
 echo "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-echo "<center><b>Este usu·rio pertence a outro servidor.</b></center>";
+echo "<center><b>Este usu√°rio pertence a outro servidor.</b></center>";
 echo "</div>";
 }
 
 echo "<ul class=\"tabs\">";
 	echo "<li><a href=\"#tab1\">" . $profile['username'] . "</a></li>";
-	echo "<li><a href=\"#tab2\">Coment·rios</a></li>";
+	echo "<li><a href=\"#tab2\">Coment√°rios</a></li>";
 	echo "<li><a href=\"#tab3\">Medalhas</a></li>";
 	echo "<li><a href=\"#tab4\">Amigos</a></li>";
-	echo "<li><a href=\"#tab5\">EstatÌsticas</a></li>";
+	echo "<li><a href=\"#tab5\">Estat√≠sticas</a></li>";
 echo "</ul>";
 
 echo "<div class=\"tab_container\">";
@@ -94,12 +94,12 @@ echo "<div class=\"tab_container\">";
 	echo "</th><td width=\"70%\">";
 	echo "<br/><table width=\"100%\">";
 	echo "<tr>";
-	echo "<td width=\"50%\"><b>Usu·rio:</b></td>";
+	echo "<td width=\"50%\"><b>Usu√°rio:</b></td>";
 	echo "<td width=\"50%\">" . $profile['username'] . " (<a href=\"mail.php?act=compose&to=" . $profile['username'] . "\">Mensagem</a>)</td>";
 	echo "</tr>";
 
 	echo "<tr>";
-	echo "<td><b>NÌvel:</b></td>";
+	echo "<td><b>N√≠vel:</b></td>";
 	echo "<td>" . $profile['level'] . "</td>";
 	echo "</tr>";
 
@@ -115,15 +115,15 @@ echo "<div class=\"tab_container\">";
 		        echo "$i";
        			$i++;
 		}
-		echo "∫";
+		echo "¬∫";
 	echo "</td></tr>";
 	}
 
-	echo "<tr><td><b>VocaÁ„o:</b></td>";
+	echo "<tr><td><b>Voca√ß√£o:</b></td>";
 	echo "<td>";
 
 		if ($profile['voc'] == 'archer' and $profile['promoted'] == 'f'){
-		echo "CaÁador";
+		echo "Ca√ßador";
 		} else if ($profile['voc'] == 'knight' and $profile['promoted'] == 'f'){
 		echo "Espadachim";
 		} else if ($profile['voc'] == 'mage' and $profile['promoted'] == 'f'){
@@ -157,7 +157,7 @@ echo "<div class=\"tab_container\">";
                 }
 	echo "</td></tr>";
 
-	echo "<tr><td><b>Cl„:</b></td>";
+	echo "<tr><td><b>Cl√£:</b></td>";
 	echo "<td>";
 
 		if ($profile['guild'] == NULL or $profile['guild'] == '')
@@ -173,7 +173,7 @@ echo "<div class=\"tab_container\">";
 
     echo "<tr><td><b>Vip:</b></td>";
 	echo "<td>";
-    if ($profile['vip']>time()){ echo "Sim"; }else{ echo "Não"; }
+    if ($profile['vip']>time()){ echo "Sim"; }else{ echo "N√£o"; }
 	echo "</font></td>";
 	echo "</tr>";
     
@@ -189,7 +189,7 @@ echo "<div class=\"tab_container\">";
 		$mes = date("M", $profile['registered']);
 		$mes_ano["Jan"] = "Janeiro";
 		$mes_ano["Feb"] = "Fevereiro";
-		$mes_ano["Mar"] = "MarÁo";
+		$mes_ano["Mar"] = "Mar√ßo";
 		$mes_ano["Apr"] = "Abril";
  		$mes_ano["May"] = "Maio";
 		$mes_ano["Jun"] = "Junho";
@@ -213,21 +213,21 @@ echo "<div class=\"tab_container\">";
 	echo "</tr>";
 
 	echo "<tr>";
-	echo "<td><b>⁄ltima atividade:</b></td>";
+	echo "<td><b>√∫ltima atividade:</b></td>";
 
 		$valortempo = time() -  $profile['last_active'];
 		if ($valortempo < 60){
 		$valortempo2 = $valortempo;
-		$auxiliar2 = "segundo(s) atr·s";
+		$auxiliar2 = "segundo(s) atr√°s";
 		}else if($valortempo < 3600){
 		$valortempo2 = floor($valortempo / 60);
-		$auxiliar2 = "minuto(s) atr·s";
+		$auxiliar2 = "minuto(s) atr√°s";
 		}else if($valortempo < 86400){
 		$valortempo2 = floor($valortempo / 3600);
-		$auxiliar2 = "hora(s) atr·s";
+		$auxiliar2 = "hora(s) atr√°s";
 		}else if($valortempo > 86400){
 		$valortempo2 = floor($valortempo / 86400);
-		$auxiliar2 = "dia(s) atr·s";
+		$auxiliar2 = "dia(s) atr√°s";
 		}
 
 	echo "<td>" . $valortempo2 . " " . $auxiliar2 . "</td>";
@@ -269,7 +269,7 @@ echo "<div class=\"tab_container\">";
 	}
 
 	if (($player->gm_rank > 2) and ($profile['username'] != 0) and ($profile['username'] > 99)){
-		echo " | <a href=\"forum_unban.php?player=" . $profile['id'] . "\">Desbanir do FÛrum</a>";
+		echo " | <a href=\"forum_unban.php?player=" . $profile['id'] . "\">Desbanir do F√≥rum</a>";
 	}
 	echo "</center>";
 
@@ -282,7 +282,7 @@ echo "<div id=\"tab2\" class=\"tab_content\">";
 	$procuramengperfil = $db->execute("select `perfil` from `profile` where `player_id`=?", array($profile['id']));
 	if ($procuramengperfil->recordcount() == 0)
 	{
-		$mencomentario = "Sem coment·rios.";
+		$mencomentario = "Sem coment√°rios.";
 	}
 	else
 	{
@@ -297,7 +297,7 @@ if ($nname != NULL)
 {
 echo $nname;
 }else{
-echo "N„o Informado";
+echo "N√£o Informado";
 }
 ?></td></tr>
 <tr><td width="15%"><b>Sexo:</b></td><td><?php
@@ -309,7 +309,7 @@ echo "Masculino";
 }elseif ($sex == 'f'){
 echo "Feminino";
 }else{
-echo "N„o Informado";
+echo "N√£o Informado";
 }
 ?></td></tr>
 <tr><td width="15%"><b>Email:</b></td><td><?php
@@ -322,7 +322,7 @@ echo "N„o Informado";
 		echo "Email Oculto";
 		}
 ?></td></tr>
-<tr><td width="15%"><b>Coment·rios:</b></td><td><?php echo bbcode::parse($mencomentario); ?></td></tr>
+<tr><td width="15%"><b>Coment√°rios:</b></td><td><?php echo bbcode::parse($mencomentario); ?></td></tr>
 </table>
 <?php
 
@@ -331,7 +331,7 @@ echo "<div id=\"tab3\" class=\"tab_content\">";
 
 			$medalha = $db->execute("select * from `medalhas` where `player_id`=? order by `medalha` asc, `type` desc", array($profile['id']));
 			if ($medalha->recordcount() == 0) {
-				echo "<br/><center><b>" . $profile['username'] . " n„o tem medalhas.</b></center><br/>";
+				echo "<br/><center><b>" . $profile['username'] . " n√£o tem medalhas.</b></center><br/>";
 			}else{
 			$bronze = $db->execute("select * from `medalhas` where `player_id`=? and `type`='1'", array($profile['id']));
 			$prata = $db->execute("select * from `medalhas` where `player_id`=? and `type`='2'", array($profile['id']));
@@ -368,12 +368,12 @@ echo "<div id=\"tab4\" class=\"tab_content\">";
 			$querwwq = $db->execute("select `fname` from `friends` where `uid`=? order by `fname` desc", array($profile['id']));
 			if ($querwwq->recordcount() == 0)
 			{
-				echo "<br/><center><b>" . $profile['username'] . " n„o tem amigos.</b></center><br/>";
+				echo "<br/><center><b>" . $profile['username'] . " n√£o tem amigos.</b></center><br/>";
 			}else{
 				echo "<table width=\"95%\" border=\"0\">";
 				echo "<tr>";
-				echo "<th width=\"60%\"><b>Usu·rio</b></td>";
-				echo "<th width=\"40%\"><b>OpÁıes</b></td>";
+				echo "<th width=\"60%\"><b>Usu√°rio</b></td>";
+				echo "<th width=\"40%\"><b>Op√ß√µes</b></td>";
 				echo "</tr>";
 
 			while($friend = $querwwq->fetchrow())
@@ -389,11 +389,11 @@ echo "<div id=\"tab4\" class=\"tab_content\">";
 echo "</div>";
 echo "<div id=\"tab5\" class=\"tab_content\">";
 
-		echo "<b>Usu·rios assassinados:</b> " . $profile['kills'] . "";
+		echo "<b>Usu√°rios assassinados:</b> " . $profile['kills'] . "";
 		echo "<br/><b>Monstros mortos:</b> " . $profile['monsterkilled'] . "";
 		echo "<br/><b>Monstros mortos em grupo:</b> " . $profile['groupmonsterkilled'] . "";
 		echo "<br/><b>Mortes:</b> " . $profile['deaths'] . "";
-		echo "<br/><br/><b>PontuaÁ„o total:</b> " . ceil(($profile['kills']*6) + ($profile['monsterkilled']/3) + ($profile['groupmonsterkilled']/12) - ($profile['deaths']*35)) . "";
+		echo "<br/><br/><b>Pontua√ß√£o total:</b> " . ceil(($profile['kills']*6) + ($profile['monsterkilled']/3) + ($profile['groupmonsterkilled']/12) - ($profile['deaths']*35)) . "";
 
 echo "</div>";
 echo "</div><br/>";

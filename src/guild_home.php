@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Concentração do Clã");
+define("PAGENAME", "Concentra√ß√£o do Cl√£");
 $player = check_user($secret_key, $db);
 include("bbcode.php");
 include("checkbattle.php");
@@ -18,7 +18,7 @@ if ($query->recordcount() == 0) {
 }
 
 if ($_GET['act'] == 'showmsg'){
-	header('Content-type: text/html; charset=iso-8859-1');
+	header('Content-type: text/html; charset=utf-8');
 
 		$countmsgs = $db->execute("select * from `user_chat` where `guild`=? order by `time` asc", array($player->guild));
 
@@ -81,7 +81,7 @@ echo "<table width=\"100%\">";
 	echo "<td><table width=\"100%\" class=\"brown\" id=\"nvbarra\" style='height:25px;'>";
   	echo "<tr>";
 		echo "<td width=\"25%\"><b>Lider:</b> <a href=\"profile.php?id=" . $guild['leader']. "\">" . $guild['leader']. "</a></td>";
-		echo "<td width=\"30%\"><b>Vice-Lider:</b> "; if ($guild['vice'] != NULL){ echo "<a href=\"profile.php?id=" . $guild['vice']. "\">" . $guild['vice']. "</a>"; }else{ echo "NinguÍm"; } echo "</td>";
+		echo "<td width=\"30%\"><b>Vice-Lider:</b> "; if ($guild['vice'] != NULL){ echo "<a href=\"profile.php?id=" . $guild['vice']. "\">" . $guild['vice']. "</a>"; }else{ echo "Ningu√©m"; } echo "</td>";
 		echo "<td width=\"20%\"><b>Membros:</b> " . $guild['members']. "</td>";
 		echo "<td width=\"25%\"><b>Tesouro:</b> " . $guild['gold']. "</td>";
   	echo "</tr>";
@@ -99,7 +99,7 @@ echo "<table width=\"100%\">";
 
  	echo "<tr><td class=\"brown\" id=\"nvbarra\" style='height:25px;'>";
 	
-	echo "<font size=\"1px\"><b>Membros do cl„ online:</b> ";
+	echo "<font size=\"1px\"><b>Membros do cl√£ online:</b> ";
 	$checkonne = $db->execute("select `player_id` from `user_online`");
 	while($online = $checkonne->fetchrow())
 	{
@@ -136,7 +136,7 @@ echo "<br/>";
 
 echo "<table width=\"100%\" class=\"brown\" style='background:#ffe8aa;' >";
 	echo "<tr style='height:20px;' id='nvbarra'>";
-		echo "<td width=\"100%\"><b>Pagamento do Cl„</b></td>";
+		echo "<td width=\"100%\"><b>Pagamento do Cl√£</b></td>";
 	echo "</tr>";
 	echo "<tr class=\"salmon\">";
 
@@ -155,19 +155,19 @@ echo "<table width=\"100%\" class=\"brown\" style='background:#ffe8aa;' >";
 		$auxiliar2 = "dia(s)";
 		}
 
-		echo "<td width=\"100%\"><i><center><b>Cl„ pago por:</b> " . $valortempo2 . " " . $auxiliar2 . ". <a href=\"guild_treasury.php\">Clique para enviar ouro</a>.<br>Este cl„ ser· deletado se o tempo acabar e os lideres n„o pagarem mais.</center></i></td>";
+		echo "<td width=\"100%\"><i><center><b>Cl√£ pago por:</b> " . $valortempo2 . " " . $auxiliar2 . ". <a href=\"guild_treasury.php\">Clique para enviar ouro</a>.<br>Este cl√£ ser√° deletado se o tempo acabar e os lideres n√£o pagarem mais.</center></i></td>";
 	echo "</tr>";
 echo "</table>";
 
 echo "<br/>";
 echo "<form><center><table width='300'><tr>";
 if(($player->username == $guild['leader']) or ($player->username == $guild['vice'])){
-	echo "<td><input id=\"link\" class=\"neg\" type=\"button\" VALUE=\"AdministraÁ„o\" ONCLICK=\"window.location.href='guild_admin.php'\"></td>&nbsp;";
+	echo "<td><input id=\"link\" class=\"neg\" type=\"button\" VALUE=\"Administra√ß√£o\" ONCLICK=\"window.location.href='guild_admin.php'\"></td>&nbsp;";
 }
 echo "
-<td><input type=\"button\" id=\"link\" class=\"neg\" VALUE=\"Perfil do Cl„\" ONCLICK=\"window.location.href='guild_profile.php?id=" . $guild['id'] . "&redirect=false'\"></td>&nbsp;
+<td><input type=\"button\" id=\"link\" class=\"neg\" VALUE=\"Perfil do Cl√£\" ONCLICK=\"window.location.href='guild_profile.php?id=" . $guild['id'] . "&redirect=false'\"></td>&nbsp;
 <td><input type=\"button\" id=\"link\" class=\"neg\" VALUE=\"Tesouro\" ONCLICK=\"window.location.href='guild_treasury.php'\">&nbsp;
-<td><input type=\"button\" id=\"link\" class=\"neg\" VALUE=\"Abandonar Cl„\" ONCLICK=\"window.location.href='guild_leave.php'\"></td></tr></table>";
+<td><input type=\"button\" id=\"link\" class=\"neg\" VALUE=\"Abandonar Cl√£\" ONCLICK=\"window.location.href='guild_leave.php'\"></td></tr></table>";
 echo "</center></form>";
 
 include("templates/private_footer.php");

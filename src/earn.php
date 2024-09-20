@@ -5,16 +5,16 @@
 	include("templates/private_header.php");
 
 	echo "<fieldset>";
-	echo "<legend><b>Está precisando de ouro?</b></legend>";
-	echo "Que tal ganhar <b>" . $setting->earn . " moedas de ouro</b> por cada amigo que você convidar para o jogo?<br/><br/>";
-	echo "É simples, basta o seu amigo se registrar no jogo através do seu <b>Link de Referência</b>, e assim que ele atingir o nível " . $setting->activate_level . ", " . $setting->earn . " moedas de ouro serão adicionados na sua conta.";
+	echo "<legend><b>EstÃ¡ precisando de ouro?</b></legend>";
+	echo "Que tal ganhar <b>" . $setting->earn . " moedas de ouro</b> por cada amigo que vocÃª convidar para o jogo?<br/><br/>";
+	echo "Ã‰ simples, basta o seu amigo se registrar no jogo atravÃ©s do seu <b>Link de ReferÃªncia</b>, e assim que ele atingir o nÃ­vel " . $setting->activate_level . ", " . $setting->earn . " moedas de ouro serÃ£o adicionados na sua conta.";
 	echo "<br/><br/>";
 	
 
 	
 
 	
-	echo "<b>Link de Referência:</b> <a href=\"http://ocrpg.com/?r=" . $player->id . "\">http://ocrpg.com/?r=" . $player->id . "</a><br/>";
+	echo "<b>Link de ReferÃªncia:</b> <a href=\"http://ocrpg.com/?r=" . $player->id . "\">http://ocrpg.com/?r=" . $player->id . "</a><br/>";
 	echo "<b>Amigos convidados:</b> " . $player->ref . "";
 	echo "</fieldset>";
 	
@@ -23,9 +23,9 @@
 	if($setting->event_convidados = true){
 	echo "<fieldset>";
 	echo "<legend><b>Evento Convide Mais Amigos.</b></legend>";
-	echo "<br/>Convide amigos para jogar o confronto, além de ganhar gold você terá chance de ganhar itens. Acumulando amigos convidados você terá chance de resgatar um item automaticamente.<p>";
-	echo "Cada item abaixo para ser resgatado precisa ter uma quantidade de amigos convidados, após atingir a quantidade requerida o sistema irá automaticamente depositar o item na sua conta. Algumas recompensas você até poderá ganhar item e gold juntos!"; 
-	echo "<br /><br />Lista de Prêmios:";
+	echo "<br/>Convide amigos para jogar o confronto, alÃ©m de ganhar gold vocÃª terÃ¡ chance de ganhar itens. Acumulando amigos convidados vocÃª terÃ¡ chance de resgatar um item automaticamente.<p>";
+	echo "Cada item abaixo para ser resgatado precisa ter uma quantidade de amigos convidados, apÃ³s atingir a quantidade requerida o sistema irÃ¡ automaticamente depositar o item na sua conta. Algumas recompensas vocÃª atÃ© poderÃ¡ ganhar item e gold juntos!"; 
+	echo "<br /><br />Lista de PrÃªmios:";
 	
 	$query2 = mysql_query("select * from ref_list_prem order by qt asc");
 				while($row = mysql_fetch_array($query2)) {
@@ -60,7 +60,7 @@
 	<div id="weapon" title="header=[<?php echo ''.$row2['name'].' +'; echo ''.$row['bonus'].''; ?>] body=[<table width=100%>
 	
 	<td width=65%><font size=1px><?php echo ''.$itemtd.': '.$row2['effectiveness'].''; ?>
-	<br/><b>Convidados: <?php echo $row['qt']; ?></b><br/><b>Gold Bónus: <?php echo $row['gold']; ?></b>
+	<br/><b>Convidados: <?php echo $row['qt']; ?></b><br/><b>Gold BÃ´nus: <?php echo $row['gold']; ?></b>
 	</font></td>
 
 	<td width=35%><font size=1px>+<font color=gray><?php echo rand(1,5); ?> for</font></font>
@@ -85,7 +85,7 @@
 	<?php
 	}
 	}
-	echo "Obs: O prazo para recebimento do item esta vigente apenas no prazo de validade do evento, sendo assim após o termino do evento se seu amigo convidado não atingiu o nível requerido você estará sujeito a receber um item diferente dos presentes nesta lista.";
+	echo "Obs: O prazo para recebimento do item esta vigente apenas no prazo de validade do evento, sendo assim apÃ³s o termino do evento se seu amigo convidado nÃ£o atingiu o nÃ­vel requerido vocÃª estarÃ¡ sujeito a receber um item diferente dos presentes nesta lista.";
 	}
 	echo "</fieldset>";
 
@@ -94,7 +94,7 @@
 	echo "<table width=\"100%\" border=\"0\">";
 		echo "<tr>";
 			echo "<td>";
-			echo "<img src=\"imprime.php?id=" . $player->id . "\" alt=\"Jogue o confronto!  de graa!\" border=\"0\">";
+			echo "<img src=\"imprime.php?id=" . $player->id . "\" alt=\"Jogue o confronto! Ã© de graÃ§a!\" border=\"0\">";
 			echo "</td>";
 				echo "<tbody><tr>";
 				echo "<td>";
@@ -115,7 +115,7 @@
 ?>
 
 <br/>
-<img src="http://img121.imageshack.us/img121/3808/24gu1i8.png" alt="Jogue o confronto!  de graa!" width="360" height="21" border="0"></a>
+<img src="http://img121.imageshack.us/img121/3808/24gu1i8.png" alt="Jogue o confronto! Ã© de graÃ§a!" width="360" height="21" border="0"></a>
   
     <table border="0">
         <tr>
@@ -133,7 +133,7 @@
     </tbody></table>
 
 <br/>
-<center><b>Voc tambm pode postar seu link no twitter <a href="http://button.topsy.com/retweet?title=Estou%20jogando%20oconfronto!%20Venha%20jogar%20tambm:&url=http%3A%2F%2Focrpg.com%2F?r=<?php echo $player->id?>" target="blank">clicando aqui</a>,<br/> ou at mesmo promove-lo no orkut, <a href="http://promote.orkut.com/preview?nt=orkut.com&tt=O%20Confronto%20MMORPG%20Medieval&du=http://ocrpg.com/?r=<?php echo $player->id?>&cn=O%20Confronto%20%C3%A9%20um%20jogo%20web-based%20medieval.%20Participe%20de%20torneios,%20batalhas,%20miss%C3%B5es%20e%20torne-se%20um%20grande%20guerreiro!%20Comece%20a%20jogar%20agora%20e%20fa%C3%A7a%20parte%20desta%20fam%C3%ADlia!&tn=http://img2.orkut.com/images/mittel/1224878329/73799681/ln.jpg" target="blank">clicando aqui</a>.</b></center>
+<center><b>VocÃª tambÃ©m pode postar seu link no twitter <a href="http://button.topsy.com/retweet?title=Estou%20jogando%20oconfronto!%20Venha%20jogar%20tambem:&url=http%3A%2F%2Focrpg.com%2F?r=<?php echo $player->id?>" target="blank">clicando aqui</a>,<br/> ou atÃ© mesmo promove-lo no orkut, <a href="http://promote.orkut.com/preview?nt=orkut.com&tt=O%20Confronto%20MMORPG%20Medieval&du=http://ocrpg.com/?r=<?php echo $player->id?>&cn=O%20Confronto%20%C3%A9%20um%20jogo%20web-based%20medieval.%20Participe%20de%20torneios,%20batalhas,%20miss%C3%B5es%20e%20torne-se%20um%20grande%20guerreiro!%20Comece%20a%20jogar%20agora%20e%20fa%C3%A7a%20parte%20desta%20fam%C3%ADlia!&tn=http://img2.orkut.com/images/mittel/1224878329/73799681/ln.jpg" target="blank">clicando aqui</a>.</b></center>
 
 <?php
 	include("templates/private_footer.php");

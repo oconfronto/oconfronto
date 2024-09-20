@@ -14,44 +14,44 @@ if ($player->transpass != f){
 if ($_POST['changetrans']) {
     //Check trans
     if (!$_POST['trans']) {
-        $errmsg2 .= "Você precisa preencher todos os campos!";
+        $errmsg2 .= "VocÃª precisa preencher todos os campos!";
         $error2 = 1;
     } else if (!$_POST['trans2']) {
-        $errmsg2 .= "Você precisa preencher todos os campos!";
+        $errmsg2 .= "VocÃª precisa preencher todos os campos!";
         $error2 = 1;
     } else if (!$_POST['pass2']) {
-        $errmsg2 .= "Você precisa preencher todos os campos!";
+        $errmsg2 .= "VocÃª precisa preencher todos os campos!";
         $error2 = 1;
     } else if (!$_POST['oldtrans']) {
-        $errmsg2 .= "Você precisa preencher todos os campos!";
+        $errmsg2 .= "VocÃª precisa preencher todos os campos!";
         $error2 = 1;
     } else if ($player->transpass != $_POST['oldtrans']) {
-	$errmsg2 .= "Sua senha de transferência atual está incorreta!";
+	$errmsg2 .= "Sua senha de transferÃªncia atual estÃ¡ incorreta!";
         $error2 = 1;
     } else if ($acc->password == encodePassword($_POST['trans'])) {
-	$errmsg2 .= "Sua senha de transferência não pode ser igual a senha de sua conta.";
+	$errmsg2 .= "Sua senha de transferÃªncia nÃ£o pode ser igual a senha de sua conta.";
         $error2 = 1;
     } else if ($acc->password != encodePassword($_POST['pass2'])) {
-	$errmsg2 .= "A senha de sua conta está incorreta!";
+	$errmsg2 .= "A senha de sua conta estÃ¡ incorreta!";
         $error2 = 1;
     } else if ($_POST['trans'] != $_POST['trans2']) {
-        $errmsg2 .= "Você não digitou as duas senhas corretamente!";
+        $errmsg2 .= "VocÃª nÃ£o digitou as duas senhas corretamente!";
         $error2 = 1;
     } else if (strlen($_POST['trans']) < 4) {
-        $errmsg2 .= "Sua senha de transferência não pode ter menos de 4 caracteres.";
+        $errmsg2 .= "Sua senha de transferÃªncia nÃ£o pode ter menos de 4 caracteres.";
         $error2 = 1;
     } else if (strlen($_POST['trans']) > 30) {
-        $errmsg2 .= "Sua senha de transferência não pode ter mais de 30 caracteres.";
+        $errmsg2 .= "Sua senha de transferÃªncia nÃ£o pode ter mais de 30 caracteres.";
         $error2 = 1;
     }
     if ($error2 == 0) {
 		$insert['player_id'] = $acc->id;
-		$insert['msg'] = "Você alterou a senha de transferência de " . $player->username . ".";
+		$insert['msg'] = "VocÃª alterou a senha de transferÃªncia de " . $player->username . ".";
 		$insert['time'] = time();
 		$query = $db->autoexecute('account_log', $insert, 'INSERT');
 
         $query = $db->execute("update `players` set `transpass`=? where `id`=?", array($_POST['trans'], $player->id));
-        echo "<fieldset><legend><b>Sucesso</b></legend>Você alterou sua senha de transferência.<br/><a href=\"home.php\">Voltar</a>.</fieldset>";
+        echo "<fieldset><legend><b>Sucesso</b></legend>VocÃª alterou sua senha de transferÃªncia.<br/><a href=\"home.php\">Voltar</a>.</fieldset>";
 	include("templates/private_footer.php");
 	exit;
 
@@ -60,11 +60,11 @@ if ($_POST['changetrans']) {
 
 ?>
 <fieldset>
-<p /><legend><b>Alterar senha de transferência</b></legend><p />
+<p /><legend><b>Alterar senha de transferÃªncia</b></legend><p />
 <table width="100%">
 <form method="POST" action="account.php">
 <tr><td width="25%"><b>Senha da conta</b>:</td><td><input type="password" name="pass2" size="20"/></td></tr>
-<tr><td width="25%"><b>Senha de transferência</b>:</td><td><input type="password" name="oldtrans" size="20"/></td></tr>
+<tr><td width="25%"><b>Senha de transferÃªncia</b>:</td><td><input type="password" name="oldtrans" size="20"/></td></tr>
 <tr><td width="25%"><b>Nova senha</b>:</td><td><input type="password" name="trans" size="20"/></td></tr>
 <tr><td width="25%"><b>Digite novamente</b>:</td><td><input type="password" name="trans2" size="20"/></td></tr>
 <tr><td colspan="2" align="center"><input type="submit" name="changetrans" value="Alterar"></td></tr>
@@ -76,7 +76,7 @@ if ($_POST['changetrans']) {
 }else{
 echo "<fieldset>";
 echo "<legend><b>Erro</b></legend>";
-echo "Você não possui uma senha de transferência. <a href=\"home.php\">Voltar</a>.";
+echo "VocÃª nÃ£o possui uma senha de transferÃªncia. <a href=\"home.php\">Voltar</a>.";
 echo "</fieldset>";
 }
 

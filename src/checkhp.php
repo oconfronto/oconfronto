@@ -4,7 +4,9 @@ $newlast = (time() - 210);
 $query = $db->execute("update `players` set `last_active`=? where `id`=?", array($newlast, $player->id));
 session_unset();
 session_destroy();
-echo "Você foi banido. As vezes usuários s�o banidos automaticamente por algum erro em suas contas. Se você acha que foi banido injustamente, ou se tiver algum erro para reportar, crie outra conta e entre em contato com o [GOD]. Assim seu banimento poderá ser removido.";
+
+echo "Você foi banido. As vezes usuários são banidos automaticamente por algum erro em suas contas. Se você acha que foi banido injustamente, ou se tiver algum erro para reportar, crie outra conta e entre em contato com o [GOD]. Assim seu banimento poderá ser removido.";  
+  
 include("templates/private_footer.php");
 exit;
 }
@@ -18,7 +20,9 @@ if ($player->hp <= 0 and $player->deadtime > time())
 	$time_remaining = ceil($time / 60);	
 	if (!$_GET['nolayout']){ include("templates/private_header.php"); }
 	echo "<fieldset>";
-	echo "<legend><b>Você est� morto!</b></legend>\n";
+
+  echo "<legend><b>Você está morto!</b></legend>\n";
+  
 	echo "<center>Você irá ressucitar em " . $time_remaining . " minuto(s).</center>";
     
     echo "<br/><b><div id=\"counter\" align=\"center\"></div></b><br/>";

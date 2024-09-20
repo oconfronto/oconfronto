@@ -22,7 +22,7 @@ switch($_GET['act'])
 		if ($query->recordcount() == 0) //Player doesn't exist
 		{
 			include("templates/private_header.php");
-			echo "Este usuário não existe! <a href=\"battle.php\"/>Voltar</a>.";
+			echo "Este usu√°rio n√£o existe! <a href=\"battle.php\"/>Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -36,7 +36,7 @@ switch($_GET['act'])
 		if ($enemy->serv != $player->serv)
 		{
 			include("templates/private_header.php");
-			echo "Este usuário não pertence ao mesmo servidor que você! <a href=\"battle.php\"/>Voltar</a>.";
+			echo "Este usu√°rio n√£o pertence ao mesmo servidor que voc√™! <a href=\"battle.php\"/>Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -44,7 +44,7 @@ switch($_GET['act'])
 		if ($enemy->reino == 0)
 		{
 			include("templates/private_header.php");
-			echo "Você não pode atacar este usuário! <a href=\"battle.php\"/>Voltar</a>.";
+			echo "Voc√™ n√£o pode atacar este usu√°rio! <a href=\"battle.php\"/>Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -52,14 +52,14 @@ switch($_GET['act'])
 		if ($enemy->level <= 20)
 		{
 			include("templates/private_header.php");
-			echo "Level desde usu·rio È menor que 20 <a href=\"battle.php\"/>Voltar</a>.";
+			echo "Level desde usu√°rio √© menor que 20 <a href=\"battle.php\"/>Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
 		}
 		if ($player->level <= 20)
 		{
 			include("templates/private_header.php");
-			echo "SÛ È permitido PVP para players de level 20+ <a href=\"battle.php\"/>Voltar</a>.";
+			echo "S√≥ √© permitido PVP para players de level 20+ <a href=\"battle.php\"/>Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -67,7 +67,7 @@ switch($_GET['act'])
 		if ($enemy->hp <= 0)
 		{
 			include("templates/private_header.php");
-			echo "Este usuário está morto! <a href=\"battle.php\"/>Voltar</a>.";
+			echo "Este usu√°rio est√° morto! <a href=\"battle.php\"/>Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -104,14 +104,14 @@ switch($_GET['act'])
 		{
 			if ($enemy->tour == 'f'){
 			include("templates/private_header.php");
-			echo "Este usuário já morreu demais hoje! <a href=\"battle.php\">Voltar</a>.";
+			echo "Este usu√°rio j√° morreu demais hoje! <a href=\"battle.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
 			}
 
 			if (($enemy->tour == 't') and (($setting->$enytourstatus != 'y') or ((($setting->$enytourstatus == 'y') and ($mytier != $enytier)) or (($setting->$enytourstatus == 'y') and ($enemy->killed > 0))))){
 			include("templates/private_header.php");
-			echo "Este usuário já morreu demais hoje! <a href=\"battle.php\">Voltar</a>.";
+			echo "Este usu√°rio j√° morreu demais hoje! <a href=\"battle.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
 			}
@@ -124,14 +124,14 @@ switch($_GET['act'])
 		{
 			if ($enemy->tour == 'f'){
 			include("templates/private_header.php");
-			echo "Você já atacou este usuário nos ˙ltimos 20 minutos.<br/>Aguarde alguns minutos para poder ataca-lo novamente. <a href=\"battle.php\">Voltar</a>.";
+			echo "Voc√™ j√° atacou este usu√°rio nos √∫ltimos 20 minutos.<br/>Aguarde alguns minutos para poder ataca-lo novamente. <a href=\"battle.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
 			}
 
 			if (($enemy->tour == 't') and (($setting->$enytourstatus != 'y') or ((($setting->$enytourstatus == 'y') and ($mytier != $enytier)) or (($setting->$enytourstatus == 'y') and ($enemy->killed > 0))))){
 			include("templates/private_header.php");
-			echo "Você já atacou este usuário nos ˙ltimos 20 minutos.<br/>Aguarde alguns minutos para poder ataca-lo novamente. <a href=\"battle.php\">Voltar</a>.";
+			echo "Voc√™ j√° atacou este usu√°rio nos √∫ltimos 20 minutos.<br/>Aguarde alguns minutos para poder ataca-lo novamente. <a href=\"battle.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
 			}
@@ -141,7 +141,7 @@ switch($_GET['act'])
 		if ($enemy->ban > time())
 		{
 			include("templates/private_header.php");
-			echo "Este usuário está banido! <a href=\"battle.php\"/>Voltar</a>.";
+			echo "Este usu√°rio est√° banido! <a href=\"battle.php\"/>Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -152,7 +152,7 @@ switch($_GET['act'])
 		if ((($checkenyrowk == t) or ($checkenyhunt == t)) and ($enemy->tour == 'f'))
 		{
 			include("templates/private_header.php");
-			echo "Você não encontrou o usuário " . $enemy->username . "! Ele deve estar trabalhando ou caçando. <a href=\"battle.php\">Voltar</a>.";
+			echo "Voc√™ n√£o encontrou o usu√°rio " . $enemy->username . "! Ele deve estar trabalhando ou ca√ßando. <a href=\"battle.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -163,8 +163,8 @@ switch($_GET['act'])
 		if (($player->level > $enemy->level*1.25) and ($enemy->tour == 't') and (($enemy->killed > 0) or ($mytier != $enytier)) and ($checarevenge->recordcount() < 1))
 		{
 			include("templates/private_header.php");
-			echo "A diferença de nível entre os dois usuários é muito grande!<br>";
-			echo "<b>Você pode atacar usuários de nÌvel $diflvl ou mais.</b> <a href=\"battle.php\">Voltar</a>.";
+			echo "A diferen√ßa de n√≠vel entre os dois usu√°rios √© muito grande!<br>";
+			echo "<b>Voc√™ pode atacar usu√°rios de n√≠vel $diflvl ou mais.</b> <a href=\"battle.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -174,8 +174,8 @@ switch($_GET['act'])
 		if (($player->level > $enemy->level*1.25) and ($enemy->tour == 'f') and ($checarevenge->recordcount() < 1))
 		{
 			include("templates/private_header.php");
-			echo "A diferença de nível entre os dois usuários é muito grande!<br>";
-			echo "<b>Você pode atacar usuários de nÌvel $diflvl ou mais.</b> <a href=\"battle.php\">Voltar</a>.";
+			echo "A diferen√ßa de n√≠vel entre os dois usu√°rios √© muito grande!<br>";
+			echo "<b>Voc√™ pode atacar usu√°rios de n√≠vel $diflvl ou mais.</b> <a href=\"battle.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -184,7 +184,7 @@ switch($_GET['act'])
 		if (($setting->$enytourstatus == 'y') and ($enemy->tour == 't') and ($player->tour == 'f'))
 		{
 			include("templates/private_header.php");
-			echo "O usuário " . $enemy->username . " está participando de um torneio agora.<br/>Você não está no torneio portanto não pode mata-lo.";
+			echo "O usu√°rio " . $enemy->username . " est√° participando de um torneio agora.<br/>Voc√™ n√£o est√° no torneio portanto n√£o pode mata-lo.";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -193,9 +193,9 @@ switch($_GET['act'])
 		{
 			include("templates/private_header.php");
 			if ($mytier != $enytier){
-			echo "O usuário " . $enemy->username . " está participando de outra categoria do torneio.<br/>Você não está na mesma categoria portanto não pode mata-lo.";
+			echo "O usu√°rio " . $enemy->username . " est√° participando de outra categoria do torneio.<br/>Voc√™ n√£o est√° na mesma categoria portanto n√£o pode mata-lo.";
 			}else{
-			echo "Você não pode matar " . $enemy->username . " pois ele está participando de um torneio agora.<br/>Você foi desclasificado do torneio portanto não pode mata-lo.<br>";
+			echo "Voc√™ n√£o pode matar " . $enemy->username . " pois ele est√° participando de um torneio agora.<br/>Voc√™ foi desclasificado do torneio portanto n√£o pode mata-lo.<br>";
 			}
 			include("templates/private_footer.php");
 			break;
@@ -206,8 +206,8 @@ switch($_GET['act'])
 		{
 			include("templates/private_header.php");
 			echo "<fieldset>";
-			echo "<legend><b>Você está sem energia</b></legend>\n";
-			echo "Você está exausto. A cada minuto que se passa você adquire <b>10 pontos de energia</b>.<br/><br/>";
+			echo "<legend><b>Voc√™ est√° sem energia</b></legend>\n";
+			echo "Voc√™ est√° exausto. A cada minuto que se passa voc√™ adquire <b>10 pontos de energia</b>.<br/><br/>";
 			echo "<div id=\"counter\" align=\"center\"></div><br/>";
 
 			$gettime = $db->GetOne("select `value` from `cron` where `name`='reset_last'");
@@ -231,31 +231,31 @@ switch($_GET['act'])
 			$numerodepocoes4 = $query4->recordcount();
 
 			echo "<fieldset>";
-			echo "<legend><b>Poções</b></legend>";
-			echo "<table width=\"100%\"><tr><td><table width=\"80px\"><tr><td><div title=\"header=[Health Potion] body=[Recupera até 5 mil de vida.]\"><img src=\"images/itens/healthpotion.gif\"></div></td><td><b>x" . $numerodepocoes . "</b>";
+			echo "<legend><b>Po√ß√µes</b></legend>";
+			echo "<table width=\"100%\"><tr><td><table width=\"80px\"><tr><td><div title=\"header=[Health Potion] body=[Recupera at√© 5 mil de vida.]\"><img src=\"images/itens/healthpotion.gif\"></div></td><td><b>x" . $numerodepocoes . "</b>";
 			if ($numerodepocoes > 0){
 			$item = $query->fetchrow();
 			echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item['id'] . "\">Usar</a>";
 			}
 			echo "</td></tr></table></td>";
-			echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Big Health Potion] body=[Recupera até 10 mil de vida.]\"><img src=\"images/itens/bighealthpotion.gif\"></div></td><td><b>x" . $numerodepocoes3 . "</b>";
+			echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Big Health Potion] body=[Recupera at√© 10 mil de vida.]\"><img src=\"images/itens/bighealthpotion.gif\"></div></td><td><b>x" . $numerodepocoes3 . "</b>";
 			if ($numerodepocoes3 > 0){
 			$item3 = $query3->fetchrow();
 			echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item3['id'] . "\">Usar</a>";
 			}
 			echo "</td></tr></table></td>";
-			echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Mana Potion] body=[Recupera até 500 de mana.]\"><img src=\"images/itens/manapotion.gif\"></div></td><td><b>x" . $numerodepocoes4 . "</b>";
+			echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Mana Potion] body=[Recupera at√© 500 de mana.]\"><img src=\"images/itens/manapotion.gif\"></div></td><td><b>x" . $numerodepocoes4 . "</b>";
 			if ($numerodepocoes4 > 0){
 			$item4 = $query4->fetchrow();
 			echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item4['id'] . "\">Usar</a>";
 			}
 			echo "</td></tr></table></td>";
-			echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Energy Potion] body=[Recupera até 50 de energia.]\"><img src=\"images/itens/energypotion.gif\"></div></td><td><b>x" . $numerodepocoes2 . "</b>";
+			echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Energy Potion] body=[Recupera at√© 50 de energia.]\"><img src=\"images/itens/energypotion.gif\"></div></td><td><b>x" . $numerodepocoes2 . "</b>";
 			if ($numerodepocoes2 > 0){
 			$item2 = $query2->fetchrow();
 			echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item2['id'] . "\">Usar</a>";
 			}
-			echo "</td></tr></table></td><td><font size=\"1\"><a href=\"hospt.php?act=sell\">Vender Poções</a><br/><a href=\"inventory.php?transpotion=true\">Transferir Poções</a></font></td></tr></table>";
+			echo "</td></tr></table></td><td><font size=\"1\"><a href=\"hospt.php?act=sell\">Vender Po√ß√µes</a><br/><a href=\"inventory.php?transpotion=true\">Transferir Po√ß√µes</a></font></td></tr></table>";
 			echo "</fieldset>";
 
 			echo "<a href=\"monster.php\">Voltar</a>";
@@ -269,8 +269,8 @@ switch($_GET['act'])
 		if ($player->died >= 3)
 		{
 			include("templates/private_header.php");
-			echo "Você morreu 3x hoje e ficou imune de ataques dos outros jogadores.<br/>";
-			echo "Se você quiser atacar alguém, você perderá sua imunidade! <a href=\"nobless.php\"/>Remover imunidade</a>.";
+			echo "Voc√™ morreu 3x hoje e ficou imune de ataques dos outros jogadores.<br/>";
+			echo "Se voc√™ quiser atacar algu√©m, voc√™ perder√° sua imunidade! <a href=\"nobless.php\"/>Remover imunidade</a>.";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -279,7 +279,7 @@ switch($_GET['act'])
 		if (($enemy->guild == $player->guild) and ($player->guild != NULL) and (!$_GET['comfirm']))
 		{
 			include("templates/private_header.php");
-			echo "Este usuário é membro do mesmo clã que você.<br/>Tem certeza que deseja ataca-lo?<br/><br/><a href=\"battle.php?act=attack&username=" . $enemy->username . "&comfirm=true\">Atacar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"battle.php\">Voltar</a>";
+			echo "Este usu√°rio √© membro do mesmo cl√£ que voc√™.<br/>Tem certeza que deseja ataca-lo?<br/><br/><a href=\"battle.php?act=attack&username=" . $enemy->username . "&comfirm=true\">Atacar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"battle.php\">Voltar</a>";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -290,7 +290,7 @@ switch($_GET['act'])
 			$ganguesaliadas = $db->execute("select `id` from `guild_aliance` where `guild_na`=? and `aled_na`=?", array($player->guild, $enemy->guild));
 			if ($ganguesaliadas->recordcount() > 0){
 			include("templates/private_header.php");
-			echo "Este usuário é membro do clã " . $enemy->guild . ", um clã aliado do seu clã.<br/>Tem certeza que deseja ataca-lo?<br/><br/><a href=\"battle.php?act=attack&username=" . $enemy->username . "&comfirm=true\">Atacar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"battle.php\">Voltar</a>";
+			echo "Este usu√°rio √© membro do cl√£ " . $enemy->guild . ", um cl√£ aliado do seu cl√£.<br/>Tem certeza que deseja ataca-lo?<br/><br/><a href=\"battle.php?act=attack&username=" . $enemy->username . "&comfirm=true\">Atacar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"battle.php\">Voltar</a>";
 			include("templates/private_footer.php");
 			break;
 			}
@@ -300,7 +300,7 @@ switch($_GET['act'])
 		$checkfriendname = $db->execute("select * from `friends` where `fname`=? and `uid`=?", array($enemy->username, $player->id));
 		if (($checkfriendname->recordcount() > 0) and (!$_GET['comfirm'])){
 			include("templates/private_header.php");
-			echo "Este usuário é seu amigo.<br/>Tem certeza que deseja ataca-lo?<br/><br/><a href=\"battle.php?act=attack&username=" . $enemy->username . "&comfirm=true\">Atacar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"battle.php\">Voltar</a>";
+			echo "Este usu√°rio √© seu amigo.<br/>Tem certeza que deseja ataca-lo?<br/><br/><a href=\"battle.php?act=attack&username=" . $enemy->username . "&comfirm=true\">Atacar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"battle.php\">Voltar</a>";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -309,7 +309,7 @@ switch($_GET['act'])
 		if ($enemy->username == $player->username)
 		{
 			include("templates/private_header.php");
-			echo "Você não pode atacar você mesmo! <a href=\"battle.php\">Voltar</a>.";
+			echo "Voc√™ n√£o pode atacar voc√™ mesmo! <a href=\"battle.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -317,7 +317,7 @@ switch($_GET['act'])
 		if ($enemy->gm_rank > 9)
 		{
 			include("templates/private_header.php");
-			echo "Este usuário é um administrador, você não pode ataca-lo! <a href=\"battle.php\">Voltar</a>.";
+			echo "Este usu√°rio √© um administrador, voc√™ n√£o pode ataca-lo! <a href=\"battle.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			break;
 		}
@@ -644,15 +644,15 @@ switch($_GET['act'])
 				$goldloss = 0;
 			}
 			
-			$depoput .= "<br/><div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>Você foi assassinado por " . $enemy->username . "!</u></b></div>";
-			$depoput .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Você perdeu <b>" . number_format($exploss) . "</b> de EXP e <b>" . number_format($goldloss) . "</b> de ouro.</div>";
+			$depoput .= "<br/><div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>Voc√™ foi assassinado por " . $enemy->username . "!</u></b></div>";
+			$depoput .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Voc√™ perdeu <b>" . number_format($exploss) . "</b> de EXP e <b>" . number_format($goldloss) . "</b> de ouro.</div>";
 			$exploss3 = (($player->exp - $exploss) <= 0)?$player->exp:$exploss;
 			$goldloss2 = (($player->gold - $goldloss) <= 0)?$player->gold:$goldloss;
 			//Update player (the loser)
 
 			if (($setting->$enytourstatus == 'y') and ($player->tour == 't') and ($enemy->tour == 't') and ($player->killed == 0) and ($enemy->killed == 0) and ($mytier == $enytier)){
 			$tourlose = time();
-			$logmsg = "Você morreu e foi desclassificado do torneio.";
+			$logmsg = "Voc√™ morreu e foi desclassificado do torneio.";
 			addlog($player->id, $logmsg, $db);
 			}else{
 			$tourlose = $player->killed;
@@ -671,7 +671,7 @@ switch($_GET['act'])
 				$query = $db->execute("update `players` set `exp`=?, `gold`=?, `kills`=?, `hp`=? where `id`=?", array($enemy->exp + $exploss, $enemy->gold + $goldloss, $enemy->kills + 1, $enemy->hp, $enemy->id));
 				//Add log message for winner
 
-				$logmsg3 = "Você foi atacado por <a href=\"profile.php?id=" . $player->username . "\">" . $player->username . "</a> mas venceu!<br />\nVocê ganhou " . number_format($exploss) . " de EXP e " . number_format($goldloss) . " de ouro.";
+				$logmsg3 = "Voc√™ foi atacado por <a href=\"profile.php?id=" . $player->username . "\">" . $player->username . "</a> mas venceu!<br />\nVoc√™ ganhou " . number_format($exploss) . " de EXP e " . number_format($goldloss) . " de ouro.";
 				$insert['player_id'] = $enemy->id;
 				$insert['msg'] = $logmsg3;
 				$insert['time'] = time();
@@ -685,7 +685,7 @@ switch($_GET['act'])
                 $db->execute("update `players` set `magic_points`=`magic_points`+1, `stat_points`=`stat_points`+1, `level`=`level`+1, `exp`=?, `gold`=?, `kills`=`kills`+1, `hp`=?, `maxhp`=? where `id`=?", array(($enemy->exp + $exploss) - maxExp($enemy->level), $enemy->gold + $goldloss, maxHp($db, $enemy->id, $enemy->level, $enemy->reino, $enemy->vip), maxHp($db, $enemy->id, $enemy->level, $enemy->reino, $enemy->vip), $enemy->id));
 				//Add log message for winner
 
-				$logmsg4 = "Você foi atacado por <a href=\"profile.php?id=" . $player->username . "\">" . $player->username . "</a> mas venceu!<br />\nVocê ganhou um nÌvel e " . number_format($goldloss) . " de ouro.";
+				$logmsg4 = "Voc√™ foi atacado por <a href=\"profile.php?id=" . $player->username . "\">" . $player->username . "</a> mas venceu!<br />\nVoc√™ ganhou um n√≠vel e " . number_format($goldloss) . " de ouro.";
 				$insert['player_id'] = $enemy->id;
 				$insert['msg'] = $logmsg4;
 				$insert['time'] = time();
@@ -706,7 +706,7 @@ switch($_GET['act'])
 			if ($goldwin < 1){
 			$goldwin = 0;
 			}
-			$depoput .= "<br/><div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>VocÍê matou " . $enemy->username . "!</u></b></div>";
+			$depoput .= "<br/><div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>Voc√™ matou " . $enemy->username . "!</u></b></div>";
 
 		$checkwanted = $db->execute("select * from `wanted` where `player_id`=?", array($player->id));
 		if ($checkwanted->recordcount() < 1) {
@@ -723,16 +723,16 @@ switch($_GET['act'])
 
 			$db->execute("delete from `wanted` where `player_id`=?", array($enemy->id));
 			$db->execute("update `players` set `gold`=`gold`+? where `id`=?", array($awardgold, $player->id));
-			$depoput .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center>O usuário que você matou era um procurado!<br/>Você ganhou uma recompensa de " . number_format($awardgold) . " moedas de ouro.</center></div>";
+			$depoput .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center>O usu√°rio que voc√™ matou era um procurado!<br/>Voc√™ ganhou uma recompensa de " . number_format($awardgold) . " moedas de ouro.</center></div>";
 		}
 
 
-			$depoput .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Você ganhou <b>" . number_format($expwin) . "</b> de EXP e <b>" . number_format($goldwin) . "</b> de ouro.</div>";
+			$depoput .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Voc√™ ganhou <b>" . number_format($expwin) . "</b> de EXP e <b>" . number_format($goldwin) . "</b> de ouro.</div>";
 			
 			if ($expwin + $player->exp >= maxExp($player->level)) //Player gained a level!
 			{
 				//Update player, gained a level
-				$depoput .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><u><b>Você passou de nível!</b></u></div>";
+				$depoput .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><u><b>Voc√™ passou de n√≠vel!</b></u></div>";
 				$newexp = $expwin + $player->exp - maxExp($player->level);
 
 				$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", array(maxMana($player->level, $player->extramana), maxMana($player->level, $player->extramana), $player->id));
@@ -781,7 +781,7 @@ switch($_GET['act'])
 		$insert['time'] = time();
 		$addrevenge = $db->autoexecute('revenge', $insert, 'INSERT');
 
-			$logmsg5 = "Você foi atacado por <a href=\"profile.php?id=" . $player->username . "\">" . $player->username . "</a> e foi derrotado... <a href=\"battle.php?act=attack&username=" . $player->username . "&comfirm=true\">Clique aqui</a> para se vingar.";
+			$logmsg5 = "Voc√™ foi atacado por <a href=\"profile.php?id=" . $player->username . "\">" . $player->username . "</a> e foi derrotado... <a href=\"battle.php?act=attack&username=" . $player->username . "&comfirm=true\">Clique aqui</a> para se vingar.";
 			$insert['player_id'] = $enemy->id;
 			$insert['msg'] = $logmsg5;
 			$insert['time'] = time();
@@ -790,7 +790,7 @@ switch($_GET['act'])
 
 			if (($setting->$enytourstatus == 'y') and ($player->tour == 't') and ($enemy->tour == 't') and ($player->killed == 0) and ($enemy->killed == 0) and ($mytier == $enytier)){
 			$tourlose = time();
-			$logmsg = "Você morreu e foi desclassificado do torneio.";
+			$logmsg = "Voc√™ morreu e foi desclassificado do torneio.";
 			addlog($enemy->id, $logmsg, $db);
 			}else{
 			$tourlose = $enemy->killed;
@@ -802,7 +802,7 @@ switch($_GET['act'])
 		}
 		else
 		{
-			$depoput .= "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>Os dois estão cançados. Ninguém venceu.</center></b></div>";
+			$depoput .= "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>Os dois est√°o can√ßados. Ningu√©m venceu.</center></b></div>";
 		}
 
 		
@@ -925,13 +925,13 @@ switch($_GET['act'])
 					echo "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>" . $potname . ":</b> " . $valortempo . " " . $auxiliar . " restante(s).<br/>" . $potdesc . "</center></div>";
 				}
 
-		echo "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><i>Você pode atacar usuários de nÌvel " . $diflvl . " ou mais.</i></center></div>\n";
+		echo "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><i>Voc√™ pode atacar usu√°rios de n√≠vel " . $diflvl . " ou mais.</i></center></div>\n";
 		echo "<fieldset>\n";
-		echo "<legend><b>Procurar por alguém</b></legend>\n";
+		echo "<legend><b>Procurar por algu√©m</b></legend>\n";
 		echo "<form method=\"get\" action=\"battle.php\">\n<input type=\"hidden\" name=\"act\" value=\"search\" />\n";
 		echo "<table width=\"100%\">\n";
 		echo "<tr>\n<td width=\"35%\">Nome:</td>\n<td width=\"65%\"><input type=\"text\" name=\"username\" size=\"16\" value=\"" . stripslashes($_GET['username']) . "\"/></td>\n</tr>\n";
-		echo "<tr>\n<td width=\"35%\">Nível:</td>\n<td width=\"65%\"><input type=\"text\" name=\"fromlevel\" size=\"4\" value=\"" . stripslashes($_GET['fromlevel']) . "\" /> ‡ <input type=\"text\" name=\"tolevel\" size=\"4\" value=\"" . stripslashes($_GET['tolevel']) . "\" /></td>\n</tr>\n";
+		echo "<tr>\n<td width=\"35%\">N√≠vel:</td>\n<td width=\"65%\"><input type=\"text\" name=\"fromlevel\" size=\"4\" value=\"" . stripslashes($_GET['fromlevel']) . "\" /> √° <input type=\"text\" name=\"tolevel\" size=\"4\" value=\"" . stripslashes($_GET['tolevel']) . "\" /></td>\n</tr>\n";
 
 		echo "<tr>\n<td width=\"35%\">Reino:</td>\n<td width=\"65%\"><select name=\"reino\">\n<option value=\"0\"";
 		echo (($_GET['reino'] == 0) or (!$_GET['reino']))?" selected=\"selected\"":"";
@@ -943,7 +943,7 @@ switch($_GET['act'])
 		echo ($_GET['reino'] == 3)?" selected=\"selected\"":"";
 		echo ">Turkic</option>\n</select></td>\n</tr>\n";
 
-		echo "<tr>\n<td width=\"35%\">Vocação:</td>\n<td width=\"65%\"><select name=\"voc\">\n<option value=\"0\"";
+		echo "<tr>\n<td width=\"35%\">Voca√ß√£o:</td>\n<td width=\"65%\"><select name=\"voc\">\n<option value=\"0\"";
 		echo ($_GET['voc'] == 0)?" selected=\"selected\"":"";
 		echo ">Selecione</option><option value=\"1\"";
 		echo ($_GET['voc'] == 1)?" selected=\"selected\"":"";
@@ -957,9 +957,9 @@ switch($_GET['act'])
 		echo (($_GET['promo'] == 'any') or (!$_GET['promo']))?" selected=\"selected\"":"";
 		echo ">Selecione</option><option value=\"t\"";
 		echo ($_GET['promo'] == 't')?" selected=\"selected\"":"";
-		echo ">Vocação Superior</option>\n<option value=\"p\"";
+		echo ">Voca√ß√£o Superior</option>\n<option value=\"p\"";
 		echo ($_GET['promo'] == 'p')?" selected=\"selected\"":"";
-		echo ">Vocação Suprema</option>\n</select></td>\n</tr>\n";
+		echo ">Voca√ß√£o Suprema</option>\n</select></td>\n</tr>\n";
 
 		echo "<tr><td></td><td><br /><input type=\"submit\" value=\"Procurar\" /></td></tr>\n";
 		echo "</table>\n";
@@ -973,12 +973,12 @@ switch($_GET['act'])
 				$reinno = "Turkic";
 			}
 
-			echo "<center><i>Atacar usuários do seu próprio reino, " . $reinno . ", pode lhe gerar pontos negativos.</i></center>";
+			echo "<center><i>Atacar usu√°rios do seu pr√≥prio reino, " . $reinno . ", pode lhe gerar pontos negativos.</i></center>";
 		}
 		echo "<br /><br />";
 
 		echo "<table width=\"100%\">\n";
-		echo "<tr><th width=\"35%\">Usuário</th><th width=\"15%\">Nível</th><th width=\20%\">Vocação</th><th width=\"30%\">Batalha</a></th></tr>\n";
+		echo "<tr><th width=\"35%\">Usu√°rio</th><th width=\"15%\">N√≠vel</th><th width=\20%\">Voca√ß√£o</th><th width=\"30%\">Batalha</a></th></tr>\n";
 		$query = $db->execute($search); //Search!
 		if ($query->recordcount() > 0) //Check if any players were found
 		{
@@ -992,7 +992,7 @@ switch($_GET['act'])
 				echo "<td width=\"15%\">" . $result['level'] . "</td>\n";
 				echo "<td width=\"20%\">";
 if ($result['voc'] == 'archer' and $result['promoted'] == 'f'){
-echo "Caçador";
+echo "Ca√ßador";
 } else if ($result['voc'] == 'knight' and $result['promoted'] == 'f'){
 echo "Espadachim";
 } else if ($result['voc'] == 'mage' and $result['promoted'] == 'f'){
@@ -1020,7 +1020,7 @@ echo "Arquimago";
 		else //Display error message
 		{
 			echo "<tr>\n";
-			echo "<td colspan=\"3\">Nenhum usuário encontrado.</td>\n";
+			echo "<td colspan=\"3\">Nenhum usu√°rio encontrado.</td>\n";
 			echo "</tr>\n";
 		}
 		echo "</table>\n";
@@ -1052,23 +1052,23 @@ echo "Arquimago";
 
 if (($player->stat_points > 0) and ($player->level < 15))
 {
-	echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Antes de batalhar, utilize seus <b>" . $player->stat_points . "</b> pontos de status disponÌveis, assim você fica mais forte! <a href=\"stat_points.php\">Clique aqui para utiliza-los!</a></div>";
+	echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Antes de batalhar, utilize seus <b>" . $player->stat_points . "</b> pontos de status dispon√≠veis, assim voc√™ fica mais forte! <a href=\"stat_points.php\">Clique aqui para utiliza-los!</a></div>";
 }
 
 $query = $db->execute("select * from `items` where `player_id`=? and `status`='equipped'", array($player->id));
 if (($query->recordcount() < 2) and ($player->level > 4) and ($player->level < 20))
 {
-	echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Já está na hora de você comprar seus própios itens. <a href=\"shop.php\">Clique aqui e visite o ferreiro</a>.</div>";
+	echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">J√Å est√° na hora de voc√™ comprar seus pr√≥pios itens. <a href=\"shop.php\">Clique aqui e visite o ferreiro</a>.</div>";
 }
 		
 		//The default battle page, giving choice of whether to search for players or to target one
-		echo "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><i>Você pode atacar usuários de nÌvel " . $diflvl . " ou mais.</i></center></div>\n";
+		echo "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><i>Voc√™ pode atacar usu√°rios de n√≠vel " . $diflvl . " ou mais.</i></center></div>\n";
 		echo "<fieldset>\n";
-		echo "<legend><b>Procurar por alguém</b></legend>\n";
+		echo "<legend><b>Procurar por algu√©m</b></legend>\n";
 		echo "<form method=\"get\" action=\"battle.php\">\n<input type=\"hidden\" name=\"act\" value=\"search\" />\n";
 		echo "<table width=\"100%\">\n";
 		echo "<tr>\n<td width=\"35%\">Nome:</td>\n<td width=\"65%\"><input type=\"text\" name=\"username\" size=\"16\"/></td>\n</tr>\n";
-		echo "<tr>\n<td width=\"35%\">Nível:</td>\n<td width=\"65%\"><input type=\"text\" name=\"fromlevel\" size=\"4\" value=\"" . $diflvl . "\" /> ‡ <input type=\"text\" name=\"tolevel\" size=\"4\" /></td>\n</tr>\n";
+		echo "<tr>\n<td width=\"35%\">N√≠vel:</td>\n<td width=\"65%\"><input type=\"text\" name=\"fromlevel\" size=\"4\" value=\"" . $diflvl . "\" /> √° <input type=\"text\" name=\"tolevel\" size=\"4\" /></td>\n</tr>\n";
 
 		echo "<tr>\n<td width=\"35%\">Reino:</td>\n<td width=\"65%\"><select name=\"reino\">";
 		echo "<option value=\"0\">Selecione</option>\n";
@@ -1077,10 +1077,10 @@ if (($query->recordcount() < 2) and ($player->level > 4) and ($player->level < 2
 		echo "<option value=\"3\">Turkic</option>\n";
 		echo "</select></td>\n</tr>\n";
 
-		echo "<tr>\n<td width=\"35%\">Vocação:</td>\n<td width=\"65%\"><select name=\"voc\">\n<option value=\"0\"selected=\"selected\">Selecione</option>\n<option value=\"1\">Arqueiro</option>\n<option value=\"2\">Cavaleiro</option>\n<option value=\"3\">Mago</option>\n</select> <select name=\"promo\">\n";
+		echo "<tr>\n<td width=\"35%\">Voca√ß√£o:</td>\n<td width=\"65%\"><select name=\"voc\">\n<option value=\"0\"selected=\"selected\">Selecione</option>\n<option value=\"1\">Arqueiro</option>\n<option value=\"2\">Cavaleiro</option>\n<option value=\"3\">Mago</option>\n</select> <select name=\"promo\">\n";
 		echo "<option value=\"any\" selected=\"selected\">Selecione</option>";
-		echo "<option value=\"t\">Vocação Superior</option>\n";
-		echo "<option value=\"p\">Vocação Suprema</option>\n";
+		echo "<option value=\"t\">Voca√ß√£o Superior</option>\n";
+		echo "<option value=\"p\">Voca√ß√£o Suprema</option>\n";
 		echo "</select>";
 		echo "</td>\n</tr>\n";
 
@@ -1096,7 +1096,7 @@ if (($query->recordcount() < 2) and ($player->level > 4) and ($player->level < 2
 				$reinno = "Turkic";
 			}
 
-			echo "<center><i>Atacar usuários do seu próprio reino, " . $reinno . ", pode lhe gerar pontos negativos.</i></center>";
+			echo "<center><i>Atacar usu√°rios do seu pr√≥prio reino, " . $reinno . ", pode lhe gerar pontos negativos.</i></center>";
 		}
 		echo "<br /><br />\n";
 
@@ -1112,11 +1112,11 @@ if (($query->recordcount() < 2) and ($player->level > 4) and ($player->level < 2
         echo "<table width=\"100%\" border=\"0\">";
 		if ($serchwanted->recordcount() > 0){
 			echo "<tr>";
-				echo "<th width=\"33%\"><b>Usuário</b></td>";
-				echo "<th width=\"10%\"><b>NÌvel</b></td>";
+				echo "<th width=\"33%\"><b>Usu√°rio</b></td>";
+				echo "<th width=\"10%\"><b>N√≠vel</b></td>";
 				echo "<th width=\"26%\"><b>Assassinatos/Mortes</b></td>";
 				echo "<th width=\"16%\"><b>Recompensa</b></td>";
-				echo "<th width=\"15%\"><b>Opções</b></td>";
+				echo "<th width=\"15%\"><b>Op√ß√µes</b></td>";
 			echo "</tr>";
 
 			$bool = 1;
@@ -1136,7 +1136,7 @@ if (($query->recordcount() < 2) and ($player->level > 4) and ($player->level < 2
 			}
 		}else{
 			echo "<tr>";
-				echo "<td width=\"100%\"><br/><b><center>Nenhum usuário encontrado.</center></b><br/></td>";
+				echo "<td width=\"100%\"><br/><b><center>Nenhum usu√°rio encontrado.</center></b><br/></td>";
 			echo "</tr>";
 		}
 

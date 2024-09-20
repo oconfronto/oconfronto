@@ -51,7 +51,7 @@ if (($_SESSION['ref'] != null) and (is_numeric($_SESSION['ref'])))
         
         elseif (strlen($_POST['conta2']) < 3)
         { //If conta is too short...
-            $msg1 = "Sua conta n„o pode ter menos de 3 caracteres!<br />\n"; //Add to error message
+            $msg1 = "Sua conta n√£o pode ter menos de 3 caracteres!<br />\n"; //Add to error message
             $error = 1; //Set error check
             $erro1 = 1;
         }
@@ -63,13 +63,13 @@ if (($_SESSION['ref'] != null) and (is_numeric($_SESSION['ref'])))
         }
         else if (!preg_match("/^[-_a-zA-Z0-9]+$/", $_POST['conta2']))
         { //If conta contains illegal characters...
-            $msg1 = "Sua conta n„o pode conter <b>caracteres especiais</b>!<br />\n"; //Add to error message
+            $msg1 = "Sua conta n√£o pode conter <b>caracteres especiais</b>!<br />\n"; //Add to error message
             $error = 1; //Set error check
             $erro1 = 1;
         }
         else if ($query->recordcount() > 0)
         {
-            $msg1 = "Esta conta j· est· sendo usuada!<br />\n";
+            $msg1 = "Esta conta j√° est√° sendo usuada!<br />\n";
             $error = 1; //Set error check
             $erro1 = 1;
         }
@@ -98,13 +98,13 @@ if (($_SESSION['ref'] != null) and (is_numeric($_SESSION['ref'])))
         }
         else if (strlen($_POST['email2']) < 5)
         { //If email is too short...
-            $msg3 = "O seu endereÁo de email deve conter mais de 5 caracteres.<br />\n"; //Add to error message
+            $msg3 = "O seu endere√ßo de email deve conter mais de 5 caracteres.<br />\n"; //Add to error message
             $error = 1; //Set error check
             $erro3 = 1;
         }
         else if (!preg_match("/^[-!#$%&\'*+\\.\/0-9=?A-Z^_`{|}~]+@([-0-9A-Z]+\.)+([0-9A-Z]){2,4}$/i", $_POST['email2']))
         {
-            $msg3 = "O formato do seu email È inv·lido!<br />\n"; //Add to error message
+            $msg3 = "O formato do seu email √© inv√°lido!<br />\n"; //Add to error message
             $error = 1; //Set error check
             $erro3 = 1;
         }
@@ -115,13 +115,13 @@ if (($_SESSION['ref'] != null) and (is_numeric($_SESSION['ref'])))
             $query2 = $db->execute("select * from `pending` where `pending_id`=1 and `pending_status`=?", array($_POST['email2']));
             if ($query->recordcount() > 0)
             {
-                $msg3 = "Este email j· est· sendo usado por outra conta!<br />\n";
+                $msg3 = "Este email j√° est√° sendo usado por outra conta!<br />\n";
                 $error = 1; //Set error check
                 $erro3 = 1;
             }
             else if ($query2->recordcount() > 0)
             {
-                $msg3 = "Este email j· est· em uso!<br />\n";
+                $msg3 = "Este email j√° est√° em uso!<br />\n";
                 $error = 1; //Set error check
                 $erro3 = 1;
             }
@@ -146,7 +146,7 @@ if (($_SESSION['ref'] != null) and (is_numeric($_SESSION['ref'])))
                 }
                 else if (($_POST['password2']) != ($_POST['password3']))
                 { //If password is too short...
-                    $msg4 = "As senhas digitadas não comferem!<br />\n"; //Add to error message
+                    $msg4 = "As senhas digitadas n√£o comferem!<br />\n"; //Add to error message
                     $error = 2; //Set error check
                     $erro4 = 1;
                 }
@@ -159,7 +159,7 @@ if (($_SESSION['ref'] != null) and (is_numeric($_SESSION['ref'])))
                 }
                 else if (($_POST['email2']) != ($_POST['email3']))
                 { //If email address isn't filled in...
-                    $msg5 = "Os emails digitados não comferem!<br />\n"; //Add to error message
+                    $msg5 = "Os emails digitados n√£o comferem!<br />\n"; //Add to error message
                     $error = 2; //Set error check
                     $erro5 = 1;
                 }
@@ -178,7 +178,7 @@ if (($_SESSION['ref'] != null) and (is_numeric($_SESSION['ref'])))
                     
                     $id = $db->Insert_ID();
 					
-					// INSERE DADOS DE C”DIGO DE REFERENCIA DO CONVITE.
+					// INSERE DADOS DE C√ìDIGO DE REFERENCIA DO CONVITE.
 					$insert_ref['id_p_c'] = $id;
 					$insert_ref['id_p_ref'] = $usaar;
 					$insert_ref['date_regis'] = time();
@@ -227,7 +227,7 @@ if (($_SESSION['ref'] != null) and (is_numeric($_SESSION['ref'])))
                 }
                 echo "</span>";
 
-                echo "<center><p>Confirme suas informações para completar seu registro.</p></center>";
+                echo "<center><p>Confirme suas informa√ß√µes para completar seu registro.</p></center>";
                 echo "<form action='register.php?confirm=true' method='post'>";
                 
                 echo "<input type=\"hidden\" name=\"conta2\" value=\"" . $_POST['conta2'] . "\">";

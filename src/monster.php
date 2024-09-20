@@ -16,7 +16,7 @@ if (($selectbixo->recordcount() != 1) and (!$_GET['noreturn'])) {
 
 include("checkwork.php");
 
-header("Content-Type: text/html; charset=ISO-8859-1",true);
+header("Content-Type: text/html; charset=utf-8",true);
     
 if (!$_SESSION['battlelog']){
 	$_SESSION['battlelog'] = array();
@@ -73,7 +73,7 @@ switch($_GET['act'])
                                 $db->execute("delete from `bixos` where `player_id`=?", array($player->id));
                                 unset($_SESSION['battlelog']);
                                 if (!$_GET['nolayout']){ include("templates/private_header.php"); }
-                                echo "Voc&ecirc; n„o possui tanta energia para descarregar neste monstro!</b></font> <a href=\"monster.php\">Voltar</a>.";
+                                echo "Voc&ecirc; n√£o possui tanta energia para descarregar neste monstro!</b></font> <a href=\"monster.php\">Voltar</a>.";
                                 if (!$_GET['nolayout']){ include("templates/private_footer.php"); }
                                 exit;
                             }
@@ -155,7 +155,7 @@ switch($_GET['act'])
         $expdomonstro = $expdomonstro * $bixo->mul;
         
         
-        //verifica se o monstro é de arena
+        //verifica se o monstro √© de arena
         $monstroDeArena = false;
         $checkdDungeon = $db->getone("select `dungeon_id` from `dungeon_status` where `status`<90 and `fail`=0 and `player_id`=?", array($player->id));
         if (($checkdDungeon != null) and ($checkdDungeon != 0)){
@@ -181,7 +181,7 @@ switch($_GET['act'])
 			$db->execute("delete from `bixos` where `player_id`=?", array($player->id));
 			unset($_SESSION['battlelog']);
 			if (!$_GET['nolayout']){ include("templates/private_header.php"); }
-			echo "Voc&ecirc; n„o pode atacar este monstro!</b></font> <a href=\"monster.php\">Voltar</a>.";
+			echo "Voc&ecirc; n√£o pode atacar este monstro!</b></font> <a href=\"monster.php\">Voltar</a>.";
 			if (!$_GET['nolayout']){ include("templates/private_footer.php"); }
 			break;
 		}
@@ -194,14 +194,14 @@ switch($_GET['act'])
 				$db->execute("delete from `bixos` where `player_id`=?", array($player->id));
 				unset($_SESSION['battlelog']);
 					if (!$_GET['nolayout']){ include("templates/private_header.php"); }
-					echo "Este monstro n„o existe! <a href=\"monster.php\">Voltar</a>.";
+					echo "Este monstro n√£o existe! <a href=\"monster.php\">Voltar</a>.";
 					if (!$_GET['nolayout']){ include("templates/private_footer.php"); }
 				break;
 			}elseif (($enemy->id == 49) and ($bixoexpec1->recordcount() < 1)){
 				$db->execute("delete from `bixos` where `player_id`=?", array($player->id));
 				unset($_SESSION['battlelog']);
 					if (!$_GET['nolayout']){ include("templates/private_header.php"); }
-					echo "Este monstro n„o existe! <a href=\"monster.php\">Voltar</a>.";
+					echo "Este monstro n√£o existe! <a href=\"monster.php\">Voltar</a>.";
 					if (!$_GET['nolayout']){ include("templates/private_footer.php"); }
 				break;
 			}
@@ -215,7 +215,7 @@ switch($_GET['act'])
 				$db->execute("delete from `bixos` where `player_id`=?", array($player->id));
 				unset($_SESSION['battlelog']);
                 if (!$_GET['nolayout']){ include("templates/private_header.php"); }
-                echo "Os portões do reino estão fechados! <a href=\"monster.php\">Voltar</a>.";
+                echo "Os port√µes do reino est√°o fechados! <a href=\"monster.php\">Voltar</a>.";
                 if (!$_GET['nolayout']){ include("templates/private_footer.php"); }
 				break;
 			}
@@ -228,8 +228,8 @@ switch($_GET['act'])
 			unset($_SESSION['battlelog']);
 			if (!$_GET['nolayout']){ include("templates/private_header.php"); }
 			echo "<fieldset>";
-			echo "<legend><b>Voc&ecirc; est· sem energia</b></legend>\n";
-			echo "Voc&ecirc; est· exausto. A cada minuto que se passa voc&ecirc; adquire <b>10 pontos de energia</b>.<br/><br/>";
+			echo "<legend><b>Voc&ecirc; est√° sem energia</b></legend>\n";
+			echo "Voc&ecirc; est√° exausto. A cada minuto que se passa voc&ecirc; adquire <b>10 pontos de energia</b>.<br/><br/>";
 			echo "<div id=\"counter\" align=\"center\"></div><br/>";
 
 			$gettime = $db->GetOne("select `value` from `cron` where `name`='reset_last'");
@@ -253,31 +253,31 @@ switch($_GET['act'])
 			$numerodepocoes4 = $query4->recordcount();
 
 			echo "<fieldset>";
-			echo "<legend><b>PoÁıes</b></legend>";
-			echo "<table width=\"100%\"><tr><td><table width=\"80px\"><tr><td><div title=\"header=[Health Potion] body=[Recupera atÈ 5 mil de vida.]\"><img src=\"images/itens/healthpotion.gif\"></div></td><td><b>x" . $numerodepocoes . "</b>";
+			echo "<legend><b>Po√ß√µes</b></legend>";
+			echo "<table width=\"100%\"><tr><td><table width=\"80px\"><tr><td><div title=\"header=[Health Potion] body=[Recupera at√© 5 mil de vida.]\"><img src=\"images/itens/healthpotion.gif\"></div></td><td><b>x" . $numerodepocoes . "</b>";
 			if ($numerodepocoes > 0){
 			$item = $query->fetchrow();
 			echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item['id'] . "\">Usar</a>";
 			}
 			echo "</td></tr></table></td>";
-			echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Big Health Potion] body=[Recupera atÈ 10 mil de vida.]\"><img src=\"images/itens/bighealthpotion.gif\"></div></td><td><b>x" . $numerodepocoes3 . "</b>";
+			echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Big Health Potion] body=[Recupera at√© 10 mil de vida.]\"><img src=\"images/itens/bighealthpotion.gif\"></div></td><td><b>x" . $numerodepocoes3 . "</b>";
 			if ($numerodepocoes3 > 0){
 			$item3 = $query3->fetchrow();
 			echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item3['id'] . "\">Usar</a>";
 			}
 			echo "</td></tr></table></td>";
-			echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Mana Potion] body=[Recupera atÈ 500 de mana.]\"><img src=\"images/itens/manapotion.gif\"></div></td><td><b>x" . $numerodepocoes4 . "</b>";
+			echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Mana Potion] body=[Recupera at√© 500 de mana.]\"><img src=\"images/itens/manapotion.gif\"></div></td><td><b>x" . $numerodepocoes4 . "</b>";
 			if ($numerodepocoes4 > 0){
 			$item4 = $query4->fetchrow();
 			echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item4['id'] . "\">Usar</a>";
 			}
 			echo "</td></tr></table></td>";
-			echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Energy Potion] body=[Recupera atÈ 50 de energia.]\"><img src=\"images/itens/energypotion.gif\"></div></td><td><b>x" . $numerodepocoes2 . "</b>";
+			echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Energy Potion] body=[Recupera at√© 50 de energia.]\"><img src=\"images/itens/energypotion.gif\"></div></td><td><b>x" . $numerodepocoes2 . "</b>";
 			if ($numerodepocoes2 > 0){
 			$item2 = $query2->fetchrow();
 			echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item2['id'] . "\">Usar</a>";
 			}
-			echo "</td></tr></table></td><td><font size=\"1\"><a href=\"hospt.php?act=sell\">Vender PoÁıes</a><br/><a href=\"inventory.php?transpotion=true\">Transferir PoÁıes</a></font></td></tr></table>";
+			echo "</td></tr></table></td><td><font size=\"1\"><a href=\"hospt.php?act=sell\">Vender Po√ß√µes</a><br/><a href=\"inventory.php?transpotion=true\">Transferir Po√ß√µes</a></font></td></tr></table>";
 			echo "</fieldset>";
 
 			echo "<a href=\"monster.php\">Voltar</a>";
@@ -312,7 +312,7 @@ switch($_GET['act'])
 
 		// 	if (!$_GET['nolayout']){ include("templates/private_header.php"); }
 		// 	echo "<fieldset>";
-		// 	echo "<legend><b>Antes de atacar, digite o cÛdigo abaixo:</b></legend>";
+		// 	echo "<legend><b>Antes de atacar, digite o c√≥digo abaixo:</b></legend>";
 		// 	echo "<form action=\"\" method=\"post\"><center>";
 		// 	echo recaptcha_get_html($publickey, $error);
 		// 	echo "</center>";
@@ -776,7 +776,7 @@ switch($_GET['act'])
 				$db->execute("update `players` set `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=?, `maxhp`=?, `exp`=?, `magic_points`=`magic_points`+1, `groupmonsterkilled`=`groupmonsterkilled`+? where `id`=?", array(maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), $newexp, $bixo->mul, $pinfo['id']));
 
 				if ($pinfo['id'] != $player->id){
-				$logwinlvlmsg = "Voc&ecirc; avanÁou um nÌvel enquanto <a href=\"profile.php?id=" . $player->username . "\">" . $player->username . "</a> matava monstros.";
+				$logwinlvlmsg = "Voc&ecirc; avan√£ou um n√≠vel enquanto <a href=\"profile.php?id=" . $player->username . "\">" . $player->username . "</a> matava monstros.";
 				addlog($pinfo['id'], $logwinlvlmsg, $db);
 				}
 
@@ -852,12 +852,12 @@ switch($_GET['act'])
 			} */
 
 			if ($enemy->username == Zeus){
-			$medalha10 = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=?", array($player->id, 'Lend·rio'));
+			$medalha10 = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=?", array($player->id, 'Lend√°rio'));
 			if ($medalha10->recordcount() < 1) {
 			$medalha = 10;
 			$medalhamsg = "Voc&ecirc; matou Zeus e uma medalha foi adicionada ao seu perfil por este motivo.";
 			$insert['player_id'] = $player->id;   	  
-			$insert['medalha'] = "Lend·rio";
+			$insert['medalha'] = "Lend√°rio";
 			$insert['motivo'] = "Matou o poderoso Zeus.";
 			$query = $db->autoexecute('medalhas', $insert, 'INSERT');
 
@@ -878,14 +878,14 @@ switch($_GET['act'])
                 
             //verifica dungeon
             if ($monstroDeArena) {
-                $output .= showAlert("Você matou um monstro da arena, <a href=\"dungeon.php\">clique aqui</a> e veja seu próximo oponente.", "green");
+                $output .= showAlert("Voc√™ matou um monstro da arena, <a href=\"dungeon.php\">clique aqui</a> e veja seu pr√≥ximo oponente.", "green");
                 $db->execute("update `dungeon_status` set `status`=`status`+1 where `status`<90 and `fail`=0 and `player_id`=?", array($player->id));
             }
                 
 		}
 
 		if ($newlevell == 5){
-			$output .= showAlert("<u><b>Voc&ecirc; passou de nÌvel!</b></u>", "green");
+			$output .= showAlert("<u><b>Voc&ecirc; passou de n√≠vel!</b></u>", "green");
 		}
 		if ($lootstatus == 5){
 			$output .= showAlert($mensagem);
@@ -912,7 +912,7 @@ switch($_GET['act'])
 				
 				//verifica dungeon
                 if ($monstroDeArena) {
-                    $output .= showAlert("Você foi morto por um monstro da arena e foi desclassificado.", "red");
+                    $output .= showAlert("Voc√™ foi morto por um monstro da arena e foi desclassificado.", "red");
                     $db->execute("update `dungeon_status` set `fail`=1, `status`=? where `status`<90 and `fail`=0 and `player_id`=?", array((time() + 86400), $player->id));
                 }
 			
@@ -968,7 +968,7 @@ switch($_GET['act'])
 			echo "</td>";
 
 			echo "<td width=\"26%\">";
-			echo "<font size=\"1px\"><b>Usu·rio:</b> " . $player->username . "</font><br />";
+			echo "<font size=\"1px\"><b>Usu√°rio:</b> " . $player->username . "</font><br />";
  			echo show_prog_bar(155, ceil(($player->hp / $player->maxhp) * 100), $player->hp, 'red', '#FFF');
 			echo "<br />";
 			echo show_prog_bar(155, ceil(($player->mana / $player->maxmana) * 100), $player->mana, 'blue', '#FFF');
@@ -1002,7 +1002,7 @@ switch($_GET['act'])
 			}
 			elseif (($magiaatual2['magia'] == 6) or ($magiaatual2['magia'] == 9)){
 			echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-			echo "<center>FeitiÁo de defesa por " . $magiaatual2['turnos'] . " turno(s).</center>";
+			echo "<center>Feiti√ßo de defesa por " . $magiaatual2['turnos'] . " turno(s).</center>";
 			echo "</div>";
 			}
 			elseif ($magiaatual2['magia'] == 7){
@@ -1012,12 +1012,12 @@ switch($_GET['act'])
 			}
 			elseif ($magiaatual2['magia'] == 10){
 			echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-			echo "<center>Seu escudo mÌstico est· ativo por " . $magiaatual2['turnos'] . " turno(s).</center>";
+			echo "<center>Seu escudo m√≠stico est√° ativo por " . $magiaatual2['turnos'] . " turno(s).</center>";
 			echo "</div>";
 			}
 			elseif ($magiaatual2['magia'] == 11){
 			echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-			echo "<center>O monstro est· tonto por " . $magiaatual2['turnos'] . " turno(s).</center>";
+			echo "<center>O monstro est√° tonto por " . $magiaatual2['turnos'] . " turno(s).</center>";
 			echo "</div>";
 			}
 			elseif ($magiaatual2['magia'] == 12){
@@ -1032,7 +1032,7 @@ switch($_GET['act'])
 			$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=6 and `player_id`=?", array($player->id));
 			if ($tutorial->recordcount() > 0){
 				if ($player->exp > 0){
-					echo showAlert("”timo, <a href=\"start.php?act=7\">clique aqui</a> para continuar seu tutorial.", "green");
+					echo showAlert("√≥timo, <a href=\"start.php?act=7\">clique aqui</a> para continuar seu tutorial.", "green");
 				}
 			}
 
@@ -1061,7 +1061,7 @@ switch($_GET['act'])
 
 				echo "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
 				echo "<table width=\"100%\"><tr><td width=\"75%\">";
-					echo "<b>OpÁıes:</b> <a href=\"monster.php?act=attack&id=" . ($bixo->id * $player->id) . "\">Atacar outr" . $enemy->prepo . " " . $enemy->username . "</a> | ";
+					echo "<b>Op√ß√µes:</b> <a href=\"monster.php?act=attack&id=" . ($bixo->id * $player->id) . "\">Atacar outr" . $enemy->prepo . " " . $enemy->username . "</a> | ";
 					if (($heal > 0) and ($player->gold > $cost)) { echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('heal.php', 'swap')\">Recuperar vida</a> <font size=\"1\">(" . number_format($cost) . " de ouro)</font> | "; }
 					elseif (($heal > 0) and ($player->gold > 0)) { echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('heal.php', 'swap')\">Recuperar vida</a> <font size=\"1\">(" . number_format($cost2) . " de ouro)</font> | "; }
 					echo "<a href=\"monster.php\">Voltar</a>";
@@ -1069,7 +1069,7 @@ switch($_GET['act'])
    				echo "</td><td width=\"25%\">";
 					$modefastbattle = $db->execute("select * from `other` where `value`=? and `player_id`=?", array('fastbattle', $player->id));
 					if ($modefastbattle->recordcount() > 0) {
-   						echo "<center><font size=\"1px\"><b><a href=\"swap_type.php?alterar=true\">Desativar Luta R·pida</a></b></font></center>";
+   						echo "<center><font size=\"1px\"><b><a href=\"swap_type.php?alterar=true\">Desativar Luta R√°pida</a></b></font></center>";
 					}
 				echo "</tr></table>";
 				echo "</div>";
@@ -1097,7 +1097,7 @@ switch($_GET['act'])
 				}
 
    				echo "</td><td width=\"15%\" bgcolor=\"#E1CBA4\">";
-   				echo "<center><font size=\"1px\"><b><a href=\"swap_type.php?alterar=true\">Luta R·pida</a></b><br/><a href=\"swap_type.php?type=96\">Fugir</a></font></center>";
+   				echo "<center><font size=\"1px\"><b><a href=\"swap_type.php?alterar=true\">Luta R√°pida</a></b><br/><a href=\"swap_type.php?type=96\">Fugir</a></font></center>";
    				echo "</td></tr></table>";
 			}
         
@@ -1105,9 +1105,9 @@ switch($_GET['act'])
             {
                 $modefastbattle = $db->execute("select * from `other` where `value`=? and `player_id`=?", array('fastbattle', $player->id));
                 if ($modefastbattle->recordcount() > 0) {
-                    echo "<center><i><a href=\"monster.php?act=attack&id=" . ($bixo->id * $player->id) . "&times=" . floor($player->energy / 10) . "\">Clique aqui</a> para descarregar toda sua energia no monstro " . $enemy->username . ".</i><img src=\"images/help.gif\" title=\"header=[Descarregar Energia] body=[<font size='1px'>Você possui " . $player->energy . " pontos de energia, e pode matar " . floor($player->energy / 10) . " monstros. Esta opção faz com que você ataque " . floor($player->energy / 10) . "x o monstro " . $enemy->username . " de uma só vez.</font>]\">";
+                    echo "<center><i><a href=\"monster.php?act=attack&id=" . ($bixo->id * $player->id) . "&times=" . floor($player->energy / 10) . "\">Clique aqui</a> para descarregar toda sua energia no monstro " . $enemy->username . ".</i><img src=\"images/help.gif\" title=\"header=[Descarregar Energia] body=[<font size='1px'>Voc√™ possui " . $player->energy . " pontos de energia, e pode matar " . floor($player->energy / 10) . " monstros. Esta op√ß√£o faz com que voc√™ ataque " . floor($player->energy / 10) . "x o monstro " . $enemy->username . " de uma s√≥ vez.</font>]\">";
                 } else {
-                    echo "<center><i><a href=\"swap_type.php?descarregar=true&times=" . floor($player->energy / 10) . "\">Clique aqui</a> para descarregar toda sua energia no monstro " . $enemy->username . ".</i><img src=\"images/help.gif\" title=\"header=[Descarregar Energia] body=[<font size='1px'>Você possui " . $player->energy . " pontos de energia, e pode matar " . floor($player->energy / 10) . " monstros. Esta opção faz com que você ataque " . floor($player->energy / 10) . "x o monstro " . $enemy->username . " de uma só vez.</font>]\">";
+                    echo "<center><i><a href=\"swap_type.php?descarregar=true&times=" . floor($player->energy / 10) . "\">Clique aqui</a> para descarregar toda sua energia no monstro " . $enemy->username . ".</i><img src=\"images/help.gif\" title=\"header=[Descarregar Energia] body=[<font size='1px'>Voc√™ possui " . $player->energy . " pontos de energia, e pode matar " . floor($player->energy / 10) . " monstros. Esta op√ß√£o faz com que voc√™ ataque " . floor($player->energy / 10) . "x o monstro " . $enemy->username . " de uma s√≥ vez.</font>]\">";
                 }
             }
         
@@ -1127,9 +1127,9 @@ switch($_GET['act'])
 			$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=6 and `player_id`=?", array($player->id));
 			if ($tutorial->recordcount() > 0){
 				if ($player->exp > 0){
-					echo showAlert("”timo, <a href=\"start.php?act=7\">clique aqui</a> para continuar seu tutorial.", "green");
+					echo showAlert("√≥timo, <a href=\"start.php?act=7\">clique aqui</a> para continuar seu tutorial.", "green");
 				}else{
-					echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">Existem 3 maneiras de se conseguir experi&ecirc;ncia: Lutando contra outros <u>jogadores</u>, contra <u>monstros</u> ou <u>caÁando</u>.<br/><font size=\"1px\">O <u>mais recomendado</u> para voc&ecirc;, novato, È a luta contra monstros.</font><br/><br/>Escolha um monstro de nÌvel inferior e divirta-se!</td><th><font size=\"1px\"><a href=\"start.php?act=7\">PrÛximo</a></font></th></tr></table>", "white", "left");
+					echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">Existem 3 maneiras de se conseguir experi&ecirc;ncia: Lutando contra outros <u>jogadores</u>, contra <u>monstros</u> ou <u>ca√ßando</u>.<br/><font size=\"1px\">O <u>mais recomendado</u> para voc&ecirc;, novato, √© a luta contra monstros.</font><br/><br/>Escolha um monstro de n√≠vel inferior e divirta-se!</td><th><font size=\"1px\"><a href=\"start.php?act=7\">Pr√≥ximo</a></font></th></tr></table>", "white", "left");
 				}
 			}
 
@@ -1177,12 +1177,12 @@ switch($_GET['act'])
 			}
         
         if ($player->level <= 20) {
-            echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Bônus de experi&ecirc;ncia em dobro para usuários de nível 20 ou menos.</div>";
+            echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">B√¥nus de experi&ecirc;ncia em dobro para usu√°rios de n√≠vel 20 ou menos.</div>";
         } elseif ($player->level < 35) {
-            echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Bônus de experi&ecirc;ncia de 50% para usuários de nível inferior a 35.</div>";
+            echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">B√¥nus de experi&ecirc;ncia de 50% para usu√°rios de n√≠vel inferior a 35.</div>";
         } else {
             if ($player->vip > time()) {
-                echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Bônus de experi&ecirc;ncia de 10% para usuários VIP.</div>";
+                echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">B√¥nus de experi&ecirc;ncia de 10% para usu√°rios VIP.</div>";
             }
         }
 
@@ -1199,16 +1199,16 @@ switch($_GET['act'])
 				}
 
 				if (($grupototalbonus > 4999) and ($grupototalbonus < 15000)){
-				echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>BÙnus de Experi&ecirc;ncia:</b> 5%<br/>Mais de 5000 monstros mortos pelo grupo de caÁa.</center></div>";
+				echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>B√¥nus de Experi&ecirc;ncia:</b> 5%<br/>Mais de 5000 monstros mortos pelo grupo de ca√ßa.</center></div>";
 				}
 				elseif (($grupototalbonus > 14999) and ($grupototalbonus < 30000)){
-				echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>BÙnus de Experi&ecirc;ncia:</b> 10%<br/>Mais de 15000 monstros mortos pelo grupo de caÁa.</center></div>";
+				echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>B√¥nus de Experi&ecirc;ncia:</b> 10%<br/>Mais de 15000 monstros mortos pelo grupo de ca√ßa.</center></div>";
 				}
 				elseif (($grupototalbonus > 29999) and ($grupototalbonus < 50000)){
-				echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>BÙnus de Experi&ecirc;ncia:</b> 15%<br/>Mais de 30000 monstros mortos pelo grupo de caÁa.</center></div>";
+				echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>B√¥nus de Experi&ecirc;ncia:</b> 15%<br/>Mais de 30000 monstros mortos pelo grupo de ca√ßa.</center></div>";
 				}
 				elseif ($grupototalbonus > 49999){
-				echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>BÙnus de Experi&ecirc;ncia:</b> 20%<br/>Mais de 50000 monstros mortos pelo grupo de caÁa.</center></div>";
+				echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>B√¥nus de Experi&ecirc;ncia:</b> 20%<br/>Mais de 50000 monstros mortos pelo grupo de ca√ßa.</center></div>";
 				}
 			}
 		}
@@ -1222,11 +1222,11 @@ switch($_GET['act'])
 			$minutes = $end/60%60;
 			$acaba = "$hours hora(s) $minutes minuto(s)";
 
-			echo showAlert("<b>Portıes do reino abertos!</b> Voc&ecirc; pode lutar contra monstros especiais.<br>Tempo restante: " . $acaba . ".", "white", "left");
+			echo showAlert("<b>Port√µes do reino abertos!</b> Voc&ecirc; pode lutar contra monstros especiais.<br>Tempo restante: " . $acaba . ".", "white", "left");
 			$bosses = $db->execute("select * from `monsters` where `evento`='t' order by `level` asc");
 
 			echo "<table width=\"100%\">\n";
-		 	echo "<tr><th width=\"50%\">Nome</th><th width=\"20%\">NÌvel</th><th width=\"30%\">Batalha</a></th></tr>\n";
+		 	echo "<tr><th width=\"50%\">Nome</th><th width=\"20%\">N√≠vel</th><th width=\"30%\">Batalha</a></th></tr>\n";
 		  	$bool = 1;
 				while ($result = $bosses->fetchrow())
 				{
@@ -1241,9 +1241,9 @@ switch($_GET['act'])
 		}
 
 
-		echo showAlert("<i>Voc&ecirc; pode enfrentar monstros do nivel 1 ‡ " . $tolevel . ".</i>");
+		echo showAlert("<i>Voc&ecirc; pode enfrentar monstros do nivel 1 √° " . $tolevel . ".</i>");
 		echo "<table width=\"100%\">\n";
-		  echo "<tr><th width=\"50%\">Nome</th><th width=\"20%\">NÌvel</th><th width=\"30%\">Batalha</a></th></tr>\n";
+		  echo "<tr><th width=\"50%\">Nome</th><th width=\"20%\">N√≠vel</th><th width=\"30%\">Batalha</a></th></tr>\n";
 		  $bool = 1;
 			while ($result = mysql_fetch_array($sql))
 			{

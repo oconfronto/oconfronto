@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Entrar no Cl„");
+define("PAGENAME", "Entrar no Cl√£");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 include("checkguild.php");
@@ -21,9 +21,9 @@ if (!$_GET['confirm']){
 include("templates/private_header.php");
 echo "<fieldset>";
 echo "<legend><b>" . $guild['name'] . " ::Entrar</b></legend>";
-echo "Deseja fazer parte do cl„ <b>" . $guild['name'] . "</b> por <b>" . $guild['price'] . "</b> moedas de ouro?<br/><br/>";
+echo "Deseja fazer parte do cl√£ <b>" . $guild['name'] . "</b> por <b>" . $guild['price'] . "</b> moedas de ouro?<br/><br/>";
 echo "<table width=\"100%\" border=\"0\"><tr>";
-echo "<td width=\"50%\"><a href=\"home.php\">N„o</a></td>";
+echo "<td width=\"50%\"><a href=\"home.php\">N√£o</a></td>";
 echo "<td width=\"50%\" align=\"right\"><a href=\"guild_join.php?id=" . $_GET['id'] . "&confirm=true\">Sim</a></td>";
 echo "</tr></table>";
 echo "</fieldset>";
@@ -36,13 +36,13 @@ exit;
 	if ($player->guild != NULL) {
 		echo "<fieldset>";
 		echo "<legend><b>" . $guild['name'] . " :: Entrar</b></legend>";
-		echo "VocÍ j· est· em um cl„!<br/>";
+		echo "Voc√™ j√° est√° em um cl√£!<br/>";
 		echo "</fieldset>";
 		echo "<a href=\"home.php\">Principal</a>";
 	} elseif ($player->gold < $guild['price']) {
 		echo "<fieldset>";
 		echo "<legend><b>" . $guild['name'] . " :: Entrar</b></legend>";
-		echo "VocÍ n„o tem dinheiro para entar no cl„. Custa " . $guild['price'] . " de ouro.<br/>";
+		echo "Voc√™ n√£o tem dinheiro para entar no cl√£. Custa " . $guild['price'] . " de ouro.<br/>";
 		echo "</fieldset>";
 		echo "<a href=\"home.php\">Principal</a>";
 	} else {
@@ -55,7 +55,7 @@ exit;
 			} else {
 				echo "<fieldset>";
 				echo "<legend><b>" . $guild['name'] . " :: Entrar</b></legend>";
-				echo "VocÍ n„o foi convidado por este cl„.<br/>";
+				echo "Voc√™ n√£o foi convidado por este cl√£.<br/>";
 				echo "</fieldset>";
 				echo "<a href=\"home.php\">Principal</a>";
 				$mayjoin = false;
@@ -66,11 +66,11 @@ exit;
 			$db->execute("update guilds set members=?, gold=? where id=?", array($guild['members'] + 1, $guild['gold'] + $guild['price'], $guild['id']));
 			echo "<fieldset>";
 			echo "<legend><b>" . $guild['name'] . " :: Entrar</b></legend>";
-			echo "Obrigado por participar do cl„: <b>" . $guild['name'] . "</b>!<br/>";
+			echo "Obrigado por participar do cl√£: <b>" . $guild['name'] . "</b>!<br/>";
 			echo "</fieldset>";
 			echo "<table width=\"100%\" border=\"0\"><tr>";
 			echo "<td width=\"50%\"><a href=\"home.php\">Voltar</a></td>";
-			echo "<td width=\"50%\" align=\"right\"><a href=\"guild_home.php\">P·gina do Cl„</a></td>";
+			echo "<td width=\"50%\" align=\"right\"><a href=\"guild_home.php\">P√°gina do Cl√£</a></td>";
 			echo "</tr></table>";
 		}
 	}

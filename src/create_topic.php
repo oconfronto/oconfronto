@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Fórum");
+define("PAGENAME", "F√≥rum");
 $player = check_user($secret_key, $db);
 include("checkforum.php");
 
@@ -8,19 +8,19 @@ if ($_POST['submit']) {
 	$verifica = $db->GetOne("select `imperador` from `reinos` where `id`=?", array($player->reino));
 
 	if (!$_POST['detail'] or !$_POST['topic']) {
-		$error = "Você precisa preencher todos os campos.";
+		$error = "Voc√™ precisa preencher todos os campos.";
 	}
 
 	elseif ($_POST['category'] == 'none') {
-		$error = "Você precisa escolher uma categoria.";
+		$error = "Voc√™ precisa escolher uma categoria.";
 	}
 
 	elseif (($_POST['category'] != 'reino') and ($_POST['category'] != 'sugestoes') and ($_POST['category'] != 'gangues') and ($_POST['category'] != 'trade') and ($_POST['category'] != 'duvidas') and ($_POST['category'] != 'outros') and ($_POST['category'] != 'fan') and ($_POST['category'] != 'off') and ($player->gm_rank < 9)) {
-		$error = "Você não possui autorização para criar tópicos nesta categoria.";
+		$error = "Voc√™ n√£o possui autoriza√ß√£o para criar t√≥picos nesta categoria.";
 	}
 
 	elseif (($_POST['category'] == 'reino') and ($player->id != $verifica) and ($player->gm_rank < 9)) {
-		$error = "Você não possui autorização para criar tópicos nesta categoria.";
+		$error = "Voc√™ n√£o possui autoriza√ß√£o para criar t√≥picos nesta categoria.";
 	
 	} else {
 
@@ -61,10 +61,10 @@ if ($error){
 
 echo "<script type=\"text/javascript\" src=\"bbeditor/ed.js\"></script>";
 	echo "<table width=\"100%\" border=\"0px\">";
-		echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Criar novo Tópico</b></center></td></tr>";
+		echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Criar novo T√≥pico</b></center></td></tr>";
 		echo "<tr class=\"salmon\"><td>";
 			echo "<form method=\"post\" action=\"create_topic.php\">";
-			echo "<b>Têtulo:</b> <input name=\"topic\" type=\"text\" id=\"topic\" size=\"35\" value=\"" . $_POST['topic'] . "\" />";
+			echo "<b>T√≠tulo:</b> <input name=\"topic\" type=\"text\" id=\"topic\" size=\"35\" value=\"" . $_POST['topic'] . "\" />";
 			echo " <b>Categoria:</b> <select name=\"category\">";
 
 				$verifica = $db->GetOne("select `imperador` from `reinos` where `id`=?", array($player->reino));
@@ -77,9 +77,9 @@ echo "<script type=\"text/javascript\" src=\"bbeditor/ed.js\"></script>";
 
 				if ($player->gm_rank > 9) {
 					if (($_POST['category'] == 'noticias') or ($_GET['category'] == 'noticias')){
-						echo "<option value=\"noticias\" selected=\"selected\">Notêcias</option>";
+						echo "<option value=\"noticias\" selected=\"selected\">Not√≠cias</option>";
 					} else {
-						echo "<option value=\"noticias\">Notêcias</option>";
+						echo "<option value=\"noticias\">Not√≠cias</option>";
 					}
 				}
 
@@ -92,15 +92,15 @@ echo "<script type=\"text/javascript\" src=\"bbeditor/ed.js\"></script>";
 				}
 
 				if (($_POST['category'] == 'sugestoes') or ($_GET['category'] == 'sugestoes')){
-					echo "<option value=\"sugestoes\" selected=\"selected\">Sugestões</option>";
+					echo "<option value=\"sugestoes\" selected=\"selected\">Sugest√µes</option>";
 				} else {
-					echo "<option value=\"sugestoes\">Sugestões</option>";
+					echo "<option value=\"sugestoes\">Sugest√µes</option>";
 				}
 
 				if (($_POST['category'] == 'gangues') or ($_GET['category'] == 'gangues')){
-					echo "<option value=\"gangues\" selected=\"selected\">Clãs</option>";
+					echo "<option value=\"gangues\" selected=\"selected\">Cl√£s</option>";
 				} else {
-					echo "<option value=\"gangues\">Clãs</option>";
+					echo "<option value=\"gangues\">Cl√£s</option>";
 				}
 
 				if (($_POST['category'] == 'trade') or ($_GET['category'] == 'trade')){
@@ -142,8 +142,8 @@ echo "<script type=\"text/javascript\" src=\"bbeditor/ed.js\"></script>";
 		echo "</td></tr>";
 		echo "<tr class=\"salmon\"><td>";
 			echo "<table width=\"100%\" border=\"0\"><tr>";
-				echo "<td width=\"50%\"><input type=\"submit\" name=\"submit\" value=\"Criar Tópico\" /></td>";
-				echo "<td width=\"50%\" align=\"right\"><input type=\"checkbox\" name=\"vota\" value=\"yes\"> Ativar Votação</td>";
+				echo "<td width=\"50%\"><input type=\"submit\" name=\"submit\" value=\"Criar T√≥pico\" /></td>";
+				echo "<td width=\"50%\" align=\"right\"><input type=\"checkbox\" name=\"vota\" value=\"yes\"> Ativar Vota√ß√£o</td>";
 			echo "</tr></table>";
 		echo "</td></tr>";
 	echo "</table>";

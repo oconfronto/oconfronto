@@ -18,11 +18,11 @@ if (isset($_POST['deposit']))
 	$deposita = floor(OCv2::tirarCMoeda($_POST['deposit']));
 	if ($deposita > $player->gold || $deposita < 1)
 	{
-		$msg = showAlert("Voc&ecirc; n�o pode depositar esta quantia de ouro.", "red");
+		$msg = showAlert("Voc&ecirc; não pode depositar esta quantia de ouro.", "red");
 	}
 	else if (!is_numeric($deposita)) 	
 	{
-		$msg = showAlert("Esta quantia de ouro n�o � v�lida!", "red");
+		$msg = showAlert("Esta quantia de ouro não é válida!", "red");
 	}
 	else
 	{
@@ -36,11 +36,11 @@ else if (isset($_POST['withdraw']))
 	$saca = floor(OCv2::tirarCMoeda($_POST['withdraw']));
 	if ($saca > ($player->bank - $lockedgold) || $saca < 1)
 	{
-		$msg = showAlert("Voc&ecirc; n�o tem esta quantia de dinheiro na sua conta do banco!", "red");
+		$msg = showAlert("Voc&ecirc; não tem esta quantia de dinheiro na sua conta do banco!", "red");
 	}
 	else if (!is_numeric($saca)) 	
 	{
-	$msg = showAlert("Esta quantia de ouro n�o � v�lida!", "red");
+	$msg = showAlert("Esta quantia de ouro não é válida!", "red");
 	}
 	else
 	{
@@ -59,10 +59,10 @@ if (isset($msg))
 
 echo "<fieldset style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;padding:0px;border:1px solid #b9892f;'>";
 echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5px;border:0px;text-align:center;'><b>Banco</b></fieldset>";
-    echo"<div style=\"float:left;width:80px;\"><img src=\"images/medalhas/tesouro.png\" width='80' border=\"0\"></div>";
-    echo "<div><b>Bem vindo ao Banco!</b><p>";
-echo "<i>Bem-Vindo ao banco. Todo seu dinheiro aqui depositado estar� protegido.
-<br>Al�m do mais, quanto mais dinheiro voc� depositar, mais juros poder� ganhar.</i>";
+    echo"<div style=\"float:left;width:80px;\"></div>";
+    echo "<div style=\"padding-left:25px;\"><b>Bem vindo ao Banco!</b><p>";
+echo "<i>Bem-Vindo ao banco. Todo seu dinheiro aqui depositado estará protegido.
+<br>Além do mais, quanto mais dinheiro você depositar, mais juros poderá ganhar.</i>";
 	echo "</p></div></fieldset>";
     $depositar = "";
     $depositar .= "<p><form method=\"post\" action=\"bank.php\">";
@@ -76,14 +76,14 @@ echo "<i>Bem-Vindo ao banco. Todo seu dinheiro aqui depositado estar� protegid
     $sacar .= "<input type=\"text\" name=\"withdraw\" size=\"15\" value=\"" . (number_format($player->bank - $lockedgold)) . "\" />";
     $sacar .= "<input type=\"submit\" name=\"bank_action\" value=\"Retirar\"/>";
     $sacar .= "</form></p>";
-    $sacar .= "<i>Voc&ecirc; tem <b>" . (number_format($player->bank - $lockedgold)) . "</b> de ouro na sua conta banc�ria.</i>";
+    $sacar .= "<i>Voc&ecirc; tem <b>" . (number_format($player->bank - $lockedgold)) . "</b> de ouro na sua conta bancária.</i>";
     
     echo "<table width=\"100%\">";
     echo "<tr>";
         echo "<td width=\"50%\"><fieldset style='background:url(images/barra-2.png) bottom;border:0px;text-align:center;'><b>Depositar Ouro</b></fieldset>" . showAlert($depositar) . "</td>";
         echo "<td width=\"50%\"><fieldset style='background:url(images/barra-2.png) bottom;border:0px;text-align:center;'><b>Retirar Ouro</b></fieldset>" . showAlert($sacar) . "";
             if (($player->bank + $player->gold) > $setting->bank_limit){
-                echo "<center><font size=\"1px\">Sua fortuna j� passou de " . $setting->bank_limit . ", agora voc&ecirc; n�o receber� mais juros!</font></center>";
+                echo "<center><font size=\"1px\">Sua fortuna já passou de " . $setting->bank_limit . ", agora voc&ecirc; não receberá mais juros!</font></center>";
             }else{
                 echo "<center><font size=\"1px\">Seu ouro depositado se valoriza " . $setting->bank_interest_rate . "% ao dia.</font></center>";
             }
@@ -98,7 +98,7 @@ echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5p
 
 if ($player->level < $setting->activate_level)
 {
-	echo "Para poder fazer transfer&ecirc;ncias banc�rias sua conta precisa estar ativa.<br/>Ela ser� ativada automaticamente quando voc&ecirc; alcan�ar o n�vel " . $setting->activate_level . ".";
+	echo "<div style=\"padding-left:25px;padding-bottom:10px;\">Para poder fazer transfer&ecirc;ncias bancárias sua conta precisa estar ativa.<br/>Ela será ativada automaticamente quando voc&ecirc; alcançar o nível " . $setting->activate_level . ".</div>";
 	echo "</fieldset>";
 	include("templates/private_footer.php");
 	exit;
@@ -107,19 +107,19 @@ else
 {
 	if ($player->transpass == f){
 	echo "<form method=\"POST\" action=\"transferpass.php\">";
-		echo "<center><i>Escolha uma senha de transfer&ecirc;ncia para enviar ouro e itens</i><p><font size=\"1px\"><b>Senha:</b></font> <input type=\"password\" name=\"pass\" size=\"15\"/> <font size=\"1px\"><b>Confirme:</b></font> <input type=\"password\" name=\"pass2\" size=\"15\"/> <input type=\"submit\" name=\"submit\" value=\"Definir Senha\"></p><br/><font size=\"1px\">Lembre-se desta senha, ela sempre ser� usada para fazer transfer&ecirc;ncias banc�rias.</font></center>";
+		echo "<center><i>Escolha uma senha de transfer&ecirc;ncia para enviar ouro e itens</i><p><font size=\"1px\"><b>Senha:</b></font> <input type=\"password\" name=\"pass\" size=\"15\"/> <font size=\"1px\"><b>Confirme:</b></font> <input type=\"password\" name=\"pass2\" size=\"15\"/> <input type=\"submit\" name=\"submit\" value=\"Definir Senha\"></p><br/><font size=\"1px\">Lembre-se desta senha, ela sempre será usada para fazer transfer&ecirc;ncias bancárias.</font></center>";
 	echo "</form></fieldset>";
 	include("templates/private_footer.php");
 	exit;
 	}else{	echo "<form method=\"POST\" action=\"transfer.php\">";
-	echo "<table><tr><td width=\"30%\"><b>Usu�rio:</b></td><td width=\"70%\"><input type=\"text\" name=\"username\" size=\"20\"/></td></tr>";
+	echo "<table><tr><td width=\"30%\"><b>Usuário:</b></td><td width=\"70%\"><input type=\"text\" name=\"username\" size=\"20\"/></td></tr>";
 	echo "<tr><td width=\"30%\"><b>Quantia:</b></td><td width=\"70%\"><input type=\"text\" name=\"amount\" size=\"20\"/></td></tr>";
 	echo "<tr><td width=\"30%\"><b>Senha de transfer&ecirc;ncia:</b></td><td width=\"70%\"><input type=\"password\" name=\"passcode\" size=\"20\"/> <input type=\"submit\" name=\"submit\" value=\"Enviar\"></td></tr></table>";
 	echo "</form>";
     echo"<fieldset style='background:url(images/barra-2.png) bottom;border:0px;text-align:center;'>";
-    echo"<font size=\"1\"><a href=\"forgottrans.php\"><b>Esqueceu sua senha de transfer�ncia?</b></a> - <a href=\"account.php\"><b>Alterar senha de transfer�ncia</b></a></font></fieldset>";
+    echo"<font size=\"1\"><a href=\"forgottrans.php\"><b>Esqueceu sua senha de transferência?</b></a> - <a href=\"account.php\"><b>Alterar senha de transferência</b></a></font></fieldset>";
 	echo "</fieldset>";
-	echo "<center><font size=1><a href=\"#\" onclick=\"javascript:window.open('loggold.php', '_blank','top=100, left=100, height=350, width=450, status=no, menubar=no, resizable=no, scrollbars=yes, toolbar=no, location=no, directories=no');\">Transfer&ecirc;ncias realizadas nos �ltimos 14 dias.</a></font></center>";
+	echo "<center><font size=1><a href=\"#\" onclick=\"javascript:window.open('loggold.php', '_blank','top=100, left=100, height=350, width=450, status=no, menubar=no, resizable=no, scrollbars=yes, toolbar=no, location=no, directories=no');\">Transfer&ecirc;ncias realizadas nos últimos 14 dias.</a></font></center>";
 	include("templates/private_footer.php");
 	exit;
 }

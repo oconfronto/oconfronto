@@ -48,13 +48,14 @@ if($diff >= $cron['interest_time'])
 
 		$upo = ceil($flog['level'] - $flog['last_level']);
 		if ($upo == 1){
-		$plural = "n�vel";
+
+      $plural = "nível";
 		}else{
-		$plural = "n�veis";
+		$plural = "níveis";
 		}
 
 		$insert['fname'] = $flog['username'];
-		$insert['log'] = "Seu(a) amigo(a) <a href=\"profile.php?id=" . $flog['username'] . "\">" . $flog['username'] . "</a> avan�ou " . $upo . " " . $plural . " nas �ltimas 24 horas.";
+		$insert['log'] = "Seu(a) amigo(a) <a href=\"profile.php?id=" . $flog['username'] . "\">" . $flog['username'] . "</a> avançou " . $upo . " " . $plural . " nas últimas 24 horas.";
 		$insert['time'] = time();
 		$query = $db->autoexecute('log_friends', $insert, 'INSERT');
 	}
@@ -177,7 +178,7 @@ while($newhunt = $updategeralhunt->fetchrow())
 	$automlevel = $db->GetOne("select `level` from `monsters` where `id`=?", array($newhunt['hunttype']));
 	$automname = $db->GetOne("select `username` from `monsters` where `id`=?", array($newhunt['hunttype']));
 
-        //Seleciona o n�vel do player.
+        //Seleciona o nível do player.
         $autoplevel = $db->GetOne("select `level` from `players` where `id`=?", array($newhunt['player_id']));
 
         //Seleciona a experi&ecirc;ncia atual do player
@@ -229,7 +230,8 @@ while($newhunt = $updategeralhunt->fetchrow())
 
 
 	$db->execute("update `players` set `gold`=`gold`+?, `energy`=`energy`/?, `hp`=`hp`/? where `id`=?", array($autohuntgold, ceil (($newhunt['hunttime'] + 1) * 1.2), ceil(($newhunt['hunttime'] + 2) / 2.5), $newhunt['player_id']));
-    	$huntlog = "Sua ca�a(" . $automname . ") terminou! Voc&ecirc; recebeu <b>" . ceil((($autommtexp) * 20) * $newhunt['hunttime']) . " pontos de experi&ecirc;ncia</b> e <b>" . $autohuntgold . " moedas de ouro</b>.";
+
+  $huntlog = "Sua caça(" . $automname . ") terminou! Voc&ecirc; recebeu <b>" . ceil((($autommtexp) * 20) * $newhunt['hunttime']) . " pontos de experi&ecirc;ncia</b> e <b>" . $autohuntgold . " moedas de ouro</b>.";
 	addlog($newhunt['player_id'], $huntlog, $db);
 }
     

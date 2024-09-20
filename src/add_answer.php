@@ -11,7 +11,7 @@ $tbl_name="forum_answer"; // Table name
 $id=$_POST['id'];
 
 if (!$_POST['a_answer']) {
-		echo "<fieldset><legend><b>Erro</b></legend>Você precisa preencher todos os campos!<BR>";
+		echo "<fieldset><legend><b>Erro</b></legend>Voc√™ precisa preencher todos os campos!<BR>";
 		echo "<a href='view_topic.php?id=".$id."'>Voltar</a></fieldset>";
             include("templates/private_footer.php");
             exit;
@@ -19,7 +19,7 @@ if (!$_POST['a_answer']) {
 
 $fecxhado = $db->GetOne("select `closed` from `forum_question` where `id`=?", array($id));
 if ($fecxhado['closed'] == 't'){
-		echo "<fieldset><legend><b>Erro</b></legend>Este tópico está fechado.<BR>";
+		echo "<fieldset><legend><b>Erro</b></legend>Este t√≥pico est√° fechado.<BR>";
 		echo "<a href='view_topic.php?id=".$id."'>Voltar</a></fieldset>";
             include("templates/private_footer.php");
             exit;
@@ -27,7 +27,7 @@ if ($fecxhado['closed'] == 't'){
 
 $foruminfo = $db->execute("select * from `forum_question` where `id`=?", array($id));
 if ($foruminfo->recordcount() != 1){
-		echo "<fieldset><legend><b>Erro</b></legend>Este tópico não existe.<BR>";
+		echo "<fieldset><legend><b>Erro</b></legend>Este t√≥pico n√£o existe.<BR>";
 		echo "<a href='select_forum.php'>Voltar</a></fieldset>";
             include("templates/private_footer.php");
             exit;
@@ -37,7 +37,7 @@ if ($foruminfo->recordcount() != 1){
 $categoryae = $db->GetOne("select `category` from `forum_question` where `id`=?", array($id));
 $servae = $db->GetOne("select `serv` from `forum_question` where `id`=?", array($id));
 if ((($categoryae == 'gangues') or ($categoryae == 'trade')) and ($player->serv != $servae)){
-		echo "<fieldset><legend><b>Erro</b></legend>Você não pode postar aqui.<BR>";
+		echo "<fieldset><legend><b>Erro</b></legend>Voc√™ n√£o pode postar aqui.<BR>";
 		echo "<a href='select_forum.php'>Voltar</a></fieldset>";
             include("templates/private_footer.php");
             exit;

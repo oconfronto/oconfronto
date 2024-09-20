@@ -39,7 +39,7 @@ if ($gettasks->recordcount() > 0){
 					$insert['time'] = time();
 					$query = $db->autoexecute('completed_tasks', $insert, 'INSERT');
 
-					$tarefaconcluida = "Matar " . $task['obj_value'] . " usuários.";
+					$tarefaconcluida = "Matar " . $task['obj_value'] . " usuÃ¡rios.";
 				$taskaddprize = 5;
 				}
 			}elseif ($task['obj_type'] == 'level'){
@@ -49,7 +49,7 @@ if ($gettasks->recordcount() > 0){
 					$insert['time'] = time();
 					$query = $db->autoexecute('completed_tasks', $insert, 'INSERT');
 
-					$tarefaconcluida = "Alcançar o nível " . $task['obj_value'] . ".";
+					$tarefaconcluida = "AlcanÃ§ar o nÃ­vel " . $task['obj_value'] . ".";
 				$taskaddprize = 5;
 				}
 			}
@@ -59,7 +59,7 @@ if ($gettasks->recordcount() > 0){
 			if ($task['win_type'] == 'gold'){
 				$db->execute("update `players` set `gold`=`gold`+? where `id`=?", array($task['win_value'], $player->id));
 					include("templates/private_header.php");
-					echo "Parabéns, voc&ecirc; completou a tarefa: <i>" . $tarefaconcluida . "</i><br/>";
+					echo "ParabÃ©ns, voc&ecirc; completou a tarefa: <i>" . $tarefaconcluida . "</i><br/>";
 					echo "Voc&ecirc; ganhou " . $task['win_value'] . " moedas de ouro por este motivo.<br/><a href=\"home.php\">Voltar</a>.";
 					include("templates/private_footer.php");
 					exit;
@@ -83,7 +83,7 @@ if ($gettasks->recordcount() > 0){
 				$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", array(maxEnergy($player->level, $player->vip), $player->id));
 
 					include("templates/private_header.php");
-					echo "Parabéns, voc&ecirc; completou a tarefa: <i>" . $tarefaconcluida . "</i><br/>";
+					echo "ParabÃ©ns, voc&ecirc; completou a tarefa: <i>" . $tarefaconcluida . "</i><br/>";
 					echo "Voc&ecirc; ganhou " . $task['win_value'] . " pontos de experi&ecirc;ncia por este motivo.<br/><a href=\"home.php\">Voltar</a>.";
 					include("templates/private_footer.php");
 					exit;
@@ -95,7 +95,7 @@ if ($gettasks->recordcount() > 0){
 
 				$itname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", array($task['win_value']));
 					include("templates/private_header.php");
-					echo "Parabéns, voc&ecirc; completou a tarefa: <i>" . $tarefaconcluida . "</i><br/>";
+					echo "ParabÃ©ns, voc&ecirc; completou a tarefa: <i>" . $tarefaconcluida . "</i><br/>";
 					echo "Voc&ecirc; ganhou um(a) " . $itname . " por este motivo.<br/><a href=\"home.php\">Voltar</a>.";
 					include("templates/private_footer.php");
 					exit;

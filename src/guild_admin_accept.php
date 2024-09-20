@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Aceitar AlianÁa");
+define("PAGENAME", "Aceitar Alian√ßa");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 include("checkguild.php");
@@ -24,13 +24,13 @@ if (!$_GET['id']) {
 
 	include("templates/private_header.php");
 	if (($player->username != $check['leader']) and ($player->username != $check['vice'])) { 
-    		echo "VocÍ n„o pode acessar esta p·gina.<br/>";
+    		echo "Voc√™ n√£o pode acessar esta p√°gina.<br/>";
 		echo "<a href=\"home.php\">Principal</a>";
    	} else if ($checkjaaly1->recordcount() > 0) {
-		echo "Seu cl„ ja possui uma alianÁa com o cl„ " . $guild['guild_na'] . ".<br/>";
+		echo "Seu cl√£ ja possui uma alian√ßa com o cl√£ " . $guild['guild_na'] . ".<br/>";
 		echo "<a href=\"home.php\">Principal</a>";
    	} else if ($checkjaaly2->recordcount() > 0) {
-		echo "Este cl„ te marcou como inimigo! O pedido de alianÁa foi cancelado.<br/>";
+		echo "Este cl√£ te marcou como inimigo! O pedido de alian√ßa foi cancelado.<br/>";
 		echo "<a href=\"home.php\">Principal</a>";
 	} else {
 		$insert['guild_na'] = $guild['guild_na'];
@@ -51,19 +51,19 @@ if (!$_GET['id']) {
 			$log1 = $db->execute("select `id` from `players` where `guild`=?", array($guild['guild_na']));
 			while($p1 = $log1->fetchrow())
 			{
-    			$logmsg1 = "Agora seu cl„ È aliado do cl„ <a href=\"guild_profile.php?id=". $guild['aled_na'] ."\">" . $msg1 . "</a>.";
+    			$logmsg1 = "Agora seu cl√£ √© aliado do cl√£ <a href=\"guild_profile.php?id=". $guild['aled_na'] ."\">" . $msg1 . "</a>.";
 			addlog($p1['id'], $logmsg1, $db);
 			}
 
 			$log2 = $db->execute("select `id` from `players` where `guild`=?", array($guild['aled_na']));
 			while($p2 = $log2->fetchrow())
 			{
-    			$logmsg2 = "Agora seu cl„ È aliado do cl„ <a href=\"guild_profile.php?id=". $guild['guild_na'] ."\">" . $msg2 . "</a>.";
+    			$logmsg2 = "Agora seu cl√£ √© aliado do cl√£ <a href=\"guild_profile.php?id=". $guild['guild_na'] ."\">" . $msg2 . "</a>.";
 			addlog($p2['id'], $logmsg2, $db);
 			}
 
 
-		echo "Agora seu cl„ È aliado do cl„ " . $msg1 . ".<br/>";
+		echo "Agora seu cl√£ √© aliado do cl√£ " . $msg1 . ".<br/>";
 		echo "<a href=\"home.php\">Principal</a>";
 
 	}

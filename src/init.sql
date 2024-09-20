@@ -1543,7 +1543,9 @@ INSERT INTO `cron` (`name`, `value`) VALUES
 ('interest_last', '1319566354'),
 ('interest_time', '86400'),
 ('died_last', '1230776435'),
-('died_time', '86400');
+('died_time', '86400'),
+('tax_last', '1724467200'),
+('tax_time', '86400');
 
 -- --------------------------------------------------------
 

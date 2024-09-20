@@ -11,19 +11,19 @@ $sucess2 = 0;
 if ($_POST['changepassword']) {
     //Check password
     if (!$_POST['password']) {
-        $errmsg .= "Você precisa preencher todos os campos!";
+        $errmsg .= "VocÃª precisa preencher todos os campos!";
         $error = 1;
     } else if (!$_POST['password2']) {
-        $errmsg .= "Você precisa preencher todos os campos!";
+        $errmsg .= "VocÃª precisa preencher todos os campos!";
         $error = 1;
     } else if (!$_POST['oldpassword']) {
-        $errmsg .= "Você precisa preencher todos os campos!";
+        $errmsg .= "VocÃª precisa preencher todos os campos!";
         $error = 1;
     } else if ($acc->password != encodePassword($_POST['oldpassword'])) {
-	$errmsg .= "Sua senha atual está incorreta!";
+	$errmsg .= "Sua senha atual estÃ¡ incorreta!";
         $error = 1;
     } else if ($_POST['password'] != $_POST['password2']) {
-        $errmsg .= "Você não digitou as duas senhas corretamente!";
+        $errmsg .= "VocÃª nÃ£o digitou as duas senhas corretamente!";
         $error = 1;
     } else if (strlen($_POST['password']) < 4) {
         $errmsg .= "Sua senha deve ter mais que 3 caracteres.";
@@ -31,7 +31,7 @@ if ($_POST['changepassword']) {
     }
     if ($error == 0) {
 		$insert['player_id'] = $acc->id;
-		$insert['msg'] = "Você alterou a senha de sua conta.";
+		$insert['msg'] = "VocÃª alterou a senha de sua conta.";
 		$insert['time'] = time();
 		$query = $db->autoexecute('account_log', $insert, 'INSERT');
 

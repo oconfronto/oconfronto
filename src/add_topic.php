@@ -8,14 +8,14 @@ include("checkforum.php");
 include("templates/private_header.php");
 
 if (!$_POST['detail'] or !$_POST['topic']) {
-		echo "<fieldset><legend><b>Erro</b></legend>Você precisa preencher todos os campos!<BR>";
+		echo "<fieldset><legend><b>Erro</b></legend>Voc√™ precisa preencher todos os campos!<BR>";
 		echo "<a href=\"#\" onClick='javascript: history.back();'>Voltar</a></fieldset>";
             include("templates/private_footer.php");
             exit;
 }
 
 if ($_POST['category'] == 'none') {
-		echo "<fieldset><legend><b>Erro</b></legend>Você precisa escolher uma categoria!<BR>";
+		echo "<fieldset><legend><b>Erro</b></legend>Voc√™ precisa escolher uma categoria!<BR>";
 		echo "<a href=\"#\" onClick='javascript: history.back();'>Voltar</a></fieldset>";
             include("templates/private_footer.php");
             exit;
@@ -23,7 +23,7 @@ if ($_POST['category'] == 'none') {
 
 $verifica = $db->GetOne("select `imperador` from `reinos` where `id`=?", array($player->reino));
 if (($_POST['category'] != 'sugestoes') and ($_POST['category'] != 'gangues') and ($_POST['category'] != 'trade') and ($_POST['category'] != 'duvidas') and ($_POST['category'] != 'outros') and ($_POST['category'] != 'fan') and ($_POST['category'] != 'off') and ($player->gm_rank < 9)) {
-		echo "<fieldset><legend><b>Erro</b></legend>Você não tem autorização para criar tópicos nesta categoria!<BR>";
+		echo "<fieldset><legend><b>Erro</b></legend>Voc√™ n√£o tem autoriza√ß√£o para criar t√≥picos nesta categoria!<BR>";
 		echo "<a href=\"#\" onClick='javascript: history.back();'>Voltar</a></fieldset>";
             include("templates/private_footer.php");
             exit;
@@ -64,7 +64,7 @@ $time = time();
 $sql5 = $db->execute("update `players` set `posts`=`posts`+1 where `id`=?", array($player->id));
 
 if($result){
-echo "<fieldset><legend><b>Sucesso</b></legend>Tópico postado com sucesso!<BR>";
+echo "<fieldset><legend><b>Sucesso</b></legend>T√≥pico postado com sucesso!<BR>";
 echo "<a href=main_forum.php?cat=" . $category . ">Visualizar mensagem</a></fieldset>";
 }
 else {

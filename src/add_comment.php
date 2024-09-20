@@ -9,7 +9,7 @@ include("templates/private_header.php");
 $tbl_name="forum_question"; // Table name
 
 if (!$_POST['detail']) {
-		echo "<fieldset><legend><b>Erro</b></legend>Você precisa preencher todos os campos!<BR>";
+		echo "<fieldset><legend><b>Erro</b></legend>Voc√™ precisa preencher todos os campos!<BR>";
 		echo "<a href='edit_comment.php'>Voltar</a></fieldset>";
             include("templates/private_footer.php");
             exit;
