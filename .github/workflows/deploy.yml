@@ -27,4 +27,4 @@ jobs:
                 SSH_HOST: ${{ secrets.DEPLOY_EXTERNAL_IP }}
 
             - name: Deploy
-              run: ssh production "cd ${{ secrets.DEPLOY_APPLICATION_PATH }} && git stash && sudo docker compose stop -t 1 legacy-php && git pull && git stash apply && sudo docker compose up -d --build legacy-php"
+              run: ssh production "cd ${{ secrets.DEPLOY_APPLICATION_PATH }} && git stash && sudo docker compose stop --timeout 1 legacy-php && git pull && git stash apply && sudo docker compose up -d --build legacy-php"
