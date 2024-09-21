@@ -57,8 +57,8 @@ if (isset($msg))
     echo $msg;
 }
 
-echo "<fieldset style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;padding:0px;border:1px solid #b9892f;'>";
-echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5px;border:0px;text-align:center;'><b>Banco</b></fieldset>";
+echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
+echo"<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Banco</b></fieldset>";
     echo"<div style=\"float:left;width:80px;\"></div>";
     echo "<div style=\"padding-left:25px;\"><b>Bem vindo ao Banco!</b><p>";
 echo "<i>Bem-Vindo ao banco. Todo seu dinheiro aqui depositado estará protegido.
@@ -80,8 +80,8 @@ echo "<i>Bem-Vindo ao banco. Todo seu dinheiro aqui depositado estará protegido
     
     echo "<table width=\"100%\">";
     echo "<tr>";
-        echo "<td width=\"50%\"><fieldset style='background:url(images/barra-2.png) bottom;border:0px;text-align:center;'><b>Depositar Ouro</b></fieldset>" . showAlert($depositar) . "</td>";
-        echo "<td width=\"50%\"><fieldset style='background:url(images/barra-2.png) bottom;border:0px;text-align:center;'><b>Retirar Ouro</b></fieldset>" . showAlert($sacar) . "";
+        echo "<td width=\"50%\"><fieldset style='border:0px;text-align:center;'><b>Depositar Ouro</b></fieldset>" . showAlert($depositar) . "</td>";
+        echo "<td width=\"50%\"><fieldset style='border:0px;text-align:center;'><b>Retirar Ouro</b></fieldset>" . showAlert($sacar) . "";
             if (($player->bank + $player->gold) > $setting->bank_limit){
                 echo "<center><font size=\"1px\">Sua fortuna já passou de " . $setting->bank_limit . ", agora voc&ecirc; não receberá mais juros!</font></center>";
             }else{
@@ -93,8 +93,8 @@ echo "<i>Bem-Vindo ao banco. Todo seu dinheiro aqui depositado estará protegido
 ?>
 
 <?php
-echo "<fieldset style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;padding:0px;border:1px solid #b9892f;'>";
-echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5px;border:0px;text-align:center;'><b>Transferir Ouro</b></fieldset>";
+echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
+echo"<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Transferir Ouro</b></fieldset>";
 
 if ($player->level < $setting->activate_level)
 {
@@ -116,7 +116,7 @@ else
 	echo "<tr><td width=\"30%\"><b>Quantia:</b></td><td width=\"70%\"><input type=\"text\" name=\"amount\" size=\"20\"/></td></tr>";
 	echo "<tr><td width=\"30%\"><b>Senha de transfer&ecirc;ncia:</b></td><td width=\"70%\"><input type=\"password\" name=\"passcode\" size=\"20\"/> <input type=\"submit\" name=\"submit\" value=\"Enviar\"></td></tr></table>";
 	echo "</form>";
-    echo"<fieldset style='background:url(images/barra-2.png) bottom;border:0px;text-align:center;'>";
+    echo"<fieldset style='border:0px;text-align:center;'>";
     echo"<font size=\"1\"><a href=\"forgottrans.php\"><b>Esqueceu sua senha de transferência?</b></a> - <a href=\"account.php\"><b>Alterar senha de transferência</b></a></font></fieldset>";
 	echo "</fieldset>";
 	echo "<center><font size=1><a href=\"#\" onclick=\"javascript:window.open('loggold.php', '_blank','top=100, left=100, height=350, width=450, status=no, menubar=no, resizable=no, scrollbars=yes, toolbar=no, location=no, directories=no');\">Transfer&ecirc;ncias realizadas nos últimos 14 dias.</a></font></center>";

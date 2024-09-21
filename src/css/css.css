@@ -17,13 +17,13 @@ body {
 #nvbarra {
     border: 1px solid #b6804e;
     height: 28px;
-    background: url(../images/bg-barra-form.png) center;
+    /* background: url(../images/bg-barra-form.png) center; */
 }
 
 .nvbarra {
     border: 1px solid #b6804e;
     height: 28px;
-    background: url(../images/bg-barra-form.png) center;
+    /* background: url(../images/bg-barra-form.png) center; */
 }
 
 .contop {
@@ -74,7 +74,7 @@ div#tudo {
 }
 
 .lol {
-    background: url('../images/images/header.png') no-repeat top #faf0e3;
+    background: no-repeat top #faf0e3;
     background-position: 0px -30px;
     width: 100%;
     height: 100%;
@@ -117,7 +117,7 @@ div#tudo {
 
 .mochilaa {
     height: 180px;
-    background: url('../images/gladiador.png') no-repeat;
+    /* background: url('../images/gladiador.png') no-repeat; */
 }
 
 .bg_item1 {
@@ -427,7 +427,7 @@ div#tudo {
     height: 30px;
     padding-top: 5px;
     padding-bottom: 5px;
-    background: url('../images/rodape.png');
+    /* background: url('../images/rodape.png'); */
 }
 
 #rodape a {

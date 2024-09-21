@@ -3,6 +3,8 @@ $currentfile = $_SERVER["SCRIPT_NAME"];
 $parts = explode('/', $currentfile);
 $currentfile = $parts[count($parts) - 1];
 
+
+
 $tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=90 and `player_id`=?", array($player->id));
 if ($tutorial->recordcount() == 0) {
     $checatutoriallido = $db->execute("select * from `pending` where `pending_id`=2 and `player_id`=?", array($player->id));
@@ -66,7 +68,6 @@ if ($tutorial->recordcount() == 0) {
     <link rel="stylesheet" type="text/css" href="css/private/slidemenu.css" />
     <link type="text/css" rel="stylesheet" media="all" href="css/chat.css" />
     <script type="text/javascript">
-
         function Ajax(page, usediv) {
             var
                 $http
@@ -83,28 +84,30 @@ if ($tutorial->recordcount() == 0) {
             }
 
             if ($http) {
-                $http.onreadystatechange = function () {
+                $http.onreadystatechange = function() {
                     if (/4|^complete$/.test($http.readyState)) {
                         document.getElementById(usediv).innerHTML = $http.responseText;
-                        setTimeout(function () { Ajax(page, usediv); }, 1500);
+                        setTimeout(function() {
+                            Ajax(page, usediv);
+                        }, 1500);
                     }
                 };
                 $http.open('GET', page, true);
                 $http.send(null);
             }
         }
-
     </script>
 
     <script type="text/javascript">
-
         function LoadPage(page, usediv) {
             // Set up request varible
-            try { xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"); } catch (e) { }
+            try {
+                xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {}
 
             document.getElementById(usediv).innerHTML = '';
             //send data
-            xmlhttp.onreadystatechange = function () {
+            xmlhttp.onreadystatechange = function() {
                 //Check page is completed and there were no problems.
                 if ((xmlhttp.readyState == 4) && (xmlhttp.status == 200)) {
                     //Write data returned to page
@@ -116,7 +119,6 @@ if ($tutorial->recordcount() == 0) {
             //Stop any link loading normaly
             return false;
         }
-
     </script>
 
     <script src="js/jquery.js"></script>
@@ -128,65 +130,64 @@ if ($tutorial->recordcount() == 0) {
 
     <script type="text/javascript" src="js/drag.js"></script>
     <!-- initialize drag and drop -->
-    <script type="text/javascript">
-        // onload event
-        window.onload = function () {
-            rd = REDIPS.drag;	// reference to the REDIPS.drag class
-            // initialization
-            rd.init();
+    <?php
+    // Exemplo de inclusão condicional do script no cabeçalho
 
-            rd.mark.exception.amulet = 'amulet';
-            rd.mark.exception.helmet = 'helmet';
-            rd.mark.exception.weapon = 'weapon';
-            rd.mark.exception.armor = 'armor';
-            rd.mark.exception.shield = 'shield';
-            rd.mark.exception.ring = 'ring';
-            rd.mark.exception.legs = 'legs';
-            rd.mark.exception.boots = 'boots';
+    // Verifica se a página atual é 'inventory.php'
+    if ($currentfile === 'inventory.php') {
+    ?>
+        <script type="text/javascript">
+            // onload event
+            window.onload = function() {
+                rd = REDIPS.drag; // reference to the REDIPS.drag class
+                // initialization
+                rd.init();
 
-            // this function (event handler) is called after element is dropped
-            REDIPS.drag.myhandler_dropped = function () {
+                rd.mark.exception.amulet = 'amulet';
+                rd.mark.exception.helmet = 'helmet';
+                rd.mark.exception.weapon = 'weapon';
+                rd.mark.exception.armor = 'armor';
+                rd.mark.exception.shield = 'shield';
+                rd.mark.exception.ring = 'ring';
+                rd.mark.exception.legs = 'legs';
+                rd.mark.exception.boots = 'boots';
 
-                var obj_old = REDIPS.drag.obj_old;					// reference to the original object
-                var target_cell = REDIPS.drag.target_cell;				// reference to the Target cell			
+                // this function (event handler) is called after element is dropped
+                REDIPS.drag.myhandler_dropped = function() {
+                    var obj_old = REDIPS.drag.obj_old; // reference to the original object
+                    var target_cell = REDIPS.drag.target_cell; // reference to the Target cell			
 
-                // if the DIV element was placed on allowed cell then
-                if (rd.target_cell.className.indexOf(rd.mark.exception[rd.obj.id]) !== -1) {
-                    if (REDIPS.drag.target_cell !== REDIPS.drag.source_cell) {
-
+                    // if the DIV element was placed on allowed cell then
+                    if (rd.target_cell.className.indexOf(rd.mark.exception[rd.obj.id]) !== -1) {
+                        if (REDIPS.drag.target_cell !== REDIPS.drag.source_cell) {
+                            var itclassname = rd.obj_old.className;
+                            var itid = itclassname.split(' ')[1];
+                            window.location.href = 'equipit.php?itid=' + itid;
+                        } else {
+                            window.location.href = 'inventory.php';
+                        }
+                    } else if (REDIPS.drag.target_cell !== REDIPS.drag.source_cell) {
                         var itclassname = rd.obj_old.className;
                         var itid = itclassname.split(' ')[1];
-                        window.location.href = 'equipit.php?itid=' + itid;
 
+                        if (rd.target_cell.className == 'sell') {
+                            window.location.href = 'inventory.php?sellit=' + itid;
+                        } else if (rd.target_cell.className == 'mature') {
+                            window.location.href = 'inventory.php?mature=' + itid;
+                        } else {
+                            var tileclassname = rd.target_cell.className;
+                            var tileid = tileclassname.split(' ')[1];
+                            window.location.href = 'moveit.php?itid=' + itid + '&tile=' + tileid;
+                        }
                     } else {
                         window.location.href = 'inventory.php';
                     }
                 }
-
-                else if (REDIPS.drag.target_cell !== REDIPS.drag.source_cell) {
-
-                    var itclassname = rd.obj_old.className;
-                    var itid = itclassname.split(' ')[1];
-
-                    if (rd.target_cell.className == 'sell') {
-                        window.location.href = 'inventory.php?sellit=' + itid;
-                    } else if (rd.target_cell.className == 'mature') {
-                        window.location.href = 'inventory.php?mature=' + itid;
-                    } else {
-                        var tileclassname = rd.target_cell.className;
-                        var tileid = tileclassname.split(' ')[1];
-
-                        window.location.href = 'moveit.php?itid=' + itid + '&tile=' + tileid;
-                    }
-
-                } else {
-                    window.location.href = 'inventory.php';
-                }
-
             }
-        }
-
-    </script>
+        </script>
+    <?php
+    }
+    ?>
 
     <script type="text/javascript" src="js/ajax.js"></script>
     <script type="text/javascript" src="js/boxover.js"></script>
@@ -195,6 +196,7 @@ if ($tutorial->recordcount() == 0) {
         function BattleDivDown() {
             document.getElementById('logdebatalha').scrollTop += 1000000;
         }
+
         function ChatDivDown() {
             document.getElementById('chatdiv').scrollTop += 1000000;
         }
@@ -262,7 +264,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                             $potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", array($selct['item_id']));
                             $potimg = $db->GetOne("select `img` from `blueprint_items` where `id`=?", array($selct['item_id']));
 
-                            ?>
+                        ?>
                             <div
                                 title="header=[<?php echo $potname; ?>] body=[<?php echo $potdesc; ?><br><font size=1><?php echo $valortempo; ?> <?php echo $auxiliar; ?> restante(s).</font>]">
                                 <div class="potionimg"><a href="tavern.php?act=buy&id=182"><img
@@ -377,12 +379,12 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                                     <li><a href="inventory.php">Inventário</a></li>
                                     <li><a href="bat.php">Batalhar</a></li>
                                     <li><a href="work.php">Trabalhar</a></li>
-                                    <li><a href="earn.php">
+                                    <!-- <li><a href="earn.php">
                                             <font color="gold">Ganhar ouro</font>
                                         </a></li>
                                     <li><a href="vip.php">
                                             <font color="gold">Loja VIP</font>
-                                        </a></li>
+                                        </a></li> -->
                                 </ul>
                             </li>
                             <li><a href='#'><b>Reino</b></a>
@@ -422,7 +424,8 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                 <div class="contop">
                     <table width="100%">
                         <tr>
-                            <td style="width: 15%;padding-top:5px;text-align:center;"><b>Nível:</b> <?php echo $player->level ?></td>
+                            <td id="nv_atual" style="width: 15%;padding-top:5px;text-align:center;"><b>Nível:</b>
+                                <?php echo $player->level ?></td>
 
                             <?php
                             $style = 'display: none;';
@@ -433,24 +436,27 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                             ?>
 
                             <td style="width: 70%;">
-                                <div id="" title="header=[Experiência] body=[Exp: <?php echo number_format($player->exp); ?> / <?php echo number_format(maxExp($player->level)); ?>]">
+                                <div
+                                    title="header=[Experiência] body=[Exp: <?php echo number_format($player->exp); ?> / <?php echo number_format(maxExp($player->level)); ?>]">
                                     <div id="ex-bg">
-                                    <span id="expbarText"><?php echo number_format($player->exp); ?> / <?php echo number_format(maxExp($player->level)); ?> (<?php echo number_format(($player->exp * 100) / maxExp($player->level)); ?>%)</span>
+                                        <span id="expbarText"><?php echo number_format($player->exp); ?> /
+                                            <?php echo number_format(maxExp($player->level)); ?>
+                                            (<?php echo number_format(($player->exp * 100) / maxExp($player->level)); ?>%)</span>
                                         <div id="expbar" style="<?= $style ?>"></div>
                                     </div>
                                 </div>
                             </td>
                 </div>
-            <td style="width: 15%;padding-top:5px;text-align:center;"><b>Nível:</b> <?php echo $player->level + 1 ?></td>
+            <td id="nv_futuro" style="width: 15%;padding-top:5px;text-align:center;"><b>Nível:</b> <?php echo $player->level + 1 ?>
         </tr>
     </table>
 </div>
 <div class="conteudo">
 
     <script>
-        var refreshId = setInterval(function () {
+        var refreshId = setInterval(function() {
             $('#usr').load('engine.php?header=true');
-        }, 2500); 
+        }, 2500);
     </script>
 
     <div id="usr"><?php include("engine.php"); ?></div>

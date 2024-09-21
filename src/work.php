@@ -208,7 +208,7 @@ echo "</div>";
 
 
 echo "<form method=\"POST\" action=\"work.php\">";
-echo "<fieldset style='background:url(images/bg-fieldset.png);'>";
+echo "<fieldset>";
 echo "<legend><b>Trabalhar</b></legend>";
 echo "<table width=\"100%\" border=\"0\">";
 echo "<tr>";

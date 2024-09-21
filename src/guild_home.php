@@ -62,7 +62,7 @@ function submitMsg(){
 </script>
 
 <?php
-
+$bbcode = new bbcode();
 	echo "<script type=\"text/javascript\">";
 	echo "setTimeout(function() { Ajax('guild_home.php?act=showmsg', 'chatdiv'); }, 500);";
 	echo "</script>";
@@ -93,7 +93,8 @@ echo "<table width=\"100%\">";
   	echo "<tr>";
     		echo "<td class=\"salmon\">";
 			$descrikon = stripslashes($guild['blurb']);
-            echo bbcode::parse($descrikon);
+            $descrikon = $bbcode->parse($descrikon);
+			echo textLimit($descrikon, 5000, 125);
 		echo "</td>";
   	echo "</tr>";
 

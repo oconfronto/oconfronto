@@ -171,7 +171,7 @@ if($player->level < 36){
 if ($_GET['act'])
 {
 
-	if($_GET['act'] == sell){
+	if($_GET['act'] == 'sell'){
         if ($player->level < 20) {
             include("templates/private_header.php");
             echo "<fieldset><legend><b>Vender poções</b></legend>\n";
@@ -220,18 +220,18 @@ if ($_GET['act'])
 	}
 
 
-	if ($_GET['act'] == heal){
+	if ($_GET['act'] == 'heal'){
 if ($player->hp == $player->maxhp)
 {
 	include("templates/private_header.php");
-echo "<fieldset style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;padding:0px;border:1px solid #b9892f;'>";
-echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
+echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
+echo"<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
     echo"<div style=\"float:left;width:80px;\"></div>";
     echo "<div style=\"padding-left:25px;\"><b>Bem vindo ao Hospital!</b><p>";
 	echo "<i>Você esta com a vida cheia! Você não precisa ser curado.</i><br/>\n";
 	echo "</p></div></fieldset>";
 
-	echo "<table style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
+	echo "<table style='border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
 	echo "<td width=\"50%\"><a href=\"hospt.php\"  id=\"link\" style='color:#fff;text-align:center;' class=\"normal\"><b>Voltar</b>.</a></td>";
 	echo "<td width=\"50%\" align=\"right\"></td>";
 	echo "</tr></table>";
@@ -268,7 +268,7 @@ echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5p
 			include("templates/private_footer.php");
 			exit;
 		}
-	}else if($_GET['act'] == potion){
+	}else if($_GET['act'] == 'potion'){
 		if (!$_GET['pid']){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -293,7 +293,7 @@ echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5p
 
 		$potion = $query->fetchrow();
 		
-    		if ($potion['mark'] == t){
+    		if ($potion['mark'] == 't'){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "<i>Você não pode usar um item que está a venda no mercado.<br/></i>\n";
@@ -317,14 +317,14 @@ echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5p
 	if ($player->hp == $player->maxhp)
 	{
 	include("templates/private_header.php");
-echo "<fieldset style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;padding:0px;border:1px solid #b9892f;'>";
-echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
+echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
+echo"<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
     echo"<div style=\"float:left;width:80px;\"></div>";
     echo "<div style=\"padding-left:25px;\"><b>Bem vindo ao Hospital!</b><p>";
 	echo "<i>Você esta com a vida cheia! Você não precisa ser curado.</i><br/>\n";
 	echo "</p></div></fieldset>";
 
-	echo "<table style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
+	echo "<table style='border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
 	echo "<td width=\"50%\"><a href=\"hospt.php\"  id=\"link\" style='color:#fff;text-align:center;' class=\"normal\"><b>Voltar</b>.</a></td>";
 	echo "<td width=\"50%\" align=\"right\"></td>";
 	echo "</tr></table>";
@@ -356,14 +356,14 @@ echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5p
 	if ($player->hp == $player->maxhp)
 	{
 	include("templates/private_header.php");
-echo "<fieldset style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;padding:0px;border:1px solid #b9892f;'>";
-echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
+echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
+echo"<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
     echo"<div style=\"float:left;width:80px;\"></div>";
     echo "<div style=\"padding-left:25px;\"><b>Bem vindo ao Hospital!</b><p>";
 	echo "<i>Você esta com a vida cheia! Você não precisa ser curado.</i><br/>\n";
 	echo "</p></div></fieldset>";
 
-	echo "<table style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
+	echo "<table style='border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
 	echo "<td width=\"50%\"><a href=\"hospt.php\"  id=\"link\" style='color:#fff;text-align:center;' class=\"normal\"><b>Voltar</b>.</a></td>";
 	echo "<td width=\"50%\" align=\"right\"></td>";
 	echo "</tr></table>";
@@ -474,8 +474,8 @@ if ($player->mana == $player->maxmana)
 	include("templates/private_header.php");
 	//Add option to change price of hospital (life to heal * set number chosen by GM in admin panel)
 
-echo "<fieldset style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;padding:0px;border:1px solid #b9892f;'>";
-echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
+echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
+echo"<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
     echo"<div style=\"float:left;width:80px;\"></div>";
     echo "<div style=\"padding-left:25px;\"><b>Bem vindo ao Hospital!</b><p>";
 		if (($player->gold < $cost) and ($player->gold != 0)){
@@ -487,7 +487,7 @@ echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5p
 		}
 	echo "</p></div></fieldset>";
 
-	echo "<table style='background:url(images/bg-fieldset.png)repeat-x #ffedcd;border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
+	echo "<table style='border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
 	echo "<td width=\"50%\"><a href=\"home.php\"  id=\"link\" style='color:#fff;text-align:center;' class=\"normal\"><b>Voltar</b>.</a></td>";
 	echo "<td width=\"50%\" align=\"right\"><a href=\"hospt.php?act=heal\" style='color:#fff;text-align:center;'  id=\"link\" class=\"neg\"><b>Curar</b>!</a></td>";
 	echo "</tr></table>";

@@ -360,7 +360,7 @@ switch($_GET['act'])
 		include("templates/private_header.php");
 
 		echo "<form method=\"GET\" action=\"shop.php\">\n";
-		echo "<table width=\"100%\" class=\"brown\" style='border:1px solid #b6804e;height:28px;background:url(images/bg-barra-form.png) center;'><tr>";
+		echo "<table width=\"100%\" class=\"brown\" style='border:1px solid #b6804e;height:28px;'><tr>";
 			echo "<th width=\"35%\"><b>Procurar por:</b> <select name=\"type\">\n";
 
 			if ((!$_GET['type']) or ($_GET['type'] == 'none')) {
@@ -412,7 +412,7 @@ switch($_GET['act'])
 			}
 
 			echo "</select></th>";
-			echo "<th width=\"35%\">Preço de: <input type=\"text\" name=\"fromprice\" size=\"4\" value=\"" . stripslashes($_GET['fromprice']) . "\" /> Ã  <input type=\"text\" name=\"toprice\" size=\"5\" value=\"" . stripslashes($_GET['toprice']) . "\" /></th>";
+			echo "<th width=\"35%\">Preço de: <input type=\"text\" name=\"fromprice\" size=\"4\" value=\"" . stripslashes($_GET['fromprice']) . "\" /> á  <input type=\"text\" name=\"toprice\" size=\"5\" value=\"" . stripslashes($_GET['toprice']) . "\" /></th>";
 
 			echo "<th width=\"30%\" align=\"right\"><input  id=\"link\" class=\"neg\" type=\"submit\" value=\"Procurar\" /></th>";
 		echo "</tr></table>";

@@ -5,7 +5,7 @@
    padding: 3px;
    fontSize: 10px;
    color: #7b5737;
-   background:url(../images/medalhas/titulo-toll.png);
+   /* background:url(../images/medalhas/titulo-toll.png); */
    z-index: 10;
    position: relative;
 margin-left:3px;}

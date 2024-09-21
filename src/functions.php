@@ -298,12 +298,21 @@ while ($set = $query->fetchrow()) {
 	$setting->$set['name'] = $set['value'];
 }
 
-function textLimit($string, $length, $replacer = '...')
+function textLimit($string, $length, $lineBreak = null, $replacer = '...')
 {
-	if (strlen($string) > $length)
-		return (preg_match('/^(.*)\W.*$/', substr($string, 0, $length + 1), $matches) ? $matches[1] : substr($string, 0, $length)) . $replacer;
+	// Limitar o texto e adicionar reticências, se necessário
+	if (strlen($string) > $length) {
+		$string = (preg_match('/^(.*)\W.*$/', substr($string, 0, $length + 1), $matches) ? $matches[1] : substr($string, 0, $length)) . $replacer;
+	}
+
+	// Adicionar quebras de linha a cada X caracteres, se o parâmetro $lineBreak for passado
+	if ($lineBreak !== null && $lineBreak > 0) {
+		$string = wordwrap($string, $lineBreak, "<br>\n", true); // Garantir que as quebras sejam forçadas
+	}
+
 	return $string;
 }
+
 
 function antiBreak($comment, $leght)
 {
@@ -490,7 +499,7 @@ function filtro($data)
 
 function send_mail($from_name, $mail_to, $subject, $body)
 {
-    include("config.php");
+	include("config.php");
 	require("phpmailer/class.phpmailer.php");
 
 	$mail = new PHPMailer();
@@ -512,5 +521,3 @@ function send_mail($from_name, $mail_to, $subject, $body)
 
 	return $mail->send();
 }
-
-?>

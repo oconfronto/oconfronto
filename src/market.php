@@ -52,7 +52,7 @@ switch($_GET['act'])
 		//Show search form
 		include("templates/private_header.php");
 		echo "<form method=\"GET\" action=\"market.php\">\n";
-		echo "<table width=\"100%\" class=\"brown\" style='border:1px solid #b6804e;height:28px;background:url(images/bg-barra-form.png) center;'><tr>";
+		echo "<table width=\"100%\" class=\"brown\" style='border:1px solid #b6804e;height:28px;'><tr>";
 			echo "<th width=\"35%\"><b>Procurar por:</b> <select name=\"type\">\n";
 
 			if ((!$_GET['type']) or ($_GET['type'] == 'none')) {

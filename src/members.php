@@ -9,11 +9,11 @@ $page = (intval($_GET['page']) == 0)?1:intval($_GET['page']); //Start on page 1 
 
 $begin = ($limit * $page) - $limit; //Starting point for query
 
-if ($_GET['voctype'] == archer) {
+if ($_GET['voctype'] == 'archer') {
 	$searchvoc = "and `voc`='archer'";
-} else if ($_GET['voctype'] == knight) {
+} else if ($_GET['voctype'] == 'knight') {
 	$searchvoc = "and `voc`='knight'";
-} else if ($_GET['voctype'] == mage) {
+} else if ($_GET['voctype'] == 'mage') {
 	$searchvoc = "and `voc`='mage'";
 }else{
 	$searchvoc = "";
@@ -38,7 +38,7 @@ include("templates/private_header.php");
     }
 
 echo "<form method=\"get\" action=\"members.php\">\n";
-echo "<table width=\"100%\" class=\"brown\"  style='border:1px solid #b6804e;height:28px;background:url(images/bg-barra-form.png) center;'><tr>";
+echo "<table width=\"100%\" class=\"brown\"  style='border:1px solid #b6804e;height:28px;'><tr>";
 	echo "<td width=\"16%\"><center>";
 		echo "<b>Pág:</b>&nbsp;<select name=\"page\">";
 		$numpages = $total_players / $limit;

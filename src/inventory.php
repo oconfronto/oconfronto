@@ -214,8 +214,8 @@
 
 		echo "<div id=\"main_container\">";
 			echo "<div id=\"drag\">";
-				echo "<div id=\"left\" style='width:200px;min-height:230px;background:url(images/fieldset.png) repeat-x #ffedcd;'>";
-                 echo"<fieldset style='background:url(images/barra-2.png) bottom;border:0px;text-align:center;'><b>Inventário</b></fieldset>";
+				echo "<div id=\"left\" style='width:200px;min-height:230px;'>";
+                 echo"<fieldset style='border:0px;text-align:center;'><b>Inventário</b></fieldset>";
 				include("showit2.php");
 
 			echo "<table align=\"center\">";
@@ -230,8 +230,8 @@ $backpackquery = $db->execute("select items.id, items.tile, items.item_bonus, it
 	if ((60 - $backpackquery->recordcount()) >= 0){ echo (60 - $backpackquery->recordcount()); }else{ echo "0"; }
 	echo "</font></center>";
 
-echo "</div><div id=\"right\" style='padding:0px;height:230px;background:url(images/fieldset.png) repeat-x #ffedcd;'>";
-echo"<fieldset style='background:url(images/barra-2.png) bottom;border:0px;text-align:center;'><b>Mochila</b></fieldset>";
+echo "</div><div id=\"right\" style='padding:0px;height:230px;'>";
+echo"<fieldset style='border:0px;text-align:center;'><b>Mochila</b></fieldset>";
 
 echo "<table id=\"table2\" style=\"margin:5px;\" align=\"center\">";
 echo "<tr>";
@@ -393,8 +393,8 @@ $numerodepocoes3 = $query3->recordcount();
 $query4 = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=150 and `mark`='f' order by rand()", array($player->id));
 $numerodepocoes4 = $query4->recordcount();
 
-echo "<fieldset style='background:url(images/bg-fieldset.png);padding:0px;border:1px solid #b9892f;'>";
-echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5px;border:0px;text-align:center;'><b>Poções</b></fieldset>";
+echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
+echo"<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Poções</b></fieldset>";
 echo "<table width=\"100%\"><tr><td><table width=\"80px\"><tr><td><div title=\"header=[Health Potion] body=[Recupera até 5 mil de vida.]\"><img src=\"images/itens/healthpotion.gif\"></div></td><td><b>x" . $numerodepocoes . "</b>";
 if ($numerodepocoes > 0){
 $item = $query->fetchrow();
@@ -425,8 +425,8 @@ echo "</td></tr></table></td><td><font size=\"1\">
 echo "</fieldset>";
 
 echo "<br>";
-echo "<fieldset style='background:url(images/bg-fieldset.png);padding:0px;border:1px solid #b9892f;'>";
-echo"<fieldset style='background:url(images/barra-2.png) bottom;margin-bottom:5px;border:0px;text-align:center;'><b>Enviar itens</b></fieldset>";
+echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
+echo"<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Enviar itens</b></fieldset>";
 
 $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `quest_status`=90 and `player_id`=?", array($player->id));
 
