@@ -5,8 +5,8 @@
 </p>
 
 ## Pré-requisitos
-- Docker
-- Docker Compose
+- Docker.
+- Docker Compose.
 
 ## Comandos
 - Para subir o servidor:
