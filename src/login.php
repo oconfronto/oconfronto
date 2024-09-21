@@ -15,12 +15,12 @@ if (!$_GET['id'])
 		include("templates/acc_header.php");
 		$time = $loginban - time();
 		$days_remaining = $time / 86400;
-		echo "<br/><br/><br/><center>" . $loginto . " foi banido do jogo. O banimento acabar· em " . round($days_remaining) . " dia(s). <a href=\"characters.php\">Voltar</a>.</center><br/>";
+		echo "<br/><br/><br/><center>" . $loginto . " foi banido do jogo. O banimento acabar√° em " . round($days_remaining) . " dia(s). <a href=\"characters.php\">Voltar</a>.</center><br/>";
 		include("templates/acc_footer.php");
 		exit;
 	}elseif ($youracc->recordcount() != 1){
 		include("templates/acc_header.php");
-		echo "<br/><br/><br/><center>Este usu·rio n„o pertence a sua conta ou n„o foi encontrado. <a href=\"characters.php\">Voltar</a>.</center><br/>";
+		echo "<br/><br/><br/><center>Este usu√°rio n√£o pertence a sua conta ou n√£o foi encontrado. <a href=\"characters.php\">Voltar</a>.</center><br/>";
 		include("templates/acc_footer.php");
 		exit;
 	}else{

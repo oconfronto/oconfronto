@@ -24,12 +24,12 @@ if ($reino['imperador'] == $player->id) {
 
 			$query = $db->execute("select `id` from `players` where `id`!=? and `reino`=?", array($player->id, $player->reino));
 			while($member = $query->fetchrow()) {
-				$logmsg = "Os impostos do reino foram alterados. A nova taxa agora È de " . $tax . "%.";
+				$logmsg = "Os impostos do reino foram alterados. A nova taxa agora √© de " . $tax . "%.";
 				addlog($member['id'], $logmsg, $db);
 			}
 
 			$insert['reino'] = $player->reino;
-			$insert['log'] = "Os impostos do reino foram alterados.<br/>A nova taxa agora È de " . $tax . "%.";
+			$insert['log'] = "Os impostos do reino foram alterados.<br/>A nova taxa agora √© de " . $tax . "%.";
 			$insert['time'] = time();
 			$db->autoexecute('log_reino', $insert, 'INSERT');
 
@@ -57,13 +57,13 @@ if ($reino['imperador'] == $player->id) {
 
 				echo "<table width=\"100%\">";
 				$query = $db->execute("select `id` from `players` where `reino`=?", array($player->reino));
-				echo "<tr><td>1000</td><td>equivale ‡</td><td>" . ceil(1000 * (0.1 * $reino['tax'])) . "</td></tr>";
-				echo "<tr><td>10000</td><td>equivale ‡</td><td>" . ceil(10000 * (0.1 * $reino['tax'])) . "</td></tr>";
-				echo "<tr><td>100000</td><td>equivale ‡</td><td>" . ceil(100000 * (0.1 * $reino['tax'])) . "</td></tr>";
-				echo "<tr><td>1000000</td><td>equivale ‡</td><td>" . ceil(1000000 * (0.1 * $reino['tax'])) . "</td></tr>";
+				echo "<tr><td>1000</td><td>equivale √†</td><td>" . ceil(1000 * (0.1 * $reino['tax'])) . "</td></tr>";
+				echo "<tr><td>10000</td><td>equivale √†</td><td>" . ceil(10000 * (0.1 * $reino['tax'])) . "</td></tr>";
+				echo "<tr><td>100000</td><td>equivale √†</td><td>" . ceil(100000 * (0.1 * $reino['tax'])) . "</td></tr>";
+				echo "<tr><td>1000000</td><td>equivale √†</td><td>" . ceil(1000000 * (0.1 * $reino['tax'])) . "</td></tr>";
 				echo "</table>";
 
-				echo "<font size=\"1px\">Usu·rio com 1000000 moedas de ouro no banco ter· de pagar <b>" . ceil(1000000 * (0.1 * $reino['tax'])) . " de ouro por dia</b>.</font>";
+				echo "<font size=\"1px\">Usu√°rio com 1000000 moedas de ouro no banco ter√° de pagar <b>" . ceil(1000000 * (0.1 * $reino['tax'])) . " de ouro por dia</b>.</font>";
 
 			echo "</td></tr>";
 		echo "</table>";
@@ -75,7 +75,7 @@ if ($reino['imperador'] == $player->id) {
 			echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Ajustar Impostos</b></center></td></tr>";
 			echo "<tr><td class=\"salmon\">";
 
-				echo "<font size=\"1px\">Impostos <b>muito altos</b> podem trazer opiniıes negativas dos membros, porÈm impostos <b>muito baixos</b> podem levar os cofres do reino ‡ falÍncia!</font>";
+				echo "<font size=\"1px\">Impostos <b>muito altos</b> podem trazer opini√µes negativas dos membros, por√©m impostos <b>muito baixos</b> podem levar os cofres do reino √† fal√™ncia!</font>";
 
 				echo "<p><form method=\"POST\" action=\"reino_tax.php\">";
 				echo "<b>Nova Taxa:</b> ";

@@ -136,7 +136,7 @@ include("templates/acc-header.php");
             $query6 = $db->execute("update `promo` set `refs`=`refs`+1 where `player_id`=?", array($acc->ref));
             }
 			
-	//INSERINDO ITENS OU GOLD COM BASE QUE O EVENTO ESTEJA OU NÃO ATIVADO, CONFORME A LISTA PRÉ-DEFINIDA BANCO DE DADOS.
+	//INSERINDO ITENS OU GOLD COM BASE QUE O EVENTO ESTEJA OU NÃO ATIVADO, CONFORME A LISTA PRÃ-DEFINIDA BANCO DE DADOS.
 	//PESQUISANDO SE PLAYER FOI REALMENTE CONVIDADO
 	if($queryactivate1 = $db->execute("select * from `players_ref` where `id_p_c`=? ", array($acc->id))){;
 	
@@ -186,7 +186,7 @@ include("templates/acc-header.php");
 			$query7 = $db->execute("update `players` set `gold`=`gold`+?, `ref`=`ref`+1 where `id`=?", array($type_gold, $id_p_ref));
 		}
 		
-		// RETORNANDO INSERÇÃO NA TABELA PLAYERS_REF
+		// RETORNANDO INSERÃÃO NA TABELA PLAYERS_REF
 		$status = $db->execute("update `players_ref` set `date_end`=? where `id_p_c`=?", array(time(), $acc->id));
 	
 		}

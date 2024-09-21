@@ -36,7 +36,7 @@ include("checkwork.php");
 		if ($player->energy < 10)
 		{
 			include("templates/private_header.php");
-			echo "Você está sem energia! Você deve descançar um pouco. <a href=\"monster.php\">Voltar</a>.";
+			echo "VocÃª estÃ¡ sem energia! VocÃª deve descanÃ§ar um pouco. <a href=\"monster.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			exit;
 		}
@@ -45,7 +45,7 @@ include("checkwork.php");
 		if ($player->hp == 0)
 		{
 			include("templates/private_header.php");
-			echo "Você está morto! Por favor visite o hospital ou espere 30 minutos! <a href=\"monster.php\">Voltar</a>.";
+			echo "VocÃª estÃ¡ morto! Por favor visite o hospital ou espere 30 minutos! <a href=\"monster.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			exit;
 		}
@@ -252,7 +252,7 @@ include("checkwork.php");
 					$damage2 = rand(($attacking->maxdmg * 1.20), ($attacking->maxdmg * 1.25) + ($attacking->magiclevel * 1.5)); //Calculate random damage				
 					$defending->hp -= $damage2;
 					$output .= ($player->username == $defending->username)?"<font color=\"red\">":"<font color=\"green\">";
-					$output .= $attacking->username . " lançou um feitiço em " . $defending->username . " e tirou <b>" . $damage2 . "</b> de vida! (";
+					$output .= $attacking->username . " lanÃ§ou um feitiÃ§o em " . $defending->username . " e tirou <b>" . $damage2 . "</b> de vida! (";
 					$output .= ($defending->hp > 0)?$defending->hp . " de vida":"Morto";
 					$output .= ")<br />";
 					$output .= "</font>";
@@ -294,7 +294,7 @@ include("checkwork.php");
 					$damage2 = rand(($defending->maxdmg * 1.20), ($defending->maxdmg * 1.25) + ($defending->magiclevel * 1.5)); //Calculate random damage
 					$attacking->hp -= $damage2;
 					$output .= ($player->username == $defending->username)?"<font color=\"green\">":"<font color=\"red\">";
-					$output .= $defending->username . " lançou um feitiço em " . $attacking->username . " e tirou <b>" . $damage2 . "</b> de vida! (";
+					$output .= $defending->username . " lanÃ§ou um feitiÃ§o em " . $attacking->username . " e tirou <b>" . $damage2 . "</b> de vida! (";
 					$output .= ($attacking->hp > 0)?$attacking->hp . " de vida":"Morto";
 					$output .= ")<br />";
 					$output .= "</font>";
@@ -338,8 +338,8 @@ include("checkwork.php");
 			$goldloss = intval(0.4 * $player->gold);
 			$goldloss = intval(rand(1, $goldloss));
 
-			$output .= "<br/><div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>Você foi morto pel" . $enemy->prepo . " " . $enemy->username . "!</u></b></div>";
-			$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Você perdeu <b>" . $exploss . "</b> de EXP e <b>" . $goldloss . "</b> de ouro.</div>";
+			$output .= "<br/><div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>VocÃª foi morto pel" . $enemy->prepo . " " . $enemy->username . "!</u></b></div>";
+			$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">VocÃª perdeu <b>" . $exploss . "</b> de EXP e <b>" . $goldloss . "</b> de ouro.</div>";
 			$exploss3 = (($player->exp - $exploss) <= 0)?$player->exp:$exploss;
 			$goldloss2 = (($player->gold - $goldloss) <= 0)?$player->gold:$goldloss;
 			//Update player (the loser)
@@ -359,9 +359,9 @@ include("checkwork.php");
 			if ($setting->eventoouro > time()){
 			$goldwin = round($goldwin * 2);
 			}
-			$output .= "<br/><div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>Você matou " . $enemy->prepo . " " . $enemy->username . "!</u></b></div>";
-			$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Você ganhou <b>" . $expdomonstro . "</b> de EXP e <b>" . $goldwin . "</b> de ouro.</div>";
-			$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Você encontrou um Jeweled Ring com o Gadudj.</div>";
+			$output .= "<br/><div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>VocÃª matou " . $enemy->prepo . " " . $enemy->username . "!</u></b></div>";
+			$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">VocÃª ganhou <b>" . $expdomonstro . "</b> de EXP e <b>" . $goldwin . "</b> de ouro.</div>";
+			$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">VocÃª encontrou um Jeweled Ring com o Gadudj.</div>";
 
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(90, $player->id, 7));
 
@@ -382,7 +382,7 @@ include("checkwork.php");
 			if ($expdomonstro + $player->exp >= maxExp($player->level)) //Player gained a level!
 			{
 				//Update player, gained a level
-				$output .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><u><b>Você passou de nivel!</b></u></div>";
+				$output .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><u><b>VocÃª passou de nivel!</b></u></div>";
 				$newexp = $expdomonstro + $player->exp - maxExp($player->level);
 
 				$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", array(maxMana($player->level, $player->extramana), maxMana($player->level, $player->extramana), $player->id));
@@ -413,7 +413,7 @@ include("checkwork.php");
 		}
 		else
 		{
-			$output .= "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>Os dois estão muito cançados para terminar a batalha! Ninguém venceu.</u></b></div>";
+			$output .= "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>Os dois estÃ£o muito canÃ§ados para terminar a batalha! NinguÃ©m venceu.</u></b></div>";
 			$query = $db->execute("update `players` set `hp`=?, `energy`=?, `monsterkill`=? where `id`=?", array($player->hp, $player->energy - 10, $player->monsterkill + 1, $player->id));
 			
 		}

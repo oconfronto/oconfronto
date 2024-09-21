@@ -10,14 +10,14 @@ $log = explode(", ", $_SESSION['battlelog'][0]);
 $magiaatual = $db->GetOne("select `magia` from `bixos` where `player_id`=?", array($player->id));
 
 	if ($player->mana < $mana){
-		if ($log[1] != "Você tentou lançar um feitiço mas está sem mana sufuciente.") {
-			array_unshift($_SESSION['battlelog'], "5, Você tentou lançar um feitiço mas está sem mana sufuciente.");
+		if ($log[1] != "VocÃª tentou lanÃ§ar um feitiÃ§o mas estÃ¡ sem mana sufuciente.") {
+			array_unshift($_SESSION['battlelog'], "5, VocÃª tentou lanÃ§ar um feitiÃ§o mas estÃ¡ sem mana sufuciente.");
 		}
 		$otroatak = 5;
 		$mana = 0;
 	}elseif ($magiaatual != 0){
-		if ($log[1] != "Você não pode ativar um feitiço passivo enquanto outro está ativo.") {
-			array_unshift($_SESSION['battlelog'], "5, Você não pode ativar um feitiço passivo enquanto outro está ativo.");
+		if ($log[1] != "VocÃª nÃ£o pode ativar um feitiÃ§o passivo enquanto outro estÃ¡ ativo.") {
+			array_unshift($_SESSION['battlelog'], "5, VocÃª nÃ£o pode ativar um feitiÃ§o passivo enquanto outro estÃ¡ ativo.");
 		}
 		$otroatak = 5;
 		$mana = 0;
@@ -25,11 +25,11 @@ $magiaatual = $db->GetOne("select `magia` from `bixos` where `player_id`=?", arr
 
 		$misschance = intval(rand(0, 100));
 			if ($misschance <= $player->miss){
-					array_unshift($_SESSION['battlelog'], "5, Você tentou lançar um feitiço n" . $enemy->prepo . " " . $enemy->username . " mas errou!");
+					array_unshift($_SESSION['battlelog'], "5, VocÃª tentou lanÃ§ar um feitiÃ§o n" . $enemy->prepo . " " . $enemy->username . " mas errou!");
 				}else{
 					$db->execute("update `bixos` set `magia`=? where `player_id`=?", array(10, $player->id));
 					$db->execute("update `bixos` set `turnos`=? where `player_id`=?", array(4, $player->id));
-      					array_unshift($_SESSION['battlelog'], "3, Você lançou o feitiço escudo místico.");
+      					array_unshift($_SESSION['battlelog'], "3, VocÃª lanÃ§ou o feitiÃ§o escudo mÃ­stico.");
 				}
 
 			$db->execute("update `players` set `mana`=`mana`-? where `id`=?", array($mana, $player->id));

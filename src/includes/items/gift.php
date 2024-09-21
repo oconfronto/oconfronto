@@ -5,7 +5,7 @@ $numgifts = $db->execute("select `id` from `items` where `player_id`=? and `id`=
 if ($numgifts->recordcount() != 1){
 	include("templates/private_header.php");
 	echo "<fieldset><legend><b>Erro</b></legend>\n";
-        echo "Item não encontrado.<br />";
+        echo "Item nÃ£o encontrado.<br />";
         echo "<a href=\"inventory.php\">Voltar</a>.";
 	echo "</fieldset>";
         include("templates/private_footer.php");
@@ -13,7 +13,7 @@ if ($numgifts->recordcount() != 1){
 }elseif ($player->level < 50){
 	include("templates/private_header.php");
 	echo "<fieldset><legend><b>Erro</b></legend>\n";
-        echo "Você não possui nível suficiente para abrir o presente.<br />";
+        echo "VocÃª nÃ£o possui nÃ­vel suficiente para abrir o presente.<br />";
         echo "<a href=\"inventory.php\">Voltar</a>.";
 	echo "</fieldset>";
         include("templates/private_footer.php");
@@ -38,7 +38,7 @@ if ($numgifts->recordcount() != 1){
 
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Presente</b></legend>\n";
-       		echo "Você abriu seu presente e encontrou um/uma " . $giftitem['name'] . ".<br />";
+       		echo "VocÃª abriu seu presente e encontrou um/uma " . $giftitem['name'] . ".<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");
@@ -64,7 +64,7 @@ if ($numgifts->recordcount() != 1){
 
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Presente</b></legend>\n";
-       		echo "Você abriu seu presente e encontrou " . $ganhagold . " de ouro.<br />";
+       		echo "VocÃª abriu seu presente e encontrou " . $ganhagold . " de ouro.<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");

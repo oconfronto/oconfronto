@@ -9,8 +9,8 @@ if (($player->reino == '1') or ($player->vip > time())) {
 $log = explode(", ", $_SESSION['battlelog'][0]);
 
 if ($player->mana < $mana){
-      	if ($log[1] != "Você tentou lançar um feitiço mas está sem mana sufuciente.") {
-		array_unshift($_SESSION['battlelog'], "5, Você tentou lançar um feitiço mas está sem mana sufuciente.");
+      	if ($log[1] != "VocÃª tentou lanÃ§ar um feitiÃ§o mas estÃ¡ sem mana sufuciente.") {
+		array_unshift($_SESSION['battlelog'], "5, VocÃª tentou lanÃ§ar um feitiÃ§o mas estÃ¡ sem mana sufuciente.");
 	}
 	$otroatak = 5;
 }else{
@@ -21,10 +21,10 @@ if ($player->mana < $mana){
 	}
 	if (($player->hp + $curar) > $player->maxhp){
 		$db->execute("update `players` set `hp`=`maxhp` where `id`=?", array($player->id));
-		array_unshift($_SESSION['battlelog'], "3, Você fez um feitiço e recuperou toda sua vida.");
+		array_unshift($_SESSION['battlelog'], "3, VocÃª fez um feitiÃ§o e recuperou toda sua vida.");
 	}else{
 		$db->execute("update `players` set `hp`=`hp`+? where `id`=?", array($curar, $player->id));
-		array_unshift($_SESSION['battlelog'], "3, Você fez um feitiço e recuperou " . $curar . " pontos de vida.");
+		array_unshift($_SESSION['battlelog'], "3, VocÃª fez um feitiÃ§o e recuperou " . $curar . " pontos de vida.");
 	}
 
 $db->execute("update `players` set `mana`=`mana`-? where `id`=?", array($mana, $player->id));

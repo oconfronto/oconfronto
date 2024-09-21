@@ -19,7 +19,7 @@ texto de descrição<br/>
 texto de descriçãrrrro<br/>
 </p>
 </div>
-​
+â
 
 
 $(function(){
@@ -79,4 +79,4 @@ $(function(){
                                 $("#gaita"+id).attr("style", "display:none");
                                 }
                                 });
-  });​
+  });â

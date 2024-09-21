@@ -1,7 +1,7 @@
 <?php
 
 include("lib.php");
-define("PAGENAME", "F—rum");
+define("PAGENAME", "FÂ—rum");
 $player = check_user($secret_key, $db);
 
 include("checkforum.php");
@@ -19,7 +19,7 @@ if (!$_GET['topic'] | !$_GET['a'])
 	$procuramensagem = $db->execute("select * from `forum_answer` where `question_id`=? and `id`=?", array($_GET['topic'], $_GET['a']));
 	if ($procuramensagem->recordcount() == 0)
 	{
-	echo "Voc n‹o pode editar esta mensagem! <a href=\"main_forum.php\">Voltar</a>.";
+	echo "VocÂ nÂ‹o pode editar esta mensagem! <a href=\"main_forum.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -27,7 +27,7 @@ if (!$_GET['topic'] | !$_GET['a'])
 
 	if (($editmsg['a_user_id'] != $player->id) and ($player->gm_rank < 2))
 	{
-	echo "Voc n‹o pode editar esta mensagem! <a href=\"main_forum.php\">Voltar</a>.";
+	echo "VocÂ nÂ‹o pode editar esta mensagem! <a href=\"main_forum.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -42,7 +42,7 @@ if(isset($_POST['submit']))
 
 if (!$_POST['detail'])
 {
-	echo "Voc precisa preencher todos os campos! <a href=\"edit_answer.php?topic=" . $_GET['topic'] . "&a=" . $_GET['a'] . "\">Voltar</a>.";
+	echo "VocÂ precisa preencher todos os campos! <a href=\"edit_answer.php?topic=" . $_GET['topic'] . "&a=" . $_GET['a'] . "\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 }
@@ -71,7 +71,7 @@ $real = $db->execute("update `forum_answer` set `a_answer`=? where `question_id`
 <td><script>edToolbar('detail'); </script><textarea name="detail" rows="12" id="detail" class="ed"><?=$editandomensagem?></textarea></td>
 </tr>
 <tr>
-<td><input type="submit" name="submit" value="Enviar" />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="javascript:window.open('example.html', '_blank','top=100, left=100, height=400, width=400, status=no, menubar=no, resizable=no, scrollbars=yes, toolbar=no, location=no, directories=no');">Dicas de formata‹o</a></td>
+<td><input type="submit" name="submit" value="Enviar" />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="javascript:window.open('example.html', '_blank','top=100, left=100, height=400, width=400, status=no, menubar=no, resizable=no, scrollbars=yes, toolbar=no, location=no, directories=no');">Dicas de formataÂÂ‹o</a></td>
 </tr>
 </table>
 </td>

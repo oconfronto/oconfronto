@@ -75,7 +75,7 @@ if ($player->mana < $mana){
             }else{
                 $db->execute("update `players` set `hp`=`hp`-? where `id`=?", array($totalpak, $enemy->id));
             }
-            array_unshift($duellog, "1, " . $player->username . ", " . $enemy->username . ", " . $totalpak . ", ataque quádruplo");
+            array_unshift($duellog, "1, " . $player->username . ", " . $enemy->username . ", " . $totalpak . ", ataque quÃ¡druplo");
         }
         
         $db->execute("update `players` set `mana`=`mana`-? where `id`=?", array($mana, $player->id));

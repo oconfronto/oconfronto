@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Confirma‹o");
+define("PAGENAME", "ConfirmaÂÂ‹o");
 
 if ($_GET['id'])
 {
@@ -42,7 +42,7 @@ if ($_GET['id'])
                     {
                         if ($_GET['send'])
                         {
-                            $errormsg = "Imagem inv‡lida.";
+                            $errormsg = "Imagem invÂ‡lida.";
                             $error = 1;
                         } else {
                         
@@ -70,7 +70,7 @@ if ($_GET['id'])
                     if ($errormsg != 1) {
                         echo "<span id=\"aviso-a\">" . $errormsg . "</span>";
                     } else {
-                        echo "<span id=\"aviso-a\"><font size=\"1px\">Envie-nos o comprovante do seu pagamento e tenha seus crŽditos liberados mais rapidamente. (Opcional)</font></span>";
+                        echo "<span id=\"aviso-a\"><font size=\"1px\">Envie-nos o comprovante do seu pagamento e tenha seus crÂŽditos liberados mais rapidamente. (Opcional)</font></span>";
                     }
                     echo "<form method=\"POST\" action=\"sendfiles.php?submit=true&manda=true&pay=true&comprovante=true&id=" . $_GET['id'] . "&conta=" . $_GET['conta'] . "\" enctype=\"multipart/form-data\">";
                     echo "<p><center><table width=\"90%\" border=\"0px\" align=\"center\">";
@@ -90,7 +90,7 @@ if ($_GET['id'])
         if ($errormsg != 1) {
             echo "<span id=\"aviso-a\">" . $errormsg . "</span>";
         } else {
-            echo "<span id=\"aviso-a\"><font size=\"1px\">Informe-nos a conta do personagem que dever‡ receber os crŽditos.</font></span>";
+            echo "<span id=\"aviso-a\"><font size=\"1px\">Informe-nos a conta do personagem que deverÂ‡ receber os crÂŽditos.</font></span>";
         }
             echo "<form method=\"GET\" action=\"payment.php\" enctype=\"multipart/form-data\">";
             echo "<p><center><table width=\"90%\" border=\"0px\" align=\"center\">";

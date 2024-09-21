@@ -31,6 +31,6 @@ if ($player->mana < $mana){
     }
     
 	$db->execute("update `players` set `mana`=`mana`-? where `id`=?", array($mana, $player->id));
-	array_unshift($duellog, "3, " . $player->username . ", reforço");
+	array_unshift($duellog, "3, " . $player->username . ", reforÃ§o");
 }
 ?>

@@ -16,9 +16,9 @@ if ($player->level < 50){
 
 	if (($player->hp + $curar) > $player->maxhp){
 		$player->hp = $player->maxhp;
-		array_unshift($_SESSION['battlelog'], "3, Você fez um feitiço e recuperou toda sua vida.");
+		array_unshift($_SESSION['battlelog'], "3, VocÃª fez um feitiÃ§o e recuperou toda sua vida.");
 	}else{
 		$player->hp += $curar;
-		array_unshift($_SESSION['battlelog'], "3, Você fez um feitiço e recuperou " . $curar . " pontos de vida.");
+		array_unshift($_SESSION['battlelog'], "3, VocÃª fez um feitiÃ§o e recuperou " . $curar . " pontos de vida.");
 	}
 ?>

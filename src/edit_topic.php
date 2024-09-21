@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Fórum");
+define("PAGENAME", "F¬órum");
 $player = check_user($secret_key, $db);
 
 include("checkforum.php");
@@ -22,7 +22,7 @@ if (!$_GET['topic'])
 	}
 	if ($procuramensagem->recordcount() == 0)
 	{
-	echo "Você não pode editar este topico! <a href=\"main_forum.php\">Voltar</a>.";
+	echo "Voc¬ê n¬ão pode editar este topico! <a href=\"main_forum.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -38,7 +38,7 @@ if(isset($_POST['submit']))
 
 if (!$_POST['detail'])
 {
-	echo "Você precisa preencher todos os campos! <a href=\"edit_topic.php?topic=" . $_GET['topic'] . "\">Voltar</a>.";
+	echo "Voc¬ê precisa preencher todos os campos! <a href=\"edit_topic.php?topic=" . $_GET['topic'] . "\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 }
@@ -82,7 +82,7 @@ $real = $db->execute("update `forum_question` set `topic`=?, `detail`=?, `fixo`=
 <td>
 <table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF">
 <tr>
-<td colspan="3" bgcolor="#E6E6E6"><strong>Editar Tópico</strong> </td>
+<td colspan="3" bgcolor="#E6E6E6"><strong>Editar T¬ópico</strong> </td>
 </tr>
 <tr>
 <td><b>Titulo:</b>&nbsp;&nbsp;<input name="topic" type="text" size="35" value="<?=$editmsg['topic'];?>"/></td>
@@ -95,9 +95,9 @@ $real = $db->execute("update `forum_question` set `topic`=?, `detail`=?, `fixo`=
 <?php 
 if ($player->gm_rank > 2){
 	if ($editmsg['fixo'] == 't'){
-	echo "&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"fixo\" VALUE=\"yes\" checked> Fixar Tópico";
+	echo "&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"fixo\" VALUE=\"yes\" checked> Fixar T¬ópico";
 	}else{
-	echo "&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"fixo\" VALUE=\"yes\"> Fixar Tópico";
+	echo "&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"fixo\" VALUE=\"yes\"> Fixar T¬ópico";
 	}
 
 	if ($editmsg['closed'] == 't'){
@@ -107,9 +107,9 @@ if ($player->gm_rank > 2){
 	}
 }
 	if ($editmsg['vota'] == 't'){
-	echo "&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"vota\" VALUE=\"yes\" checked> Ativar Votação";
+	echo "&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"vota\" VALUE=\"yes\" checked> Ativar Vota¬ç¬ão";
 	}else{
-	echo "&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"vota\" VALUE=\"yes\"> Ativar Votação";
+	echo "&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"vota\" VALUE=\"yes\"> Ativar Vota¬ç¬ão";
 	}
 ?></td>
 </tr>

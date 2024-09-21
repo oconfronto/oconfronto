@@ -201,15 +201,15 @@ if ($_GET['id']) {
                         $info = $dungeoncomfirma->fetchrow();
                         
                         if (($info['status'] >= $itcount) or ($checkverstatus['status'] == 90)) {
-                            echo "" . $itcount . "º <s>" . $item['username'] . " <font size=\"1px\">(N&ecirc;vel: " . $item['level'] . ")</font></s><br/ >";
+                            echo "" . $itcount . "Âº <s>" . $item['username'] . " <font size=\"1px\">(N&ecirc;vel: " . $item['level'] . ")</font></s><br/ >";
                         } elseif (($info['status'] + 1) < $itcount) {
-                            echo "<font color=\"gray\">" . $itcount . "º " . $item['username'] . " <font size=\"1px\">(N&ecirc;vel: " . $item['level'] . ")</font></font><br/ >";
+                            echo "<font color=\"gray\">" . $itcount . "Âº " . $item['username'] . " <font size=\"1px\">(N&ecirc;vel: " . $item['level'] . ")</font></font><br/ >";
                         } else {
-                            echo "" . $itcount . "º <a href=\"monster.php?act=attack&id=" . (((int)$item['id']) * $player->id) . "\">" . $item['username'] . "</a> <font size=\"1px\">(N&ecirc;vel: " . $item['level'] . ")</font><br/ >";
+                            echo "" . $itcount . "Âº <a href=\"monster.php?act=attack&id=" . (((int)$item['id']) * $player->id) . "\">" . $item['username'] . "</a> <font size=\"1px\">(N&ecirc;vel: " . $item['level'] . ")</font><br/ >";
                         }
                         
                     } else {
-                        echo "" . $itcount . "º " . $item['username'] . " <font size=\"1px\">(N&ecirc;vel: " . $item['level'] . ")</font><br/ >";
+                        echo "" . $itcount . "Âº " . $item['username'] . " <font size=\"1px\">(N&ecirc;vel: " . $item['level'] . ")</font><br/ >";
                     }
                     
                     $itcount = $itcount + 1;

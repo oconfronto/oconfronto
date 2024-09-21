@@ -7,7 +7,7 @@ include("templates/private_header.php");
 echo "<fieldset>";
 echo "<legend><b>Está precisando de ouro?</b></legend>";
 echo "Que tal ganhar <b>" . $setting->earn . " moedas de ouro</b> por cada amigo que você convidar para o jogo?<br/><br/>";
-echo "É simples, basta o seu amigo se registrar no jogo através do seu <b>Link de Referência</b>, e assim que ele atingir o nível " . $setting->activate_level . ", " . $setting->earn . " moedas de ouro serão adicionados na sua conta.";
+echo "Ã simples, basta o seu amigo se registrar no jogo através do seu <b>Link de Referência</b>, e assim que ele atingir o nível " . $setting->activate_level . ", " . $setting->earn . " moedas de ouro serão adicionados na sua conta.";
 echo "<br/><br/>";
 
 

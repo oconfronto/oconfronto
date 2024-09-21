@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Confirma‹o de Pagamento");
+define("PAGENAME", "ConfirmaÂÂ‹o de Pagamento");
 
 include("templates/header.php");
 echo "<span id=\"aviso-a\">";

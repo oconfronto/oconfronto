@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Missões");
+define("PAGENAME", "MissÃµes");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 include("checkhp.php");
@@ -10,7 +10,7 @@ if ($player->promoted == f)
 {
 	include("templates/private_header.php");
 	echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-	echo "<i>Você precisa ter uma vocação superior para fazer esta missão!</i><br/>\n";
+	echo "<i>VocÃª precisa ter uma vocaÃ§Ã£o superior para fazer esta missÃ£o!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo '</fieldset>';
 	include("templates/private_footer.php");
@@ -21,7 +21,7 @@ if ($player->level < 100)
 {
 	include("templates/private_header.php");
 	echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-	echo "<i>Seu nivel é muito baixo!</i><br/>\n";
+	echo "<i>Seu nivel Ã© muito baixo!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include("templates/private_footer.php");
@@ -33,8 +33,8 @@ switch($_GET['act'])
 	case "warrior":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Além da força, iteligência e coragem, um grande guerreiro precisa de ótimos itens. Vejo que você tem ótimos itens, mas está faltando uma coisa.</i><br>\n";
-		echo "<a href=\"quest1.php?act=what\">Oquê?</a> | <a href=\"home.php\">Voltar</a>.";
+		echo "<i>AlÃ©m da forÃ§a, iteligÃªncia e coragem, um grande guerreiro precisa de Ã³timos itens. Vejo que vocÃª tem Ã³timos itens, mas estÃ¡ faltando uma coisa.</i><br>\n";
+		echo "<a href=\"quest1.php?act=what\">OquÃª?</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 	break;
@@ -42,8 +42,8 @@ switch($_GET['act'])
 	case "what":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Você já ouviu falar no jeweled ring? Ele é capas de aumentar seu ataque, sua defesa e sua resistência.</i><br>\n";
-		echo "<i>Eu posso te ajudar a conseguir este precioso anel, irei te dizer tudo que é nescesário se você me pagar uma pequena quantia de <b>120000 moedas de ouro</b>.</i><br>\n";
+		echo "<i>VocÃª jÃ¡ ouviu falar no jeweled ring? Ele Ã© capas de aumentar seu ataque, sua defesa e sua resistÃªncia.</i><br>\n";
+		echo "<i>Eu posso te ajudar a conseguir este precioso anel, irei te dizer tudo que Ã© nescesÃ¡rio se vocÃª me pagar uma pequena quantia de <b>120000 moedas de ouro</b>.</i><br>\n";
 		echo "<a href=\"quest1.php?act=pay\">Eu pago!</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -52,7 +52,7 @@ switch($_GET['act'])
 	case "pay":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Você aceita pagar <b>120000 moedas de ouro</b> para saber tudo que precisa?</i><br>\n";
+		echo "<i>VocÃª aceita pagar <b>120000 moedas de ouro</b> para saber tudo que precisa?</i><br>\n";
 		echo "<a href=\"quest1.php?act=confirmpay\">Sim</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -61,8 +61,8 @@ switch($_GET['act'])
 	case "raderon":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Você tem certeza disso? Raderon é muito forte!</i><br>\n";
-		echo "<a href=\"raderon.php\">Sim</a> | <a href=\"quest1.php\">Não</a>.";
+		echo "<i>VocÃª tem certeza disso? Raderon Ã© muito forte!</i><br>\n";
+		echo "<a href=\"raderon.php\">Sim</a> | <a href=\"quest1.php\">NÃ£o</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 	break;
@@ -70,7 +70,7 @@ switch($_GET['act'])
 	case "who":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Minha história é muito longa, eu já fui um grande guerreiro e agora ajudo as pessoas que querem seguir meu caminho.</i><br>\n";
+		echo "<i>Minha histÃ³ria Ã© muito longa, eu jÃ¡ fui um grande guerreiro e agora ajudo as pessoas que querem seguir meu caminho.</i><br>\n";
 		echo "<a href=\"quest1.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -83,7 +83,7 @@ switch($_GET['act'])
 		if ($player->gold - 120000 < 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Você não possui esta quantia de ouro!</i><br/><br/>\n";
+		echo "<i>VocÃª nÃ£o possui esta quantia de ouro!</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -96,7 +96,7 @@ switch($_GET['act'])
 		$query = $db->autoexecute('quests', $insert, 'INSERT');
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Pronto, agora podemos continuar com as missões.</i><br>\n";
+		echo "<i>Pronto, agora podemos continuar com as missÃµes.</i><br>\n";
 		echo "<a href=\"quest1.php\">Continuar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -105,7 +105,7 @@ switch($_GET['act'])
 		}else{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "Você já me pagou esta taixa!</i><br/><br/>\n";
+		echo "VocÃª jÃ¡ me pagou esta taixa!</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -142,7 +142,7 @@ switch($_GET['act'])
 		if ($selectfirstitem->recordcount() == 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Você não possui um Jeweled Crystal.</i><br/>\n";
+		echo "<i>VocÃª nÃ£o possui um Jeweled Crystal.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -152,7 +152,7 @@ switch($_GET['act'])
 		$query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", array(112, $player->id, 1));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Obrigado, agora podemos passar para a próxima missão.</i><br>\n";
+		echo "<i>Obrigado, agora podemos passar para a prÃ³xima missÃ£o.</i><br>\n";
 		echo "<a href=\"quest1.php\">Continuar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -188,7 +188,7 @@ switch($_GET['act'])
 		if ($selectfirstitem->recordcount() == 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Você não possui um Jeweled Crystal.</i><br/>\n";
+		echo "<i>VocÃª nÃ£o possui um Jeweled Crystal.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -198,7 +198,7 @@ switch($_GET['act'])
 		$query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", array(112, $player->id, 1));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Obrigado, agora podemos passar para a próxima missão.</i><br>\n";
+		echo "<i>Obrigado, agora podemos passar para a prÃ³xima missÃ£o.</i><br>\n";
 		echo "<a href=\"quest1.php\">Continuar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -234,7 +234,7 @@ switch($_GET['act'])
 		if ($selectfirstitem->recordcount() == 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Você não possui um Jeweled Crystal.</i><br/>\n";
+		echo "<i>VocÃª nÃ£o possui um Jeweled Crystal.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -244,7 +244,7 @@ switch($_GET['act'])
 		$query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", array(112, $player->id, 1));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Obrigado, agora podemos passar para a próxima missão.</i><br>\n";
+		echo "<i>Obrigado, agora podemos passar para a prÃ³xima missÃ£o.</i><br>\n";
 		echo "<a href=\"quest1.php\">Continuar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -281,7 +281,7 @@ switch($_GET['act'])
 		if ($selectfirstitem->recordcount() == 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Você não possui uma Titanium Wheel.</i><br/>\n";
+		echo "<i>VocÃª nÃ£o possui uma Titanium Wheel.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -298,8 +298,8 @@ switch($_GET['act'])
 
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Pronto, ai está seu Jeweled Ring.</i><br>\n";
-		echo "(Acesse seu inventário para equipa-lo.)<br>\n";
+		echo "<i>Pronto, ai estÃ¡ seu Jeweled Ring.</i><br>\n";
+		echo "(Acesse seu inventÃ¡rio para equipa-lo.)<br>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -316,8 +316,8 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>A muito tempo ninguém procura por mim. Oquê lhe traz aqui?</i><br/>\n";
-		echo "<a href=\"quest1.php?act=who\">Quem é você?</a> | <a href=\"quest1.php?act=warrior\">Quero me tornar um grande guerreiro</a> | <a href=\"home.php\">Voltar</a>.";
+		echo "<i>A muito tempo ninguÃ©m procura por mim. OquÃª lhe traz aqui?</i><br/>\n";
+		echo "<a href=\"quest1.php?act=who\">Quem Ã© vocÃª?</a> | <a href=\"quest1.php?act=warrior\">Quero me tornar um grande guerreiro</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -327,9 +327,9 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Para criar o anel, são nescesários três <b>Jeweled Crystals</b>. Você pode obtelos matando Dragões de Pedra ou comprando no mercado.</i><br/>\n";
+		echo "<i>Para criar o anel, sÃ£o nescesÃ¡rios trÃªs <b>Jeweled Crystals</b>. VocÃª pode obtelos matando DragÃµes de Pedra ou comprando no mercado.</i><br/>\n";
 		echo "<i>Quando conseguir o primeiro jeweled crystal volte aqui.</i><br/>\n";
-		echo "<a href=\"quest1.php?act=continue1\">Já possuo o jeweled crystal</a> | <a href=\"home.php\">Voltar</a>.";
+		echo "<a href=\"quest1.php?act=continue1\">JÃ¡ possuo o jeweled crystal</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -339,9 +339,9 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Você já me entegou um <b>jeweled crystal</b>, preciso de mais dois. Você pode obtelos matando Dragões de Pedra ou comprando no mercado.</i><br/>\n";
+		echo "<i>VocÃª jÃ¡ me entegou um <b>jeweled crystal</b>, preciso de mais dois. VocÃª pode obtelos matando DragÃµes de Pedra ou comprando no mercado.</i><br/>\n";
 		echo "<i>Quando conseguir o segundo jeweled crystal volte aqui.</i><br/>\n";
-		echo "<a href=\"quest1.php?act=continue2\">Já possuo o jeweled crystal</a> | <a href=\"home.php\">Voltar</a>.";
+		echo "<a href=\"quest1.php?act=continue2\">JÃ¡ possuo o jeweled crystal</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -351,9 +351,9 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Você já me entegou dois <b>jeweled crystals</b>, preciso de mais um. Você pode obtelo matando Dragões de Pedra ou comprando no mercado.</i><br/>\n";
+		echo "<i>VocÃª jÃ¡ me entegou dois <b>jeweled crystals</b>, preciso de mais um. VocÃª pode obtelo matando DragÃµes de Pedra ou comprando no mercado.</i><br/>\n";
 		echo "<i>Quando conseguir o terceiro jeweled crystal volte aqui.</i><br/>\n";
-		echo "<a href=\"quest1.php?act=continue3\">Já possuo o jeweled crystal</a> | <a href=\"home.php\">Voltar</a>.";
+		echo "<a href=\"quest1.php?act=continue3\">JÃ¡ possuo o jeweled crystal</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -363,7 +363,7 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Agora que possuo todos os cristais nescesários só preciso de uma peça para montar o anel, uma titanium wheel. A única maneira de obtela é matando Raderon, um poderoso guerreiro.</i><br/><br/>\n";
+		echo "<i>Agora que possuo todos os cristais nescesÃ¡rios sÃ³ preciso de uma peÃ§a para montar o anel, uma titanium wheel. A Ãºnica maneira de obtela Ã© matando Raderon, um poderoso guerreiro.</i><br/><br/>\n";
 		echo "<a href=\"quest1.php?act=raderon\">Quero lutar contra Raderon</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -374,7 +374,7 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Nossa! Você conseguiu mesmo vencer raderon?!</i><br/>\n";
+		echo "<i>Nossa! VocÃª conseguiu mesmo vencer raderon?!</i><br/>\n";
 		echo "<i>Vamos acabar logo com isso, me entregue a titanium wheel e eu criarei o anel.</i><br/>\n";
 		echo "<a href=\"quest1.php?act=titanium\">Entregar a titanium wheel</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
@@ -386,7 +386,7 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Você já fez esta missão!</i><br/>\n";
+		echo "<i>VocÃª jÃ¡ fez esta missÃ£o!</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");

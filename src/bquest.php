@@ -28,7 +28,7 @@ $iname = "";
 		if ($player->voc == 'knight'){
 		$enemy->username = "Alexia";
 		}elseif ($player->voc == 'archer'){
-		$enemy->username = "Demônio";
+		$enemy->username = "DemÃ´nio";
 		}elseif ($player->voc == 'mage'){
 		$enemy->username = "Detros";
 		}
@@ -47,7 +47,7 @@ $iname = "";
 		if ($player->voc == 'knight'){
 		$enemy->username = "Ramthysts";
 		}elseif ($player->voc == 'archer'){
-		$enemy->username = "Demônio";
+		$enemy->username = "DemÃ´nio";
 		}elseif ($player->voc == 'mage'){
 		$enemy->username = "Azura";
 		}
@@ -92,7 +92,7 @@ $iname = "";
 		if ($player->energy < 10)
 		{
 			include("templates/private_header.php");
-			echo "Você está sem energia! Você deve descançar um pouco. <a href=\"monster.php\">Voltar</a>.";
+			echo "VocÃª estÃ¡ sem energia! VocÃª deve descanÃ§ar um pouco. <a href=\"monster.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			exit;
 		}
@@ -101,7 +101,7 @@ $iname = "";
 		if ($player->hp == 0)
 		{
 			include("templates/private_header.php");
-			echo "Você está morto! Por favor visite o hospital ou espere 30 minutos! <a href=\"monster.php\">Voltar</a>.";
+			echo "VocÃª estÃ¡ morto! Por favor visite o hospital ou espere 30 minutos! <a href=\"monster.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			exit;
 		}
@@ -359,8 +359,8 @@ $iname = "";
 			$goldloss = intval(0.4 * $player->gold);
 			$goldloss = intval(rand(1, $goldloss));
 
-			$output .= "<br/><div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>Você foi morto por " . $enemy->username . "!</u></b></div>";
-			$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Você perdeu <b>" . $exploss . "</b> de EXP e <b>" . $goldloss . "</b> de ouro.</div>";
+			$output .= "<br/><div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>VocÃª foi morto por " . $enemy->username . "!</u></b></div>";
+			$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">VocÃª perdeu <b>" . $exploss . "</b> de EXP e <b>" . $goldloss . "</b> de ouro.</div>";
 			$exploss3 = (($player->exp - $exploss) <= 0)?$player->exp:$exploss;
 			$goldloss2 = (($player->gold - $goldloss) <= 0)?$player->gold:$goldloss;
 			//Update player (the loser)
@@ -380,8 +380,8 @@ $iname = "";
 			if ($setting->eventoouro > time()){
 			$goldwin = round($goldwin * 2);
 			}
-			$output .= "<br/><div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>Você matou " . $enemy->username . "!</u></b></div>";
-			$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Você ganhou <b>" . $expdomonstro . "</b> de EXP e <b>" . $goldwin . "</b> de ouro.</div>";
+			$output .= "<br/><div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>VocÃª matou " . $enemy->username . "!</u></b></div>";
+			$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">VocÃª ganhou <b>" . $expdomonstro . "</b> de EXP e <b>" . $goldwin . "</b> de ouro.</div>";
 
 			if ($questnivel == 1){
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(3, $player->id, 12));
@@ -389,7 +389,7 @@ $iname = "";
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(5, $player->id, 12));
 			}elseif ($questnivel == 3){
 
-			$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Você encontrou " . $iname . " com " . $enemy->username . ".</div>";
+			$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">VocÃª encontrou " . $iname . " com " . $enemy->username . ".</div>";
 
 			$insert['player_id'] = $player->id;
 			$insert['item_id'] = $iid;
@@ -398,12 +398,12 @@ $iname = "";
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(7, $player->id, 12));
 			}
 
-			$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><a href=\"promo1.php\">Clique aqui</a> para continuar sua missão</div>";
+			$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><a href=\"promo1.php\">Clique aqui</a> para continuar sua missÃ£o</div>";
 
 			if ($expdomonstro + $player->exp >= maxExp($player->level)) //Player gained a level!
 			{
 				//Update player, gained a level
-				$output .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><u><b>Você passou de nivel!</b></u></div>";
+				$output .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><u><b>VocÃª passou de nivel!</b></u></div>";
 				$newexp = $expdomonstro + $player->exp - maxExp($player->level);
 
                 $db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", array(maxMana($player->level, $player->extramana), maxMana($player->level, $player->extramana), $player->id));
@@ -423,7 +423,7 @@ $iname = "";
 		}
 		else
 		{
-			$output .= "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>Os dois estão muito cançados para terminar a batalha! Ninguém venceu.</u></b></div>";
+			$output .= "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>Os dois estÃ£o muito canÃ§ados para terminar a batalha! NinguÃ©m venceu.</u></b></div>";
 			$query = $db->execute("update `players` set `hp`=?, `energy`=?, `monsterkill`=? where `id`=?", array($player->hp, $player->energy - 10, $player->monsterkill + 1, $player->id));
 			
 		}

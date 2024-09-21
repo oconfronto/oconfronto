@@ -106,7 +106,7 @@ $viceatual2 = "<br/><a href=\"guild_admin_vice.php?remove=" . $guild['vice'] . "
 			echo "<td width=\"40%\" align=\"right\"><b>Vice-Lider atual:</b> " . $viceatual1 . " " . $viceatual2 . "</td>";
 		echo "</tr></table>";
 		echo "</form>";
-			echo "<br/><b>ATENÇÃO:</b> Um vice-lider tem todas as funções do administrador do clã, porem não pode desfazer o mesmo e nem nomear novos vice lideres.";
+			echo "<br/><b>ATENÃÃO:</b> Um vice-lider tem todas as funções do administrador do clã, porem não pode desfazer o mesmo e nem nomear novos vice lideres.";
 			echo "<p><center>" . $msg . "<font color=\"red\">" . $errmsg . "</font></center></p>";
 		echo "</fieldset>";
 		echo "<a href=\"guild_admin.php\">Voltar</a>.";

@@ -9,7 +9,7 @@ if ($_GET['itid'])
 	{
 		$item = $query->fetchrow();
         
-        //arruma anis sem atributos
+        //arruma anÂis sem atributos
         $update = 0;
         if ($item['item_id'] == 163)
         {
@@ -105,7 +105,7 @@ if ($_GET['itid'])
             $query = $db->execute("select `id`, `status`, `item_id` from `items` where `id`=? and `player_id`=?", array($item['id'], $player->id));
             $item = $query->fetchrow();
         }
-        // fim arruma‹o anis   
+        // fim arrumaÂÂ‹o anÂis   
         
 		switch($item['status'])
 		{
@@ -125,28 +125,28 @@ if ($_GET['itid'])
 				if (($ddckitexs['voc'] == '1') and ($player->voc != 'archer'))
 				{
 				include("templates/private_header.php");
-				echo "Você não pode usar este item. <a href=\"inventory.php\">Voltar</a>.";
+				echo "VocÃª nÃ£o pode usar este item. <a href=\"inventory.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 				}
 				if (($ddckitexs['voc'] == '2') and ($player->voc != 'knight'))
 				{
 				include("templates/private_header.php");
-				echo "Você não pode usar este item. <a href=\"inventory.php\">Voltar</a>.";
+				echo "VocÃª nÃ£o pode usar este item. <a href=\"inventory.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 				}
 				if (($ddckitexs['voc'] == '3') and ($player->voc != 'mage'))
 				{
 				include("templates/private_header.php");
-				echo "Você não pode usar este item. <a href=\"inventory.php\">Voltar</a>.";
+				echo "VocÃª nÃ£o pode usar este item. <a href=\"inventory.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 				}
 				if (($ddckitexs['type'] == 'shield') and ($player->voc == 'archer'))
 				{
 				include("templates/private_header.php");
-				echo "Arqueiros não podem usar escudos. <a href=\"inventory.php\">Voltar</a>.";
+				echo "Arqueiros nÃ£o podem usar escudos. <a href=\"inventory.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 				}
@@ -159,7 +159,7 @@ if ($_GET['itid'])
 				if ($ddckitexs['needlvl'] > ($player->level + $lvlbonus))
 				{
 				include("templates/private_header.php");
-				echo "Você não tem nível suficiente para usar este item. <a href=\"inventory.php\">Voltar</a>.";
+				echo "VocÃª nÃ£o tem nÃ­vel suficiente para usar este item. <a href=\"inventory.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 				}
@@ -167,7 +167,7 @@ if ($_GET['itid'])
 				if ($ddckitexs['type'] == 'addon')
 				{
 				include("templates/private_header.php");
-				echo "Você não pode usar este item. <a href=\"inventory.php\">Voltar</a>.";
+				echo "VocÃª nÃ£o pode usar este item. <a href=\"inventory.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 				}
@@ -175,7 +175,7 @@ if ($_GET['itid'])
 				if ($ddckitexs['mark'] == t)
 				{
 				include("templates/private_header.php");
-				echo "Você não pode usar um item que está à venda no mercado. <a href=\"inventory.php\">Voltar</a>.";
+				echo "VocÃª nÃ£o pode usar um item que estÃ¡ Ã  venda no mercado. <a href=\"inventory.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 				}
@@ -183,7 +183,7 @@ if ($_GET['itid'])
 				if (($ddckitexs['needpromo'] == 't') and ($player->promoted == 'f'))
 				{
 				include("templates/private_header.php");
-				echo "Apenas usuários de vocação superior podem usar este item. <a href=\"inventory.php\">Voltar</a>.";
+				echo "Apenas usuÃ¡rios de vocaÃ§Ã£o superior podem usar este item. <a href=\"inventory.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 				}
@@ -191,7 +191,7 @@ if ($_GET['itid'])
 				if (($ddckitexs['needpromo'] == 'p') and ($player->promoted != 'p'))
 				{
 				include("templates/private_header.php");
-				echo "Apenas usuários de vocação suprema podem usar este item. <a href=\"inventory.php\">Voltar</a>.";
+				echo "Apenas usuÃ¡rios de vocaÃ§Ã£o suprema podem usar este item. <a href=\"inventory.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 				}

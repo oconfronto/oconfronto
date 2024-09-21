@@ -34,7 +34,7 @@ include("templates/private_header.php");
 <fieldset>
 <p />
 <legend><b>Contato</b></legend>
-<i>Precisa entrar em contato com a administração? Então está no lugar certo!</i>
+<i>Precisa entrar em contato com a administraÃ§Ã£o? EntÃ£o estÃ¡ no lugar certo!</i>
 <form method="POST" action="bugs.php">
 <textarea cols="60" rows="4" name="comment"></textarea><p />
 <input type="submit" name="submit" value="Enviar Mensagem">

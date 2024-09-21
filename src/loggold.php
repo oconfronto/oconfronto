@@ -36,25 +36,25 @@ if ($query0->recordcount() > 0)
 		$valortempo = time() -  $trans['time'];
 		if ($valortempo < 60){
 		$valortempo2 = $valortempo;
-		$auxiliar2 = "segundo(s) atrás.";
+		$auxiliar2 = "segundo(s) atrÃ¡s.";
 		}else if($valortempo < 3600){
 		$valortempo2 = floor($valortempo / 60);
-		$auxiliar2 = "minuto(s) atrás.";
+		$auxiliar2 = "minuto(s) atrÃ¡s.";
 		}else if($valortempo < 86400){
 		$valortempo2 = floor($valortempo / 3600);
-		$auxiliar2 = "hora(s) atrás.";
+		$auxiliar2 = "hora(s) atrÃ¡s.";
 		}else if($valortempo > 86400){
 		$valortempo2 = floor($valortempo / 86400);
-		$auxiliar2 = "dia(s) atrás.";
+		$auxiliar2 = "dia(s) atrÃ¡s.";
 		}
 
 		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[Log] body=[" . $valortempo2 . " " . $auxiliar2 . "]\">";
 		if ($trans['action'] == doou){
-		echo "<font size=\"1\">Você enviou <b>" . $trans['value'] . "</b> de ouro para o clã <b><a href=\"guild_profile.php?id=" . $trans['name2'] . "\">" . $trans['name2'] . "</a></b></font></div></td>";
+		echo "<font size=\"1\">VocÃª enviou <b>" . $trans['value'] . "</b> de ouro para o clÃ£ <b><a href=\"guild_profile.php?id=" . $trans['name2'] . "\">" . $trans['name2'] . "</a></b></font></div></td>";
 		}elseif ($trans['action'] == ganhou){
-		echo "<font size=\"1\">Você recebeu <b>" . $trans['value'] . "</b> de ouro para o clã <b><a href=\"guild_profile.php?id=" . $trans['name2'] . "\">" . $trans['name2'] . "</a></b></font></div></td>";
+		echo "<font size=\"1\">VocÃª recebeu <b>" . $trans['value'] . "</b> de ouro para o clÃ£ <b><a href=\"guild_profile.php?id=" . $trans['name2'] . "\">" . $trans['name2'] . "</a></b></font></div></td>";
 		}else{
-		echo "<font size=\"1\">Você " . $trans['action'] . " <b>" . $trans['value'] . "</b> de ouro " . $auxiliar . " <b><a href=\"profile.php?id=" . $trans['name2'] . "\">" . $trans['name2'] . "</a></b></font></div></td>";
+		echo "<font size=\"1\">VocÃª " . $trans['action'] . " <b>" . $trans['value'] . "</b> de ouro " . $auxiliar . " <b><a href=\"profile.php?id=" . $trans['name2'] . "\">" . $trans['name2'] . "</a></b></font></div></td>";
 		}
 
 		echo "</tr>";
@@ -67,7 +67,7 @@ else
 	echo "</tr>";
 }
 echo "</table>";
-echo "<center><font size=\"1\">Exibindo todos os logs dos últimos 14 dias.</font></center>";
+echo "<center><font size=\"1\">Exibindo todos os logs dos Ãºltimos 14 dias.</font></center>";
 echo "</body>";
 echo "</html>";
 ?>

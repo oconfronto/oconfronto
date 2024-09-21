@@ -50,7 +50,7 @@ if ($setting->promo == t) {
 		$ipwpwpwpa = $wpaodsla->fetchrow();
 
 		$query = $db->execute("update `players` set `bank`=? where `id`=?", array($player->bank + $setting->promo_premio, $ipwpwpwpa['player_id']));
-		$logmsg = "Você ganhou a promoção do jogo e <b>" . $setting->promo_premio . " de ouro</b> foram depositados na sua conta banc�ria.";
+		$logmsg = "Você ganhou a promoção do jogo e <b>" . $setting->promo_premio . " de ouro</b> foram depositados na sua conta bancï¿½ria.";
 		addlog($ipwpwpwpa['player_id'], $logmsg, $db);
 		$premiorecebido = "" . $setting->win_id . " de ouro";
 
@@ -59,11 +59,11 @@ if ($setting->promo == t) {
 		$query = $db->execute("truncate `promo`");
 
 
-		echo "<fieldset><legend><b>N�o existem promo��es no momento</b></legend>\n";
+		echo "<fieldset><legend><b>Nï¿½o existem promoï¿½ï¿½es no momento</b></legend>\n";
 
 		echo "<table>";
 		echo "<tr>";
-		echo "<td><b>�ltimo ganhador:</b></td>";
+		echo "<td><b>ï¿½ltimo ganhador:</b></td>";
 		echo "<td>" . $setting->promo_last_winner . "</td>";
 		echo "</tr>";
 		echo "<tr>";
@@ -83,7 +83,7 @@ if ($setting->promo == t) {
 		$checausuario = $db->execute("select `id` from `promo` where `player_id`=?", array($player->id));
 		if ($checausuario->recordcount() > 0) {
 			include("templates/private_header.php");
-			echo "Você j� est� participando da promoção!<br/><a href=\"promo.php\">Voltar</a>.";
+			echo "Você jï¿½ estï¿½ participando da promoção!<br/><a href=\"promo.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			$error = 1;
 			exit;
@@ -96,7 +96,7 @@ if ($setting->promo == t) {
 			$query = $db->autoexecute('promo', $insert, 'INSERT');
 
 			include("templates/private_header.php");
-			echo "Agora você est� participando da promoção!<br/><font size=\"1\">Convide o m�ximo de pessoas que conseguir por esse link: <b>" . $domain_url . "/?r=" . $player->id . "</b></font><br/><a href=\"promo.php\">Voltar</a>.";
+			echo "Agora você estï¿½ participando da promoção!<br/><font size=\"1\">Convide o mï¿½ximo de pessoas que conseguir por esse link: <b>" . $domain_url . "/?r=" . $player->id . "</b></font><br/><a href=\"promo.php\">Voltar</a>.";
 			include("templates/private_footer.php");
 			exit;
 		}
@@ -108,14 +108,14 @@ if ($setting->promo == t) {
 	echo "<table>";
 	echo "<tr>";
 	echo "<td><b>Como funciona:</b></td>";
-	echo "<td>Quem convidar mais usu�rios para o jogo atrav�s de seu link de refer�ncia em <b>" . $setting->promo_tempo . "</b> ganhar� o prêmio.</td>";
+	echo "<td>Quem convidar mais usuï¿½rios para o jogo atravï¿½s de seu link de referï¿½ncia em <b>" . $setting->promo_tempo . "</b> ganharï¿½ o prêmio.</td>";
 	echo "</tr>";
 	echo "<tr>";
 	echo "<td><b>Prêmio:</b></td>";
 	echo "<td>" . $setting->promo_premio . " de ouro.</td>";
 	echo "</tr>";
 	echo "<tr>";
-	echo "<td><b>N� de participantes:</b></td>";
+	echo "<td><b>Nï¿½ de participantes:</b></td>";
 	$nparticipantes = $db->execute("select `id` from `promo`");
 	echo "<td>" . $nparticipantes->recordcount() . "</td>";
 	echo "</tr>";
@@ -130,10 +130,10 @@ if ($setting->promo == t) {
 	echo "</tr>";
 	echo "</table>";
 	echo "</fieldset>";
-	echo "<font size=\"1\"><b>Seu link de refer�ncia:</b> <a href=\"" . $domain_url . "/?r=" . $player->id . "\">" . $domain_url . "/?r=" . $player->id . "</a></font>";
+	echo "<font size=\"1\"><b>Seu link de referï¿½ncia:</b> <a href=\"" . $domain_url . "/?r=" . $player->id . "\">" . $domain_url . "/?r=" . $player->id . "</a></font>";
 	echo "<br/><br/>";
 
-	echo "<fieldset><legend><b>Participantes</b> (os 15 que mais convidaram usu�rios)</legend>\n";
+	echo "<fieldset><legend><b>Participantes</b> (os 15 que mais convidaram usuï¿½rios)</legend>\n";
 	echo "<table>";
 
 	$query44887 = $db->execute("select * from `promo` order by `refs` desc limit 0,15");
@@ -143,8 +143,8 @@ if ($setting->promo == t) {
 		echo "</tr>\n";
 	} else {
 		echo "<tr>";
-		echo "<th width=\"50%\"><b>Usu�rio</b></td>";
-		echo "<th width=\"50%\"><b>N� de usu�rios convidados</b></td>";
+		echo "<th width=\"50%\"><b>Usuï¿½rio</b></td>";
+		echo "<th width=\"50%\"><b>Nï¿½ de usuï¿½rios convidados</b></td>";
 		echo "</tr>";
 		while ($member = $query44887->fetchrow()) {
 			echo "<tr>\n";
@@ -177,11 +177,11 @@ if ($setting->promo == t) {
 	exit;
 } else {
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>N�o existem promo��es no momento</b></legend>\n";
+	echo "<fieldset><legend><b>Nï¿½o existem promoï¿½ï¿½es no momento</b></legend>\n";
 
 	echo "<table>";
 	echo "<tr>";
-	echo "<td><b>�ltimo ganhador:</b></td>";
+	echo "<td><b>ï¿½ltimo ganhador:</b></td>";
 	echo "<td>" . $setting->promo_last_winner . "</td>";
 	echo "</tr>";
 

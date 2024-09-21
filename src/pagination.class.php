@@ -20,7 +20,7 @@ Author URI: http://www.mis-algoritmos.com
 		var $urlF = false;//urlFriendly
 
 		/*Buttons next and previous*/
-		var $nextT = "Próxima";
+		var $nextT = "PrÃ³xima";
 		var $nextI = "&#187;"; //&#9658;
 		var $prevT = "Anterior";
 		var $prevI = "&#171;"; //&#9668;
@@ -98,7 +98,7 @@ Author URI: http://www.mis-algoritmos.com
 						echo "Especificaste un wildcard para sustituir, pero no existe en el target<br />";
 						$error = true;
 					}elseif($this->urlF and $this->urlF == '%' and strpos($this->target,$this->urlF)===false){
-						echo "Es necesario especificar en el target el comodin % para sustituir el número de página<br />";
+						echo "Es necesario especificar en el target el comodin % para sustituir el nÃºmero de pÃ¡gina<br />";
 						$error = true;
 					}
 

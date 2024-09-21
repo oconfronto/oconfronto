@@ -178,7 +178,7 @@ if (($_SESSION['ref'] != null) and (is_numeric($_SESSION['ref'])))
                     
                     $id = $db->Insert_ID();
 					
-					// INSERE DADOS DE CÓDIGO DE REFERENCIA DO CONVITE.
+					// INSERE DADOS DE CÃDIGO DE REFERENCIA DO CONVITE.
 					$insert_ref['id_p_c'] = $id;
 					$insert_ref['id_p_ref'] = $usaar;
 					$insert_ref['date_regis'] = time();

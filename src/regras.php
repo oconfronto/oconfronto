@@ -7,33 +7,33 @@
 <legend><b>Regras</b></legend>
 Estas regras se aplicam a todas as partes de "O Confronto".<br><br>
 
-<b>1.</b> A responsabilidade pela sua conta é exclusivamente sua. Sua conta não será restaurada ou terá "rollback", a menos que os danos tenham sido causados pela nossa equipe.
+<b>1.</b> A responsabilidade pela sua conta Ã© exclusivamente sua. Sua conta nÃ£o serÃ¡ restaurada ou terÃ¡ "rollback", a menos que os danos tenham sido causados pela nossa equipe.
 <br><br>
-<b>2.</b> Você não está autorizado a efetuar login em contas de outros jogadores.
+<b>2.</b> VocÃª nÃ£o estÃ¡ autorizado a efetuar login em contas de outros jogadores.
 <br><br>
-<b>3.</b> Partilhar contas não é permitido.
+<b>3.</b> Partilhar contas nÃ£o Ã© permitido.
 <br><br>
-<b>4.</b> Você PODE ter mais de uma conta.
+<b>4.</b> VocÃª PODE ter mais de uma conta.
 <br><br>
-<b>5.</b> Você não está autorizado a cometer abusos ou roubar contas de outros players.
+<b>5.</b> VocÃª nÃ£o estÃ¡ autorizado a cometer abusos ou roubar contas de outros players.
 <br><br>
-<b>6.</b> Todas as ações devem ser feitas por você, estando presente no computador. Toda navegação deve ser realizada por você, clicando no mouse de seu computador. Isso também significa que adulterar a URL com edição no seu navegador é proibido. Add-ons em seu navegador que afetam a funcionalidade do jogo são proibidos.
+<b>6.</b> Todas as aÃ§Ãµes devem ser feitas por vocÃª, estando presente no computador. Toda navegaÃ§Ã£o deve ser realizada por vocÃª, clicando no mouse de seu computador. Isso tambÃ©m significa que adulterar a URL com ediÃ§Ã£o no seu navegador Ã© proibido. Add-ons em seu navegador que afetam a funcionalidade do jogo sÃ£o proibidos.
 <br><br>
-<b>7.</b> Bugs devem ser reportados assim que descobertos, e qualquer uso de bug poderá resultar em penalidades.
+<b>7.</b> Bugs devem ser reportados assim que descobertos, e qualquer uso de bug poderÃ¡ resultar em penalidades.
 <br><br>
-<b>8.</b> É proibido fazer spam ou flood em qualquer lugar. Também é proibido anunciar qualquer coisa.
+<b>8.</b> Ã‰ proibido fazer spam ou flood em qualquer lugar. TambÃ©m Ã© proibido anunciar qualquer coisa.
 <br><br>
-<b>9.</b> É proibido postar links ou outras coisas com conteúdo nazista, pornográfico, racista ou qualquer material que ofenda grupos de pessoas ou indivíduos.
+<b>9.</b> Ã‰ proibido postar links ou outras coisas com conteÃºdo nazista, pornogrÃ¡fico, racista ou qualquer material que ofenda grupos de pessoas ou indivÃ­duos.
 <br><br>
-<b>10.</b> É proibido enganar ou mentir para a equipe de administração ou se tentar passar por um administrador.
+<b>10.</b> Ã‰ proibido enganar ou mentir para a equipe de administraÃ§Ã£o ou se tentar passar por um administrador.
 <br><br>
-<b>11.</b> Qualquer ação que viole o acordo e a licença estabelecidos é proibida.
+<b>11.</b> Qualquer aÃ§Ã£o que viole o acordo e a licenÃ§a estabelecidos Ã© proibida.
 <br><br>
-<b>12.</b> Violando ou tentando violar qualquer destas regras poderá resultar em penalidade decidida pela administração.
+<b>12.</b> Violando ou tentando violar qualquer destas regras poderÃ¡ resultar em penalidade decidida pela administraÃ§Ã£o.
 <br><br>
-<b>13.</b> Todas as atividades criminais que violem leis locais serão reportadas para as autoridades policiais.
+<b>13.</b> Todas as atividades criminais que violem leis locais serÃ£o reportadas para as autoridades policiais.
 <br><br>
-<b>14.</b> Estas regras estão sujeitas a mudanças a qualquer tempo sem aviso prévio. 
+<b>14.</b> Estas regras estÃ£o sujeitas a mudanÃ§as a qualquer tempo sem aviso prÃ©vio. 
 
 </fieldset>
 <?php

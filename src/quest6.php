@@ -1,14 +1,14 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Missões");
+define("PAGENAME", "MissÃµes");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 
 if ($player->level < 300)
 {
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Missão</b></legend>\n";
-	echo "<i>Seu nivel é muito baixo!</i><br/>\n";
+	echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+	echo "<i>Seu nivel Ã© muito baixo!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include("templates/private_footer.php");
@@ -32,7 +32,7 @@ switch($_GET['act'])
 	case "castle":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>Já ouvi várias histórias suas através de meus mensageiros, você parece ser um forte e destemido guerreiro, qualidades que eu adimiro. E por isso lhe chamei aqui, para realizar algumas tarefas em meu nome, oque acha?<br/>Você seria recompensado generosamente.</i><br><br>\n";
+		echo "<i>JÃ¡ ouvi vÃ¡rias histÃ³rias suas atravÃ©s de meus mensageiros, vocÃª parece ser um forte e destemido guerreiro, qualidades que eu adimiro. E por isso lhe chamei aqui, para realizar algumas tarefas em meu nome, oque acha?<br/>VocÃª seria recompensado generosamente.</i><br><br>\n";
 		echo "<a href=\"quest6.php?act=aceptcastle\">Aceitar</a> / <a href=\"quest6.php?act=declinecastle\">Recusar</a>";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -42,8 +42,8 @@ switch($_GET['act'])
 	case "declinecastle":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>Tudo bem, poderia mandar lhe punirem caso recusace, mas tenho certeza de que você mudara de idéia.</i><br><br>\n";
-		echo "<a href=\"home.php\">Página Principal</a>.";
+		echo "<i>Tudo bem, poderia mandar lhe punirem caso recusace, mas tenho certeza de que vocÃª mudara de idÃ©ia.</i><br><br>\n";
+		echo "<a href=\"home.php\">PÃ¡gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 	break;
@@ -52,8 +52,8 @@ switch($_GET['act'])
 		if ($verificacao1->recordcount() > 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Aviso</b></legend>\n";
-		echo "<i>Você já aceitou esta missão.</i><br><br>\n";
-		echo "<a href=\"home.php\">Página Principal</a>.";
+		echo "<i>VocÃª jÃ¡ aceitou esta missÃ£o.</i><br><br>\n";
+		echo "<a href=\"home.php\">PÃ¡gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -69,9 +69,9 @@ switch($_GET['act'])
 		$query = $db->autoexecute('quests', $insert, 'INSERT');
 
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>Ótimo, você fez a coisa certa ao aceitar. Vamos começar logo, preciso que alguem leve um pacote ao rei Rashar, é um pacote muito valioso, certifique-se que ele chegue em segurança.</i><br>";
-		echo "<b>(você adiquiriu um pacote)</b><br><br>\n";
-		echo "<a href=\"quest6.php?act=go\">Ir ao império de Rashar</a> / <a href=\"home.php\">Voltar</a>.";
+		echo "<i>Ã“timo, vocÃª fez a coisa certa ao aceitar. Vamos comeÃ§ar logo, preciso que alguem leve um pacote ao rei Rashar, Ã© um pacote muito valioso, certifique-se que ele chegue em seguranÃ§a.</i><br>";
+		echo "<b>(vocÃª adiquiriu um pacote)</b><br><br>\n";
+		echo "<a href=\"quest6.php?act=go\">Ir ao impÃ©rio de Rashar</a> / <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		}
@@ -86,10 +86,10 @@ switch($_GET['act'])
 
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(time() + 36000, $player->id, 13));
 
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você está a caminho do império de Rashar.</i><br>";
-		echo "<i>Faltam 10 horas para você chegar.</i><br><br>\n";
-		echo "<a href=\"home.php\">Página Principal</a>.";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª estÃ¡ a caminho do impÃ©rio de Rashar.</i><br>";
+		echo "<i>Faltam 10 horas para vocÃª chegar.</i><br><br>\n";
+		echo "<a href=\"home.php\">PÃ¡gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		}
@@ -103,8 +103,8 @@ switch($_GET['act'])
 		if ($vesetemobox->recordcount() == 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Rashar</b></legend>\n";
-		echo "<i>Que pacote? Você não tem nenhum pacote no seu inventário.</i><br><br>\n";
-		echo "<a href=\"home.php\">Voltar</a> / <a href=\"quest6.php?act=abort\">Abandonar missão</a>";
+		echo "<i>Que pacote? VocÃª nÃ£o tem nenhum pacote no seu inventÃ¡rio.</i><br><br>\n";
+		echo "<a href=\"home.php\">Voltar</a> / <a href=\"quest6.php?act=abort\">Abandonar missÃ£o</a>";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		}else{
@@ -118,8 +118,8 @@ switch($_GET['act'])
 		$query = $db->autoexecute('quests', $insert, 'INSERT');
 
 		echo "<fieldset><legend><b>Rashar</b></legend>\n";
-		echo "<i>Vejo que Alexander está procurando novos guerreiros. Este pacote me é inútil, ele apenas está testando sua confiança. Vejo que você é honesto, pois este pacote possui grande valor comercial. Boa sorte guerreiro.</i><br><br>\n";
-		echo "<a href=\"quest6.php?act=backalex\">Voltar à Alexander</a>";
+		echo "<i>Vejo que Alexander estÃ¡ procurando novos guerreiros. Este pacote me Ã© inÃºtil, ele apenas estÃ¡ testando sua confianÃ§a. Vejo que vocÃª Ã© honesto, pois este pacote possui grande valor comercial. Boa sorte guerreiro.</i><br><br>\n";
+		echo "<a href=\"quest6.php?act=backalex\">Voltar Ã  Alexander</a>";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		}
@@ -132,10 +132,10 @@ switch($_GET['act'])
 		$upxxdateeaz = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(time() + 36000, $player->id, 14));
 
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você está indo à Alexander.</i><br>";
-		echo "<i>Faltam 10 horas para você chegar.</i><br><br>\n";
-		echo "<a href=\"home.php\">Página Principal</a>.";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª estÃ¡ indo Ã  Alexander.</i><br>";
+		echo "<i>Faltam 10 horas para vocÃª chegar.</i><br><br>\n";
+		echo "<a href=\"home.php\">PÃ¡gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 
@@ -152,8 +152,8 @@ switch($_GET['act'])
 
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>Ótimo, vamos continuar.</i><br><br>\n";
-		echo "<a href=\"quest7.php\">Continuar</a> / <a href=\"home.php\">Página Principal</a>.";
+		echo "<i>Ã“timo, vamos continuar.</i><br><br>\n";
+		echo "<a href=\"quest7.php\">Continuar</a> / <a href=\"home.php\">PÃ¡gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 
@@ -165,7 +165,7 @@ switch($_GET['act'])
 	case "nofinish":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>Não sei oque passa em sua cabeça, fazer parte da elite imperial é o sonho de todo guerreiro. Se mudar de idéia, sinta-se livre para voltar aqui.</i><br><br>\n";
+		echo "<i>NÃ£o sei oque passa em sua cabeÃ§a, fazer parte da elite imperial Ã© o sonho de todo guerreiro. Se mudar de idÃ©ia, sinta-se livre para voltar aqui.</i><br><br>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -175,8 +175,8 @@ switch($_GET['act'])
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(90, $player->id, 13));
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(89, $player->id, 14));
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você abandonou a missão.</i><br><br>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª abandonou a missÃ£o.</i><br><br>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -188,7 +188,7 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Mensagem</b></legend>\n";
-		echo "<i>" . $player->username . ", você atingiu altos níveis de batalha, e o Rei deseja falar com você pessoalmente.</i><br/><br>\n";
+		echo "<i>" . $player->username . ", vocÃª atingiu altos nÃ­veis de batalha, e o Rei deseja falar com vocÃª pessoalmente.</i><br/><br>\n";
 		echo "<a href=\"quest6.php?act=castle\">Ir ao Castelo</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -200,8 +200,8 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>Agora que eu já lhe entreguei o pacote, vá ao império de Rashar.</i><br><br>";
-		echo "<a href=\"quest6.php?act=go\">Ir ao império de Rashar</a> / <a href=\"home.php\">Voltar</a>.";
+		echo "<i>Agora que eu jÃ¡ lhe entreguei o pacote, vÃ¡ ao impÃ©rio de Rashar.</i><br><br>";
+		echo "<a href=\"quest6.php?act=go\">Ir ao impÃ©rio de Rashar</a> / <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -213,8 +213,8 @@ switch($_GET['act'])
 			{
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(2, $player->id, 13));
 			include("templates/private_header.php");
-			echo "<fieldset><legend><b>Missão</b></legend>\n";
-			echo "<i>Você chegou no império de Rashar.</i><br><br>";
+			echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+			echo "<i>VocÃª chegou no impÃ©rio de Rashar.</i><br><br>";
 			echo "<a href=\"quest6.php\">Continuar</a>.";
 	     	 	echo "</fieldset>";
 			include("templates/private_footer.php");
@@ -224,10 +224,10 @@ switch($_GET['act'])
 		include("templates/private_header.php");
 		$time = ($quest1['quest_status'] - time());
 		$time_remaining = ceil($time / 60);
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você está a caminho do império de Rashar.</i><br>";
-		echo "<i>Faltam $time_remaining minuto(s) para você chegar.</i><br><br>\n";
-		echo "<a href=\"home.php\">Página Principal</a>.";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª estÃ¡ a caminho do impÃ©rio de Rashar.</i><br>";
+		echo "<i>Faltam $time_remaining minuto(s) para vocÃª chegar.</i><br><br>\n";
+		echo "<a href=\"home.php\">PÃ¡gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -237,7 +237,7 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Rashar</b></legend>\n";
-		echo "<i>Olá " . $player->username . ", oque lhe traz aqui?</i><br><br>";
+		echo "<i>OlÃ¡ " . $player->username . ", oque lhe traz aqui?</i><br><br>";
 		echo "<a href=\"quest6.php?act=entregar\">Entregar pacote</a> / <a href=\"home.php\">Voltar</a>.";
 	     	echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -247,9 +247,9 @@ switch($_GET['act'])
 	if (($quest1['quest_status'] == 90) and ($quest2['quest_status'] == 1))
 		{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você já entregou o pacote à Rashar, agora volte e fale com alexander.</i><br><br>";
-		echo "<a href=\"quest6.php?act=backalex\">Voltar à Alexander</a>";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª jÃ¡ entregou o pacote Ã  Rashar, agora volte e fale com alexander.</i><br><br>";
+		echo "<a href=\"quest6.php?act=backalex\">Voltar Ã  Alexander</a>";
 	     	echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -261,8 +261,8 @@ switch($_GET['act'])
 			{
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(80, $player->id, 14));
 			include("templates/private_header.php");
-			echo "<fieldset><legend><b>Missão</b></legend>\n";
-			echo "<i>Você chegou à Alexander.</i><br><br>";
+			echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+			echo "<i>VocÃª chegou Ã  Alexander.</i><br><br>";
 			echo "<a href=\"quest6.php\">Continuar</a>.";
 	     	 	echo "</fieldset>";
 			include("templates/private_footer.php");
@@ -272,10 +272,10 @@ switch($_GET['act'])
 		include("templates/private_header.php");
 		$time = ($quest2['quest_status'] - time());
 		$time_remaining = ceil($time / 60);
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você está a caminho de Alexander.</i><br>";
-		echo "<i>Faltam $time_remaining minuto(s) para você chegar.</i><br><br>\n";
-		echo "<a href=\"home.php\">Página Principal</a>.";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª estÃ¡ a caminho de Alexander.</i><br>";
+		echo "<i>Faltam $time_remaining minuto(s) para vocÃª chegar.</i><br><br>\n";
+		echo "<a href=\"home.php\">PÃ¡gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -286,9 +286,9 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 			echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-			echo "<i>Olá " . $player->username . ", recebi uma mensagem de Rashar, ele recebeu o pacote.</i><br />";
-			echo "<i>Vejo que você é um guerreiro honesto, e com o treinamento que estou disposto a oferecer, você poderá ingressar na elite imperial. Oque acha? Estará disposto a fazer alguns sacrificios?</i><br /><br />";
-			echo "<a href=\"quest6.php?act=finish\">Sim</a> / <a href=\"quest6.php?act=nofinish\">Não</a>.";
+			echo "<i>OlÃ¡ " . $player->username . ", recebi uma mensagem de Rashar, ele recebeu o pacote.</i><br />";
+			echo "<i>Vejo que vocÃª Ã© um guerreiro honesto, e com o treinamento que estou disposto a oferecer, vocÃª poderÃ¡ ingressar na elite imperial. Oque acha? EstarÃ¡ disposto a fazer alguns sacrificios?</i><br /><br />";
+			echo "<a href=\"quest6.php?act=finish\">Sim</a> / <a href=\"quest6.php?act=nofinish\">NÃ£o</a>.";
 	     	 	echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -297,8 +297,8 @@ switch($_GET['act'])
 	if ($quest2['quest_status'] == 89)
 	{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você abandonou esta missão.</i><br><br>";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª abandonou esta missÃ£o.</i><br><br>";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	     	echo "</fieldset>";
 		include("templates/private_footer.php");

@@ -55,7 +55,7 @@ if ($profile['ban'] > time()) {
 
 if ($profile['gm_rank'] > 9) {
 echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-echo "<center><b>O usuário " . $profile['username'] . " É um dos administradores do jogo.</b></center>";
+echo "<center><b>O usuário " . $profile['username'] . " Ã um dos administradores do jogo.</b></center>";
 echo "</div>";
 }elseif ($profile['gm_rank'] > 2){
 echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
@@ -115,7 +115,7 @@ echo "<div class=\"tab_container\">";
 		        echo "$i";
        			$i++;
 		}
-		echo "º";
+		echo "Âº";
 	echo "</td></tr>";
 	}
 

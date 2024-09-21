@@ -25,7 +25,7 @@
         return $ret;
     }
     
-	// Função SmileEmoticons
+	// FunÃ§Ã£o SmileEmoticons
 	function FunSmile($text, $smile = '0')
 	{
 		$smilefun = array(
@@ -65,7 +65,7 @@
 	class bbcode {
         function parse($text, $smile = '0')
         {
-            // Lista de função BBCODE  
+            // Lista de funÃ§Ã£o BBCODE  
             
             // BBOCDE "QUOTE"
             $rows = 0;
@@ -95,7 +95,7 @@
                 if ($exists) {
                     $text = str_ireplace('[img]'.$img.'[/img]', '<img style="max-width:460px; width: expression(this.width > 460 ? 460: true);" src="'.$img.'">', $text);
                 } else {
-                    $text = str_ireplace('[img]'.$img.'[/img]', '[Imagem Inv‡lida]', $text);
+                    $text = str_ireplace('[img]'.$img.'[/img]', '[Imagem InvÂ‡lida]', $text);
                 }
             }
             
@@ -113,7 +113,7 @@
                 $text = str_ireplace('[i]'.$b.'[/i]', '<i>'.$b.'</i>', $text);
             }
             
-            //BBCODE "DESSA PORRA DE [U] QUE EU NÃO SEI QUAL É NOME --> UNDERLINE]
+            //BBCODE "DESSA PORRA DE [U] QUE EU NÃƒO SEI QUAL Ã‰ NOME --> UNDERLINE]
             while(stripos($text, '[u]') !== false && stripos($text, '[/u]') !== false )
             {
                 $c = substr($text, stripos($text, '[u]')+3, stripos($text, '[/u]') - stripos($text, '[u]') - 3);
@@ -188,7 +188,7 @@
             // BBCODE "COLOR=" -> VERSAO ANTIGA
             $text = preg_replace("/\[color=(\#[0-9A-F]{6}|[a-z]+)\](.*)\[\/color\]/Usi", "<span style=\"color:\\1\">\\2</span>", $text);
             
-            /* //BBCODE "[COLOR] - NECESSITA ALTERAÇÃO"
+            /* //BBCODE "[COLOR] - NECESSITA ALTERAÃ‡ÃƒO"
             while(stripos($text, '[color=]') !== false && stripos($text, '[/color]') !== false )
             {
                 $i = substr($text, stripos($text, '[color]')+7, stripos($text, '[/color]') - stripos($text, '[color]') - 7);

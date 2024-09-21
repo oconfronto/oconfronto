@@ -34,5 +34,5 @@ if ($fastmagia == 1){
 	}
 
 		$player->mana -= $mana;
-		array_unshift($_SESSION['battlelog'], "3, Você deu um ataque quádruplo n" . $enemy->prepo . " " . $enemy->username . " e tirou " . $totalpak . " de vida.");
+		array_unshift($_SESSION['battlelog'], "3, VocÃª deu um ataque quÃ¡druplo n" . $enemy->prepo . " " . $enemy->username . " e tirou " . $totalpak . " de vida.");
 ?>

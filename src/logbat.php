@@ -27,16 +27,16 @@ if ($query0->recordcount() > 0)
 		$valortempo = time() - $log0['time'];
 		if ($valortempo < 60){
 		$valortempo2 = $valortempo;
-		$auxiliar2 = "segundo(s) atrás.";
+		$auxiliar2 = "segundo(s) atrÃ¡s.";
 		}else if($valortempo < 3600){
 		$valortempo2 = floor($valortempo / 60);
-		$auxiliar2 = "minuto(s) atrás.";
+		$auxiliar2 = "minuto(s) atrÃ¡s.";
 		}else if($valortempo < 86400){
 		$valortempo2 = floor($valortempo / 3600);
-		$auxiliar2 = "hora(s) atrás.";
+		$auxiliar2 = "hora(s) atrÃ¡s.";
 		}else if($valortempo > 86400){
 		$valortempo2 = floor($valortempo / 86400);
-		$auxiliar2 = "dia(s) atrás.";
+		$auxiliar2 = "dia(s) atrÃ¡s.";
 		}
 
 		echo "<tr>";
@@ -51,7 +51,7 @@ else
 	echo "</tr>";
 }
 echo "</table>";
-echo "<center><font size=\"1\">Exibindo todos os logs dos últimos 7 dias.</font></center>";
+echo "<center><font size=\"1\">Exibindo todos os logs dos Ãºltimos 7 dias.</font></center>";
 echo "</body>";
 echo "</html>";
 ?>

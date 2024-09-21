@@ -13,11 +13,11 @@ if ($_GET['r']) {
 
 <fieldset>
 <legend><b>O Confronto</b></legend>
-O Confronto é um jogo web-based medieval. Em sua jornada, você irá seguir os passos de um guerreiro medieval, lutando contra monstros e criaturas, fazendo missões e participando de muitas aventuras.
+O Confronto Ã© um jogo web-based medieval. Em sua jornada, vocÃª irÃ¡ seguir os passos de um guerreiro medieval, lutando contra monstros e criaturas, fazendo missÃµes e participando de muitas aventuras.
 <br/><br/>
-Monstros, PVP, Torneios, Missões, Magias, Trabalhos, Mercado, e muitas outras funções irão te surpreender neste game.
+Monstros, PVP, Torneios, MissÃµes, Magias, Trabalhos, Mercado, e muitas outras funÃ§Ãµes irÃ£o te surpreender neste game.
 <br/><br/>
-Comece já a jogar e descubra este novo mundo. <a href="register.php?r=<?php echo $usaar?>">Clique aqui para se registar</a>.
+Comece jÃ¡ a jogar e descubra este novo mundo. <a href="register.php?r=<?php echo $usaar?>">Clique aqui para se registar</a>.
 </fieldset>
 
 <?php

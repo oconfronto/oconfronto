@@ -73,7 +73,7 @@ echo "<option value=\"$result[username]\">$result[username]</option>";
 }
 echo "</select>"; ?> <input type="submit" name="submit" value="Passar liderança"><p />
 </form>
-<b>ATENÇÃO:</b> Nomeando um novo lider, você perderá todas as funções da administração!
+<b>ATENÃÃO:</b> Nomeando um novo lider, você perderá todas as funções da administração!
 <p /><?=$msg?><p />
 <p /><font color=red><?=$errmsg?></font><p />
 </fieldset>

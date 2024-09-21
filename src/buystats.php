@@ -10,7 +10,7 @@ if ($player->buystats >= 15)
 {
 	include("templates/private_header.php");
 	echo "<fieldset><legend><b>Treinador</b></legend>\n";
-	echo "<i>Você já comprou muitos pontos de status!</i><br/>\n";
+	echo "<i>VocÃª jÃ¡ comprou muitos pontos de status!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo '</fieldset>';
 	include("templates/private_footer.php");
@@ -27,7 +27,7 @@ else
 		{
 			include("templates/private_header.php");
 			echo "<fieldset><legend><b>Treinador</b></legend>\n";
-			echo "<i>Você não tem ouro suficiente!</i><br/>\n";
+			echo "<i>VocÃª nÃ£o tem ouro suficiente!</i><br/>\n";
 			echo '<a href="home.php">Voltar</a>.';
 	                echo '</fieldset>';
 	 		include("templates/private_footer.php");
@@ -39,7 +39,7 @@ else
 			$player = check_user($secret_key, $db); //Get new stats
 			include("templates/private_header.php");
 
-			echo "<i>Você ganhou 2 ponto(s) de status!</i>\n";
+			echo "<i>VocÃª ganhou 2 ponto(s) de status!</i>\n";
 			echo '<a href="home.php">Voltar</a>.';
 			include("templates/private_footer.php");
 			exit;
@@ -48,8 +48,8 @@ else
 	include("templates/private_header.php");
 	echo "<fieldset>";
 	echo "<legend><b>Treinador</b></legend>";
-	echo "<i>Você gostaria de treinar por apenas <b>" . $cost . "</b> de ouro?</i> <a href=\"buystats.php?act=buy\">Treinar!</a><br/>";
-	echo "Treinando você ganhará mais 2 pontos de status.";
+	echo "<i>VocÃª gostaria de treinar por apenas <b>" . $cost . "</b> de ouro?</i> <a href=\"buystats.php?act=buy\">Treinar!</a><br/>";
+	echo "Treinando vocÃª ganharÃ¡ mais 2 pontos de status.";
 	include("templates/private_footer.php");
 	exit;
 }

@@ -4,7 +4,7 @@
 ?>
 <html>
 <head>
-<title>O Confronto :: Logs de Usu·rio</title>
+<title>O Confronto :: Logs de Usu√°rio</title>
 <link rel="stylesheet" type="text/css" href="css/style-a.css" />
 <link rel="stylesheet" type="text/css" href="css/boxover.css" />
 <script type="text/javascript" src="js/boxover.js"></script>
@@ -17,7 +17,7 @@
 $read0 = $db->execute("update `user_log` set `status`='read' where `player_id`=? and `status`='unread'", array($player->id));
 
 echo "<table width=\"100%\">";
-echo "<tr><td align=\"center\" bgcolor=\"#E1CBA4\"><b>Logs do usu·rio</b></td></tr>";
+echo "<tr><td align=\"center\" bgcolor=\"#E1CBA4\"><b>Logs do usu√°rio</b></td></tr>";
 $query0 = $db->execute("select `msg`, `status`, `time` from `user_log` where `player_id`=? order by `time` desc", array($player->id));
 if ($query0->recordcount() > 0)
 {
@@ -27,16 +27,16 @@ if ($query0->recordcount() > 0)
 		$valortempo = time() - $log0['time'];
 		if ($valortempo < 60){
 		$valortempo2 = $valortempo;
-		$auxiliar2 = "segundo(s) atr·s.";
+		$auxiliar2 = "segundo(s) atr√°s.";
 		}else if($valortempo < 3600){
 		$valortempo2 = floor($valortempo / 60);
-		$auxiliar2 = "minuto(s) atr·s.";
+		$auxiliar2 = "minuto(s) atr√°s.";
 		}else if($valortempo < 86400){
 		$valortempo2 = floor($valortempo / 3600);
-		$auxiliar2 = "hora(s) atr·s.";
+		$auxiliar2 = "hora(s) atr√°s.";
 		}else if($valortempo > 86400){
 		$valortempo2 = floor($valortempo / 86400);
-		$auxiliar2 = "dia(s) atr·s.";
+		$auxiliar2 = "dia(s) atr√°s.";
 		}
 
 		echo "<tr>";
@@ -51,7 +51,7 @@ else
 	echo "</tr>";
 }
 echo "</table>";
-echo "<center><font size=\"1\">Exibindo todos os logs dos ˙ltimos 7 dias.</font></center>";
+echo "<center><font size=\"1\">Exibindo todos os logs dos √∫ltimos 7 dias.</font></center>";
 echo "</body>";
 echo "</html>";
 ?>

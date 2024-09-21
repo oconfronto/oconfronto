@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Missão");
+define("PAGENAME", "MissÃ£o");
 $player = check_user($secret_key, $db);
 
 $quest = $db->execute("select * from `bixos` where `player_id`=? and `quest`='t'", array($player->id));
@@ -16,17 +16,17 @@ switch($_GET['act'])
 			if (($player->level >= 15) or (($player->strength + $player->vitality + $player->agility + $player->resistance) > 30)){
 			$db->execute("update `players` set `gold`=`gold`+? where `id`=?", array(5000, $player->id));
 				include("templates/private_header.php");
-				echo "<fieldset><legend><b>Missão</b></legend>\n";
-				echo "<i>Você salvou o jovem da morte e ele te recompensou com 5000 moedas de ouro.</i><br><br>\n";
-				echo "<a href=\"monster.php?act=attack&id=" . $quest['id'] . "\">Continuar Caça</a>.";
+				echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+				echo "<i>VocÃª salvou o jovem da morte e ele te recompensou com 5000 moedas de ouro.</i><br><br>\n";
+				echo "<a href=\"monster.php?act=attack&id=" . $quest['id'] . "\">Continuar CaÃ§a</a>.";
 				echo "</fieldset>";
 				include("templates/private_footer.php");
 				break;
 			}else{
 			$db->execute("update `players` set `hp`=0, `mana`=0, `deadtime`=?, `deaths`=`deaths`+1 where `id`=?", array(time() + $setting->dead_time, $player->id));
 				include("templates/private_header.php");
-				echo "<fieldset><legend><b>Missão</b></legend>\n";
-				echo "<i>Você tentou salvar o jovem mas acabou sendo morto pelos lobos.</i><br><br>\n";
+				echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+				echo "<i>VocÃª tentou salvar o jovem mas acabou sendo morto pelos lobos.</i><br><br>\n";
 				echo "<a href=\"home.php\">Voltar</a>.";
 				echo "</fieldset>";
 				include("templates/private_footer.php");
@@ -40,9 +40,9 @@ switch($_GET['act'])
 		$potions = $db->execute("select * from `items` where `item_id`=136 and `player_id`=?", array($player->id));
 			if ($potions->recordcount() == 0){
 				include("templates/private_header.php");
-				echo "<fieldset><legend><b>Missão</b></legend>\n";
-				echo "<i>Você não possui nenhuma poção para vender.</i><br><br>\n";
-				echo "<a href=\"monster.php?act=attack&id=" . $quest['id'] . "\">Continuar Caça</a>.";
+				echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+				echo "<i>VocÃª nÃ£o possui nenhuma poÃ§Ã£o para vender.</i><br><br>\n";
+				echo "<a href=\"monster.php?act=attack&id=" . $quest['id'] . "\">Continuar CaÃ§a</a>.";
 				echo "</fieldset>";
 				include("templates/private_footer.php");
 				break;
@@ -51,9 +51,9 @@ switch($_GET['act'])
 			$db->execute("update `players` set `gold`=`gold`+? where `id`=?", array(7500, $player->id));
 
 				include("templates/private_header.php");
-				echo "<fieldset><legend><b>Missão</b></legend>\n";
-				echo "<i>Você vendeu uma Health Potion por 7500 moedas de ouro.</i><br><br>\n";
-				echo "<a href=\"monster.php?act=attack&id=" . $quest['id'] . "\">Continuar Caça</a>.";
+				echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+				echo "<i>VocÃª vendeu uma Health Potion por 7500 moedas de ouro.</i><br><br>\n";
+				echo "<a href=\"monster.php?act=attack&id=" . $quest['id'] . "\">Continuar CaÃ§a</a>.";
 				echo "</fieldset>";
 				include("templates/private_footer.php");
 				break;
@@ -65,9 +65,9 @@ switch($_GET['act'])
 	$db->execute("update `players` set `lutando`=0 where `id`=?", array($player->id));
 
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Missão</b></legend>\n";
-	echo "<i>Você recusou e agora continua sua caça.</i><br><br>\n";
-	echo "<a href=\"monster.php?act=attack&id=" . $quest['id'] . "\">Continuar Caça</a>.";
+	echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+	echo "<i>VocÃª recusou e agora continua sua caÃ§a.</i><br><br>\n";
+	echo "<a href=\"monster.php?act=attack&id=" . $quest['id'] . "\">Continuar CaÃ§a</a>.";
 	echo "</fieldset>";
 	include("templates/private_footer.php");
 	break;
@@ -77,8 +77,8 @@ switch($_GET['act'])
 
 	if ($quest['hp'] == 1) {
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Enquanto você caçava vê um jovem guerreiro sendo atacado por lobos. O que você deseja fazer?</i><br/><br>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>Enquanto vocÃª caÃ§ava vÃª um jovem guerreiro sendo atacado por lobos. O que vocÃª deseja fazer?</i><br/><br>\n";
 		echo "<a href=\"esquest.php?act=accept\">Atacar lobos</a> | <a href=\"esquest.php?act=decline\">Ignorar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -86,9 +86,9 @@ switch($_GET['act'])
 
 	} elseif ($quest['hp'] == 2) {
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Ao caminho de sua caça você encontra um homem a beira da morte. Ele está lhe oferecendo 7500 moedas de ouro por uma simples poção de vida. O que você deseja fazer?</i><br/><br>\n";
-		echo "<a href=\"esquest.php?act=accept\">Vender poção</a> | <a href=\"esquest.php?act=decline\">Ignorar</a>.";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>Ao caminho de sua caÃ§a vocÃª encontra um homem a beira da morte. Ele estÃ¡ lhe oferecendo 7500 moedas de ouro por uma simples poÃ§Ã£o de vida. O que vocÃª deseja fazer?</i><br/><br>\n";
+		echo "<a href=\"esquest.php?act=accept\">Vender poÃ§Ã£o</a> | <a href=\"esquest.php?act=decline\">Ignorar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -96,7 +96,7 @@ switch($_GET['act'])
 	}else{
 	include("templates/private_header.php");
 	echo "<fieldset><legend><b>Erro</b></legend>\n";
-	echo "<i>Você não pode acessar esta página.</i><br><br>";
+	echo "<i>VocÃª nÃ£o pode acessar esta pÃ¡gina.</i><br><br>";
 	echo "<a href=\"home.php\">Voltar</a>.";
 	echo "</fieldset>";
 	include("templates/private_footer.php");

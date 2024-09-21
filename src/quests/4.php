@@ -5,7 +5,7 @@ if ($missao['quest_status'] == 1) {
         header("Location: tavern.php?p=quests&start=".$quest['id']."");
         exit;
     }
-    $a = "<i>Ol· " . $player->username . ". Voc&ecirc; pode me ajudar?<br/>";
+    $a = "<i>Ol√° " . $player->username . ". Voc&ecirc; pode me ajudar?<br/>";
     $a .= "Preciso de sua ajuda para fazer uma entrega para o Lord Drofus. Estou sem tempo, e preciso que voc&ecirc; entregue um pacote para ele.<br>Se voc&ecirc; me ajudar, poderei fazer entregas para voc&ecirc; quando quiser. O que acha?</i>";
     $b = "<a href=\"tavern.php?p=quests&start=".$quest['id']."&next=true\">Aceitar</a><br/><a href=\"home.php\">Recusar</a>";
     
@@ -15,7 +15,7 @@ if ($missao['quest_status'] == 1) {
     $db->autoexecute('items', $insert, 'INSERT');
     $db->execute("update `quests` set `quest_status`='3', `extra`=? where `id`=?", array(time() + 900, $missao['id']));
     
-    $a = "<i>”timo! Pegue este pacote e v· em direÁ„o ‡ mans„o de Lord Drofus.</i><br/><b>(Voc&ecirc; adiquiriu um pacote)</b>";
+    $a = "<i>√ìtimo! Pegue este pacote e v√° em dire√ß√£o √† mans√£o de Lord Drofus.</i><br/><b>(Voc&ecirc; adiquiriu um pacote)</b>";
     $b = "<a href=\"tavern.php?p=quests&start=".$quest['id']."\">Continuar</a>";
 
 } elseif ($missao['quest_status'] == 3) {
@@ -25,16 +25,16 @@ if ($missao['quest_status'] == 1) {
         exit;
     }
     
-    $a = "<i>Voc&ecirc; est· a caminho da mans„o de Lord Drofus.<br />Faltam " . ceil(($missao['extra'] - time()) / 60) . " minutos para voc&ecirc; chegar.</i>";
+    $a = "<i>Voc&ecirc; est√° a caminho da mans√£o de Lord Drofus.<br />Faltam " . ceil(($missao['extra'] - time()) / 60) . " minutos para voc&ecirc; chegar.</i>";
     $b = "<a href=\"home.php\">Principal</a>";
 } elseif ($missao['quest_status'] == 4) {
     if ($_GET['talk'] == 1) {
         $vesetemobox = $db->execute("select * from `items` where `item_id`=116 and `player_id`=?", array($player->id));
 		if ($vesetemobox->recordcount() == 0) {
-            $a = "<i>Voc&ecirc; quer entregar um pacote? Estranho, pois n„o existe nenhum pacote no seu invent·rio.</i>";
+            $a = "<i>Voc&ecirc; quer entregar um pacote? Estranho, pois n√£o existe nenhum pacote no seu invent√°rio.</i>";
             $b = "<a href=\"home.php\">Voltar</a>";
         } else {
-            $a = "<b>Mordomo:</b> <i>Bom, posso entregar esse pagote para o Lord Drofus, porÈm voc&ecirc; vai ter que me pagar ".$quest['cost']." moedas de ouro, caso contr·rio, ele n„o saber· que voc&ecirc; esteve aqui.</i>";
+            $a = "<b>Mordomo:</b> <i>Bom, posso entregar esse pagote para o Lord Drofus, por√©m voc&ecirc; vai ter que me pagar ".$quest['cost']." moedas de ouro, caso contr√°rio, ele n√£o saber√° que voc&ecirc; esteve aqui.</i>";
             $b = "<a href=\"tavern.php?p=quests&start=".$quest['id']."&pay=true\">Pagar</a><br/><a href=\"home.php\">Voltar</a>";
         }
     } else {
@@ -44,7 +44,7 @@ if ($missao['quest_status'] == 1) {
             $a = "<b>Mordomo:</b> <i>Obrigado. Entregarei o pacote ao Lord Drofus assim que ele chegar.</i>";
             $b = "<a href=\"tavern.php?p=quests&start=".$quest['id']."\">Voltar para cidade</a>";
         } else {
-            $a = "<b>Mordomo:</b> <i>Ol· senhor(a), o que deseja?</i>";
+            $a = "<b>Mordomo:</b> <i>Ol√° senhor(a), o que deseja?</i>";
             $b = "<a href=\"tavern.php?p=quests&start=".$quest['id']."&talk=1\">Entregar um pacote</a><br/><a href=\"home.php\">Voltar</a>";
         }
     }
@@ -55,7 +55,7 @@ if ($missao['quest_status'] == 1) {
         exit;
     }
     
-    $a = "<i>Voc&ecirc; est· a caminho da cidade.<br />Faltam " . ceil(($missao['extra'] - time()) / 60) . " minutos para voc&ecirc; chegar.</i>";
+    $a = "<i>Voc&ecirc; est√° a caminho da cidade.<br />Faltam " . ceil(($missao['extra'] - time()) / 60) . " minutos para voc&ecirc; chegar.</i>";
     $b = "<a href=\"home.php\">Principal</a>";
     
 } elseif ($missao['quest_status'] == 6) {
@@ -67,7 +67,7 @@ if ($missao['quest_status'] == 1) {
 } elseif ($missao['quest_status'] == 7) {
     $db->execute("update `quests` set `quest_status`='90' where `id`=?", array($missao['id']));
     
-    $a = "<i>Ol·! Eu recebi uma mensagem de Lord Drofus, ele recebeu o pacote.</i><br /><i>Obrigado por me ajudar. Lembre-se, agora em diante sempre quando precisar enviar algo para alguÈm, acesse seu invent·rio.</i>";
+    $a = "<i>Ol√°! Eu recebi uma mensagem de Lord Drofus, ele recebeu o pacote.</i><br /><i>Obrigado por me ajudar. Lembre-se, agora em diante sempre quando precisar enviar algo para algu√©m, acesse seu invent√°rio.</i>";
     $b = "<a href=\"tavern.php?p=quests\">Finalizar</a>";
 }
 ?>

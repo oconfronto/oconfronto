@@ -95,7 +95,7 @@ echo "<table width=\"100%\">";
                                             echo "$i";
                                         $i++;
                                     }
-                                    echo "º";
+                                    echo "Âº";
                                     echo "</center>";
                                 echo "</th></tr>";
                                 

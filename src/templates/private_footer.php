@@ -8,7 +8,7 @@
     <div id="rodape">
 <a href="http://facebook.com/ocrpg" target="_blank"><img src="images/facebook.png" style="width:25px;height:25px;margin-top:3px;margin-left:30px;position:absolute;" border="0px">
 
-        <center><a href="regras.php">Regras</a> - <a href="bugs.php">Contato</a> - <a href="sendfiles.php">Upload de Imagens</a> - <a href="creditos.php">Creditos</a> - <a href="changelog.php">Mudanças Recentes</a><br/><font size="1px">Copyright (c) 2008-2012 OC Productions</font></center>
+        <center><a href="regras.php">Regras</a> - <a href="bugs.php">Contato</a> - <a href="sendfiles.php">Upload de Imagens</a> - <a href="creditos.php">Creditos</a> - <a href="changelog.php">MudanÃ§as Recentes</a><br/><font size="1px">Copyright (c) 2008-2012 OC Productions</font></center>
     </div>
 </div>
 

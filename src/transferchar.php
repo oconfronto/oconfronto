@@ -11,13 +11,13 @@ $cancel0 = $db->execute("select * from `pending` where `pending_id`=4 and `pendi
 	$dileti = $db->execute("delete from `pending` where `pending_id`=4 and `pending_other`=?", array($acc->id));
 	include("templates/acc-header.php");
     echo "<span id=\"aviso-a\"></span>";
-	echo "<br/><p><center>Você cancelou a solicitação de transferência de personagem. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
+	echo "<br/><p><center>VocÃª cancelou a solicitaÃ§Ã£o de transferÃªncia de personagem. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
 	include("templates/acc-footer.php");
 	exit;
 	}else{
 	include("templates/acc-header.php");
     echo "<span id=\"aviso-a\"></span>";
-	echo "<br/><p><center>Nenhuma solicitação de transferência encontrada. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
+	echo "<br/><p><center>Nenhuma solicitaÃ§Ã£o de transferÃªncia encontrada. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
 	include("templates/acc-footer.php");
 	exit;
 	}
@@ -30,7 +30,7 @@ if ($querynumplayers->recordcount() > 19)
 {
 include("templates/acc-header.php");
 echo "<span id=\"aviso-a\"></span>";
-echo "<br/><p><center>Você já atingiu o número máximo de personagens por conta, vinte.<br/>Você não pode mais adicionar personagens nesta conta. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
+echo "<br/><p><center>VocÃª jÃ¡ atingiu o nÃºmero mÃ¡ximo de personagens por conta, vinte.<br/>VocÃª nÃ£o pode mais adicionar personagens nesta conta. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
 include("templates/acc-footer.php");
 exit;
 }
@@ -38,7 +38,7 @@ exit;
 if (!$_GET['id'])
 {
 	include("templates/acc-header.php");
-	echo "<span id=\"aviso-a\"><font size=\"1px\">Digite o personagem que você deseja transferir para sua conta.</font></span>";
+	echo "<span id=\"aviso-a\"><font size=\"1px\">Digite o personagem que vocÃª deseja transferir para sua conta.</font></span>";
 	echo "<p><form method=\"get\" action=\"transferchar.php\"><table width=\"90%\" align=\"center\"><tr><td width=\"37%\"><b>Personagem:</b></td><td width=\"62%\"><input type=\"text\" name=\"id\" class=\"inp\" size=\"20\"/></td></tr></table><br/><center><button type=\"submit\" name=\"submit\" value=\"Enviar\" class=\"enviar\"></button></center></form></p>";
 	include("templates/acc-footer.php");
 	exit;
@@ -51,7 +51,7 @@ if (!$_GET['id'])
 	if ($query0->recordcount() != 1){
 	include("templates/acc-header.php");
     echo "<span id=\"aviso-a\"></span>";
-	echo "<br/><p><center>Personagem não encontrado. <a href=\"transferchar.php\">Voltar</a>.</center></p></p><br/>";
+	echo "<br/><p><center>Personagem nÃ£o encontrado. <a href=\"transferchar.php\">Voltar</a>.</center></p></p><br/>";
 	include("templates/acc-footer.php");
 	exit;
 	}else{
@@ -61,7 +61,7 @@ if (!$_GET['id'])
 	if ($char['acc_id'] == $acc->id){
 	include("templates/acc-header.php");
     echo "<span id=\"aviso-a\"></span>";
-	echo "<br/><p><center>Este personagem já pertence a sua conta. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
+	echo "<br/><p><center>Este personagem jÃ¡ pertence a sua conta. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
 	include("templates/acc-footer.php");
 	exit;
 	}
@@ -69,7 +69,7 @@ if (!$_GET['id'])
 	if ($query1->recordcount() > 0){
 	include("templates/acc-header.php");
     echo "<span id=\"aviso-a\"></span>";
-	echo "<br/><p><center>Já existe uma solicitação de transferência pendente com este personagem. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
+	echo "<br/><p><center>JÃ¡ existe uma solicitaÃ§Ã£o de transferÃªncia pendente com este personagem. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
 	include("templates/acc-footer.php");
 	exit;
 	}
@@ -77,7 +77,7 @@ if (!$_GET['id'])
 	if ($query2->recordcount() > 0){
 	include("templates/acc-header.php");
     echo "<span id=\"aviso-a\"></span>";
-	echo "<br/><p><center>Já existe uma solicitação de transferência pendente com a conta deste personagem. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
+	echo "<br/><p><center>JÃ¡ existe uma solicitaÃ§Ã£o de transferÃªncia pendente com a conta deste personagem. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
 	include("templates/acc-footer.php");
 	exit;
 	}
@@ -85,7 +85,7 @@ if (!$_GET['id'])
 	if ($query3->recordcount() > 0){
 	include("templates/acc-header.php");
     echo "<span id=\"aviso-a\"></span>";
-	echo "<br/><p><center>Já existe uma solicitação de transferência pendente com sua conta. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
+	echo "<br/><p><center>JÃ¡ existe uma solicitaÃ§Ã£o de transferÃªncia pendente com sua conta. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
 	include("templates/acc-footer.php");
 	exit;
 	}
@@ -103,19 +103,19 @@ if (!$_GET['id'])
             $errmsg .= "Preencha todos os campos";
             $error = 1;
 		}else if ($_POST['conta'] != $cconta){
-            $errmsg .= "A conta não confere com o personagem.";
+            $errmsg .= "A conta nÃ£o confere com o personagem.";
             $error = 1;
             $lock = 1;
 		}else if (encodePassword($_POST['senhadaconta']) != $ccontappassss){
-            $errmsg .= "A senha não confere com o personagem.";
+            $errmsg .= "A senha nÃ£o confere com o personagem.";
             $error = 1;
             $lock = 1;
 		}else if (($_POST['transferpass'] != $char['transpass']) and ($char['transpass'] != f)){
-            $errmsg .= "A senha de tranferência não confere com o personagem.";
+            $errmsg .= "A senha de tranferÃªncia nÃ£o confere com o personagem.";
             $error = 1;
             $lock = 1;
 		}else if ($tentativas > 9) {
-            $errmsg .= "Você errou sua senha 10 vezes seguidas.<br/>Aguarde 30 minutos para poder tentar novamente.";
+            $errmsg .= "VocÃª errou sua senha 10 vezes seguidas.<br/>Aguarde 30 minutos para poder tentar novamente.";
             $error = 1;
             $lock = 1;
         }
@@ -143,7 +143,7 @@ if (!$_GET['id'])
 
             include("templates/acc-header.php");
             echo "<span id=\"aviso-a\"></span>";
-            echo "<br/><p><center>Você solicitou a tranferência de " . $char['username'] . " para sua conta.<br/>Você terá que aguardar 14 dias para ver " . $char['username'] . " em sua conta. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
+            echo "<br/><p><center>VocÃª solicitou a tranferÃªncia de " . $char['username'] . " para sua conta.<br/>VocÃª terÃ¡ que aguardar 14 dias para ver " . $char['username'] . " em sua conta. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
             include("templates/acc-footer.php");
             exit;
 		}
@@ -156,7 +156,7 @@ if (!$_GET['id'])
     {
         echo $errmsg;
     } else {
-        echo "<font size=\"1px\">Digite as informações de " . $char['username'] . " abaixo.</font>";
+        echo "<font size=\"1px\">Digite as informaÃ§Ãµes de " . $char['username'] . " abaixo.</font>";
     }
     echo "</span>";
 ?>
@@ -168,7 +168,7 @@ if (!$_GET['id'])
 <tr><td width="27%"><b>Senha</b>:</td><td><input type="password" name="senhadaconta" class="inp" value="<?=$_POST['senhadaconta'];?>" size="20"/></td></tr>
 <?php
 if ($char['transpass'] != f){
-echo "<tr><td width=\"27%\"><b>Senha de Tranferência</b>:</td><td><input type=\"password\" name=\"transferpass\" class=\"inp\" value=\"" . $_POST['transferpass'] . "\" size=\"20\"/></td></tr>";
+echo "<tr><td width=\"27%\"><b>Senha de TranferÃªncia</b>:</td><td><input type=\"password\" name=\"transferpass\" class=\"inp\" value=\"" . $_POST['transferpass'] . "\" size=\"20\"/></td></tr>";
 }
 ?>
 </table>

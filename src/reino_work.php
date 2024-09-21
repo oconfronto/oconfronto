@@ -23,7 +23,7 @@ if ($reino['imperador'] == $player->id) {
 
 			if ($preco > $reino['ouro']) {
 				include("templates/private_header.php");
-				echo "Seu reino n„o possui ouro suficiente para esta mudanÁa. <a href=\"reino.php\">Voltar</a>.";
+				echo "Seu reino n√£o possui ouro suficiente para esta mudan√ßa. <a href=\"reino.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 			}
@@ -36,12 +36,12 @@ if ($reino['imperador'] == $player->id) {
 			$db->execute("update `reinos` set `ouro`=`ouro`-?, `work`=?, `worktime`=? where `id`=?", array($preco, $work, time() + 432000, $player->reino));
 
 			while($member = $query->fetchrow()) {
-				$logmsg = "Os sal·rios trabalhistas foram alterados. BÙnus salarial de " . ($work * 100) . "% por 5 dias.";
+				$logmsg = "Os sal√°rios trabalhistas foram alterados. B√¥nus salarial de " . ($work * 100) . "% por 5 dias.";
 				addlog($member['id'], $logmsg, $db);
 			}
 
 			$insert['reino'] = $player->reino;
-			$insert['log'] = "Os sal·rios trabalhistas foram alterados.<br/>BÙnus salarial de " . ($work * 100) . "% por 5 dias.";
+			$insert['log'] = "Os sal√°rios trabalhistas foram alterados.<br/>B√¥nus salarial de " . ($work * 100) . "% por 5 dias.";
 			$insert['time'] = time();
 			$db->autoexecute('log_reino', $insert, 'INSERT');
 
@@ -52,9 +52,9 @@ if ($reino['imperador'] == $player->id) {
 
 	include("templates/private_header.php");
 	if ($_GET['success'] == 'true') {
-		echo showAlert("BÙnus salarial adicionado com sucesso.", "green");
+		echo showAlert("B√¥nus salarial adicionado com sucesso.", "green");
 	} elseif ($_GET['success'] == 'false') {
-		echo showAlert("Um bÙnus salarial j· est· ativo.", "red");
+		echo showAlert("Um b√¥nus salarial j√° est√° ativo.", "red");
 	} else {
 		echo showAlert($reino['ouro'] . " moedas de ouro nos cofres do reino.");
 	}
@@ -63,17 +63,17 @@ if ($reino['imperador'] == $player->id) {
 	echo "<tr><td width=\"35%\">";
 
 		echo "<table width=\"100%\" style=\"text-align: center;\">";
-			echo "<tr><td class=\"brown\" width=\"100%\"><center><b>BÙnus Salarial</b></center></td></tr>";
+			echo "<tr><td class=\"brown\" width=\"100%\"><center><b>B√¥nus Salarial</b></center></td></tr>";
 			echo "<tr><td class=\"off\">";
 
 				echo "<table width=\"100%\">";
 				$query = $db->execute("select `id` from `players` where `reino`=?", array($player->reino));
-				echo "<tr><td>10%</td><td>de bÙnus por</td><td>" . ceil(300 * $query->recordcount()) . "</td></tr>";
-				echo "<tr><td>15%</td><td>de bÙnus por</td><td>" . ceil(400 * $query->recordcount()) . "</td></tr>";
-				echo "<tr><td>20%</td><td>de bÙnus por</td><td>" . ceil(500 * $query->recordcount()) . "</td></tr>";
+				echo "<tr><td>10%</td><td>de b√¥nus por</td><td>" . ceil(300 * $query->recordcount()) . "</td></tr>";
+				echo "<tr><td>15%</td><td>de b√¥nus por</td><td>" . ceil(400 * $query->recordcount()) . "</td></tr>";
+				echo "<tr><td>20%</td><td>de b√¥nus por</td><td>" . ceil(500 * $query->recordcount()) . "</td></tr>";
 				echo "</table>";
 
-				echo "<font size=\"1px\">Os bÙnus sal·riais duram 5 dias.</font>";
+				echo "<font size=\"1px\">Os b√¥nus sal√°riais duram 5 dias.</font>";
 
 			echo "</td></tr>";
 		echo "</table>";
@@ -82,16 +82,16 @@ if ($reino['imperador'] == $player->id) {
 	echo "<td width=\"65%\">";
 
 		echo "<table width=\"100%\" style=\"text-align: center;\">";
-			echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Ajustar Sal·rios</b></center></td></tr>";
+			echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Ajustar Sal√°rios</b></center></td></tr>";
 			echo "<tr><td class=\"salmon\">";
 
-				echo "<font size=\"1px\">VocÍ pode usar o dinheiro dos cofres do reino para<br/>aumentar o sal·rio dos trabalhadores do reino por 5 dias.</font>";
+				echo "<font size=\"1px\">Voc√™ pode usar o dinheiro dos cofres do reino para<br/>aumentar o sal√°rio dos trabalhadores do reino por 5 dias.</font>";
 
 				if ($reino['gates'] > time()){
-					echo "<p><b>BÙnus sal·riais de " . ($reino['work'] * 100) . "% j· est„o ativos.</b></p>";
+					echo "<p><b>B√¥nus sal√°riais de " . ($reino['work'] * 100) . "% j√° est√£o ativos.</b></p>";
 				} else {
 					echo "<p><form method=\"POST\" action=\"reino_work.php\">";
-					echo "<b>BÙnus de:</b> ";
+					echo "<b>B√¥nus de:</b> ";
 
 					echo "<select name=\"work\">";
 						if (($reino['work'] == '0.1') or ($reino['work'] == '0')){
@@ -109,7 +109,7 @@ if ($reino['imperador'] == $player->id) {
 						}
 					echo "</select>";
 
-					echo "<input type=\"submit\" name=\"submit\" value=\"Atualizar Sal·rios\">";
+					echo "<input type=\"submit\" name=\"submit\" value=\"Atualizar Sal√°rios\">";
 					echo "</form></p>";
 				}
 

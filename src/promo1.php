@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Missões");
+define("PAGENAME", "MissÃµes");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 include("checkhp.php");
@@ -9,8 +9,8 @@ include("checkwork.php");
 if ($player->level < 240)
 {
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Missão</b></legend>\n";
-	echo "<i>Seu nivel é muito baixo!</i><br/>\n";
+	echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+	echo "<i>Seu nivel Ã© muito baixo!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include("templates/private_footer.php");
@@ -25,7 +25,7 @@ if ($_GET['act'] == "pay"){
 		if ($player->gold - 2000000 < 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-		echo "<i>Você não possui esta quantia de ouro!</i><br/><br/>\n";
+		echo "<i>VocÃª nÃ£o possui esta quantia de ouro!</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -47,7 +47,7 @@ if ($_GET['act'] == "pay"){
 		}else{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-		echo "Você já me pagou!</i><br/><br/>\n";
+		echo "VocÃª jÃ¡ me pagou!</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -62,7 +62,7 @@ if ($_GET['act'] == "pay"){
 	if ($_GET['next'] == 1){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-		echo "<i>É sobre uma guerreiro incrível, porém não me lembro muito bem. Acho que 2 milhões ajudarão a refrescar minha memória.</i><br/>\n";
+		echo "<i>Ã‰ sobre uma guerreiro incrÃ­vel, porÃ©m nÃ£o me lembro muito bem. Acho que 2 milhÃµes ajudarÃ£o a refrescar minha memÃ³ria.</i><br/>\n";
 		echo "<a href=\"promo1.php?next=2\">Eu pago</a> | <a href=\"promo1.php?next=3\">Nunca!</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -71,7 +71,7 @@ if ($_GET['act'] == "pay"){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
 		echo "<i>Deseja pagar 2000000 de ouro para ouvir mais sore este guerreiro?</i><br/>\n";
-		echo "<a href=\"promo1.php?act=pay\">Sim</a> | <a href=\"promo1.php?next=3\">Não</a>.";
+		echo "<a href=\"promo1.php?act=pay\">Sim</a> | <a href=\"promo1.php?next=3\">NÃ£o</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -86,8 +86,8 @@ if ($_GET['act'] == "pay"){
 	}else{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-		echo "<i>Olá " . $player->username . "! Ouvi muito sobre você na cidade, e tambem ouvi alguns boatos que você vai querer ouvir.</i><br/>\n";
-		echo "<a href=\"promo1.php?next=1\">Que Boatos?</a> | <a href=\"promo1.php?next=3\">Não estou interessado</a>.";
+		echo "<i>OlÃ¡ " . $player->username . "! Ouvi muito sobre vocÃª na cidade, e tambem ouvi alguns boatos que vocÃª vai querer ouvir.</i><br/>\n";
+		echo "<a href=\"promo1.php?next=1\">Que Boatos?</a> | <a href=\"promo1.php?next=3\">NÃ£o estou interessado</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -99,8 +99,8 @@ if ($_GET['act'] == "pay"){
 	if ($_GET['next'] == 1){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-		echo "<i>Seu nome é Friden o destemido guerreiro banhado pelo sangue do dragão!<br/>Derrote Friden e obtenha sua espada que também foi banhada pelo sangue do dragão, e você poderá se tornar um grandioso Guerreiro, porém devo avisar-lhe que não é uma tarefa fácil. Friden tem muitos admiradores e amigos, cuidado para não encontralos em sua jornada.</i><br/>\n";
-		echo "<a href=\"promo1.php?next=2\">Desejo começar minha jornada</a> | <a href=\"promo1.php?next=3\">Não estou preparado</a>.";
+		echo "<i>Seu nome Ã© Friden o destemido guerreiro banhado pelo sangue do dragÃ£o!<br/>Derrote Friden e obtenha sua espada que tambÃ©m foi banhada pelo sangue do dragÃ£o, e vocÃª poderÃ¡ se tornar um grandioso Guerreiro, porÃ©m devo avisar-lhe que nÃ£o Ã© uma tarefa fÃ¡cil. Friden tem muitos admiradores e amigos, cuidado para nÃ£o encontralos em sua jornada.</i><br/>\n";
+		echo "<a href=\"promo1.php?next=2\">Desejo comeÃ§ar minha jornada</a> | <a href=\"promo1.php?next=3\">NÃ£o estou preparado</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -116,7 +116,7 @@ if ($_GET['act'] == "pay"){
 	}else if ($_GET['next'] == 3){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-		echo "<i>Tudo bem, treine um pouco mais e mais tarde você poderá buscar por Friden.</i><br/>\n";
+		echo "<i>Tudo bem, treine um pouco mais e mais tarde vocÃª poderÃ¡ buscar por Friden.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -124,7 +124,7 @@ if ($_GET['act'] == "pay"){
 	}else{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-		echo "<i>Dizem por ai que existe um homem que todos julgam ser imortal.  Arranque sua cabeça, perfure seus pulmões, corte-o ao meio nada o matará... A não ser, que perfurem seu coração, sua grande franqueza.</i><br/>\n";
+		echo "<i>Dizem por ai que existe um homem que todos julgam ser imortal.  Arranque sua cabeÃ§a, perfure seus pulmÃµes, corte-o ao meio nada o matarÃ¡... A nÃ£o ser, que perfurem seu coraÃ§Ã£o, sua grande franqueza.</i><br/>\n";
 		echo "<a href=\"promo1.php?next=1\">Conte-me Mais!</a> | <a href=\"promo1.php?next=3\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -136,16 +136,16 @@ if ($_GET['act'] == "pay"){
 		{
 		if ($_GET['next'] == 3){
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você conseguiu despistar Alexia, mas deverá enfrentá-la mais tarde.</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª conseguiu despistar Alexia, mas deverÃ¡ enfrentÃ¡-la mais tarde.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
 		}else{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Conforme você procurava por Friden, encontrou Alexia, uma de seus seguidores.</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>Conforme vocÃª procurava por Friden, encontrou Alexia, uma de seus seguidores.</i><br/>\n";
 		echo "<a href=\"bquest.php\">Lutar contra Alexia</a> | <a href=\"promo1.php?next=3\">Fugir</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -160,16 +160,16 @@ if ($_GET['act'] == "pay"){
 		header("Location: bquest.php");
 		}elseif ($_GET['next'] == 3){
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você conseguiu despistar Ramthysts, mas deverá enfrentá-lo mais tarde.</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª conseguiu despistar Ramthysts, mas deverÃ¡ enfrentÃ¡-lo mais tarde.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
 		}else{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você derrotou Alexia, e continuou sua jornada, até encontrar Ramthysts, o poderoso guerreiro manipulador de fogo!</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª derrotou Alexia, e continuou sua jornada, atÃ© encontrar Ramthysts, o poderoso guerreiro manipulador de fogo!</i><br/>\n";
 		echo "<a href=\"promo1.php?next=1\">Lutar contra Ramthysts</a> | <a href=\"promo1.php?next=3\">Fugir</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -184,16 +184,16 @@ if ($_GET['act'] == "pay"){
 		header("Location: bquest.php");
 		}elseif ($_GET['next'] == 3){
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você conseguiu despistar Friden, mas deverá enfrentá-lo mais tarde.</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª conseguiu despistar Friden, mas deverÃ¡ enfrentÃ¡-lo mais tarde.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
 		}else{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você derrotou Ramthysts, e logo após encontrou Friden, que cabara de sair de uma luta, o sangue do guerreiro derrotado por Friden escorria em sua face.</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª derrotou Ramthysts, e logo apÃ³s encontrou Friden, que cabara de sair de uma luta, o sangue do guerreiro derrotado por Friden escorria em sua face.</i><br/>\n";
 		echo "<a href=\"promo1.php?next=1\">Lutar contra Friden</a> | <a href=\"promo1.php?next=3\">Fugir</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -207,8 +207,8 @@ if ($_GET['act'] == "pay"){
 		$query = $db->execute("update `players` set `promoted`=? where `id`=?", array(p, $player->id));
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(90, $player->id, 12));
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Ao segurar a espada de Friden você sente seus músculos enrijecerem e seu corpo fortalecido. Você acaba de se tornar um Cavaleiro!</i><br/><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>Ao segurar a espada de Friden vocÃª sente seus mÃºsculos enrijecerem e seu corpo fortalecido. VocÃª acaba de se tornar um Cavaleiro!</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -219,7 +219,7 @@ if ($_GET['act'] == "pay"){
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-		echo "<i>Você já terminou esta missão!</i><br/>\n";
+		echo "<i>VocÃª jÃ¡ terminou esta missÃ£o!</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -237,8 +237,8 @@ if ($_GET['act'] == "pay"){
 		{
 		if ($player->gold - 2000000 < 0){
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você não possui esta quantia de ouro!</i><br/><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª nÃ£o possui esta quantia de ouro!</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -250,8 +250,8 @@ if ($_GET['act'] == "pay"){
 		$insert['quest_status'] = 1;
 		$query = $db->autoexecute('quests', $insert, 'INSERT');
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você se inscreveu no torneio e agora podemos continuar.</i><br>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª se inscreveu no torneio e agora podemos continuar.</i><br>\n";
 		echo "<a href=\"promo1.php\">Continuar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -259,8 +259,8 @@ if ($_GET['act'] == "pay"){
 		}
 		}else{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "Você já me pagou!</i><br/><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "VocÃª jÃ¡ me pagou!</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -273,23 +273,23 @@ if ($_GET['act'] == "pay"){
 	if ($verificacao->recordcount() == 0) {
 	if ($_GET['next'] == 1){
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você segue e encontra um gigantesco coliseu, e ao redor vê vários dos mais famosos magos da região. Este torneio não será nada fácil. Você realmente deseja participar?</i><br/>\n";
-		echo "<a href=\"promo1.php?next=2\">Sim</a> | <a href=\"promo1.php?next=3\">Não</a>.";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª segue e encontra um gigantesco coliseu, e ao redor vÃª vÃ¡rios dos mais famosos magos da regiÃ£o. Este torneio nÃ£o serÃ¡ nada fÃ¡cil. VocÃª realmente deseja participar?</i><br/>\n";
+		echo "<a href=\"promo1.php?next=2\">Sim</a> | <a href=\"promo1.php?next=3\">NÃ£o</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
 	}else if ($_GET['next'] == 2){
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você precisará pagar 2000000 de ouro para participar do torneio. Acredite, valerá a pena!</i><br/>\n";
-		echo "<a href=\"promo1.php?act=pay\">Eu pago</a> | <a href=\"promo1.php?next=3\">Não</a>.";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª precisarÃ¡ pagar 2000000 de ouro para participar do torneio. Acredite, valerÃ¡ a pena!</i><br/>\n";
+		echo "<a href=\"promo1.php?act=pay\">Eu pago</a> | <a href=\"promo1.php?next=3\">NÃ£o</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
 	}else if ($_GET['next'] == 3){
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
 		echo "<i>Tudo bem, talvez mais tarde.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
@@ -297,9 +297,9 @@ if ($_GET['act'] == "pay"){
 		exit;
 	}else{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você sente algo queimar sua pele durante o sono, e ao acordar se repara com uma marca talhada em seu peito em forma de um dragão. Você sabia que a hora chegava e teria de enfrentar seu destino!";
-		echo "<br/>Durante toda sua vida você se preparava que estas marcas aparecessem. Está na hora de você participar do torneio dos magos, onde você deverá provar que você domina seus feitiços e sua mente.</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª sente algo queimar sua pele durante o sono, e ao acordar se repara com uma marca talhada em seu peito em forma de um dragÃ£o. VocÃª sabia que a hora chegava e teria de enfrentar seu destino!";
+		echo "<br/>Durante toda sua vida vocÃª se preparava que estas marcas aparecessem. EstÃ¡ na hora de vocÃª participar do torneio dos magos, onde vocÃª deverÃ¡ provar que vocÃª domina seus feitiÃ§os e sua mente.</i><br/>\n";
 		echo "<a href=\"promo1.php?next=2\">Continuar</a> | <a href=\"promo1.php?next=3\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -311,16 +311,16 @@ if ($_GET['act'] == "pay"){
 		{
 	if ($_GET['next'] == 1){
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Seu nome é Friden o destemido guerreiro banhado pelo sangue do dragão!<br/>Derrote Friden e obtenha sua espada que também foi banhada pelo sangue do dragão, e você poderá se tornar um grandioso Guerreiro, porém devo avisar-lhe que não é uma tarefa fácil. Friden tem muitos admiradores e amigos, cuidado para não encontralos em sua jornada.</i><br/>\n";
-		echo "<a href=\"promo1.php?next=2\">Desejo começar minha jornada</a> | <a href=\"promo1.php?next=3\">Não estou preparado</a>.";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>Seu nome Ã© Friden o destemido guerreiro banhado pelo sangue do dragÃ£o!<br/>Derrote Friden e obtenha sua espada que tambÃ©m foi banhada pelo sangue do dragÃ£o, e vocÃª poderÃ¡ se tornar um grandioso Guerreiro, porÃ©m devo avisar-lhe que nÃ£o Ã© uma tarefa fÃ¡cil. Friden tem muitos admiradores e amigos, cuidado para nÃ£o encontralos em sua jornada.</i><br/>\n";
+		echo "<a href=\"promo1.php?next=2\">Desejo comeÃ§ar minha jornada</a> | <a href=\"promo1.php?next=3\">NÃ£o estou preparado</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
 	}else if ($_GET['next'] == 2){
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(2, $player->id, 12));
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
 		echo "<i>Adimiro sua corragem guerreiro, boa sorte em sua jornada.</i><br/>\n";
 		echo "<a href=\"promo1.php\">Continuar</a>.";
 	        echo "</fieldset>";
@@ -328,7 +328,7 @@ if ($_GET['act'] == "pay"){
 		exit;
 	}else if ($_GET['next'] == 3){
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
 		echo "<i>Tudo bem, treine um pouco mais e volte mais tarde.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
@@ -336,8 +336,8 @@ if ($_GET['act'] == "pay"){
 		exit;
 	}else{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Dizem por ai que existe um homem que todos julgam ser imortal.  Arranque sua cabeça, perfure seus pulmões, corte-o ao meio nada o matará... A não ser, que perfurem seu coração, sua grande franqueza.</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>Dizem por ai que existe um homem que todos julgam ser imortal.  Arranque sua cabeÃ§a, perfure seus pulmÃµes, corte-o ao meio nada o matarÃ¡... A nÃ£o ser, que perfurem seu coraÃ§Ã£o, sua grande franqueza.</i><br/>\n";
 		echo "<a href=\"promo1.php?next=1\">Conte-me Mais!</a> | <a href=\"promo1.php?next=3\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -349,16 +349,16 @@ if ($_GET['act'] == "pay"){
 		{
 		if ($_GET['next'] == 1){
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Seu primerio oponente é Detros. Este mago é famoso pela sua incrível velocidade que tem ao lançar feitiços.</i><br/>\n";
-		echo "<a href=\"bquest.php\">Lutar contra Detros</a> | <a href=\"promo1.php?next=3\">Não estou preparado</a>.";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>Seu primerio oponente Ã© Detros. Este mago Ã© famoso pela sua incrÃ­vel velocidade que tem ao lanÃ§ar feitiÃ§os.</i><br/>\n";
+		echo "<a href=\"bquest.php\">Lutar contra Detros</a> | <a href=\"promo1.php?next=3\">NÃ£o estou preparado</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
 		}elseif ($_GET['next'] == 3){
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você abandonou o coliseu e acabou deixando uma má impressão entre os magos.</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª abandonou o coliseu e acabou deixando uma mÃ¡ impressÃ£o entre os magos.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -366,7 +366,7 @@ if ($_GET['act'] == "pay"){
 		}else{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Torneio</b></legend>\n";
-		echo "<i>O torneio se baseia em três etapas em que você terá de derrotar 3 guerreiros e o último jovem em pé será o que domina seus poderes!</i><br/>\n";
+		echo "<i>O torneio se baseia em trÃªs etapas em que vocÃª terÃ¡ de derrotar 3 guerreiros e o Ãºltimo jovem em pÃ© serÃ¡ o que domina seus poderes!</i><br/>\n";
 		echo "<a href=\"bquest.php\">Continuar</a> | <a href=\"promo1.php?next=3\">Fugir</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -381,16 +381,16 @@ if ($_GET['act'] == "pay"){
 		header("Location: bquest.php");
 		}elseif ($_GET['next'] == 3){
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você abandonou o coliseu e acabou deixando uma má impressão entre os magos.</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª abandonou o coliseu e acabou deixando uma mÃ¡ impressÃ£o entre os magos.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
 		}else{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você derrotou Detros, mas é bom se recuperar logo, pois agora você terá de lutar com Azura, uma poderosa feiticeira.</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª derrotou Detros, mas Ã© bom se recuperar logo, pois agora vocÃª terÃ¡ de lutar com Azura, uma poderosa feiticeira.</i><br/>\n";
 		echo "<a href=\"promo1.php?next=1\">Lutar contra Azura</a> | <a href=\"promo1.php?next=3\">Fugir</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -405,16 +405,16 @@ if ($_GET['act'] == "pay"){
 		header("Location: bquest.php");
 		}elseif ($_GET['next'] == 3){
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você abandonou o coliseu e acabou deixando uma má impressão entre os magos.</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª abandonou o coliseu e acabou deixando uma mÃ¡ impressÃ£o entre os magos.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
 		}else{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Incrível! Você derrotou Azura. Muitos pelo colizeu não acreditavam que isso aconteceria!<br/>Você avançou para a etapa final do torneio, e agora terá de enfrentar Draconos, um mago com poderes incríveis.</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>IncrÃ­vel! VocÃª derrotou Azura. Muitos pelo colizeu nÃ£o acreditavam que isso aconteceria!<br/>VocÃª avanÃ§ou para a etapa final do torneio, e agora terÃ¡ de enfrentar Draconos, um mago com poderes incrÃ­veis.</i><br/>\n";
 		echo "<a href=\"promo1.php?next=1\">Lutar contra Draconos</a> | <a href=\"promo1.php?next=3\">Fugir</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -428,8 +428,8 @@ if ($_GET['act'] == "pay"){
 		$query = $db->execute("update `players` set `promoted`=? where `id`=?", array(p, $player->id));
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(90, $player->id, 12));
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você derrotou o destemido Draconos! Nunca um forasteiro havia conseguido tamanha façanha.<br/><b>Você foi promovido para um Arquimago, e agora possui a Draconia Staff!</b></i><br/><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª derrotou o destemido Draconos! Nunca um forasteiro havia conseguido tamanha faÃ§anha.<br/><b>VocÃª foi promovido para um Arquimago, e agora possui a Draconia Staff!</b></i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -439,8 +439,8 @@ if ($_GET['act'] == "pay"){
 	if ($quest['quest_status'] == 90)
 		{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você já terminou esta missão!</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª jÃ¡ terminou esta missÃ£o!</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -456,7 +456,7 @@ if ($_GET['act'] == "pay"){
 		if ($player->gold - 2000000 < 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-		echo "<i>Você não possui esta quantia de ouro!</i><br/><br/>\n";
+		echo "<i>VocÃª nÃ£o possui esta quantia de ouro!</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -478,7 +478,7 @@ if ($_GET['act'] == "pay"){
 		}else{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-		echo "Você já me pagou!</i><br/><br/>\n";
+		echo "VocÃª jÃ¡ me pagou!</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -493,7 +493,7 @@ if ($_GET['act'] == "pay"){
 	if ($_GET['next'] == 1){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-		echo "<i>É sobre o famoso arqueiro Baltazar, porém não me lembro muito bem. Acho que 2 milhões ajudarão a refrescar minha memória.</i><br/>\n";
+		echo "<i>Ã‰ sobre o famoso arqueiro Baltazar, porÃ©m nÃ£o me lembro muito bem. Acho que 2 milhÃµes ajudarÃ£o a refrescar minha memÃ³ria.</i><br/>\n";
 		echo "<a href=\"promo1.php?next=2\">Eu pago</a> | <a href=\"promo1.php?next=3\">Nunca!</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -502,7 +502,7 @@ if ($_GET['act'] == "pay"){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
 		echo "<i>Deseja pagar 2000000 de ouro para ouvir mais sore Baltazar?</i><br/>\n";
-		echo "<a href=\"promo1.php?act=pay\">Sim</a> | <a href=\"promo1.php?next=3\">Não</a>.";
+		echo "<a href=\"promo1.php?act=pay\">Sim</a> | <a href=\"promo1.php?next=3\">NÃ£o</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -517,8 +517,8 @@ if ($_GET['act'] == "pay"){
 	}else{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-		echo "<i>Olá " . $player->username . "! Ouvi muito sobre você na cidade, e tambem ouvi alguns boatos que você vai querer ouvir.</i><br/>\n";
-		echo "<a href=\"promo1.php?next=1\">Que Boatos?</a> | <a href=\"promo1.php?next=3\">Não estou interessado</a>.";
+		echo "<i>OlÃ¡ " . $player->username . "! Ouvi muito sobre vocÃª na cidade, e tambem ouvi alguns boatos que vocÃª vai querer ouvir.</i><br/>\n";
+		echo "<a href=\"promo1.php?next=1\">Que Boatos?</a> | <a href=\"promo1.php?next=3\">NÃ£o estou interessado</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -530,8 +530,8 @@ if ($_GET['act'] == "pay"){
 	if ($_GET['next'] == 1){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-		echo "<i>O arco de Baltazar foi banhado pelo sangue de demônios, é a arma perfeita.<br/>Porém, os demônios estão sempre próximos a Baltazar, você terá de enfrenta-los em sua jornada.</i><br/>\n";
-		echo "<a href=\"promo1.php?next=2\">Desejo começar minha jornada</a> | <a href=\"promo1.php?next=3\">Não estou preparado</a>.";
+		echo "<i>O arco de Baltazar foi banhado pelo sangue de demÃ´nios, Ã© a arma perfeita.<br/>PorÃ©m, os demÃ´nios estÃ£o sempre prÃ³ximos a Baltazar, vocÃª terÃ¡ de enfrenta-los em sua jornada.</i><br/>\n";
+		echo "<a href=\"promo1.php?next=2\">Desejo comeÃ§ar minha jornada</a> | <a href=\"promo1.php?next=3\">NÃ£o estou preparado</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -547,7 +547,7 @@ if ($_GET['act'] == "pay"){
 	}else if ($_GET['next'] == 3){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-		echo "<i>Tudo bem, treine um pouco mais e mais tarde você poderá buscar por Baltazar, mas não demore demais, ou ele poderá acabar indo embora.</i><br/>\n";
+		echo "<i>Tudo bem, treine um pouco mais e mais tarde vocÃª poderÃ¡ buscar por Baltazar, mas nÃ£o demore demais, ou ele poderÃ¡ acabar indo embora.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -555,7 +555,7 @@ if ($_GET['act'] == "pay"){
 	}else{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-		echo "<i>Dizem por que Baltazar está morando em uma caverna ao norte da cidade. E esta provavelmete será sua única chance de roubar seu poderoso arco.</i><br/>\n";
+		echo "<i>Dizem por que Baltazar estÃ¡ morando em uma caverna ao norte da cidade. E esta provavelmete serÃ¡ sua Ãºnica chance de roubar seu poderoso arco.</i><br/>\n";
 		echo "<a href=\"promo1.php?next=1\">Conte-me Mais!</a> | <a href=\"promo1.php?next=3\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -567,17 +567,17 @@ if ($_GET['act'] == "pay"){
 		{
 		if ($_GET['next'] == 3){
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você fugiu, mas sabe que deverá enfrentar o demônio se quiser continuar.</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª fugiu, mas sabe que deverÃ¡ enfrentar o demÃ´nio se quiser continuar.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
 		}else{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você seguiu ao norte da cidade como Thomas mencionou, em busca da caverna. Finalmente a encontra, mas avista um demônio em sua entrada.</i><br/>\n";
-		echo "<a href=\"bquest.php\">Lutar contra o Demônio</a> | <a href=\"promo1.php?next=3\">Fugir</a>.";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª seguiu ao norte da cidade como Thomas mencionou, em busca da caverna. Finalmente a encontra, mas avista um demÃ´nio em sua entrada.</i><br/>\n";
+		echo "<a href=\"bquest.php\">Lutar contra o DemÃ´nio</a> | <a href=\"promo1.php?next=3\">Fugir</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -591,17 +591,17 @@ if ($_GET['act'] == "pay"){
 		header("Location: bquest.php");
 		}elseif ($_GET['next'] == 3){
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você fugiu, mas sabe que deverá enfrentar o demônio se quiser continuar.</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª fugiu, mas sabe que deverÃ¡ enfrentar o demÃ´nio se quiser continuar.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
 		}else{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você matou o demônio, mas com o barulho que você fez, vê outro demônio se aproxima. Oque você fará?</i><br/>\n";
-		echo "<a href=\"promo1.php?next=1\">Lutar contra o Demônio</a> | <a href=\"promo1.php?next=3\">Fugir</a>.";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª matou o demÃ´nio, mas com o barulho que vocÃª fez, vÃª outro demÃ´nio se aproxima. Oque vocÃª farÃ¡?</i><br/>\n";
+		echo "<a href=\"promo1.php?next=1\">Lutar contra o DemÃ´nio</a> | <a href=\"promo1.php?next=3\">Fugir</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -615,16 +615,16 @@ if ($_GET['act'] == "pay"){
 		header("Location: bquest.php");
 		}elseif ($_GET['next'] == 3){
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você conseguiu despistar Baltazar, mas deverá enfrentá-lo mais tarde.</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª conseguiu despistar Baltazar, mas deverÃ¡ enfrentÃ¡-lo mais tarde.</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
 		}else{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você derrotou o segundo demônio, e ao entrar um pouco mais na caverna vê Baltazar furioso. Oque você fará?</i><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª derrotou o segundo demÃ´nio, e ao entrar um pouco mais na caverna vÃª Baltazar furioso. Oque vocÃª farÃ¡?</i><br/>\n";
 		echo "<a href=\"promo1.php?next=1\">Lutar contra Baltazar</a> | <a href=\"promo1.php?next=3\">Fugir</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -638,8 +638,8 @@ if ($_GET['act'] == "pay"){
 		$query = $db->execute("update `players` set `promoted`=? where `id`=?", array(p, $player->id));
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(90, $player->id, 12));
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Ao tocar no arco de Baltazar você sente seus músculos enrijecerem e seu corpo fortalecido. Você acaba de se tornar um Arqueiro Royal!</i><br/><br/>\n";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>Ao tocar no arco de Baltazar vocÃª sente seus mÃºsculos enrijecerem e seu corpo fortalecido. VocÃª acaba de se tornar um Arqueiro Royal!</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -650,7 +650,7 @@ if ($_GET['act'] == "pay"){
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-		echo "<i>Você já terminou esta missão!</i><br/>\n";
+		echo "<i>VocÃª jÃ¡ terminou esta missÃ£o!</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");

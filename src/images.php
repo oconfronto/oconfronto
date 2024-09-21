@@ -21,13 +21,13 @@ background: #FFFDE0;
 <table width="100%" border="0">
   <tr>
     <td class="off" onmouseover="this.className='on'" onmouseout="this.className='off'" height="200"><div align="center">
-	<a href="images/ss/ss1.png" rel="lightbox[screens]" title="V·rias formas de caÁa disponÌveis."><img src="images/ss/ss1.png" width="180" height="160" border="2px" alt="Batalha" /></a><br />
+	<a href="images/ss/ss1.png" rel="lightbox[screens]" title="V√°rias formas de ca√ßa dispon√≠veis."><img src="images/ss/ss1.png" width="180" height="160" border="2px" alt="Batalha" /></a><br />
 	<br /><strong>Batalha</strong></div></td>
     <td class="off" onmouseover="this.className='on'" onmouseout="this.className='off'" height="200"><div align="center">
-	<a href="images/ss/ss2.png" rel="lightbox[screens]" title="Equipamentos, itens especiais, o ferreiro e o mercado fazem dos itens uma das principais moedas de troca do jogo."><img src="images/ss/ss2.png" width="180" height="160" border="2px" alt="Invent·rio" /></a><br />
-        <br /><strong>Invent·rio</strong></div></td>
+	<a href="images/ss/ss2.png" rel="lightbox[screens]" title="Equipamentos, itens especiais, o ferreiro e o mercado fazem dos itens uma das principais moedas de troca do jogo."><img src="images/ss/ss2.png" width="180" height="160" border="2px" alt="Invent√°rio" /></a><br />
+        <br /><strong>Invent√°rio</strong></div></td>
     <td class="off" onmouseover="this.className='on'" onmouseout="this.className='off'" height="200"><div align="center">
-	<a href="images/ss/ss3.png" rel="lightbox[screens]" title="A luta em turnos alÈm de ser agradavel, permite o uso de magias e ataques especiais."><img src="images/ss/ss3.png" width="180" height="160" border="2px" alt="Monstros" /></a><br />
+	<a href="images/ss/ss3.png" rel="lightbox[screens]" title="A luta em turnos al√©m de ser agradavel, permite o uso de magias e ataques especiais."><img src="images/ss/ss3.png" width="180" height="160" border="2px" alt="Monstros" /></a><br />
         <br /><strong>Monstros</strong></div></td>
   </tr>
 </table>
@@ -35,10 +35,10 @@ background: #FFFDE0;
 <table width="100%" border="0">
   <tr>
     <td class="off" onmouseover="this.className='on'" onmouseout="this.className='off'" height="200"><div align="center">
-	<a href="images/ss/ss4.png" rel="lightbox[screens]" title="FaÁa amigos, crie grupos e cl„s. Converse, troque itens, e atÈ caÁe com seus amigos!"><img src="images/ss/ss4.png" width="180" height="160" border="2px" alt="Amigos" /></a><br />
+	<a href="images/ss/ss4.png" rel="lightbox[screens]" title="Fa√ßa amigos, crie grupos e cl√£s. Converse, troque itens, e at√© ca√ße com seus amigos!"><img src="images/ss/ss4.png" width="180" height="160" border="2px" alt="Amigos" /></a><br />
         <br /><strong>Amigos</strong></div></td>
     <td class="off" onmouseover="this.className='on'" onmouseout="this.className='off'" height="200"><div align="center">
-	<a href="images/ss/ss5.png" rel="lightbox[screens]" title="Deixe seu personagem trabalhando antes de sair do jogo, e garanta um pouco de outro extra quando vocÍ voltar."><img src="images/ss/ss5.png" width="180" height="160" border="2px" alt="Trabalho" /></a><br />
+	<a href="images/ss/ss5.png" rel="lightbox[screens]" title="Deixe seu personagem trabalhando antes de sair do jogo, e garanta um pouco de outro extra quando voc√™ voltar."><img src="images/ss/ss5.png" width="180" height="160" border="2px" alt="Trabalho" /></a><br />
 	<br /><strong>Trabalho</strong></div></td>
     <td class="off" onmouseover="this.className='on'" onmouseout="this.className='off'" height="200"><div align="center"><a href="images/ss/ss6.png" rel="lightbox[screens]"><img src="images/ss/ss6.png" width="180" height="160" border="2px" alt="Perfil" /></a><br />
       <br /><strong>Perfil</strong></div></td>

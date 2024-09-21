@@ -11,8 +11,8 @@ if ($numgoldbars->recordcount() > 2){
 			$db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", array(40, 40, 40, 40, $ringid));
 
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Atenção</b></legend>\n";
-        echo "Os três cristais mágicos que você possuia em seu inventário parecem ter se misturado, e formado um novo anél.<br />";
+	echo "<fieldset><legend><b>AtenÃ§Ã£o</b></legend>\n";
+        echo "Os trÃªs cristais mÃ¡gicos que vocÃª possuia em seu inventÃ¡rio parecem ter se misturado, e formado um novo anÃ©l.<br />";
         echo "<a href=\"inventory.php\">Voltar</a>.";
 	echo "</fieldset>";
         include("templates/private_footer.php");

@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Mudanças Recentes");
+define("PAGENAME", "MudanÃ§as Recentes");
 $player = check_user($secret_key, $db);
 
 $error = 0;
@@ -14,14 +14,14 @@ $id_log = $_GET['delid'];
 
 if(OCv2::totaldados(changelog,id,$id_log,false)){
 if(!$_GET['confirm'] == yes){
-echo showAlert("Deseja realmente deletar este log? <a href='?delid=$id_log&confirm=yes'>Sim</a> | <a href='changelog.php'>Não</a>", "red");
+echo showAlert("Deseja realmente deletar este log? <a href='?delid=$id_log&confirm=yes'>Sim</a> | <a href='changelog.php'>NÃ£o</a>", "red");
 }
 if($_GET['confirm'] == yes){
 $db->execute("DELETE FROM changelog WHERE id=$id_log");
 echo showAlert("Log deletado com sucesso", "red");
 }
 }else{
-echo showAlert("Log não encontrado", "red");
+echo showAlert("Log nÃ£o encontrado", "red");
 }
 }
 
@@ -35,7 +35,7 @@ $comentario_edit = $lisquery['descricao'];
 
 }
 }else{
-echo showAlert("Log não encontrado", "red");
+echo showAlert("Log nÃ£o encontrado", "red");
 }
 }
 
@@ -177,7 +177,7 @@ if (($player->gm_rank >= 90))
 </tr>
 <tr class="salmon">
 <td>
-<b>Título:</b> 
+<b>TÃ­Âtulo:</b> 
 <input name="title" size="26" value="<?php echo $title_edit; ?>" type="text"> 
 
 <b>Categoria:</b>
@@ -252,8 +252,8 @@ echo "<input name=\"vota\" value=\"".$lisquery['id']."\" type=\"radio\"> ".$lisq
 <table width="100%"><tbody>
 <tr>
 <td class="brown" >
-<b>Lista de Alterações</b>
-<img src="images/help.gif" title="header=[Informação] body=[<font size='1px'>Veja abaixo a lista de todas as alterações no game que foram feita ou estão em andamento.</font>]">
+<b>Lista de AlteraÃ§Ãµes</b>
+<img src="images/help.gif" title="header=[InformaÃ§Ã£o] body=[<font size='1px'>Veja abaixo a lista de todas as alteraÃ§Ãµes no game que foram feita ou estÃ£o em andamento.</font>]">
 
 </td>
 </tr>
@@ -292,7 +292,7 @@ if (($player->gm_rank >= 90)){
 }
 ?>
 </b><br> 
-<b>Comentário:</b> <?php echo $member['descricao'] ?>
+<b>ComentÃ¡rio:</b> <?php echo $member['descricao'] ?>
 <?php
 $query_n = $db->execute("select * from list_sistemas where id = $member[type_categoria]");
 
@@ -322,7 +322,7 @@ while($lisquery = $query_n->fetchrow())
 <tbody>
 <tr>
 <td width="80%">
-<font size="2px">Não foram encontrado dados disponíveis<br>
+<font size="2px">NÃ£o foram encontrado dados disponÃ­veis<br>
 
 </font>
 </td>

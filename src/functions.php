@@ -1,5 +1,5 @@
 <?php
-// CLASSES NOVAS PARA OC VERSÓO 2.0 //
+// CLASSES NOVAS PARA OC VERSÃO 2.0 //
 class OCv2
 {
 	function info_db($data, $data2, $data3, $data4)
@@ -52,7 +52,7 @@ class OCv2
 function encodePassword($password)
 {
 
-	$salt = "�h329*�%&�*(smd!�";
+	$salt = "ï¿½h329*ï¿½%&ï¿½*(smd!ï¿½";
 	$hash = sha1($password . $salt);
 
 	for ($i = 0; $i < 1000; $i++) {

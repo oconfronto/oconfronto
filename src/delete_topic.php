@@ -1,7 +1,7 @@
 <?php
 
 include("lib.php");
-define("PAGENAME", "Fórum");
+define("PAGENAME", "FÃ³rum");
 $player = check_user($secret_key, $db);
 
 include("templates/private_header.php");
@@ -19,7 +19,7 @@ if (!$_GET['topic'])
 	}
 	if ($procuramensagem->recordcount() == 0)
 	{
-	echo "Você não pode apagar este tópico! <a href=\"main_forum.php\">Voltar</a>.";
+	echo "VocÃª nÃ£o pode apagar este tÃ³pico! <a href=\"main_forum.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -32,7 +32,7 @@ if (!$_GET['topic'])
 if(isset($_POST['submit']))
 {
 	if ($player->gm_rank > 2){
-	$logalert2 = "O tópico " . $editmsg['topic'] . " foi deletado pelo moderador <b>" . $player->username . "</b>";
+	$logalert2 = "O tÃ³pico " . $editmsg['topic'] . " foi deletado pelo moderador <b>" . $player->username . "</b>";
 	forumlog($logalert2, $db);
 	}
 
@@ -49,7 +49,7 @@ if(isset($_POST['submit']))
         $real = $db->execute("delete from `forum_question` where `id`=?", array($_GET['topic']));
         $real = $db->execute("delete from `forum_answer` where `question_id`=?", array($_GET['topic']));
         $real = $db->execute("delete from `thumb` where `topic_id`=?", array($_GET['topic']));
-	echo "Tópico removido com sucesso! <a href=\"main_forum.php\">Voltar</a>.";
+	echo "TÃ³pico removido com sucesso! <a href=\"main_forum.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 }
@@ -62,7 +62,7 @@ if(isset($_POST['submit']))
 <td>
 <table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF">
 <tr>
-<td colspan="3" bgcolor="#E6E6E6"><strong>Deseja apagar este tópico?</strong></td>
+<td colspan="3" bgcolor="#E6E6E6"><strong>Deseja apagar este tÃ³pico?</strong></td>
 </tr>
 <tr>
 <td><?=$editandomensagem?></td>

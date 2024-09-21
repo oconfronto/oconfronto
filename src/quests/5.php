@@ -1,49 +1,49 @@
 <?php
 if ($missao['quest_status'] == 1) {
     $db->execute("update `quests` set `quest_status`='2' where `id`=?", array($missao['id']));
-    $a = "<i>Meu nome é Hastakk, sou um treinador de guerreiros. Eu não costumo me apresentar assim, mas algo me diz que há algo muito especial em você.</i>";
+    $a = "<i>Meu nome ¬é Hastakk, sou um treinador de guerreiros. Eu n¬ão costumo me apresentar assim, mas algo me diz que h¬á algo muito especial em voc¬ê.</i>";
     $b = "<a href=\"tavern.php?p=quests&start=".$quest['id']."\">Continuar</a>";
     
 } elseif ($missao['quest_status'] == 2) {
     if ($missao['pago'] == 't') {
-        //define quantos usuários deve matar
+        //define quantos usu¬ários deve matar
         if ($missao['extra'] == null) {
             $db->execute("update `quests` set `extra`=? where `id`=?", array($player->kills + 15, $missao['id']));
             $remaining = 15;
         } else {
-            //define quantos usuários faltam ser mortos
+            //define quantos usu¬ários faltam ser mortos
             $remaining = ($missao['extra'] - $player->kills);
         }
         
-        //verifica se já nao matou todos os usuários
+        //verifica se j¬á nao matou todos os usu¬ários
         if ($remaining < 1)
         {
             $db->execute("update `quests` set `quest_status`='3' where `id`=?", array($missao['id']));
-            $a = "<i>Voc&ecirc; j· matou todos os usu·rios nesces·rios.</i>";
+            $a = "<i>Voc&ecirc; j√° matou todos os usu√°rios nesces√°rios.</i>";
             $b = "<a href=\"tavern.php?p=quests&start=".$quest['id']."\">Continuar</a>.";
         } else {
-            $a = "<i>Grandes guerreiros precisam aprender a matar desde cedo, ent„o minha miss„o ‡ voc&ecirc; ser· simples. <b>Mate " . $remaining . " usu·rios</b>, volte aqui, e voc&ecirc; consiguir· os 3 nÌveis.</i>";
+            $a = "<i>Grandes guerreiros precisam aprender a matar desde cedo, ent√£o minha miss√£o √† voc&ecirc; ser√° simples. <b>Mate " . $remaining . " usu√°rios</b>, volte aqui, e voc&ecirc; consiguir√° os 3 n√≠veis.</i>";
             $b = "<a href=\"home.php\">Principal</a>";
         }
     } else {
-        $a = "<i>Gostaria de comeÁar seu treinamento por " . $quest['cost'] . " de ouro?<br>Se eu te treinar, voc&ecirc; poder· adiquirir atÈ tr&ecirc;s nÌveis!</i>";
+        $a = "<i>Gostaria de come√ßar seu treinamento por " . $quest['cost'] . " de ouro?<br>Se eu te treinar, voc&ecirc; poder√° adiquirir at√© tr&ecirc;s n√≠veis!</i>";
         $b = "<a href=\"tavern.php?p=quests&start=".$quest['id']."&pay=true\">Pagar</a>";
     }
 } elseif ($missao['quest_status'] == 3) {
-    //dá o prêmio
+    //d¬á o pr¬êmio
     $db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", array(maxMana(($player->level + 2), $player->extramana), maxMana(($player->level + 2), $player->extramana), $player->id));
     $db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", array(maxEnergy(($player->level + 2), $player->vip), $player->id));
     $db->execute("update `players` set `magic_points`=?, `stat_points`=?, `level`=?, `maxhp`=?, `exp`=0, `hp`=? where `id`=?", array($player->magic_points + 3, $player->stat_points + 9, $player->level + 3, maxHp($db, $player->id, ($player->level + 2), $player->reino, $player->vip), maxHp($db, $player->id, ($player->level + 2), $player->reino, $player->vip), $player->id));
     
     //finaliza a quest
     $db->execute("update `quests` set `quest_status`='90' where `id`=?", array($missao['id']));
-    $a = "<i>Bom, espero que voc&ecirc; tenha aprendido a matar.<br><b>(Voc&ecirc; passou para o nÌvel " . ($player->level+3) . ")</i>";
+    $a = "<i>Bom, espero que voc&ecirc; tenha aprendido a matar.<br><b>(Voc&ecirc; passou para o n√≠vel " . ($player->level+3) . ")</i>";
     $b = "<a href=\"tavern.php?p=quests\">Voltar</a>";
 }
     
 /*
 include("lib.php");
-define("PAGENAME", "Missıes");
+define("PAGENAME", "Miss√µes");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 
@@ -56,7 +56,7 @@ if ($player->level < 25)
 {
 	include("templates/private_header.php");
 	echo "<fieldset><legend><b>Treinador</b></legend>\n";
-	echo "<i>Seu nivel È muito baixo!</i><br/>\n";
+	echo "<i>Seu nivel √© muito baixo!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include("templates/private_footer.php");
@@ -69,7 +69,7 @@ if ($player->level > 35)
 	$query = $db->execute("delete from `quests` where `player_id`=? and `quest_id`=6", array($player->id));
 	include("templates/private_header.php");
 	echo "<fieldset><legend><b>Treinador</b></legend>\n";
-	echo "<i>Seu nivel È muito alto!</i><br/>\n";
+	echo "<i>Seu nivel √© muito alto!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include("templates/private_footer.php");
@@ -92,7 +92,7 @@ switch($_GET['act'])
 	case "help":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Bom, esse È meu trabalho, treinar guerreiros. Gostaria de comeÁar seu treinamento por " . $cost . " de ouro?<br>Se eu te treinar, voc&ecirc; poder· adiquirir atÈ tr&ecirc;s nÌveis!</i><br><br>\n";
+		echo "<i>Bom, esse √© meu trabalho, treinar guerreiros. Gostaria de come√ßar seu treinamento por " . $cost . " de ouro?<br>Se eu te treinar, voc&ecirc; poder√° adiquirir at√© tr&ecirc;s n√≠veis!</i><br><br>\n";
 		echo "<a href=\"quest3.php?act=acept\">Aceito</a> | <a href=\"quest3.php?act=decline\">Recuso</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -101,7 +101,7 @@ switch($_GET['act'])
 	case "decline":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Tudo bem, a escolha È sua.</i><br><br>\n";
+		echo "<i>Tudo bem, a escolha √© sua.</i><br><br>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -113,7 +113,7 @@ switch($_GET['act'])
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Aviso</b></legend>\n";
 		echo "<i>Um erro desconhecido ocorreu, contate o administrador.</i><br><br>\n";
-		echo "<a href=\"home.php\">P·gina Principal</a>.";
+		echo "<a href=\"home.php\">P√°gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -121,7 +121,7 @@ switch($_GET['act'])
 	$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=5", array($player->kills + 12, $player->id));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Grandes guerreiros precisam aprender a matar desde cedo, ent„o minha miss„o ‡ voc&ecirc; ser· simples. <b>Mate 12 usu·rios</b> e voc&ecirc; consiguir· os 3 nÌveis.</i><br><br>\n";
+		echo "<i>Grandes guerreiros precisam aprender a matar desde cedo, ent√£o minha miss√£o √† voc&ecirc; ser√° simples. <b>Mate 12 usu√°rios</b> e voc&ecirc; consiguir√° os 3 n√≠veis.</i><br><br>\n";
 		echo "<a href=\"quest3.php\">Continuar</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -133,7 +133,7 @@ switch($_GET['act'])
 		if ($verifikcheck->recordcount() != 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "Voc&ecirc; j· me pagou!</i><br/><br/>\n";
+		echo "Voc&ecirc; j√° me pagou!</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -142,7 +142,7 @@ switch($_GET['act'])
 			if ($player->gold - $cost < 0){
 			include("templates/private_header.php");
 			echo "<fieldset><legend><b>Treinador</b></legend>\n";
-			echo "<i>Voc&ecirc; n„o possui esta quantia de ouro!</i><br/><br/>\n";
+			echo "<i>Voc&ecirc; n√£o possui esta quantia de ouro!</i><br/><br/>\n";
 			echo "<a href=\"home.php\">Voltar</a>.";
 	        	echo "</fieldset>";
 			include("templates/private_footer.php");
@@ -155,8 +155,8 @@ switch($_GET['act'])
 		$query = $db->autoexecute('quests', $insert, 'INSERT');
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Obrigado. vamos logo comeÁar com o treinamento.</i><br><br>\n";
-		echo "<a href=\"quest3.php\">ComeÁar Treinamento</a> | <a href=\"home.php\">Voltar</a>.";
+		echo "<i>Obrigado. vamos logo come√ßar com o treinamento.</i><br><br>\n";
+		echo "<a href=\"quest3.php\">Come√ßar Treinamento</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -175,8 +175,8 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Ol· meu jovem. Porque me procura?</i><br/><br>\n";
-		echo "<a href=\"quest3.php?act=who\">Quem È voc&ecirc;?</a> | <a href=\"quest3.php?act=help\">Preciso treinar</a> | <a href=\"home.php\">Voltar</a>.";
+		echo "<i>Ol√° meu jovem. Porque me procura?</i><br/><br>\n";
+		echo "<a href=\"quest3.php?act=who\">Quem √© voc&ecirc;?</a> | <a href=\"quest3.php?act=help\">Preciso treinar</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -188,7 +188,7 @@ switch($_GET['act'])
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=5", array($player->kills + 12, $player->id));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Grandes guerreiros precisam aprender a matar desde cedo, ent„o minha miss„o ‡ voc&ecirc; ser· simples. <b>Mate 12 usu·rios</b> e voc&ecirc; consiguir· os 3 nÌveis.</i><br><br>\n";
+		echo "<i>Grandes guerreiros precisam aprender a matar desde cedo, ent√£o minha miss√£o √† voc&ecirc; ser√° simples. <b>Mate 12 usu√°rios</b> e voc&ecirc; consiguir√° os 3 n√≠veis.</i><br><br>\n";
 		echo "<a href=\"quest3.php\">Continuar</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -207,7 +207,7 @@ switch($_GET['act'])
 		$query = $db->execute("delete from `quests` where `player_id`=? and `quest_id`=5", array($player->id));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Voc&ecirc; j· matou todos os usu·rios nesces·rios.</i><br><br>";
+		echo "<i>Voc&ecirc; j√° matou todos os usu√°rios nesces√°rios.</i><br><br>";
 		echo "<a href=\"quest3.php\">Continuar</a>.";
 	     	echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -215,7 +215,7 @@ switch($_GET['act'])
 		}else{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Voc&ecirc; precisa matar <b>" . $remaining . " usu·rio(s)</b> para terminar seu treinamento.</i><br><br>";
+		echo "<i>Voc&ecirc; precisa matar <b>" . $remaining . " usu√°rio(s)</b> para terminar seu treinamento.</i><br><br>";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	     	echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -230,7 +230,7 @@ switch($_GET['act'])
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=6", array(90, $player->id));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Bom, espero que voc&ecirc; tenha aprendido a matar.<br><b>(Voc&ecirc; passou para o nÌvel " . $newlvl . ")</b></i><br><br>";
+		echo "<i>Bom, espero que voc&ecirc; tenha aprendido a matar.<br><b>(Voc&ecirc; passou para o n√≠vel " . $newlvl . ")</b></i><br><br>";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -246,7 +246,7 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-		echo "<i>Voc&ecirc; j· fez esta miss„o.</i><br><br>";
+		echo "<i>Voc&ecirc; j√° fez esta miss√£o.</i><br><br>";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");

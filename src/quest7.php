@@ -1,14 +1,14 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Missões");
+define("PAGENAME", "MissÃµes");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 
 if ($player->level < 300)
 {
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Missão</b></legend>\n";
-	echo "<i>Seu nivel é muito baixo!</i><br/>\n";
+	echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+	echo "<i>Seu nivel Ã© muito baixo!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include("templates/private_footer.php");
@@ -30,8 +30,8 @@ if ($player->level < 300)
 $verificacao3 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`=?", array($player->id, 14, 90));
 if ($verificacao3->recordcount() < 1){
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Missão</b></legend>\n";
-	echo "<i>Você precisa completar a missão do pacote imperial primeiro.</i><br/>\n";
+	echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+	echo "<i>VocÃª precisa completar a missÃ£o do pacote imperial primeiro.</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include("templates/private_footer.php");
@@ -55,7 +55,7 @@ switch($_GET['act'])
 	case "question":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>Você terá 24 horas para atingir o nível " . $needlvl . ". Aceite meu desafio e se tiver sucesso, passará para a próxima etapa do treinamento.</i><br><br>\n";
+		echo "<i>VocÃª terÃ¡ 24 horas para atingir o nÃ­vel " . $needlvl . ". Aceite meu desafio e se tiver sucesso, passarÃ¡ para a prÃ³xima etapa do treinamento.</i><br><br>\n";
 		echo "<a href=\"quest7.php?act=acept\">Aceitar</a> / <a href=\"quest7.php?act=decline\">Recusar</a>";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -66,7 +66,7 @@ switch($_GET['act'])
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
 		echo "<i>Precisa se preparar mais? Ok, volte quando estiver pronto.</i><br><br>\n";
-		echo "<a href=\"home.php\">Página Principal</a>.";
+		echo "<a href=\"home.php\">PÃ¡gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 	break;
@@ -75,8 +75,8 @@ switch($_GET['act'])
 		if ($verificacao1->recordcount() > 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Aviso</b></legend>\n";
-		echo "<i>Você já aceitou o desafio.</i><br><br>\n";
-		echo "<a href=\"home.php\">Página Principal</a>.";
+		echo "<i>VocÃª jÃ¡ aceitou o desafio.</i><br><br>\n";
+		echo "<a href=\"home.php\">PÃ¡gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -94,7 +94,7 @@ switch($_GET['act'])
 		$query = $db->autoexecute('quests', $insert, 'INSERT');
 
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>Ótimo, agora seja rápido e atinja o nível " . $needlvl . " o mais rápido possivel. Volte aqui depois de alcançar este nível.</i><br /><br />";
+		echo "<i>Ã“timo, agora seja rÃ¡pido e atinja o nÃ­vel " . $needlvl . " o mais rÃ¡pido possivel. Volte aqui depois de alcanÃ§ar este nÃ­vel.</i><br /><br />";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -115,8 +115,8 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>" . $player->username . ", você precisa me provar que é um guerreiro dedicado, e terá de realizar um desafio.</i><br/><br>\n";
-		echo "<a href=\"quest7.php?act=question\">Qual é o Desafio?</a> / <a href=\"home.php\">Voltar</a>.";
+		echo "<i>" . $player->username . ", vocÃª precisa me provar que Ã© um guerreiro dedicado, e terÃ¡ de realizar um desafio.</i><br/><br>\n";
+		echo "<a href=\"quest7.php?act=question\">Qual Ã© o Desafio?</a> / <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -128,8 +128,8 @@ switch($_GET['act'])
 			{
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(2, $player->id, 15));
 			include("templates/private_header.php");
-			echo "<fieldset><legend><b>Missão</b></legend>\n";
-			echo "<i>Você demorou demais para atingir o nível nescesário. Você falhou no desafio.</i><br><br>";
+			echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+			echo "<i>VocÃª demorou demais para atingir o nÃ­vel nescesÃ¡rio. VocÃª falhou no desafio.</i><br><br>";
 			echo "<a href=\"quest7.php\">Continuar</a>.";
 	     	 	echo "</fieldset>";
 			include("templates/private_footer.php");
@@ -140,8 +140,8 @@ switch($_GET['act'])
 			{
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(80, $player->id, 15));
 			include("templates/private_header.php");
-			echo "<fieldset><legend><b>Missão</b></legend>\n";
-			echo "<i>Parabéns, você atingiu o nível nescesário a tempo.</i><br><br>";
+			echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+			echo "<i>ParabÃ©ns, vocÃª atingiu o nÃ­vel nescesÃ¡rio a tempo.</i><br><br>";
 			echo "<a href=\"quest7.php\">Falar com Alexander</a>.";
 	     	 	echo "</fieldset>";
 			include("templates/private_footer.php");
@@ -151,10 +151,10 @@ switch($_GET['act'])
 		include("templates/private_header.php");
 		$time = ($quest1['quest_status'] - time());
 		$time_remaining = ceil($time / 60);
-		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você ainda não atingiu o nível " . $quest2['quest_status'] . ".</i><br>";
-		echo "<i>Você ainda tem $time_remaining minuto(s) para alcançar este nível.</i><br><br>\n";
-		echo "<a href=\"home.php\">Página Principal</a>.";
+		echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+		echo "<i>VocÃª ainda nÃ£o atingiu o nÃ­vel " . $quest2['quest_status'] . ".</i><br>";
+		echo "<i>VocÃª ainda tem $time_remaining minuto(s) para alcanÃ§ar este nÃ­vel.</i><br><br>\n";
+		echo "<a href=\"home.php\">PÃ¡gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -164,7 +164,7 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>Parece que você falhou no seu desafio, mas estarei lhe dando outra chance. Deseja tentar novamente?</i><br><br>";
+		echo "<i>Parece que vocÃª falhou no seu desafio, mas estarei lhe dando outra chance. Deseja tentar novamente?</i><br><br>";
 		echo "<a href=\"quest7.php?act=retry\">Sim</a> / <a href=\"home.php\">Voltar</a>.";
 	     	echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -176,7 +176,7 @@ switch($_GET['act'])
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(90, $player->id, 15));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>Vejo que você é um guerreiro dedicado, e agora está mais mais próximo de fazer parte da elite imperial.</i><br><br>";
+		echo "<i>Vejo que vocÃª Ã© um guerreiro dedicado, e agora estÃ¡ mais mais prÃ³ximo de fazer parte da elite imperial.</i><br><br>";
 		echo "<a href=\"quest8.php\">Continuar Treinamento</a> / <a href=\"home.php\">Voltar</a>.";
 	     	echo "</fieldset>";
 		include("templates/private_footer.php");

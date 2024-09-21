@@ -10,5 +10,5 @@ $fastmagia = 10;
 $fastturno = 4;
 
 	$player->mana -= $mana;
-	array_unshift($_SESSION['battlelog'], "3, Você lançou o feitiço escudo místico.");
+	array_unshift($_SESSION['battlelog'], "3, VocÃª lanÃ§ou o feitiÃ§o escudo mÃ­stico.");
 ?>

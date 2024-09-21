@@ -1,14 +1,14 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Missıes");
+define("PAGENAME", "Miss√µes");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 
 if ($player->level < 300)
 {
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Miss„o</b></legend>\n";
-	echo "<i>Seu nivel È muito baixo!</i><br/>\n";
+	echo "<fieldset><legend><b>Miss√£o</b></legend>\n";
+	echo "<i>Seu nivel √© muito baixo!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include("templates/private_footer.php");
@@ -25,8 +25,8 @@ if ($player->level < 300)
 $verificacao3 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`=?", array($player->id, 17, 90));
 if ($verificacao3->recordcount() < 1){
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Miss„o</b></legend>\n";
-	echo "<i>VocÍ precisa completar outra miss„o primeiro.</i><br/>\n";
+	echo "<fieldset><legend><b>Miss√£o</b></legend>\n";
+	echo "<i>Voc√™ precisa completar outra miss√£o primeiro.</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include("templates/private_footer.php");
@@ -39,7 +39,7 @@ switch($_GET['act'])
 	case "question":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>Seu ˙ltimo desafio ser· trazer os olhos de Zanoth, a criatura mais temida que se conheÁe. Ele se localiza no monte das almas, ao sul do impÈrio.</i><br><br>\n";
+		echo "<i>Seu √∫ltimo desafio ser√° trazer os olhos de Zanoth, a criatura mais temida que se conhe√ße. Ele se localiza no monte das almas, ao sul do imp√©rio.</i><br><br>\n";
 		echo "<a href=\"quest9.php?act=acept\">Aceitar Desafio</a> / <a href=\"quest9.php?act=decline\">Recusar</a>";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -49,8 +49,8 @@ switch($_GET['act'])
 	case "decline":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>N„o fico surpreso por recusar, ele È um monstro muito poderoso. Volte quando achar que est· pronto.</i><br><br>\n";
-		echo "<a href=\"home.php\">P·gina Principal</a>.";
+		echo "<i>N√£o fico surpreso por recusar, ele √© um monstro muito poderoso. Volte quando achar que est√° pronto.</i><br><br>\n";
+		echo "<a href=\"home.php\">P√°gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 	break;
@@ -59,8 +59,8 @@ switch($_GET['act'])
 		if ($verificacao1->recordcount() > 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Aviso</b></legend>\n";
-		echo "<i>VocÍ j· aceitou esta miss„o.</i><br><br>\n";
-		echo "<a href=\"home.php\">P·gina Principal</a>.";
+		echo "<i>Voc√™ j√° aceitou esta miss√£o.</i><br><br>\n";
+		echo "<a href=\"home.php\">P√°gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -84,9 +84,9 @@ switch($_GET['act'])
 		if (($quest1['quest_status'] == 1) or ($quest1['quest_status'] == 2)){
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(2, $player->id, 18));
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Miss„o</b></legend>\n";
-		echo "<i>VocÍ sente que ainda n„o est· pronto e decide se esconder no monte das almas.</i><br><br>\n";
-		echo "<a href=\"home.php\">P·gina Principal</a>.";
+		echo "<fieldset><legend><b>Miss√£o</b></legend>\n";
+		echo "<i>Voc√™ sente que ainda n√£o est√° pronto e decide se esconder no monte das almas.</i><br><br>\n";
+		echo "<a href=\"home.php\">P√°gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		}else{
@@ -109,8 +109,8 @@ switch($_GET['act'])
 		if ($verificacao1->recordcount() > 0){
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(90, $player->id, 18));
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Miss„o</b></legend>\n";
-		echo "<i>VocÍ abandonou a miss„o.</i><br><br>\n";
+		echo "<fieldset><legend><b>Miss√£o</b></legend>\n";
+		echo "<i>Voc√™ abandonou a miss√£o.</i><br><br>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -126,7 +126,7 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>Seu ˘ltimo desafio ser· trazer os olhos de Zanoth, a criatura mais temida que se conheÁe.</i><br/><br>\n";
+		echo "<i>Seu √πltimo desafio ser√° trazer os olhos de Zanoth, a criatura mais temida que se conhe√ße.</i><br/><br>\n";
 		echo "<a href=\"quest9.php?act=question\">Quais Itens?</a> / <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -136,9 +136,9 @@ switch($_GET['act'])
 	if ($quest1['quest_status'] == 1)
 		{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Miss„o</b></legend>\n";
-		echo "<i>VocÍ chegou ao monte das almas, e ouve sons de uma criatura poderoza. Podem ser os gritos de Zanoth. Est· pronto para enfrenta-lo?</i><br/><br>\n";
-		echo "<a href=\"quest9.php?act=ready\">Sim</a> / <a href=\"quest9.php?act=noready\">N„o</a>";
+		echo "<fieldset><legend><b>Miss√£o</b></legend>\n";
+		echo "<i>Voc√™ chegou ao monte das almas, e ouve sons de uma criatura poderoza. Podem ser os gritos de Zanoth. Est√° pronto para enfrenta-lo?</i><br/><br>\n";
+		echo "<a href=\"quest9.php?act=ready\">Sim</a> / <a href=\"quest9.php?act=noready\">N√£o</a>";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -147,9 +147,9 @@ switch($_GET['act'])
 	if ($quest1['quest_status'] == 2)
 		{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Miss„o</b></legend>\n";
-		echo "<i>VocÍ est· escondido no monte das almas, e continua ouvindo sons que parecem vir de Zanoth. Est· pronto para enfrenta-lo?</i><br/><br>\n";
-		echo "<a href=\"quest9.php?act=ready\">Sim</a> / <a href=\"quest9.php?act=noready\">N„o</a>";
+		echo "<fieldset><legend><b>Miss√£o</b></legend>\n";
+		echo "<i>Voc√™ est√° escondido no monte das almas, e continua ouvindo sons que parecem vir de Zanoth. Est√° pronto para enfrenta-lo?</i><br/><br>\n";
+		echo "<a href=\"quest9.php?act=ready\">Sim</a> / <a href=\"quest9.php?act=noready\">N√£o</a>";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -158,9 +158,9 @@ switch($_GET['act'])
 	if ($quest1['quest_status'] == 3)
 		{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Miss„o</b></legend>\n";
-		echo "<i>VocÍ ainda n„o matou Zanoth. Deseja enfrenta-lo?</i><br/><br>\n";
-		echo "<a href=\"quest9.php?act=ready\">Sim</a> / <a href=\"quest9.php?act=noready\">N„o</a>";
+		echo "<fieldset><legend><b>Miss√£o</b></legend>\n";
+		echo "<i>Voc√™ ainda n√£o matou Zanoth. Deseja enfrenta-lo?</i><br/><br>\n";
+		echo "<a href=\"quest9.php?act=ready\">Sim</a> / <a href=\"quest9.php?act=noready\">N√£o</a>";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -172,8 +172,8 @@ switch($_GET['act'])
 		if ($vesetemoeye->recordcount() == 0){
 			include("templates/private_header.php");
 			echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-			echo "<i>Sinto muito, mas n„o consigo encontrar os olhos de Zanoth no seu invent·rio.</i><br><br>\n";
-			echo "<a href=\"home.php\">Voltar</a> / <a href=\"quest9.php?act=abort\">Abandonar miss„o</a>";
+			echo "<i>Sinto muito, mas n√£o consigo encontrar os olhos de Zanoth no seu invent√°rio.</i><br><br>\n";
+			echo "<a href=\"home.php\">Voltar</a> / <a href=\"quest9.php?act=abort\">Abandonar miss√£o</a>";
 	       		echo "</fieldset>";
 			include("templates/private_footer.php");
 		}else{
@@ -196,8 +196,8 @@ switch($_GET['act'])
 
 			include("templates/private_header.php");
 			echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-			echo "<i>" . $player->username . ", vocÍ me provou ser um Ûtimo guerreiro, e como passou por meus testes com sucesso. Agora vocÍ faz parte da elite imperial.<br/>Membros da elite imperial devem usar Ûtimos itens, ent„o tome esta <u>Holy Armor</u> e estas <u>Holy Legs</u>.</i><br><br>";
-			echo "<a href=\"home.php\">P·gina Principal</a>.";
+			echo "<i>" . $player->username . ", voc√™ me provou ser um √≥timo guerreiro, e como passou por meus testes com sucesso. Agora voc√™ faz parte da elite imperial.<br/>Membros da elite imperial devem usar √≥timos itens, ent√£o tome esta <u>Holy Armor</u> e estas <u>Holy Legs</u>.</i><br><br>";
+			echo "<a href=\"home.php\">P√°gina Principal</a>.";
 	     		echo "</fieldset>";
 			include("templates/private_footer.php");
 			exit;
@@ -207,9 +207,9 @@ switch($_GET['act'])
 	if ($quest1['quest_status'] == 90)
 	{
 		include("templates/private_header.php");
-		echo "<fieldset><legend><b>Miss„o</b></legend>\n";
-		echo "<i>VocÍ j· terminou esta miss„o.</i><br><br>";
-		echo "<a href=\"home.php\">P·gina Principal</a>.";
+		echo "<fieldset><legend><b>Miss√£o</b></legend>\n";
+		echo "<i>Voc√™ j√° terminou esta miss√£o.</i><br><br>";
+		echo "<a href=\"home.php\">P√°gina Principal</a>.";
 	     	echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;

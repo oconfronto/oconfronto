@@ -1,7 +1,7 @@
 <?php
 
 include("lib.php");
-define("PAGENAME", "FÛrum");
+define("PAGENAME", "F√≥rum");
 $player = check_user($secret_key, $db);
 
 include("templates/private_header.php");
@@ -23,7 +23,7 @@ if (!$_GET['topic'])
 	}
 
 	if (($player->gm_rank < 3) and ($player->id != $nome['user_id'])) {
-		echo "VocÍ n„o tem permisıes para mover este tÛpico! <a href=\"view_topic.php?id=" . $_GET['topic'] . "\">Voltar</a>.";
+		echo "Voc√™ n√£o tem permis√µes para mover este t√≥pico! <a href=\"view_topic.php?id=" . $_GET['topic'] . "\">Voltar</a>.";
 		include("templates/private_footer.php");
 		exit;
 	}
@@ -35,34 +35,34 @@ if(isset($_POST['submit']))
 
 	if (!$_POST['category'])
 	{
-		echo "VocÍ precisa preencher todos os campos! <a href=\"move_topic.php?topic=" . $_GET['topic'] . "\">Voltar</a>.";
+		echo "Voc√™ precisa preencher todos os campos! <a href=\"move_topic.php?topic=" . $_GET['topic'] . "\">Voltar</a>.";
 		include("templates/private_footer.php");
 		exit;
 	}
 
 	elseif (($_POST['category'] != 'reino') and ($_POST['category'] != 'sugestoes') and ($_POST['category'] != 'gangues') and ($_POST['category'] != 'trade') and ($_POST['category'] != 'duvidas') and ($_POST['category'] != 'outros') and ($_POST['category'] != 'fan') and ($_POST['category'] != 'off') and ($player->gm_rank < 9)) {
-		$error = "VocÍ n„o possui autorizaÁ„o para mover tÛpicos para essa categoria.";
+		$error = "Voc√™ n√£o possui autoriza√ß√£o para mover t√≥picos para essa categoria.";
 		include("templates/private_footer.php");
 		exit;
 	}
 
 	elseif (($_POST['category'] == 'reino') and ($player->id != $verifica) and ($player->gm_rank < 9)) {
-		$error = "VocÍ n„o possui autorizaÁ„o para mover tÛpicos para essa categoria.";
+		$error = "Voc√™ n√£o possui autoriza√ß√£o para mover t√≥picos para essa categoria.";
 		include("templates/private_footer.php");
 		exit;
 	}
 
 
 if ($_POST['category'] == 'gangues') {
-$categoria = "Cl„s";
+$categoria = "Cl√£s";
 }elseif ($_POST['category'] == 'trade') {
 $categoria = "Compro/Vendo";
 }elseif ($_POST['category'] == 'noticias') {
-$categoria = "NotÌcias";
+$categoria = "Not√≠cias";
 }elseif ($_POST['category'] == 'sugestoes') {
-$categoria = "Sugestıes";
+$categoria = "Sugest√µes";
 }elseif ($_POST['category'] == 'duvidas') {
-$categoria = "D˙vidas";
+$categoria = "D√∫vidas";
 }elseif ($_POST['category'] == 'fan') {
 $categoria = "Fanwork";
 }elseif ($_POST['category'] == 'off') {
@@ -72,7 +72,7 @@ $categoria = ucfirst($_POST['category']);
 }
 
 	if ($player->gm_rank > 2) {
-		$log = "O tÛpico " . $nome['topic'] . " foi movido para a sess„o " . $categoria . " pelo moderador <b>" . $player->username . "</b>";
+		$log = "O t√≥pico " . $nome['topic'] . " foi movido para a sess√£o " . $categoria . " pelo moderador <b>" . $player->username . "</b>";
 		forumlog($log, $db);
 	}
 
@@ -91,24 +91,24 @@ $real = $db->execute("update `forum_question` set `category`=? where `id`=?", ar
 <td>
 <table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF">
 <tr>
-<td colspan="3" bgcolor="#E6E6E6"><strong>Mover TÛpico</strong> </td>
+<td colspan="3" bgcolor="#E6E6E6"><strong>Mover T√≥pico</strong> </td>
 </tr>
 <tr>
-<td>Para onde deseja mover o tÛpico: <b><?=$nome['topic']?></b> ?<br/>
+<td>Para onde deseja mover o t√≥pico: <b><?=$nome['topic']?></b> ?<br/>
 <select name="category">
 <option value="none" selected="selected">Selecione</option>
 <?php
 $verifica = $db->GetOne("select `imperador` from `reinos` where `id`=?", array($player->reino));
 if ($player->gm_rank > 9) {
-	echo "<option value=\"noticias\">NotÌcias</option>";
+	echo "<option value=\"noticias\">Not√≠cias</option>";
 }
 
 if (($verifica == $player->id) or ($player->gm_rank > 9)) {
 	echo "<option value=\"reino\">Reino</option>";
 }
 ?>
-<option value="sugestoes">Sugestıes</option>
-<option value="gangues">Cl„s</option>
+<option value="sugestoes">Sugest√µes</option>
+<option value="gangues">Cl√£s</option>
 <option value="trade">Compro/Vendo</option>
 <option value="duvidas">Duvidas</option>
 <option value="fan">Fanwork</option>

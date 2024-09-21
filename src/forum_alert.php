@@ -1,11 +1,11 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Fórum");
+define("PAGENAME", "FÃ³rum");
 $player = check_user($secret_key, $db);
 
 if ($player->gm_rank < 3) {
 	include("templates/private_header.php");
-	echo "Você não pode acessar esta página! <a href=\"select_forum.php\">Voltar</a>.";
+	echo "VocÃª nÃ£o pode acessar esta pÃ¡gina! <a href=\"select_forum.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 }
@@ -17,7 +17,7 @@ if ($_GET['answer'])
 	if ($query->recordcount() != 1)
 	{
 		include("templates/private_header.php");
-		echo "Este post não existe! <a href=\"select_forum.php\">Voltar</a>.";
+		echo "Este post nÃ£o existe! <a href=\"select_forum.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		exit;
 	} else {
@@ -29,21 +29,21 @@ if ($_GET['answer'])
 		if ($_POST['alert']){
 			if (!$_POST['motivo']) {
 				include("templates/private_header.php");
-				echo "Você precisa digitar o motivo do alerta! <a href=\"forum_alert.php?answer=" . $_GET['answer'] . "\">Voltar</a>.";
+				echo "VocÃª precisa digitar o motivo do alerta! <a href=\"forum_alert.php?answer=" . $_GET['answer'] . "\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 			}
 
 			if (!$_POST['days']) {
 				include("templates/private_header.php");
-				echo "Você precisa digitar o nível de alerta! <a href=\"forum_alert.php?answer=" . $_GET['answer'] . "\">Voltar</a>.";
+				echo "VocÃª precisa digitar o nÃ­vel de alerta! <a href=\"forum_alert.php?answer=" . $_GET['answer'] . "\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 			}
 
 			if ($player->gm_rank <= $usuario['gm_rank']) {
 				include("templates/private_header.php");
-				echo "Você não pode alertar seus colegas e superiores! <a href=\"forum_alert.php?answer=" . $_GET['answer'] . "\">Voltar</a>.";
+				echo "VocÃª nÃ£o pode alertar seus colegas e superiores! <a href=\"forum_alert.php?answer=" . $_GET['answer'] . "\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 			}
@@ -51,7 +51,7 @@ if ($_GET['answer'])
 			
 
 			$db->execute("update `players` set `alerts`=`alerts`+? where `id`=?", array($_POST['days'], $usuario['id']));
-			$logmsg = "Você foi alertado no fórum em " . strip_tags($_POST['days']) . "%.<br/><b>Motivo:</b> " . strip_tags($_POST['motivo']) . "";
+			$logmsg = "VocÃª foi alertado no fÃ³rum em " . strip_tags($_POST['days']) . "%.<br/><b>Motivo:</b> " . strip_tags($_POST['motivo']) . "";
 			addlog($usuario['id'], $logmsg, $db);
 
 			$logmsg = "" . showName($usuario['id'], $db, 'off', 'off') . " foi alertado em " . strip_tags($_POST['days']) . "% pelo moderador <b>" . $player->username . "</b><br/><b>Motivo:</b> " . strip_tags($_POST['motivo']) . "";
@@ -84,7 +84,7 @@ elseif ($_GET['topic'])
 	if ($query->recordcount() != 1)
 	{
 		include("templates/private_header.php");
-		echo "Este post não existe! <a href=\"select_forum.php\">Voltar</a>.";
+		echo "Este post nÃ£o existe! <a href=\"select_forum.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		exit;
 	} else {
@@ -96,28 +96,28 @@ elseif ($_GET['topic'])
 		if ($_POST['alert']){
 			if (!$_POST['motivo']) {
 				include("templates/private_header.php");
-				echo "Você precisa digitar o motivo do alerta! <a href=\"forum_alert.php?topic=" . $_GET['topic'] . "\">Voltar</a>.";
+				echo "VocÃª precisa digitar o motivo do alerta! <a href=\"forum_alert.php?topic=" . $_GET['topic'] . "\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 			}
 
 			if (!$_POST['days']) {
 				include("templates/private_header.php");
-				echo "Você precisa digitar o nível de alerta! <a href=\"forum_alert.php?topic=" . $_GET['topic'] . "\">Voltar</a>.";
+				echo "VocÃª precisa digitar o nÃ­vel de alerta! <a href=\"forum_alert.php?topic=" . $_GET['topic'] . "\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 			}
 
 			if ($player->gm_rank <= $usuario['gm_rank']) {
 				include("templates/private_header.php");
-				echo "Você não pode alertar seus colegas e superiores! <a href=\"forum_alert.php?topic=" . $_GET['topic'] . "\">Voltar</a>.";
+				echo "VocÃª nÃ£o pode alertar seus colegas e superiores! <a href=\"forum_alert.php?topic=" . $_GET['topic'] . "\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 			}
 
 
 			$db->execute("update `players` set `alerts`=`alerts`+? where `id`=?", array($_POST['days'], $usuario['id']));
-			$logmsg = "Você foi alertado no fórum em " . strip_tags($_POST['days']) . "%.<br/><b>Motivo:</b> " . strip_tags($_POST['motivo']) . "";
+			$logmsg = "VocÃª foi alertado no fÃ³rum em " . strip_tags($_POST['days']) . "%.<br/><b>Motivo:</b> " . strip_tags($_POST['motivo']) . "";
 			addlog($usuario['id'], $logmsg, $db);
 
 			$logmsg = "" . showName($usuario['id'], $db, 'off', 'off') . " foi alertado em " . strip_tags($_POST['days']) . "% pelo moderador <b>" . $player->username . "</b><br/><b>Motivo:</b> " . strip_tags($_POST['motivo']) . "";

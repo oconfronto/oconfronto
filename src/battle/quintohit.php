@@ -33,8 +33,8 @@ $log = explode(", ", $_SESSION['battlelog'][0]);
 
 
 				if ($player->mana < $mana){
-      				if ($log[1] != "Você tentou lançar um feitiço mas está sem mana sufuciente.") {
-					array_unshift($_SESSION['battlelog'], "5, Você tentou lançar um feitiço mas está sem mana sufuciente.");
+      				if ($log[1] != "VocÃª tentou lanÃ§ar um feitiÃ§o mas estÃ¡ sem mana sufuciente.") {
+					array_unshift($_SESSION['battlelog'], "5, VocÃª tentou lanÃ§ar um feitiÃ§o mas estÃ¡ sem mana sufuciente.");
 				}
 				$otroatak = 5;
 				}else{
@@ -43,7 +43,7 @@ $log = explode(", ", $_SESSION['battlelog'][0]);
 				$misschance = intval(rand(0, 100));
 				if ($misschance <= $player->miss)
 				{
-					array_unshift($_SESSION['battlelog'], "5, Você tentou lançar um feitiço n" . $enemy->prepo . " " . $enemy->username . " mas errou!");
+					array_unshift($_SESSION['battlelog'], "5, VocÃª tentou lanÃ§ar um feitiÃ§o n" . $enemy->prepo . " " . $enemy->username . " mas errou!");
 					$db->execute("update `bixos` set `vez`='e' where `player_id`=?", array($player->id));
 				}else{
 					if (($bixo->hp - $totalpak) < 1){
@@ -54,7 +54,7 @@ $log = explode(", ", $_SESSION['battlelog'][0]);
 					}
 
 				$db->execute("update `players` set `mana`=`mana`-? where `id`=?", array($mana, $player->id));
-      				array_unshift($_SESSION['battlelog'], "3, Você deu um ataque quádruplo n" . $enemy->prepo . " " . $enemy->username . " e tirou " . $totalpak . " pontos de vida.");
+      				array_unshift($_SESSION['battlelog'], "3, VocÃª deu um ataque quÃ¡druplo n" . $enemy->prepo . " " . $enemy->username . " e tirou " . $totalpak . " pontos de vida.");
 				$db->execute("update `bixos` set `vez`='e' where `player_id`=?", array($player->id));
 				}
 				}

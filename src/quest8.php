@@ -1,14 +1,14 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Missões");
+define("PAGENAME", "MissÃµes");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 
 if ($player->level < 300)
 {
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Missão</b></legend>\n";
-	echo "<i>Seu nivel é muito baixo!</i><br/>\n";
+	echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+	echo "<i>Seu nivel Ã© muito baixo!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include("templates/private_footer.php");
@@ -25,8 +25,8 @@ if ($player->level < 300)
 $verificacao3 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`=?", array($player->id, 15, 90));
 if ($verificacao3->recordcount() < 1){
 	include("templates/private_header.php");
-	echo "<fieldset><legend><b>Missão</b></legend>\n";
-	echo "<i>Você precisa completar outra missão primeiro.</i><br/>\n";
+	echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+	echo "<i>VocÃª precisa completar outra missÃ£o primeiro.</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include("templates/private_footer.php");
@@ -39,8 +39,8 @@ switch($_GET['act'])
 	case "question":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>Você já ouviu falar em um oddin orb? Ele é um orb raríssimo, que cai em qualquer monstro morto por usuários de nível 75 ou mais. Um membro da elite imperial deve ter experiência em procurar itens diversos, e por isso quero que me traga <u>dois oddin orbs</u>.</i><br><br>\n";
-		echo "<a href=\"quest8.php?act=acept\">Aceitar a Missão</a> / <a href=\"quest8.php?act=decline\">Recusar</a>";
+		echo "<i>VocÃª jÃ¡ ouviu falar em um oddin orb? Ele Ã© um orb rarÃ­ssimo, que cai em qualquer monstro morto por usuÃ¡rios de nÃ­vel 75 ou mais. Um membro da elite imperial deve ter experiÃªncia em procurar itens diversos, e por isso quero que me traga <u>dois oddin orbs</u>.</i><br><br>\n";
+		echo "<a href=\"quest8.php?act=acept\">Aceitar a MissÃ£o</a> / <a href=\"quest8.php?act=decline\">Recusar</a>";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 	break;
@@ -49,8 +49,8 @@ switch($_GET['act'])
 	case "decline":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>Vai abandonar a elite imperial agora? Sei que voltará em breve.</i><br><br>\n";
-		echo "<a href=\"home.php\">Página Principal</a>.";
+		echo "<i>Vai abandonar a elite imperial agora? Sei que voltarÃ¡ em breve.</i><br><br>\n";
+		echo "<a href=\"home.php\">PÃ¡gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 	break;
@@ -59,8 +59,8 @@ switch($_GET['act'])
 		if ($verificacao1->recordcount() > 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Aviso</b></legend>\n";
-		echo "<i>Você já aceitou esta missão.</i><br><br>\n";
-		echo "<a href=\"home.php\">Página Principal</a>.";
+		echo "<i>VocÃª jÃ¡ aceitou esta missÃ£o.</i><br><br>\n";
+		echo "<a href=\"home.php\">PÃ¡gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -73,7 +73,7 @@ switch($_GET['act'])
 		$query = $db->autoexecute('quests', $insert, 'INSERT');
 
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>Ótimo, volte aqui quando possuir os dois orbs.</i><br /><br />";
+		echo "<i>Ã“timo, volte aqui quando possuir os dois orbs.</i><br /><br />";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -86,7 +86,7 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>" . $player->username . ", se você realmente estiver interessado em fazer parte da elite imperial, precisará procurar por alguns itens para mim.</i><br/><br>\n";
+		echo "<i>" . $player->username . ", se vocÃª realmente estiver interessado em fazer parte da elite imperial, precisarÃ¡ procurar por alguns itens para mim.</i><br/><br>\n";
 		echo "<a href=\"quest8.php?act=question\">Quais Itens?</a> / <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -102,8 +102,8 @@ switch($_GET['act'])
 			$deletaorbs = $db->execute("delete from `items` where `player_id`=? and `item_id`=? LIMIT 2", array($player->id, 156));
 			$updatestatus = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(80, $player->id, 17));
 			include("templates/private_header.php");
-			echo "<fieldset><legend><b>Missão</b></legend>\n";
-			echo "<i>Você entregou os dois orbs para Alexander.</i><br><br>";
+			echo "<fieldset><legend><b>MissÃ£o</b></legend>\n";
+			echo "<i>VocÃª entregou os dois orbs para Alexander.</i><br><br>";
 			echo "<a href=\"quest8.php\">Continuar</a>.";
 	     	 	echo "</fieldset>";
 			include("templates/private_footer.php");
@@ -113,8 +113,8 @@ switch($_GET['act'])
 			{
 			include("templates/private_header.php");
 			echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-			echo "<i>Você ainda não possui os dois oddin orbs que solicitei.</i><br><br>";
-			echo "<a href=\"home.php\">Página Principal</a>.";
+			echo "<i>VocÃª ainda nÃ£o possui os dois oddin orbs que solicitei.</i><br><br>";
+			echo "<a href=\"home.php\">PÃ¡gina Principal</a>.";
 	     	 	echo "</fieldset>";
 			include("templates/private_footer.php");
 			exit;
@@ -127,7 +127,7 @@ switch($_GET['act'])
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(90, $player->id, 17));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
-		echo "<i>Fiquei impressionado quando você me entregou os orbs. Geralmente os guerreiros demoram muito mais tempo para reuni-los. Isso me prova que você é um ótimo guerreiro, e acho que já podemos passar para o teste final.</i><br><br>";
+		echo "<i>Fiquei impressionado quando vocÃª me entregou os orbs. Geralmente os guerreiros demoram muito mais tempo para reuni-los. Isso me prova que vocÃª Ã© um Ã³timo guerreiro, e acho que jÃ¡ podemos passar para o teste final.</i><br><br>";
 		echo "<a href=\"quest9.php\">Continuar</a> / <a href=\"home.php\">Voltar</a>.";
 	     	echo "</fieldset>";
 		include("templates/private_footer.php");

@@ -2,7 +2,7 @@
 				$misschance = intval(rand(0, 100));
 				if ($misschance <= $player->miss)
 				{
-					array_unshift($_SESSION['battlelog'], "5, Você tentou atacar " . $enemy->prepo . " " . $enemy->username . " mas errou!");
+					array_unshift($_SESSION['battlelog'], "5, VocÃª tentou atacar " . $enemy->prepo . " " . $enemy->username . " mas errou!");
 				}else{
 				$totalpak = rand($player->mindmg, $player->maxdmg);
 
@@ -29,7 +29,7 @@
 				}else{
 				$db->execute("update `bixos` set `hp`=`hp`-? where `player_id`=?", array($totalpak, $player->id));
 				}
-			array_unshift($_SESSION['battlelog'], "1, Você atacou " . $enemy->prepo . " " . $enemy->username . " e tirou " . $totalpak . " de vida.");
+			array_unshift($_SESSION['battlelog'], "1, VocÃª atacou " . $enemy->prepo . " " . $enemy->username . " e tirou " . $totalpak . " de vida.");
 			$db->execute("update `bixos` set `vez`='e' where `player_id`=?", array($player->id));
 			}
 ?>

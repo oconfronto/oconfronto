@@ -109,7 +109,7 @@ if ($setting->$unc1 == t)
 	echo "</tr>";
 
 	echo "<tr>";
-	echo "<td><b>Nº de participantes:</b></td>";
+	echo "<td><b>NÂº de participantes:</b></td>";
 	echo "<td>" . $setting->$unc4 . "</td>";
 	echo "</tr>";
 

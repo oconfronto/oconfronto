@@ -40,8 +40,8 @@ if (isset($_POST['submit'])) {
         $subject = "Você solicitou sua senha de transferência por email";
 
         $body = "
-            <h2>Voc� solicitou sua senha de transfêrencia.<br><br>
-            <font color=blue>Sua senha de transferência �: " . $player->transpass . "</font></h2>
+            <h2>Vocï¿½ solicitou sua senha de transfêrencia.<br><br>
+            <font color=blue>Sua senha de transferência ï¿½: " . $player->transpass . "</font></h2>
             <br><br><br>
         ";
 

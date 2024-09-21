@@ -58,7 +58,7 @@ a:visited {
 		$query = $db->execute("select * from `log_battle` where `id`=? and `player_id`=?", array($_GET['id'], $player->id));
 		if ($query->recordcount() < 1)
 		{
-		echo "Log não encontrado.";
+		echo "Log nÃ£o encontrado.";
 		echo "</body>";
 		echo "</html>";
 		exit;

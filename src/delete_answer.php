@@ -1,7 +1,7 @@
 <?php
 
 include("lib.php");
-define("PAGENAME", "F—rum");
+define("PAGENAME", "FÂ—rum");
 $player = check_user($secret_key, $db);
 
 include("templates/private_header.php");
@@ -16,7 +16,7 @@ if (!$_GET['topic'] | !$_GET['a'])
 	$procuramensagem = $db->execute("select * from `forum_answer` where `question_id`=? and `id`=?", array($_GET['topic'], $_GET['a']));
 	if ($procuramensagem->recordcount() == 0)
 	{
-	echo "Voc n‹o pode apagar esta mensagem! <a href=\"main_forum.php\">Voltar</a>.";
+	echo "VocÂ nÂ‹o pode apagar esta mensagem! <a href=\"main_forum.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}
@@ -24,7 +24,7 @@ if (!$_GET['topic'] | !$_GET['a'])
 
 	if (($editmsg['a_user_id'] != $player->id) and ($player->gm_rank < 3))
 	{
-	echo "Voc n‹o pode apagar esta mensagem! <a href=\"main_forum.php\">Voltar</a>.";
+	echo "VocÂ nÂ‹o pode apagar esta mensagem! <a href=\"main_forum.php\">Voltar</a>.";
 	include("templates/private_footer.php");
 	exit;
 	}

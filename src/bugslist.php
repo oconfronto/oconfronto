@@ -16,7 +16,7 @@ include("templates/private_header.php");
 
 if ($player->gm_rank < 2)
 {
-	echo "VocÍ n„o tem permis„o para acessar esta p·gina!";
+	echo "Voc√™ n√£o tem permis√£o para acessar esta p√°gina!";
 	include("templates/private_footer.php");
 	exit;
 }
@@ -28,12 +28,12 @@ if (isset($_GET['move'])) {
 
 if (isset($_GET['remove'])) {	
 	$query = $db->execute("update `bugs` set `status`='Pending' where `id`=?", array($_GET['remove']));	    
-	echo "<b><center>Mensagem marcada como n„o resolvida com sucesso.</center></b>";
+	echo "<b><center>Mensagem marcada como n√£o resolvida com sucesso.</center></b>";
 }
 
 if (isset($_GET['validate'])) {	
 	$query = $db->execute("update `players` set `validated`='1' where `username`=?", array($_GET['validate']));	    
-	echo "<b><center>A conta banc·ria do usu·rio " . $_GET['validate'] . " foi ativa.</center></b>";
+	echo "<b><center>A conta banc√°ria do usu√°rio " . $_GET['validate'] . " foi ativa.</center></b>";
 }
 
 
@@ -50,7 +50,7 @@ if (isset($_GET['fixed'])) {
     echo "<table>";
     echo "<tr><td><b>Username: </b>$usernamestr</td></tr>";
     echo "<tr><td><b>Bug Report: </b>$messagestr</td></tr>";
-    echo "<tr><td><b>Status: </b>$statusstr | <a href=\"bugslist.php?fixed=true&remove=" . $idstr . "\">Marcar como n„o resolvido</a></td></tr>";
+    echo "<tr><td><b>Status: </b>$statusstr | <a href=\"bugslist.php?fixed=true&remove=" . $idstr . "\">Marcar como n√£o resolvido</a></td></tr>";
     echo "</table><p />";
 	}
 }
@@ -67,7 +67,7 @@ if (isset($_GET['pending'])) {
     
 
     echo "<table>";
-    echo "<tr><td><b>Usu·rio: </b>$usernamestr | <a href=\"bugslist.php?pending=true&validate=" . $usernamestr . "\">Ativar conta de " . $usernamestr . "</a></td></tr>";
+    echo "<tr><td><b>Usu√°rio: </b>$usernamestr | <a href=\"bugslist.php?pending=true&validate=" . $usernamestr . "\">Ativar conta de " . $usernamestr . "</a></td></tr>";
     echo "<tr><td><b>Mensagem: </b>$messagestr</td></tr>";
 			echo "<tr><td><form method=\"post\" action=\"mail.php?act=compose\">\n";
 			echo "<input type=\"hidden\" name=\"to\" value=\"" . $usernamestr . "\" />\n";
@@ -93,8 +93,8 @@ if (isset($_GET['pending'])) {
 <center>
 <form method="GET" action="bugslist.php">
 <input type="submit" name="fixed" value="Revolvidos">
-<input type="submit" name="pending" value="N„o Resolvidos">
-<p /><b>Selecione quais mensagens vocÍ quer checar.</b><p />
+<input type="submit" name="pending" value="N√£o Resolvidos">
+<p /><b>Selecione quais mensagens voc√™ quer checar.</b><p />
 </center>
 
 <?php include("templates/private_footer.php")

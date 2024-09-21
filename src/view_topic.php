@@ -1,7 +1,7 @@
 <?php
 include("lib.php");
 include('bbcode.php');
-define("PAGENAME", "F—rum");
+define("PAGENAME", "FÂ—rum");
 $player = check_user($secret_key, $db);
 include("checkforum.php");
 
@@ -22,7 +22,7 @@ $id = $data['id'];
 
 	$foruminfo = $db->execute("select * from `forum_question` where `id`=?", array($data['id']));
 	if ($foruminfo->recordcount() != 1){
-		echo "Este t—pico n‹o existe. <a href=\"select_forum.php\">Voltar</a>.";
+		echo "Este tÂ—pico nÂ‹o existe. <a href=\"select_forum.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		exit;
 	}else{
@@ -32,7 +32,7 @@ $id = $data['id'];
 }
 
 if ((($rows['category'] == 'gangues') or ($rows['category'] == 'trade')) and ($player->serv != $rows['serv'])){
-		echo "<fieldset><legend><b>Erro</b></legend>Voc n‹o pode visualizar este t—pico.<BR>";
+		echo "<fieldset><legend><b>Erro</b></legend>VocÂ nÂ‹o pode visualizar este tÂ—pico.<BR>";
 		echo "<a href='select_forum.php'>Voltar</a></fieldset>";
             include("templates/private_footer.php");
             exit;
@@ -43,7 +43,7 @@ if (($_GET['up']) or ($_GET['down']))
 {
 	$jaupou = $db->execute("select * from `thumb` where `topic_id`=? and `player_id`=?", array($data['id'], $player->id));
 	if ($jaupou->recordcount() > 0){
-		echo showAlert("Voc j‡ votou neste t—pico!", "red");
+		echo showAlert("VocÂ jÂ‡ votou neste tÂ—pico!", "red");
 	} else {
 
 		$insert['player_id'] = $player->id;
@@ -69,16 +69,16 @@ if ($_POST['a_answer']) {
 	$lastpost = $db->execute("select * from `forum_answer` where `a_user_id`=? and `a_datetime`>?", array($player->id, (time() - 20)));
 
 	if ($fecxhado['closed'] == 't') {
-		echo showAlert("Este t—pico est‡ fechado.", "red");
+		echo showAlert("Este tÂ—pico estÂ‡ fechado.", "red");
 
 	} elseif ($foruminfo->recordcount() != 1) {
-		echo showAlert("Este t—pico n‹o existe.", "red");
+		echo showAlert("Este tÂ—pico nÂ‹o existe.", "red");
 
 	} elseif ((($categoryae == 'gangues') or ($categoryae == 'trade')) and ($player->serv != $servae)){
-		echo showAlert("Voc n‹o pode postar aqui.", "red");
+		echo showAlert("VocÂ nÂ‹o pode postar aqui.", "red");
 	
 	} elseif ($lastpost->recordcount() != 0) {
-		echo showAlert("N‹o faa postagens seguidas.<br/>Aguarde 20 segundos para poder postar novamente.", "red");
+		echo showAlert("NÂ‹o faÂa postagens seguidas.<br/>Aguarde 20 segundos para poder postar novamente.", "red");
 
 	} else {
         $texto = strip_tags($_POST['a_answer']);
@@ -105,15 +105,15 @@ if ($_POST['a_answer']) {
 // get value of id that sent from address bar
 
 if ($rows['category'] == 'gangues') {
-$categoria = "Cl‹s";
+$categoria = "ClÂ‹s";
 }elseif ($rows['category'] == 'trade') {
 $categoria = "Compro/Vendo";
 }elseif ($rows['category'] == 'noticias') {
-$categoria = "Notcias";
+$categoria = "NotÂcias";
 }elseif ($rows['category'] == 'sugestoes') {
-$categoria = "Sugest›es";
+$categoria = "SugestÂ›es";
 }elseif ($rows['category'] == 'duvidas') {
-$categoria = "Dúvidas";
+$categoria = "DÃºvidas";
 }elseif ($rows['category'] == 'fan') {
 $categoria = "Fanwork";
 }elseif ($rows['category'] == 'off') {
@@ -122,7 +122,7 @@ $categoria = "Off-Topic";
 $categoria = $rows['category'];
 }
 
-echo "<b><font size=\"1px\"><a href=\"select_forum.php\">F—runs</a> -> <a href=\"main_forum.php?cat=" . $rows['category'] . "\">" . ucfirst($categoria) . "</a> -> <a href=\"view_topic.php?id=" . $rows['id'] . "\">" . ucfirst(stripslashes($rows['topic'])) . "</a></font></b>";
+echo "<b><font size=\"1px\"><a href=\"select_forum.php\">FÂ—runs</a> -> <a href=\"main_forum.php?cat=" . $rows['category'] . "\">" . ucfirst($categoria) . "</a> -> <a href=\"view_topic.php?id=" . $rows['id'] . "\">" . ucfirst(stripslashes($rows['topic'])) . "</a></font></b>";
 
 $query = $db->execute("select `id`, `username`, `avatar`, `posts`, `ban`, `alerts`, `gm_rank`, `serv` from `players` where `id`=?", array($rows['user_id']));
 $topicouser = $query->fetchrow();
@@ -152,7 +152,7 @@ echo "<b>Alerta:</b> " . $topicouser['alerts'] . "%</br>";
 }elseif ($topicouser['ban'] > time()){
 echo "Banido</br>";
 }else if (($topicouser['alerts'] == 'forever') or ($topicouser['alerts'] > 99)){
-echo "Banido do F—rum</br>";
+echo "Banido do FÂ—rum</br>";
 }
 if ($player->gm_rank > 2) 
 {
@@ -278,7 +278,7 @@ if ($aux['total'] > 0) {
 			}elseif ($user['ban'] > time()){
 				echo "Banido</br>";
 			}else if (($user['alerts'] == 'forever') or ($user['alerts'] > 99)){
-				echo "Banido do F—rum</br>";
+				echo "Banido do FÂ—rum</br>";
 			}
 
 			if ($player->gm_rank > 2) {
@@ -336,7 +336,7 @@ if ($fecxhado['closed'] != 't'){
 <td><script>edToolbar('a_answer'); </script><textarea name="a_answer" rows="6" id="a_answer" class="ed"></textarea></td>
 </tr>
 <tr>
-<td><input type="submit" name="submit" value="Enviar" />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="javascript:window.open('example.html', '_blank','top=100, left=100, height=400, width=400, status=no, menubar=no, resizable=no, scrollbars=yes, toolbar=no, location=no, directories=no');">Dicas de formata‹o</a></td>
+<td><input type="submit" name="submit" value="Enviar" />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="javascript:window.open('example.html', '_blank','top=100, left=100, height=400, width=400, status=no, menubar=no, resizable=no, scrollbars=yes, toolbar=no, location=no, directories=no');">Dicas de formataÂÂ‹o</a></td>
 </tr>
 </table>
 </td>
@@ -345,7 +345,7 @@ if ($fecxhado['closed'] != 't'){
 </table>
 <?php
 }else{
-echo "<br/><center><b>T—pico fechado.</b></center>";
+echo "<br/><center><b>TÂ—pico fechado.</b></center>";
 }
 include("templates/private_footer.php");
 ?>

@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Grupos de Caça");
+define("PAGENAME", "Grupos de CaÃ§a");
 $player = check_user($secret_key, $db);
 
 
@@ -10,7 +10,7 @@ if (!$_GET['id']) {
 	$query = $db->execute("select * from `group_invite` where `group_id`=? and `invited_id`=?", array($_GET['id'], $player->id));
 		if ($query->recordcount() == 0) {
 		include("templates/private_header.php");
-    		echo "Grupo de caça não encontrado.<br/>";
+    		echo "Grupo de caÃ§a nÃ£o encontrado.<br/>";
 		echo "<a href=\"home.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		exit;
@@ -23,16 +23,16 @@ if (!$_GET['id']) {
 
 	include("templates/private_header.php");
 	if (($player->level + 30) < $leaderlevel) { 
-    		echo "A diferença de nível entre você e o lider do grupo é maior que 30 níveis.<br/>";
+    		echo "A diferenÃ§a de nÃ­vel entre vocÃª e o lider do grupo Ã© maior que 30 nÃ­veis.<br/>";
 		echo "<a href=\"home.php\">Voltar</a>.";
    	} else if (($player->level - 30) > $leaderlevel) {
-    		echo "A diferença de nível entre você e o lider do grupo é maior que 30 níveis.<br/>";
+    		echo "A diferenÃ§a de nÃ­vel entre vocÃª e o lider do grupo Ã© maior que 30 nÃ­veis.<br/>";
 		echo "<a href=\"home.php\">Voltar</a>.";
    	} else if ($player->level < 30) {
-    		echo "Seu nível é inferior à 30.<br/>";
+    		echo "Seu nÃ­vel Ã© inferior Ã  30.<br/>";
 		echo "<a href=\"home.php\">Voltar</a>.";
    	} else if ($countamembros->recordcount() > 3) {
-		echo "Este grupo já está cheio.<br/>";
+		echo "Este grupo jÃ¡ estÃ¡ cheio.<br/>";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	} else {
 		$insert['id'] = $_GET['id'];
@@ -44,11 +44,11 @@ if (!$_GET['id']) {
 			$log1 = $db->execute("select `player_id` from `groups` where `id`=? and `player_id`!=?", array($_GET['id'], $player->id));
 			while($p1 = $log1->fetchrow())
 			{
-    			$logmsg1 = "Agora <a href=\"profile.php?id=". $player->username ."\">" . $player->username . "</a> faz parte do grupo de caça de <a href=\"profile.php?id=". $leadername ."\">" . $leadername . "</a>.";
+    			$logmsg1 = "Agora <a href=\"profile.php?id=". $player->username ."\">" . $player->username . "</a> faz parte do grupo de caÃ§a de <a href=\"profile.php?id=". $leadername ."\">" . $leadername . "</a>.";
 			addlog($p1['player_id'], $logmsg1, $db);
 			}
 
-		echo "Você acaba de entrar no grupo de caça de " . $leadername . ".<br/>";
+		echo "VocÃª acaba de entrar no grupo de caÃ§a de " . $leadername . ".<br/>";
 		echo "<a href=\"friendlist.php\">Voltar</a>.";
 
 	}

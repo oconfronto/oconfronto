@@ -1,7 +1,7 @@
 <?php
 
 include("lib.php");
-define("PAGENAME", "Missões");
+define("PAGENAME", "MissÃµes");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 
@@ -14,7 +14,7 @@ if ($player->level < 145)
 {
 	include("templates/private_header.php");
 	echo "<fieldset><legend><b>Treinador</b></legend>\n";
-	echo "<i>Seu nivel é muito baixo!</i><br/>\n";
+	echo "<i>Seu nivel Ã© muito baixo!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include("templates/private_footer.php");
@@ -27,7 +27,7 @@ if ($player->level > 155)
 	$query = $db->execute("delete from `quests` where `player_id`=? and `quest_id`=9", array($player->id));
 	include("templates/private_header.php");
 	echo "<fieldset><legend><b>Treinador</b></legend>\n";
-	echo "<i>Seu nivel é muito alto!</i><br/>\n";
+	echo "<i>Seu nivel Ã© muito alto!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include("templates/private_footer.php");
@@ -50,7 +50,7 @@ switch($_GET['act'])
 	case "help":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Bom, esse é meu trabalho, treinar guerreiros. Gostaria de começar seu treinamento por " . $cost . " de ouro?<br>Se eu te treinar, você poderá adiquirir até três níveis!</i><br><br>\n";
+		echo "<i>Bom, esse Ã© meu trabalho, treinar guerreiros. Gostaria de comeÃ§ar seu treinamento por " . $cost . " de ouro?<br>Se eu te treinar, vocÃª poderÃ¡ adiquirir atÃ© trÃªs nÃ­veis!</i><br><br>\n";
 		echo "<a href=\"quest5.php?act=acept\">Aceito</a> | <a href=\"quest5.php?act=decline\">Recuso</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -59,7 +59,7 @@ switch($_GET['act'])
 	case "decline":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Tudo bem, a escolha é sua.</i><br><br>\n";
+		echo "<i>Tudo bem, a escolha Ã© sua.</i><br><br>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -71,7 +71,7 @@ switch($_GET['act'])
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Aviso</b></legend>\n";
 		echo "<i>Um erro desconhecido ocorreu, contate o administrador.</i><br><br>\n";
-		echo "<a href=\"home.php\">Página Principal</a>.";
+		echo "<a href=\"home.php\">PÃ¡gina Principal</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -80,7 +80,7 @@ switch($_GET['act'])
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=9", array($player->kills + 30, $player->id));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Você é mesmo um ótimo guerreiro como eu ouvi dizer por ai?<br/><b>Mate 200 monstros</b> e <b>30 usuários</b> e eu te darei os 3 níveis.</i><br><br>\n";
+		echo "<i>VocÃª Ã© mesmo um Ã³timo guerreiro como eu ouvi dizer por ai?<br/><b>Mate 200 monstros</b> e <b>30 usuÃ¡rios</b> e eu te darei os 3 nÃ­veis.</i><br><br>\n";
 		echo "<a href=\"quest5.php\">Continuar</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -92,7 +92,7 @@ switch($_GET['act'])
 		if ($verifikcheck->recordcount() != 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "Você já me pagou!</i><br/><br/>\n";
+		echo "VocÃª jÃ¡ me pagou!</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -101,7 +101,7 @@ switch($_GET['act'])
 			if ($player->gold - $cost < 0){
 			include("templates/private_header.php");
 			echo "<fieldset><legend><b>Treinador</b></legend>\n";
-			echo "<i>Você não possui esta quantia de ouro!</i><br/><br/>\n";
+			echo "<i>VocÃª nÃ£o possui esta quantia de ouro!</i><br/><br/>\n";
 			echo "<a href=\"home.php\">Voltar</a>.";
 	        	echo "</fieldset>";
 			include("templates/private_footer.php");
@@ -118,8 +118,8 @@ switch($_GET['act'])
 		$query = $db->autoexecute('quests', $insert, 'INSERT');
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Obrigado. vamos logo começar com o treinamento.</i><br><br>\n";
-		echo "<a href=\"quest5.php\">Começar Treinamento</a> | <a href=\"home.php\">Voltar</a>.";
+		echo "<i>Obrigado. vamos logo comeÃ§ar com o treinamento.</i><br><br>\n";
+		echo "<a href=\"quest5.php\">ComeÃ§ar Treinamento</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -139,8 +139,8 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Olá meu jovem. Porque me procura?</i><br/><br>\n";
-		echo "<a href=\"quest5.php?act=who\">Quem é você?</a> | <a href=\"quest5.php?act=help\">Preciso treinar</a> | <a href=\"home.php\">Voltar</a>.";
+		echo "<i>OlÃ¡ meu jovem. Porque me procura?</i><br/><br>\n";
+		echo "<a href=\"quest5.php?act=who\">Quem Ã© vocÃª?</a> | <a href=\"quest5.php?act=help\">Preciso treinar</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -153,7 +153,7 @@ switch($_GET['act'])
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=9", array($player->kills + 30, $player->id));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Você é mesmo um ótimo guerreiro como eu ouvi dizer por ai?<br/><b>Mate 200 monstros</b> e <b>30 usuários</b> e eu te darei os 3 níveis.</i><br><br>\n";
+		echo "<i>VocÃª Ã© mesmo um Ã³timo guerreiro como eu ouvi dizer por ai?<br/><b>Mate 200 monstros</b> e <b>30 usuÃ¡rios</b> e eu te darei os 3 nÃ­veis.</i><br><br>\n";
 		echo "<a href=\"quest5.php\">Continuar</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -178,7 +178,7 @@ switch($_GET['act'])
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=9", array(2, $player->id));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Você já matou o suficiente.</i><br><br>";
+		echo "<i>VocÃª jÃ¡ matou o suficiente.</i><br><br>";
 		echo "<a href=\"quest5.php\">Continuar</a>.";
 	     	echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -186,7 +186,7 @@ switch($_GET['act'])
 		}else{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Você precisa matar <b>" . $remaining . " monstro(s)</b> e <b>" . $remaining2 . " usuário(s)</b> para terminar seu treinamento.</i><br><br>";
+		echo "<i>VocÃª precisa matar <b>" . $remaining . " monstro(s)</b> e <b>" . $remaining2 . " usuÃ¡rio(s)</b> para terminar seu treinamento.</i><br><br>";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	     	echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -206,7 +206,7 @@ switch($_GET['act'])
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=9", array(90, $player->id));
 		include("templates/private_header.php");
             echo "<fieldset><legend><b>Treinador</b></legend>\n";
-            echo "<i>Bom, parece mesmo que você é um ótimo guerreiro.<br><b>(Você passou para o nível " . $newlvl . ")</b></i><br><br>";
+            echo "<i>Bom, parece mesmo que vocÃª Ã© um Ã³timo guerreiro.<br><b>(VocÃª passou para o nÃ­vel " . $newlvl . ")</b></i><br><br>";
             echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -217,7 +217,7 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-		echo "<i>Você já fez esta missão.</i><br><br>";
+		echo "<i>VocÃª jÃ¡ fez esta missÃ£o.</i><br><br>";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");

@@ -21,7 +21,7 @@ if ($reino['imperador'] == $player->id) {
 
 			if ($preco > $reino['ouro']) {
 				include("templates/private_header.php");
-				echo "Seu reino n„o possui ouro suficiente para esta mudanÁa. <a href=\"reino.php\">Voltar</a>.";
+				echo "Seu reino n√£o possui ouro suficiente para esta mudan√ßa. <a href=\"reino.php\">Voltar</a>.";
 				include("templates/private_footer.php");
 				exit;
 			}
@@ -30,19 +30,19 @@ if ($reino['imperador'] == $player->id) {
 
 			$query = $db->execute("select `id` from `players` where `id`!=? and `reino`=?", array($player->id, $player->reino));
 			while($member = $query->fetchrow()) {
-				$logmsg = "Os portıes do reino foram abertos por " . $_POST['time'] . " minutos.";
+				$logmsg = "Os port√µes do reino foram abertos por " . $_POST['time'] . " minutos.";
 				addlog($member['id'], $logmsg, $db);
 			}
 
 			$insert['reino'] = $player->reino;
-			$insert['log'] = "Os portıes do reino foram abertos por " . $_POST['time'] . " minutos apÛs o imperador pagar uma taxa de " . $preco . " moedas de ouro.";
+			$insert['log'] = "Os port√µes do reino foram abertos por " . $_POST['time'] . " minutos ap√≥s o imperador pagar uma taxa de " . $preco . " moedas de ouro.";
 			$insert['time'] = time();
 			$db->autoexecute('log_reino', $insert, 'INSERT');
 
 			$query = $db->execute("select * from `reinos` where `id`=?", array($player->reino));
 			$reino = $query->fetchrow();
 			
-			$msg = "Os portıes do reino foram abertos por " . $_POST['time'] . " minutos.";
+			$msg = "Os port√µes do reino foram abertos por " . $_POST['time'] . " minutos.";
 		}
 	}
 
@@ -58,7 +58,7 @@ if ($reino['imperador'] == $player->id) {
 	echo "<tr><td width=\"35%\">";
 
 		echo "<table width=\"100%\" style=\"text-align: center;\">";
-			echo "<tr><td class=\"brown\" width=\"100%\"><center><b>PreÁos</b></center></td></tr>";
+			echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Pre√ßos</b></center></td></tr>";
 			echo "<tr><td class=\"off\">";
 
 				$count = $db->execute("select `id` from `players` where `reino`=?", array($player->reino));
@@ -68,7 +68,7 @@ if ($reino['imperador'] == $player->id) {
 				echo "<tr><td width=\"25%\">60 min</td><td>custam</td><td>" . ceil(3200 * $count->recordcount()) . "</td></tr>";
 				echo "</table>";
 
-				echo "<font size=\"1px\">Os portıes sÛ podem ser abertos a cada 3 dias.</font>";
+				echo "<font size=\"1px\">Os port√µes s√≥ podem ser abertos a cada 3 dias.</font>";
 
 			echo "</td></tr>";
 		echo "</table>";
@@ -77,17 +77,17 @@ if ($reino['imperador'] == $player->id) {
 	echo "<td width=\"65%\">";
 
 		echo "<table width=\"100%\" style=\"text-align: center;\">";
-			echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Abrir portıes</b></center></td></tr>";
+			echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Abrir port√µes</b></center></td></tr>";
 			echo "<tr><td class=\"salmon\">";
 
-				echo "<font size=\"1px\">Ao abrir os portıes <b>novos monstros</b> ficar„o disponÌveis para combate.<br/>Estes monstros carregam <b>mais ouro e experiÍncia</b> que o usual.</font>";
+				echo "<font size=\"1px\">Ao abrir os port√µes <b>novos monstros</b> ficar√£o dispon√≠veis para combate.<br/>Estes monstros carregam <b>mais ouro e experi√™ncia</b> que o usual.</font>";
 
 				echo "<p>";
 					if ($reino['gates'] > time()){
-						echo "<b>Os portıes do reino est„o abertos!</b>";
+						echo "<b>Os port√µes do reino est√£o abertos!</b>";
 					} elseif (($reino['gates'] + 255600) < time()){
 						echo "<form method=\"POST\" action=\"reino_gates.php\">";
-						echo "<b>Abrir portıes por:</b> ";
+						echo "<b>Abrir port√µes por:</b> ";
 
 						echo "<select name=\"time\">";
 							echo "<option value=\"0\" selected=\"selected\">0 minutos</option>";
@@ -99,7 +99,7 @@ if ($reino['imperador'] == $player->id) {
 						echo "<input type=\"submit\" name=\"submit\" value=\"Abrir\">";
 						echo "</form>";
 					} else {
-						echo "<b>VocÍ j· abriu os portıes nos ˙ltimos 3 dias!</b>";
+						echo "<b>Voc√™ j√° abriu os port√µes nos √∫ltimos 3 dias!</b>";
 					}
 				echo "</p>";
 

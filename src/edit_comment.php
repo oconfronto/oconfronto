@@ -1,7 +1,7 @@
 <?php
 
 include("lib.php");
-define("PAGENAME", "Editar Coment·rio");
+define("PAGENAME", "Editar Coment√°rio");
 $player = check_user($secret_key, $db);
 
 
@@ -12,7 +12,7 @@ include("templates/private_header.php");
 	$procuramengperfil = $db->execute("select `perfil` from `profile` where `player_id`=?", array($player->id));
 	if ($procuramengperfil->recordcount() == 0)
 	{
-		$mencomentario = "Sem coment·rios.";
+		$mencomentario = "Sem coment√°rios.";
 	}
 	else
 	{
@@ -29,7 +29,7 @@ include("templates/private_header.php");
 <td>
 <table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF">
 <tr>
-<td colspan="3" bgcolor="#E6E6E6"><strong>Editar coment·rios do perfil</strong> </td>
+<td colspan="3" bgcolor="#E6E6E6"><strong>Editar coment√°rios do perfil</strong> </td>
 </tr>
 <tr>
 <td><script>edToolbar('detail'); </script><textarea name="detail" rows="12" id="detail" class="ed"><?=$mencomentario?></textarea></td>

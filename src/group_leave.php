@@ -1,6 +1,6 @@
 <?php
 include("lib.php");
-define("PAGENAME", "Grupos de Caça");
+define("PAGENAME", "Grupos de CaÃ§a");
 $player = check_user($secret_key, $db);
 
 
@@ -11,7 +11,7 @@ if (!$_GET['id']) {
 	$query = $db->execute("select * from `groups` where `id`=? and `player_id`=?", array($_GET['id'], $player->id));
 	if ($query->recordcount() == 0) {
 		include("templates/private_header.php");
-    		echo "Você não pertence a este grupo de caça.<br/>";
+    		echo "VocÃª nÃ£o pertence a este grupo de caÃ§a.<br/>";
 		echo "<a href=\"home.php\">Voltar</a>.";
 		include("templates/private_footer.php");
 		exit;
@@ -30,7 +30,7 @@ if (($_GET['confirm']) and ($_GET['id'])) {
 				$log1 = $db->execute("select `player_id` from `groups` where `id`=? and `player_id`!=?", array($_GET['id'], $player->id));
 				while($p1 = $log1->fetchrow())
 				{
-    				$logmsg1 = "<a href=\"profile.php?id=". $player->username ."\">" . $player->username . "</a> desfez seu grupo de caça.";
+    				$logmsg1 = "<a href=\"profile.php?id=". $player->username ."\">" . $player->username . "</a> desfez seu grupo de caÃ§a.";
 				addlog($p1['player_id'], $logmsg1, $db);
 				}
 
@@ -41,7 +41,7 @@ if (($_GET['confirm']) and ($_GET['id'])) {
 				$log1 = $db->execute("select `player_id` from `groups` where `id`=? and `player_id`!=?", array($_GET['id'], $player->id));
 				while($p1 = $log1->fetchrow())
 				{
-    				$logmsg1 = "<a href=\"profile.php?id=". $player->username ."\">" . $player->username . "</a> não faz mais parte do grupo de caça.";
+    				$logmsg1 = "<a href=\"profile.php?id=". $player->username ."\">" . $player->username . "</a> nÃ£o faz mais parte do grupo de caÃ§a.";
 				addlog($p1['player_id'], $logmsg1, $db);
 				}
 
@@ -49,7 +49,7 @@ if (($_GET['confirm']) and ($_GET['id'])) {
 			$query = $db->execute("delete from `group_invite` where `group_id`=? and `invited_id`=?", array($_GET['id'], $player->id));
 			}
 
-		echo "Você abandonou seu grupo de caça.<br/>";
+		echo "VocÃª abandonou seu grupo de caÃ§a.<br/>";
 		echo "<a href=\"home.php\">Voltar</a>.";
 
 	include("templates/private_footer.php");
@@ -59,9 +59,9 @@ if (($_GET['confirm']) and ($_GET['id'])) {
 } else {
 
 		include("templates/private_header.php");
-    		echo "Tem certeza que deseja abandonar seu grupo de caça?<br/>";
+    		echo "Tem certeza que deseja abandonar seu grupo de caÃ§a?<br/>";
 		if ($player->id == $group['id']){
-		echo "(Você é o lider do grupo, se o abandonar ele deixará de existir).<br/>";
+		echo "(VocÃª Ã© o lider do grupo, se o abandonar ele deixarÃ¡ de existir).<br/>";
 		}
 		echo "<a href=\"group_leave.php?id=" . $_GET['id'] . "&confirm=t\">Sim</a> | <a href=\"friendlist.php\">Voltar</a>.";
 		include("templates/private_footer.php");

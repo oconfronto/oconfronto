@@ -2,10 +2,10 @@
 if (($_GET['transpotion']) and (!$_POST['mandap']))
 {
 include("templates/private_header.php");
-echo "<fieldset><legend><b>Enviar Poções</b></legend>\n";
+echo "<fieldset><legend><b>Enviar PoÃ§Ãµes</b></legend>\n";
 echo "<form method=\"post\" action=\"inventory.php?transpotion=true\"><table><tr><td><b>Desejo enviar:</b></td><td><select name=\"potion\"><option value=\"none\" selected=\"selected\">Selecione</option><option value=\"hp\">Health Potions</option><option value=\"bhp\">Big Health Potions</option><option value=\"mana\">Mana Potions</option><option value=\"energy\">Energy Potions</option></select></td></tr>";
 echo "<tr><td><b>Quantia:</b></td><td><input type=\"text\" name=\"quantia\" size=\"4\"/></td></tr>";
-echo "<tr><td><b>Senha de Transferência:</b></td><td><input type=\"password\" name=\"passcode\" size=\"20\"/></td></tr>";
+echo "<tr><td><b>Senha de TransferÃªncia:</b></td><td><input type=\"password\" name=\"passcode\" size=\"20\"/></td></tr>";
 echo "<tr><td><b>Para:</b></td><td><input type=\"text\" name=\"to\"/> <input type=\"submit\" name=\"mandap\" value=\"Enviar\" /></td></tr></table>";
 echo "</form></fieldset><a href=\"inventory.php\">Voltar</a>.";
 include("templates/private_footer.php");
@@ -14,7 +14,7 @@ exit;
 	 if (!$_POST['potion']){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-        	echo "Você precisa preencher todos os campos!<br />";
+        	echo "VocÃª precisa preencher todos os campos!<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");
@@ -23,7 +23,7 @@ exit;
 	 if (!$_POST['quantia']){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-        	echo "Você precisa preencher todos os campos!<br />";
+        	echo "VocÃª precisa preencher todos os campos!<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");
@@ -32,7 +32,7 @@ exit;
 	 if (!$_POST['passcode']){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-        	echo "Você precisa preencher todos os campos!<br />";
+        	echo "VocÃª precisa preencher todos os campos!<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");
@@ -41,7 +41,7 @@ exit;
 	 if (!$_POST['to']){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-        	echo "Você precisa preencher todos os campos!<br />";
+        	echo "VocÃª precisa preencher todos os campos!<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");
@@ -50,7 +50,7 @@ exit;
 	 if ($_POST['passcode'] != $player->transpass){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-        	echo "Sua senha de transferência está incorreta.<br />";
+        	echo "Sua senha de transferÃªncia estÃ¡ incorreta.<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");
@@ -59,7 +59,7 @@ exit;
 	if ((!is_numeric($_POST['quantia'])) or ($_POST['quantia'] < 1)){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-        	echo "A quantia de poções digitada não é uma quantia válida.<br />";
+        	echo "A quantia de poÃ§Ãµes digitada nÃ£o Ã© uma quantia vÃ¡lida.<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");
@@ -68,7 +68,7 @@ exit;
 	if (($_POST['potion'] != hp) and ($_POST['potion'] != bhp) and ($_POST['potion'] != mana) and ($_POST['potion'] != energy)){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-        	echo "Selecione um tipo de poção para enviar.<br />";
+        	echo "Selecione um tipo de poÃ§Ã£o para enviar.<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");
@@ -78,7 +78,7 @@ exit;
    	if ($veruser->recordcount() == 0) {
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-        	echo "O usuário " . $_POST['to'] . " não existe.<br />";
+        	echo "O usuÃ¡rio " . $_POST['to'] . " nÃ£o existe.<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");
@@ -89,7 +89,7 @@ exit;
    	if ($player->serv != $memberto['serv']) {
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-        	echo "Este usuário pertence a outro servidor.<br />";
+        	echo "Este usuÃ¡rio pertence a outro servidor.<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");
@@ -117,7 +117,7 @@ exit;
 	if ($numpotio->recordcount() < $quantia){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-        	echo "Você não possui " . $quantia . " " . $tipo . "s para enviar.<br />";
+        	echo "VocÃª nÃ£o possui " . $quantia . " " . $tipo . "s para enviar.<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");
@@ -143,13 +143,13 @@ exit;
 		$insert['time'] = time();
 		$query = $db->autoexecute('log_item', $insert, 'INSERT');
 
-                $logmsg = "O usuário <b>" . $player->username . "</b> lhe enviou <b>" . $quantia . " " . $tipo . "s</b>.";
+                $logmsg = "O usuÃ¡rio <b>" . $player->username . "</b> lhe enviou <b>" . $quantia . " " . $tipo . "s</b>.";
                 addlog($memberto['id'], $logmsg, $db);
 
 		$mandapocoes = $db->execute("update `items` set `player_id`=? where `player_id`=? and `item_id`=? and `mark`='f' LIMIT ?", array($memberto['id'], $player->id, $pid, $quantia));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Sucesso</b></legend>\n";
-        	echo "Você acaba de enviar " . $quantia . " " . $tipo . "s para " . $memberto['username'] . ".<br />";
+        	echo "VocÃª acaba de enviar " . $quantia . " " . $tipo . "s para " . $memberto['username'] . ".<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");

@@ -64,7 +64,7 @@ if (!$_GET['email'] or !$_GET['string'] or !$_GET['email'] & !$_GET['string']) {
 	$message .= "<p style=\"font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;font-size:13px;line-height:18px;border-bottom:1px solid rgb(238, 238, 238);padding-bottom:10px\"></p>\n";
 
 	$message .= "<p style=\"font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;margin-top:5px;font-size:10px;color:#888888;text-align:center;\">\n";
-	$message .= "Copyright © 2008-2024 OC Productions<br/>\n";
+	$message .= "Copyright Â© 2008-2024 OC Productions<br/>\n";
 	$message .= "Todos os direitos reservados.\n";
 	$message .= "</p>\n";
 

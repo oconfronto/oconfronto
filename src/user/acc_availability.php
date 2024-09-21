@@ -1,8 +1,8 @@
 <?php
 include("../config.php");
 $tb_name = "accounts";
-mysql_connect($config_server, $config_username, $config_password) or die ("Can’t connect to Datebase");
-mysql_select_db($config_database) or die ("Couldn’t successfully connected");
+mysql_connect($config_server, $config_username, $config_password) or die ("CanÂ’t connect to Datebase");
+mysql_select_db($config_database) or die ("CouldnÂ’t successfully connected");
 $username=$_POST['username'];
 $username=$_POST['user_name'];
 

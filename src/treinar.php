@@ -1,4 +1,4 @@
-﻿<?php
+ï»¿<?php
 
 if(isset($_POST['treinar_strength'])){
 	if($_POST['restante']<0){ echo "<script>self.location='?p=home'</script>"; break; }

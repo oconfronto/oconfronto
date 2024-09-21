@@ -45,10 +45,10 @@ $magiaatual2 = $magiaatual->fetchrow();
 					$curar = rand($enemy->level, ($enemy->level * 2));
 					if (($bixo->hp + $curar) > $enemy->hp){
 						$db->execute("update `bixos` set `hp`=`hp`+?, `mana`=`mana`-15 where `player_id`=?", array($curar, $player->id));
-						array_unshift($_SESSION['battlelog'], "4, " . ucfirst($enemy->prepo) . " " . $enemy->username . " fez um feitiço e recuperou toda sua vida.");
+						array_unshift($_SESSION['battlelog'], "4, " . ucfirst($enemy->prepo) . " " . $enemy->username . " fez um feitiÃ§o e recuperou toda sua vida.");
 					}else{
 						$db->execute("update `bixos` set `hp`=`hp`+?, `mana`=`mana`-15 where `player_id`=?", array($curar, $player->id));
-						array_unshift($_SESSION['battlelog'], "4, " . ucfirst($enemy->prepo) . " " . $enemy->username . " fez um feitiço e recuperou " . $curar . " pontos de vida.");
+						array_unshift($_SESSION['battlelog'], "4, " . ucfirst($enemy->prepo) . " " . $enemy->username . " fez um feitiÃ§o e recuperou " . $curar . " pontos de vida.");
 					}
 
 				} elseif (($playerdamage > $monsterdamage) and ($bixo->mana >= 30) and ($bixo->mana < 65) and ($chancemagia <= 3) and ($playerhp > $monsterhp)){
@@ -60,7 +60,7 @@ $magiaatual2 = $magiaatual->fetchrow();
 					}
 
 					$db->execute("update `bixos` set `mana`=`mana`-30 where `player_id`=?", array($player->id));
-					array_unshift($_SESSION['battlelog'], "4, " . ucfirst($enemy->prepo) . " " . $enemy->username . " deu um ataque duplo em você e tirou " . ($monsterdamage * 2) . " pontos de vida.");
+					array_unshift($_SESSION['battlelog'], "4, " . ucfirst($enemy->prepo) . " " . $enemy->username . " deu um ataque duplo em vocÃª e tirou " . ($monsterdamage * 2) . " pontos de vida.");
 
 				} elseif (($playerdamage > $monsterdamage) and ($bixo->mana >= 65) and ($chancemagia <= 3) and ($playerhp > $monsterhp)){
 					if (($player->hp - ($monsterdamage * 4)) < 1){
@@ -71,17 +71,17 @@ $magiaatual2 = $magiaatual->fetchrow();
 					}
 
 					$db->execute("update `bixos` set `mana`=`mana`-30 where `player_id`=?", array($player->id));
-					array_unshift($_SESSION['battlelog'], "4, " . ucfirst($enemy->prepo) . " " . $enemy->username . " deu um ataque quádruplo em você e tirou " . ($monsterdamage * 4) . " pontos de vida.");
+					array_unshift($_SESSION['battlelog'], "4, " . ucfirst($enemy->prepo) . " " . $enemy->username . " deu um ataque quÃ¡druplo em vocÃª e tirou " . ($monsterdamage * 4) . " pontos de vida.");
 
 				}else{
 
 					if (($player->hp - $monsterdamage) < 1){
 						$db->execute("update `players` set `hp`=0 where `id`=?", array($player->id));
-						array_unshift($_SESSION['battlelog'], "2, " . ucfirst($enemy->prepo) . " " . $enemy->username . " te atacou e você perdeu " . $monsterdamage . " de vida.");
+						array_unshift($_SESSION['battlelog'], "2, " . ucfirst($enemy->prepo) . " " . $enemy->username . " te atacou e vocÃª perdeu " . $monsterdamage . " de vida.");
 						$morreu = 5;
 					}else{
 						$db->execute("update `players` set `hp`=`hp`-? where `id`=?", array($monsterdamage, $player->id));
-						array_unshift($_SESSION['battlelog'], "2, " . ucfirst($enemy->prepo) . " " . $enemy->username . " te atacou e você perdeu " . $monsterdamage . " de vida.");	
+						array_unshift($_SESSION['battlelog'], "2, " . ucfirst($enemy->prepo) . " " . $enemy->username . " te atacou e vocÃª perdeu " . $monsterdamage . " de vida.");	
 					}
 				}
 		}

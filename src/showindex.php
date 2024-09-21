@@ -18,7 +18,7 @@ include("lib.php");
         }
         elseif ($tentativas > 9)
         {
-            $errormsg = "Você errou sua senha 10 vezes seguidas. Aguarde 30 minutos para poder tentar novamente.";
+            $errormsg = "VocÃª errou sua senha 10 vezes seguidas. Aguarde 30 minutos para poder tentar novamente.";
             $error = 1;
         }
         

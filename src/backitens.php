@@ -8,7 +8,7 @@ $player = check_user($secret_key, $db);
 if ($player->gm_rank < 75)
 {
 	include("templates/private_header.php");
-	echo "VOcÍ n„o tem autoridade para acessar esta p·gina.";
+	echo "VOc√™ n√£o tem autoridade para acessar esta p√°gina.";
 	include("templates/private_footer.php");
 	exit;
 }
@@ -50,22 +50,22 @@ elseif (($_GET['from']) and (!$_POST['devolve']))
 				$queryver = $db->execute("select * from `items` where `id`=? and `player_id`!=?", array($log['itemid'], $to));
  				if ($queryver->recordcount() == 0)
 				{
-				echo "" . $log['value'] . " para " . $log['name2'] . " j· devolvidada ou n„o encontrada.<br/>";
+				echo "" . $log['value'] . " para " . $log['name2'] . " j√° devolvidada ou n√£o encontrada.<br/>";
 				}else{
 
 		$valortempo = time() -  $log['time'];
 		if ($valortempo < 60){
 		$valortempo2 = $valortempo;
-		$auxiliar2 = "segundo(s) atr·s.";
+		$auxiliar2 = "segundo(s) atr√°s.";
 		}else if($valortempo < 3600){
 		$valortempo2 = floor($valortempo / 60);
-		$auxiliar2 = "minuto(s) atr·s.";
+		$auxiliar2 = "minuto(s) atr√°s.";
 		}else if($valortempo < 86400){
 		$valortempo2 = floor($valortempo / 3600);
-		$auxiliar2 = "hora(s) atr·s.";
+		$auxiliar2 = "hora(s) atr√°s.";
 		}else if($valortempo > 86400){
 		$valortempo2 = floor($valortempo / 86400);
-		$auxiliar2 = "dia(s) atr·s.";
+		$auxiliar2 = "dia(s) atr√°s.";
 		}
 
 			$totalitem = $totalitem + 1;

@@ -4,9 +4,9 @@ $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `
    	 if ($verifikeuser->recordcount() == 0) {
 		include("templates/private_header.php");
 	echo"<fieldset><legend><b>Enviar Itens</b></legend>";
-	echo"Você precisa chegar ao nivel 40 e completar uma missão para utilizar esta função.";
+	echo"VocÃª precisa chegar ao nivel 40 e completar uma missÃ£o para utilizar esta funÃ§Ã£o.";
 	if ($player->level > 39) {
-	echo"<br><center><a href=\"quest2.php\"><b>Clique aqui para fazer a missão.</b></a></center>";
+	echo"<br><center><a href=\"quest2.php\"><b>Clique aqui para fazer a missÃ£o.</b></a></center>";
 	}
 	echo"</fieldset>";
         	include("templates/private_footer.php");
@@ -17,7 +17,7 @@ $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `
 		$error = 1;
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-        	echo "Você precisa preencher todos os campos!<br />";
+        	echo "VocÃª precisa preencher todos os campos!<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");
@@ -28,7 +28,7 @@ $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `
 		$error = 1;
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-        	echo "Você precisa preencher todos os campos!<br />";
+        	echo "VocÃª precisa preencher todos os campos!<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");
@@ -39,7 +39,7 @@ $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `
 		$error = 1;
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-        	echo "Você precisa preencher todos os campos!<br />";
+        	echo "VocÃª precisa preencher todos os campos!<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");
@@ -50,7 +50,7 @@ $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `
 		$error = 1;
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-        	echo "Sua senha de transferência está incorreta.<br />";
+        	echo "Sua senha de transferÃªncia estÃ¡ incorreta.<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");
@@ -61,7 +61,7 @@ $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `
 		$error = 1;
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-        	echo "Você não pode enviar um iten para você mesmo!<br />";
+        	echo "VocÃª nÃ£o pode enviar um iten para vocÃª mesmo!<br />";
         	echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
         	include("templates/private_footer.php");
@@ -81,7 +81,7 @@ $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `
 	$error = 1;
         include("templates/private_header.php");
 	echo "<fieldset><legend><b>Erro</b></legend>\n";
-        echo "Você não possui este item.<br />";
+        echo "VocÃª nÃ£o possui este item.<br />";
         echo "<a href=\"inventory.php\">Voltar</a>.";
 	echo "</fieldset>";
         include("templates/private_footer.php");
@@ -92,7 +92,7 @@ $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `
 	$error = 1;
         include("templates/private_header.php");
 	echo "<fieldset><legend><b>Erro</b></legend>\n";
-        echo "Você não pode enviar um item que está sendo usado.<br />";
+        echo "VocÃª nÃ£o pode enviar um item que estÃ¡ sendo usado.<br />";
         echo "<a href=\"inventory.php\">Voltar</a>.";
 	echo "</fieldset>";
         include("templates/private_footer.php");
@@ -103,7 +103,7 @@ $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `
 	$error = 1;
         include("templates/private_header.php");
 	echo "<fieldset><legend><b>Erro</b></legend>\n";
-        echo "Você não pode enviar um item que está à venda no mercado.<br />";
+        echo "VocÃª nÃ£o pode enviar um item que estÃ¡ Ã  venda no mercado.<br />";
         echo "<a href=\"inventory.php\">Voltar</a>.";
 	echo "</fieldset>";
         include("templates/private_footer.php");
@@ -114,7 +114,7 @@ $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `
 	$error = 1;
         include("templates/private_header.php");
 	echo "<fieldset><legend><b>Erro</b></legend>\n";
-        echo "Você não pode enviar pedras.<br />";
+        echo "VocÃª nÃ£o pode enviar pedras.<br />";
         echo "<a href=\"inventory.php\">Voltar</a>.";
 	echo "</fieldset>";
         include("templates/private_footer.php");
@@ -125,7 +125,7 @@ $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `
 	$error = 1;
         include("templates/private_header.php");
 	echo "<fieldset><legend><b>Erro</b></legend>\n";
-        echo "O usuário " . $_POST['username'] . " não existe.<br />";
+        echo "O usuÃ¡rio " . $_POST['username'] . " nÃ£o existe.<br />";
         echo "<a href=\"inventory.php\">Voltar</a>.";
 	echo "</fieldset>";
         include("templates/private_footer.php");
@@ -136,7 +136,7 @@ $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `
 	$error = 1;
 	include("templates/private_header.php");
 	echo "<fieldset><legend><b>Erro</b></legend>\n";
-        echo "Este usuário pertence a outro servidor.<br />";
+        echo "Este usuÃ¡rio pertence a outro servidor.<br />";
         echo "<a href=\"inventory.php\">Voltar</a>.";
 	echo "</fieldset>";
         include("templates/private_footer.php");
@@ -167,11 +167,11 @@ $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `
 		$insert['time'] = time();
 		$query = $db->autoexecute('log_item', $insert, 'INSERT');
 
-                $logmsg = "O usuário <b>" . $player->username . "</b> lhe enviou um(a) <b>" . $item5['name'] . " +" . $item5['item_bonus'] . "</b>.";
+                $logmsg = "O usuÃ¡rio <b>" . $player->username . "</b> lhe enviou um(a) <b>" . $item5['name'] . " +" . $item5['item_bonus'] . "</b>.";
                 addlog($destination['id'], $logmsg, $db);
                 include("templates/private_header.php");
 		echo "<fieldset><legend><b>Sucesso</b></legend>\n";
-                echo "Você enviou um(a) <b>" . $item5['name'] . " +" . $item5['item_bonus'] . "</b> com sucesso para o usuário: <b>" . $_POST['username'] . "</b>.<br />";
+                echo "VocÃª enviou um(a) <b>" . $item5['name'] . " +" . $item5['item_bonus'] . "</b> com sucesso para o usuÃ¡rio: <b>" . $_POST['username'] . "</b>.<br />";
                 echo "<a href=\"inventory.php\">Voltar</a>.";
 		echo "</fieldset>";
                 include("templates/private_footer.php");

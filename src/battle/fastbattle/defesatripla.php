@@ -10,5 +10,5 @@ $fastmagia = 6;
 $fastturno = 3;
 
 	$player->mana -= $mana;
-	array_unshift($_SESSION['battlelog'], "3, Você lançou o feitiço defesa dupla.");
+	array_unshift($_SESSION['battlelog'], "3, VocÃª lanÃ§ou o feitiÃ§o defesa dupla.");
 ?>

@@ -7,7 +7,7 @@
 /*************************************/
 
 include("lib.php");
-define("PAGENAME", "Missões");
+define("PAGENAME", "MissÃµes");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 include("checkhp.php");
@@ -30,7 +30,7 @@ if ($player->promoted == t)
 {
 	include("templates/private_header.php");
 	echo "<fieldset><legend><b>Treinador</b></legend>\n";
-	echo "<i>Você já possui uma vocação superior!</i><br/>\n";
+	echo "<i>VocÃª jÃ¡ possui uma vocaÃ§Ã£o superior!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo '</fieldset>';
 	include("templates/private_footer.php");
@@ -41,7 +41,7 @@ if ($player->level < 80)
 {
 	include("templates/private_header.php");
 	echo "<fieldset><legend><b>Treinador</b></legend>\n";
-	echo "<i>Seu nivel é muito baixo!</i><br/>\n";
+	echo "<i>Seu nivel Ã© muito baixo!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include("templates/private_footer.php");
@@ -53,7 +53,7 @@ switch($_GET['act'])
 	case "pay":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Você está disposto a me pagar 80000 de ouro para começar as missões?</i><br>\n";
+		echo "<i>VocÃª estÃ¡ disposto a me pagar 80000 de ouro para comeÃ§ar as missÃµes?</i><br>\n";
 		echo "<a href=\"promote.php?act=confirmpay\">Sim eu estou</a> | <a href=\"home.php\">Deixar para depois</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -66,7 +66,7 @@ switch($_GET['act'])
 		if ($player->gold - 80000 < 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Você não possui esta quantia de ouro!</i><br/><br/>\n";
+		echo "<i>VocÃª nÃ£o possui esta quantia de ouro!</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -79,7 +79,7 @@ switch($_GET['act'])
 		$query = $db->autoexecute('quests', $insert, 'INSERT');
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Pronto, agora podemos continuar com as missões.</i><br>\n";
+		echo "<i>Pronto, agora podemos continuar com as missÃµes.</i><br>\n";
 		echo "<a href=\"promote.php\">Continuar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -88,7 +88,7 @@ switch($_GET['act'])
 		}else{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "Você já nos pagou esta taixa!</i><br/><br/>\n";
+		echo "VocÃª jÃ¡ nos pagou esta taixa!</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -125,7 +125,7 @@ switch($_GET['act'])
 		if ($selectfirstitem->recordcount() == 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Você não possui um Wind Orb.</i><br/><br/>\n";
+		echo "<i>VocÃª nÃ£o possui um Wind Orb.</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -135,7 +135,7 @@ switch($_GET['act'])
 		$query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", array(107, $player->id, 1));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Obrigado, agora podemos passar para a segunda missão.</i><br>\n";
+		echo "<i>Obrigado, agora podemos passar para a segunda missÃ£o.</i><br>\n";
 		echo "<a href=\"promote.php\">Continuar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -171,7 +171,7 @@ switch($_GET['act'])
 		if ($selectfirstitem->recordcount() == 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Você não possui um Earth Orb.</i><br/><br/>\n";
+		echo "<i>VocÃª nÃ£o possui um Earth Orb.</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -181,7 +181,7 @@ switch($_GET['act'])
 		$query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", array(108, $player->id, 1));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Obrigado, agora podemos passar para a terceira missão.</i><br>\n";
+		echo "<i>Obrigado, agora podemos passar para a terceira missÃ£o.</i><br>\n";
 		echo "<a href=\"promote.php\">Continuar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -217,7 +217,7 @@ switch($_GET['act'])
 		if ($selectfirstitem->recordcount() == 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Você não possui um Water Orb.</i><br/><br/>\n";
+		echo "<i>VocÃª nÃ£o possui um Water Orb.</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -227,7 +227,7 @@ switch($_GET['act'])
 		$query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", array(110, $player->id, 1));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Obrigado, agora podemos passar para a ultima missão.</i><br>\n";
+		echo "<i>Obrigado, agora podemos passar para a ultima missÃ£o.</i><br>\n";
 		echo "<a href=\"promote.php\">Continuar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -263,7 +263,7 @@ switch($_GET['act'])
 		if ($selectfirstitem->recordcount() == 0){
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Você não possui um Fire Orb.</i><br/><br/>\n";
+		echo "<i>VocÃª nÃ£o possui um Fire Orb.</i><br/><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -274,7 +274,7 @@ switch($_GET['act'])
 		$query = $db->execute("update `players` set `promoted`=? where `id`=?", array(t, $player->id));
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Pronto! Você me provou que é um ótimo guerreiro, e como eu tinha lhe prometido, <b>estou te promovendo para $futuravocacao!</b></i><br><br>\n";
+		echo "<i>Pronto! VocÃª me provou que Ã© um Ã³timo guerreiro, e como eu tinha lhe prometido, <b>estou te promovendo para $futuravocacao!</b></i><br><br>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
@@ -291,10 +291,10 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Vejo que você deseja se tornar um <b>$futuravocacao</b>.</i>\n";
-		echo " <i>Com uma vocação superior seu ataque e sua defesa aumentam, e você pode usar itens para vocações superiores!</i><br/><br/>";
-		echo "<i>Se você completar algumas pequenas missões e me pagar uma quantia de <b>80000 moedas de ouro</b>, você se transformará em um $futuravocacao!</i><br/><br/>\n";
-		echo "<a href=\"promote.php?act=pay\">Aceito as missões</a> | <a href=\"home.php\">Deixar para depois</a>.";
+		echo "<i>Vejo que vocÃª deseja se tornar um <b>$futuravocacao</b>.</i>\n";
+		echo " <i>Com uma vocaÃ§Ã£o superior seu ataque e sua defesa aumentam, e vocÃª pode usar itens para vocaÃ§Ãµes superiores!</i><br/><br/>";
+		echo "<i>Se vocÃª completar algumas pequenas missÃµes e me pagar uma quantia de <b>80000 moedas de ouro</b>, vocÃª se transformarÃ¡ em um $futuravocacao!</i><br/><br/>\n";
+		echo "<a href=\"promote.php?act=pay\">Aceito as missÃµes</a> | <a href=\"home.php\">Deixar para depois</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -304,8 +304,8 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Seu primeiro desafio é conseguir um <b>Wind Orb</b>. Você pode obtelo matando Decapitadores ou comprando no mercado.</i><br/><br/>\n";
-		echo "<a href=\"promote.php?act=continue1\">Continuar missão</a> | <a href=\"home.php\">Voltar</a>.";
+		echo "<i>Seu primeiro desafio Ã© conseguir um <b>Wind Orb</b>. VocÃª pode obtelo matando Decapitadores ou comprando no mercado.</i><br/><br/>\n";
+		echo "<a href=\"promote.php?act=continue1\">Continuar missÃ£o</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -315,8 +315,8 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Seu segundo desafio é conseguir um <b>Earth Orb</b>. Você pode obtelo matando Guerreiros Zumbi ou comprando no mercado.</i><br/><br/>\n";
-		echo "<a href=\"promote.php?act=continue2\">Continuar missão</a> | <a href=\"home.php\">Voltar</a>.";
+		echo "<i>Seu segundo desafio Ã© conseguir um <b>Earth Orb</b>. VocÃª pode obtelo matando Guerreiros Zumbi ou comprando no mercado.</i><br/><br/>\n";
+		echo "<a href=\"promote.php?act=continue2\">Continuar missÃ£o</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -326,8 +326,8 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Seu terceiro desafio é conseguir um <b>Water Orb</b>. Você pode obtelo matando Taurens ou comprando no mercado.</i><br/><br/>\n";
-		echo "<a href=\"promote.php?act=continue3\">Continuar missão</a> | <a href=\"home.php\">Voltar</a>.";
+		echo "<i>Seu terceiro desafio Ã© conseguir um <b>Water Orb</b>. VocÃª pode obtelo matando Taurens ou comprando no mercado.</i><br/><br/>\n";
+		echo "<a href=\"promote.php?act=continue3\">Continuar missÃ£o</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -337,8 +337,8 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Seu ultimo desafio é conseguir um <b>Fire Orb</b>. Você pode obtelo matando Menderiels ou comprando no mercado.</i><br/><br/>\n";
-		echo "<a href=\"promote.php?act=continue4\">Finalizar missão</a> | <a href=\"home.php\">Voltar</a>.";
+		echo "<i>Seu ultimo desafio Ã© conseguir um <b>Fire Orb</b>. VocÃª pode obtelo matando Menderiels ou comprando no mercado.</i><br/><br/>\n";
+		echo "<a href=\"promote.php?act=continue4\">Finalizar missÃ£o</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
 		exit;
@@ -348,7 +348,7 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Você já possui uma vocação superior!</i><br/>\n";
+		echo "<i>VocÃª jÃ¡ possui uma vocaÃ§Ã£o superior!</i><br/>\n";
 		echo "<a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
