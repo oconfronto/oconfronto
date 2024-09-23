@@ -1,115 +1,230 @@
 <script src="js/jquery.js" type="text/javascript" language="javascript"></script>
 
 <script language="javascript">
+	//Novo character
+	$(document).ready(function() {
+		$("#username").blur(function() {
+			//remove all the class add the messagebox classes and start fading
+			$("#msgbox").removeClass().addClass('messagebox').fadeIn("slow");
+			//check the username exists or not from ajax
+			$.post("user/user_availability.php", {
+				user_name: $(this).val()
+			}, function(data) {
+				if (data == 'no') //if username not avaiable
+				{
+					$("#msgbox").fadeTo(200, 0.1, function() //start fading the messagebox
+						{
+							//add message and change the class of the box and start fading
+							$(this).html('').addClass('messageboxerror').fadeTo(500, 1);
+						});
+				} else {
+					$("#msgbox").fadeTo(200, 0.1, function() //start fading the messagebox
+						{
+							//add message and change the class of the box and start fading
+							$(this).html('').addClass('messageboxok').fadeTo(500, 1);
+						});
+				}
 
-$(document).ready(function()
-{
-	$("#username").blur(function()
-	{
-		//remove all the class add the messagebox classes and start fading
-		$("#msgbox").removeClass().addClass('messagebox').fadeIn("slow");
-		//check the username exists or not from ajax
-		$.post("user/user_availability.php",{ user_name:$(this).val() } ,function(data)
-        {
-		  if(data=='no') //if username not avaiable
-		  {
-		  	$("#msgbox").fadeTo(200,0.1,function() //start fading the messagebox
-			{ 
-			  //add message and change the class of the box and start fading
-			  $(this).html('').addClass('messageboxerror').fadeTo(500,1);
-			});		
-        	  }
-		  else
-		  {
-		  	$("#msgbox").fadeTo(200,0.1,function()  //start fading the messagebox
-			{ 
-			  //add message and change the class of the box and start fading
-			  $(this).html('').addClass('messageboxok').fadeTo(500,1);	
 			});
-		  }
-				
-        });
- 
+
+		});
 	});
-});
 </script>
 <script language="javascript">
+	//Validando Email
+	$(document).ready(function() {
+		$("#emailbox").blur(function() {
+			//remove all the class add the messagebox classes and start fading
+			$("#msgbox1").removeClass().addClass('messagebox').fadeIn("slow");
+			//check the emailbox exists or not from ajax
+			$.post("user/email_availability.php", {
+				email_name: $(this).val()
+			}, function(data) {
+				if (data == 'no') //if emailbox not avaiable
+				{
+					$("#msgbox1").fadeTo(200, 0.1, function() //start fading the messagebox
+						{
+							//add message and change the class of the box and start fading
+							$(this).html('').addClass('messageboxerror').fadeTo(500, 1);
+						});
+				} else {
+					$("#msgbox1").fadeTo(200, 0.1, function() //start fading the messagebox
+						{
+							//add message and change the class of the box and start fading
+							$(this).html('').addClass('messageboxok').fadeTo(500, 1);
+						});
+				}
 
-$(document).ready(function()
-{
-	$("#emailbox").blur(function()
-	{
-		//remove all the class add the messagebox classes and start fading
-		$("#msgbox2").removeClass().addClass('messagebox').fadeIn("slow");
-		//check the emailbox exists or not from ajax
-		$.post("user/email_availability.php",{ email_name:$(this).val() } ,function(data)
-        {
-		  if(data=='no') //if emailbox not avaiable
-		  {
-		  	$("#msgbox2").fadeTo(200,0.1,function() //start fading the messagebox
-			{ 
-			  //add message and change the class of the box and start fading
-			  $(this).html('').addClass('messageboxerror').fadeTo(500,1);
-			});		
-         	 }
-		  else
-		  {
-		  	$("#msgbox2").fadeTo(200,0.1,function()  //start fading the messagebox
-			{ 
-			  //add message and change the class of the box and start fading
-			  $(this).html('').addClass('messageboxok').fadeTo(500,1);	
 			});
-		  }
-				
-        });
- 
+
+		});
 	});
-});
 </script>
 
 <script language="javascript">
-
-$(document).ready(function()
-{
-	$("#conta").blur(function()
-	{
-		//remove all the class add the messagebox classes and start fading
-		$("#msgbox4").removeClass().addClass('messagebox').fadeIn("slow");
-		//check the username exists or not from ajax
-		$.post("user/acc_availability.php",{ user_name:$(this).val() } ,function(data)
-        {
-		  if(data=='no') //if username not avaiable
-		  {
-		  	$("#msgbox4").fadeTo(200,0.1,function() //start fading the messagebox
-			{ 
-			  //add message and change the class of the box and start fading
-			  $(this).html('').addClass('messageboxerror').fadeTo(500,1);
-			});		
-        	  }
-		  else
-		  {
-		  	$("#msgbox4").fadeTo(200,0.1,function()  //start fading the messagebox
-			{ 
-			  //add message and change the class of the box and start fading
-			  $(this).html('').addClass('messageboxok').fadeTo(500,1);	
-			});
-		  }
-				
-        });
- 
+	//Validando confirmacao de Email
+	$(document).ready(function() {
+		$("#emailboxconf").blur(function() {
+			//remove all the class add the messagebox classes and start fading
+			$("#msgbox2").removeClass().addClass('messagebox').fadeIn("slow");
+			if ($(this).val() == $("#emailbox").val()) {
+				$("#msgbox2").fadeTo(200, 0.1, function() //start fading the messagebox
+					{
+						//add message and change the class of the box and start fading
+						$(this).html('').addClass('messageboxok').fadeTo(500, 1);
+					});
+			} else {
+				$("#msgbox2").fadeTo(200, 0.1, function() //start fading the messagebox
+					{
+						//add message and change the class of the box and start fading
+						$(this).html('').addClass('messageboxerror').fadeTo(500, 1);
+					});
+			}
+		});
 	});
-});
 </script>
+
+<script language="javascript">
+	$(document).ready(function() {
+		$("#conta").blur(function() {
+			//remove all the class add the messagebox classes and start fading
+			$("#msgbox4").removeClass().addClass('messagebox').fadeIn("slow");
+			//check the username exists or not from ajax
+			$.post("user/acc_availability.php", {
+				user_name: $(this).val()
+			}, function(data) {
+				if (data == 'no') //if username not avaiable
+				{
+					$("#msgbox4").fadeTo(200, 0.1, function() //start fading the messagebox
+						{
+							//add message and change the class of the box and start fading
+							$(this).html('').addClass('messageboxerror').fadeTo(500, 1);
+						});
+				} else {
+					$("#msgbox4").fadeTo(200, 0.1, function() //start fading the messagebox
+						{
+							//add message and change the class of the box and start fading
+							$(this).html('').addClass('messageboxok').fadeTo(500, 1);
+						});
+				}
+
+			});
+
+		});
+	});
+</script>
+
+<script language="javascript">
+	//Validando senha
+	$(document).ready(function() {
+		$("#user_pass").blur(function() {
+			//remove all the class add the messagebox classes and start fading
+			$("#msgbox7").removeClass().addClass('messagebox').fadeIn("slow");
+			if ($(this).val() != "" && $(this).val().length > 3) {
+				$("#msgbox7").fadeTo(200, 0.1, function() //start fading the messagebox
+					{
+						//add message and change the class of the box and start fading
+						$(this).html('').addClass('messageboxok').fadeTo(500, 1);
+					});
+			} else {
+				$("#msgbox7").fadeTo(200, 0.1, function() //start fading the messagebox
+					{
+						//add message and change the class of the box and start fading
+						$(this).html('').addClass('messageboxerror').fadeTo(500, 1);
+					});
+			}
+		});
+	});
+</script>
+
+<script language="javascript">
+	//Validando confirmacao de senha
+	$(document).ready(function() {
+		$("#conf_pass").blur(function() {
+			//remove all the class add the messagebox classes and start fading
+			$("#msgbox8").removeClass().addClass('messagebox').fadeIn("slow");
+
+			if ($(this).val() == $("#user_pass").val()) {
+				$("#msgbox8").fadeTo(200, 0.1, function() //start fading the messagebox
+					{
+						//add message and change the class of the box and start fading
+						$(this).html('').addClass('messageboxok').fadeTo(500, 1);
+					});
+			} else {
+				$("#msgbox8").fadeTo(200, 0.1, function() //start fading the messagebox
+					{
+						//add message and change the class of the box and start fading
+						$(this).html('').addClass('messageboxerror').fadeTo(500, 1);
+					});
+			}
+		});
+	});
+</script>
+
+
+<Script Language=JavaScript>
+	// var nText = new Array()
+	// nText[0] = "<font size=\"1\">Escolha sua voca��o.</font>";
+	// nText[1] = "<font size=\"1\">Os Cavaleiros possuem uma grande defesa mas um baixo ataque.</font>";
+	// nText[2] = "<font size=\"1\">Os Magos s�o nivelados em ataque e defesa.</font>";
+	// nText[3] = "<font size=\"1\">Os Arqueiros possuem um bom ataque mas uma defesa fraca.</font>"
+
+	function deleteMsg(name) {
+		if (name.value == "none") {
+			document.getElementById('tr_confirm').style = "display:none";
+			document.getElementById('txtDelete').innerHTML = "";
+		} else {
+			document.getElementById('tr_confirm').style = "";
+			document.getElementById('txtDelete').innerHTML = `Digite <b style=\"color:red\">'${name.value}'</b> para confirmar a exclusão!`;
+		}
+
+	}
+</Script>
+
+
+<script language="javascript">
+	//Validando confirmacao de senha
+	$(document).ready(function() {
+		$("#conf_delete").blur(function() {
+			//remove all the class add the messagebox classes and start fading
+			$("#msgbox10").removeClass().addClass('messagebox').fadeIn("slow");
+			var teste = $("#ddl_char");
+			var valorSelecionado = teste.val();			
+
+			if ($(this).val() == valorSelecionado) {
+				$("#msgbox10").fadeTo(200, 0.1, function() //start fading the messagebox
+					{
+						//add message and change the class of the box and start fading
+						$(this).html('').addClass('messageboxok').fadeTo(500, 1);
+					});
+			} else {
+				$("#msgbox10").fadeTo(200, 0.1, function() //start fading the messagebox
+					{
+						//add message and change the class of the box and start fading
+						$(this).html('').addClass('messageboxerror').fadeTo(500, 1);
+					});
+			}
+		});
+	});
+</script>
+
 
 <style type="text/css">
-.messagebox{
+	.messagebox {}
 
-}
-.messageboxok{
-display:block;float:right;background:url(../images/ok.png);width:15px;height:16px;
-}
-.messageboxerror{
-display:block;float:right;background:url(../images/erro.png);width:15px;height:16px;
-}
+	.messageboxok {
+		display: block;
+		float: right;
+		background: url(../images/ok.png);
+		width: 15px;
+		height: 16px;
+	}
 
+	.messageboxerror {
+		display: block;
+		float: right;
+		background: url(../images/erro.png);
+		width: 15px;
+		height: 16px;
+	}
 </style>

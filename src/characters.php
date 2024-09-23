@@ -132,7 +132,7 @@ include("templates/acc-header.php");
     if (($acc->ref != t) and ($queryactivate->recordcount() > 0)){
 	$query7 = $db->execute("update `players_ref` set `session_id`=? where `id_p_c`=?", array(1, $acc->id));
 	
-            if($setting->promo == t){
+            if($setting->promo == 't'){
             $query6 = $db->execute("update `promo` set `refs`=`refs`+1 where `player_id`=?", array($acc->ref));
             }
 			
@@ -263,8 +263,9 @@ include("templates/acc-header.php");
     }
     
     echo "<span id=\"aviso-v\"><table width=\"95%\" align=\"center\"><tr>";
-    echo "<td width=\"25%\"><font size=\"1px\"><a href=\"logout.php\">Sair</a></font></td>";
-    echo "<td width=\"50%\" align=\"center\"><font size=\"1px\"><a href=\"newchar.php\"><b>Criar novo Personagem</b></a></font></td>";
+    echo "<td width=\"15%\"><font size=\"1px\"><a href=\"logout.php\">Sair</a></font></td>";
+    echo "<td width=\"30%\" align=\"center\"><font size=\"1px\"><a href=\"newchar.php\"><b>Criar novo Personagem</b></a></font></td>";
+    echo "<td width=\"30%\" align=\"center\"><font size=\"1px\"><a href=\"deletechar.php\"><b>Excluir Personagem</b></a></font></td>";
     echo "<td width=\"25%\" align=\"right\"><font size=\"1px\"><a href=\"acc_options.php\">Editar Conta</a></font></td>";
     echo "</tr></table></span>";
 include("templates/footer.php");

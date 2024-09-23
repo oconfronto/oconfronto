@@ -1,0 +1,102 @@
+/* Container central do quadro de notícias */
+.news-board {
+    position: absolute;
+    width: 40%;
+    max-width: 900px;
+    max-height: 90%;
+    margin: 15px auto;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Transparência */
+    border: 3px solid #a67c52;
+    /* Borda com estilo medieval */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    text-align: center;
+    overflow-y: scroll;
+}
+
+/* Customização da barra de rolagem para navegadores WebKit */
+.news-board::-webkit-scrollbar {
+    width: 12px;
+    /* Largura da barra de rolagem */
+}
+
+.news-board::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    /* Fundo da barra de rolagem */
+    border-radius: 10px;
+    /* Borda arredondada */
+}
+
+.news-board::-webkit-scrollbar-thumb {
+    background-color: #a67c52;
+    /* Cor da barra de rolagem */
+    border-radius: 10px;
+    /* Borda arredondada */
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    /* Borda em volta da barra */
+}
+
+.news-board::-webkit-scrollbar-thumb:hover {
+    background-color: #8b5e30;
+    /* Cor da barra ao passar o mouse */
+}
+
+/* Para navegadores que suportam a pseudo-classe scrollbar (Firefox) */
+.news-board {
+    scrollbar-width: thin;
+    /* Largura fina */
+    scrollbar-color: #a67c52 rgba(0, 0, 0, 0.3);
+    /* Cor da barra e do fundo */
+}
+
+/* Título principal do quadro */
+.news-board h1 {
+    font-size: 36px;
+    color: #cdbb8e;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 3px 3px 0 #000;
+}
+
+/* Cada notícia */
+.news-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Transparente com cor escura */
+    border-radius: 8px;
+    border-left: 5px solid #cdbb8e;
+    /* Borda decorativa à esquerda */
+}
+
+/* Título das notícias */
+.news-item h2 {
+    font-size: 24px;
+    color: #e1d6b2;
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 0 #000;
+}
+
+/* Texto das notícias */
+.news-item p {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #f8f3eb;
+    text-shadow: 1px 1px 0 #000;
+}
+
+/* Links dentro das notícias */
+.news-item a {
+    color: #b89b5e;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.news-item a:hover {
+    text-decoration: underline;
+}

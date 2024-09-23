@@ -55,7 +55,7 @@ if ($querynumplayers->recordcount() >= 12) {
 			$erro1 = 1;
 		}
 
-		if ($_POST['voc'] == none) {
+		if ($_POST['voc'] == 'none') {
 			$msg2 .= "Voc&ecirc; precisa escolher uma vocação!";
 			$error = 1;
 			$erro2 = 1;
@@ -115,11 +115,12 @@ if ($querynumplayers->recordcount() >= 12) {
 
 			$numpots = 3;
 			$playerpots = $player['id'];
-			$addpots = "INSERT INTO items (player_id, item_id) VALUES";
+
 			for ($i = 0; $i < $numpots; $i++) {
-				$addpots .= "($playerpots, 136)" . (($i == $numpots - 1) ? "" : ", ");
+				$insert['player_id'] = $playerpots;
+				$insert['item_id'] = 136;
+				$query = $db->autoExecute('items', $insert, 'INSERT');
 			}
-			$result = mysql_query($addpots);
 
 			if ($query) {
 				echo "<span id=\"aviso-a\"></span>";
@@ -131,7 +132,7 @@ if ($querynumplayers->recordcount() >= 12) {
 		}
 	}
 
-	?>
+?>
 	<span id="aviso-a">
 		<?php
 		if ($msg1 != "") {
@@ -154,16 +155,16 @@ if ($querynumplayers->recordcount() >= 12) {
 	<br />
 	<?php include("box.php"); ?>
 	<form method="POST" action="newchar.php">
-		<table width="90%" align="center" border=\"0px\">			
+		<table width="90%" align="center" border=\"0px\">
 			<tr>
 				<td width="28%"><b>Nome</b>:</td>
 				<td width="72%"><input type="text" name="username" id="username" value="<?= $_POST['username']; ?>"
 						class="inp" size="20" /><span id="msgbox"><?php
-						if ($erro1 == 1) {
-							echo "<span id=\"erro\"></span>";
-						} else if ($certo1 == 1) {
-							echo "<span id=\"certo\"></span>";
-						} ?></span></td>
+																	if ($erro1 == 1) {
+																		echo "<span id=\"erro\"></span>";
+																	} else if ($certo1 == 1) {
+																		echo "<span id=\"certo\"></span>";
+																	} ?></span></td>
 			</tr>
 			<tr>
 				<td width="28%"><b>Vocação</b>:</td>
@@ -173,22 +174,23 @@ if ($querynumplayers->recordcount() >= 12) {
 						<option value="mage">Mago</option>
 						<option value="archer">Arqueiro</option>
 					</select><?php
-					if ($erro2 == 1) {
-						echo "<span id=\"erro\"></span>";
-					} else if ($certo2 == 1) {
-						echo "<span id=\"certo\"></span>";
-					} ?></td>
+								if ($erro2 == 1) {
+									echo "<span id=\"erro\"></span>";
+								} else if ($certo2 == 1) {
+									echo "<span id=\"certo\"></span>";
+								} ?></td>
 			</tr>
 			<tr>
-				<td colspan="2" style="font-size: 14px;font-weight: bold;text-align: center;padding: 15px;">					
-					<div id="textDiv"><div>Escolha sua vocação.</div>
+				<td colspan="2" style="font-size: 14px;font-weight: bold;text-align: center;padding: 15px;">
+					<div id="textDiv">
+						<div>Escolha sua vocação.</div>
 				</td>
 			</tr>
 		</table>
 		<br />
 		<center><button type="submit" name="register" value="Criar Personagem" class="personagem"></button></center>
 	</form>
-	<?php
+<?php
 	include("templates/acc-footer.php");
 }
 ?>
