@@ -172,7 +172,7 @@ if ($_GET['itid'])
 				exit;
 				}
 
-				if ($ddckitexs['mark'] == t)
+				if ($ddckitexs['mark'] == 't')
 				{
 				include("templates/private_header.php");
 				echo "Você não pode usar um item que está à venda no mercado. <a href=\"inventory.php\">Voltar</a>.";
@@ -205,7 +205,7 @@ if ($_GET['itid'])
 					$item = $query->fetchrow();
 
                     //pega valor dos adicionais
-					if ($item['type'] == amulet){
+					if ($item['type'] == 'amulet'){
                         $extrahp = (($item['effectiveness'] + ($item['item_bonus'] * 2) + $item['vit']) * 20);
                         $extramana = (($item['effectiveness'] + ($item['item_bonus'] * 2) + $item['vit']) * 5);
                     } else {
@@ -235,7 +235,7 @@ if ($_GET['itid'])
 				$item = $query->fetchrow();
                 
                     //pega valor dos adicionais
-                    if ($item['type'] == amulet){
+                    if ($item['type'] == 'amulet'){
                         $extrahp = (($item['effectiveness'] + ($item['item_bonus'] * 2) + $item['vit']) * 20);
                         $extramana = (($item['effectiveness'] + ($item['item_bonus'] * 2) + $item['vit']) * 5);
                     } else {
@@ -253,7 +253,7 @@ if ($_GET['itid'])
 					$item = $query->fetchrow();
 
                     //pega valor dos adicionais
-                    if ($item['type'] == amulet){
+                    if ($item['type'] == 'amulet'){
                         $extrahp = (($item['effectiveness'] + ($item['item_bonus'] * 2) + $item['vit']) * 20);
                         $extramana = (($item['effectiveness'] + ($item['item_bonus'] * 2) + $item['vit']) * 5);
                     } else {
@@ -283,7 +283,7 @@ if ($_GET['itid'])
 					$item = $query->fetchrow();
 
                     //pega valor dos adicionais
-                    if ($item['type'] == amulet){
+                    if ($item['type'] == 'amulet'){
                         $extrahp = (($item['effectiveness'] + ($item['item_bonus'] * 2) + $item['vit']) * 20);
                         $extramana = (($item['effectiveness'] + ($item['item_bonus'] * 2) + $item['vit']) * 5);
                     } else {

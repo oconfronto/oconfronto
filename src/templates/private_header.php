@@ -139,8 +139,18 @@ if ($tutorial->recordcount() == 0) {
         <script type="text/javascript">
             // onload event
             window.onload = function() {
-                rd = REDIPS.drag; // reference to the REDIPS.drag class
-                // initialization
+                // Verifica se é um dispositivo móvel
+                var isMobile = /Mobi|Android/i.test(navigator.userAgent);
+                if (isMobile) {
+                    // Redireciona para uma página diferente para dispositivos móveis
+                    var btnMobile = document.getElementById('btn_mobile');
+                    if (btnMobile) {
+                        btnMobile.style.display = 'flex';
+                    }
+                }
+
+                rd = REDIPS.drag; // referência à classe REDIPS.drag
+                // inicialização
                 rd.init();
 
                 rd.mark.exception.amulet = 'amulet';
@@ -152,12 +162,12 @@ if ($tutorial->recordcount() == 0) {
                 rd.mark.exception.legs = 'legs';
                 rd.mark.exception.boots = 'boots';
 
-                // this function (event handler) is called after element is dropped
+                // esta função (manipulador de eventos) é chamada após o elemento ser solto
                 REDIPS.drag.myhandler_dropped = function() {
-                    var obj_old = REDIPS.drag.obj_old; // reference to the original object
-                    var target_cell = REDIPS.drag.target_cell; // reference to the Target cell			
+                    var obj_old = REDIPS.drag.obj_old; // referência ao objeto original
+                    var target_cell = REDIPS.drag.target_cell; // referência à célula de destino			
 
-                    // if the DIV element was placed on allowed cell then
+                    // se o elemento DIV foi colocado em uma célula permitida
                     if (rd.target_cell.className.indexOf(rd.mark.exception[rd.obj.id]) !== -1) {
                         if (REDIPS.drag.target_cell !== REDIPS.drag.source_cell) {
                             var itclassname = rd.obj_old.className;
@@ -371,9 +381,9 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                 <div style="margin-right:-2px;position:abosolute;">
                     <div class='cssmenu'>
                         <ul>
-                            <li><a
-                                    href='profile.php?id=<?php echo $player->username ?>'><b><?php echo $player->username ?></b></a>
+                            <li><a href='#'><b><?php echo $player->username ?></b></a>
                                 <ul>
+                                    <li><a href='profile.php?id=<?php echo $player->username ?>'><?php echo $player->username ?></a></li>
                                     <li><a href="home.php">Principal</a></li>
                                     <li><a href="log.php">Log (<?php echo $logscount; ?>)</a></li>
                                     <li><a href="inventory.php">Inventário</a></li>

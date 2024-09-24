@@ -5,6 +5,13 @@
     <h1>Últimas Notícias</h1>
 
     <div class="news-item">
+        <h2>Inventário versão mobile!</h2>
+        <p>Quando acessado por um navegador de dispositivo mobile ele automaticamente exibirá na tela de inventário um botão.</p>
+        <p>Nele terá acesso ao inventário de versão mobile.</p>
+        <p style="color:red">OBS: Tome cuidado, nos botões de "venda" e "maturar"! Não existe confirmação, ao clicar será executado.</p>
+    </div>
+
+    <div class="news-item">
         <h2>Novo quadro de noticias!</h2>
         <p>Este novo quadro foi destinado a exibir as novas atualizações e informar sobre os demais assuntos do jogo!</p>
         <p>Estamos animados com a retomado do projeto e esperamos ter a colaboração de todos!</p>
