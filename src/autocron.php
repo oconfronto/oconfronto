@@ -14,14 +14,14 @@ date_default_timezone_set('UTC');
 $now = time();
 
 $diff = ($now - $cron['reset_last']);
-if($diff >= 30)
+if($diff >= 60)
 {
 	$atualizacron = $db->execute("update `cron` set `value`=? where `name`=?", array($now, "reset_last"));
 
 	if ($atualizacron) {
-	$timedif = ($diff / 30);
+	$timedif = ($diff / 60);
 	$addhp = (35 * $timedif);
-	$addenergy = (10 * $timedif);
+	$addenergy = (20 * $timedif);
 	$addmana = (35 * $timedif);
 	$sql = "update `players` set hp = IF((hp + $addhp)>maxhp, maxhp, (hp + $addhp)), mana = IF((mana + $addmana)>maxmana, maxmana, (mana + $addmana)) where hp > 0";
 	$sql2 = "update `players` set energy = IF((energy + $addenergy)>maxenergy, maxenergy, (energy + $addenergy))";
