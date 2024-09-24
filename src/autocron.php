@@ -19,7 +19,7 @@ if($diff >= 30)
 	$atualizacron = $db->execute("update `cron` set `value`=? where `name`=?", array($now, "reset_last"));
 
 	if ($atualizacron) {
-	$timedif = ($diff / 60);
+	$timedif = ($diff / 30);
 	$addhp = (35 * $timedif);
 	$addenergy = (10 * $timedif);
 	$addmana = (35 * $timedif);
