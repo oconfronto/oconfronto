@@ -14,7 +14,7 @@ date_default_timezone_set('UTC');
 $now = time();
 
 $diff = ($now - $cron['reset_last']);
-if($diff >= 60)
+if($diff >= 30)
 {
 	$atualizacron = $db->execute("update `cron` set `value`=? where `name`=?", array($now, "reset_last"));
 
