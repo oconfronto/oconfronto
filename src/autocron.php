@@ -20,9 +20,9 @@ if($diff >= 60)
 
 	if ($atualizacron) {
 	$timedif = ($diff / 60);
-	$addhp = (35 * $timedif);
+	$addhp = (70 * $timedif);
 	$addenergy = (20 * $timedif);
-	$addmana = (35 * $timedif);
+	$addmana = (70 * $timedif);
 	$sql = "update `players` set hp = IF((hp + $addhp)>maxhp, maxhp, (hp + $addhp)), mana = IF((mana + $addmana)>maxmana, maxmana, (mana + $addmana)) where hp > 0";
 	$sql2 = "update `players` set energy = IF((energy + $addenergy)>maxenergy, maxenergy, (energy + $addenergy))";
 	$result=mysql_query($sql);
