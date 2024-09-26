@@ -83,7 +83,7 @@ if ($_SESSION['Login']['player_id'] > 0) {
 
 	echo "$('#expbar').animate({width: '" . $progressExp . "%'});";
 	echo "$('#expbarText').text('" . number_format($player->exp) . " / " . number_format(maxExp($player->level)) . " (" . number_format($progressExp) . "%)');";
-	echo "$('#vl_pontos').html('<div><center style='font-size:11px' id='vl_pontos'><b>Pontos de status: </b><?= $player->stat_points ?></center></div>');";
+	echo "$('#vl_pontos').html('<div><center style=\"font-size:11px\" id=\"vl_pontos\"><b>Pontos de status: </b><?= $player->stat_points ?></center></div>');";
 	echo "$('#vl_pontosMisticos').html('<font size=\"1px\"><b>Pontos místicos:</b> " . $player->magic_points . "</font>');";
 	echo "$('#player-gold').html('" . number_format($player->gold) . " moedas');";
 	echo "$('#nv_atual').html('<b>Nível:</b>" . $player->level . "');";
