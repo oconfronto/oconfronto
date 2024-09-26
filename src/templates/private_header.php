@@ -232,7 +232,12 @@ if ($tutorial->recordcount() == 0) {
         echo "<script type=\"text/javascript\" src=\"js/checkStatus.js\"></script>";
     }
     ?>
-
+    <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1892370805366558"
+        crossorigin="anonymous"
+    >
+    </script>
 </head>
 
 <?php
