@@ -10,7 +10,7 @@ if ($_GET['msg']) {
 			if (($player->guild != NULL) or ($player->guild > 0)) {
 				$insert['player_id'] = $player->id;
 				$insert['guild'] = $player->guild;
-				$insert['msg'] = $msg;
+				$insert['msg'] = $msg;				
 				$insert['time'] = time();
 				$db->autoexecute('user_chat', $insert, 'INSERT');
 			}
@@ -20,6 +20,8 @@ if ($_GET['msg']) {
 			if ($check->recordcount() == 0){
 				$insert['player_id'] = $player->id;
 				$insert['msg'] = $msg;
+				$insert['reino'] = 0;
+				$insert['guild'] = 0;
 				$insert['time'] = time();
 				$db->autoexecute('user_chat', $insert, 'INSERT');
 			}else{
