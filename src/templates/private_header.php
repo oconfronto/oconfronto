@@ -3,7 +3,11 @@ $currentfile = $_SERVER["SCRIPT_NAME"];
 $parts = explode('/', $currentfile);
 $currentfile = $parts[count($parts) - 1];
 
-
+$userAgent = $_SERVER['HTTP_USER_AGENT'];
+function isMobile($userAgent)
+{
+    return preg_match('/Mobile|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/', $userAgent);
+}
 
 $tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=90 and `player_id`=?", array($player->id));
 if ($tutorial->recordcount() == 0) {
@@ -27,9 +31,18 @@ if ($tutorial->recordcount() == 0) {
         } elseif (($tut['pending_status'] == 3) and ($currentfile != 'stat_points.php')) {
             header("Location: stat_points.php");
             exit;
-        } elseif (($tut['pending_status'] == 4) and ($currentfile != 'inventory.php')) {
-            header("Location: inventory.php");
-            exit;
+        } elseif ($tut['pending_status'] == 4) {
+            if (isMobile($userAgent)) {
+                if ($currentfile != 'inventory_mobile.php') {
+                    header("Location: inventory_mobile.php");
+                    exit;
+                }
+            } else {
+                if ($currentfile != 'inventory.php') {
+                    header("Location: inventory.php");
+                    exit;
+                }
+            }
         } elseif (($tut['pending_status'] == 5) and ($currentfile != 'home.php')) {
             header("Location: home.php");
             exit;

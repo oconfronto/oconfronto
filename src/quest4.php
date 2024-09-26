@@ -4,6 +4,7 @@ define("PAGENAME", "Missões");
 $player = check_user($secret_key, $db);
 include("checkbattle.php");
 
+//QUEST melhoria do jeweled ring
 
 if ($player->level < 130)
 {

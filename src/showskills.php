@@ -1,28 +1,158 @@
 <?php
-    if ($_GET['voltar'] == true){
-        include("lib.php");
-		header("Content-Type: text/html; charset=utf-8",true);
-	}
-	$player = check_user($secret_key, $db);
-    
-    $pbonusfor = 0;
-    $pbonusvit = 0;
-    $pbonusagi = 0;
-    $pbonusres = 0;
-	$countstats = $db->query("select `for`, `vit`, `agi`, `res` from `items` where `player_id`=? and `status`='equipped'", array($player->id));
-	while($count = $countstats->fetchrow())
-	{
-		$pbonusfor += $count['for'];
-		$pbonusvit += $count['vit'];
-		$pbonusagi += $count['agi'];
-		$pbonusres += $count['res'];
-	}
-    
-    $totalstats = ($player->vitality + $player->agility + $player->resistance + $player->strength + $pbonusfor + $pbonusvit + $pbonusagi + $pbonusres);
-    echo "<center><div title=\"header=[Força (" . round((($player->strength + $pbonusfor) / $totalstats) * 100) . "%)] body=[" . $player->strength . " +" . $pbonusfor . " pontos de forÁa.]\"><img src=\"images/for.png\"><img src=\"bargen.php?for\">"; if ($player->stat_points > 0){ echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('stat_points.php?for=1&vit=0&agi=0&res=0&add=Home', 'skills')\"><img src=\"images/addstat.png\" border=\"0px\"></a>"; }else{ echo "<img src=\"images/none.png\" border=\"0px\">"; } echo "</div></center>";
-    echo "<center><div title=\"header=[Vitalidade (" . round((($player->vitality + $pbonusvit) / $totalstats) * 100) . "%)] body=[" . $player->vitality . " +" . $pbonusvit . " pontos de vitalidade.]\"><img src=\"images/vit.png\"><img src=\"bargen.php?vit\">"; if ($player->stat_points > 0){ echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('stat_points.php?for=0&vit=1&agi=0&res=0&add=Home', 'skills')\"><img src=\"images/addstat.png\" border=\"0px\"></a>"; }else{ echo "<img src=\"images/none.png\" border=\"0px\">"; } echo "</div></center>";
-    echo "<center><div title=\"header=[Agilidade (" . round((($player->agility + $pbonusagi) / $totalstats) * 100) . "%)] body=[" . $player->agility . " +" . $pbonusagi . " pontos de agilidade.]\"><img src=\"images/agi.png\"><img src=\"bargen.php?agi\">"; if ($player->stat_points > 0){ echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('stat_points.php?for=0&vit=0&agi=1&res=0&add=Home', 'skills')\"><img src=\"images/addstat.png\" border=\"0px\"></a>"; }else{ echo "<img src=\"images/none.png\" border=\"0px\">"; } echo "</div></center>";
-    echo "<center><div title=\"header=[ResistÍncia (" . round((($player->resistance + $pbonusres) / $totalstats) * 100) . "%)] body=[" . $player->resistance . " +" . $pbonusres . " pontos de resistÍncia.]\"><img src=\"images/res.png\"><img src=\"bargen.php?res\">"; if ($player->stat_points > 0){ echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('stat_points.php?for=0&vit=0&agi=0&res=1&add=Home', 'skills')\"><img src=\"images/addstat.png\" border=\"0px\"></a>"; }else{ echo "<img src=\"images/none.png\" border=\"0px\">"; } echo "</div></center>";
-    echo "<center id=\"vl_pontos\"><font size=\"1px\"><b>Pontos de status:</b> " . $player->stat_points . "</font></center>";
 
+$player = check_user($secret_key, $db);
+
+if ($_GET['voltar'] == true) {
+    include("lib.php");
+    header("Content-Type: text/html; charset=utf-8", true);
+}
+
+include("itemstatus.php");
+
+$tipoAtributo = "";
+
+
+if ($player->voc == 'archer') {
+    $tipoAtributo = "Pontaria";
+} else if ($player->voc == 'knight') {
+    $tipoAtributo = "Força";
+} else if ($player->voc == 'mage') {
+    $tipoAtributo = "Ataque";
+}
+
+
+$atk = "";
+$def = "";
+
+if ($player->promoted == 't') {
+
+    if ($player->level > 149) {
+        if ($player->voc == 'archer') {
+            $atk = "30%";
+            $def = "20%";
+        } else if ($player->voc == 'knight') {
+            $atk = "25%";
+            $def = "21%";
+        } else if ($player->voc == 'mage') {
+            $atk = "27%";
+            $def = "20%";
+        }
+    } elseif ($player->level > 129) {
+        if ($player->voc == 'archer') {
+            $atk = "28%";
+            $def = "18%";
+        } else if ($player->voc == 'knight') {
+            $atk = "23%";
+            $def = "20%";
+        } else if ($player->voc == 'mage') {
+            $atk = "26%";
+            $def = "18%";
+        }
+    } elseif ($player->level > 119) {
+        if ($player->voc == 'archer') {
+            $atk = "25%";
+            $def = "16%";
+        } else if ($player->voc == 'knight') {
+            $atk = "20%";
+            $def = "17%";
+        } else if ($player->voc == 'mage') {
+            $atk = "23%";
+            $def = "16%";
+        }
+    } elseif ($player->level > 99) {
+        if ($player->voc == 'archer') {
+            $atk = "21%";
+            $def = "13%";
+        } else if ($player->voc == 'knight') {
+            $atk = "17%";
+            $def = "15%";
+        } else if ($player->voc == 'mage') {
+            $atk = "19%";
+            $def = "13%";
+        }
+    } elseif ($player->level > 89) {
+        if ($player->voc == 'archer') {
+            $atk = "17%";
+            $def = "11%";
+        } else if ($player->voc == 'knight') {
+            $atk = "14%";
+            $def = "12%";
+        } else if ($player->voc == 'mage') {
+            $atk = "16%";
+            $def = "11%";
+        }
+    } else {
+        if ($player->voc == 'archer') {
+            $atk = "13%";
+            $def = "8%";
+        } else if ($player->voc == 'knight') {
+            $atk = "10%";
+            $def = "9%";
+        } else if ($player->voc == 'mage') {
+            $atk = "12%";
+            $def = "8%";
+        }
+    }
+} elseif ($player->promoted == 'p') {
+    if ($player->voc == 'archer') {
+        $atk = "36%";
+        $def = "24%";
+    } else if ($player->voc == 'knight') {
+        $atk = "30%";
+        $def = "26%";
+    } else if ($player->voc == 'mage') {
+        $atk = "33%";
+        $def = "24%";
+    }
+}
 ?>
+
+<div>
+    <div>
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <td style="width: 5%;"></td>
+                    <td style="width: 10%;"></td>
+                    <td style="width: 10%;font-size:11px">Pontos</td>
+                    <td style="width: 10%;font-size:11px">Itens</td>
+                    <td style="width: 60%;font-size:11px">Promote</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td style='font-weight:bold;text-align:right'><?= $tipoAtributo ?>: </td>
+                    <td><?= $player->strength ?></td>
+                    <td style='color:gray'>+<?= $forcaadebonus ?></td>
+                    <td style='color:black'><?= $atk ?></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td style='font-weight:bold;text-align:right'>Vitalidade: </td>
+                    <td><?= $player->vitality ?></td>
+                    <td style='color:green'>+<?= $vitalidadeeeeebonus ?></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td style='font-weight:bold;text-align:right'>Agilidade: </td>
+                    <td><?= $player->agility ?></td>
+                    <td style='color:blue'>+<?= $agilidadeeedebonus ?></td>
+                    <td style='color:black'><?= $def ?></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td style='font-weight:bold;text-align:right'>Resistência: </td>
+                    <td><?= $player->resistance ?></td>
+                    <td style='color:red'>+<?= $resistenciaaaadebonus ?></td>
+                    <td style='color:black'><?= $def ?></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <center style="font-size:11px" id="vl_pontos">
+            <b>Pontos de status: </b><?= $player->stat_points ?>
+        </center>
+    </div>
+</div>

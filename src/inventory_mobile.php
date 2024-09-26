@@ -15,12 +15,50 @@ include("includes/actions/transfer-items.php");
 
 include("templates/private_header.php");
 
-function displayItemOptions($item, $action, $label)
-{
-    return "<a href=\"inventory_mobile.php?{$action}={$item['id']}\">{$label}</a>";
+$tuto = false;
+
+$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=4 and `player_id`=?", array($player->id));
+if ($tutorial->recordcount() > 0) {
+    $tutorial = $db->execute("select * from `items` where `player_id`=? and `status`='equipped'", array($player->id));
+    if ($tutorial->recordcount() == 0) {
+        global $tuto;
+        $tuto = true;
+        echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">Itens ajudam na sua força e resist&ecirc;ncia.<br/><font size=\"1px\">Voc&ecirc; pode obter itens <u>lutando contra monstros</u> ou <u>comprando-os no ferreiro</u>.</font><br/><br/>Para equipar seu item, clique em <b style='color:green'>EQUIPAR</b> na arma abaixo.</td><th><font size=\"1px\"><a href=\"start.php?act=5\">Próximo</a></font></th></tr></table>", "white", "left");
+    } else {
+        global $tuto;
+        $tuto = false;
+        echo showAlert("ótimo, <a href=\"start.php?act=5\">clique aqui</a> para continuar seu tutorial.", "green");
+    }
 }
 
-function displayItem($item, $type)
+function displayItemOptions($item, $action, $label)
+{
+    if ($action == 'sell') {
+        return "<a onclick=\"return confirm('Tem certeza que deseja VENDER o item {$item['name']} +{$item['item_bonus']} ?');\" href=\"inventory_mobile.php?{$action}={$item['id']}\">{$label}</a>";
+    } else if ($action == 'mature') {
+        return "<a onclick=\"return confirm('Tem certeza que deseja MATURAR o item {$item['name']} +{$item['item_bonus']} ?');\" href=\"inventory_mobile.php?{$action}={$item['id']}\">{$label}</a>";
+    } else {
+        global $tuto;
+        if ($tuto) {
+            echo "<style>
+            .txt-tutorial-equip{
+            font-size:14px;
+            animation: piscar 2.5s infinite;
+            }
+            @keyframes piscar{
+            0%, 100%{color:#745927}
+            100%{color:green}            
+            }
+            </style>";
+
+            return "<a href=\"inventory_mobile.php?{$action}={$item['id']}\"><b class='txt-tutorial-equip'>->{$label}<-</b></a>";
+        } else {
+            return "<a href=\"inventory_mobile.php?{$action}={$item['id']}\">{$label}</a>";
+        }
+    }
+}
+
+function displayItem($item, $type, $player, $bool)
 {
     $options = array(); // Use array() instead of []
     if ($type === 'equipped') {
@@ -31,39 +69,167 @@ function displayItem($item, $type)
     $options[] = displayItemOptions($item, 'sell', 'Vender');
     $options[] = displayItemOptions($item, 'mature', 'Maturar');
 
-    if ($item["item_id"] != "136" && $item["item_id"] != "137" && $item["item_id"] != "150" && $item["item_id"] != "148") {
-        return "
-        <div class=\"item\">
-            <img src=\"images/itens/{$item['img']}\" alt=\"{$item['name']}\">
-            <div class=\"item-info\">
-                <span>{$item['name']} +{$item['item_bonus']}</span>
-                <div class=\"item-options\">" . implode(' | ', $options) . "</div>
-            </div>
-        </div>
-    ";
-    } else {
-        return "";
+    $type = "";
+    if ($item['type'] == 'amulet') {
+        $type = "Vitalidade";
     }
+    if ($item['type'] == 'weapon') {
+        $type = "Ataque";
+    }
+    if ($item['type'] == 'armor') {
+        $type = "Defesa";
+    }
+    if ($item['type'] == 'boots') {
+        $type = "Agilidade";
+    }
+
+    if ($item['type'] == 'legs') {
+        $type = "Defesa";
+    }
+
+    if ($item['type'] == 'helmet') {
+        $type = "Defesa";
+    }
+
+    if ($item['type'] == 'shield') {
+        $type = "Defesa";
+    }
+
+    $atributo = "";
+    if ($item['type'] != 'ring') {
+        $atributo =  $type . ": {$item['effectiveness']}";
+    } else {        
+        switch ($item['item_id']) {
+            case 163:
+                $item['for'] = 10;
+                $item['vit'] = 10;
+                $item['agi'] = 10;
+                $item['res'] = 10;
+                break;
+            case 164:
+                $item['for'] = 10;
+                break;
+            case 165:
+                $item['vit'] = 10;
+                break;
+            case 166:
+                $item['agi'] = 10;
+                break;
+            case 167:
+                $item['res'] = 10;
+                break;
+            case 168:
+                $item['for'] = 20;
+                $item['vit'] = 20;
+                $item['agi'] = 20;
+                $item['res'] = 20;
+                break;
+            case 169:
+                $item['for'] = 10;                
+                $item['res'] = 15;
+                break;
+            case 170:                
+                $item['vit'] = 15;
+                $item['agi'] = 15;
+                $item['res'] = 5;
+                break;
+            case 172:
+                $item['for'] = 40;
+                $item['vit'] = 30;
+                $item['agi'] = 40;
+                $item['res'] = 30;
+                break;
+            case 176:
+                $item['for'] = 30;
+                $item['vit'] = 40;
+                $item['agi'] = 30;
+                $item['res'] = 40;
+                break;
+            case 178:
+                //Não seu qual atributo dá ainda.
+                break;            
+            default:
+        }        
+    }
+
+    $bonus1 = "";
+    $bonus2 = "";
+    $bonus3 = "";
+    $bonus4 = "";
+    $bonus5 = "";
+
+    if ($item['item_bonus'] > 0) {
+        $bonus1 = " (+" . $item['item_bonus'] . ")";
+    }
+    if ($item['for'] > 0) {
+        $bonus2 = " <font color=\"gray\">+" . $item['for'] . "F</font>";
+    }
+    if ($item['vit'] > 0) {
+        $bonus3 = " <font color=\"green\">+" . $item['vit'] . "V</font>";
+    }
+    if ($item['agi'] > 0) {
+        $bonus4 = " <font color=\"blue\">+" . $item['agi'] . "A</font>";
+    }
+    if ($item['res'] > 0) {
+        $bonus5 = " <font color=\"red\">+" . $item['res'] . "R</font>";
+    }
+
+    
+
+
+    $string = "<tr class=\"row" . $bool . "\">
+                <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><img src=\"images/itens/{$item['img']}\" alt=\"{$item['name']}\"></td>
+                <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $atributo . "</td>
+                <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $item['name'] . " " . $bonus1 . "" . $bonus2 . "" . $bonus3 . "" . $bonus4 . "" . $bonus5 . "</td>
+                <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $options[0] . "</td>
+                <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $options[1] . "</td>
+                <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $options[2] . "</td>
+                </tr>";
+
+    return $string;
 }
 
 function fetchItems($playerId, $status)
 {
     global $db;
-    return $db->execute("SELECT items.id, items.item_id, items.item_bonus, items.status, blueprint_items.name, blueprint_items.img FROM `items` 
-                         JOIN `blueprint_items` ON items.item_id=blueprint_items.id 
-                         WHERE items.player_id=? AND items.status=?", array($playerId, $status));
+    return $db->execute("SELECT items.id, items.item_id, items.item_bonus, items.for, items.vit, items.agi, items.res, items.status, 
+                        blueprint_items.name, blueprint_items.img, blueprint_items.effectiveness, blueprint_items.type, blueprint_items.description
+                        FROM `items` 
+                        JOIN `blueprint_items` ON items.item_id=blueprint_items.id 
+                        WHERE items.player_id=? AND items.status=? AND blueprint_items.type !='potion' AND blueprint_items.type!='stone' AND items.mark='f' ORDER BY items.tile", array($playerId, $status));
+}
+
+function fetchPlayers($playerId)
+{
+    global $db;
+    return $db->execute("select * FROM players where id=?", array($playerId));
 }
 
 function displayItems($playerId, $status, $title)
 {
     $items = fetchItems($playerId, $status);
-    echo "<h3>{$title}</h3>";
+    $player = fetchPlayers($playerId);
+    echo "<div style='text-align:center'><h3>{$title}</h3></div>";
     if ($items->recordcount() > 0) {
+        $bool = 1;
+        echo "<fieldset>";
+        echo "<table style='width:100%;border-collapse: collapse;'>";
+        echo "<thead>";
+        echo "<tr>";
+        echo "<th style='width:5%;text-align: center;'><b>Item</b></th>";
+        echo "<th style='width:15%;text-align: center;'><b>Atributo</b></th>";
+        echo "<th style='width:55%;text-align: center;'><b>Descrição</b></th>";
+        echo "<th colspan='3' style='width:25%;text-align: center;'><b>Ações</b></th>";
+        echo "</tr>";
+        echo "</thead>";
+        echo "<tbody>";
         while ($item = $items->fetchrow()) {
-            echo displayItem($item, $status);
+            echo displayItem($item, $status, $player, $bool);
+            $bool = ($bool == 1) ? 2 : 1;
         }
+        echo "</tbody></table></fieldset>";
     } else {
-        echo "<p>Nenhum item encontrado.</p>";
+        echo "<div style='text-align:center'><p>Nenhum item encontrado.</p></div>";
     }
 }
 

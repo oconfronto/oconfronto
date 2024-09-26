@@ -300,7 +300,7 @@ while ($bag = $backpackquery->fetchrow()) {
 	}
 	echo "<td class=\"" . $colorbg . " " . $fieldnumber . "\">";
 	echo "<div id=\"" . $bag['type'] . "\" class=\"drag " . $bag['id'] . "\" title=\"header=[" . $showitname . "] body=[" . $showitinfo . "]\">";
-	echo "<img src=\"images/itens/" . $bag['img'] . "\" border=\"0\">";	
+	echo "<img src=\"images/itens/" . $bag['img'] . "\" border=\"0\">";
 	echo "</div>";
 	echo "</td>";
 
@@ -415,13 +415,32 @@ if ($player->level < $setting->activate_level) {
 	echo "<tr><td width=\"40%\">Usuário:</td><td><input type=\"text\" name=\"username\" size=\"20\"/></td></tr>";
 	echo "<tr><td width=\"40%\">Item:</td><td>";
 
-	$queoppa = $db->execute("select items.id, items.item_bonus, items.item_id, items.mark, blueprint_items.name from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type!='stone' and blueprint_items.type!='potion' and items.mark='f' order by blueprint_items.type, blueprint_items.name asc", array($player->id));
+	$queoppa = $db->execute("select items.id, items.item_bonus, items.item_id, items.mark, items.for, items.vit, items.agi, items.res, blueprint_items.name from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type!='stone' and blueprint_items.type!='potion' and items.mark='f' order by blueprint_items.type, blueprint_items.name asc", array($player->id));
 	if ($queoppa->recordcount() == 0) {
 		echo "<b>Voc&ecirc; não possui itens.</b>";
 	} else {
 		echo "<select name=\"itselected\">";
 		while ($item = $queoppa->fetchrow()) {
-			echo "<option value=\"" . $item['id'] . "\">" . $item['name'] . " +" . $item['item_bonus'] . "</option>";
+			$bonus1 = " (+" . $item['item_bonus'] . ") ";
+			$bonus2 = "";
+			$bonus3 = "";
+			$bonus4 = "";
+			$bonus5 = "";
+
+			if ($item['for'] > 0) {
+				$bonus2 = " +" . $item['for'] . "F";
+			}
+			if ($item['vit'] > 0) {
+				$bonus3 = " +" . $item['vit'] . "V";
+			}
+			if ($item['agi'] > 0) {
+				$bonus4 = " +" . $item['agi'] . "A";
+			}
+			if ($item['res'] > 0) {
+				$bonus5 = " +" . $item['res'] . "R";
+			}
+
+			echo "<option value=\"" . $item['id'] . "\">" . $item['name'] . " " . $bonus1 . "" . $bonus2 . "" . $bonus3 . "" . $bonus4 . "" . $bonus5 . "</option>";
 		}
 		echo "</select>";
 	}

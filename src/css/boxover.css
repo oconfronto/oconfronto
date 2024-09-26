@@ -1,23 +1,29 @@
 .dvHdr {
-   width: 150px;
+   width: auto;
    font-family: arial;
-   border: 2px solid #B9892F;
+   border: 2px solid #b08250;
+   border-radius: 8px 8px 0px 0px;
    padding: 3px;
-   fontSize: 10px;
-   color: #7b5737;
-   /* background:url(../images/medalhas/titulo-toll.png); */
+   font-size: 12px;
+   font-weight: bold;
+   color: #f9eecd;
+   /* background:#ffd27d; */
+   background: url(../images/menu/menuhover.png);
    z-index: 10;
    position: relative;
-margin-left:3px;}
+   margin-left: 3px;
+}
 
 .dvBdy {
    border-bottom: 2px solid #b08250;
    border-left: 2px solid #b08250;
    border-right: 2px solid #b08250;
-   width: 150px;
+   border-radius: 0px 0px 8px 8px;   
+   width: auto;
+   max-width: 150px;
    font-family: arial;
-margin-left:3px;
-   fontSize: 11px;
+   margin-left: 3px;
+   font-size: 13px;
    padding: 3px;
    color: #7b5737;
    background: #fff1ba;

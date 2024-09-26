@@ -42,8 +42,8 @@
 	margin: auto;
 	z-index: 10;
 	filter: alpha(opacity=70);
-	/* without width, IE6/7 will not apply filter/opacity to the element ?! */
 	border: 0px;
+	/* without width, IE6/7 will not apply filter/opacity to the element ?! */
 }
 
 .sell{color: white; background-color: #2D4B7A; width: 130px; text-align:center;}

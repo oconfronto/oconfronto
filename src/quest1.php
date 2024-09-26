@@ -6,7 +6,9 @@ include("checkbattle.php");
 include("checkhp.php");
 include("checkwork.php");
 
-if ($player->promoted == f)
+//QUEST jeweled ring
+
+if ($player->promoted == 'f')
 {
 	include("templates/private_header.php");
 	echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";

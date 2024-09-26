@@ -60,7 +60,7 @@ echo "<table width=\"100%\">";
 echo "<tr><td class=\"brown\" width=\"100%\"><center><b>" . $player->username . "</b></center></td></tr>";
 
 echo "<tr><td class=\"salmon\" height=\"80px\">";
-echo "<table width=\"100%\">";
+echo "<table style='padding:14px;'  width=\"100%\">";
 
 echo "<tr><td width=\"20%\"><b>Vocação:</b></td><td width=\"55%\">";
 
