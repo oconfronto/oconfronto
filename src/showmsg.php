@@ -97,14 +97,14 @@ elseif (($msgtype == 3) and ($messaged == 0)){
 		$messaged = 1;
 	}else{
 	$sorteia = rand(1, 7);
-	if ($setting->$torneiovarificapelotier == t){
+	if ($setting->$torneiovarificapelotier == 't'){
 		if ($sorteia == 1){
 			echo "Inscreva-se no torneio! <a href=\"tournament.php\">Clique aqui</a>.";
 			$messaged = 1;
 		}
 	}
 
-	if ($setting->$lottoavisoheader == t){
+	if ($setting->$lottoavisoheader == 't'){
 		if ($sorteia == 2){
 		echo "Aposte na loteria! <a href=\"lottery.php\">Clique aqui</a>.";
 		$messaged = 1;

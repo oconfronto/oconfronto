@@ -333,7 +333,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
 
                             <div class="moedas">
                                 <div class="ic-moeda"></div>
-                                <div id="player-gold" class="ouro"><?php echo $player->gold ?> moedas</div>
+                                <div id="player-gold" class="ouro"><?php echo number_format($player->gold, 0, '', '.') ?> moedas</div>
                             </div>
                         </div>
 
