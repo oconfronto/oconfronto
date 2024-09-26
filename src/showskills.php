@@ -17,7 +17,7 @@ if ($player->voc == 'archer') {
 } else if ($player->voc == 'knight') {
     $tipoAtributo = "Força";
 } else if ($player->voc == 'mage') {
-    $tipoAtributo = "Ataque";
+    $tipoAtributo = "Magia";
 }
 
 
