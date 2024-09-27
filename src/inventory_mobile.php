@@ -33,10 +33,23 @@ if ($tutorial->recordcount() > 0) {
 
 function displayItemOptions($item, $action, $label)
 {
+    if ($item['item_bonus'] == 0) {
+        $precol = ceil($item['price'] / 3.5);
+    } elseif ($item['item_bonus'] == 1) {
+        $precol = ceil(($item['price'] / 3.5) * 1.3);
+    } elseif ($item['item_bonus'] == 2) {
+        $precol = ceil(($item['price'] / 3.5) * 1.7);
+    } elseif ($item['item_bonus'] == 3) {
+        $precol = ceil(($item['price'] / 3.5) * 2);
+    } else {
+        $precol = ceil(($item['price'] / 3.5) * ($item['item_bonus'] / 1.85));
+    }
+
+
     if ($action == 'sell') {
-        return "<a onclick=\"return confirm('Tem certeza que deseja VENDER o item {$item['name']} +{$item['item_bonus']} ?');\" href=\"inventory_mobile.php?{$action}={$item['id']}\">{$label}</a>";
+        return "<a onclick=\"return confirm('Tem certeza que deseja VENDER o item {$item['name']} +{$item['item_bonus']} no valor de: {$item['price']} ?');\" href=\"inventory_mobile.php?{$action}={$item['id']}\">{$label}</a>";
     } else if ($action == 'mature') {
-        return "<a onclick=\"return confirm('Tem certeza que deseja MATURAR o item {$item['name']} +{$item['item_bonus']} ?');\" href=\"inventory_mobile.php?{$action}={$item['id']}\">{$label}</a>";
+        return "<a onclick=\"return confirm('Tem certeza que deseja MATURAR o item {$item['name']} +{$item['item_bonus']} no valor de: {$precol} ?');\" href=\"inventory_mobile.php?{$action}={$item['id']}\">{$label}</a>";
     } else {
         global $tuto;
         if ($tuto) {
@@ -98,7 +111,7 @@ function displayItem($item, $type, $player, $bool)
     $atributo = "";
     if ($item['type'] != 'ring') {
         $atributo =  $type . ": {$item['effectiveness']}";
-    } else {        
+    } else {
         switch ($item['item_id']) {
             case 163:
                 $item['for'] = 10;
@@ -125,10 +138,10 @@ function displayItem($item, $type, $player, $bool)
                 $item['res'] = 20;
                 break;
             case 169:
-                $item['for'] = 10;                
+                $item['for'] = 10;
                 $item['res'] = 15;
                 break;
-            case 170:                
+            case 170:
                 $item['vit'] = 15;
                 $item['agi'] = 15;
                 $item['res'] = 5;
@@ -147,9 +160,9 @@ function displayItem($item, $type, $player, $bool)
                 break;
             case 178:
                 //Não seu qual atributo dá ainda.
-                break;            
+                break;
             default:
-        }        
+        }
     }
 
     $bonus1 = "";
@@ -174,7 +187,7 @@ function displayItem($item, $type, $player, $bool)
         $bonus5 = " <font color=\"red\">+" . $item['res'] . "R</font>";
     }
 
-    
+
 
 
     $string = "<tr class=\"row" . $bool . "\">
@@ -193,7 +206,7 @@ function fetchItems($playerId, $status)
 {
     global $db;
     return $db->execute("SELECT items.id, items.item_id, items.item_bonus, items.for, items.vit, items.agi, items.res, items.status, 
-                        blueprint_items.name, blueprint_items.img, blueprint_items.effectiveness, blueprint_items.type, blueprint_items.description
+                        blueprint_items.name, blueprint_items.img, blueprint_items.effectiveness, blueprint_items.type, blueprint_items.description, blueprint_items.price
                         FROM `items` 
                         JOIN `blueprint_items` ON items.item_id=blueprint_items.id 
                         WHERE items.player_id=? AND items.status=? AND blueprint_items.type !='potion' AND blueprint_items.type!='stone' AND items.mark='f' ORDER BY items.tile", array($playerId, $status));
