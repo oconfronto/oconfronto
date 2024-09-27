@@ -238,6 +238,14 @@ if ($tutorial->recordcount() == 0) {
         crossorigin="anonymous"
     >
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5C9CTZE98D"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-5C9CTZE98D');
+    </script>
 </head>
 <div id="applixir_vanishing_div" hidden style="z-index: 1000">
      <iframe id="applixir_parent" ></iframe>

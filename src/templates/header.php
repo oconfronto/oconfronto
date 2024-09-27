@@ -37,6 +37,14 @@
         crossorigin="anonymous"
     >
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5C9CTZE98D"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-5C9CTZE98D');
+    </script>
 </head>
 
 <body>    
