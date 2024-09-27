@@ -239,7 +239,9 @@ if ($tutorial->recordcount() == 0) {
     >
     </script>
 </head>
-
+<div id="applixir_vanishing_div" hidden style="z-index: 1000">
+     <iframe id="applixir_parent" ></iframe>
+</div>
 <?php
 if ($currentfile == 'inventory.php') {
     echo "<body>";
