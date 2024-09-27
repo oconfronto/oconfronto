@@ -412,7 +412,7 @@ if ($player->level < $setting->activate_level) {
 
 	echo "<table width=\"100%\">";
 	echo "<form method=\"POST\" action=\"inventory.php\">";
-	echo "<tr><td width=\"40%\">Usuário:</td><td><input type=\"text\" name=\"username\" size=\"20\"/></td></tr>";
+	echo "<tr><td width=\"40%\">Usuário:</td><td><input autocomplete='off' type=\"text\" name=\"username\" size=\"20\"/></td></tr>";
 	echo "<tr><td width=\"40%\">Item:</td><td>";
 
 	$queoppa = $db->execute("select items.id, items.item_bonus, items.item_id, items.mark, items.for, items.vit, items.agi, items.res, blueprint_items.name from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type!='stone' and blueprint_items.type!='potion' and items.mark='f' order by blueprint_items.type, blueprint_items.name asc", array($player->id));
@@ -446,7 +446,7 @@ if ($player->level < $setting->activate_level) {
 	}
 
 	echo "</td></tr>";
-	echo "<tr><td width=\"40%\">Senha de transfer&ecirc;ncia:</td><td><input type=\"password\" name=\"passcode\" size=\"20\"/></td></tr>";
+	echo "<tr><td width=\"40%\">Senha de transfer&ecirc;ncia:</td><td><input autocomplete='off' type=\"password\" name=\"passcode\" size=\"20\"/></td></tr>";
 	echo "<tr><td colspan=\"2\" align=\"center\"><input type=\"submit\" name=\"transferitems\" value=\"Enviar\"></td></tr>";
 	echo "</table></form>";
 	echo "<font size=\"1\"><a href=\"forgottrans.php\">Esqueceu sua senha de transfer&ecirc;ncia?</a></font>";

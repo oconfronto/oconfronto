@@ -80,11 +80,11 @@ switch ($_GET['act']) {
 					<input type="hidden" name="item" value="<?php echo $_GET['item']; ?>">
 					<tr>
 						<td><b>Preço:</b></td>
-						<td><input type="text" name="price" size="15"></td>
+						<td><input autocomplete='off' type="text" name="price" size="15"></td>
 					</tr>
 					<?php
 					if ($player->transpass != 'f') {
-						echo "<tr><td><b>Senha de<br/>transferência:</b></td><td><input type=\"password\" name=\"passcode\" size=\"20\"/></td></tr>";
+						echo "<tr><td><b>Senha de<br/>transferência:</b></td><td><input autocomplete='off' type=\"password\" name=\"passcode\" size=\"20\"/></td></tr>";
 					}
 					?>
 				</table>

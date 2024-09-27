@@ -112,9 +112,9 @@ else
 	include("templates/private_footer.php");
 	exit;
 	}else{	echo "<form method=\"POST\" action=\"transfer.php\">";
-	echo "<table><tr><td width=\"30%\"><b>Usuário:</b></td><td width=\"70%\"><input type=\"text\" name=\"username\" size=\"20\"/></td></tr>";
-	echo "<tr><td width=\"30%\"><b>Quantia:</b></td><td width=\"70%\"><input type=\"text\" name=\"amount\" size=\"20\"/></td></tr>";
-	echo "<tr><td width=\"30%\"><b>Senha de transfer&ecirc;ncia:</b></td><td width=\"70%\"><input type=\"password\" name=\"passcode\" size=\"20\"/> <input type=\"submit\" name=\"submit\" value=\"Enviar\"></td></tr></table>";
+	echo "<table><tr><td width=\"30%\"><b>Usuário:</b></td><td width=\"70%\"><input autocomplete='off' type=\"text\" name=\"username\" size=\"20\"/></td></tr>";
+	echo "<tr><td width=\"30%\"><b>Quantia:</b></td><td width=\"70%\"><input autocomplete='off' type=\"text\" name=\"amount\" size=\"20\"/></td></tr>";
+	echo "<tr><td width=\"30%\"><b>Senha de transfer&ecirc;ncia:</b></td><td width=\"70%\"><input autocomplete='off' type=\"password\" name=\"passcode\" size=\"20\"/> <input type=\"submit\" name=\"submit\" value=\"Enviar\"></td></tr></table>";
 	echo "</form>";
     echo"<fieldset style='border:0px;text-align:center;'>";
     echo"<font size=\"1\"><a href=\"forgottrans.php\"><b>Esqueceu sua senha de transferência?</b></a> - <a href=\"account.php\"><b>Alterar senha de transferência</b></a></font></fieldset>";
