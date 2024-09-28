@@ -893,9 +893,9 @@ switch ($_GET['act']) {
 			include("templates/private_header.php");
 		}
 
-		// echo "<script type=\"text/javascript\">";
-		// echo "setTimeout(function() { Ajax('monster.php?act=attack&nolayout=true&noreturn=true&hit=Atacar', 'battle'); }, 1500);";
-		// echo "</script>";
+		echo "<script type=\"text/javascript\">";
+		echo "setTimeout(function() { Ajax('monster.php?act=attack&nolayout=true&noreturn=true&hit=Atacar', 'battle'); }, 1500);";
+		echo "</script>";
 
 		echo "<div id=\"swap\"></div><div id=\"battle\">";
 
