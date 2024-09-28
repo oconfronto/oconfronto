@@ -1,8 +1,7 @@
 version: '3.7'
 services:
   mysql:
-    image: mysql/mysql-server:5.7.37
-    container_name: mysql
+    image: mysql/mysql-server:5.7.37    
     restart: always
     environment:
       MYSQL_DATABASE: database
@@ -15,8 +14,7 @@ services:
     volumes:
     - ./src/init.sql:/docker-entrypoint-initdb.d/init.sql 
 
-  legacy-php:
-    container_name: legacy-php
+  legacy-php:    
     depends_on:
     - mysql
     image: orsolin/docker-php-5.3-apache
