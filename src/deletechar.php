@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $row = $query->fetchrow(); // Obtém a linha como um array
                     $playerID = $row['id']; // Acessa o ID
                     $db->execute("DELETE FROM `players` WHERE `id`=?", array($playerID));
+                    // $db->execute("DELETE FROM `friends` WHERE `fname`=?", array($nomedeusuari0));
                 }
                 // Redireciona após excluir o personagem
                 header("Location: characters.php");

@@ -150,9 +150,7 @@ if ($player->promoted == 't') {
             </tbody>
         </table>
     </div>
-    <div>
-        <center style="font-size:11px" id="vl_pontos">
-            <b>Pontos de status: </b><?= $player->stat_points ?>
-        </center>
+    <div style="font-size:11px;text-align:center" id="vl_pontos">
+        <b>Pontos de status: </b><?= $player->stat_points ?>
     </div>
 </div>

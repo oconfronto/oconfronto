@@ -44,10 +44,15 @@ function displayItemOptions($item, $action, $label)
     } else {
         $precol = ceil(($item['price'] / 3.5) * ($item['item_bonus'] / 1.85));
     }
-
+    
+    if ($item['item_bonus'] > 10) {
+        $valordavenda = floor(($item['price'] / 2) + (($item['item_bonus'] * $item['price']) / 5) + 3000000);
+    } else {
+        $valordavenda = floor(($item['price'] / 2) + (($item['item_bonus'] * $item['price']) / 5));
+    }
 
     if ($action == 'sell') {
-        return "<a onclick=\"return confirm('Tem certeza que deseja VENDER o item {$item['name']} +{$item['item_bonus']} no valor de: {$item['price']} ?');\" href=\"inventory_mobile.php?{$action}={$item['id']}\">{$label}</a>";
+        return "<a onclick=\"return confirm('Tem certeza que deseja VENDER o item {$item['name']} +{$item['item_bonus']} no valor de: {$valordavenda} ?');\" href=\"inventory_mobile.php?{$action}={$item['id']}\">{$label}</a>";
     } else if ($action == 'mature') {
         return "<a onclick=\"return confirm('Tem certeza que deseja MATURAR o item {$item['name']} +{$item['item_bonus']} no valor de: {$precol} ?');\" href=\"inventory_mobile.php?{$action}={$item['id']}\">{$label}</a>";
     } else {

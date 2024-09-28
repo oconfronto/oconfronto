@@ -75,15 +75,15 @@ if ($_SESSION['Login']['player_id'] > 0) {
 	// Garante que o progresso esteja entre 0 e 100
 	$progressExp = is_numeric($progressExp) && $progressExp > 0 && $progressExp <= 100 ? round($progressExp) : 0;
 
+
 	echo "<script language=\"javascript\">";
 	echo "$('#bar-hp').animate({width: '" . ceil(($player->hp * 100) / $player->maxhp) . "%'}).html('<span>" . $player->hp . " / " . $player->maxhp . "</span>');";
 	echo "$('#bar-mp').animate({width: '" . ceil(($player->mana * 100) / $player->maxmana) . "%'}).html('<span>" . $player->mana . " / " . $player->maxmana . "</span>');";
 	echo "$('#bar-en').animate({width: '" . ceil(($player->energy * 100) / $player->maxenergy) . "%'}).html('<span>" . $player->energy . " / " . $player->maxenergy . "</span>');";
 	echo "$('#player-gold').html('" . number_format($player->gold) . " moedas');";
-
 	echo "$('#expbar').animate({width: '" . $progressExp . "%'});";
 	echo "$('#expbarText').text('" . number_format($player->exp) . " / " . number_format(maxExp($player->level)) . " (" . number_format($progressExp) . "%)');";
-	echo "$('#vl_pontos').html('<div><center style='font-size:11px' id='vl_pontos'><b>Pontos de status: </b>" . $player->stat_points . "</center></div>');";
+	echo "$('#vl_pontos').html('<div style=\"font-size:11px;text-align:center\" id=\"vl_pontos\"><b>Pontos de status: </b>$player->stat_points</div>');";
 	echo "$('#vl_pontosMisticos').html('<font size=\"1px\"><b>Pontos místicos:</b> " . $player->magic_points . "</font>');";
 	echo "$('#player-gold').html('" . number_format($player->gold, 0, '', '.') . " moedas');";
 	echo "$('#nv_atual').html('<b>Nível:</b>" . $player->level . "');";

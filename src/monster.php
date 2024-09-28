@@ -45,14 +45,14 @@ switch ($_GET['act']) {
 						$insert['player_id'] = $player->id;
 						$insert['id'] = $_GET['id'];
 						$insert['hp'] = 1;
-						$insert['quest'] = t;
+						$insert['quest'] = 't';
 						$query = $db->autoexecute('bixos', $insert, 'INSERT');
 						$quest = 1;
 					} elseif (($surprisequest2 == 1) and ($player->level < 50)) {
 						$insert['player_id'] = $player->id;
 						$insert['id'] = $_GET['id'];
 						$insert['hp'] = 2;
-						$insert['quest'] = t;
+						$insert['quest'] = 't';
 						$query = $db->autoexecute('bixos', $insert, 'INSERT');
 						$quest = 1;
 					} else {
@@ -813,7 +813,7 @@ switch ($_GET['act']) {
 				}
 			} */
 
-				if ($enemy->username == Zeus) {
+				if ($enemy->username == 'Zeus') {
 					$medalha10 = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=?", array($player->id, 'Lendário'));
 					if ($medalha10->recordcount() < 1) {
 						$medalha = 10;
@@ -893,9 +893,9 @@ switch ($_GET['act']) {
 			include("templates/private_header.php");
 		}
 
-		echo "<script type=\"text/javascript\">";
-		echo "setTimeout(function() { Ajax('monster.php?act=attack&nolayout=true&noreturn=true&hit=Atacar', 'battle'); }, 1500);";
-		echo "</script>";
+		// echo "<script type=\"text/javascript\">";
+		// echo "setTimeout(function() { Ajax('monster.php?act=attack&nolayout=true&noreturn=true&hit=Atacar', 'battle'); }, 1500);";
+		// echo "</script>";
 
 		echo "<div id=\"swap\"></div><div id=\"battle\">";
 
@@ -1053,7 +1053,7 @@ switch ($_GET['act']) {
 			echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_type.php?type=97', 'swap')\"><img src=\"images/magias/hit.png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 3;\" border=\"0\" /></a>";
 
 
-			$vermagia = $db->execute("select magias.magia_id, blueprint_magias.nome, blueprint_magias.descri, blueprint_magias.mana from `magias`, `blueprint_magias` where magias.magia_id=blueprint_magias.id and magias.used=? and magias.magia_id!=5 and magias.player_id=?", array(t, $player->id));
+			$vermagia = $db->execute("select magias.magia_id, blueprint_magias.nome, blueprint_magias.descri, blueprint_magias.mana from `magias`, `blueprint_magias` where magias.magia_id=blueprint_magias.id and magias.used=? and magias.magia_id!=5 and magias.player_id=?", array('t', $player->id));
 			while ($result = $vermagia->fetchrow()) {
 
 				echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_type.php?type=" . $result['magia_id'] . "', 'swap')\">";
@@ -1076,9 +1076,9 @@ switch ($_GET['act']) {
 		if (floor($player->energy / 10) > 1) {
 			$modefastbattle = $db->execute("select * from `other` where `value`=? and `player_id`=?", array('fastbattle', $player->id));
 			if ($modefastbattle->recordcount() > 0) {
-				echo "<center><i><a href=\"monster.php?act=attack&id=" . ($bixo->id * $player->id) . "&times=" . floor($player->energy / 10) . "\">Clique aqui</a> para descarregar toda sua energia no monstro " . $enemy->username . ".</i><img src=\"images/help.gif\" title=\"header=[Descarregar Energia] body=[<font size='1px'>Você possui " . $player->energy . " pontos de energia, e pode matar " . floor($player->energy / 10) . " monstros. Esta opção faz com que você ataque " . floor($player->energy / 10) . "x o monstro " . $enemy->username . " de uma só vez.</font>]\">";
+				echo "<div style='text-align:center' id='des_battle'><i><a href=\"monster.php?act=attack&id=" . ($bixo->id * $player->id) . "&times=" . floor($player->energy / 10) . "\">Clique aqui</a> para descarregar toda sua energia no monstro " . $enemy->username . ".</i><img src=\"images/help.gif\" title=\"header=[Descarregar Energia] body=[<font size='1px'>Você possui " . $player->energy . " pontos de energia, e pode matar " . floor($player->energy / 10) . " monstros. Esta opção faz com que você ataque " . floor($player->energy / 10) . "x o monstro " . $enemy->username . " de uma só vez.</font>]\"></div>";
 			} else {
-				echo "<center><i><a href=\"swap_type.php?descarregar=true&times=" . floor($player->energy / 10) . "\">Clique aqui</a> para descarregar toda sua energia no monstro " . $enemy->username . ".</i><img src=\"images/help.gif\" title=\"header=[Descarregar Energia] body=[<font size='1px'>Você possui " . $player->energy . " pontos de energia, e pode matar " . floor($player->energy / 10) . " monstros. Esta opção faz com que você ataque " . floor($player->energy / 10) . "x o monstro " . $enemy->username . " de uma só vez.</font>]\">";
+				echo "<div style='text-align:center' id='des_battle'><i><a href=\"swap_type.php?descarregar=true&times=" . floor($player->energy / 10) . "\">Clique aqui</a> para descarregar toda sua energia no monstro " . $enemy->username . ".</i><img src=\"images/help.gif\" title=\"header=[Descarregar Energia] body=[<font size='1px'>Você possui " . $player->energy . " pontos de energia, e pode matar " . floor($player->energy / 10) . " monstros. Esta opção faz com que você ataque " . floor($player->energy / 10) . "x o monstro " . $enemy->username . " de uma só vez.</font>]\"></div>";
 			}
 		}
 

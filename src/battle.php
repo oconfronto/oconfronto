@@ -49,7 +49,7 @@ switch($_GET['act'])
 			break;
 		}
 		
-		if ($enemy->level <= 20)
+		if ($enemy->level < 20)
 		{
 			include("templates/private_header.php");
 			echo "Level desde usuário é menor que 20 <a href=\"battle.php\"/>Voltar</a>.";
