@@ -1,6 +1,6 @@
 <?php
 
-$config_server = "host.docker.internal:3306";
+$config_server = "mysql";
 $config_database = $_ENV['MYSQL_DATABASE'];
 $config_username = $_ENV['MYSQL_USER'];
 $config_password = $_ENV['MYSQL_PASSWORD'];
