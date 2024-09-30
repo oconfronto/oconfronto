@@ -9,6 +9,8 @@
 - Docker Compose.
 
 ## Comandos
+- Para configurar as variáveis de ambiente apenas copie o arquivo `.env.example` e renomeie a cópia para `.env`, mude o valor de variáveis conforme sua necessidade.
+
 - Para subir o servidor:
 
 `docker-compose up`

@@ -52,7 +52,7 @@ class OCv2
 function encodePassword($password)
 {
 
-	$salt = "ï¿½h329*ï¿½%&ï¿½*(smd!ï¿½";
+	$salt = $_ENV['PASSWORD_SALT'];
 	$hash = sha1($password . $salt);
 
 	for ($i = 0; $i < 1000; $i++) {
