@@ -678,8 +678,9 @@ switch ($_GET['act']) {
 				$expwin = rand($expwin3, $expwin2);
 				$goldwin = round(0.9 * $expwin);
 				if ($setting->eventoouro > time()) {
-					$goldwin = round($goldwin * 2);
+					$goldwin = round($goldwin * 4);
 				}
+				$goldwin = round($goldwin * 2);
 				$goldwin = $goldwin * $bixo->mul;
 
 				$expgroup1 = $db->execute("select `id` from `groups` where `player_id`=?", array($player->id));
