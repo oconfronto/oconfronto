@@ -139,7 +139,7 @@ switch($_GET['act'])
 		exit;
 		}
 
-		
+
 		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", array($player->id, 112));
 		if ($selectfirstitem->recordcount() == 0){
 		include("templates/private_header.php");
@@ -185,7 +185,7 @@ switch($_GET['act'])
 		exit;
 		}
 
-		
+
 		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", array($player->id, 112));
 		if ($selectfirstitem->recordcount() == 0){
 		include("templates/private_header.php");
@@ -231,7 +231,7 @@ switch($_GET['act'])
 		exit;
 		}
 
-		
+
 		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", array($player->id, 112));
 		if ($selectfirstitem->recordcount() == 0){
 		include("templates/private_header.php");
@@ -278,7 +278,7 @@ switch($_GET['act'])
 		exit;
 		}
 
-		
+
 		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", array($player->id, 111));
 		if ($selectfirstitem->recordcount() == 0){
 		include("templates/private_header.php");
@@ -296,7 +296,7 @@ switch($_GET['act'])
 			$insert['item_id'] = 163;
 			$db->autoexecute('items', $insert, 'INSERT');
 			$ringid = $db->Insert_ID();
-			$db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", array(20, 20, 20, 20, $ringid));
+			$db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", array(10, 10, 10, 10, $ringid));
 
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
