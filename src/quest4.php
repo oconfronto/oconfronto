@@ -45,7 +45,7 @@ switch($_GET['act'])
 	case "help":
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Gadudj</b></legend>\n";
-		echo "<i>Bom, vejo que você está usando um jeweled ring. Ele é um anel muito poderoso mas eu posso deixa-lo ainda melhor.<br>Se você me pagar uma quantia de 250000, modificarei seu anel e ele poderá aumentar até 15% sua agilidade e força. O que acha?</i><br><br>\n";
+		echo "<i>Bom, vejo que você está usando um jeweled ring. Ele é um anel muito poderoso mas eu posso deixa-lo ainda melhor.<br>Se você me pagar uma quantia de 250000, modificarei seu anel e ele poderá aumentar até 100% dos atributos. O que acha?</i><br><br>\n";
 		echo "<a href=\"quest4.php?act=acept\">Aceito</a> | <a href=\"quest4.php?act=decline\">Recuso</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
