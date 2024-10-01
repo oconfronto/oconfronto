@@ -190,7 +190,7 @@ switch($_GET['act'])
 			$insert['item_id'] = 168;
 			$db->autoexecute('items', $insert, 'INSERT');
 			$ringid = $db->Insert_ID();
-			$db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", array(30, 30, 30, 30, $ringid));
+			$db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", array(20, 20, 20, 20, $ringid));
 
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Missão</b></legend>\n";
