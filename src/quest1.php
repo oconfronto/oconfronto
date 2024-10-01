@@ -329,7 +329,7 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Para criar o anel, são necessário três <b>Jeweled Crystals</b>. Você pode obtê-los matando Dragões de Pedra ou comprando no mercado.</i><br/>\n";
+		echo "<i>Para criar o anel, são necessários três <b>Jeweled Crystals</b>. Você pode obtê-los matando Dragões de Pedra ou comprando no mercado.</i><br/>\n";
 		echo "<i>Quando conseguir o primeiro jeweled crystal volte aqui.</i><br/>\n";
 		echo "<a href=\"quest1.php?act=continue1\">Já possuo o jeweled crystal</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
@@ -365,7 +365,7 @@ switch($_GET['act'])
 		{
 		include("templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-		echo "<i>Agora que possuo todos os cristais necessário só preciso de uma peça para montar o anel, uma titanium wheel. A única maneira de obtê-los é matando Raderon, um poderoso guerreiro.</i><br/><br/>\n";
+		echo "<i>Agora que possuo todos os cristais necessários só preciso de uma peça para montar o anel, uma titanium wheel. A única maneira de obtê-los é matando Raderon, um poderoso guerreiro.</i><br/><br/>\n";
 		echo "<a href=\"quest1.php?act=raderon\">Quero lutar contra Raderon</a> | <a href=\"home.php\">Voltar</a>.";
 	        echo "</fieldset>";
 		include("templates/private_footer.php");
