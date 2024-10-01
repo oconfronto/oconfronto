@@ -137,17 +137,17 @@ switch ($_GET['act']) {
 
 
 		if ($setting->eventoexp > time()) {
-			$expdomonstro = ceil($enemy->mtexp * 2);
+			$expdomonstro = ceil($enemy->mtexp * 4);
 		} else {
 			if ($player->level <= 20) {
-				$expdomonstro = ceil($enemy->mtexp * 2);
+				$expdomonstro = ceil($enemy->mtexp * 4);
 			} elseif ($player->level < 35) {
-				$expdomonstro = ceil($enemy->mtexp * 1.5);
+				$expdomonstro = ceil($enemy->mtexp * 2.5);
 			} else {
 				if ($player->vip > time()) {
-					$expdomonstro = ceil($enemy->mtexp * 1.1);
+					$expdomonstro = ceil($enemy->mtexp * 2.1);
 				} else {
-					$expdomonstro = ceil($enemy->mtexp * 1);
+					$expdomonstro = ceil($enemy->mtexp * 2);
 				}
 			}
 		}
