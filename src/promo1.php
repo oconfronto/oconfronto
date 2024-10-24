@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Missões");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
@@ -20,7 +20,7 @@ if ($player->level < 240) {
 
 if ($player->voc == "knight") {
 	if ($_GET['act'] == "pay") {
-		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 12));
+		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 12]);
 		if ($verificacao->recordcount() == 0) {
 			if ($player->gold - 2000000 < 0) {
 				include(__DIR__ . "/templates/private_header.php");
@@ -31,7 +31,8 @@ if ($player->voc == "knight") {
 				include(__DIR__ . "/templates/private_footer.php");
 				exit;
 			}
-   $query = $db->execute("update `players` set `gold`=? where `id`=?", array($player->gold - 2000000, $player->id));
+
+   $query = $db->execute("update `players` set `gold`=? where `id`=?", [$player->gold - 2000000, $player->id]);
    $insert['player_id'] = $player->id;
    $insert['quest_id'] = 12;
    $insert['quest_status'] = 1;
@@ -44,6 +45,7 @@ if ($player->voc == "knight") {
    include(__DIR__ . "/templates/private_footer.php");
    exit;
 		}
+
   include(__DIR__ . "/templates/private_header.php");
   echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
   echo "Você já me pagou!</i><br/><br/>\n";
@@ -53,7 +55,7 @@ if ($player->voc == "knight") {
   exit;
 	}
 
-	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 12));
+	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 12]);
 	$quest = $verificacao->fetchrow();
 
 	if ($verificacao->recordcount() == 0) {
@@ -66,6 +68,7 @@ if ($player->voc == "knight") {
          include(__DIR__ . "/templates/private_footer.php");
          exit;
      }
+
      if ($_GET['next'] == 2) {
          include(__DIR__ . "/templates/private_header.php");
          echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
@@ -75,6 +78,7 @@ if ($player->voc == "knight") {
          include(__DIR__ . "/templates/private_footer.php");
          exit;
      }
+
      if ($_GET['next'] == 3) {
    			include(__DIR__ . "/templates/private_header.php");
    			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
@@ -84,15 +88,14 @@ if ($player->voc == "knight") {
    			include(__DIR__ . "/templates/private_footer.php");
    			exit;
    		}
-     else {
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-   			echo "<i>Olá " . $player->username . "! Ouvi muito sobre você na cidade, e tambem ouvi alguns boatos que você vai querer ouvir.</i><br/>\n";
-   			echo "<a href=\"promo1.php?next=1\">Que Boatos?</a> | <a href=\"promo1.php?next=3\">Não estou interessado</a>.";
-   			echo "</fieldset>";
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
+
+     include(__DIR__ . "/templates/private_header.php");
+     echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
+     echo "<i>Olá " . $player->username . "! Ouvi muito sobre você na cidade, e tambem ouvi alguns boatos que você vai querer ouvir.</i><br/>\n";
+     echo "<a href=\"promo1.php?next=1\">Que Boatos?</a> | <a href=\"promo1.php?next=3\">Não estou interessado</a>.";
+     echo "</fieldset>";
+     include(__DIR__ . "/templates/private_footer.php");
+     exit;
  }
 
 	if ($quest['quest_status'] == 1) {
@@ -105,8 +108,9 @@ if ($player->voc == "knight") {
          include(__DIR__ . "/templates/private_footer.php");
          exit;
      }
+
      if ($_GET['next'] == 2) {
-         $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(2, $player->id, 12));
+         $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [2, $player->id, 12]);
          include(__DIR__ . "/templates/private_header.php");
          echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
          echo "<i>Adimiro sua corragem guerreiro, boa sorte em sua jornada.</i><br/>\n";
@@ -115,6 +119,7 @@ if ($player->voc == "knight") {
          include(__DIR__ . "/templates/private_footer.php");
          exit;
      }
+
      if ($_GET['next'] == 3) {
    			include(__DIR__ . "/templates/private_header.php");
    			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
@@ -124,15 +129,14 @@ if ($player->voc == "knight") {
    			include(__DIR__ . "/templates/private_footer.php");
    			exit;
    		}
-     else {
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-   			echo "<i>Dizem por ai que existe um homem que todos julgam ser imortal.  Arranque sua cabeça, perfure seus pulmões, corte-o ao meio nada o matará... A não ser, que perfurem seu coração, sua grande franqueza.</i><br/>\n";
-   			echo '<a href="promo1.php?next=1">Conte-me Mais!</a> | <a href="promo1.php?next=3">Voltar</a>.';
-   			echo "</fieldset>";
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
+
+     include(__DIR__ . "/templates/private_header.php");
+     echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
+     echo "<i>Dizem por ai que existe um homem que todos julgam ser imortal.  Arranque sua cabeça, perfure seus pulmões, corte-o ao meio nada o matará... A não ser, que perfurem seu coração, sua grande franqueza.</i><br/>\n";
+     echo '<a href="promo1.php?next=1">Conte-me Mais!</a> | <a href="promo1.php?next=3">Voltar</a>.';
+     echo "</fieldset>";
+     include(__DIR__ . "/templates/private_footer.php");
+     exit;
  }
 
 	if ($quest['quest_status'] == 2) {
@@ -145,6 +149,7 @@ if ($player->voc == "knight") {
 			include(__DIR__ . "/templates/private_footer.php");
 			exit;
 		}
+
   include(__DIR__ . "/templates/private_header.php");
   echo "<fieldset><legend><b>Missão</b></legend>\n";
   echo "<i>Conforme você procurava por Friden, encontrou Alexia, uma de seus seguidores.</i><br/>\n";
@@ -156,7 +161,7 @@ if ($player->voc == "knight") {
 
 	if ($quest['quest_status'] == 3 || $quest['quest_status'] == 4) {
 		if ($_GET['next'] == 1) {
-			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(4, $player->id, 12));
+			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [4, $player->id, 12]);
 			header("Location: bquest.php");
 		} elseif ($_GET['next'] == 3) {
 			include(__DIR__ . "/templates/private_header.php");
@@ -179,7 +184,7 @@ if ($player->voc == "knight") {
 
 	if ($quest['quest_status'] == 5 || $quest['quest_status'] == 6) {
 		if ($_GET['next'] == 1) {
-			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(6, $player->id, 12));
+			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [6, $player->id, 12]);
 			header("Location: bquest.php");
 		} elseif ($_GET['next'] == 3) {
 			include(__DIR__ . "/templates/private_header.php");
@@ -202,8 +207,8 @@ if ($player->voc == "knight") {
 
 
 	if ($quest['quest_status'] == 7) {
-		$query = $db->execute("update `players` set `promoted`=? where `id`=?", array('p', $player->id));
-		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(90, $player->id, 12));
+		$query = $db->execute("update `players` set `promoted`=? where `id`=?", ['p', $player->id]);
+		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [90, $player->id, 12]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Missão</b></legend>\n";
 		echo "<i>Ao segurar a espada de Friden você sente seus músculos enrijecerem e seu corpo fortalecido. Você acaba de se tornar um Cavaleiro!</i><br/><br/>\n";
@@ -225,7 +230,7 @@ if ($player->voc == "knight") {
 } elseif ($player->voc == "mage") {
 
 	if ($_GET['act'] == "pay") {
-		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 12));
+		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 12]);
 		if ($verificacao->recordcount() == 0) {
 			if ($player->gold - 2000000 < 0) {
 				include(__DIR__ . "/templates/private_header.php");
@@ -236,7 +241,8 @@ if ($player->voc == "knight") {
 				include(__DIR__ . "/templates/private_footer.php");
 				exit;
 			}
-   $query = $db->execute("update `players` set `gold`=? where `id`=?", array($player->gold - 2000000, $player->id));
+
+   $query = $db->execute("update `players` set `gold`=? where `id`=?", [$player->gold - 2000000, $player->id]);
    $insert['player_id'] = $player->id;
    $insert['quest_id'] = 12;
    $insert['quest_status'] = 1;
@@ -249,6 +255,7 @@ if ($player->voc == "knight") {
    include(__DIR__ . "/templates/private_footer.php");
    exit;
 		}
+
   include(__DIR__ . "/templates/private_header.php");
   echo "<fieldset><legend><b>Missão</b></legend>\n";
   echo "Você já me pagou!</i><br/><br/>\n";
@@ -258,7 +265,7 @@ if ($player->voc == "knight") {
   exit;
 	}
  
-	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 12));
+	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 12]);
 	$quest = $verificacao->fetchrow();
 
 	if ($verificacao->recordcount() == 0) {
@@ -271,6 +278,7 @@ if ($player->voc == "knight") {
          include(__DIR__ . "/templates/private_footer.php");
          exit;
      }
+
      if ($_GET['next'] == 2) {
          include(__DIR__ . "/templates/private_header.php");
          echo "<fieldset><legend><b>Missão</b></legend>\n";
@@ -280,6 +288,7 @@ if ($player->voc == "knight") {
          include(__DIR__ . "/templates/private_footer.php");
          exit;
      }
+
      if ($_GET['next'] == 3) {
    			include(__DIR__ . "/templates/private_header.php");
    			echo "<fieldset><legend><b>Missão</b></legend>\n";
@@ -289,16 +298,15 @@ if ($player->voc == "knight") {
    			include(__DIR__ . "/templates/private_footer.php");
    			exit;
    		}
-     else {
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset><legend><b>Missão</b></legend>\n";
-   			echo "<i>Você sente algo queimar sua pele durante o sono, e ao acordar se repara com uma marca talhada em seu peito em forma de um dragão. Você sabia que a hora chegava e teria de enfrentar seu destino!";
-   			echo "<br/>Durante toda sua vida você se preparava que estas marcas aparecessem. Está na hora de você participar do torneio dos magos, onde você deverá provar que você domina seus feitiços e sua mente.</i><br/>\n";
-   			echo '<a href="promo1.php?next=2">Continuar</a> | <a href="promo1.php?next=3">Voltar</a>.';
-   			echo "</fieldset>";
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
+
+     include(__DIR__ . "/templates/private_header.php");
+     echo "<fieldset><legend><b>Missão</b></legend>\n";
+     echo "<i>Você sente algo queimar sua pele durante o sono, e ao acordar se repara com uma marca talhada em seu peito em forma de um dragão. Você sabia que a hora chegava e teria de enfrentar seu destino!";
+     echo "<br/>Durante toda sua vida você se preparava que estas marcas aparecessem. Está na hora de você participar do torneio dos magos, onde você deverá provar que você domina seus feitiços e sua mente.</i><br/>\n";
+     echo '<a href="promo1.php?next=2">Continuar</a> | <a href="promo1.php?next=3">Voltar</a>.';
+     echo "</fieldset>";
+     include(__DIR__ . "/templates/private_footer.php");
+     exit;
  }
 
 	if ($quest['quest_status'] == 1) {
@@ -311,8 +319,9 @@ if ($player->voc == "knight") {
          include(__DIR__ . "/templates/private_footer.php");
          exit;
      }
+
      if ($_GET['next'] == 2) {
-         $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(2, $player->id, 12));
+         $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [2, $player->id, 12]);
          include(__DIR__ . "/templates/private_header.php");
          echo "<fieldset><legend><b>Missão</b></legend>\n";
          echo "<i>Adimiro sua corragem guerreiro, boa sorte em sua jornada.</i><br/>\n";
@@ -321,6 +330,7 @@ if ($player->voc == "knight") {
          include(__DIR__ . "/templates/private_footer.php");
          exit;
      }
+
      if ($_GET['next'] == 3) {
    			include(__DIR__ . "/templates/private_header.php");
    			echo "<fieldset><legend><b>Missão</b></legend>\n";
@@ -330,15 +340,14 @@ if ($player->voc == "knight") {
    			include(__DIR__ . "/templates/private_footer.php");
    			exit;
    		}
-     else {
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset><legend><b>Missão</b></legend>\n";
-   			echo "<i>Dizem por ai que existe um homem que todos julgam ser imortal.  Arranque sua cabeça, perfure seus pulmões, corte-o ao meio nada o matará... A não ser, que perfurem seu coração, sua grande franqueza.</i><br/>\n";
-   			echo '<a href="promo1.php?next=1">Conte-me Mais!</a> | <a href="promo1.php?next=3">Voltar</a>.';
-   			echo "</fieldset>";
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
+
+     include(__DIR__ . "/templates/private_header.php");
+     echo "<fieldset><legend><b>Missão</b></legend>\n";
+     echo "<i>Dizem por ai que existe um homem que todos julgam ser imortal.  Arranque sua cabeça, perfure seus pulmões, corte-o ao meio nada o matará... A não ser, que perfurem seu coração, sua grande franqueza.</i><br/>\n";
+     echo '<a href="promo1.php?next=1">Conte-me Mais!</a> | <a href="promo1.php?next=3">Voltar</a>.';
+     echo "</fieldset>";
+     include(__DIR__ . "/templates/private_footer.php");
+     exit;
  }
 
 	if ($quest['quest_status'] == 2) {
@@ -351,6 +360,7 @@ if ($player->voc == "knight") {
          include(__DIR__ . "/templates/private_footer.php");
          exit;
      }
+
      if ($_GET['next'] == 3) {
          include(__DIR__ . "/templates/private_header.php");
          echo "<fieldset><legend><b>Missão</b></legend>\n";
@@ -360,20 +370,19 @@ if ($player->voc == "knight") {
          include(__DIR__ . "/templates/private_footer.php");
          exit;
      }
-     else {
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset><legend><b>Torneio</b></legend>\n";
-   			echo "<i>O torneio se baseia em três etapas em que você terá de derrotar 3 guerreiros e o último jovem em pé será o que domina seus poderes!</i><br/>\n";
-   			echo '<a href="bquest.php">Continuar</a> | <a href="promo1.php?next=3">Fugir</a>.';
-   			echo "</fieldset>";
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
+
+     include(__DIR__ . "/templates/private_header.php");
+     echo "<fieldset><legend><b>Torneio</b></legend>\n";
+     echo "<i>O torneio se baseia em três etapas em que você terá de derrotar 3 guerreiros e o último jovem em pé será o que domina seus poderes!</i><br/>\n";
+     echo '<a href="bquest.php">Continuar</a> | <a href="promo1.php?next=3">Fugir</a>.';
+     echo "</fieldset>";
+     include(__DIR__ . "/templates/private_footer.php");
+     exit;
  }
 
 	if ($quest['quest_status'] == 3 || $quest['quest_status'] == 4) {
 		if ($_GET['next'] == 1) {
-			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(4, $player->id, 12));
+			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [4, $player->id, 12]);
 			header("Location: bquest.php");
 		} elseif ($_GET['next'] == 3) {
 			include(__DIR__ . "/templates/private_header.php");
@@ -396,7 +405,7 @@ if ($player->voc == "knight") {
 
 	if ($quest['quest_status'] == 5 || $quest['quest_status'] == 6) {
 		if ($_GET['next'] == 1) {
-			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(6, $player->id, 12));
+			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [6, $player->id, 12]);
 			header("Location: bquest.php");
 		} elseif ($_GET['next'] == 3) {
 			include(__DIR__ . "/templates/private_header.php");
@@ -419,8 +428,8 @@ if ($player->voc == "knight") {
 
 
 	if ($quest['quest_status'] == 7) {
-		$query = $db->execute("update `players` set `promoted`=? where `id`=?", array('p', $player->id));
-		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(90, $player->id, 12));
+		$query = $db->execute("update `players` set `promoted`=? where `id`=?", ['p', $player->id]);
+		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [90, $player->id, 12]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Missão</b></legend>\n";
 		echo "<i>Você derrotou o destemido Draconos! Nunca um forasteiro havia conseguido tamanha façanha.<br/><b>Você foi promovido para um Arquimago, e agora possui a Draconia Staff!</b></i><br/><br/>\n";
@@ -441,7 +450,7 @@ if ($player->voc == "knight") {
 	}
 } elseif ($player->voc == "archer") {
 	if ($_GET['act'] == "pay") {
-		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 12));
+		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 12]);
 		if ($verificacao->recordcount() == 0) {
 			if ($player->gold - 2000000 < 0) {
 				include(__DIR__ . "/templates/private_header.php");
@@ -452,7 +461,8 @@ if ($player->voc == "knight") {
 				include(__DIR__ . "/templates/private_footer.php");
 				exit;
 			}
-   $query = $db->execute("update `players` set `gold`=? where `id`=?", array($player->gold - 2000000, $player->id));
+
+   $query = $db->execute("update `players` set `gold`=? where `id`=?", [$player->gold - 2000000, $player->id]);
    $insert['player_id'] = $player->id;
    $insert['quest_id'] = 12;
    $insert['quest_status'] = 1;
@@ -465,6 +475,7 @@ if ($player->voc == "knight") {
    include(__DIR__ . "/templates/private_footer.php");
    exit;
 		}
+
   include(__DIR__ . "/templates/private_header.php");
   echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
   echo "Você já me pagou!</i><br/><br/>\n";
@@ -474,7 +485,7 @@ if ($player->voc == "knight") {
   exit;
 	}
 
-	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 12));
+	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 12]);
 	$quest = $verificacao->fetchrow();
 
 	if ($verificacao->recordcount() == 0) {
@@ -487,6 +498,7 @@ if ($player->voc == "knight") {
          include(__DIR__ . "/templates/private_footer.php");
          exit;
      }
+
      if ($_GET['next'] == 2) {
          include(__DIR__ . "/templates/private_header.php");
          echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
@@ -496,6 +508,7 @@ if ($player->voc == "knight") {
          include(__DIR__ . "/templates/private_footer.php");
          exit;
      }
+
      if ($_GET['next'] == 3) {
    			include(__DIR__ . "/templates/private_header.php");
    			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
@@ -505,15 +518,14 @@ if ($player->voc == "knight") {
    			include(__DIR__ . "/templates/private_footer.php");
    			exit;
    		}
-     else {
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-   			echo "<i>Olá " . $player->username . "! Ouvi muito sobre você na cidade, e tambem ouvi alguns boatos que você vai querer ouvir.</i><br/>\n";
-   			echo "<a href=\"promo1.php?next=1\">Que Boatos?</a> | <a href=\"promo1.php?next=3\">Não estou interessado</a>.";
-   			echo "</fieldset>";
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
+
+     include(__DIR__ . "/templates/private_header.php");
+     echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
+     echo "<i>Olá " . $player->username . "! Ouvi muito sobre você na cidade, e tambem ouvi alguns boatos que você vai querer ouvir.</i><br/>\n";
+     echo "<a href=\"promo1.php?next=1\">Que Boatos?</a> | <a href=\"promo1.php?next=3\">Não estou interessado</a>.";
+     echo "</fieldset>";
+     include(__DIR__ . "/templates/private_footer.php");
+     exit;
  }
 
 	if ($quest['quest_status'] == 1) {
@@ -526,8 +538,9 @@ if ($player->voc == "knight") {
          include(__DIR__ . "/templates/private_footer.php");
          exit;
      }
+
      if ($_GET['next'] == 2) {
-         $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(2, $player->id, 12));
+         $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [2, $player->id, 12]);
          include(__DIR__ . "/templates/private_header.php");
          echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
          echo "<i>Adimiro sua corragem guerreiro, boa sorte em sua jornada.</i><br/>\n";
@@ -536,6 +549,7 @@ if ($player->voc == "knight") {
          include(__DIR__ . "/templates/private_footer.php");
          exit;
      }
+
      if ($_GET['next'] == 3) {
    			include(__DIR__ . "/templates/private_header.php");
    			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
@@ -545,15 +559,14 @@ if ($player->voc == "knight") {
    			include(__DIR__ . "/templates/private_footer.php");
    			exit;
    		}
-     else {
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-   			echo "<i>Dizem por que Baltazar está morando em uma caverna ao norte da cidade. E esta provavelmete será sua única chance de roubar seu poderoso arco.</i><br/>\n";
-   			echo '<a href="promo1.php?next=1">Conte-me Mais!</a> | <a href="promo1.php?next=3">Voltar</a>.';
-   			echo "</fieldset>";
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
+
+     include(__DIR__ . "/templates/private_header.php");
+     echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
+     echo "<i>Dizem por que Baltazar está morando em uma caverna ao norte da cidade. E esta provavelmete será sua única chance de roubar seu poderoso arco.</i><br/>\n";
+     echo '<a href="promo1.php?next=1">Conte-me Mais!</a> | <a href="promo1.php?next=3">Voltar</a>.';
+     echo "</fieldset>";
+     include(__DIR__ . "/templates/private_footer.php");
+     exit;
  }
 
 	if ($quest['quest_status'] == 2) {
@@ -566,6 +579,7 @@ if ($player->voc == "knight") {
 			include(__DIR__ . "/templates/private_footer.php");
 			exit;
 		}
+
   include(__DIR__ . "/templates/private_header.php");
   echo "<fieldset><legend><b>Missão</b></legend>\n";
   echo "<i>Você seguiu ao norte da cidade como Thomas mencionou, em busca da caverna. Finalmente a encontra, mas avista um demônio em sua entrada.</i><br/>\n";
@@ -577,7 +591,7 @@ if ($player->voc == "knight") {
 
 	if ($quest['quest_status'] == 3 || $quest['quest_status'] == 4) {
 		if ($_GET['next'] == 1) {
-			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(4, $player->id, 12));
+			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [4, $player->id, 12]);
 			header("Location: bquest.php");
 		} elseif ($_GET['next'] == 3) {
 			include(__DIR__ . "/templates/private_header.php");
@@ -600,7 +614,7 @@ if ($player->voc == "knight") {
 
 	if ($quest['quest_status'] == 5 || $quest['quest_status'] == 6) {
 		if ($_GET['next'] == 1) {
-			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(6, $player->id, 12));
+			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [6, $player->id, 12]);
 			header("Location: bquest.php");
 		} elseif ($_GET['next'] == 3) {
 			include(__DIR__ . "/templates/private_header.php");
@@ -623,8 +637,8 @@ if ($player->voc == "knight") {
 
 
 	if ($quest['quest_status'] == 7) {
-		$query = $db->execute("update `players` set `promoted`=? where `id`=?", array('p', $player->id));
-		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(90, $player->id, 12));
+		$query = $db->execute("update `players` set `promoted`=? where `id`=?", ['p', $player->id]);
+		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [90, $player->id, 12]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Missão</b></legend>\n";
 		echo "<i>Ao tocar no arco de Baltazar você sente seus músculos enrijecerem e seu corpo fortalecido. Você acaba de se tornar um Arqueiro Royal!</i><br/><br/>\n";

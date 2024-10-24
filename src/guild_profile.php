@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Clã");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/bbcode.php");
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkguild.php");
@@ -19,7 +19,7 @@ if (!$_GET['id']) {
 	header("Location: guild_listing.php");
 } else {
 	//Populates $guild variable
-	$query = $db->execute("select * from `guilds` where `id`=?", array($_GET['id']));
+	$query = $db->execute("select * from `guilds` where `id`=?", [$_GET['id']]);
 	if ($query->recordcount() == 0) {
 		header("Location: guild_listing.php");
 	} else {
@@ -95,7 +95,7 @@ echo '<div id="tab1" class="tab_content">';
   							echo "Nenhum";
   						}
 
-						$contvitoria = $db->execute("select `id` from `pwar` where ((`status`='g' and `guild_id`=?) or (`status`='e' and `enemy_id`=?))", array($guild['id'], $guild['id']));
+						$contvitoria = $db->execute("select `id` from `pwar` where ((`status`='g' and `guild_id`=?) or (`status`='e' and `enemy_id`=?))", [$guild['id'], $guild['id']]);
 						?>
 					</td>
 
@@ -124,7 +124,7 @@ echo '<div id="tab1" class="tab_content">';
 
 						echo "" . date("d", $guild['registered']) . " de " . $mes_ano[$mes] . " de " . date("Y", $guild['registered']) . "";
 
-						$contderrota = $db->execute("select `id` from `pwar` where ((`status`='e' and `guild_id`=?) or (`status`='g' and `enemy_id`=?))", array($guild['id'], $guild['id']));
+						$contderrota = $db->execute("select `id` from `pwar` where ((`status`='e' and `guild_id`=?) or (`status`='g' and `enemy_id`=?))", [$guild['id'], $guild['id']]);
 						?>
 					</td>
 
@@ -171,7 +171,7 @@ echo '<div id="tab2" class="tab_content">';
 	</tr>
 	<?php
 	//Select all members ordered by level (highest first, members table also doubles as rankings table)
-	$query = $db->execute("select `id`, `username`, `level`, `voc`, `promoted`, `gold`, `bank`, `hp`, `kills`, `monsterkilled`, `deaths` from `players` where `guild`=? order by `level` desc", array($guild['id']));
+	$query = $db->execute("select `id`, `username`, `level`, `voc`, `promoted`, `gold`, `bank`, `hp`, `kills`, `monsterkilled`, `deaths` from `players` where `guild`=? order by `level` desc", [$guild['id']]);
 
 	$bool = 1;
 	while ($member = $query->fetchrow()) {
@@ -232,12 +232,12 @@ echo "</div>";
 echo '<div id="tab3" class="tab_content">';
 
 echo "<br/>";
-$alyquery = $db->execute("select `aled_na` from `guild_aliance` where `guild_na`=?", array($guild['id']));
+$alyquery = $db->execute("select `aled_na` from `guild_aliance` where `guild_na`=?", [$guild['id']]);
 if ($alyquery->recordcount() < 1) {
 	echo "<center><b>O clã " . $guild['name'] . " não tem alianças.</b></center><br/>";
 } else {
 	while ($aly = $alyquery->fetchrow()) {
-		$allyname = $db->GetOne("select `name` from `guilds` where `id`=?", array($aly['aled_na']));
+		$allyname = $db->GetOne("select `name` from `guilds` where `id`=?", [$aly['aled_na']]);
 		echo "<center><b>O clã " . $guild['name'] . " possui alianças com o clã <a href=\"guild_profile.php?id=" . $aly['aled_na'] . '">' . $allyname . "</a>.</b></center><br/>";
 	}
 }
@@ -245,12 +245,12 @@ if ($alyquery->recordcount() < 1) {
 echo "</div>";
 echo '<div id="tab4" class="tab_content">';
 
-$enyquery = $db->execute("select `enemy_na` from `guild_enemy` where `guild_na`=?", array($guild['id']));
+$enyquery = $db->execute("select `enemy_na` from `guild_enemy` where `guild_na`=?", [$guild['id']]);
 if ($enyquery->recordcount() < 1) {
 	echo "<br/><center><b>O clã " . $guild['name'] . " não tem inimigos.</b></center><br/>";
 } else {
 	while ($eny = $enyquery->fetchrow()) {
-		$ennyname = $db->GetOne("select `name` from `guilds` where `id`=?", array($eny['enemy_na']));
+		$ennyname = $db->GetOne("select `name` from `guilds` where `id`=?", [$eny['enemy_na']]);
 		echo "<br/><center><b>O clã " . $guild['name'] . " é inimigo do clã <a href=\"guild_profile.php?id=" . $eny['enemy_na'] . '">' . $ennyname . "</a>.</b></center><br/>";
 	}
 }

@@ -3,12 +3,12 @@
 ?>
 ï»¿<?php 
 if(isset($_POST['treinar_strength'])){
-	if($_POST['restante']<0){ echo "<script>self.location='?p=home'</script>"; break; }
+	if($_POST['restante']<0){ echo "<script>self.location='?p=home'</script>"; return; }
  
 	$strength=$_POST['treinar_strength'];
 	$vitality=$_POST['treinar_vitality'];
 	$agility=$_POST['treinar_agility'];
-	if($strength<=0 || $vitality<=0 || $agility<=0){ echo "<script>self.location='?p=home'</script>"; break; }
+	if($strength<=0 || $vitality<=0 || $agility<=0){ echo "<script>self.location='?p=home'</script>"; return; }
  
 	$total=0;
  if ($strength>$player->strength) {
@@ -32,9 +32,9 @@ if(isset($_POST['treinar_strength'])){
     	} while($agility>$player->agility);
  }
  
-	if($total>$player->gold){ echo "<script>self.location='?p=treinar&msg=2'</script>"; break; }
+	if($total>$player->gold){ echo "<script>self.location='?p=treinar&msg=2'</script>"; return; }
  
-	mysql_query(sprintf('UPDATE players SET gold=gold-%s, strength=%s, vitality=%s, agility=%s WHERE id=', $total, $strength, $vitality, $agility).$player->id);
+	$db->execute(sprintf('UPDATE players SET gold=gold-%s, strength=%s, vitality=%s, agility=%s WHERE id=', $total, $strength, $vitality, $agility).$player->id);
 	echo "<script>self.location='?p=treinar&msg=1&gold=".$total."'</script>";
 }
 ?>
@@ -179,14 +179,14 @@ function change(at,dir){
 </script>
 <?php 
 $max=194;
-function equacao($atr){
+function equacao($atr): float{
 	return round(($atr*2)+($atr*$atr)+($atr*0.2));
 }
 
 $src="static/_images/bars/bar.png";
-$array=array("t"=>$player->strength,"n"=>$player->vitality,"g"=>$player->agility);
+$array=["t"=>$player->strength, "n"=>$player->vitality, "g"=>$player->agility];
 rsort($array);
-$array2=array("t"=>100,"n"=>100,"g"=>100);
+$array2=["t"=>100, "n"=>100, "g"=>100];
 arsort($array2);
 ?>
 <div class="box_top">Treino</div>
@@ -205,7 +205,7 @@ echo $player->agility;
 	<?php 
 if(isset($_GET['msg'])){
 		switch($_GET['msg']){
-			case 1: $gold = isset($_GET['gold']) ? $_GET['gold'] : 0; $msg='Treino realizado com sucesso! Foram gastos <b>'.number_format($gold,2,',','.').' gold</b> para realizar o treino.'; break;
+			case 1: $gold = $_GET['gold'] ?? 0; $msg='Treino realizado com sucesso! Foram gastos <b>'.number_format($gold,2,',','.').' gold</b> para realizar o treino.'; break;
 			case 2: $msg='gold insuficientes!'; break;
 		}
   

@@ -3,18 +3,19 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Trabalhar");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 
 $totaltime = 0;
-$counthours = $db->execute("select `hunttime` from `hunt` where `start`>? and `player_id`=? and `status`!='a'", array(time() + 604800, $player->id));
+$counthours = $db->execute("select `hunttime` from `hunt` where `start`>? and `player_id`=? and `status`!='a'", [time() + 604800, $player->id]);
 while($hours = $counthours->fetchrow())
 {
 	$totaltime += $totaltime + $hours['hunttime'];
 }
-if ($_GET['act'] == cancel) {
+
+if ($_GET['act'] == "cancel") {
     include(__DIR__ . "/templates/private_header.php");
     echo "<fieldset>";
     echo "<legend><b>Caça</b></legend>";
@@ -26,8 +27,8 @@ if ($_GET['act'] == cancel) {
 }
 
 
-	if ($_GET['act'] == remove) {
-     $query = $db->execute("update `hunt` set `status`='a' where `player_id`=? and `status`='t'", array($player->id));
+	if ($_GET['act'] == "remove") {
+     $query = $db->execute("update `hunt` set `status`='a' where `player_id`=? and `status`='t'", [$player->id]);
      include(__DIR__ . "/templates/private_header.php");
      echo "<fieldset>";
      echo "<legend><b>Caça</b></legend>";
@@ -73,7 +74,7 @@ if (($player->reino == '2' || $player->vip > time()) && ($player->level < 40 && 
 	exit;
 }
 
-	if ($player->tour == t && $setting->tournament != 'f') {
+	if ($player->tour == "t" && $setting->tournament != 'f') {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset>";
 		echo "<legend><b>Caçar</b></legend>";
@@ -93,7 +94,7 @@ if (($player->reino == '2' || $player->vip > time()) && ($player->level < 40 && 
 		exit;
 	}
 
-		$checkmonster = $db->execute("select `id`, `username`, `mtexp` from `monsters` where `level`<=? and `evento`!='n' and `evento`!='t' order by `level` desc limit 1", array($player->level));
+		$checkmonster = $db->execute("select `id`, `username`, `mtexp` from `monsters` where `level`<=? and `evento`!='n' and `evento`!='t' order by `level` desc limit 1", [$player->level]);
 		if ($checkmonster->recordcount() == 0) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset>";
@@ -103,6 +104,7 @@ if (($player->reino == '2' || $player->vip > time()) && ($player->level < 40 && 
 			include(__DIR__ . "/templates/private_footer.php");
 			exit;
 		}
+
   $monster = $checkmonster->fetchrow();
 
 		if ($monster['level'] >= $player->level && $monster['level'] != 1){
@@ -149,10 +151,10 @@ include(__DIR__ . "/templates/private_header.php");
 				echo "<tr>";
 				echo '<td width="15%"><b>Monstro:</b></td>';
 
-				$query = $db->execute("select `id`, `username` from `monsters` where `level`<=? and `evento`!='n' and `evento`!='t' order by `level` desc limit 1", array($player->level));
+				$query = $db->execute("select `id`, `username` from `monsters` where `level`<=? and `evento`!='n' and `evento`!='t' order by `level` desc limit 1", [$player->level]);
 				echo "<td>";
 					$result = $query->fetchrow();
-					echo $result[username];
+					echo $result["username"];
 				echo ".</td>";
 
 			echo "</tr><tr>";
@@ -232,7 +234,7 @@ include(__DIR__ . "/templates/private_header.php");
 
 echo '<table width="100%">';
 echo "<tr><td align=\"center\" bgcolor=\"#E1CBA4\"><b>últimas Caças</b></td></tr>";
-$query1 = $db->execute("select * from `hunt` where `player_id`=? and `status`!='t' order by `start` desc limit 10", array($player->id));
+$query1 = $db->execute("select * from `hunt` where `player_id`=? and `status`!='t' order by `start` desc limit 10", [$player->id]);
 if ($query1->recordcount() > 0)
 {
 	while ($log1 = $query1->fetchrow())
@@ -252,16 +254,16 @@ if ($query1->recordcount() > 0)
       $auxiliar2 = "dia(s) atrás.";
   }
 
-		$huntmonstername = $db->GetOne("select `username` from `monsters` where `id`=?", array($log1['hunttype']));
-		$huntmonsterlevel = $db->GetOne("select `level` from `monsters` where `id`=?", array($log1['hunttype']));
-		$huntmonstermtexp = $db->GetOne("select `mtexp` from `monsters` where `id`=?", array($log1['hunttype']));
+		$huntmonstername = $db->GetOne("select `username` from `monsters` where `id`=?", [$log1['hunttype']]);
+		$huntmonsterlevel = $db->GetOne("select `level` from `monsters` where `id`=?", [$log1['hunttype']]);
+		$huntmonstermtexp = $db->GetOne("select `mtexp` from `monsters` where `id`=?", [$log1['hunttype']]);
 
 
 			$expwin1 = $huntmonsterlevel * 6;
 			$expwin2 = (($player->level - $huntmonsterlevel) > 0)?$expwin1 - (($player->level - $huntmonsterlevel) * 3):$expwin1 + (($player->level - $huntmonsterlevel) * 3);
 			$expwin2 = ($expwin2 <= 0)?1:$expwin2;
 			$expwin3 = round(0.5 * $expwin2);
-			$expwin = rand($expwin3, $expwin2);
+			$expwin = random_int(intval($expwin3), intval($expwin2));
 			$goldwin = round(0.9 * $expwin);
 			if ($setting->eventoouro > time()){
 				$goldwin = round($goldwin * 2);

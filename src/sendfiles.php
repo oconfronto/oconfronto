@@ -5,18 +5,19 @@ include(__DIR__ . "/lib.php");
 define("PAGENAME", "Enviar Imagens");
 $msg = "";
 
-if ($setting->allow_upload != t) {
-    $player = check_user($secret_key, $db);
+if ($setting->allow_upload != "t") {
+    $player = check_user($db);
     include(__DIR__ . "/templates/private_header.php");
     echo "O envio de imagens está desativado no momento. <a href=\"home.php\">Voltar</a>.";
     include(__DIR__ . "/templates/private_footer.php");
     exit;
 }
+
 if ($_POST['upload'] && $_FILES["foto"]) {
-    $erro = array();
-    $config = array();
+    $erro = [];
+    $config = [];
     // Prepara a variável do arquivo
-    $arquivo = isset($_FILES["foto"]) ? $_FILES["foto"] : FALSE;
+    $arquivo = $_FILES["foto"] ?? FALSE;
     // Tamanho máximo do arquivo (em bytes)
     $config["tamanho"] = 1048576;
     // Largura máxima (pixels)
@@ -70,15 +71,15 @@ if ($_POST['upload'] && $_FILES["foto"]) {
             // Faz o upload da imagem
             move_uploaded_file($arquivo["tmp_name"], $imagem_dir);
             if ($_GET['avatar']) {
-                $player = check_user($secret_key, $db);
-                $db->execute("update `players` set `avatar`=? where `id`=?", array($imagem_dir, $player->id));
+                $player = check_user($db);
+                $db->execute("update `players` set `avatar`=? where `id`=?", [$imagem_dir, $player->id]);
                 header("Location: avatar.php?success=true");
                 exit;
             }
 
             if ($_GET['cla']) {
-                $player = check_user($secret_key, $db);
-                $db->execute("update `guilds` set `img`=? where `id`=?", array($imagem_dir, $player->guild));
+                $player = check_user($db);
+                $db->execute("update `guilds` set `img`=? where `id`=?", [$imagem_dir, $player->guild]);
                 header("Location: guild_admin.php?success=true");
                 exit;
             }
@@ -95,6 +96,7 @@ if ($_POST['upload'] && $_FILES["foto"]) {
         }
     }
 }
+
 if ($_GET['avatar']) {
     header("Location: avatar.php?msg=error");
     exit;
@@ -104,19 +106,16 @@ if ($_GET['cla']) {
     header("Location: guild_admin.php?msg=error");
     exit;
 }
-else {
-    $player = check_user($secret_key, $db);
-    include(__DIR__ . "/templates/private_header.php");
 
-    echo "<fieldset>";
-    echo "<legend><b>Enviar Imagens</b></legend>";
-    echo '<form action="sendfiles.php" method="post" enctype="multipart/form-data">';
-    echo '<input type="file" name="foto" size="30"><input type="submit" name="upload" value="Enviar">';
-    echo "</form>";
-    echo "</fieldset>";
-    echo "<font size=\"1\">Aqui você pode enviar imagens para usar como avatar, no fórum, no perfil, etc.</font><br/><br/>";
-
-    echo $msg;
-    include(__DIR__ . "/templates/private_footer.php");
-}
+$player = check_user($db);
+include(__DIR__ . "/templates/private_header.php");
+echo "<fieldset>";
+echo "<legend><b>Enviar Imagens</b></legend>";
+echo '<form action="sendfiles.php" method="post" enctype="multipart/form-data">';
+echo '<input type="file" name="foto" size="30"><input type="submit" name="upload" value="Enviar">';
+echo "</form>";
+echo "</fieldset>";
+echo "<font size=\"1\">Aqui você pode enviar imagens para usar como avatar, no fórum, no perfil, etc.</font><br/><br/>";
+echo $msg;
+include(__DIR__ . "/templates/private_footer.php");
 ?>

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Concentração do Clã");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/bbcode.php");
 include(__DIR__ . "/checkbattle.php");
 
@@ -11,7 +11,7 @@ $guildonline = 0;
 include(__DIR__ . "/checkguild.php");
 
 //Populates $guild variable
-$query = $db->execute("select * from `guilds` where `id`=?", array($player->guild));
+$query = $db->execute("select * from `guilds` where `id`=?", [$player->guild]);
 
 if ($query->recordcount() == 0) {
     header("Location: home.php");
@@ -22,11 +22,11 @@ if ($query->recordcount() == 0) {
 if ($_GET['act'] == 'showmsg'){
 	header('Content-type: text/html; charset=utf-8');
 
-		$countmsgs = $db->execute("select * from `user_chat` where `guild`=? order by `time` asc", array($player->guild));
+		$countmsgs = $db->execute("select * from `user_chat` where `guild`=? order by `time` asc", [$player->guild]);
 
 		$orda = $countmsgs->recordcount() >= 13 ? $countmsgs->recordcount() - 13 : 0;
 
-		$getmsgs = $db->execute("select * from `user_chat` where `guild`=? order by `time` asc limit ?, ?", array($player->guild, $orda, $countmsgs->recordcount()));
+		$getmsgs = $db->execute("select * from `user_chat` where `guild`=? order by `time` asc limit ?, ?", [$player->guild, $orda, $countmsgs->recordcount()]);
 
 			if ($getmsgs->recordcount() == 0) {
 				echo '<font size="1"><center><b>Nenhuma mensagem recente.</center></font>';
@@ -103,7 +103,7 @@ echo '<table width="100%">';
 	$checkonne = $db->execute("select `player_id` from `user_online`");
 	while($online = $checkonne->fetchrow())
 	{
-	$getname = $db->execute("select `username` from `players` where `id`=? and `guild`=? order by `username` asc", array($online['player_id'], $guild['id']));
+	$getname = $db->execute("select `username` from `players` where `id`=? and `guild`=? order by `username` asc", [$online['player_id'], $guild['id']]);
 		while($member = $getname->fetchrow())
 		{
 		echo '<a href="profile.php?id=' . $member['username'] . '">';

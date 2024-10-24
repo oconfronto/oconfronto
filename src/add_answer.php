@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Principal");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 include(__DIR__ . "/checkforum.php");
 include(__DIR__ . "/templates/private_header.php");
@@ -19,7 +19,7 @@ if (!$_POST['a_answer']) {
             exit;
 }
 
-$fecxhado = $db->GetOne("select `closed` from `forum_question` where `id`=?", array($id));
+$fecxhado = $db->GetOne("select `closed` from `forum_question` where `id`=?", [$id]);
 if ($fecxhado['closed'] == 't'){
 		echo "<fieldset><legend><b>Erro</b></legend>Este tópico está fechado.<BR>";
 		echo "<a href='view_topic.php?id=".$id."'>Voltar</a></fieldset>";
@@ -27,7 +27,7 @@ if ($fecxhado['closed'] == 't'){
             exit;
 }
 
-$foruminfo = $db->execute("select * from `forum_question` where `id`=?", array($id));
+$foruminfo = $db->execute("select * from `forum_question` where `id`=?", [$id]);
 if ($foruminfo->recordcount() != 1){
 		echo "<fieldset><legend><b>Erro</b></legend>Este tópico não existe.<BR>";
 		echo "<a href='select_forum.php'>Voltar</a></fieldset>";
@@ -36,8 +36,8 @@ if ($foruminfo->recordcount() != 1){
 }
 
 
-$categoryae = $db->GetOne("select `category` from `forum_question` where `id`=?", array($id));
-$servae = $db->GetOne("select `serv` from `forum_question` where `id`=?", array($id));
+$categoryae = $db->GetOne("select `category` from `forum_question` where `id`=?", [$id]);
+$servae = $db->GetOne("select `serv` from `forum_question` where `id`=?", [$id]);
 if (($categoryae == 'gangues' || $categoryae == 'trade') && $player->serv != $servae){
 		echo "<fieldset><legend><b>Erro</b></legend>Você não pode postar aqui.<BR>";
 		echo "<a href='select_forum.php'>Voltar</a></fieldset>";
@@ -47,8 +47,8 @@ if (($categoryae == 'gangues' || $categoryae == 'trade') && $player->serv != $se
 
 // Find highest answer number.
 $sql=sprintf("SELECT MAX(a_id) AS Maxa_id FROM %s WHERE question_id='%s'", $tbl_name, $id);
-$result=mysql_query($sql);
-$rows=mysql_fetch_array($result);
+$result=$db->execute($sql);
+$rows=$result->fetchrow();
 
 // add + 1 to highest answer number and keep it in variable name "$Max_id". if there no answer yet set it = 1
 $Max_id = $rows ? $rows['Maxa_id']+1 : 1;
@@ -65,14 +65,14 @@ $datetime=date("d/m/y H:i:s");
 
 // Insert answer
 $sql2=sprintf("INSERT INTO %s(question_id, a_id, a_user_id, a_answer, a_datetime)VALUES('%s', '%s', '%s', '%s', '%d')", $tbl_name, $id, $Max_id, $player->id, $texto, $time);
-$sql4 = $db->execute("update `forum_question` set `last_post`=?, `last_post_date`=? where `id`=?", array(time(), $datetime, $id));
-$sql5 = $db->execute("update `players` set `posts`=`posts`+1 where `id`=?", array($player->id));
-$result2=mysql_query($sql2);
+$sql4 = $db->execute("update `forum_question` set `last_post`=?, `last_post_date`=? where `id`=?", [time(), $datetime, $id]);
+$sql5 = $db->execute("update `players` set `posts`=`posts`+1 where `id`=?", [$player->id]);
+$result2=$db->execute($sql2);
 
 if($result2){
 echo "<fieldset><legend><b>Sucesso</b></legend>Mensagem enviada com sucesso!<BR>";
 
-	$total_answers = $db->execute("select `a_id` from `forum_answer` where `question_id`=?", array($id));
+	$total_answers = $db->execute("select `a_id` from `forum_answer` where `question_id`=?", [$id]);
 	$pagenumber = ceil($total_answers->recordcount() / 5);
 	if ($pagenumber < 1){
 		$pagenumber = 1;
@@ -83,7 +83,7 @@ echo '<a href="view_topic.php?page=' . $pagenumber . "&id=" . $id . '">Visualiza
 // If added new answer, add value +1 in reply column
 $tbl_name2="forum_question";
 $sql3=sprintf("UPDATE %s SET reply='%s' WHERE id='%s'", $tbl_name2, $Max_id, $id);
-$result3=mysql_query($sql3);
+$result3=$db->execute($sql3);
 
 }
 else {
@@ -91,7 +91,6 @@ echo "<fieldset><legend><b>Erro</b></legend>Um erro inesperado ocorreu.<BR>";
 echo "<a href=select_forum.php>Voltar</a></fieldset>";
 }
 
-mysql_close();
 ?>
 <?php
 include(__DIR__ . "/templates/private_footer.php");

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Editar perfil");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 $error = 0;
 
@@ -30,10 +30,10 @@ if ($_POST['submit1']) {
 
 	$premiacao = $_POST['winid'] > 0 && $_POST['winid'] < 1000 ? $_POST['winid'] : $_POST['winid2'];
 
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['endlotto'], end_lotto_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($premiacao, win_id_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['preco'], lottery_price_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array(t, lottery_1));
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['endlotto'], "end_lotto_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$premiacao, "win_id_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['preco'], "lottery_price_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", ["t", "lottery_1"]);
 
         $msg1 .= "Você começou uma loteria com sucesso.<br/><a href=\"eventos.php\">Voltar</a>.";
     }
@@ -57,10 +57,10 @@ elseif ($_POST['submit2']) {
 
 	$premiacao = $_POST['winid'] > 0 && $_POST['winid'] < 1000 ? $_POST['winid'] : $_POST['winid2'];
 
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['endlotto'], end_lotto_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($premiacao, win_id_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['preco'], lottery_price_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array(t, lottery_2));
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['endlotto'], "end_lotto_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$premiacao, "win_id_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['preco'], "lottery_price_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", ["t", "lottery_2"]);
 
         $msg1 .= "Você começou uma loteria com sucesso.<br/><a href=\"eventos.php\">Voltar</a>.";
     }
@@ -106,56 +106,56 @@ elseif ($_POST['submit3']) {
 
     if ($error == 0) {
 
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['endtour'], end_tour_1_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['endtour'], end_tour_2_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['endtour'], end_tour_3_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['endtour'], end_tour_4_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['endtour'], end_tour_5_1));
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['endtour'], "end_tour_1_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['endtour'], "end_tour_2_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['endtour'], "end_tour_3_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['endtour'], "end_tour_4_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['endtour'], "end_tour_5_1"]);
 
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['endtour'], end_tour_1_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['endtour'], end_tour_2_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['endtour'], end_tour_3_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['endtour'], end_tour_4_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['endtour'], end_tour_5_2));
-
-
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['premo1'], tour_win_1_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['premo2'], tour_win_2_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['premo3'], tour_win_3_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['premo4'], tour_win_4_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['premo5'], tour_win_5_1));
-
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['premo1'], tour_win_1_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['premo2'], tour_win_2_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['premo3'], tour_win_3_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['premo4'], tour_win_4_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['premo5'], tour_win_5_2));
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['endtour'], "end_tour_1_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['endtour'], "end_tour_2_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['endtour'], "end_tour_3_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['endtour'], "end_tour_4_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['endtour'], "end_tour_5_2"]);
 
 
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['preco1'], tour_price_1_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['preco2'], tour_price_2_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['preco3'], tour_price_3_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['preco4'], tour_price_4_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['preco5'], tour_price_5_1));
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['premo1'], "tour_win_1_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['premo2'], "tour_win_2_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['premo3'], "tour_win_3_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['premo4'], "tour_win_4_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['premo5'], "tour_win_5_1"]);
 
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['preco1'], tour_price_1_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['preco2'], tour_price_2_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['preco3'], tour_price_3_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['preco4'], tour_price_4_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array($_POST['preco5'], tour_price_5_2));
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['premo1'], "tour_win_1_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['premo2'], "tour_win_2_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['premo3'], "tour_win_3_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['premo4'], "tour_win_4_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['premo5'], "tour_win_5_2"]);
 
 
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array(t, tournament_1_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array(t, tournament_2_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array(t, tournament_3_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array(t, tournament_4_1));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array(t, tournament_5_1));
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['preco1'], "tour_price_1_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['preco2'], "tour_price_2_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['preco3'], "tour_price_3_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['preco4'], "tour_price_4_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['preco5'], "tour_price_5_1"]);
 
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array(t, tournament_1_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array(t, tournament_2_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array(t, tournament_3_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array(t, tournament_4_2));
-	$query = $db->execute("update `settings` set `value`=? where `name`=?", array(t, tournament_5_2));
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['preco1'], "tour_price_1_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['preco2'], "tour_price_2_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['preco3'], "tour_price_3_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['preco4'], "tour_price_4_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", [$_POST['preco5'], "tour_price_5_2"]);
+
+
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", ["t", "tournament_1_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", ["t", "tournament_2_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", ["t", "tournament_3_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", ["t", "tournament_4_1"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", ["t", "tournament_5_1"]);
+
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", ["t", "tournament_1_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", ["t", "tournament_2_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", ["t", "tournament_3_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", ["t", "tournament_4_2"]);
+	$query = $db->execute("update `settings` set `value`=? where `name`=?", ["t", "tournament_5_2"]);
 
         $msg2 .= "Você começou um torneio com sucesso.<br/><a href=\"eventos.php\">Voltar</a>.";
     }
@@ -166,7 +166,7 @@ elseif ($_POST['submit3']) {
 <fieldset>
 <legend><b>Adicionar Loteria - Servidor 1</b></legend>
 <?php
-if ($setting->lottery_1 != t){
+if ($setting->lottery_1 != "t"){
 ?>
 <table width="100%">
 <form method="POST" action="eventos.php">
@@ -177,7 +177,7 @@ if ($setting->lottery_1 != t){
 $itemsid = $db->execute("select `id`, `name` from `blueprint_items`");
 echo '<select name="winid"><option value="0">Selecione</option>';
 while($result = $itemsid->fetchrow()){
-echo sprintf('<option value="%s">%s</option>', $result[id], $result[name]);
+echo sprintf('<option value="%s">%s</option>', $result["id"], $result["name"]);
 }
 ?>
 </td></tr>
@@ -202,7 +202,7 @@ echo "<br/><center><b>A loteria está acontecendo neste momento.</b></center>";
 <fieldset>
 <legend><b>Adicionar Loteria - Servidor 2</b></legend>
 <?php
-if ($setting->lottery_2 != t){
+if ($setting->lottery_2 != "t"){
 ?>
 <table width="100%">
 <form method="POST" action="eventos.php">
@@ -213,7 +213,7 @@ if ($setting->lottery_2 != t){
 $itemsid = $db->execute("select `id`, `name` from `blueprint_items`");
 echo '<select name="winid"><option value="0">Selecione</option>';
 while($result = $itemsid->fetchrow()){
-echo sprintf('<option value="%s">%s</option>', $result[id], $result[name]);
+echo sprintf('<option value="%s">%s</option>', $result["id"], $result["name"]);
 }
 ?>
 </td></tr>
@@ -238,7 +238,7 @@ echo "<br/><center><b>A loteria está acontecendo neste momento.</b></center>";
 <fieldset>
 <legend><b>Adicionar Torneio</b></legend>
 <?php
-if ($setting->tournament_1_1 != t){
+if ($setting->tournament_1_1 != "t"){
 ?>
 <table width="100%">
 <form method="POST" action="eventos.php">

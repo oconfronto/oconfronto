@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Loteria");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
@@ -17,23 +17,23 @@ $unc6 = "lottery_tic_" . $player->serv . "";
 $unc7 = "lottery_premio_" . $player->serv . "";
 $unc8 = "lotto_" . $player->serv . "";
 
-if ($setting->$unc3 == t)
+if ($setting->$unc3 == "t")
 {
 
 	if (time() > $setting->$unc5){
 
 	$query = $db->execute(sprintf("update `settings` set `value`='f' where `name`='%s'", $unc3));
 
-	$wpaodsla = $db->execute("select * from `lotto` where `serv`=? order by RAND() limit 1", array($player->serv));
+	$wpaodsla = $db->execute("select * from `lotto` where `serv`=? order by RAND() limit 1", [$player->serv]);
 	$ipwpwpwpa = $wpaodsla->fetchrow();
 
 	if ($setting->$unc2 > 1000){
-	$query = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", array($setting->$unc2, $ipwpwpwpa['player_id']));
+	$query = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", [$setting->$unc2, $ipwpwpwpa['player_id']]);
 		$logmsg = "Você ganhou na loteria e <b>" . $setting->$unc2 . " de ouro</b> foram depositados na sua conta bancária.";
 		addlog($ipwpwpwpa['player_id'], $logmsg, $db);
 		$premiorecebido = "" . $setting->$unc2 . " de ouro";
 	}else{
-	$itotuuejdb = $db->execute("select `name` from `blueprint_items` where id=?", array($setting->$unc2));
+	$itotuuejdb = $db->execute("select `name` from `blueprint_items` where id=?", [$setting->$unc2]);
 	$ioeowkewttttee = $itotuuejdb->fetchrow();
 
 		$insert['player_id'] = $ipwpwpwpa['player_id'];
@@ -41,7 +41,7 @@ if ($setting->$unc3 == t)
 		$query = $db->autoexecute('items', $insert, 'INSERT');
 		if ($setting->$unc2 == 172){
 			$ringid = $db->Insert_ID();
-			$db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", array(40, 30, 40, 30, $ringid));
+			$db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", [40, 30, 40, 30, $ringid]);
 		}
 
 		$logmsg = "Você ganhou na loteria e recebeu um/uma <b>" . $ioeowkewttttee['name'] . "</b>.";
@@ -49,7 +49,7 @@ if ($setting->$unc3 == t)
 		$premiorecebido = $ioeowkewttttee['name'];
 	}
 
-$medalha7 = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=?", array($ipwpwpwpa['player_id'], Sortudo));
+$medalha7 = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=?", [$ipwpwpwpa['player_id'], "sortudo"]);
 if ($medalha7->recordcount() < 1) {
 	$insert['player_id'] = $ipwpwpwpa['player_id'];   	  
 	$insert['medalha'] = "Sortudo";
@@ -62,15 +62,15 @@ if ($medalha7->recordcount() < 1) {
 		$query = $db->autoexecute('log_friends', $insert, 'INSERT');
 }
 
-	$peoeajjwwa = $db->execute("select `username` from `players` where `id`=?", array($ipwpwpwpa['player_id']));
+	$peoeajjwwa = $db->execute("select `username` from `players` where `id`=?", [$ipwpwpwpa['player_id']]);
 	$totkooowowow = $peoeajjwwa->fetchrow();
 
 
-	$query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc1), array($totkooowowow['username']));
-	$query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc7), array($premiorecebido));
+	$query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc1), [$totkooowowow['username']]);
+	$query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc7), [$premiorecebido]);
 	$query = $db->execute(sprintf("update `settings` set `value`=0 where `name`='%s'", $unc6));
 	$query = $db->execute(sprintf("update `settings` set `value`=0 where `name`='%s'", $unc5));
-	$query = $db->execute("delete from `lotto` where `serv`=?", array($player->serv));
+	$query = $db->execute("delete from `lotto` where `serv`=?", [$player->serv]);
 
 	header("Location: lottery.php");
 	exit;
@@ -113,15 +113,17 @@ if ($medalha7->recordcount() < 1) {
 		$error = 1;
 		exit;
 		}
-  $query = $db->execute("update `players` set `gold`=? where `id`=?", array($player->gold - $total, $player->id));
-  $query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc6), array($setting->$unc6 + $_POST['amount']));
+
+  $query = $db->execute("update `players` set `gold`=? where `id`=?", [$player->gold - $total, $player->id]);
+  $query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc6), [$setting->$unc6 + $_POST['amount']]);
   $num = $_POST['amount'];
   $sql = "INSERT INTO lotto (player_id, serv) VALUES";
   for ($i = 0; $i < $num; ++$i)
 		{
 		    $sql .= sprintf('(%s, %s)', $player->id, $player->serv) . (($i == $num - 1) ? "" : ", ");
 		}
-  $result=mysql_query($sql);
+
+  $result=$db->execute($sql);
   include(__DIR__ . "/templates/private_header.php");
   echo "Você comprou " . $_POST['amount'] . " ticket(s) por " . $total . ' de ouro. <a href="lottery.php">Voltar</a>.';
   include(__DIR__ . "/templates/private_footer.php");
@@ -132,7 +134,7 @@ if ($medalha7->recordcount() < 1) {
 	include(__DIR__ . "/templates/private_header.php");
 
 	if ($setting->$unc2 < 1000){
-	$itcheckedcheckondb = $db->execute("select name, description, type, effectiveness, img, voc, needpromo, needring, needlvl from `blueprint_items` where id=?", array($setting->$unc2));
+	$itcheckedcheckondb = $db->execute("select name, description, type, effectiveness, img, voc, needpromo, needring, needlvl from `blueprint_items` where id=?", [$setting->$unc2]);
 	$itchecked = $itcheckedcheckondb->fetchrow();
 	$premio = $itchecked['name'];
 	$premiotype = 1;
@@ -186,6 +188,7 @@ if ($medalha7->recordcount() < 1) {
     	}else{
     	echo "<table width=\"100%\">\n";
     	}
+
      echo '<tr><td width="5%">';
      echo '<img src="static/images/itens/' . $itchecked['img'] . '"/>';
      echo '</td><td width="68%">' . $itchecked['description'] . "<br />";
@@ -204,6 +207,7 @@ if ($medalha7->recordcount() < 1) {
     	}else{
     	echo "Defesa: ";
     	}
+
      echo "</b>";
      echo $itchecked['effectiveness'];
      echo '<td width="30%">';
@@ -239,6 +243,7 @@ if ($medalha7->recordcount() < 1) {
      else{
      echo "Todas";
      }
+
      echo "</td>";
      echo "</tr>";
      echo "</table>";
@@ -246,10 +251,12 @@ if ($medalha7->recordcount() < 1) {
      {
      echo "<center><b><font color=\"red\">Você precisa ter nível " . $itchecked['needlvl'] . " ou mais para usar este item.</font></b></center>";
      }
+
      if ($itchecked['needring'] == 't')
      {
      echo "<center><b><font color=\"red\">Para usar este item você precisa estar usando um Jeweled Ring.</font></b></center>";
      }
+
      echo "</fieldset>";
  }
  
@@ -260,12 +267,13 @@ if ($medalha7->recordcount() < 1) {
 	echo "</form>";
 	echo "</fieldset>";
 
-	$getlottocount = $db->execute("select `id` from `lotto` where `player_id`=?", array($player->id));
+	$getlottocount = $db->execute("select `id` from `lotto` where `player_id`=?", [$player->id]);
 	echo " <b>Cada ticket custa:</b> " . $setting->$unc4 . " de ouro | <b>Você já comprou:</b> " . $getlottocount->recordcount() . " tickets.";
 
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 	}
+
 include(__DIR__ . "/templates/private_header.php");
 echo "<fieldset><legend><b>A loteria está fechada</b></legend>\n";
 echo "<table>";

@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Alterar Senha");
-$acc = check_acc($secret_key, $db);
-$player = check_user($secret_key, $db);
+$acc = check_acc($db);
+$player = check_user($db);
 
 $sucess2 = 0;
 $error2 = 0;
@@ -12,7 +12,7 @@ $error2 = 0;
 include(__DIR__ . "/templates/private_header.php");
 
 
-if ($player->transpass != f){
+if ($player->transpass != "f"){
 if ($_POST['changetrans']) {
     //Check trans
     if (!$_POST['trans']) {
@@ -53,7 +53,7 @@ if ($_POST['changetrans']) {
 		$insert['time'] = time();
 		$query = $db->autoexecute('account_log', $insert, 'INSERT');
 
-        $query = $db->execute("update `players` set `transpass`=? where `id`=?", array($_POST['trans'], $player->id));
+        $query = $db->execute("update `players` set `transpass`=? where `id`=?", [$_POST['trans'], $player->id]);
         echo "<fieldset><legend><b>Sucesso</b></legend>Você alterou sua senha de transferência.<br/><a href=\"home.php\">Voltar</a>.</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;

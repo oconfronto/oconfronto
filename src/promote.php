@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Missões");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
@@ -58,7 +58,7 @@ switch ($_GET['act']) {
 		break;
 
 	case "confirmpay":
-		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 1));
+		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 1]);
 		if ($verificacao->recordcount() == 0) {
 			if ($player->gold - 80000 < 0) {
 				include(__DIR__ . "/templates/private_header.php");
@@ -69,7 +69,8 @@ switch ($_GET['act']) {
 				include(__DIR__ . "/templates/private_footer.php");
 				exit;
 			}
-   $query = $db->execute("update `players` set `gold`=? where `id`=?", array($player->gold - 80000, $player->id));
+
+   $query = $db->execute("update `players` set `gold`=? where `id`=?", [$player->gold - 80000, $player->id]);
    $insert['player_id'] = $player->id;
    $insert['quest_id'] = 1;
    $insert['quest_status'] = 1;
@@ -82,6 +83,7 @@ switch ($_GET['act']) {
    include(__DIR__ . "/templates/private_footer.php");
    exit;
 		}
+
   include(__DIR__ . "/templates/private_header.php");
   echo "<fieldset><legend><b>Treinador</b></legend>\n";
   echo "Você já nos pagou esta taixa!</i><br/><br/>\n";
@@ -89,11 +91,9 @@ switch ($_GET['act']) {
   echo "</fieldset>";
   include(__DIR__ . "/templates/private_footer.php");
   exit;
-  
-		break;
 
 	case "continue1":
-		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 1));
+		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 1]);
 		$statux = $verificacao->fetchrow();
 
 		if ($verificacao->recordcount() == 0) {
@@ -117,7 +117,7 @@ switch ($_GET['act']) {
 		}
 
 
-		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", array($player->id, 107));
+		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", [$player->id, 107]);
 		if ($selectfirstitem->recordcount() == 0) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Treinador</b></legend>\n";
@@ -127,8 +127,9 @@ switch ($_GET['act']) {
 			include(__DIR__ . "/templates/private_footer.php");
 			exit;
 		}
-  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(2, $player->id, 1));
-  $query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", array(107, $player->id, 1));
+
+  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [2, $player->id, 1]);
+  $query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", [107, $player->id, 1]);
   include(__DIR__ . "/templates/private_header.php");
   echo "<fieldset><legend><b>Treinador</b></legend>\n";
   echo "<i>Obrigado, agora podemos passar para a segunda missão.</i><br>\n";
@@ -139,7 +140,7 @@ switch ($_GET['act']) {
 		break;
 
 	case "continue2":
-		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 1));
+		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 1]);
 		$statux = $verificacao->fetchrow();
 
 		if ($verificacao->recordcount() == 0) {
@@ -163,7 +164,7 @@ switch ($_GET['act']) {
 		}
 
 
-		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", array($player->id, 108));
+		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", [$player->id, 108]);
 		if ($selectfirstitem->recordcount() == 0) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Treinador</b></legend>\n";
@@ -173,8 +174,9 @@ switch ($_GET['act']) {
 			include(__DIR__ . "/templates/private_footer.php");
 			exit;
 		}
-  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(3, $player->id, 1));
-  $query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", array(108, $player->id, 1));
+
+  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [3, $player->id, 1]);
+  $query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", [108, $player->id, 1]);
   include(__DIR__ . "/templates/private_header.php");
   echo "<fieldset><legend><b>Treinador</b></legend>\n";
   echo "<i>Obrigado, agora podemos passar para a terceira missão.</i><br>\n";
@@ -185,7 +187,7 @@ switch ($_GET['act']) {
 		break;
 
 	case "continue3":
-		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 1));
+		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 1]);
 		$statux = $verificacao->fetchrow();
 
 		if ($verificacao->recordcount() == 0) {
@@ -209,7 +211,7 @@ switch ($_GET['act']) {
 		}
 
 
-		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", array($player->id, 110));
+		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", [$player->id, 110]);
 		if ($selectfirstitem->recordcount() == 0) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Treinador</b></legend>\n";
@@ -219,8 +221,9 @@ switch ($_GET['act']) {
 			include(__DIR__ . "/templates/private_footer.php");
 			exit;
 		}
-  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(4, $player->id, 1));
-  $query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", array(110, $player->id, 1));
+
+  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [4, $player->id, 1]);
+  $query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", [110, $player->id, 1]);
   include(__DIR__ . "/templates/private_header.php");
   echo "<fieldset><legend><b>Treinador</b></legend>\n";
   echo "<i>Obrigado, agora podemos passar para a ultima missão.</i><br>\n";
@@ -231,7 +234,7 @@ switch ($_GET['act']) {
 		break;
 
 	case "continue4":
-		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 1));
+		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 1]);
 		$statux = $verificacao->fetchrow();
 
 		if ($verificacao->recordcount() == 0) {
@@ -255,7 +258,7 @@ switch ($_GET['act']) {
 		}
 
 
-		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", array($player->id, 109));
+		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", [$player->id, 109]);
 		if ($selectfirstitem->recordcount() == 0) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Treinador</b></legend>\n";
@@ -265,9 +268,10 @@ switch ($_GET['act']) {
 			include(__DIR__ . "/templates/private_footer.php");
 			exit;
 		}
-  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(90, $player->id, 1));
-  $query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", array(109, $player->id, 1));
-  $query = $db->execute("update `players` set `promoted`=? where `id`=?", array('t', $player->id));
+
+  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [90, $player->id, 1]);
+  $query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", [109, $player->id, 1]);
+  $query = $db->execute("update `players` set `promoted`=? where `id`=?", ['t', $player->id]);
   include(__DIR__ . "/templates/private_header.php");
   echo "<fieldset><legend><b>Treinador</b></legend>\n";
   echo "<i>Pronto! Você me provou que é um ótimo guerreiro, e como eu tinha lhe prometido, <b>estou te promovendo para {$futuravocacao}!</b></i><br><br>\n";
@@ -283,7 +287,7 @@ switch ($_GET['act']) {
 <?php
 
 //dialogo e processos da quest.
-$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 1));
+$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 1]);
 $quest = $verificacao->fetchrow();
 
 if ($verificacao->recordcount() == 0) {

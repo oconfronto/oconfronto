@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Inventário");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
@@ -20,7 +20,7 @@ include(__DIR__ . "/includes/actions/transfer-items.php");
 include(__DIR__ . "/templates/private_header.php");
 
 if ($_GET['sellit']) {
-	$query = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.img, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", array($player->id, $_GET['sellit']));
+	$query = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.img, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", [$player->id, $_GET['sellit']]);
 
 	if ($query->recordcount() > 0) {
 		$sell = $query->fetchrow(); //Get item info
@@ -65,11 +65,11 @@ if ($_GET['sellit']) {
 		echo "</div>";
 	} elseif ($_GET['sellit'] > 0 && $_GET['comfirm'] == true) {
 		if ($sell['mark'] == 't') {
-			$db->execute("delete from `market` where `market_id`=?", array($_GET['sellit']));
+			$db->execute("delete from `market` where `market_id`=?", [$_GET['sellit']]);
 		}
 
-		$db->execute("delete from `items` where `id`=?", array($_GET['sellit']));
-		$db->execute("update `players` set `gold`=`gold`+? where `id`=?", array($valordavenda, $player->id));
+		$db->execute("delete from `items` where `id`=?", [$_GET['sellit']]);
+		$db->execute("update `players` set `gold`=`gold`+? where `id`=?", [$valordavenda, $player->id]);
 
 		echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
@@ -80,7 +80,7 @@ if ($_GET['sellit']) {
 }
 
 if ($_GET['mature']) {
-	$querymature = $db->execute("select items.id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.img, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", array($player->id, $_GET['mature']));
+	$querymature = $db->execute("select items.id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.img, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", [$player->id, $_GET['mature']]);
 
 	if ($querymature->recordcount() > 0) {
 		$mature = $querymature->fetchrow();
@@ -156,8 +156,8 @@ if ($_GET['mature']) {
 				$extramana = 0;
 			}
 
-			$db->execute("update `items` set `item_bonus`=? where `id`=?", array($mature['item_bonus'] + 1, $mature['id']));
-			$db->execute("update `players` set `hp`=`hp`+?, `maxhp`=`maxhp`+?, `mana`=`mana`+?, `maxmana`=`maxmana`+?, `extramana`=`extramana`+?, `gold`=`gold`-? where `id`=?", array($addhp, $addhp, $extramana, $extramana, $extramana, $precol, $player->id));
+			$db->execute("update `items` set `item_bonus`=? where `id`=?", [$mature['item_bonus'] + 1, $mature['id']]);
+			$db->execute("update `players` set `hp`=`hp`+?, `maxhp`=`maxhp`+?, `mana`=`mana`+?, `maxmana`=`maxmana`+?, `extramana`=`extramana`+?, `gold`=`gold`-? where `id`=?", [$addhp, $addhp, $extramana, $extramana, $extramana, $precol, $player->id]);
 
 			echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 			echo '<table width="100%" align="center"><tr>';
@@ -168,9 +168,9 @@ if ($_GET['mature']) {
 	}
 }
 
-$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=4 and `player_id`=?", array($player->id));
+$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=4 and `player_id`=?", [$player->id]);
 if ($tutorial->recordcount() > 0) {
-	$tutorial = $db->execute("select * from `items` where `player_id`=? and `status`='equipped'", array($player->id));
+	$tutorial = $db->execute("select * from `items` where `player_id`=? and `status`='equipped'", [$player->id]);
 	if ($tutorial->recordcount() == 0) {
 		echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">Itens ajudam na sua força e resist&ecirc;ncia.<br/><font size=\"1px\">Voc&ecirc; pode obter itens <u>lutando contra monstros</u> ou <u>comprando-os no ferreiro</u>.</font><br/><br/>Para equipar seu item, arraste sua arma para sua mão esquerda.</td><th><font size=\"1px\"><a href=\"start.php?act=5\">Próximo</a></font></th></tr></table>", "white", "left");
 	} else {
@@ -190,7 +190,7 @@ echo '<tr><td class="sell">Vender</td></tr>';
 echo '<tr><td class="mature">Maturar</td></tr>';
 echo "</table>";
 
-$backpackquery = $db->execute("select items.id, items.tile, items.item_bonus, items.for, items.vit, items.agi, items.res, items.status, blueprint_items.name, blueprint_items.effectiveness, blueprint_items.img, blueprint_items.type, blueprint_items.description, blueprint_items.needlvl, blueprint_items.needpromo from `items`, `blueprint_items` where items.player_id=? and items.status='unequipped' and items.item_id=blueprint_items.id and blueprint_items.type!='potion' and blueprint_items.type!='stone' and items.mark='f' order by items.tile asc limit 55", array($player->id));
+$backpackquery = $db->execute("select items.id, items.tile, items.item_bonus, items.for, items.vit, items.agi, items.res, items.status, blueprint_items.name, blueprint_items.effectiveness, blueprint_items.img, blueprint_items.type, blueprint_items.description, blueprint_items.needlvl, blueprint_items.needpromo from `items`, `blueprint_items` where items.player_id=? and items.status='unequipped' and items.item_id=blueprint_items.id and blueprint_items.type!='potion' and blueprint_items.type!='stone' and items.mark='f' order by items.tile asc limit 55", [$player->id]);
 
 echo '<center><font size="1px"><b>Capacidade:</b> 60</font><br/>';
 echo "<font size=\"1px\"><b>Espaço Restante:</b> ";
@@ -353,16 +353,16 @@ echo "</div>";
 
 echo "<br />";
 
-$query = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=136 and `mark`='f' order by rand()", array($player->id));
+$query = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=136 and `mark`='f' order by rand()", [$player->id]);
 $numerodepocoes = $query->recordcount();
 
-$query2 = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=137 and `mark`='f' order by rand()", array($player->id));
+$query2 = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=137 and `mark`='f' order by rand()", [$player->id]);
 $numerodepocoes2 = $query2->recordcount();
 
-$query3 = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=148 and `mark`='f' order by rand()", array($player->id));
+$query3 = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=148 and `mark`='f' order by rand()", [$player->id]);
 $numerodepocoes3 = $query3->recordcount();
 
-$query4 = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=150 and `mark`='f' order by rand()", array($player->id));
+$query4 = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=150 and `mark`='f' order by rand()", [$player->id]);
 $numerodepocoes4 = $query4->recordcount();
 
 echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
@@ -404,7 +404,7 @@ echo "<br>";
 echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
 echo "<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Enviar itens</b></fieldset>";
 
-$verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `quest_status`=90 and `player_id`=?", array($player->id));
+$verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `quest_status`=90 and `player_id`=?", [$player->id]);
 
 if ($player->level < $setting->activate_level) {
 	echo "<center><p><font size=\"1\">Para poder transferir itens sua conta precisa estar ativa.<br/>Ela será ativada automaticamente quando voc&ecirc; alcançar o nível " . $setting->activate_level . ".</font></p></center>";
@@ -424,7 +424,7 @@ if ($player->level < $setting->activate_level) {
 	echo "<tr><td width=\"40%\">Usuário:</td><td><input autocomplete='off' type=\"text\" name=\"username\" size=\"20\"/></td></tr>";
 	echo '<tr><td width="40%">Item:</td><td>';
 
-	$queoppa = $db->execute("select items.id, items.item_bonus, items.item_id, items.mark, items.for, items.vit, items.agi, items.res, blueprint_items.name from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type!='stone' and blueprint_items.type!='potion' and items.mark='f' order by blueprint_items.type, blueprint_items.name asc", array($player->id));
+	$queoppa = $db->execute("select items.id, items.item_bonus, items.item_id, items.mark, items.for, items.vit, items.agi, items.res, blueprint_items.name from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type!='stone' and blueprint_items.type!='potion' and items.mark='f' order by blueprint_items.type, blueprint_items.name asc", [$player->id]);
 	if ($queoppa->recordcount() == 0) {
 		echo "<b>Voc&ecirc; não possui itens.</b>";
 	} else {

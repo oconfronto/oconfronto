@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Fórum");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 if ($player->gm_rank < 3) {
 	include(__DIR__ . "/templates/private_header.php");
@@ -11,8 +11,9 @@ if ($player->gm_rank < 3) {
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
+
 if ($_GET['answer']) {
-    $query = $db->execute("select `question_id`, `a_user_id`, `a_answer` from `forum_answer` where `id`=?", array($_GET['answer']));
+    $query = $db->execute("select `question_id`, `a_user_id`, `a_answer` from `forum_answer` where `id`=?", [$_GET['answer']]);
     if ($query->recordcount() != 1)
    	{
    		include(__DIR__ . "/templates/private_header.php");
@@ -20,8 +21,9 @@ if ($_GET['answer']) {
    		include(__DIR__ . "/templates/private_footer.php");
    		exit;
    	}
+
     $postagem = $query->fetchrow();
-    $usuario = $db->execute("select * from `players` where `id`=?", array($postagem['a_user_id']));
+    $usuario = $db->execute("select * from `players` where `id`=?", [$postagem['a_user_id']]);
     $usuario = $usuario->fetchrow();
 
     if ($_POST['alert']){
@@ -48,7 +50,7 @@ if ($_GET['answer']) {
   
   			
   
-  			$db->execute("update `players` set `alerts`=`alerts`+? where `id`=?", array($_POST['days'], $usuario['id']));
+  			$db->execute("update `players` set `alerts`=`alerts`+? where `id`=?", [$_POST['days'], $usuario['id']]);
   			$logmsg = "Você foi alertado no fórum em " . strip_tags($_POST['days']) . "%.<br/><b>Motivo:</b> " . strip_tags($_POST['motivo']) . "";
   			addlog($usuario['id'], $logmsg, $db);
   
@@ -61,6 +63,7 @@ if ($_GET['answer']) {
   			exit;
   
   		}
+
     include(__DIR__ . "/templates/private_header.php");
     echo '<b><font size="1px">Selecione o motivo do alerta do post de ' . showName($postagem['a_user_id'], $db, 'off') . ".</font></b><br/>";
     echo "<p><i><center>" . $postagem['a_answer'] . "</center></i></p>";
@@ -74,7 +77,7 @@ if ($_GET['answer']) {
 
 
 if ($_GET['topic']) {
-    $query = $db->execute("select * from `forum_question` where `id`=?", array($_GET['topic']));
+    $query = $db->execute("select * from `forum_question` where `id`=?", [$_GET['topic']]);
     if ($query->recordcount() != 1)
    	{
    		include(__DIR__ . "/templates/private_header.php");
@@ -82,8 +85,9 @@ if ($_GET['topic']) {
    		include(__DIR__ . "/templates/private_footer.php");
    		exit;
    	}
+
     $postagem = $query->fetchrow();
-    $usuario = $db->execute("select * from `players` where `id`=?", array($postagem['user_id']));
+    $usuario = $db->execute("select * from `players` where `id`=?", [$postagem['user_id']]);
     $usuario = $usuario->fetchrow();
 
     if ($_POST['alert']){
@@ -109,7 +113,7 @@ if ($_GET['topic']) {
   			}
   
   
-  			$db->execute("update `players` set `alerts`=`alerts`+? where `id`=?", array($_POST['days'], $usuario['id']));
+  			$db->execute("update `players` set `alerts`=`alerts`+? where `id`=?", [$_POST['days'], $usuario['id']]);
   			$logmsg = "Você foi alertado no fórum em " . strip_tags($_POST['days']) . "%.<br/><b>Motivo:</b> " . strip_tags($_POST['motivo']) . "";
   			addlog($usuario['id'], $logmsg, $db);
   
@@ -122,6 +126,7 @@ if ($_GET['topic']) {
   			exit;
   
   		}
+
     include(__DIR__ . "/templates/private_header.php");
     echo '<b><font size="1px">Selecione o motivo do alerta do post de ' . showName($postagem['user_id'], $db, 'off') . ".</font></b><br/>";
     echo "<p><i><center>" . $postagem['detail'] . "</center></i></p>";
@@ -132,10 +137,9 @@ if ($_GET['topic']) {
     include(__DIR__ . "/templates/private_footer.php");
     exit;
 }
-else {
-	include(__DIR__ . "/templates/private_header.php");
-	echo 'Selecione uma postagem para alertar. <a href="select_forum.php">Voltar</a>.';
-	include(__DIR__ . "/templates/private_footer.php");
-	exit;
-}
+
+include(__DIR__ . "/templates/private_header.php");
+echo 'Selecione uma postagem para alertar. <a href="select_forum.php">Voltar</a>.';
+include(__DIR__ . "/templates/private_footer.php");
+exit;
 ?>

@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Reino");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 $msg = null;
 
-$query = $db->execute("select * from `reinos` where `id`=?", array($player->reino));
+$query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);
 $reino = $query->fetchrow();
 
 if ($reino['imperador'] == $player->id) {
@@ -20,17 +20,19 @@ if ($reino['imperador'] == $player->id) {
   			} elseif ($_POST['tax'] == 20){
   				$tax = '0.02';
   			}
-     $db->execute("update `reinos` set `tax`=? where `id`=?", array($tax, $player->reino));
-     $query = $db->execute("select `id` from `players` where `id`!=? and `reino`=?", array($player->id, $player->reino));
+
+     $db->execute("update `reinos` set `tax`=? where `id`=?", [$tax, $player->reino]);
+     $query = $db->execute("select `id` from `players` where `id`!=? and `reino`=?", [$player->id, $player->reino]);
      while($member = $query->fetchrow()) {
   				$logmsg = "Os impostos do reino foram alterados. A nova taxa agora é de " . $tax . "%.";
   				addlog($member['id'], $logmsg, $db);
   			}
+
      $insert['reino'] = $player->reino;
      $insert['log'] = "Os impostos do reino foram alterados.<br/>A nova taxa agora é de " . $tax . "%.";
      $insert['time'] = time();
      $db->autoexecute('log_reino', $insert, 'INSERT');
-     $query = $db->execute("select * from `reinos` where `id`=?", array($player->reino));
+     $query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);
      $reino = $query->fetchrow();
      $msg = "Taxas atualizadas com sucesso!";
  }
@@ -51,7 +53,7 @@ if ($reino['imperador'] == $player->id) {
 				echo '<font size="1px"><b>Taxa Atual:</b> ' . $reino['tax'] . "%</font>";
 
 				echo '<table width="100%">';
-				$query = $db->execute("select `id` from `players` where `reino`=?", array($player->reino));
+				$query = $db->execute("select `id` from `players` where `reino`=?", [$player->reino]);
 				echo "<tr><td>1000</td><td>equivale à</td><td>" . ceil(1000 * (0.1 * $reino['tax'])) . "</td></tr>";
 				echo "<tr><td>10000</td><td>equivale à</td><td>" . ceil(10000 * (0.1 * $reino['tax'])) . "</td></tr>";
 				echo "<tr><td>100000</td><td>equivale à</td><td>" . ceil(100000 * (0.1 * $reino['tax'])) . "</td></tr>";
@@ -112,5 +114,6 @@ if ($reino['imperador'] == $player->id) {
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
+
 header("Location: home.php");
 ?>

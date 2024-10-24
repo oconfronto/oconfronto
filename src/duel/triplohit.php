@@ -21,8 +21,8 @@ if ($player->mana < $mana){
         $emagia = $luta['p_magia'];
     }
     
-    $pak0 = rand($player->mindmg, $player->maxdmg);
-    $pak1 = rand($player->mindmg, $player->maxdmg);
+    $pak0 = random_int(intval($player->mindmg), intval($player->maxdmg));
+    $pak1 = random_int(intval($player->mindmg), intval($player->maxdmg));
     $totalpak = ceil($pak0 + $pak1);
     
     if ($magia == 1) {
@@ -51,33 +51,33 @@ if ($player->mana < $mana){
         $totalpak = ceil($totalpak / 2);
     }
     
-    $misschance = intval(rand(0, 100));
+    $misschance = intval(random_int(0, 100));
     if ($misschance <= $player->miss || $emagia == 6)
     {
-        $db->execute("update `players` set `mana`=`mana`-? where `id`=?", array($mana, $player->id));
+        $db->execute("update `players` set `mana`=`mana`-? where `id`=?", [$mana, $player->id]);
         array_unshift($duellog, "8, " . $player->username . ", " . $enemy->username . "");
     }else{
         if ($emagia == 10){
             if (($player->hp - $totalpak) < 1){
-                $db->execute("update `players` set `hp`='0', `deadtime`=? where `id`=?", array(time() + $setting->dead_time, $player->id));
+                $db->execute("update `players` set `hp`='0', `deadtime`=? where `id`=?", [time() + $setting->dead_time, $player->id]);
                 $morreu = 5;
             }else{
-                $db->execute("update `players` set `hp`=`hp`-? where `id`=?", array($totalpak, $player->id));
+                $db->execute("update `players` set `hp`=`hp`-? where `id`=?", [$totalpak, $player->id]);
             }
             
             array_unshift($duellog, "10, " . $player->username . ", " . $enemy->username . ", " . $totalpak . "");
         } else {
             if (($enemy->hp - $totalpak) < 1){
-                $db->execute("update `players` set `hp`='0', `deadtime`=? where `id`=?", array(time() + $setting->dead_time, $enemy->id));
+                $db->execute("update `players` set `hp`='0', `deadtime`=? where `id`=?", [time() + $setting->dead_time, $enemy->id]);
                 $matou = 5;
             }else{
-                $db->execute("update `players` set `hp`=`hp`-? where `id`=?", array($totalpak, $enemy->id));
+                $db->execute("update `players` set `hp`=`hp`-? where `id`=?", [$totalpak, $enemy->id]);
             }
             
             array_unshift($duellog, "1, " . $player->username . ", " . $enemy->username . ", " . $totalpak . ", ataque duplo");
         }
         
-        $db->execute("update `players` set `mana`=`mana`-? where `id`=?", array($mana, $player->id));
+        $db->execute("update `players` set `mana`=`mana`-? where `id`=?", [$mana, $player->id]);
     }
 }
 ?>

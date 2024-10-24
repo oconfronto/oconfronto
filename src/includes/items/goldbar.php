@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-$numgoldbars = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=? and `mark`='f'", array($player->id, 157));
+$numgoldbars = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=? and `mark`='f'", [$player->id, 157]);
 if ($numgoldbars->recordcount() > 2){
 
-	$removelmagicgoldbars = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", array(157, $player->id, 3));
+	$removelmagicgoldbars = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", [157, $player->id, 3]);
 
 		$insert['player_id'] = $player->id;
 		$insert['item_id'] = 158;

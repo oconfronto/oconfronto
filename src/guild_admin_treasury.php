@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Administração do Clã");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkguild.php");
 
@@ -20,7 +20,7 @@ $username = ($_POST['username']);
 $amount = floor($_POST['amount']);
 
 //Populates $guild variable
-$query = $db->execute("select * from `guilds` where `id`=?", array($player->guild));
+$query = $db->execute("select * from `guilds` where `id`=?", [$player->guild]);
 
 if ($query->recordcount() == 0) {
     header("Location: home.php");
@@ -38,7 +38,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 
 if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['submit'])) {
 	
-	$query = $db->execute("select * from `players` where `username`=?", array($username));
+	$query = $db->execute("select * from `players` where `username`=?", [$username]);
 	
     if ($query->recordcount() == 0) {
         $errmsg .= "Este usuário não existe!<p />";
@@ -58,8 +58,8 @@ if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['submit'])) {
     			$errmsg .= sprintf('O usuário %s não é membro do clã ', $username). $guild['name'] ."!<p />";
     			$error = 1;
         	} else {
-            	$query = $db->execute("update `guilds` set `gold`=? where `id`=?", array($guild['gold'] - $amount, $player->guild));
-            	$query1 = $db->execute("update `players` set `gold`=? where `username`=?", array($member['gold'] + $amount, $member['username']));
+            	$query = $db->execute("update `guilds` set `gold`=? where `id`=?", [$guild['gold'] - $amount, $player->guild]);
+            	$query1 = $db->execute("update `players` set `gold`=? where `username`=?", [$member['gold'] + $amount, $member['username']]);
             	$logmsg = sprintf('Você recebeu <b>%s</b> de ouro do clã: <b>', $amount). $guild['name'] ."</b>.";
 				addlog($member['id'], $logmsg, $db);
 

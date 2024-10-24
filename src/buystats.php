@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Treinar");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
@@ -18,6 +18,7 @@ if ($player->buystats >= 15)
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
+
 $heal = $player->buystats + 1;
 $cost = $heal * 1500;
 if ($_GET['act'])
@@ -32,8 +33,9 @@ if ($_GET['act'])
 	 		include(__DIR__ . "/templates/private_footer.php");
 			exit;
 		}
- $query = $db->execute("update `players` set `gold`=`gold`-?, `stat_points`=`stat_points`+2, `buystats`=`buystats`+1 where `id`=?", array($cost, $player->id));
- $player = check_user($secret_key, $db);
+
+ $query = $db->execute("update `players` set `gold`=`gold`-?, `stat_points`=`stat_points`+2, `buystats`=`buystats`+1 where `id`=?", [$cost, $player->id]);
+ $player = check_user($db);
  //Get new stats
  include(__DIR__ . "/templates/private_header.php");
  echo "<i>Você ganhou 2 ponto(s) de status!</i>\n";

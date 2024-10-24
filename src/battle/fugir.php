@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-$luck = rand(0, 10);
-$playerdamage = rand($player->mindmg, $player->maxdmg);
-$monsterdamage = rand($enemy->mindmg, $enemy->maxdmg);
+$luck = random_int(0, 10);
+$playerdamage = random_int(intval($player->mindmg), intval($player->maxdmg));
+$monsterdamage = random_int(intval($enemy->mindmg), intval($enemy->maxdmg));
 
 $monsterhp = $bixo->hp / $enemy->hp;
 $monsterhp = ceil($monsterhp * 100);

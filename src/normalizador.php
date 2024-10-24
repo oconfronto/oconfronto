@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 define("PAGENAME", "Erro");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
     if ($player->maxhp != maxHp($db, $player->id, ($player->level - 1), $player->reino, $player->vip)) {
         include(__DIR__ . "/templates/private_header.php");

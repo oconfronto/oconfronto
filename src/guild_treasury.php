@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Tesouro do Clã");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkguild.php");
 
@@ -11,7 +11,7 @@ $error1 = 0;
 $error2 = 0;
 
 //Populates $guild variable
-$query = $db->execute("select * from `guilds` where `id`=?", array($player->guild));
+$query = $db->execute("select * from `guilds` where `id`=?", [$player->guild]);
 if ($query->recordcount() == 0) {
     header("Location: home.php");
 } else {
@@ -32,8 +32,8 @@ if ($_POST['deposit']) {
         $msg1 .= "Você não possui esta quantia de ouro!";
         $error1 = 1;
     } else {
-	$db->execute("update `guilds` set `gold`=`gold`+? where `id`=?", array(floor($_POST['amount']), $player->guild));
-	$db->execute("update `players` set `gold`=`gold`-? where `id`=?", array(floor($_POST['amount']), $player->id));
+	$db->execute("update `guilds` set `gold`=`gold`+? where `id`=?", [floor($_POST['amount']), $player->guild]);
+	$db->execute("update `players` set `gold`=`gold`-? where `id`=?", [floor($_POST['amount']), $player->id]);
 
 		$insert['player_id'] = $player->id;
 		$insert['name1'] = $player->username;
@@ -44,8 +44,8 @@ if ($_POST['deposit']) {
 		$insert['time'] = time();
 		$query = $db->autoexecute('log_gold', $insert, 'INSERT');
 
-		$lider = $db->GetOne("select `id` from `players` where `username`=?", array($guild['leader']));
-		$vice = $db->GetOne("select `id` from `players` where `username`=?", array($guild['vice']));
+		$lider = $db->GetOne("select `id` from `players` where `username`=?", [$guild['leader']]);
+		$vice = $db->GetOne("select `id` from `players` where `username`=?", [$guild['vice']]);
     		$logmsg = sprintf('<b>%s</b> transferiu <b>', $player->username) . floor($_POST['amount']) . " de gold</b> para o clã.";
 		addlog($lider, $logmsg, $db);
 		addlog($vice, $logmsg, $db);
@@ -55,7 +55,7 @@ if ($_POST['deposit']) {
 }
 
 elseif ($_POST['transfer']) {
-$query = $db->execute("select * from `players` where `username`=?", array($_POST['username']));
+$query = $db->execute("select * from `players` where `username`=?", [$_POST['username']]);
 
     if ($query->recordcount() == 0) {
         $msg2 .= "Este usuário não existe!";
@@ -75,8 +75,8 @@ $query = $db->execute("select * from `players` where `username`=?", array($_POST
     } else {
         $member = $query->fetchrow();
 
-            		$db->execute("update `guilds` set `gold`=? where `id`=?", array($guild['gold'] - floor($_POST['amount']), $player->guild));
-            		$db->execute("update `players` set `gold`=? where `username`=?", array($member['gold'] + floor($_POST['amount']), $member['username']));
+            		$db->execute("update `guilds` set `gold`=? where `id`=?", [$guild['gold'] - floor($_POST['amount']), $player->guild]);
+            		$db->execute("update `players` set `gold`=? where `username`=?", [$member['gold'] + floor($_POST['amount']), $member['username']]);
             		$logmsg = "Você recebeu <b>" . floor($_POST['amount']) . "</b> de ouro do clã: <b>". $guild['name'] ."</b>.";
 			addlog($member['id'], $logmsg, $db);
 
@@ -93,8 +93,8 @@ $query = $db->execute("select * from `players` where `username`=?", array($_POST
     	}
 }
 
-$player = check_user($secret_key, $db);
-$query = $db->execute("select * from `guilds` where `id`=?", array($player->guild));
+$player = check_user($db);
+$query = $db->execute("select * from `guilds` where `id`=?", [$player->guild]);
 $guild = $query->fetchrow();
 
 include(__DIR__ . "/templates/private_header.php");

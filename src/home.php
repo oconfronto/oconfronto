@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Principal");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
-$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=90 and `player_id`=?", array($player->id));
+$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=90 and `player_id`=?", [$player->id]);
 if ($tutorial->recordcount() == 0) {
-    $checatutoriallido = $db->execute("select * from `pending` where `pending_id`=2 and `player_id`=?", array($player->id));
+    $checatutoriallido = $db->execute("select * from `pending` where `pending_id`=2 and `player_id`=?", [$player->id]);
     if ($checatutoriallido->recordcount() == 0) {
         $insert['player_id'] = $player->id;
         $insert['pending_id'] = 2;
@@ -26,9 +26,9 @@ include(__DIR__ . "/checktasks.php");
 include(__DIR__ . "/templates/private_header.php");
 include(__DIR__ . "/checkmedals.php");
 
-$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=5 and `player_id`=?", array($player->id));
+$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=5 and `player_id`=?", [$player->id]);
 if ($tutorial->recordcount() > 0) {
-    $tutorial = $db->execute("select * from `magias` where `magia_id`=? and `player_id`=?", array(4, $player->id));
+    $tutorial = $db->execute("select * from `magias` where `magia_id`=? and `player_id`=?", [4, $player->id]);
     if ($tutorial->recordcount() == 0) {
         echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">A cada nível que voc&ecirc; passa, voc&ecirc; ganha 1 <u>ponto místico</u>.<br/><font size=\"1px\">Com os pontos místicos voc&ecirc; pode treinar <u>novos feitiços</u>.</font><br/><br/>Agora, treine o feitiço <b>Cura</b> para continuar.</td><th><font size=\"1px\"><a href=\"start.php?act=6\">Próximo</a></font></th></tr></table>", "white", "left");
     } else {
@@ -39,18 +39,18 @@ if ($tutorial->recordcount() > 0) {
 include(__DIR__ . "/checkquest.php");
 
 //VERIFICANDO ULTIMO ITEM RECEBIDO E NOTIFICANDO //
-if ($query2 = mysql_query(sprintf('select * from `items` where `player_id`= %s and `item_event` = 1', $player->id))) {
-    while ($row = mysql_fetch_array($query2)) {
+if ($query2 = $db->execute(sprintf('select * from `items` where `player_id`= %s and `item_event` = 1', $player->id))) {
+    while ($row = $query2->fetchrow()) {
         $id = $row['id'];
         $item_id = $row['item_id'];
         $item_bonus = $row['item_bonus'];
-        if ($query3 = mysql_query('select * from `blueprint_items` where `id`= ' . $item_id)) {
-            while ($row2 = mysql_fetch_array($query3)) {
+        if ($query3 = $db->execute('select * from `blueprint_items` where `id`= ' . $item_id)) {
+            while ($row2 = $query3->fetchrow()) {
                 $item_name = $row2['name'];
             }
             
             echo showAlert("Você acaba de ganhar o Item <u>" . $item_name . " +" . $item_bonus . "</u> do Evento Convide Amigos, Parabéns !", "green");
-            $db->execute("update `items` set `item_event`=? where `id`=? ", array('0', $id));
+            $db->execute("update `items` set `item_event`=? where `id`=? ", ['0', $id]);
         }
     }
 }
@@ -91,9 +91,9 @@ if ($player->voc == 'archer' && $player->promoted == 'f') {
 echo '</td><th rowspan="4" width="25%">';
 echo '<center><font size="1px">Ranking</font><br/>';
 $sql = "select id from players where gm_rank<10 and serv=" . $player->serv . " order by level desc, exp desc";
-$dados = mysql_query($sql);
+$dados = $db->execute($sql);
 $i = 1;
-while ($linha = mysql_fetch_array($dados)) {
+while ($linha = $dados->fetchrow()) {
     if ($linha['id'] == $player->id) {
         echo '' . $i;
     }
@@ -118,7 +118,7 @@ if ($player->reino == 1) {
 
 echo "</td></tr>";
 
-$nomecla = $db->GetOne("select `name` from `guilds` where `id`=?", array($player->guild));
+$nomecla = $db->GetOne("select `name` from `guilds` where `id`=?", [$player->guild]);
 echo "<tr><td><b>Clã:</b></td><td>";
 if ($nomecla != NULL) {
     echo '<a href="guild_home.php">' . $nomecla . "</a>";
@@ -193,7 +193,7 @@ echo '<br/><table width="100%">';
 echo '<tr><td class="brown" width="100%"><center><b>Estender Mana</b></center></td></tr>';
 echo "<tr>";
 echo '<td class="salmon" height="100px"><div id="maxmana">';
-$magiascount = $db->execute("select * from `magias` where `player_id`=?", array($player->id));
+$magiascount = $db->execute("select * from `magias` where `player_id`=?", [$player->id]);
 if ($magiascount->recordcount() < 11) {
     echo "<br/><br/><center>Apenas jogadores que possuem todas as magias liberadas podem estender sua mana.</center><br/><br/>";
 } else {
@@ -225,7 +225,7 @@ echo '<table width="100%">';
 echo '<tr><td width="50%">';
 echo '<table width="100%">';
 echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Tarefas e Missões</b><img src=\"static/images/help.gif\" title=\"header=[Tarefas] body=[<font size='1px'>Tarefas são maneiras divertidas de se beneficiar no jogo. Apenas siga alguma das tarefas abaixo e seja recompensado com ouro, itens ou até mesmo ponto de experi&ecirc;ncia!</font>]\"></center></td></tr>";
-$gettasks = $db->execute("select * from `tasks` where `needlvl`<=? order by `needlvl` asc", array($player->level));
+$gettasks = $db->execute("select * from `tasks` where `needlvl`<=? order by `needlvl` asc", [$player->level]);
 if ($gettasks->recordcount() < 1) {
     echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa disponível.</font></center></td></tr>";
 } else {
@@ -235,7 +235,7 @@ if ($gettasks->recordcount() < 1) {
         $q .= '<td width="70%"><b>' . $quest['name'] . "</b><br/><i>" . $quest['desc'] . "</i><br/><br/></td>";
 
         //verifica se a missão está disponível ou se foi completa
-        $qStatus = $db->GetOne("select `quest_status` from `quests` where `player_id`=? and `quest_id`=?", array($player->id, $quest['id']));
+        $qStatus = $db->GetOne("select `quest_status` from `quests` where `player_id`=? and `quest_id`=?", [$player->id, $quest['id']]);
         if ($qStatus != 90 && $quest['lvl'] <= $player->level) {
             $mostra = true;
             if ($quest['to_lvl'] < $player->level && $quest['to_lvl'] > 0) {
@@ -253,11 +253,11 @@ if ($gettasks->recordcount() < 1) {
     }
 
     while ($task = $gettasks->fetchrow()) {
-        $checkcompleted = $db->execute("select * from `completed_tasks` where `player_id`=? and `task_id`=?", array($player->id, $task['id']));
+        $checkcompleted = $db->execute("select * from `completed_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id']]);
         if ($checkcompleted->recordcount() == 0) {
             if ($task['obj_type'] == 'monster' && $task['obj_extra'] > 0) {
-                $mname = $db->GetOne("select `username` from `monsters` where `id`=?", array($task['obj_value']));
-                $pcento = $db->GetOne("select `value` from `monster_tasks` where `player_id`=? and `task_id`=?", array($player->id, $task['id']));
+                $mname = $db->GetOne("select `username` from `monsters` where `id`=?", [$task['obj_value']]);
+                $pcento = $db->GetOne("select `value` from `monster_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id']]);
                 $pcento = ceil(($pcento / $task['obj_extra']) * 100);
                 $msg = "Matar " . $task['obj_extra'] . "x o monstro " . $mname . ".<br/>";
             } elseif ($task['obj_type'] == 'monster' && $task['obj_extra'] == 0) {
@@ -277,7 +277,7 @@ if ($gettasks->recordcount() < 1) {
             } elseif ($task['win_type'] == 'exp') {
                 $win = "<b>Recompensa:</b> " . $task['win_value'] . " pontos de experi&ecirc;ncia.<br/>";
             } elseif ($task['win_type'] == 'item') {
-                $itname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", array($task['win_value']));
+                $itname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$task['win_value']]);
                 $win = "<b>Recompensa:</b> " . $itname . ".<br/>";
             }
 
@@ -285,7 +285,7 @@ if ($gettasks->recordcount() < 1) {
         }
     }
 
-    $countcompleted = $db->execute("select `id` from `completed_tasks` where `player_id`=?", array($player->id));
+    $countcompleted = $db->execute("select `id` from `completed_tasks` where `player_id`=?", [$player->id]);
     if ($gettasks->recordcount() == $countcompleted->recordcount()) {
         echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa disponível.</font></center></td></tr>";
     }
@@ -298,12 +298,12 @@ echo '<td width="50%">';
 echo '<table width="100%">';
 echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Amigos</b><img src=\"static/images/help.gif\" title=\"header=[Amigos] body=[<font size='1px'>Seus amigos são importantes no jogo. Além de poder caçar com eles voc&ecirc; sempre ficará informado do que seu amigo está fazendo no jogo, portanto, vá logo para o chat ou o fórum do jogo e comece novas amizades!</font>]\"></center></td></tr>";
 
-$countfriends = $db->execute("select * from `friends` where `uid`=?", array($player->acc_id));
+$countfriends = $db->execute("select * from `friends` where `uid`=?", [$player->acc_id]);
 if ($countfriends->recordcount() == 0) {
     echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Você não tem amigos.</font></center></td></tr>";
 } else {
 
-    $getflogs = $db->execute("select log_friends.log, log_friends.time from `log_friends`, `friends` where friends.uid=? and log_friends.fname=friends.fname order by log_friends.time desc limit 5", array($player->acc_id));
+    $getflogs = $db->execute("select log_friends.log, log_friends.time from `log_friends`, `friends` where friends.uid=? and log_friends.fname=friends.fname order by log_friends.time desc limit 5", [$player->acc_id]);
     if ($getflogs->recordcount() < 1) {
         echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhum registro recente.</font></center></td></tr>";
     } else {
@@ -331,7 +331,7 @@ if ($countfriends->recordcount() == 0) {
 
 echo "</table>";
 if ($countfriends->recordcount() > 0) {
-    $countgetflogs = $db->execute("select log_friends.log from `log_friends`, `friends` where friends.uid=? and log_friends.fname=friends.fname", array($player->acc_id));
+    $countgetflogs = $db->execute("select log_friends.log from `log_friends`, `friends` where friends.uid=? and log_friends.fname=friends.fname", [$player->acc_id]);
     if ($countgetflogs->recordcount() > 5) {
         echo "<center><font size=\"1\"><a href=\"#\" onclick=\"javascript:window.open('friendslogs.php', '_blank','top=100, left=100, height=350, width=520, status=no, menubar=no, resizable=no, scrollbars=yes, toolbar=no, location=no, directories=no');\">Exibir mais logs de amigos</a></font></center>";
     }
@@ -342,8 +342,9 @@ echo "</table>";
 
 $totalon = $db->execute("select `player_id` from `user_online`");
 if ($totalon->recordcount() > $setting->user_record) {
-    $query = $db->execute("update `settings` set `value`=? where `name`='user_record'", array($totalon->recordcount()));
+    $query = $db->execute("update `settings` set `value`=? where `name`='user_record'", [$totalon->recordcount()]);
 }
 
 include(__DIR__ . "/templates/private_footer.php");
 exit;
+

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Mercado");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
@@ -21,7 +21,7 @@ switch ($_GET['act']) {
 	case "sell": {
 			include(__DIR__ . "/templates/private_header.php");			
 
-			$gsadasdiiii = $db->execute("select items.item_id, items.item_bonus, items.for, items.vit, items.agi, items.res, items.status, blueprint_items.name, blueprint_items.type from `items`, `blueprint_items` where items.id=? and items.player_id=? and items.item_id=blueprint_items.id", array($_GET['item'], $player->id));
+			$gsadasdiiii = $db->execute("select items.item_id, items.item_bonus, items.for, items.vit, items.agi, items.res, items.status, blueprint_items.name, blueprint_items.type from `items`, `blueprint_items` where items.id=? and items.player_id=? and items.item_id=blueprint_items.id", [$_GET['item'], $player->id]);
 			$goooosdsfds = $gsadasdiiii->fetchrow();
 
 			if ($gsadasdiiii->recordcount() == 0) {
@@ -132,7 +132,7 @@ switch ($_GET['act']) {
 				break;
 			}
 
-			$verificaall = $db->execute("select items.item_id, items.status, items.mark, items.item_bonus, items.for, items.vit, items.agi, items.res, blueprint_items.name, blueprint_items.type from `items`, `blueprint_items` where items.id=? and items.player_id=? and items.item_id=blueprint_items.id", array($_POST['item'], $player->id));
+			$verificaall = $db->execute("select items.item_id, items.status, items.mark, items.item_bonus, items.for, items.vit, items.agi, items.res, blueprint_items.name, blueprint_items.type from `items`, `blueprint_items` where items.id=? and items.player_id=? and items.item_id=blueprint_items.id", [$_POST['item'], $player->id]);
 			if ($verificaall->recordcount() == 0) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Você não possui este item.<br/><a href=\"market.php\">Voltar</a>.";
@@ -201,7 +201,7 @@ switch ($_GET['act']) {
 				break;
 			}
    
-			$gsassaaa = $db->execute("select blueprint_items.name, items.item_id from `blueprint_items`, `items` where items.id=? and blueprint_items.id=items.item_id", array($item));
+			$gsassaaa = $db->execute("select blueprint_items.name, items.item_id from `blueprint_items`, `items` where items.id=? and blueprint_items.id=items.item_id", [$item]);
 			$gooooa = $gsassaaa->fetchrow();
 			include(__DIR__ . "/templates/private_header.php");
 		?>
@@ -226,7 +226,7 @@ switch ($_GET['act']) {
 				break;
 			}
 
-			$verificaall = $db->execute("select items.item_id, items.status, items.mark, items.item_bonus, items.for, items.vit, items.agi, items.res, blueprint_items.name, blueprint_items.type from `items`, `blueprint_items` where items.id=? and items.player_id=? and items.item_id=blueprint_items.id", array($_POST['item'], $player->id));
+			$verificaall = $db->execute("select items.item_id, items.status, items.mark, items.item_bonus, items.for, items.vit, items.agi, items.res, blueprint_items.name, blueprint_items.type from `items`, `blueprint_items` where items.id=? and items.player_id=? and items.item_id=blueprint_items.id", [$_POST['item'], $player->id]);
 			if ($verificaall->recordcount() == 0) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Você não possui este item.<br/><a href=\"market.php\">Voltar</a>.";
@@ -301,8 +301,8 @@ switch ($_GET['act']) {
 				$insert['serv'] = $player->serv;
 				$query2 = $db->autoexecute('market', $insert, 'INSERT');
 				//remove fee from player
-				$query02 = $db->execute("update `players` set `gold`=? where `id`=?", array($player->gold - $fee, $player->id));
-				$query03 = $db->execute("update `items` set `mark`='t', `status`='unequipped' where `id`=?", array($item));
+				$query02 = $db->execute("update `players` set `gold`=? where `id`=?", [$player->gold - $fee, $player->id]);
+				$query03 = $db->execute("update `items` set `mark`='t', `status`='unequipped' where `id`=?", [$item]);
 
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Agora seu item está disponivel no mercado! <a href=\"market.php\">Voltar</a>.";
@@ -324,12 +324,13 @@ switch ($_GET['act']) {
 			echo "<br /><b>Você não tem itens para vender.</b>";
 		}
   
-		$abaioepa = $db->execute("select `id` from `items` where `player_id`=?", array($player->id));
+		$abaioepa = $db->execute("select `id` from `items` where `player_id`=?", [$player->id]);
 		if ($abaioepa->recordcount() == 0) {
 			echo "<br /><b>Você não tem itens para vender.</b>";
 			include(__DIR__ . "/templates/private_footer.php");
 			exit;
 		}
+
   echo "<fieldset><legend><b>Quais itens você gostaria de vender?</b></legend>";
   echo "<table style='width:100%;border-collapse: collapse;'>";
   echo "<thead>";
@@ -340,7 +341,7 @@ switch ($_GET['act']) {
   echo "</tr>";
   echo "</thead>";
   echo "<tbody>";
-  $gettheitemuniqid = $db->execute("select items.id, items.item_bonus, items.for, items.vit, items.agi, items.res, blueprint_items.name, blueprint_items.img from `items`, `blueprint_items` where `player_id`=? and mark!='t' and status != 'equipped'  and items.item_id=blueprint_items.id order by blueprint_items.name asc", array($player->id));
+  $gettheitemuniqid = $db->execute("select items.id, items.item_bonus, items.for, items.vit, items.agi, items.res, blueprint_items.name, blueprint_items.img from `items`, `blueprint_items` where `player_id`=? and mark!='t' and status != 'equipped'  and items.item_id=blueprint_items.id order by blueprint_items.name asc", [$player->id]);
   $bool = 1;
   while ($gettheitemuniqiditem = $gettheitemuniqid->fetchrow()) {
 				$bonus01 = $gettheitemuniqiditem['item_bonus'] > 0 ? " (+" . $gettheitemuniqiditem['item_bonus'] . ")" : "";
@@ -360,6 +361,7 @@ switch ($_GET['act']) {
 
 				$bool = ($bool==1)?2:1;
 			}
+
   echo "</tbody></table></fieldset>";
 		?>
 <?php

@@ -9,6 +9,7 @@ if ($setting->closed < time() && $_GET['beta'] != 'imjusttesting'){
 	echo time();
 	exit;
 }
+
 include(__DIR__ . "/templates/acc_header.php");
 echo "<br/><br/><br/>";
 echo "<center>Seja bem-vindo ao jogo. Depois de Várias atualizações, estamos prestes a abrir nossas portas novamente!</center>";

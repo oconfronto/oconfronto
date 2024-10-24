@@ -7,7 +7,8 @@
 
     <title>O Confronto :: <?php echo PAGENAME ?></title>
 
-    <link rel="stylesheet" type="text/css" href="static/css/index.css" />    
+    <link rel="icon" type="image/x-icon" href="static/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="static/css/index.css" />
     <link rel="stylesheet" type="text/css" href="static/example2.css" />
 
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" />

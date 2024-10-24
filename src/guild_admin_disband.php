@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Desfazer Clã");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkguild.php");
 
 //Populates $guild variable
-$query = $db->execute("select * from `guilds` where `id`=?", array($player->guild));
+$query = $db->execute("select * from `guilds` where `id`=?", [$player->guild]);
 
 if ($query->recordcount() == 0) {
     header("Location: home.php");
@@ -26,19 +26,20 @@ if ($player->username != $guild['leader']) {
     echo '<a href="home.php">Principal</a>';
     echo "</fieldset>";
 } elseif ($_GET['act'] == "go") {
-    $query4 = $db->execute("select `id` from `players` where `guild`=?", array($guild['id']));
+    $query4 = $db->execute("select `id` from `players` where `guild`=?", [$guild['id']]);
     while($member = $query4->fetchrow()) {
   		$logmsg = "A gangue " . $guild['name'] . " foi deletada pelo lider do clã.";
   		addlog($member['id'], $logmsg, $db);
   		}
-    $db->execute("update `players` set `bank`=`bank`+? where `username`=?", array($guild['gold'], $guild['leader']));
-    $db->execute("delete from `guilds` where `id`=?", array($player->guild));
-    $db->execute("delete from `guild_invites` where `guild_id`=?", array($player->guild));
-    $db->execute("delete from `guild_chat` where `guild_id`=?", array($player->guild));
-    $db->execute("delete from `guild_enemy` where (`guild_na`=? or `enemy_na`=?)", array($player->guild, $player->guild));
-    $db->execute("delete from `guild_aliance` where (`guild_na`=? or `aled_na`=?)", array($player->guild, $player->guild));
-    $db->execute("delete from `guild_paliance` where (`guild_na`=? or `aled_na`=?)", array($player->guild, $player->guild));
-    $db->execute("update `players` set `guild`=? where `guild`=?", array(NULL, $guild['id']));
+
+    $db->execute("update `players` set `bank`=`bank`+? where `username`=?", [$guild['gold'], $guild['leader']]);
+    $db->execute("delete from `guilds` where `id`=?", [$player->guild]);
+    $db->execute("delete from `guild_invites` where `guild_id`=?", [$player->guild]);
+    $db->execute("delete from `guild_chat` where `guild_id`=?", [$player->guild]);
+    $db->execute("delete from `guild_enemy` where (`guild_na`=? or `enemy_na`=?)", [$player->guild, $player->guild]);
+    $db->execute("delete from `guild_aliance` where (`guild_na`=? or `aled_na`=?)", [$player->guild, $player->guild]);
+    $db->execute("delete from `guild_paliance` where (`guild_na`=? or `aled_na`=?)", [$player->guild, $player->guild]);
+    $db->execute("update `players` set `guild`=? where `guild`=?", [NULL, $guild['id']]);
     echo "<fieldset>";
     echo "<legend><b>" . $guild['name'] . " :: Desfazer Clã</b></legend>";
     echo "Seu clã foi excluido com sucesso!<br/><br/>";

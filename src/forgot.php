@@ -12,7 +12,7 @@ $errormsg = "";
 $showerror2 = 0;
 
 if (isset($_POST['forgot'])) {
-    $verForgot = $db->execute("select * from `accounts` where `email`=? and `conta`=?", array($_POST['emailf'], $_POST['username']));
+    $verForgot = $db->execute("select * from `accounts` where `email`=? and `conta`=?", [$_POST['emailf'], $_POST['username']]);
 
     if (!$_POST['username'] && !$_POST['emailf']) {
         $errormsg = "Preencha todos os campos.";
@@ -55,6 +55,7 @@ if (isset($_POST['forgot'])) {
             include(__DIR__ . "/templates/footer.php");
             exit;
         }
+
         echo "Erro ao enviar o email.";
     }
 }

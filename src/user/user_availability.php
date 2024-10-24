@@ -11,10 +11,10 @@ $rep[0] = "";
 $rep[1] = " ";
 $rep[2] = "";
 $nomedouser = ucwords(preg_replace($pat, $rep, $username));
-$query = $db->execute("select * from `players` where `username`=?", array($nomedouser));
+$query = $db->execute("select * from `players` where `username`=?", [$nomedouser]);
 // $query = ("Select * from $tb_name where username='$nomedouser'");
-// $result = mysql_query($query);
-// $num = mysql_num_rows($result);
+// $result = $db->execute($query);
+// $num = $result->recordcount();
 if ($query->recordcount() > 0) {
     //Username already exist
     echo "no";

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Torneio");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
@@ -30,14 +30,15 @@ $unc5 = "tour_price_" . $tier . "_" . $player->serv . "";
 $unc6 = "tour_win_" . $tier . "_" . $player->serv . "";
 $unc7 = "end_tour_" . $tier . "_" . $player->serv . "";
 $unc8 = "last_tour_" . $tier . "_" . $player->serv . "";
-if ($setting->$unc1 == t) {
+if ($setting->$unc1 == "t") {
     if (time() > $setting->$unc7){
    		$query = $db->execute(sprintf("update `settings` set `value`='y' where `name`='%s'", $unc1));
    		header("Location: tournament.php");
    	}
+
     if ($_POST['join'])
    	{
-   		$checasejaestainscrito = $db->execute("select `id` from `players` where `id`=? and `tour`='t' and `serv`=? and `tier`=?", array($player->id, $player->serv, $tier));
+   		$checasejaestainscrito = $db->execute("select `id` from `players` where `id`=? and `tour`='t' and `serv`=? and `tier`=?", [$player->id, $player->serv, $tier]);
    
    		if ($checasejaestainscrito->recordcount() > 0){
    		include(__DIR__ . "/templates/private_header.php");
@@ -83,8 +84,8 @@ if ($setting->$unc1 == t) {
    		exit;
    		}
    
-   		$query7895 = $db->execute("update `players` set `gold`=?, `tour`='t', `killed`=0, `tier`=? where `id`=?", array($player->gold - $setting->$unc5, $tier, $player->id));
-   		$query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc4), array($setting->$unc4 + 1));
+   		$query7895 = $db->execute("update `players` set `gold`=?, `tour`='t', `killed`=0, `tier`=? where `id`=?", [$player->gold - $setting->$unc5, $tier, $player->id]);
+   		$query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc4), [$setting->$unc4 + 1]);
    
    		include(__DIR__ . "/templates/private_header.php");
    		echo "<fieldset><legend><b>Torneio</b></legend>\n";
@@ -95,6 +96,7 @@ if ($setting->$unc1 == t) {
    		include(__DIR__ . "/templates/private_footer.php");
    		exit;
    	}
+
     include(__DIR__ . "/templates/private_header.php");
     echo "<fieldset><legend><b>Torneio</b></legend>\n";
     echo "<table>";
@@ -131,19 +133,19 @@ if ($setting->$unc1 == t) {
 }
 
 
-if ($setting->$unc1 == y) {
-    $chekka1 = $db->execute("select `id` from `players` where `tour`='t' and `serv`=? and `tier`=?", array($player->serv, $tier));
+if ($setting->$unc1 == "y") {
+    $chekka1 = $db->execute("select `id` from `players` where `tour`='t' and `serv`=? and `tier`=?", [$player->serv, $tier]);
     if ($chekka1->recordcount() < 5){
   			while($aviso = $chekka1->fetchrow()) {
-  			$devolveouropago = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", array($setting->$unc5, $aviso['id']));
+  			$devolveouropago = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", [$setting->$unc5, $aviso['id']]);
   			$logmsg = "O torneio para seu nível foi cancelado, pois não foram inscritos participantes suficientes.<br/>O ouro pago, " . $setting->$unc5 . ", foi depositado na sua conta bancária.";
   			addlog($aviso['id'], $logmsg, $db);
   			}
   
   			$nobodywinmsg = "Ninguém";
   
-  			$query = $db->execute("update `players` set `tour`='f', `killed`=0 where `serv`=? and `tier`=?", array($player->serv, $tier));
-  			$query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc8), array($nobodywinmsg));
+  			$query = $db->execute("update `players` set `tour`='f', `killed`=0 where `serv`=? and `tier`=?", [$player->serv, $tier]);
+  			$query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc8), [$nobodywinmsg]);
   			$query = $db->execute(sprintf("update `settings` set `value`=0 where `name`='%s'", $unc4));
   			$query = $db->execute(sprintf("update `settings` set `value`=0 where `name`='%s'", $unc7));
   			$query = $db->execute(sprintf("update `settings` set `value`='f' where `name`='%s'", $unc1));
@@ -151,16 +153,17 @@ if ($setting->$unc1 == y) {
   			header("Location: tournament.php");
   			exit;
   		}
-    $chekka2 = $db->execute("select `id`, `username` from `players` where `killed`>0 and `tour`='t' and `serv`=? and `tier`=?", array($player->serv, $tier));
+
+    $chekka2 = $db->execute("select `id`, `username` from `players` where `killed`>0 and `tour`='t' and `serv`=? and `tier`=?", [$player->serv, $tier]);
     $num1 = $chekka1->recordcount();
     $num2 = $chekka2->recordcount();
     $chekka3 = $num1 - $num2;
     $winner = $chekka1->fetchrow();
     if ($chekka3 < 2) {
         if ($chekka3 == 1) {
-            $wqrpgfdin = $db->execute("select `id`, `username`, `bank`, `killed` from `players` where `tour`='t' and `serv`=? and `tier`=? and `killed`=0 limit 0,1", array($player->serv, $tier));
+            $wqrpgfdin = $db->execute("select `id`, `username`, `bank`, `killed` from `players` where `tour`='t' and `serv`=? and `tier`=? and `killed`=0 limit 0,1", [$player->serv, $tier]);
             $winneb1 = $wqrpgfdin->fetchrow();
-            $query = $db->execute("update `players` set `bank`=? where `id`=?", array($winneb1['bank'] + $setting->$unc6, $winneb1['id']));
+            $query = $db->execute("update `players` set `bank`=? where `id`=?", [$winneb1['bank'] + $setting->$unc6, $winneb1['id']]);
             $logmsg = "Você venceu o torneio e <b>" . $setting->$unc6 . " de ouro</b> foram depositados na sua conta bancária.";
             addlog($winneb1['id'], $logmsg, $db);
             $insert['player_id'] = $winneb1['id'];
@@ -171,26 +174,27 @@ if ($setting->$unc1 == y) {
             $insert['log'] = '<a href="profile.php?id=' . $player->username . '">' . $player->username . "</a> venceu o torneio de usuários de nível " . $setting->$unc2 . " á " . $setting->$unc3 . ".";
             $insert['time'] = time();
             $query = $db->autoexecute('log_friends', $insert, 'INSERT');
-            $query = $db->execute("update `players` set `tour`='f', `killed`=0 where `serv`=? and `tier`=?", array($player->serv, $tier));
-            $query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc8), array($winneb1['username']));
+            $query = $db->execute("update `players` set `tour`='f', `killed`=0 where `serv`=? and `tier`=?", [$player->serv, $tier]);
+            $query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc8), [$winneb1['username']]);
             $query = $db->execute(sprintf("update `settings` set `value`=0 where `name`='%s'", $unc4));
             $query = $db->execute(sprintf("update `settings` set `value`=0 where `name`='%s'", $unc7));
             $query = $db->execute(sprintf("update `settings` set `value`='f' where `name`='%s'", $unc1));
             header("Location: tournament.php");
             exit;
         }
+
         if ($chekka3 == 0) {
-            $wqweqwwin = $db->execute("select `id`, `username`, `bank`, `killed` from `players` where `tour`='t' and `serv`=? and `tier`=? order by `killed` desc limit 0,1", array($player->serv, $tier));
+            $wqweqwwin = $db->execute("select `id`, `username`, `bank`, `killed` from `players` where `tour`='t' and `serv`=? and `tier`=? order by `killed` desc limit 0,1", [$player->serv, $tier]);
             $winneb2 = $wqweqwwin->fetchrow();
-            $query = $db->execute("update `players` set `bank`=? where `id`=?", array($winneb2['bank'] + $setting->$unc6, $winneb2['id']));
+            $query = $db->execute("update `players` set `bank`=? where `id`=?", [$winneb2['bank'] + $setting->$unc6, $winneb2['id']]);
             $logmsg = "Você venceu o torneio e <b>" . $setting->$unc6 . " de ouro</b> foram depositados na sua conta bancária.";
             addlog($winneb2['id'], $logmsg, $db);
             $insert['player_id'] = $winneb2['id'];
             $insert['medalha'] = "Guerreiro Exemplar";
             $insert['motivo'] = "Venceu o torneio de usuários de nível " . $setting->$unc2 . " á " . $setting->$unc3 . ".";
             $query = $db->autoexecute('medalhas', $insert, 'INSERT');
-            $query = $db->execute("update `players` set `tour`='f', `killed`=0 where `serv`=? and `tier`=?", array($player->serv, $tier));
-            $query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc8), array($winneb2['username']));
+            $query = $db->execute("update `players` set `tour`='f', `killed`=0 where `serv`=? and `tier`=?", [$player->serv, $tier]);
+            $query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc8), [$winneb2['username']]);
             $query = $db->execute(sprintf("update `settings` set `value`=0 where `name`='%s'", $unc4));
             $query = $db->execute(sprintf("update `settings` set `value`=0 where `name`='%s'", $unc7));
             $query = $db->execute(sprintf("update `settings` set `value`='f' where `name`='%s'", $unc1));
@@ -198,6 +202,7 @@ if ($setting->$unc1 == y) {
             exit;
         }
     }
+
     include(__DIR__ . "/templates/private_header.php");
     echo "<fieldset><legend><b>Torneio</b></legend>\n";
     echo "<table>";
@@ -211,7 +216,7 @@ if ($setting->$unc1 == y) {
     echo "</tr>";
     echo "<tr>";
     echo "<td><b>Usuários eliminados:</b></td>";
-    $userseliminados = $db->execute("select `id` from `players` where `tour`='t' and `killed`>0 and `serv`=? and `tier`=?", array($player->serv, $tier));
+    $userseliminados = $db->execute("select `id` from `players` where `tour`='t' and `killed`>0 and `serv`=? and `tier`=?", [$player->serv, $tier]);
     echo "<td>" . $userseliminados->recordcount() . "</td>";
     echo "</tr>";
     echo "<tr>";
@@ -223,21 +228,21 @@ if ($setting->$unc1 == y) {
     echo "<br/>";
     echo "<fieldset><legend><b>Participantes</b></legend>\n";
     echo "<table>";
-    $sdfsdfoiewfwe = $db->execute("select `id`, `username`, `level`, `killed`, `ban`, `hp` from `players` where `tour`='t' and `serv`=? and `tier`=? order by `level` desc", array($player->serv, $tier));
+    $sdfsdfoiewfwe = $db->execute("select `id`, `username`, `level`, `killed`, `ban`, `hp` from `players` where `tour`='t' and `serv`=? and `tier`=? order by `level` desc", [$player->serv, $tier]);
     while($member = $sdfsdfoiewfwe->fetchrow())
 			{
 			if ($member['ban'] > time()){
 				$logmsg = "Você foi desclassificado do torneio pois estava banido.";
 				addlog($member['id'], $logmsg, $db);
-			$query = $db->execute("update `players` set `tour`='f' where `id`=?", array($member['id']));
+			$query = $db->execute("update `players` set `tour`='f' where `id`=?", [$member['id']]);
 			}elseif ($member['hp'] < 1 && $member['killed'] == 0){
 				$logmsg = "Você foi desclassificado do torneio pois estava morto quando ele começou.";
 				addlog($member['id'], $logmsg, $db);
-			$query = $db->execute("update `players` set `tour`='f' where `id`=?", array($member['id']));
+			$query = $db->execute("update `players` set `tour`='f' where `id`=?", [$member['id']]);
 			}elseif ($member['level'] > $setting->$unc3){
 				$logmsg = "Você foi desclassificado do torneio pois seu nível estava acima do permitido.";
 				addlog($member['id'], $logmsg, $db);
-			$query = $db->execute("update `players` set `tour`='f' where `id`=?", array($member['id']));
+			$query = $db->execute("update `players` set `tour`='f' where `id`=?", [$member['id']]);
 			}else{
     			echo "<tr>";
 			echo "<td><b>Usuário:</b> " . $member['username'] . "<td>";
@@ -256,7 +261,7 @@ if ($setting->$unc1 == y) {
 
     echo "</table>";
     echo "</fieldset>";
-    $checwerwasaao = $db->execute("select `username` from `players` where `tour`='t' and `id`=? and `serv`=? and `tier`=?", array($player->id, $player->serv, $tier));
+    $checwerwasaao = $db->execute("select `username` from `players` where `tour`='t' and `id`=? and `serv`=? and `tier`=?", [$player->id, $player->serv, $tier]);
     if ($checwerwasaao->recordcount() < 1) {
         $tourstatus = "Você não se inscreveu.";
     } elseif ($player->killed > 0) {
@@ -271,29 +276,25 @@ if ($setting->$unc1 == y) {
     include(__DIR__ . "/templates/private_footer.php");
     exit;
 }
-else{
-	include(__DIR__ . "/templates/private_header.php");
 
-	$lastinfo1 = "last_tour_1_" . $player->serv . "";
-	$lastinfo2 = "last_tour_2_" . $player->serv . "";
-	$lastinfo3 = "last_tour_3_" . $player->serv . "";
-	$lastinfo4 = "last_tour_4_" . $player->serv . "";
-	$lastinfo5 = "last_tour_5_" . $player->serv . "";
-
-	$wininfo1 = "tour_win_1_" . $player->serv . "";
-	$wininfo2 = "tour_win_2_" . $player->serv . "";
-	$wininfo3 = "tour_win_3_" . $player->serv . "";
-	$wininfo4 = "tour_win_4_" . $player->serv . "";
-	$wininfo5 = "tour_win_5_" . $player->serv . "";
-
-	$endinffo1 = "tournament_1_" . $player->serv . "";
-	$endinffo2 = "tournament_2_" . $player->serv . "";
-	$endinffo3 = "tournament_3_" . $player->serv . "";
-	$endinffo4 = "tournament_4_" . $player->serv . "";
-	$endinffo5 = "tournament_5_" . $player->serv . "";
-
-	echo "<fieldset><legend><b>Torneio níveis 1 - 99</b></legend>\n";
-	if ($setting->$endinffo1 == y || $setting->$endinffo1 == t){
+include(__DIR__ . "/templates/private_header.php");
+$lastinfo1 = "last_tour_1_" . $player->serv . "";
+$lastinfo2 = "last_tour_2_" . $player->serv . "";
+$lastinfo3 = "last_tour_3_" . $player->serv . "";
+$lastinfo4 = "last_tour_4_" . $player->serv . "";
+$lastinfo5 = "last_tour_5_" . $player->serv . "";
+$wininfo1 = "tour_win_1_" . $player->serv . "";
+$wininfo2 = "tour_win_2_" . $player->serv . "";
+$wininfo3 = "tour_win_3_" . $player->serv . "";
+$wininfo4 = "tour_win_4_" . $player->serv . "";
+$wininfo5 = "tour_win_5_" . $player->serv . "";
+$endinffo1 = "tournament_1_" . $player->serv . "";
+$endinffo2 = "tournament_2_" . $player->serv . "";
+$endinffo3 = "tournament_3_" . $player->serv . "";
+$endinffo4 = "tournament_4_" . $player->serv . "";
+$endinffo5 = "tournament_5_" . $player->serv . "";
+echo "<fieldset><legend><b>Torneio níveis 1 - 99</b></legend>\n";
+if ($setting->$endinffo1 == "y" || $setting->$endinffo1 == "t"){
 	echo "<br/><center><b>Este torneio ainda não acabou.</b></center><br/>";
 	}else{
 	echo "<table>";
@@ -318,10 +319,9 @@ else{
 	echo "</table>";
 	}
 
-	echo "</fieldset>";
-
-	echo "<br/><fieldset><legend><b>Torneio níveis 100 - 199</b></legend>\n";
-	if ($setting->$endinffo2 == y || $setting->$endinffo2 == t){
+echo "</fieldset>";
+echo "<br/><fieldset><legend><b>Torneio níveis 100 - 199</b></legend>\n";
+if ($setting->$endinffo2 == "y" || $setting->$endinffo2 == "t"){
 	echo "<br/><center><b>Este torneio ainda não acabou.</b></center><br/>";
 	}else{
 	echo "<table>";
@@ -346,10 +346,9 @@ else{
 	echo "</table>";
 	}
 
-	echo "</fieldset>";
-
-	echo "<br/><fieldset><legend><b>Torneio níveis 200 - 299</b></legend>\n";
-	if ($setting->$endinffo3 == y || $setting->$endinffo3 == t){
+echo "</fieldset>";
+echo "<br/><fieldset><legend><b>Torneio níveis 200 - 299</b></legend>\n";
+if ($setting->$endinffo3 == "y" || $setting->$endinffo3 == "t"){
 	echo "<br/><center><b>Este torneio ainda não acabou.</b></center><br/>";
 	}else{
 	echo "<table>";
@@ -374,10 +373,9 @@ else{
 	echo "</table>";
 	}
 
-	echo "</fieldset>";
-
-	echo "<br/><fieldset><legend><b>Torneio níveis 300 - 399</b></legend>\n";
-	if ($setting->$endinffo4 == y || $setting->$endinffo4 == t){
+echo "</fieldset>";
+echo "<br/><fieldset><legend><b>Torneio níveis 300 - 399</b></legend>\n";
+if ($setting->$endinffo4 == "y" || $setting->$endinffo4 == "t"){
 	echo "<br/><center><b>Este torneio ainda não acabou.</b></center><br/>";
 	}else{
 	echo "<table>";
@@ -402,11 +400,9 @@ else{
 	echo "</table>";
 	}
 
-	echo "</fieldset>";
-
-
-	echo "<br/><fieldset><legend><b>Torneio níveis 400 - 999</b></legend>\n";
-	if ($setting->$endinffo5 == y || $setting->$endinffo5 == t){
+echo "</fieldset>";
+echo "<br/><fieldset><legend><b>Torneio níveis 400 - 999</b></legend>\n";
+if ($setting->$endinffo5 == "y" || $setting->$endinffo5 == "t"){
 	echo "<br/><center><b>Este torneio ainda não acabou.</b></center><br/>";
 	}else{
 	echo "<table>";
@@ -431,11 +427,9 @@ else{
 	echo "</table>";
 	}
 
-	echo "</fieldset>";
-
-	echo "<br/><center><i>As inscrições para o torneio abrirão automaticamente todas as Sextas-Feiras.</i></center>";
-	include(__DIR__ . "/templates/private_footer.php");
-	exit;
-}
+echo "</fieldset>";
+echo "<br/><center><i>As inscrições para o torneio abrirão automaticamente todas as Sextas-Feiras.</i></center>";
+include(__DIR__ . "/templates/private_footer.php");
+exit;
 
 ?>

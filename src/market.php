@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Mercado");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
@@ -18,7 +18,7 @@ switch($_GET['act'])
 		break;
 		}
 
-		$verifik = $db->execute("select market.seller, blueprint_items.name, items.item_bonus, items.mark from `market`, `blueprint_items`, `items` where market.ite_id=blueprint_items.id and market.market_id=items.id and market.market_id=?", array($_GET['item']));
+		$verifik = $db->execute("select market.seller, blueprint_items.name, items.item_bonus, items.mark from `market`, `blueprint_items`, `items` where market.ite_id=blueprint_items.id and market.market_id=items.id and market.market_id=?", [$_GET['item']]);
 		if ($verifik->recordcount() == 0)
 		{
 		include(__DIR__ . "/templates/private_header.php");
@@ -41,8 +41,8 @@ switch($_GET['act'])
 		echo "Tem certeza que seseja remover seu item do mercado? (" . $item['name'] . ')<br/><a href="market.php?act=remove&item=' . $_GET['item'] . '&confirm=yes">Sim</a> | <a href="market.php">Voltar</a>.';
 		include(__DIR__ . "/templates/private_footer.php");
 		}else{
-		$mark_sold=$db->execute("update `items` set `mark`='f' where `id`=?", array($_GET['item']));
-		$query_delete=$db->execute("delete from `market` where `market_id`=?", array($_GET['item']));
+		$mark_sold=$db->execute("update `items` set `mark`='f' where `id`=?", [$_GET['item']]);
+		$query_delete=$db->execute("delete from `market` where `market_id`=?", [$_GET['item']]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo "Você removeu seu item do mercado<br/><a href=\"market.php\">Voltar</a>.";
 		include(__DIR__ . "/templates/private_footer.php");
@@ -185,7 +185,7 @@ switch($_GET['act'])
 			
 			$filtrobusca = "" . $orderby . " " . $sort . "";
 
-			$query = $db->execute("select market.market_id, market.price, market.seller, blueprint_items.name, blueprint_items.effectiveness, blueprint_items.needpromo, blueprint_items.needring, blueprint_items.voc, blueprint_items.img, items.item_bonus, items.for, items.vit, items.agi, items.res from `market`, `blueprint_items`, `items` where market.ite_id=blueprint_items.id and market.market_id=items.id and blueprint_items.type=? and market.serv=? order by " . $filtrobusca . "", array($_GET['type'], $player->serv, $orderby));
+			$query = $db->execute("select market.market_id, market.price, market.seller, blueprint_items.name, blueprint_items.effectiveness, blueprint_items.needpromo, blueprint_items.needring, blueprint_items.voc, blueprint_items.img, items.item_bonus, items.for, items.vit, items.agi, items.res from `market`, `blueprint_items`, `items` where market.ite_id=blueprint_items.id and market.market_id=items.id and blueprint_items.type=? and market.serv=? order by " . $filtrobusca . "", [$_GET['type'], $player->serv, $orderby]);
 			if ($query->recordcount() == 0) {
 				echo "<p><i><center>Nenhum item encontrado! Tente procurar por outra coisa.</center></i></p>";
 			} else {

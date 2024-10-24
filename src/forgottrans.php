@@ -3,17 +3,17 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Recuperar senha");
-$acc = check_acc($secret_key, $db);
-$player = check_user($secret_key, $db);
+$acc = check_acc($db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 
 include(__DIR__ . "/templates/private_header.php");
 
-$soma1 = rand(1, 70);
-$soma2 = rand(1, 10);
+$soma1 = random_int(1, 70);
+$soma2 = random_int(1, 10);
 
 if (isset($_POST['submit'])) {
-    $getaccount = $db->execute("select `id` from `accounts` where `id`=? and `email`=?", array($player->acc_id, $_POST['email']));
+    $getaccount = $db->execute("select `id` from `accounts` where `id`=? and `email`=?", [$player->acc_id, $_POST['email']]);
 
     if ($_POST['email'] != $_POST['email1']) {
         print "Os emails digitados são diferentes. <a href='forgottrans.php'>Voltar</a>.";
@@ -39,6 +39,7 @@ if (isset($_POST['submit'])) {
         include(__DIR__ . "/templates/footer.php");
         exit;
     }
+
     $subject = "Você solicitou sua senha de transferência por email";
     $body = "
             <h2>Vocï¿½ solicitou sua senha de transfêrencia.<br><br>
@@ -55,9 +56,11 @@ if (isset($_POST['submit'])) {
     } else {
         print 'Ocorreu um erro, tente novamente. <a href="forgottrans.php">Voltar.</a>';
     }
+
     include(__DIR__ . "/templates/footer.php");
     exit;
 }
+
 print "<fieldset><legend><b>Recuperar senha de transferência</b></legend>\n";
 print "<table><form action='forgottrans.php' method='post'>";
 print "<tr><td><b>Email:</b></td><td><input type='text' name='email' size='25'></td></tr>";

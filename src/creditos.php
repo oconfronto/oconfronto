@@ -3,7 +3,7 @@
 
 include(__DIR__ . "/lib.php");
 	define("PAGENAME", "Créditos");
-	$player = check_user($secret_key, $db);
+	$player = check_user($db);
 	include(__DIR__ . "/templates/private_header.php");
 ?>
 <b>As pessoas envolvidas na criação do site são:</b>

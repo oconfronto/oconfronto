@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Criar Clã");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkguild.php");
 
@@ -43,7 +43,7 @@ $msg1 = '<font color="red">';
 $msg2 = '<font color="red">';
 $msg3 = '<font color="red">';
 
-    $query = $db->execute("select `id` from `guilds` where `name`=? and `serv`=?", array($_POST['name'], $player->serv));
+    $query = $db->execute("select `id` from `guilds` where `name`=? and `serv`=?", [$_POST['name'], $player->serv]);
 
 		$pat[0] = "/^\s+/";
 		$pat[1] = "/\s{2,}/";
@@ -53,7 +53,7 @@ $msg3 = '<font color="red">';
 		$rep[2] = "";
 		$nomedecla = ucwords(preg_replace($pat,$rep,$_POST['name']));
 
-    $query2 = $db->execute("select `id` from `guilds` where `name`=? and `serv`=?", array($nomedecla, $player->serv));
+    $query2 = $db->execute("select `id` from `guilds` where `name`=? and `serv`=?", [$nomedecla, $player->serv]);
 
     if (!$_POST['name']) {
         //Add to error message
@@ -132,7 +132,7 @@ if ($error == 0) {
     $query = $db->autoexecute('guilds', $insert, 'INSERT');
     
         $insertid = $db->Insert_ID();
-        $query = $db->execute("update `players` set `guild`=?, `gold`=? where `id`=?", array($insertid, $player->gold - $goldcost, $player->id));
+        $query = $db->execute("update `players` set `guild`=?, `gold`=? where `id`=?", [$insertid, $player->gold - $goldcost, $player->id]);
         
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Clãs</b></legend>\n";

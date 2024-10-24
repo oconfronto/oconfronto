@@ -7,6 +7,7 @@
 
     <title>O Confronto :: <?php echo PAGENAME ?></title>
 
+    <link rel="icon" type="image/x-icon" href="static/favicon.ico">
     <link rel="stylesheet" type="text/css" href="static/css/index.css" />
     <link rel="stylesheet" type="text/css" href="static/example2.css" />
 

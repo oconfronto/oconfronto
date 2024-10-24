@@ -2,11 +2,12 @@
 	declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
-	$player = check_user($secret_key, $db);
+	$player = check_user($db);
 ?>
 <html>
 <head>
 <title>O Confronto :: Logs de Itens</title>
+<link rel="icon" type="image/x-icon" href="static/favicon.ico">
 <link rel="stylesheet" type="text/css" href="static/css/style-a.css" />
 <link rel="stylesheet" type="text/css" href="static/css/boxover.css" />
 <script type="text/javascript" src="static/js/boxover.js"></script>
@@ -16,21 +17,21 @@ include(__DIR__ . "/lib.php");
 
 
 <?php
-$read0 = $db->execute("update `user_log` set `status`='read' where `player_id`=? and `status`='unread'", array($player->id));
+$read0 = $db->execute("update `user_log` set `status`='read' where `player_id`=? and `status`='unread'", [$player->id]);
 
 echo '<table width="100%">';
 echo '<tr><td align="center" bgcolor="#E1CBA4"><b>Logs de Itens</b></td></tr>';
-$query0 = $db->execute("select * from `log_item` where `player_id`=? order by `time` desc", array($player->id));
+$query0 = $db->execute("select * from `log_item` where `player_id`=? order by `time` desc", [$player->id]);
 if ($query0->recordcount() > 0)
 {
 	while ($trans = $query0->fetchrow())
 	{
-		$read1 = $db->execute("update `log_item` set `status`='read' where `player_id`=? and `status`='unread' and `id`=?", array($player->id, $trans['id']));
+		$read1 = $db->execute("update `log_item` set `status`='read' where `player_id`=? and `status`='unread' and `id`=?", [$player->id, $trans['id']]);
 
 		echo "<tr>";
 
 
-		$auxiliar = $trans['action'] == enviou ? "para" : "de";
+		$auxiliar = $trans['action'] == "enviou" ? "para" : "de";
 
 		$valortempo = time() -  $trans['time'];
 		if ($valortempo < 60) {
@@ -48,9 +49,9 @@ if ($query0->recordcount() > 0)
   }
 
 		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[Log] body=[" . $valortempo2 . " " . $auxiliar2 . ']">';
-		if ($trans['action'] == devolveu){
+		if ($trans['action'] == "devolveu"){
 		echo '<font size="1">O administrador devolveu seu/sua <b>' . $trans['value'] . '</b> para <b><a href="profile.php?id=' . $trans['name2'] . '">' . $trans['name2'] . "</a></b></font></div></td>";
-		}elseif ($trans['action'] == recuperou){
+		}elseif ($trans['action'] == "recuperou"){
 		echo '<font size="1">O administrador recuperou seu/sua <b>' . $trans['value'] . '</b> que estava com <b><a href="profile.php?id=' . $trans['name2'] . '">' . $trans['name2'] . "</a></b></font></div></td>";
 		}else{
 		echo "<font size=\"1\">Você " . $trans['action'] . " " . $trans['value'] . " " . $auxiliar . ' <b><a href="profile.php?id=' . $trans['name2'] . '">' . $trans['name2'] . "</a></b>" . $trans['aditional'] . "</font></div></td>";

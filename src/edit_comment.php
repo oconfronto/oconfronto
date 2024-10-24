@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Editar Comentário");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 
 include(__DIR__ . "/templates/private_header.php");
 ?>
 <script type="text/javascript" src="static/bbeditor/ed.js"></script>
 <?php
-	$procuramengperfil = $db->execute("select `perfil` from `profile` where `player_id`=?", array($player->id));
+	$procuramengperfil = $db->execute("select `perfil` from `profile` where `player_id`=?", [$player->id]);
 	if ($procuramengperfil->recordcount() == 0)
 	{
 		$mencomentario = "Sem comentários.";
@@ -19,7 +19,7 @@ include(__DIR__ . "/templates/private_header.php");
 	else
 	{
 		$comentdocara = $procuramengperfil->fetchrow();
-		$quebras = Array( '<br />', '<br>', '<br/>' );
+		$quebras = ['<br />', '<br>', '<br/>'];
 		$mencomentario = str_replace($quebras, "", $comentdocara['perfil']);
 	}
 

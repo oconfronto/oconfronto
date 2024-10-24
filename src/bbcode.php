@@ -31,37 +31,16 @@ function remoteFileExists($url)
 // Função SmileEmoticons
 function FunSmile($text, $smile = '0')
 {
-    $smilefun = array(
-        ';D' => 1,
-        ':D' => 1,
-        '(b)' => 2,
-        ':O' => 3,
-        ';o' => 4,
-        ';O' => 4,
-        ':(' => 5,
-        ';(' => 5,
-        ':@' => 6,
-        ';@' => 6,
-        ':)' => 8,
-        ';d' => 9,
-        ':d' => 9,
-        ':megusta:' => 'megusta',
-        ':omg:' => 'omg',
-        ':trollface:' => 'trollface',
-        ':NAAO:' => 'NAAAO',
-        ':chacc:' => 'challengeaccepted',
-        ':cry:' => 'cryy',
-        ';)' => 10
-    );
+    $smilefun = [';D' => 1, ':D' => 1, '(b)' => 2, ':O' => 3, ';o' => 4, ';O' => 4, ':(' => 5, ';(' => 5, ':@' => 6, ';@' => 6, ':)' => 8, ';d' => 9, ':d' => 9, ':megusta:' => 'megusta', ':omg:' => 'omg', ':trollface:' => 'trollface', ':NAAO:' => 'NAAAO', ':chacc:' => 'challengeaccepted', ':cry:' => 'cryy', ';)' => 10];
     if ($smile == 1) {
         return $text;
-    } else {
-        // Altera os caracteres por imagens
-        foreach ($smilefun as $search => $replace)
-            $text = str_replace($search, '<img src="static/images/smile/' . $replace . '.gif" />', $text);
-        
-        return $text;
     }
+
+    // Altera os caracteres por imagens
+    foreach ($smilefun as $search => $replace)
+        $text = str_replace($search, '<img src="static/images/smile/' . $replace . '.gif" />', $text);
+
+    return $text;
 }
 
 
@@ -72,10 +51,7 @@ class bbcode
     {
         // Lista de função BBCODE  
 
-        $print = ''; // Inicializando a variável $print
-
-        // BBOCDE "QUOTE"
-        $rows = 0;
+        $print = '';
         while (stripos($text, '[quote]') !== false && stripos($text, '[/quote]') !== false) {
             $quote = substr($text, stripos($text, '[quote]') + 7, stripos($text, '[/quote]') - stripos($text, '[quote]') - 7);
             $text = str_ireplace('[quote]' . $quote . '[/quote]', '<blockquote>' . $quote . '</blockquote>', $text);

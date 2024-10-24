@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Arena");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
-$dungeonPoints = $db->execute("select `dungeon_id` from `dungeon_status` where `player_id`=? and `status`=90 and `fail`=0", array($player->id));
+$dungeonPoints = $db->execute("select `dungeon_id` from `dungeon_status` where `player_id`=? and `status`=90 and `fail`=0", [$player->id]);
 $dungeonPoints = $dungeonPoints->recordcount();
     
-$dungeonVerificaPremiacoes = $db->execute("select * from `dungeon_status` where `player_id`=? and `status`<90 and `fail`=0", array($player->id));
+$dungeonVerificaPremiacoes = $db->execute("select * from `dungeon_status` where `player_id`=? and `status`<90 and `fail`=0", [$player->id]);
 while($dungeonInfo = $dungeonVerificaPremiacoes->fetchrow())
 {    
-	$getAllDungeonInfo = $db->execute("select * from `dungeon` where `id`=?", array($dungeonInfo['dungeon_id']));
+	$getAllDungeonInfo = $db->execute("select * from `dungeon` where `id`=?", [$dungeonInfo['dungeon_id']]);
 	$AllDungeonInfo = $getAllDungeonInfo->fetchrow();
 	
 	$divideDungeonMosters = explode (", ", $AllDungeonInfo['monsters']);
  if (($dungeonInfo['start'] + $AllDungeonInfo['time']) < time()) {
-     $db->execute("update `dungeon_status` set `fail`='2', `status`=? where `dungeon_id`=? and `player_id`=?", array((time() + 86400),$dungeonInfo['dungeon_id'], $player->id));
+     $db->execute("update `dungeon_status` set `fail`='2', `status`=? where `dungeon_id`=? and `player_id`=?", [(time() + 86400), $dungeonInfo['dungeon_id'], $player->id]);
      include(__DIR__ . "/templates/private_header.php");
      echo "O tempo para a dungeon " . $AllDungeonInfo['name'] . " se esgotou!<br/>Você deverá esperar 1 dia para participar dela novamente.";
      echo '<br/><a href="dungeon.php">Continuar</a>.';
@@ -25,7 +25,7 @@ while($dungeonInfo = $dungeonVerificaPremiacoes->fetchrow())
  }
 
 	if (count($divideDungeonMosters) == $dungeonInfo['status']) {
-     $db->execute("update `dungeon_status` set `status`=90, `finish`=? where `dungeon_id`=? and `player_id`=?", array(time(), $dungeonInfo['dungeon_id'], $player->id));
+     $db->execute("update `dungeon_status` set `status`=90, `finish`=? where `dungeon_id`=? and `player_id`=?", [time(), $dungeonInfo['dungeon_id'], $player->id]);
      include(__DIR__ . "/templates/private_header.php");
      echo "<b>Você completou a dungeon " . $AllDungeonInfo['name'] . ", parabéns guerreiro!</b><br/>";
      echo "Você adiquiriu 1 dungeon point por completar esta arena.<br/>";
@@ -35,11 +35,11 @@ while($dungeonInfo = $dungeonVerificaPremiacoes->fetchrow())
      foreach ($itid as $key_value)
      {
          if ($key_value > 999) {
-             $db->execute("update `players` set `gold`=`gold`+? where `id`=?", array($key_value, $player->id));
+             $db->execute("update `players` set `gold`=`gold`+? where `id`=?", [$key_value, $player->id]);
              echo "<li>" . $key_value . " moedas de ouro.</li>";
          } else {
              echo "<li>";
-                 $itinfo = $db->execute("select * from `blueprint_items` where `id`=?", array($key_value));
+                 $itinfo = $db->execute("select * from `blueprint_items` where `id`=?", [$key_value]);
                  $item = $itinfo->fetchrow();
                  
                  $insert['player_id'] = $player->id;
@@ -61,6 +61,7 @@ while($dungeonInfo = $dungeonVerificaPremiacoes->fetchrow())
              echo "</li>";
          }
      }
+
      echo "</ul>";
      echo '<a href="dungeon.php">Continuar</a>.';
      include(__DIR__ . "/templates/private_footer.php");
@@ -69,17 +70,17 @@ while($dungeonInfo = $dungeonVerificaPremiacoes->fetchrow())
 }
 
 if ($_GET['id']) {
-    $checkverid = $db->execute("select * from `dungeon` where `id`=?", array($_GET['id'])); 
+    $checkverid = $db->execute("select * from `dungeon` where `id`=?", [$_GET['id']]); 
     if ($checkverid->recordcount() > 0) {
         
-        $checkverid2 = $db->execute("select * from `dungeon_status` where `player_id`=? and `status`<90 and `fail`=0", array($player->id)); 
+        $checkverid2 = $db->execute("select * from `dungeon_status` where `player_id`=? and `status`<90 and `fail`=0", [$player->id]); 
         if ($checkverid2->recordcount() == 0) {
             $datta = $checkverid->fetchrow();
             
-            $checkverid3 = $db->execute("select * from `dungeon_status` where `dungeon_id`=? and `player_id`=? and `status`<=90 and `fail`=0", array($_GET['id'], $player->id)); 
+            $checkverid3 = $db->execute("select * from `dungeon_status` where `dungeon_id`=? and `player_id`=? and `status`<=90 and `fail`=0", [$_GET['id'], $player->id]); 
             if ($checkverid3->recordcount() == 0) {
                 
-                $checkverid4 = $db->execute("select * from `dungeon_status` where `dungeon_id`=? and `player_id`=? and `status`>?", array($_GET['id'], $player->id, time())); 
+                $checkverid4 = $db->execute("select * from `dungeon_status` where `dungeon_id`=? and `player_id`=? and `status`>?", [$_GET['id'], $player->id, time()]); 
                 if ($checkverid4->recordcount() == 0) {
                 
                     if ($dungeonPoints >= $datta['level']) {
@@ -89,6 +90,7 @@ if ($_GET['id']) {
                             include(__DIR__ . "/templates/private_footer.php");
                             exit;
                         }
+
                         $insert['player_id'] = $player->id;
                         $insert['dungeon_id'] = $_GET['id'];
                         $insert['start'] = time();
@@ -98,6 +100,7 @@ if ($_GET['id']) {
                         include(__DIR__ . "/templates/private_footer.php");
                         exit;
                     }
+
                     include(__DIR__ . "/templates/private_header.php");
                     echo "Você não possui dungeon points suficientes para participar desta arena.";
                     echo '<br/><a href="dungeon.php">Voltar.</a>';
@@ -105,18 +108,21 @@ if ($_GET['id']) {
                     exit;
                     
                 }
+
                 include(__DIR__ . "/templates/private_header.php");
                 echo "Você deve aguardar para participar novamente desta arena.";
                 echo '<br/><a href="dungeon.php">Voltar.</a>';
                 include(__DIR__ . "/templates/private_footer.php");
                 exit;
             }
+
             include(__DIR__ . "/templates/private_header.php");
             echo "Você já participou desta arena.";
             echo '<br/><a href="dungeon.php">Voltar.</a>';
             include(__DIR__ . "/templates/private_footer.php");
             exit;
         }
+
         include(__DIR__ . "/templates/private_header.php");
         echo "Você já está participando de uma arena!";
         echo '<br/><a href="dungeon.php">Voltar.</a>';
@@ -124,6 +130,7 @@ if ($_GET['id']) {
         exit;
         
     }
+
     include(__DIR__ . "/templates/private_header.php");
     echo "Esta arena não está dispon&ecirc;vel no momento.";
     echo '<br/><a href="dungeon.php">Voltar.</a>';
@@ -152,11 +159,11 @@ if ($_GET['id']) {
                 echo '<tr><td style="background-color: #FFFDE0;">';
                 echo '<table width="100%"><tr>';
                 echo '<td width="20%"><center><img src="static/images/itens/medalha.gif" style="padding-top: 5px;" border="0px"/></center></td>';
-                    $verstatus = $db->getone("select `status` from `dungeon_status` where `dungeon_id`=? and `player_id`=?", array($vipti['id'], $player->id));
-                    $verstart = $db->getone("select `start` from `dungeon_status` where `dungeon_id`=? and `player_id`=?", array($vipti['id'], $player->id));
+                    $verstatus = $db->getone("select `status` from `dungeon_status` where `dungeon_id`=? and `player_id`=?", [$vipti['id'], $player->id]);
+                    $verstart = $db->getone("select `start` from `dungeon_status` where `dungeon_id`=? and `player_id`=?", [$vipti['id'], $player->id]);
                     if ($verstatus > 90) {
                         if (time() > $verstatus) {
-                            $db->execute("delete from `dungeon_status` where `dungeon_id`=? and `player_id`=?", array($vipti['id'], $player->id));
+                            $db->execute("delete from `dungeon_status` where `dungeon_id`=? and `player_id`=?", [$vipti['id'], $player->id]);
                             echo '<td width="80%"><center><a href="dungeon.php?id=' . $vipti['id'] . '">Participar</a><br/><font size="1px">Min. ' . $vipti['level'] . " dungeon points.<br/>Tempo max. " . ($vipti['time'] / 60) . " minutos.</font></center></td>";
                         } else {
                             $horas = ceil(($verstatus - time()) / 3600);
@@ -182,10 +189,10 @@ if ($_GET['id']) {
                 $itcount = 1;
                 foreach ($itid as $key_value)
                 {
-                    $itinfo = $db->execute("select * from `monsters` where `id`=?", array($key_value));
+                    $itinfo = $db->execute("select * from `monsters` where `id`=?", [$key_value]);
                     $item = $itinfo->fetchrow();
                     
-                    $dungeoncomfirma = $db->execute("select * from `dungeon_status` where `status`<=90 and `dungeon_id`=? and `player_id`=?", array($vipti['id'], $player->id)); 
+                    $dungeoncomfirma = $db->execute("select * from `dungeon_status` where `status`<=90 and `dungeon_id`=? and `player_id`=?", [$vipti['id'], $player->id]); 
                     if ($dungeoncomfirma->recordcount() > 0) {
                         $info = $dungeoncomfirma->fetchrow();
                         
@@ -212,7 +219,7 @@ if ($_GET['id']) {
                         if ($key_value > 999) {
                             echo "" . $key_value . " moedas de ouro.<br/>";
                         } else {
-                            $itinfo = $db->execute("select * from `blueprint_items` where `id`=?", array($key_value));
+                            $itinfo = $db->execute("select * from `blueprint_items` where `id`=?", [$key_value]);
                             $item = $itinfo->fetchrow();
                             
                             if ($item['type'] == 'amulet'){
@@ -236,7 +243,7 @@ if ($_GET['id']) {
 
 echo '<table width="100%">';
 echo '<tr><td align="center" bgcolor="#E1CBA4"><b>Dungeons Recentes</b></td></tr>';
-$query1 = $db->execute("select * from `dungeon_status` where `player_id`=? and (`status`='90' or `fail`!='0') order by `start` desc limit 10", array($player->id));
+$query1 = $db->execute("select * from `dungeon_status` where `player_id`=? and (`status`='90' or `fail`!='0') order by `start` desc limit 10", [$player->id]);
 if ($query1->recordcount() > 0)
 {
 	while ($log1 = $query1->fetchrow())
@@ -256,7 +263,7 @@ if ($query1->recordcount() > 0)
       $auxiliar2 = "dia(s) atrás.";
   }
         
-        $DungeonLogName = $db->getone("select `name` from `dungeon` where `id`=?", array($log1['dungeon_id']));
+        $DungeonLogName = $db->getone("select `name` from `dungeon` where `id`=?", [$log1['dungeon_id']]);
 
 		echo "<tr>";
 		if ($log1['fail'] == '2'){

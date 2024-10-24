@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Missões");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 
 if ($player->level < 300)
@@ -17,8 +17,8 @@ if ($player->level < 300)
 	exit;
 }
 
-	$verificacao1 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 15));
-	$verificacao2 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 16));
+	$verificacao1 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 15]);
+	$verificacao2 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 16]);
 
 	if ($verificacao1->recordcount() > 0){
 	$quest1 = $verificacao1->fetchrow();
@@ -29,7 +29,7 @@ if ($player->level < 300)
 	}
 
 
-$verificacao3 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`=?", array($player->id, 14, 90));
+$verificacao3 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`=?", [$player->id, 14, 90]);
 if ($verificacao3->recordcount() < 1){
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
@@ -83,6 +83,7 @@ switch($_GET['act'])
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 		}
+
   include(__DIR__ . "/templates/private_header.php");
   $insert['player_id'] = $player->id;
   $insert['quest_id'] = 15;
@@ -101,8 +102,8 @@ switch($_GET['act'])
 	break;
 
 	case "retry":
-		$delety1 = $db->execute("delete from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 15));
-		$delety2 = $db->execute("delete from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 16));
+		$delety1 = $db->execute("delete from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 15]);
+		$delety2 = $db->execute("delete from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 16]);
 
 		header("Location: quest7.php?act=question");
 
@@ -123,7 +124,7 @@ switch($_GET['act'])
 
 	if ($quest1['quest_status'] > 100) {
      if ($quest1['quest_status'] < time()) {
-         $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(2, $player->id, 15));
+         $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [2, $player->id, 15]);
          include(__DIR__ . "/templates/private_header.php");
          echo "<fieldset><legend><b>Missão</b></legend>\n";
          echo "<i>Você demorou demais para atingir o nível nescesário. Você falhou no desafio.</i><br><br>";
@@ -132,8 +133,9 @@ switch($_GET['act'])
          include(__DIR__ . "/templates/private_footer.php");
          exit;
      }
+
      if ($quest1['quest_status'] > time() && $player->level >= $quest2['quest_status']) {
-         $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(80, $player->id, 15));
+         $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [80, $player->id, 15]);
          include(__DIR__ . "/templates/private_header.php");
          echo "<fieldset><legend><b>Missão</b></legend>\n";
          echo "<i>Parabéns, você atingiu o nível nescesário a tempo.</i><br><br>";
@@ -142,6 +144,7 @@ switch($_GET['act'])
          include(__DIR__ . "/templates/private_footer.php");
          exit;
      }
+
      include(__DIR__ . "/templates/private_header.php");
      $time = ($quest1['quest_status'] - time());
      $time_remaining = ceil($time / 60);
@@ -167,7 +170,7 @@ switch($_GET['act'])
 
 	if ($quest1['quest_status'] == 80)
 	{
-		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(90, $player->id, 15));
+		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [90, $player->id, 15]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
 		echo "<i>Vejo que você é um guerreiro dedicado, e agora está mais mais próximo de fazer parte da elite imperial.</i><br><br>";

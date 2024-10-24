@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Fórum");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 include(__DIR__ . "/checkforum.php");
 include(__DIR__ . "/templates/private_header.php");
@@ -67,7 +67,7 @@ if (isset($_GET['page']) && is_numeric($_GET['page']) && ($page = $_GET['page'])
 		$sqlStrAux = sprintf("SELECT count(*) as total FROM forum_question WHERE category='%s' ORDER BY fixo ASC, last_post DESC", $cate);
 	}
 
-$aux = Mysql_Fetch_Assoc(mysql_query($sqlStrAux));
+$aux = $db->execute($sqlStrAux)->fetchrow();
 $query = $db->execute($sqlStr, $values);
 
 
@@ -95,7 +95,7 @@ if ($aux['total'] > 0) {
        echo "<b>Fechado:</b> ";
    }
    
-		$total_answers = $db->execute("select * from `forum_answer` where `question_id`=?", array($rows['id']));
+		$total_answers = $db->execute("select * from `forum_answer` where `question_id`=?", [$rows['id']]);
 		$pagenumber = ceil($total_answers->recordcount() / 5);
 		if ($pagenumber < 1){
 			$pagenumber = 1;
@@ -104,7 +104,7 @@ if ($aux['total'] > 0) {
 		echo '<b><a href="view_topic.php?page=' . $pagenumber . "&id=" . $rows['id'] . '">' . textLimit(stripslashes($rows['topic']), 75) . "</a></b><br />";
 
 			if ($rows['reply'] > 0){
-			$lastpostid = $db->GetOne("select SQL_CACHE `a_user_id` from `forum_answer` where `question_id`=? order by `a_datetime` DESC", array($rows['id']));
+			$lastpostid = $db->GetOne("select SQL_CACHE `a_user_id` from `forum_answer` where `question_id`=? order by `a_datetime` DESC", [$rows['id']]);
 				echo "<font size=\"1\">último post por " . showName($lastpostid, $db) . "</font></td>";
 			}else{
 				echo '<font size="1">Iniciado por ' . showName($rows['user_id'], $db) . "</font></td>";

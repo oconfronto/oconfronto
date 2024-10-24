@@ -4,24 +4,27 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4f81c82781e94afe479539710f163a9b",
+    "content-hash": "e4e0905089d6c2796c9e45396018b617",
     "packages": [
         {
             "name": "adodb/adodb-php",
-            "version": "v5.20.21",
+            "version": "v5.22.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ADOdb/ADOdb.git",
-                "reference": "6c38e6c614802acd3151444a71191912edcec965"
+                "reference": "e7150539d5707ae556172532e2b25ac4e88cb2a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ADOdb/ADOdb/zipball/6c38e6c614802acd3151444a71191912edcec965",
-                "reference": "6c38e6c614802acd3151444a71191912edcec965",
+                "url": "https://api.github.com/repos/ADOdb/ADOdb/zipball/e7150539d5707ae556172532e2b25ac4e88cb2a6",
+                "reference": "e7150539d5707ae556172532e2b25ac4e88cb2a6",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2"
+                "php": "^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5"
             },
             "type": "library",
             "autoload": {
@@ -50,7 +53,7 @@
                 }
             ],
             "description": "ADOdb is a PHP database abstraction layer library",
-            "homepage": "http://adodb.org/",
+            "homepage": "https://adodb.org/",
             "keywords": [
                 "abstraction",
                 "database",
@@ -62,7 +65,7 @@
                 "issues": "https://github.com/ADOdb/ADOdb/issues",
                 "source": "https://github.com/ADOdb/ADOdb"
             },
-            "time": "2022-01-22T22:38:02+00:00"
+            "time": "2023-11-04T22:25:49+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -167,7 +170,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.3"
+        "php": ">=7.4.33"
     },
     "platform-dev": [],
     "plugin-api-version": "2.6.0"

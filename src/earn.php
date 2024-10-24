@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Ganhar Ouro");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/templates/private_header.php");
 
 echo "<fieldset>";
@@ -29,11 +29,11 @@ if ($setting->event_convidados = true) {
 	echo "Cada item abaixo para ser resgatado precisa ter uma quantidade de amigos convidados, após atingir a quantidade requerida o sistema irá automaticamente depositar o item na sua conta. Algumas recompensas você até poderá ganhar item e gold juntos!";
 	echo "<br /><br />Lista de Prêmios:";
 
-	$query2 = mysql_query("select * from ref_list_prem order by qt asc");
-	while ($row = mysql_fetch_array($query2)) {
+	$query2 = $db->execute("select * from ref_list_prem order by qt asc");
+	while ($row = $query2->fetchrow()) {
 		$type_id = $row['item_id'];
-		$query3 = mysql_query(sprintf('select * from `blueprint_items` where `id` = %s ', $type_id));
-		while ($row2 = mysql_fetch_array($query3)) {
+		$query3 = $db->execute(sprintf('select * from `blueprint_items` where `id` = %s ', $type_id));
+		while ($row2 = $query3->fetchrow()) {
 
 			if ($row2['type'] == "shield") {
 				$itemtd = "Defesa";
@@ -80,14 +80,14 @@ if ($setting->event_convidados = true) {
 	<br/><b>Convidados: <?php echo $row['qt']; ?></b><br/><b>Gold Bônus: <?php echo $row['gold']; ?></b>
 	</font></td>
 
-	<td width=35%><font size=1px>+<font color=gray><?php echo rand(1, 5); ?> for</font></font>
+	<td width=35%><font size=1px>+<font color=gray><?php echo random_int(1, 5); ?> for</font></font>
 	
 	</br>
-	<font size=1px>+<font color=green><?php echo rand(1, 5); ?> vit</font></font>
+	<font size=1px>+<font color=green><?php echo random_int(1, 5); ?> vit</font></font>
 	</br>
-	<font size=1px>+<font color=blue><?php echo rand(1, 5); ?> agi</font></font>
+	<font size=1px>+<font color=blue><?php echo random_int(1, 5); ?> agi</font></font>
 	</br>
-	<font size=1px>+<font color=red><?php echo rand(1, 5); ?> res</font></font>
+	<font size=1px>+<font color=red><?php echo random_int(1, 5); ?> res</font></font>
 		
 	</td>
 	</table>]">

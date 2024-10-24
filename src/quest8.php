@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Missões");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 
 if ($player->level < 300)
@@ -17,14 +17,14 @@ if ($player->level < 300)
 	exit;
 }
 
-	$verificacao1 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 17));
+	$verificacao1 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 17]);
 
 	if ($verificacao1->recordcount() > 0){
 	$quest1 = $verificacao1->fetchrow();
 	}
 
 
-$verificacao3 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`=?", array($player->id, 15, 90));
+$verificacao3 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`=?", [$player->id, 15, 90]);
 if ($verificacao3->recordcount() < 1){
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
@@ -67,6 +67,7 @@ switch($_GET['act'])
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 		}
+
   include(__DIR__ . "/templates/private_header.php");
   $insert['player_id'] = $player->id;
   $insert['quest_id'] = 17;
@@ -95,12 +96,12 @@ switch($_GET['act'])
 
 	if ($quest1['quest_status'] == 1)
 		{
-			$contaorbs = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", array($player->id, 156));
+			$contaorbs = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", [$player->id, 156]);
 
 			if ($contaorbs->recordcount() >= 2)
 			{
-			$deletaorbs = $db->execute("delete from `items` where `player_id`=? and `item_id`=? LIMIT 2", array($player->id, 156));
-			$updatestatus = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(80, $player->id, 17));
+			$deletaorbs = $db->execute("delete from `items` where `player_id`=? and `item_id`=? LIMIT 2", [$player->id, 156]);
+			$updatestatus = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [80, $player->id, 17]);
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Você entregou os dois orbs para Alexander.</i><br><br>";
@@ -109,6 +110,7 @@ switch($_GET['act'])
 			include(__DIR__ . "/templates/private_footer.php");
 			exit;
 			}
+
    include(__DIR__ . "/templates/private_header.php");
    echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
    echo "<i>Você ainda não possui os dois oddin orbs que solicitei.</i><br><br>";
@@ -121,7 +123,7 @@ switch($_GET['act'])
 
 	if ($quest1['quest_status'] == 80)
 	{
-		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(90, $player->id, 17));
+		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [90, $player->id, 17]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
 		echo "<i>Fiquei impressionado quando você me entregou os orbs. Geralmente os guerreiros demoram muito mais tempo para reuni-los. Isso me prova que você é um ótimo guerreiro, e acho que já podemos passar para o teste final.</i><br><br>";

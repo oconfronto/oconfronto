@@ -4,7 +4,7 @@ declare(strict_types=1);
 $selectmana = $db->GetOne("select `mana` from `blueprint_magias` where `id`=4");
 $mana = $player->reino == '1' || $player->vip > time() ? $selectmana - 5 : $selectmana;
 
-$curar = $player->level < 50 ? rand(30, 100) : rand($player->level, ($player->level * 2));
+$curar = $player->level < 50 ? random_int(30, 100) : random_int(intval($player->level), intval($player->level * 2));
 
 	$player->mana -= $mana;
 

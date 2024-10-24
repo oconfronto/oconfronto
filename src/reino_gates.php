@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Reino");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 $msg = null;
 
-$query = $db->execute("select * from `reinos` where `id`=?", array($player->reino));
+$query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);
 $reino = $query->fetchrow();
 
 if ($reino['imperador'] == $player->id) {
 	if ($_POST['submit'] && ($_POST['time'] == 15 || $_POST['time'] == 30 || $_POST['time'] == 60)) {
-     $count = $db->execute("select `id` from `players` where `reino`=?", array($player->reino));
+     $count = $db->execute("select `id` from `players` where `reino`=?", [$player->reino]);
      if ($_POST['time'] == 15) {
   				$preco = ceil(100 * $count->recordcount());
   			} elseif ($_POST['time'] == 30) {
@@ -19,23 +19,26 @@ if ($reino['imperador'] == $player->id) {
   			} elseif ($_POST['time'] == 60) {
   				$preco = ceil(175 * $count->recordcount());
   			}
+
      if ($preco > $reino['ouro']) {
   				include(__DIR__ . "/templates/private_header.php");
   				echo "Seu reino não possui ouro suficiente para esta mudança. <a href=\"reino.php\">Voltar</a>.";
   				include(__DIR__ . "/templates/private_footer.php");
   				exit;
   			}
-     $db->execute("update `reinos` set `gates`=?, `ouro`=`ouro`-? where `id`=?", array((time() + (60 * $_POST['time'])), $preco, $player->reino));
-     $query = $db->execute("select `id` from `players` where `id`!=? and `reino`=?", array($player->id, $player->reino));
+
+     $db->execute("update `reinos` set `gates`=?, `ouro`=`ouro`-? where `id`=?", [(time() + (60 * $_POST['time'])), $preco, $player->reino]);
+     $query = $db->execute("select `id` from `players` where `id`!=? and `reino`=?", [$player->id, $player->reino]);
      while($member = $query->fetchrow()) {
   				$logmsg = "Os portões do reino foram abertos por " . $_POST['time'] . " minutos.";
   				addlog($member['id'], $logmsg, $db);
   			}
+
      $insert['reino'] = $player->reino;
      $insert['log'] = "Os portões do reino foram abertos por " . $_POST['time'] . " minutos após o imperador pagar uma taxa de " . $preco . " moedas de ouro.";
      $insert['time'] = time();
      $db->autoexecute('log_reino', $insert, 'INSERT');
-     $query = $db->execute("select * from `reinos` where `id`=?", array($player->reino));
+     $query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);
      $reino = $query->fetchrow();
      $msg = "Os portões do reino foram abertos por " . $_POST['time'] . " minutos.";
  }
@@ -55,7 +58,7 @@ if ($reino['imperador'] == $player->id) {
 			echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Preços</b></center></td></tr>";
 			echo '<tr><td class="off">';
 
-				$count = $db->execute("select `id` from `players` where `reino`=?", array($player->reino));
+				$count = $db->execute("select `id` from `players` where `reino`=?", [$player->reino]);
 				echo '<table width="100%">';
 				echo '<tr><td width="25%">15 min</td><td>custam</td><td>' . ceil(1750 * $count->recordcount()) . "</td></tr>";
 				echo '<tr><td width="25%">30 min</td><td>custam</td><td>' . ceil(2700 * $count->recordcount()) . "</td></tr>";
@@ -107,5 +110,6 @@ if ($reino['imperador'] == $player->id) {
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
+
 header("Location: home.php");
 ?>

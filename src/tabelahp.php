@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Membros");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 include(__DIR__ . "/templates/private_header.php");
 

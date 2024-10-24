@@ -19,36 +19,48 @@ class barGen
 {
 	
 	public $bar_w;
+
  public $bar_h;
+
  public $fontSize;
+
  public $cr;
+
  public $cg;
+
  public $value;
+
  public $fill_color;
+
  public $backColor;
+
  public $max;
+
  /**
   * @var int
   */
  public $dataPercent;
+
  public $bar;
+
  public $barPercent;
- public function setWidth($value)
+
+ public function setWidth($value): void
 	{
 		$this->bar_w = $value;
 	}
 
-	public function setHeight($value)
+	public function setHeight($value): void
 	{
 		$this->bar_h = $value;
 	}
 
-	public function setFontSize($value)
+	public function setFontSize($value): void
 	{
 		$this->fontSize = $value;
 	}
 
-	public function setFillColor($cr, $cg, $value)
+	public function setFillColor($cr, $cg, $value): void
 	{
 		$this->cr = $cr;
 		$this->cg = $cg;
@@ -58,7 +70,7 @@ class barGen
 	}
 
 	
-	public function setBackColor()
+	public function setBackColor(): void
 	{
 		if ($this->fontSize > 0){
 		$this->backColor = imagecolorallocate($this->bar, 171, 171, 179);
@@ -67,7 +79,7 @@ class barGen
 		}
 	}
 
-	public function setData($max, $value)
+	public function setData($max, $value): void
 	{
 		$this->max = $max;
 		$this->value = $value;
@@ -75,13 +87,13 @@ class barGen
 		$this->dataPercent = intval($this->value / $this->max * 100);
 	}
 	
-	public function makeBar()
+	public function makeBar(): void
 	{
 		$this->bar = imagecreate($this->bar_w, $this->bar_h);
 		$this->setBackColor();
 	}
 
-	public function generateBar()
+	public function generateBar(): void
 	{
 		header('Content-type: image/png');
 

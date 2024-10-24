@@ -5,7 +5,7 @@ include(__DIR__ . "/lib.php");
 	define("PAGENAME", "Alterar Senha");
 	include(__DIR__ . "/templates/acc-header.php");
 
-	$acc = check_acc($secret_key, $db);
+	$acc = check_acc($db);
 
 $sucess1 = 0;
 $sucess2 = 0;
@@ -38,7 +38,7 @@ if ($_POST['changepassword']) {
 		$insert['time'] = time();
 		$query = $db->autoexecute('account_log', $insert, 'INSERT');
 
-        $query = $db->execute("update `accounts` set `password`=? where `id`=?", array(encodePassword($_POST['password']), $acc->id));
+        $query = $db->execute("update `accounts` set `password`=? where `id`=?", [encodePassword($_POST['password']), $acc->id]);
         $msg .= "Senha alterada com sucesso.";
 	$sucess1 = 1;
     }

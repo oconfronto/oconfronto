@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Principal");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 include(__DIR__ . "/templates/private_header.php");
 
@@ -18,7 +18,7 @@ if (!$_POST['detail']) {
 }
 
 
-	$procuramengperfil = $db->execute("select `perfil` from `profile` where `player_id`=?", array($player->id));
+	$procuramengperfil = $db->execute("select `perfil` from `profile` where `player_id`=?", [$player->id]);
 
     $topic=$_POST['detail'];
     $topic2=strip_tags($topic);
@@ -35,14 +35,13 @@ if (!$_POST['detail']) {
 	}
 	else
 	{
-        $db->execute("update `profile` set `perfil`=? where `player_id`=?", array($texto, $player->id));
+        $db->execute("update `profile` set `perfil`=? where `player_id`=?", [$texto, $player->id]);
         echo "<fieldset><legend><b>Sucesso</b></legend>Perfil atualizado com sucesso!<BR>";
         echo '<a href="profile.php?id=' . $player->username . '">Visualizar perfil</a></fieldset>';
 	}
 
 // get data that sent from form
 
-mysql_close();
 ?>
 <?php
 include(__DIR__ . "/templates/private_footer.php");

@@ -2,11 +2,12 @@
 	declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
-	$player = check_user($secret_key, $db);
+	$player = check_user($db);
 ?>
 <html>
 <head>
 <title>O Confronto :: Logs de Batalha</title>
+<link rel="icon" type="image/x-icon" href="static/favicon.ico">
 <link rel="stylesheet" type="text/css" href="static/css/style-a.css" />
 <link rel="stylesheet" type="text/css" href="static/css/boxover.css" />
 <script type="text/javascript" src="static/js/boxover.js"></script>
@@ -16,11 +17,11 @@ include(__DIR__ . "/lib.php");
 
 
 <?php
-$read0 = $db->execute("update `logbat` set `status`='read' where `player_id`=? and `status`='unread'", array($player->id));
+$read0 = $db->execute("update `logbat` set `status`='read' where `player_id`=? and `status`='unread'", [$player->id]);
 
 echo '<table width="100%">';
 echo '<tr><td align="center" bgcolor="#E1CBA4"><b>Logs de Batalha</b></td></tr>';
-$query0 = $db->execute("select `msg`, `status`, `time` from `logbat` where `player_id`=? order by `time` desc", array($player->id));
+$query0 = $db->execute("select `msg`, `status`, `time` from `logbat` where `player_id`=? order by `time` desc", [$player->id]);
 if ($query0->recordcount() > 0)
 {
 	while ($log0 = $query0->fetchrow())

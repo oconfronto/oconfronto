@@ -148,7 +148,7 @@ jQuery.fn = jQuery.prototype = {
 		return this;
 	},
 
-	// Execute a callback for every element in the matched set.
+	// execute a callback for every element in the matched set.
 	// (You can seed the arguments with an array of args, but this is
 	// only used internally.)
 	each: function( callback, args ) {
@@ -2960,7 +2960,7 @@ jQuery.fn.extend({
 
 		// If the DOM is already ready
 		if ( jQuery.isReady )
-			// Execute the function immediately
+			// execute the function immediately
 			fn.call( document, jQuery );
 
 		// Otherwise, remember the function for later
@@ -3027,7 +3027,7 @@ jQuery.extend({
 
 			// If there are functions bound, to execute
 			if ( jQuery.readyList ) {
-				// Execute all of them
+				// execute all of them
 				jQuery.each( jQuery.readyList, function(){
 					this.call( document, jQuery );
 				});
@@ -4126,7 +4126,7 @@ jQuery.fx.prototype = {
 					for ( var p in this.options.curAnim )
 						jQuery.attr(this.elem.style, p, this.options.orig[p]);
 					
-				// Execute the complete function
+				// execute the complete function
 				this.options.complete.call( this.elem );
 			}
 

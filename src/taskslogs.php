@@ -2,11 +2,12 @@
 	declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
-	$player = check_user($secret_key, $db);
+	$player = check_user($db);
 ?>
 <html>
 <head>
 <title>O Confronto :: Logs de Tarefas</title>
+<link rel="icon" type="image/x-icon" href="static/favicon.ico">
 <link rel="stylesheet" type="text/css" href="static/css/style-a.css" />
 <link rel="stylesheet" type="text/css" href="static/css/boxover.css" />
 <script type="text/javascript" src="static/js/boxover.js"></script>
@@ -18,7 +19,7 @@ include(__DIR__ . "/lib.php");
 <?php
 echo '<table width="100%">';
 echo "<tr><td align=\"center\" bgcolor=\"#E1CBA4\"><b>Tarefas Concluídas</b></td></tr>";
-$query0 = $db->execute("select * from `completed_tasks` where `player_id`=? order by `time` desc", array($player->id));
+$query0 = $db->execute("select * from `completed_tasks` where `player_id`=? order by `time` desc", [$player->id]);
 if ($query0->recordcount() > 0)
 {
 	while ($gettsk = $query0->fetchrow())
@@ -40,12 +41,12 @@ if ($query0->recordcount() > 0)
       $auxiliar2 = "dia(s) atrás.";
   }
 
-			$gettasks = $db->execute("select * from `tasks` where `id`=?", array($gettsk['task_id']));
+			$gettasks = $db->execute("select * from `tasks` where `id`=?", [$gettsk['task_id']]);
 			$task = $gettasks->fetchrow();
 
 						if ($task['obj_type'] == 'monster' && $task['obj_extra'] > 0){
-							$mname = $db->GetOne("select `username` from `monsters` where `id`=?", array($task['obj_value']));
-							$pcento = $db->GetOne("select `value` from `monster_tasks` where `player_id`=? and `task_id`=?", array($player->id, $task['id']));
+							$mname = $db->GetOne("select `username` from `monsters` where `id`=?", [$task['obj_value']]);
+							$pcento = $db->GetOne("select `value` from `monster_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id']]);
 							$pcento = ceil(($pcento / $task['obj_extra']) * 100);
 							$msg = "Matar " . $task['obj_extra'] . "x o monstro " . $mname . ".<br/>";
 						}elseif ($task['obj_type'] == 'monster' && $task['obj_extra'] == 0){
@@ -65,7 +66,7 @@ if ($query0->recordcount() > 0)
 						}elseif ($task['win_type'] == 'exp'){
 							$win = "<b>Recompensa:</b> " . $task['win_value'] . " pontos de experiência.<br/>";
 						}elseif ($task['win_type'] == 'item'){
-							$itname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", array($task['win_value']));
+							$itname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$task['win_value']]);
 							$win = "<b>Recompensa:</b> " . $itname . ".<br/>";
 						}
 

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/../config.php");
 $email=$_POST['email_name'];
-$query = $db->execute("Select `id` from `accounts` where `email`=?", array($email));
+$query = $db->execute("Select `id` from `accounts` where `email`=?", [$email]);
 
 if ($query->recordcount() > 0) {
     //Username already exist

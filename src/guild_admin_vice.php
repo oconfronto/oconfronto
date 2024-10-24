@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Administração do Clã");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkguild.php");
 
 $error = 0;
 
-$guildquery = $db->execute("select * from `guilds` where `id`=?", array($player->guild));
+$guildquery = $db->execute("select * from `guilds` where `id`=?", [$player->guild]);
 if ($guildquery->recordcount() == 0) {
     header("Location: home.php");
 } else {
@@ -28,7 +28,7 @@ if ($_GET['remove']) {
 	if ($guild['vice'] == NULL || $guild['vice'] == ''){
 		$msg .= "Seu clã não possui um vice lider.";
 	}else{
-	$db->execute("update `guilds` set `vice`=NULL where `id`=?", array($guild['id']));
+	$db->execute("update `guilds` set `vice`=NULL where `id`=?", [$guild['id']]);
 
 		if ($player->username == $guild['leader']){
 			$msg .= "Você removeu os privilégios de vice-lider de " . $guild['vice'] . ".";
@@ -45,7 +45,7 @@ if ($_GET['remove']) {
 if (isset($_POST['username']) && ($_POST['submit'])) {
 
 	$username = $_POST['username'];
-	$query = $db->execute("select `id`, `username`, `guild` from `players` where `username`=? and `serv`=?", array($username, $guild['serv']));
+	$query = $db->execute("select `id`, `username`, `guild` from `players` where `username`=? and `serv`=?", [$username, $guild['serv']]);
 
     if ($query->recordcount() == 0) {
         $errmsg .= "Este usuário não existe!<p />";
@@ -68,7 +68,7 @@ if (isset($_POST['username']) && ($_POST['submit'])) {
     			$msg .= sprintf('Você nomeou %s como vice-lider do clã.<br/>O antigo vice-lider, ', $username) . $guild['vice'] . "  agora é um membro comum.";
 			}
 
-    			$query = $db->execute("update `guilds` set `vice`=? where `id`=?", array($username, $guild['id']));
+    			$query = $db->execute("update `guilds` set `vice`=? where `id`=?", [$username, $guild['id']]);
     			$logmsg = "Você foi nomeado vice-lider do clã: ". $guild['name'] .".";
 				addlog($member['id'], $logmsg, $db);
     		}
@@ -76,7 +76,7 @@ if (isset($_POST['username']) && ($_POST['submit'])) {
 	}
 
 
-$guildquery = $db->execute("select * from `guilds` where `id`=?", array($player->guild));
+$guildquery = $db->execute("select * from `guilds` where `id`=?", [$player->guild]);
 if ($guildquery->recordcount() == 0) {
     header("Location: home.php");
 } else {
@@ -97,10 +97,10 @@ $viceatual2 = '<br/><a href="guild_admin_vice.php?remove=' . $guild['vice'] . "\
 		echo '<table width="100%" border="0"><tr>';
 			echo '<td width="60%">';
 			echo "<b>Usuário:</b>";
-				$query = $db->execute("select `id`, `username` from `players` where `guild`=?", array($guild['id']));
+				$query = $db->execute("select `id`, `username` from `players` where `guild`=?", [$guild['id']]);
 				echo "<select name=\"username\"><option value=''>Selecione</option>";
 				while($result = $query->fetchrow()){
-					echo sprintf('<option value="%s">%s</option>', $result[username], $result[username]);
+					echo sprintf('<option value="%s">%s</option>', $result["username"], $result["username"]);
 				}
     
 				echo "</select>";

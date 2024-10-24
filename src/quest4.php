@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Missões");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 
 //QUEST melhoria do jeweled ring
@@ -19,7 +19,7 @@ if ($player->level < 130)
 	exit;
 }
 
-	$verificaring = $db->execute("select * from `items` where `player_id`=? and `item_id`=163", array($player->id));
+	$verificaring = $db->execute("select * from `items` where `player_id`=? and `item_id`=163", [$player->id]);
 	if ($verificaring->recordcount() == 0)
 	{
 		include(__DIR__ . "/templates/private_header.php");
@@ -71,7 +71,7 @@ switch($_GET['act'])
 	exit;
 
 	case "confirmpay":
-	$verificaring = $db->execute("select * from `items` where `player_id`=? and `item_id`=163", array($player->id));
+	$verificaring = $db->execute("select * from `items` where `player_id`=? and `item_id`=163", [$player->id]);
 	if ($verificaring->recordcount() == 0)
 	{
 		include(__DIR__ . "/templates/private_header.php");
@@ -82,7 +82,7 @@ switch($_GET['act'])
 		exit;
 	}
  
-	$verificacao = $db->execute("select `id` from `quests` where `player_id`=? and `quest_id`=7", array($player->id));
+	$verificacao = $db->execute("select `id` from `quests` where `player_id`=? and `quest_id`=7", [$player->id]);
 	if ($verificacao->recordcount() == 0)
 		{
 		if ($player->gold - 250000 < 0){
@@ -94,7 +94,8 @@ switch($_GET['act'])
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 		}
-  $query = $db->execute("update `players` set `gold`=? where `id`=?", array($player->gold - 250000, $player->id));
+
+  $query = $db->execute("update `players` set `gold`=? where `id`=?", [$player->gold - 250000, $player->id]);
   $insert['player_id'] = $player->id;
   $insert['quest_id'] = 7;
   $insert['quest_status'] = time() + 36000;
@@ -107,6 +108,7 @@ switch($_GET['act'])
   include(__DIR__ . "/templates/private_footer.php");
   exit;
 		}
+
  include(__DIR__ . "/templates/private_header.php");
  echo "<fieldset><legend><b>Gadudj</b></legend>\n";
  echo "Você já me pagou!</i><br/><br/>\n";
@@ -114,8 +116,6 @@ switch($_GET['act'])
  echo "</fieldset>";
  include(__DIR__ . "/templates/private_footer.php");
  exit;
- 
-	break;
 
 	case "search":
 		include(__DIR__ . "/templates/private_header.php");
@@ -146,7 +146,7 @@ switch($_GET['act'])
 
 	case "buy":
 
-	$vepaoiseee = $db->execute("select `id` from `quests` where `player_id`=? and `quest_id`=7 and `quest_status`=2", array($player->id));
+	$vepaoiseee = $db->execute("select `id` from `quests` where `player_id`=? and `quest_id`=7 and `quest_status`=2", [$player->id]);
 	if ($vepaoiseee->recordcount() == 0)
 		{
 		include(__DIR__ . "/templates/private_header.php");
@@ -158,7 +158,7 @@ switch($_GET['act'])
 		exit;
 		}
 
-	$vepaooosswwe = $db->execute("select `id` from `quests` where `player_id`=? and `quest_id`=7 and `quest_status`=3", array($player->id));
+	$vepaooosswwe = $db->execute("select `id` from `quests` where `player_id`=? and `quest_id`=7 and `quest_status`=3", [$player->id]);
 	if ($vepaooosswwe->recordcount() == 0)
 		{
 		if ($player->gold - 80000 < 0){
@@ -170,19 +170,21 @@ switch($_GET['act'])
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 		}
-  $query = $db->execute("update `players` set `gold`=? where `id`=?", array($player->gold - 80000, $player->id));
-  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(90, $player->id, 7));
-  $verificaringeq = $db->execute("select * from `items` where `player_id`=? and `item_id`=163 and `status`='equipped'", array($player->id));
+
+  $query = $db->execute("update `players` set `gold`=? where `id`=?", [$player->gold - 80000, $player->id]);
+  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [90, $player->id, 7]);
+  $verificaringeq = $db->execute("select * from `items` where `player_id`=? and `item_id`=163 and `status`='equipped'", [$player->id]);
   if ($verificaringeq->recordcount() > 0)
 		{
-			$db->execute("update `players` set `hp`=`hp`-500, `maxhp`=`maxhp`-500 where `id`=?", array($player->id));
+			$db->execute("update `players` set `hp`=`hp`-500, `maxhp`=`maxhp`-500 where `id`=?", [$player->id]);
 		}
-  $query = $db->execute("delete from `items` where `player_id`=? and `item_id`=?", array($player->id, 163));
+
+  $query = $db->execute("delete from `items` where `player_id`=? and `item_id`=?", [$player->id, 163]);
   $insert['player_id'] = $player->id;
   $insert['item_id'] = 168;
   $db->autoexecute('items', $insert, 'INSERT');
   $ringid = $db->Insert_ID();
-  $db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", array(30, 30, 30, 30, $ringid));
+  $db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", [30, 30, 30, 30, $ringid]);
   include(__DIR__ . "/templates/private_header.php");
   echo "<fieldset><legend><b>Missão</b></legend>\n";
   echo "<i>O assassino que você contratou matou Gadudj e recuperou seu Jeweled Ring.<br>Sua missão acabou.</i><br><br>\n";
@@ -191,6 +193,7 @@ switch($_GET['act'])
   include(__DIR__ . "/templates/private_footer.php");
   exit;
 		}
+
  include(__DIR__ . "/templates/private_header.php");
  echo "<fieldset><legend><b>Missão</b></legend>\n";
  echo "Você já pagou ao assassino!</i><br/><br/>\n";
@@ -198,18 +201,16 @@ switch($_GET['act'])
  echo "</fieldset>";
  include(__DIR__ . "/templates/private_footer.php");
  exit;
- 
-	break;
 
 }
 ?>
 <?php
-	$verificacao1 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 7));
+	$verificacao1 = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 7]);
 	$quest1 = $verificacao1->fetchrow();
 
 	if ($verificacao1->recordcount() == 0)
 		{
-	$verificaring = $db->execute("select * from `items` where `player_id`=? and `item_id`=163", array($player->id));
+	$verificaring = $db->execute("select * from `items` where `player_id`=? and `item_id`=163", [$player->id]);
 	if ($verificaring->recordcount() == 0)
 	{
 		include(__DIR__ . "/templates/private_header.php");
@@ -233,7 +234,7 @@ switch($_GET['act'])
 		{
 			if ($quest1['quest_status'] < time())
 			{
-			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(2, $player->id, 7));
+			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [2, $player->id, 7]);
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Parece que Gadudj fugiu com seu jeweled ring! Você terá que procurar e mata-lo para recuperar seu anel.</i><br><br>";

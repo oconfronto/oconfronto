@@ -13,6 +13,7 @@ if ($_GET['transpotion'] && !$_POST['mandap']) {
     include(__DIR__ . "/templates/private_footer.php");
     exit;
 }
+
 if ($_GET['transpotion'] && $_POST['mandap']) {
     if (!$_POST['potion']){
   		include(__DIR__ . "/templates/private_header.php");
@@ -23,7 +24,7 @@ if ($_GET['transpotion'] && $_POST['mandap']) {
           	include(__DIR__ . "/templates/private_footer.php");
           	exit;
   	}
-    
+
     if (!$_POST['quantia']){
   		include(__DIR__ . "/templates/private_header.php");
   		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -33,7 +34,7 @@ if ($_GET['transpotion'] && $_POST['mandap']) {
           	include(__DIR__ . "/templates/private_footer.php");
           	exit;
   	}
-    
+
     if (!$_POST['passcode']){
   		include(__DIR__ . "/templates/private_header.php");
   		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -43,7 +44,7 @@ if ($_GET['transpotion'] && $_POST['mandap']) {
           	include(__DIR__ . "/templates/private_footer.php");
           	exit;
   	}
-    
+
     if (!$_POST['to']){
   		include(__DIR__ . "/templates/private_header.php");
   		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -53,7 +54,7 @@ if ($_GET['transpotion'] && $_POST['mandap']) {
           	include(__DIR__ . "/templates/private_footer.php");
           	exit;
   	}
-    
+
     if ($_POST['passcode'] != $player->transpass){
   		include(__DIR__ . "/templates/private_header.php");
   		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -63,7 +64,7 @@ if ($_GET['transpotion'] && $_POST['mandap']) {
           	include(__DIR__ . "/templates/private_footer.php");
           	exit;
   	}
-    
+
     if (!is_numeric($_POST['quantia']) || $_POST['quantia'] < 1){
    		include(__DIR__ . "/templates/private_header.php");
    		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -73,8 +74,8 @@ if ($_GET['transpotion'] && $_POST['mandap']) {
            	include(__DIR__ . "/templates/private_footer.php");
            	exit;
    	}
-    
-    if ($_POST['potion'] != hp && $_POST['potion'] != bhp && $_POST['potion'] != mana && $_POST['potion'] != energy){
+
+    if ($_POST['potion'] != "hp" && $_POST['potion'] != "bhp" && $_POST['potion'] != "mana" && $_POST['potion'] != "energy"){
    		include(__DIR__ . "/templates/private_header.php");
    		echo "<fieldset><legend><b>Erro</b></legend>\n";
            	echo "Selecione um tipo de poção para enviar.<br />";
@@ -83,8 +84,8 @@ if ($_GET['transpotion'] && $_POST['mandap']) {
            	include(__DIR__ . "/templates/private_footer.php");
            	exit;
    	}
-    
-    $veruser = $db->execute("select `id`, `username`, `serv` from `players` where `username`=?", array($_POST['to']));
+
+    $veruser = $db->execute("select `id`, `username`, `serv` from `players` where `username`=?", [$_POST['to']]);
     if ($veruser->recordcount() == 0) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -94,7 +95,7 @@ if ($_GET['transpotion'] && $_POST['mandap']) {
         	include(__DIR__ . "/templates/private_footer.php");
         	exit;
 	}
-    
+
     $memberto = $veruser->fetchrow();
     if ($player->serv != $memberto['serv']) {
 		include(__DIR__ . "/templates/private_header.php");
@@ -105,21 +106,23 @@ if ($_GET['transpotion'] && $_POST['mandap']) {
         	include(__DIR__ . "/templates/private_footer.php");
         	exit;
 	}
-    if ($_POST['potion'] == hp){
+
+    if ($_POST['potion'] == "hp"){
   		$pid = 136;
   		$tipo = "Health Potion";
-  		}elseif ($_POST['potion'] == bhp){
+  		}elseif ($_POST['potion'] == "bhp"){
   		$pid = 148;
   		$tipo = "Big Health Potion";
-  		}elseif ($_POST['potion'] == mana){
+  		}elseif ($_POST['potion'] == "mana"){
   		$pid = 150;
   		$tipo = "Mana Potion";
-  		}elseif ($_POST['potion'] == energy){
+  		}elseif ($_POST['potion'] == "energy"){
   		$pid = 137;
   		$tipo = "Energy Potion";
   		}
+
     $quantia = floor($_POST['quantia']);
-    $numpotio = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=? and `mark`='f'", array($player->id, $pid));
+    $numpotio = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=? and `mark`='f'", [$player->id, $pid]);
     if ($numpotio->recordcount() < $quantia){
    		include(__DIR__ . "/templates/private_header.php");
    		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -129,6 +132,7 @@ if ($_GET['transpotion'] && $_POST['mandap']) {
            	include(__DIR__ . "/templates/private_footer.php");
            	exit;
    	}
+
     $insert['player_id'] = $player->id;
     $insert['name1'] = $player->username;
     $insert['name2'] = $memberto['username'];
@@ -148,7 +152,7 @@ if ($_GET['transpotion'] && $_POST['mandap']) {
     $query = $db->autoexecute('log_item', $insert, 'INSERT');
     $logmsg = "O usuário <b>" . $player->username . "</b> lhe enviou <b>" . $quantia . " " . $tipo . "s</b>.";
     addlog($memberto['id'], $logmsg, $db);
-    $mandapocoes = $db->execute("update `items` set `player_id`=? where `player_id`=? and `item_id`=? and `mark`='f' LIMIT ?", array($memberto['id'], $player->id, $pid, $quantia));
+    $mandapocoes = $db->execute("update `items` set `player_id`=? where `player_id`=? and `item_id`=? and `mark`='f' LIMIT ?", [$memberto['id'], $player->id, $pid, $quantia]);
     include(__DIR__ . "/templates/private_header.php");
     echo "<fieldset><legend><b>Sucesso</b></legend>\n";
     echo "Você acaba de enviar " . $quantia . " " . $tipo . "s para " . $memberto['username'] . ".<br />";

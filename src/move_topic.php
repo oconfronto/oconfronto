@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Fórum");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 include(__DIR__ . "/templates/private_header.php");
 
@@ -15,13 +15,14 @@ if (!$_GET['topic'])
 	exit;
 }
 
-	$procuramensagem = $db->execute("select `topic`, `user_id` from `forum_question` where `id`=?", array($_GET['topic']));
+	$procuramensagem = $db->execute("select `topic`, `user_id` from `forum_question` where `id`=?", [$_GET['topic']]);
 	if ($procuramensagem->recordcount() == 0)
 	{
 		echo 'Um erro desconhecido ocorreu! <a href="main_forum.php">Voltar</a>.';
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
+
  $nome = $procuramensagem->fetchrow();
 
 	if ($player->gm_rank < 3 && $player->id != $nome['user_id']) {
@@ -33,12 +34,13 @@ if (!$_GET['topic'])
 
 if(isset($_POST['submit']))
 {
-	$verifica = $db->GetOne("select `imperador` from `reinos` where `id`=?", array($player->reino));
+	$verifica = $db->GetOne("select `imperador` from `reinos` where `id`=?", [$player->reino]);
  if (!$_POST['category']) {
      echo "Você precisa preencher todos os campos! <a href=\"move_topic.php?topic=" . $_GET['topic'] . '">Voltar</a>.';
      include(__DIR__ . "/templates/private_footer.php");
      exit;
  }
+
  if ($_POST['category'] != 'reino' && $_POST['category'] != 'sugestoes' && $_POST['category'] != 'gangues' && $_POST['category'] != 'trade' && $_POST['category'] != 'duvidas' && $_POST['category'] != 'outros' && $_POST['category'] != 'fan' && $_POST['category'] != 'off' && $player->gm_rank < 9) {
      $error = "Você não possui autorização para mover tópicos para essa categoria.";
      include(__DIR__ . "/templates/private_footer.php");
@@ -76,7 +78,7 @@ $categoria = ucfirst($_POST['category']);
 	}
 
 
-$real = $db->execute("update `forum_question` set `category`=? where `id`=?", array($_POST['category'], $_GET['topic']));
+$real = $db->execute("update `forum_question` set `category`=? where `id`=?", [$_POST['category'], $_GET['topic']]);
 	echo 'Postagem movida com sucesso! <a href="view_topic.php?id=' . $_GET['topic'] . '">Voltar</a>.';
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
@@ -97,7 +99,7 @@ $real = $db->execute("update `forum_question` set `category`=? where `id`=?", ar
 <select name="category">
 <option value="none" selected="selected">Selecione</option>
 <?php
-$verifica = $db->GetOne("select `imperador` from `reinos` where `id`=?", array($player->reino));
+$verifica = $db->GetOne("select `imperador` from `reinos` where `id`=?", [$player->reino]);
 if ($player->gm_rank > 9) {
 	echo "<option value=\"noticias\">Notícias</option>";
 }

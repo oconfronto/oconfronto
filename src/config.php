@@ -8,14 +8,14 @@ $config_username = getenv('MYSQL_USER');
 $config_password = getenv('MYSQL_PASSWORD');
 
 include(__DIR__ . '/../vendor/adodb/adodb-php/adodb.inc.php'); //Include adodb files
-$db = &ADONewConnection('mysql'); //Connect to database
-$conn = $db->Connect($config_server, $config_username, $config_password, $config_database); //Select table
+$db = ADONewConnection('mysqli'); // Change 'mysql' to 'mysqli'
+$conn = $db->connect($config_server, $config_username, $config_password, $config_database); //Select table
 
 // Define o charset para utf8
-$db->Execute("SET NAMES 'utf8'");
-$db->Execute("SET CHARACTER SET 'utf8'");
+$db->execute("SET NAMES 'utf8'");
+$db->execute("SET CHARACTER SET 'utf8'");
 
-$db->SetFetchMode(ADODB_FETCH_ASSOC); //Fetch associative arrays
+$db->setFetchMode(ADODB_FETCH_ASSOC); //Fetch associative arrays
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC; //Fetch associative arrays
 //$db->debug = true; //Debug
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Fórum");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 include(__DIR__ . "/templates/private_header.php");
 if (!$_GET['player']) {
@@ -18,14 +18,13 @@ if ($player->gm_rank < 3) {
     include(__DIR__ . "/templates/private_footer.php");
     exit;
 }
-else {
-	$user = $db->execute("select `username`, `gm_rank` from `players` where `id`=?", array($_GET['player']));
-	if ($user->recordcount() == 0) {
+
+$user = $db->execute("select `username`, `gm_rank` from `players` where `id`=?", [$_GET['player']]);
+if ($user->recordcount() == 0) {
 		echo "Este usuário não existe! <a href=\"select_forum.php\">Voltar</a>.";
 	}
- 
-	include(__DIR__ . "/templates/private_footer.php");
-	exit;
-}
+
+include(__DIR__ . "/templates/private_footer.php");
+exit;
 
 ?>

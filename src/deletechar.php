@@ -4,7 +4,7 @@ declare(strict_types=1);
 ob_start(); // Inicia o buffer de saída
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Deleta Personagem");
-$acc = check_acc($secret_key, $db);
+$acc = check_acc($db);
 include(__DIR__ . "/templates/acc-header.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
@@ -19,14 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
             echo "<span id=\"aviso-a\">A confirmação não corresponde ao personagem selecionado.</span>";
         } else {
             // Check if username has already been used
-            $query = $db->execute("SELECT `id` FROM `players` WHERE `username`=?", array($nomedeusuari0));
+            $query = $db->execute("SELECT `id` FROM `players` WHERE `username`=?", [$nomedeusuari0]);
             if ($query->recordcount() > 0) {
                 $row = $query->fetchrow(); // Obtém a linha como um array
                 $playerID = $row['id']; // Acessa o ID
-                $db->execute("DELETE FROM `players` WHERE `id`=?", array($playerID));
+                $db->execute("DELETE FROM `players` WHERE `id`=?", [$playerID]);
                 // $db->execute("DELETE FROM `friends` WHERE `fname`=?", array($nomedeusuari0));
             }
-            
+
             // Redireciona após excluir o personagem
             header("Location: characters.php");
             exit;
@@ -48,7 +48,7 @@ ob_end_flush(); // Envia o conteúdo do buffer e limpa
             <td width="72%">
                 <select id="ddl_char" name="ddl_char" onchange="deleteMsg(this)" class="inp">
                     <?php
-                    $querynumplayers = $db->execute("SELECT `username` FROM `players` WHERE `acc_id`=?", array($acc->id));
+                    $querynumplayers = $db->execute("SELECT `username` FROM `players` WHERE `acc_id`=?", [$acc->id]);
                     if ($querynumplayers) {
                         echo '<option value="none" selected="selected">Selecione</option>';
                         foreach ($querynumplayers as $querynumplayer) {

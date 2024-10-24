@@ -11,9 +11,9 @@ function isMobile($userAgent)
     return preg_match('/Mobile|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/', $userAgent);
 }
 
-$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=90 and `player_id`=?", array($player->id));
+$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=90 and `player_id`=?", [$player->id]);
 if ($tutorial->recordcount() == 0) {
-    $checatutoriallido = $db->execute("select * from `pending` where `pending_id`=2 and `player_id`=?", array($player->id));
+    $checatutoriallido = $db->execute("select * from `pending` where `pending_id`=2 and `player_id`=?", [$player->id]);
     if ($checatutoriallido->recordcount() == 0) {
         $insert['player_id'] = $player->id;
         $insert['pending_id'] = 2;
@@ -23,19 +23,23 @@ if ($tutorial->recordcount() == 0) {
         header("Location: start.php");
         exit;
     }
+
     $tut = $checatutoriallido->fetchrow();
     if (($tut['pending_status'] == 1 || $player->reino == 0) && $currentfile !== 'start.php') {
         header("Location: start.php");
         exit;
     }
+
     if ($tut['pending_status'] == 2 && $currentfile !== 'start.php') {
         header("Location: start.php");
         exit;
     }
+
     if ($tut['pending_status'] == 3 && $currentfile !== 'stat_points.php') {
         header("Location: stat_points.php");
         exit;
     }
+
     if ($tut['pending_status'] == 4) {
         if (isMobile($userAgent)) {
             if ($currentfile !== 'inventory_mobile.php') {
@@ -76,6 +80,7 @@ if ($tutorial->recordcount() == 0) {
     <meta http-equiv="Expires" content="-1" />
 
     <title>O Confronto :: <?php echo PAGENAME ?></title>
+    <link rel="icon" type="image/x-icon" href="static/favicon.ico">
     <link href="static/css/styles.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="static/css/css.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="static/css/boxover.css" />
@@ -265,12 +270,12 @@ if ($currentfile === 'inventory.php') {
     echo "<body>";
 }
 
-$mailcount = $db->execute("select `id` from `mail` where `to`=? and `status`='unread'", array($player->id));
-$logcount0 = $db->execute("select `id` from `user_log` where `player_id`=? and `status`='unread'", array($player->id));
-$logcount1 = $db->execute("select `id` from `logbat` where `player_id`=? and `status`='unread'", array($player->id));
-$logcount2 = $db->execute("select `id` from `log_gold` where `player_id`=? and `status`='unread'", array($player->id));
-$logcount3 = $db->execute("select `id` from `log_item` where `player_id`=? and `status`='unread'", array($player->id));
-$logcount4 = $db->execute("select `id` from `account_log` where `player_id`=? and `status`='unread'", array($player->acc_id));
+$mailcount = $db->execute("select `id` from `mail` where `to`=? and `status`='unread'", [$player->id]);
+$logcount0 = $db->execute("select `id` from `user_log` where `player_id`=? and `status`='unread'", [$player->id]);
+$logcount1 = $db->execute("select `id` from `logbat` where `player_id`=? and `status`='unread'", [$player->id]);
+$logcount2 = $db->execute("select `id` from `log_gold` where `player_id`=? and `status`='unread'", [$player->id]);
+$logcount3 = $db->execute("select `id` from `log_item` where `player_id`=? and `status`='unread'", [$player->id]);
+$logcount4 = $db->execute("select `id` from `account_log` where `player_id`=? and `status`='unread'", [$player->acc_id]);
 $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2->recordcount() + $logcount3->recordcount() + $logcount4->recordcount();
 ?>
 
@@ -289,7 +294,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                             style="-webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;" border="0">
 
                         <?php
-                        $verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", array($player->id, time()));
+                        $verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", [$player->id, time()]);
                         if ($verificpotion->recordcount() > 0) {
                             $selct = $verificpotion->fetchrow();
                             $valortempo = $selct['time'] - time();
@@ -303,9 +308,9 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                                 $auxiliar = "hora(s)";
                             }
 
-                            $potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", array($selct['item_id']));
-                            $potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", array($selct['item_id']));
-                            $potimg = $db->GetOne("select `img` from `blueprint_items` where `id`=?", array($selct['item_id']));
+                            $potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id']]);
+                            $potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id']]);
+                            $potimg = $db->GetOne("select `img` from `blueprint_items` where `id`=?", [$selct['item_id']]);
 
                         ?>
                             <div
@@ -350,7 +355,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
 
                         <span id="mudar1"><img src="static/images/menu/on1.png" border="0px"></span>
                         <div id="gaita1">
-                            <?php include(__DIR__ . "/showit.php"); ?>
+                            <?php include(__DIR__ . "/../showit.php"); ?>
 
                             <div class="moedas">
                                 <div class="ic-moeda"></div>
@@ -364,24 +369,24 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
 
                             <?php
                             echo '<table border="0px" cellpadding="0px" cellspacing="0px"  class="friend">';
-                            $query = $db->execute("select `fname` from `friends` WHERE `uid`=? order by `fname` asc", array($player->acc_id));
+                            $query = $db->execute("select `fname` from `friends` WHERE `uid`=? order by `fname` asc", [$player->acc_id]);
                             if ($query->recordcount() == 0) {
                                 echo "<tr class=\"amigo\"><th><center>Você não tem amigos.</center></th></tr>";
                             } else {
                                 $bool = "o";
                                 while ($friend = $query->fetchrow()) {
-                                    $name = $db->GetOne("select `id` from `players` where `username`=?", array($friend['fname']));
-                                    $friendlevel = $db->getone("select `level` from `players` where `id`=?", array($name));
+                                    $name = $db->GetOne("select `id` from `players` where `username`=?", [$friend['fname']]);
+                                    $friendlevel = $db->getone("select `level` from `players` where `id`=?", [$name]);
 
                                     echo '<tr class="amig' . $bool . '">';
                                     echo "<th>&nbsp;<b>" . showName($name, $db, 'off', 'off') . "</b></th>";
                                     echo "<th><b>Nv. " . $friendlevel . "</b></th>";
 
 
-                                    $online = $db->execute("select `time` from `user_online` where `player_id`=?", array($name));
-                                    $ignorado = $db->execute("select * from `ignored` where `uid`=? and `bid`=?", array($name, $player->id));
+                                    $online = $db->execute("select `time` from `user_online` where `player_id`=?", [$name]);
+                                    $ignorado = $db->execute("select * from `ignored` where `uid`=? and `bid`=?", [$name, $player->id]);
                                     if ($online->recordcount() > 0 && $ignorado->recordcount() == 0) {
-                                        $check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", array($name));
+                                        $check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", [$name]);
                                         if ($check->recordcount() == 0) {
                                             echo "<th><center><a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", showName($name, $db, 'off', 'off')) . "')\"><img src=\"static/images/images/on.png\" border=\"0px\"></a></center></th>";
                                         } else {

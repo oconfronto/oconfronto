@@ -21,12 +21,12 @@ if ($player->mana < $mana){
     $otroatak = 5;
 }else{
     if ($player->id == $luta['p_id']) {
-        $db->execute("update `duels` set `p_magia`='6', `p_turnos`='5' where `id`=?", array($luta['id']));
+        $db->execute("update `duels` set `p_magia`='6', `p_turnos`='5' where `id`=?", [$luta['id']]);
     } else {
-        $db->execute("update `duels` set `e_magia`='6', `e_turnos`='5' where `id`=?", array($luta['id']));
+        $db->execute("update `duels` set `e_magia`='6', `e_turnos`='5' where `id`=?", [$luta['id']]);
     }
     
-    $db->execute("update `players` set `mana`=`mana`-? where `id`=?", array($mana, $player->id));
+    $db->execute("update `players` set `mana`=`mana`-? where `id`=?", [$mana, $player->id]);
     array_unshift($duellog, "3, " . $player->username . ", defesa quádrupla");
 }
 ?>

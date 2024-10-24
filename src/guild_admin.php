@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Administração do Clã");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkguild.php");
 
 $error = 0;
 
 //Populates $guild variable
-$query = $db->execute("select * from `guilds` where `id`=?", array($player->guild));
+$query = $db->execute("select * from `guilds` where `id`=?", [$player->guild]);
 
 if ($query->recordcount() == 0) {
     header("Location: home.php");
@@ -32,6 +32,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
     include(__DIR__ . "/templates/private_footer.php");
     exit;
 }
+
 //If price set then update query
 if (isset($_POST['price']) && ($_POST['submit'])) {
     if (($_POST['price']) < 0) {
@@ -46,10 +47,11 @@ if (isset($_POST['price']) && ($_POST['submit'])) {
         $msg1 .= "<font color=\"red\">Este valor não é valido.</font><p />";
         $error = 1;
     } else {
-        $query = $db->execute("update `guilds` set `price`=? where `id`=?", array($_POST['price'], $guild['id']));
+        $query = $db->execute("update `guilds` set `price`=? where `id`=?", [$_POST['price'], $guild['id']]);
         $msg1 .= "Voc trocou o preço para entrar no seu clã.<p />";
     }
 }
+
 //Imagem by jrotta
 // if (isset($_POST['img']) && ($_POST['submit'])) {
 //     if (strlen($_POST['img']) < 12) {
@@ -71,9 +73,10 @@ if ($_POST['upload']) {
         $errmsg .= "O endereço desta imagem não é válido!";
         $error = 1;
     }
+
     if ($error == 0) {
         $avat = $_POST['guild_admin'] ?: "default_guild.png";
-        $query = $db->execute("update `guilds` set `img`=? where `id`=?", array($avat, $guild['id']));
+        $query = $db->execute("update `guilds` set `img`=? where `id`=?", [$avat, $guild['id']]);
         $msg .= "Você alterou seu avatar com sucesso!";
         // Espera 1.5 segundos antes de atualizar a página
         //  echo "<p><font color='green'>$msg</font></p>";
@@ -81,12 +84,14 @@ if ($_POST['upload']) {
         echo '<meta http-equiv="refresh" content="1.3">';
         exit;
     }
+
     // Espera 1.5 segundos antes de atualizar a página
     //  echo "<p><font color='green'>$msg</font></p>";
     echo showAlert("<b>" . $errmsg . "</b>", "red");
     echo '<meta http-equiv="refresh" content="1.3">';
     exit;
 }
+
 // if ($_GET['success'] == 'true') {
 //     echo showAlert("Você trocou a imagem do seu clã com sucesso!", "green");
 // } elseif ($_GET['msg']) {
@@ -103,10 +108,11 @@ if (isset($_POST['motd']) && ($_POST['submit'])) {
         $msg3 .= "<font color=\"red\">A mensagem do seu clã deve conter de 3 é 220 caracteres!</font><p />";
         $error = 1;
     } else {
-        $query = $db->execute("update `guilds` set `motd`=? where `id`=?", array($_POST['motd'], $guild['id']));
+        $query = $db->execute("update `guilds` set `motd`=? where `id`=?", [$_POST['motd'], $guild['id']]);
         $msg3 .= "Você trocou a mensagem do seu clã.<p />";
     }
 }
+
 //If blurb set then update query
 if (isset($_POST['blurb']) && ($_POST['submit'])) {
     if (strlen($_POST['blurb']) < 50) {
@@ -122,7 +128,7 @@ if (isset($_POST['blurb']) && ($_POST['submit'])) {
         $texto = nl2br($tirahtmldades);
 
 
-        $query = $db->execute("update `guilds` set `blurb`=? where `id`=?", array($texto, $guild['id']));
+        $query = $db->execute("update `guilds` set `blurb`=? where `id`=?", [$texto, $guild['id']]);
         $msg4 .= "Você trocou a descrição do seu clã.<p />";
     }
 }
@@ -254,7 +260,7 @@ echo "</table>";
                             edToolbar('blurb');
                         </script><textarea onkeyup="contador(this.id,'alvo',5000);" rows="12"
                             name="blurb" id="blurb" class="ed"><?php
-                                                                $quebras = array('<br />', '<br>', '<br/>');
+                                                                $quebras = ['<br />', '<br>', '<br/>'];
                                                                 echo str_replace($quebras, "", $textoreferencia);
                                                                 ?></textarea>
                         <font size="1"><br />O seu texto contem <span id="alvo">5000</span> caracteres. (Máximo 5000)</font>

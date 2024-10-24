@@ -3,12 +3,12 @@
 
 include(__DIR__ . "/lib.php");
 	define("PAGENAME", "Informações Pessoais");
-	$acc = check_acc($secret_key, $db);
+	$acc = check_acc($db);
 
 	include(__DIR__ . "/templates/acc-header.php");
 
 $error = 0;
-$checkshowmail = $db->execute("select * from `other` where `value`=? and `player_id`=?", array(showmail, $acc->id));
+$checkshowmail = $db->execute("select * from `other` where `value`=? and `player_id`=?", ["showmail", $acc->id]);
 
 if ($_POST['submit']) {
     if ((!$_POST['rlname'] | !$_POST['showmail'] | !$_POST['remember'] | !$_POST['sex']) !== 0) {
@@ -43,14 +43,14 @@ if ($_POST['submit']) {
 	if ($_POST['showmail'] == 2){
 		if ($checkshowmail->recordcount() < 1) {
 		$insert['player_id'] = $acc->id;
-		$insert['value'] = showmail;
+		$insert['value'] = "showmail";
 		$db->autoexecute('other', $insert, 'INSERT');
 		}
 	}else{
-	$deleteshowmail = $db->execute("delete from `other` where `value`=? and `player_id`=?", array(showmail, $acc->id));
+	$deleteshowmail = $db->execute("delete from `other` where `value`=? and `player_id`=?", ["showmail", $acc->id]);
 	}
 
-        $query = $db->execute("update `accounts` set `name`=?, `sex`=?, `remember`=? where `id`=?", array($_POST['rlname'], $sexx, $rememberr, $acc->id));
+        $query = $db->execute("update `accounts` set `name`=?, `sex`=?, `remember`=? where `id`=?", [$_POST['rlname'], $sexx, $rememberr, $acc->id]);
         echo '<span id="aviso-a"></span>';
         echo "<br/><p><center><b>Informações pessoais alteradas com sucesso! <a href=\"characters.php\">Voltar</a>.</b></center></p><br/>";
         include(__DIR__ . "/templates/acc-footer.php");
@@ -58,8 +58,8 @@ if ($_POST['submit']) {
     }
 }
 
-$acc = check_acc($secret_key, $db);
-$checkshowmail = $db->execute("select * from `other` where `value`=? and `player_id`=?", array(showmail, $acc->id));
+$acc = check_acc($db);
+$checkshowmail = $db->execute("select * from `other` where `value`=? and `player_id`=?", ["showmail", $acc->id]);
     
     echo '<span id="aviso-a">';
     if ($errmsg != "") {
@@ -88,7 +88,7 @@ echo "<tr><td width=\"40%\"><b>Mostrar email</b>:</td><td><select name=\"showmai
 echo "<tr><td width=\"40%\"><b>Mostrar email</b>:</td><td><select name=\"showmail\" class=\"inp\"><option value=\"1\">Não</option><option value=\"2\" selected=\"selected\">Sim</option></select></td></tr>";
 }
 
-if ($acc->remember != t){
+if ($acc->remember != "t"){
 echo "<tr><td width=\"40%\"><b>Lembrar Senha</b>:</td><td><select name=\"remember\" class=\"inp\"><option value=\"1\" selected=\"selected\">Não</option><option value=\"2\">Sim</option></select></td></tr>";
 }else{
 echo "<tr><td width=\"40%\"><b>Lembrar Senha</b>:</td><td><select name=\"remember\" class=\"inp\"><option value=\"1\">Não</option><option value=\"2\" selected=\"selected\">Sim</option></select></td></tr>";

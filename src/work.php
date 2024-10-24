@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Trabalhar");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 
 $totaltime = 0;
-$counthours = $db->execute("select `worktime` from `work` where `start`>? and `player_id`=? and `status`!='a'", array(time() + 604800, $player->id));
+$counthours = $db->execute("select `worktime` from `work` where `start`>? and `player_id`=? and `status`!='a'", [time() + 604800, $player->id]);
 while($hours = $counthours->fetchrow())
 {
 	$totaltime += $totaltime + $hours['worktime'];
 }
 
 
-	$query = $db->execute("select * from `reinos` where `id`=?", array($player->reino));
+	$query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);
 	$reino = $query->fetchrow();
 
 	$bonnus = 0;
@@ -72,7 +72,8 @@ while($hours = $counthours->fetchrow())
 		$needlvl = 40;
 		$ganha = 20 * (1 + $bonnus);
 	}
- if ($_GET['act'] == cancel) {
+
+ if ($_GET['act'] == "cancel") {
      include(__DIR__ . "/templates/private_header.php");
      echo "<fieldset>";
      echo "<legend><b>Trabalho</b></legend>";
@@ -83,8 +84,8 @@ while($hours = $counthours->fetchrow())
      exit;
  }
 
-	if ($_GET['act'] == remove) {
-     $query = $db->execute("update `work` set `status`='a' where `player_id`=? and `status`='t'", array($player->id));
+	if ($_GET['act'] == "remove") {
+     $query = $db->execute("update `work` set `status`='a' where `player_id`=? and `status`='t'", [$player->id]);
      include(__DIR__ . "/templates/private_header.php");
      echo "<fieldset>";
      echo "<legend><b>Trabalho</b></legend>";
@@ -131,7 +132,7 @@ if (($player->reino == '2' || $player->vip > time()) && ($player->level < 80 && 
 }
 
 
-	if ($player->tour == t && $setting->tournament != 'f') {
+	if ($player->tour == "t" && $setting->tournament != 'f') {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset>";
 		echo "<legend><b>Trabalhar</b></legend>";
@@ -180,7 +181,7 @@ if ($player->level < 40) {
 		echo showAlert("<i>Você pode trabalhar por uma hora a mais, pelo fato de ser um membro vip.</i>");
 	}
 
-	$query = $db->execute("select * from `reinos` where `id`=?", array($player->reino));
+	$query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);
 	$reino = $query->fetchrow();
 
 	if ($reino['worktime'] > time() || $player->vip > time()) {
@@ -289,7 +290,7 @@ echo "<br />";
 
 echo '<table width="100%">';
 echo "<tr><td align=\"center\" bgcolor=\"#E1CBA4\"><b>últimos Trabalhos</b></td></tr>";
-$query1 = $db->execute("select * from `work` where `player_id`=? and `status`!='t' order by `start` desc limit 10", array($player->id));
+$query1 = $db->execute("select * from `work` where `player_id`=? and `status`!='t' order by `start` desc limit 10", [$player->id]);
 if ($query1->recordcount() > 0)
 {
 	while ($log1 = $query1->fetchrow())

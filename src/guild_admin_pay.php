@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Administração do Clã");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkguild.php");
 
 $error = 0;
 
 //Populates $guild variable
-$guildquery = $db->execute("select * from `guilds` where `id`=?", array($player->guild));
+$guildquery = $db->execute("select * from `guilds` where `id`=?", [$player->guild]);
 
 if ($guildquery->recordcount() == 0) {
     header("Location: home.php");
@@ -69,7 +69,7 @@ $price2 = ceil($price * $_POST['days']);
 
 		if ($error == 0){
 		$tempoadicional = $guild['pagopor'] + ($arredonda * 86400);
-		$query = $db->execute("update `guilds` set `gold`=?, `pagopor`=? where `id`=?", array($guild['gold'] - $price2, $tempoadicional, $guild['id']));
+		$query = $db->execute("update `guilds` set `gold`=?, `pagopor`=? where `id`=?", [$guild['gold'] - $price2, $tempoadicional, $guild['id']]);
 		$msg .= "Seu clã acaba de ser pago por mais " . $arredonda . " dia(s).";
 		}
 }

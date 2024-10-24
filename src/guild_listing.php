@@ -4,7 +4,7 @@ declare(strict_types=1);
 include(__DIR__ . "/lib.php");
 include(__DIR__ . "/bbcode.php");
 define("PAGENAME", "Clãs");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkguild.php");
 
@@ -26,10 +26,10 @@ if ($player->guild == NULL || $player->guild == 0) {
 }
 
 echo '<table width="100%">';
-$query = $db->execute("select * from `pwar` where `time`>? and (`status`='t' or `status`='g' or `status`='e') order by `time` desc limit 5", array(time() - 172800));
+$query = $db->execute("select * from `pwar` where `time`>? and (`status`='t' or `status`='g' or `status`='e') order by `time` desc limit 5", [time() - 172800]);
 while ($war = $query->fetchrow()) {
-	$guildname = $db->GetOne("select `name` from `guilds` where `id`=?", array($war['guild_id']));
-	$enyname = $db->GetOne("select `name` from `guilds` where `id`=?", array($war['enemy_id']));
+	$guildname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['guild_id']]);
+	$enyname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['enemy_id']]);
 
 	if ($war['status'] == 'g') {
 		echo "<tr onclick=\"window.location.href='view_war.php?id=" . $war['id'] . "'\"><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\">";
@@ -72,7 +72,7 @@ echo "</table><br/>";
 
 $bbcode = new bbcode();
 
-$query = $db->execute("select * from `guilds` where `serv`=? order by `members` desc", array($player->serv));
+$query = $db->execute("select * from `guilds` where `serv`=? order by `members` desc", [$player->serv]);
 if ($query->recordcount() == 0) {
 	echo "<p><i><center>Nenhum clã registrado no momento.</center></i></p>";
 } else {
@@ -111,7 +111,7 @@ if ($query->recordcount() == 0) {
 		echo "</tr>";
 		echo "<tr>";
 		echo "<td align=center>";
-		$checkquery = $db->execute("select count(*) inv_count from guild_invites where player_id =? and guild_id =?", array($player->id, $guild['id']));
+		$checkquery = $db->execute("select count(*) inv_count from guild_invites where player_id =? and guild_id =?", [$player->id, $guild['id']]);
 		$check = $checkquery->fetchrow();
 		if ($check['inv_count'] > 0) {
       echo '<font size="1"><a href="guild_join.php?id=' . $guild['id'] . '">Participar</a></font>';

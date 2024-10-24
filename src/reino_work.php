@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Reino");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
-$query = $db->execute("select * from `reinos` where `id`=?", array($player->reino));
+$query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);
 $reino = $query->fetchrow();
 
 if ($reino['imperador'] == $player->id) {
 	if ($_POST['submit']){
-		$query = $db->execute("select `id` from `players` where `id`!=? and `reino`=?", array($player->id, $player->reino));
+		$query = $db->execute("select `id` from `players` where `id`!=? and `reino`=?", [$player->id, $player->reino]);
 		if ($_POST['work'] == 10 || $_POST['work'] == 15 || $_POST['work'] == 20){
 			if ($_POST['work'] == 10){
 				$work = '0.1';
@@ -35,7 +35,7 @@ if ($reino['imperador'] == $player->id) {
 				exit;
 			}
 
-			$db->execute("update `reinos` set `ouro`=`ouro`-?, `work`=?, `worktime`=? where `id`=?", array($preco, $work, time() + 432000, $player->reino));
+			$db->execute("update `reinos` set `ouro`=`ouro`-?, `work`=?, `worktime`=? where `id`=?", [$preco, $work, time() + 432000, $player->reino]);
 
 			while($member = $query->fetchrow()) {
 				$logmsg = "Os salários trabalhistas foram alterados. Bônus salarial de " . ($work * 100) . "% por 5 dias.";
@@ -69,7 +69,7 @@ if ($reino['imperador'] == $player->id) {
 			echo '<tr><td class="off">';
 
 				echo '<table width="100%">';
-				$query = $db->execute("select `id` from `players` where `reino`=?", array($player->reino));
+				$query = $db->execute("select `id` from `players` where `reino`=?", [$player->reino]);
 				echo "<tr><td>10%</td><td>de bônus por</td><td>" . ceil(300 * $query->recordcount()) . "</td></tr>";
 				echo "<tr><td>15%</td><td>de bônus por</td><td>" . ceil(400 * $query->recordcount()) . "</td></tr>";
 				echo "<tr><td>20%</td><td>de bônus por</td><td>" . ceil(500 * $query->recordcount()) . "</td></tr>";
@@ -125,5 +125,6 @@ if ($reino['imperador'] == $player->id) {
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
+
 header("Location: home.php");
 ?>

@@ -8,6 +8,7 @@ declare(strict_types=1);
 /*    http://www.ezrpgproject.com/   */
 /*************************************/
 
+error_reporting(E_ALL & ~E_NOTICE);
 session_start();
 
 include(__DIR__ . "/config.php");

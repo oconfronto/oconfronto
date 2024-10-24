@@ -13,6 +13,7 @@ Author URI: http://www.mis-algoritmos.com
 */
 		/*Default values*/
 		public $total_pages = -1;
+
   //items
 		public $limit;
   
@@ -34,6 +35,7 @@ Author URI: http://www.mis-algoritmos.com
 		public $nextT = "Próxima";
   
 		public $nextI = "&#187;";
+
    //&#9658;
 		public $prevT = "Anterior";
   
@@ -43,40 +45,40 @@ Author URI: http://www.mis-algoritmos.com
 		public $calculate = false;
 		
 		#Total items
-		public function items($value){$this->total_pages = (int) $value;}
+		public function items($value): void{$this->total_pages = (int) $value;}
 		
 		#how many items to show per page
-		public function limit($value){$this->limit = (int) $value;}
+		public function limit($value): void{$this->limit = (int) $value;}
 		
 		#Page to sent the page value
-		public function target($value){$this->target = $value;}
+		public function target($value): void{$this->target = $value;}
 		
 		#Current page
-		public function currentPage($value){$this->page = (int) $value;}
+		public function currentPage($value): void{$this->page = (int) $value;}
 		
 		#How many adjacent pages should be shown on each side of the current page?
-		public function adjacents($value){$this->adjacents = (int) $value;}
+		public function adjacents($value): void{$this->adjacents = (int) $value;}
 		
 		#show counter?
-		public function showCounter($value=""){$this->showCounter=$value===true;}
+		public function showCounter($value=""): void{$this->showCounter=$value===true;}
 
 		#to change the class name of the pagination div
-		public function changeClass($value=""){$this->className=$value;}
+		public function changeClass($value=""): void{$this->className=$value;}
 
-		public function nextLabel($value){$this->nextT = $value;}
+		public function nextLabel($value): void{$this->nextT = $value;}
   
-		public function nextIcon($value){$this->nextI = $value;}
+		public function nextIcon($value): void{$this->nextI = $value;}
   
-		public function prevLabel($value){$this->prevT = $value;}
+		public function prevLabel($value): void{$this->prevT = $value;}
   
-		public function prevIcon($value){$this->prevI = $value;}
+		public function prevIcon($value): void{$this->prevI = $value;}
 
 		#to change the class name of the pagination div
-		public function parameterName($value=""){$this->parameterName=$value;}
+		public function parameterName($value=""): void{$this->parameterName=$value;}
 
 		#to change urlFriendly
-		public function urlFriendly($value="%"){
-				if(eregi('^ *$',$value)){
+		public function urlFriendly($value="%"): ?bool{
+				if(preg_match('#^ *$#mi',$value)){
 						$this->urlF=false;
 						return false;
 					}
@@ -86,46 +88,46 @@ Author URI: http://www.mis-algoritmos.com
 			}
 		
 		public $pagination;
-
-		public function pagination(){}
   
-		public function show(){
+		public function show(): void{
 				if (!$this->calculate && $this->calculate()) {
         echo "<div class=\"$this->className\">$this->pagination</div>\n";
     }
 			}
   
-		public function getOutput()
+		public function getOutput(): ?string
   {
       if ($this->calculate) {
           return null;
       }
+
       if ($this->calculate()) {
           return "<div class=\"$this->className\">$this->pagination</div>\n";
       }
+
       return null;
   }
   
 		public function get_pagenum_link($id){
-				if (strpos($this->target,'?')===false) {
-        if ($this->urlF) {
-            return str_replace($this->urlF,$id,$this->target);
-        } else {
-            return sprintf('%s?%s=%s', $this->target, $this->parameterName, $id);
-        }
-    } else {
+				if (strpos($this->target,'?') !== false) {
         return sprintf('%s&%s=%s', $this->target, $this->parameterName, $id);
     }
+
+    if ($this->urlF) {
+        return str_replace($this->urlF,$id,$this->target);
+    }
+
+    return sprintf('%s?%s=%s', $this->target, $this->parameterName, $id);
 			}
 		
-		public function calculate(){
+		public function calculate(): bool{
 				$this->pagination = "";
 				$error = false;
-				if($this->urlF && $this->urlF != '%' && strpos($this->target,$this->urlF)===false){
+				if($this->urlF && $this->urlF != '%' && strpos($this->target,(string) $this->urlF)===false){
 						//Es necesario especificar el comodin para sustituir
 						echo "Especificaste un wildcard para sustituir, pero no existe en el target<br />";
 						$error = true;
-					}elseif($this->urlF && $this->urlF == '%' && strpos($this->target,$this->urlF)===false){
+					}elseif($this->urlF && $this->urlF == '%' && strpos($this->target,(string) $this->urlF)===false){
 						echo "Es necesario especificar en el target el comodin % para sustituir el número de página<br />";
 						$error = true;
 					}

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Pontos de status");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
@@ -30,7 +30,7 @@ if ($player->voc == 'archer') {
         $cost = 0;
     }
 	
-	if ($_GET['act'] == reset)
+	if ($_GET['act'] == "reset")
 	{
 		if ($player->gold < $cost)
 		{
@@ -42,6 +42,7 @@ if ($player->voc == 'archer') {
 			include(__DIR__ . "/templates/private_footer.php");
 			exit;
 		}
+
   $points = (5 + (($player->level - 1) * 3) + ($player->buystats * 2));
   /* $totalvit = 0;
      $queryBonuz = $db->execute("select `item_id`, `vit`, `item_bonus` from `items` where `player_id`=? and `status`='equipped'", array($player->id));
@@ -61,12 +62,12 @@ if ($player->voc == 'archer') {
   $extramana = ($player->extramana - (($player->vitality - 1) * 5));
   // vitalidade dos itens equipados
   //$db->execute("update items set `status`='unequipped' where `player_id`=?", array($player->id));
-  $db->execute("update `players` set `strength`=1, `vitality`=1, `agility`=1, `resistance`=1, `gold`=`gold`-?, `stat_points`=? where `id`=?", array($cost, $points, $player->id));
-  $player = check_user($secret_key, $db);
+  $db->execute("update `players` set `strength`=1, `vitality`=1, `agility`=1, `resistance`=1, `gold`=`gold`-?, `stat_points`=? where `id`=?", [$cost, $points, $player->id]);
+  $player = check_user($db);
   $maxhp = maxHp($db, $player->id, ($player->level - 1), $player->reino, $player->vip);
   $maxmana = maxMana(($player->level - 1), $extramana);
-  $db->execute("update `players` set `hp`=?, `maxhp`=?, `mana`=?, `maxmana`=?, `extramana`=? where `id`=?", array($maxhp, $maxhp, $maxmana, $maxmana, $extramana, $player->id));
-  $player = check_user($secret_key, $db);
+  $db->execute("update `players` set `hp`=?, `maxhp`=?, `mana`=?, `maxmana`=?, `extramana`=? where `id`=?", [$maxhp, $maxhp, $maxmana, $maxmana, $extramana, $player->id]);
+  $player = check_user($db);
   //Get new stats
   include(__DIR__ . "/templates/private_header.php");
   echo "<fieldset><legend><b>Treinador</b></legend>\n";
@@ -77,7 +78,7 @@ if ($player->voc == 'archer') {
   exit;
 	}
     
-    if ($_GET['act'] == magiasreset)
+    if ($_GET['act'] == "magiasreset")
 	{
         $magiaspreco = $db->execute("select `cost` from `blueprint_magias`");
         $totalprecomagias = 0;
@@ -93,10 +94,10 @@ if ($player->voc == 'archer') {
             $manacomprado = 0;
         }
             
-        $db->execute("delete from `magias` where `player_id`=?", array($player->id));
-        $db->execute("update `players` set `magic_points`=`level`, `mana`=`mana`-?, `maxmana`=`maxmana`-? where `id`=?", array(($manacomprado * 2), ($manacomprado * 2), $player->id));
+        $db->execute("delete from `magias` where `player_id`=?", [$player->id]);
+        $db->execute("update `players` set `magic_points`=`level`, `mana`=`mana`-?, `maxmana`=`maxmana`-? where `id`=?", [($manacomprado * 2), ($manacomprado * 2), $player->id]);
         
-        $player = check_user($secret_key, $db); //Get new stats
+        $player = check_user($db); //Get new stats
         include(__DIR__ . "/templates/private_header.php");
         echo "<fieldset><legend><b>Treinador</b></legend>\n";
         echo "<i>Pronto, suas magias foram resetadas e voc&ecirc; ganhou " . $player->level . " pontos místicos!.<br/></i>\n";
@@ -221,26 +222,30 @@ if ($player->voc == 'archer') {
 		$error = 1;
 		exit;
 		}
+
   if ($_GET['for'] > 0){
-				$db->execute("update `players` set `stat_points`=?, `strength`=? where `id`=?", array($player->stat_points - ceil($_GET['for']), $player->strength + ceil($_GET['for']), $player->id));
-				$player = check_user($secret_key, $db); //Get new stats
+				$db->execute("update `players` set `stat_points`=?, `strength`=? where `id`=?", [$player->stat_points - ceil($_GET['for']), $player->strength + ceil($_GET['for']), $player->id]);
+				$player = check_user($db); //Get new stats
 				$msg1 = "Voc&ecirc; aumentou " . $_GET['for'] . " ponto(s) de " . $antigaforca . "!";
 			}
+
   if ($_GET['vit'] > 0){
 				$addinghp = ceil($_GET['vit'] * 20);
 				$addingmana = ceil($_GET['vit'] * 5);
-				$db->execute("update `players` set `stat_points`=?, `vitality`=?, `hp`=?, `maxhp`=?, `mana`=?, `maxmana`=?, `extramana`=? where `id`=?", array($player->stat_points - ceil($_GET['vit']), $player->vitality + ceil($_GET['vit']),  $player->hp + $addinghp, $player->maxhp + $addinghp, $player->mana + $addingmana, $player->maxmana + $addingmana, $player->extramana + $addingmana, $player->id));
-				$player = check_user($secret_key, $db); //Get new stats
+				$db->execute("update `players` set `stat_points`=?, `vitality`=?, `hp`=?, `maxhp`=?, `mana`=?, `maxmana`=?, `extramana`=? where `id`=?", [$player->stat_points - ceil($_GET['vit']), $player->vitality + ceil($_GET['vit']), $player->hp + $addinghp, $player->maxhp + $addinghp, $player->mana + $addingmana, $player->maxmana + $addingmana, $player->extramana + $addingmana, $player->id]);
+				$player = check_user($db); //Get new stats
 				$msg2 = "Voc&ecirc; aumentou " . $_GET['vit'] . " ponto(s) de vitalidade!";
 			}
+
   if ($_GET['agi'] > 0){
-				$db->execute("update `players` set `stat_points`=?, `agility`=? where `id`=?", array($player->stat_points - ceil($_GET['agi']), $player->agility + ceil($_GET['agi']), $player->id));
-				$player = check_user($secret_key, $db); //Get new stats
+				$db->execute("update `players` set `stat_points`=?, `agility`=? where `id`=?", [$player->stat_points - ceil($_GET['agi']), $player->agility + ceil($_GET['agi']), $player->id]);
+				$player = check_user($db); //Get new stats
 				$msg3 = "Voc&ecirc; aumentou " . $_GET['agi'] . " ponto(s) de agilidade!";
 			}
+
   if ($_GET['res'] > 0){
-				$db->execute("update `players` set `stat_points`=?, `resistance`=? where `id`=?", array($player->stat_points - ceil($_GET['res']), $player->resistance + ceil($_GET['res']), $player->id));
-				$player = check_user($secret_key, $db); //Get new stats
+				$db->execute("update `players` set `stat_points`=?, `resistance`=? where `id`=?", [$player->stat_points - ceil($_GET['res']), $player->resistance + ceil($_GET['res']), $player->id]);
+				$player = check_user($db); //Get new stats
 				$msg4 = "Voc&ecirc; aumentou " . $_GET['res'] . " ponto(s) de resist&ecirc;ncia!";
 			}
 
@@ -253,7 +258,7 @@ if ($player->voc == 'archer') {
     
 include(__DIR__ . "/templates/private_header.php");
 
-$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=3 and `player_id`=?", array($player->id));
+$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=3 and `player_id`=?", [$player->id]);
 if ($tutorial->recordcount() > 0){
 	if ($player->stat_points > 0){
 		echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">Antes de começar a lutar, voc&ecirc; deve distribuir seus pontos de status.<br/><font size=\"1px\">Voc&ecirc; começa com 5 pontos, e ganhará mais 3 pontos de status a cada nível que obter.</font><br/><br/> Comece focando seus pontos em força e resist&ecirc;ncia, mas não esqueça que sua agilidade e vitalidade também são importantes.</td><th><font size=\"1px\"><a href=\"start.php?act=4\">Próximo</a></font></th></tr></table>", "white", "left");

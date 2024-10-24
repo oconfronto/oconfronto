@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Fórum");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 include(__DIR__ . "/templates/private_header.php");
 
@@ -16,9 +16,9 @@ if (!$_GET['topic'])
 }
 
 	if ($player->gm_rank > 2){
-	$procuramensagem = $db->execute("select `topic`, `detail` from `forum_question` where `id`=?", array($_GET['topic']));
+	$procuramensagem = $db->execute("select `topic`, `detail` from `forum_question` where `id`=?", [$_GET['topic']]);
 	}else{
-	$procuramensagem = $db->execute("select `topic`, `detail` from `forum_question` where `id`=? and `user_id`=?", array($_GET['topic'], $player->id));
+	$procuramensagem = $db->execute("select `topic`, `detail` from `forum_question` where `id`=? and `user_id`=?", [$_GET['topic'], $player->id]);
 	}
  
 	if ($procuramensagem->recordcount() == 0)
@@ -27,6 +27,7 @@ if (!$_GET['topic'])
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 	}
+
  $editmsg = $procuramensagem->fetchrow();
  $editandomensagem = "" . $editmsg['detail'] . "";
  
@@ -37,19 +38,19 @@ if(isset($_POST['submit']))
 	forumlog($logalert2, $db);
 	}
 
-	$removeposts = $db->execute("select `a_user_id` from `forum_answer` where `question_id`=?", array($_GET['topic']));
+	$removeposts = $db->execute("select `a_user_id` from `forum_answer` where `question_id`=?", [$_GET['topic']]);
 	while($player = $removeposts->fetchrow())
 	{
-	$query = $db->execute("update `players` set `posts`=`posts`-1 where `id`=?", array($player['a_user_id']));
+	$query = $db->execute("update `players` set `posts`=`posts`-1 where `id`=?", [$player['a_user_id']]);
 	}
 
-	$removeposts2 = $db->execute("select `user_id` from `forum_question` where `id`=?", array($_GET['topic']));
+	$removeposts2 = $db->execute("select `user_id` from `forum_question` where `id`=?", [$_GET['topic']]);
 	$player2 = $removeposts2->fetchrow();
-	$query = $db->execute("update `players` set `posts`=`posts`-1 where `id`=?", array($player2['user_id']));
+	$query = $db->execute("update `players` set `posts`=`posts`-1 where `id`=?", [$player2['user_id']]);
 
-        $real = $db->execute("delete from `forum_question` where `id`=?", array($_GET['topic']));
-        $real = $db->execute("delete from `forum_answer` where `question_id`=?", array($_GET['topic']));
-        $real = $db->execute("delete from `thumb` where `topic_id`=?", array($_GET['topic']));
+        $real = $db->execute("delete from `forum_question` where `id`=?", [$_GET['topic']]);
+        $real = $db->execute("delete from `forum_answer` where `question_id`=?", [$_GET['topic']]);
+        $real = $db->execute("delete from `thumb` where `topic_id`=?", [$_GET['topic']]);
 	echo "Tópico removido com sucesso! <a href=\"main_forum.php\">Voltar</a>.";
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;

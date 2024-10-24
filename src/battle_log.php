@@ -2,11 +2,12 @@
 	declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
-	$player = check_user($secret_key, $db);
+	$player = check_user($db);
 ?>
 <html>
 <head>
 <title>O Confronto :: Log de Batalha</title>
+<link rel="icon" type="image/x-icon" href="static/favicon.ico">
 
 <style type="text/css">
 body
@@ -57,7 +58,7 @@ a:visited {
 		exit;
 		}
 
-		$query = $db->execute("select * from `log_battle` where `id`=? and `player_id`=?", array($_GET['id'], $player->id));
+		$query = $db->execute("select * from `log_battle` where `id`=? and `player_id`=?", [$_GET['id'], $player->id]);
 		if ($query->recordcount() < 1)
 		{
 		echo "Log não encontrado.";

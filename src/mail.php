@@ -11,14 +11,14 @@ declare(strict_types=1);
 include(__DIR__ . "/lib.php");
 include(__DIR__ . "/bbcode.php");
 define("PAGENAME", "Mensagens");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 $errormsg = '<font color="red">';
 $errors = 0;
 if ($_POST['sendmail'])
 {
 	//Process mail info, show success message
-	$query = $db->execute("select `id`, `gm_rank` from `players` where `username`=?", array($_POST['to']));
+	$query = $db->execute("select `id`, `gm_rank` from `players` where `username`=?", [$_POST['to']]);
 	if ($query->recordcount() == 0)
 	{
 		$errormsg .= "Este usuário não existe!<br />";
@@ -50,7 +50,7 @@ if ($_POST['sendmail'])
 		$errors = 1;
 	}
  
-	$ignorado = $db->execute("select * from `ignored` where `uid`=? and `bid`=?", array($sendto['id'], $player->id));
+	$ignorado = $db->execute("select * from `ignored` where `uid`=? and `bid`=?", [$sendto['id'], $player->id]);
 	if ($ignorado->recordcount() > 0)
 	{
 		$errormsg .= "Você está sendo ignorado por este usuário e não poderá enviar mensagens para ele.<br />";
@@ -66,7 +66,7 @@ if ($_POST['sendmail'])
 		$insert['body'] = htmlentities($_POST['body'], ENT_QUOTES);
 		$insert['subject'] = ($_POST['subject'] == "")?"Sem Assunto":$_POST['subject'];
 		$insert['time'] = time();
-		$query = $db->execute("insert into `mail` (`to`, `from`, `body`, `subject`, `time`) values (?, ?, ?, ?, ?)", array($insert['to'], $insert['from'], $insert['body'], $insert['subject'], $insert['time']));
+		$query = $db->execute("insert into `mail` (`to`, `from`, `body`, `subject`, `time`) values (?, ?, ?, ?, ?)", [$insert['to'], $insert['from'], $insert['body'], $insert['subject'], $insert['time']]);
 		if ($query)
 		{
 			include(__DIR__ . "/templates/private_header.php");
@@ -77,6 +77,7 @@ if ($_POST['sendmail'])
 			include(__DIR__ . "/templates/private_footer.php");
 			exit;
 		}
+
   $errormsg .= "Erro, a mensagem não pode ser enviada.";
   //Add to admin error log, or whatever, maybe for another version ;)
 
@@ -132,46 +133,52 @@ switch($_GET['act'])
 {
 	case "ignore": //Reading a message
  if ($_POST['add']) {
-     $query = $db->execute("select `id`, `gm_rank` from `players` where `username`=?", array($_POST['add']));
+     $query = $db->execute("select `id`, `gm_rank` from `players` where `username`=?", [$_POST['add']]);
      if ($query->recordcount() == 0)
    		{
    			echo "Este ususuário não existe!<br/><a href=\"mail.php?act=ignore\">Voltar</a>.";
    			include(__DIR__ . "/templates/private_footer.php");
    			exit;
    		}
+
      $ignore = $query->fetchrow();
      if ($ignore['id'] == $player->id){
    			echo "Você não pode ignorar você mesmo!<br><a href=\"mail.php?act=ignore\">Voltar</a>.";
    			include(__DIR__ . "/templates/private_footer.php");
    			exit;
    		}
-     $query = $db->execute("select * from `ignored` where `bid`=? and `uid`=?", array($ignore['id'], $player->id));
+
+     $query = $db->execute("select * from `ignored` where `bid`=? and `uid`=?", [$ignore['id'], $player->id]);
      if ($query->recordcount() > 0){
    			echo "Você já está ignorando este usuário!<br><a href=\"mail.php?act=ignore\">Voltar</a>.";
    			include(__DIR__ . "/templates/private_footer.php");
    			exit;
    		}
+
      $insert['uid'] = $player->id;
      $insert['bid'] = $ignore['id'];
      $query = $db->autoexecute('ignored', $insert, 'INSERT');
      if ($query) {
-  				echo "" . showName($ignore['id'], &$db, 'off') . ' foi ignorado!<br><a href="mail.php?act=ignore">Voltar</a>.';
+  				echo "" . showName($ignore['id'], $db, 'off') . ' foi ignorado!<br><a href="mail.php?act=ignore">Voltar</a>.';
   				include(__DIR__ . "/templates/private_footer.php");
   				exit;
   			}
+
      echo 'Um erro desconhecido ocorreu!<br><a href="mail.php?act=ignore">Voltar</a>.';
      include(__DIR__ . "/templates/private_footer.php");
      exit;
  }
+
  //Reading a message
 
 	if ($_GET['delete']) {
-     $query = $db->execute("delete from `ignored` where `uid`=? and `bid`=?", array($player->id, $_GET['delete']));
+     $query = $db->execute("delete from `ignored` where `uid`=? and `bid`=?", [$player->id, $_GET['delete']]);
      if ($query) {
-   			echo "Agora " . showName($_GET['delete'], &$db, 'off') . " não está mais sendo ignorado!<br><a href=\"mail.php?act=ignore\">Voltar</a>.";
+   			echo "Agora " . showName($_GET['delete'], $db, 'off') . " não está mais sendo ignorado!<br><a href=\"mail.php?act=ignore\">Voltar</a>.";
    			include(__DIR__ . "/templates/private_footer.php");
    			exit;
    		}
+
      echo 'Um erro desconhecido ocorreu!<br><a href="mail.php?act=ignore">Voltar</a>.';
      include(__DIR__ . "/templates/private_footer.php");
      exit;
@@ -180,7 +187,7 @@ switch($_GET['act'])
 	echo "<fieldset>";
 	echo "<legend><b>Usuários Ignorados</b></legend>";
 
-		$query = $db->execute("select `bid` from `ignored` WHERE `uid`=?", array($player->id));
+		$query = $db->execute("select `bid` from `ignored` WHERE `uid`=?", [$player->id]);
 		if ($query->recordcount() == 0)
 		{
 			echo "<p><center>Você não está ignorando ninguém.</center></p>";
@@ -189,7 +196,7 @@ switch($_GET['act'])
 			while($friend = $query->fetchrow())
 			{
 				echo "<table width=\"100%\">\n";
-				echo '<tr><td width="60%">' . showName($friend['bid'], &$db, 'off') . '</td><td><a href="mail.php?act=compose&to=' . showName($friend['bid'], &$db, 'off', 'off') . '">Mensagem</a> | <a href="mail.php?act=ignore&delete=' . $friend['bid'] . '">Deletar</a></td></tr>';
+				echo '<tr><td width="60%">' . showName($friend['bid'], $db, 'off') . '</td><td><a href="mail.php?act=compose&to=' . showName($friend['bid'], $db, 'off', 'off') . '">Mensagem</a> | <a href="mail.php?act=ignore&delete=' . $friend['bid'] . '">Deletar</a></td></tr>';
 				echo "</table>";
 			}
 		}
@@ -213,7 +220,7 @@ break;
 
 
 	case "read": //Reading a message
-		$query = $db->execute("select `id`, `to`, `from`, `subject`, `body`, `time`, `status` from `mail` where `id`=?", array($_GET['id']));
+		$query = $db->execute("select `id`, `to`, `from`, `subject`, `body`, `time`, `status` from `mail` where `id`=?", [$_GET['id']]);
 		if ($query->recordcount() == 1)
 		{
 			$msg = $query->fetchrow();
@@ -224,8 +231,8 @@ break;
 			}
 
 			echo "<table width=\"100%\" border=\"0\">\n";
-			echo '<tr><td width="20%"><b>Para:</b></td><td width="80%">' . showName($msg['to'], &$db) . "</td></tr>\n";
-			echo '<tr><td width="20%"><b>De:</b></td><td width="80%">' . showName($msg['from'], &$db) . "</td></tr>\n";
+			echo '<tr><td width="20%"><b>Para:</b></td><td width="80%">' . showName($msg['to'], $db) . "</td></tr>\n";
+			echo '<tr><td width="20%"><b>De:</b></td><td width="80%">' . showName($msg['from'], $db) . "</td></tr>\n";
 
                                 $mes = date("M", $msg['time']);
                                 $mes_ano["Jan"] = "Janeiro";
@@ -243,10 +250,10 @@ break;
 
 			echo '<tr><td width="20%"><b>Data:</b></td><td width="80%">' . date("d", $msg['time']) . " de " . $mes_ano[$mes] . " de " . date("Y, g:i A", $msg['time']) . "</td></tr>";
 			echo '<tr><td width="20%"><b>Assunto:</b></td><td width="80%">' . stripslashes($msg['subject']) . "</td></tr>";
-			echo '<tr><td width="20%"><b>Mensagem:</b></td><td width="80%">' . bbcode::parse(stripslashes(nl2br($msg['body']))) . "</td></tr>";
+			echo '<tr><td width="20%"><b>Mensagem:</b></td><td width="80%">' . (new bbcode())->parse(stripslashes(nl2br($msg['body']))) . "</td></tr>";
 			echo "</table>";
   			if ($player->id == $msg['to'] && $msg['status'] == "unread"){
-			$query = $db->execute("update `mail` set `status`='read' where `id`=?", array($msg['id']));
+			$query = $db->execute("update `mail` set `status`='read' where `id`=?", [$msg['id']]);
 			}
      
 			echo "<br /><br />\n";
@@ -254,7 +261,7 @@ break;
 			echo "<tr><td width=\"50%\">\n";
   			if ($player->id == $msg['to']){
 			echo "<form method=\"post\" action=\"mail.php?act=compose\">\n";
-			echo '<input type="hidden" name="to" value="' . showName($msg['from'], &$db, off, off) . "\" />\n";
+			echo '<input type="hidden" name="to" value="' . showName($msg['from'], $db, "off", "off") . "\" />\n";
 			echo '<input type="hidden" name="subject" value="RE: ' . stripslashes($msg['subject']) . "\" />\n";
 			$reply = explode("\n", $msg['body']);
 			foreach($reply as $key=>$value)
@@ -310,7 +317,7 @@ break;
    			}
    			else
    			{
-   				$query = $db->getone("select count(*) as `count` from `mail` where `id`=? and `to`=?", array($_POST['id'], $player->id));
+   				$query = $db->getone("select count(*) as `count` from `mail` where `id`=? and `to`=?", [$_POST['id'], $player->id]);
    				if (($query['count'] = 0) !== 0) {
            //In case there are some funny guys out there ;)
            echo "Esta(s) mensagem não pertence a você!";
@@ -323,7 +330,7 @@ break;
            echo "</form>";
        } else
   					{
-  						$query = $db->execute("delete from `mail` where `id`=?", array($_POST['id']));
+  						$query = $db->execute("delete from `mail` where `id`=?", [$_POST['id']]);
   						echo "A mensagem foi deletada com sucesso!";
   						//Redirect back to inbox, or show success message
   						//Can be changed in the admin panel
@@ -339,7 +346,7 @@ break;
    			{
    				foreach($_POST['id'] as $msg)
    				{
-   					$query = $db->getone("select count(*) as `count` from `mail` where `id`=? and `to`=?", array($msg, $player->id));
+   					$query = $db->getone("select count(*) as `count` from `mail` where `id`=? and `to`=?", [$msg, $player->id]);
    					if (($query['count'] = 0) !== 0)
    					{
    						//In case there are some funny guys out there ;)
@@ -367,9 +374,9 @@ break;
    					{
    						foreach($_POST['id'] as $msg)
    						{
-   							$query = $db->execute("delete from `mail` where `id`=?", array($msg));
+   							$query = $db->execute("delete from `mail` where `id`=?", [$msg]);
    						}
-         
+
    						echo "A mensagem foi deletada com sucesso!";
    						//Redirect back to inbox, or show success message
    						//Can be changed in the admin panel (TODO)
@@ -387,7 +394,7 @@ break;
 		echo "<td width=\"35%\"><b>Assunto</b></td>\n";
 		echo "<td width=\"40%\"><b>Data</b></td>\n";
 		echo "</tr>\n";
-		$query = $db->execute("select `id`, `to`, `subject`, `time` from `mail` where `from`=? order by `time` desc", array($player->id));
+		$query = $db->execute("select `id`, `to`, `subject`, `time` from `mail` where `from`=? order by `time` desc", [$player->id]);
 		if ($query->recordcount() > 0)
 		{
 			$bool = 1;
@@ -395,7 +402,7 @@ break;
 			{
 				echo '<tr class="row' . $bool . "\">\n";
 				echo '<td width="20%" style="vertical-align: middle;">';
-					echo showName($msg['to'], &$db);
+					echo showName($msg['to'], $db);
 				echo "</td>\n";
 
 				echo '<td width="40%" style="vertical-align: middle;">';
@@ -441,10 +448,10 @@ break;
 		echo "<td width=\"35%\"><b>Assunto</b></td>\n";
 		echo "<td width=\"40%\"><b>Data</b></td>\n";
 		echo "</tr>\n";
-		$query = $db->execute("select `id`, `from`, `subject`, `time`, `status` from `mail` where `to`=? order by `time` desc limit 25", array($player->id));
+		$query = $db->execute("select `id`, `from`, `subject`, `time`, `status` from `mail` where `to`=? order by `time` desc limit 25", [$player->id]);
 		if ($query->recordcount() > 0)
 		{
-			$qsfwwwy = $db->execute("select `id`, `from`, `subject`, `time`, `status` from `mail` where `to`=?", array($player->id));
+			$qsfwwwy = $db->execute("select `id`, `from`, `subject`, `time`, `status` from `mail` where `to`=?", [$player->id]);
 			if ($qsfwwwy->recordcount() > 25)
 			{
 			echo "<br/>";
@@ -459,7 +466,7 @@ break;
 				echo '<td width="5%"><center><input type="checkbox" name="id[]" value="' . $msg['id'] . "\" /></center></td>\n";
 
 				echo '<td width="20%" style="vertical-align: middle;">';
-					echo showName($msg['from'], &$db);
+					echo showName($msg['from'], $db);
 				echo "</td>\n";
 
 				echo '<td width="35%" style="vertical-align: middle;">';

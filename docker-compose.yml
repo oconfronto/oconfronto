@@ -8,6 +8,8 @@ services:
     ports:
       - 3306:3306
       - 33060:33060
+    networks:
+      - app-tier
     volumes:
       - ./src/init.sql:/docker-entrypoint-initdb.d/init.sql
       - mysql_data:/var/lib/mysql

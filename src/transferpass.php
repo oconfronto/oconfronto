@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Tranferir Ouro");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkwork.php");
 
 $pass1 = strtolower($_POST['pass']);
 $pass2 = strtolower($_POST['pass2']);
 if (($_POST['pass']) && ($_POST['pass2'])) {
-    if ($player->transpass != f) {
+    if ($player->transpass != "f") {
         include(__DIR__ . "/templates/private_header.php");
         echo "<fieldset><legend><b>Segurança</b></legend>";
         echo "Você já possui uma senha de transferência.";
@@ -20,6 +20,7 @@ if (($_POST['pass']) && ($_POST['pass2'])) {
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
+
     if ($pass1 !== $pass2) {
         include(__DIR__ . "/templates/private_header.php");
         echo "<fieldset><legend><b>Segurança</b></legend>";
@@ -29,6 +30,7 @@ if (($_POST['pass']) && ($_POST['pass2'])) {
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
+
     if (strlen($pass1) > 30) {
         include(__DIR__ . "/templates/private_header.php");
         echo "<fieldset><legend><b>Segurança</b></legend>";
@@ -38,6 +40,7 @@ if (($_POST['pass']) && ($_POST['pass2'])) {
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
+
     if (strlen($pass1) < 4) {
         include(__DIR__ . "/templates/private_header.php");
         echo "<fieldset><legend><b>Segurança</b></legend>";
@@ -47,6 +50,7 @@ if (($_POST['pass']) && ($_POST['pass2'])) {
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
+
     if (encodePassword($pass1) == $player->password) {
         include(__DIR__ . "/templates/private_header.php");
         echo "<fieldset><legend><b>Segurança</b></legend>";
@@ -56,17 +60,17 @@ if (($_POST['pass']) && ($_POST['pass2'])) {
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
-    else {
-            $query = $db->execute("update `players` set `transpass`=? where `id`=?", array($pass1, $player->id));
-            include(__DIR__ . "/templates/private_header.php");
-		echo "<fieldset><legend><b>Segurança</b></legend>";
-		echo "Sua senha de transfêrencia foi criada com sucesso.";
-		echo "</fieldset>";
-		echo'<br/><a href="home.php">Voltar</a>.</br>';
-            include(__DIR__ . "/templates/private_footer.php");
-            exit;
-    }
+
+    $query = $db->execute("update `players` set `transpass`=? where `id`=?", [$pass1, $player->id]);
+    include(__DIR__ . "/templates/private_header.php");
+    echo "<fieldset><legend><b>Segurança</b></legend>";
+    echo "Sua senha de transfêrencia foi criada com sucesso.";
+    echo "</fieldset>";
+    echo'<br/><a href="home.php">Voltar</a>.</br>';
+    include(__DIR__ . "/templates/private_footer.php");
+    exit;
 }
+
 include(__DIR__ . "/templates/private_header.php");
 echo "<fieldset><legend><b>Segurança</b></legend>";
 echo "Você precisa preencher todos os campos.";

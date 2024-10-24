@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 include(__DIR__ . "/../config.php");
 $tb_name = "accounts";
-mysql_connect($config_server, $config_username, $config_password) || die ("Cant connect to Datebase");
-mysql_select_db($config_database) || die ("Couldnt successfully connected");
 $username=$_POST['user_name'];
 
 $pat[0] = "/^\s+/";
@@ -16,8 +14,8 @@ $rep[2] = "";
 $nomedouser = ucwords(preg_replace($pat,$rep,$username));
 
 $query=(sprintf("Select * from %s where conta='%s'", $tb_name, $nomedouser));
-$result= mysql_query($query);
-$num=mysql_num_rows($result);
+$result= $db->execute($query);
+$num=$result->recordCount();
 if ($num > 0) {
     //Username already exist
     echo "no";

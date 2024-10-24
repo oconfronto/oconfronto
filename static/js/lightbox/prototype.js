@@ -283,7 +283,7 @@ RegExp.escape = function(str) {
 
 /*--------------------------------------------------------------------------*/
 
-var PeriodicalExecuter = Class.create({
+var Periodicalexecuter = Class.create({
   initialize: function(callback, frequency) {
     this.callback = callback;
     this.frequency = frequency;
@@ -3631,7 +3631,7 @@ Form.Element.Serializers = {
 
 /*--------------------------------------------------------------------------*/
 
-Abstract.TimedObserver = Class.create(PeriodicalExecuter, {
+Abstract.TimedObserver = Class.create(Periodicalexecuter, {
   initialize: function($super, element, frequency, callback) {
     $super(callback, frequency);
     this.element   = $(element);

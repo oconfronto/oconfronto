@@ -4,10 +4,10 @@ declare(strict_types=1);
 $selectmana = $db->GetOne("select `mana` from `blueprint_magias` where `id`=8");
 $mana = $player->reino == '1' || $player->vip > time() ? $selectmana - 5 : $selectmana;
 
-$pak0 = rand($player->mindmg, $player->maxdmg);
-$pak1 = rand($player->mindmg, $player->maxdmg);
-$pak2 = rand($player->mindmg, $player->maxdmg);
-$pak3 = rand($player->mindmg, $player->maxdmg);
+$pak0 = random_int(intval($player->mindmg), intval($player->maxdmg));
+$pak1 = random_int(intval($player->mindmg), intval($player->maxdmg));
+$pak2 = random_int(intval($player->mindmg), intval($player->maxdmg));
+$pak3 = random_int(intval($player->mindmg), intval($player->maxdmg));
 $totalpak = ceil($pak0 + $pak1 + $pak2 + $pak3);
 
 if ($fastmagia == 1) {

@@ -2,9 +2,9 @@
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
-$db->execute("update `players` set `hp`=? where `id`=?", array($_GET['StatusId'], $player->id));
+$db->execute("update `players` set `hp`=? where `id`=?", [$_GET['StatusId'], $player->id]);
 
 echo 'Employee Updated';
 

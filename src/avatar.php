@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Editar perfil");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 $error = 0;
 
@@ -11,7 +11,7 @@ include(__DIR__ . "/templates/private_header.php");
 
 
 $get = $db->execute(sprintf("select * from `players` where `username` = '%s' and subname > '0'", $player->username));
-if ($get->recordcount() > 0 && $_POST['subname'] == Alterar) {
+if ($get->recordcount() > 0 && $_POST['subname'] == "alterar") {
     $subtitle = $_POST['subtitle'];
     $sub_color = $_POST['categoria_color'];
     $numero = "10";
@@ -29,7 +29,7 @@ if ($get->recordcount() > 0 && $_POST['subname'] == Alterar) {
     						echo showAlert(sprintf('Nick alterado: %s [<font color="', $player->username) . $sub_color . '">' . $subtitle . "</font>]", "green");
     					}
          
-    					$trocachare = $db->execute("update `players` set `subname`=? where `username`=?", array($sub_final, $player->username));
+    					$trocachare = $db->execute("update `players` set `subname`=? where `username`=?", [$sub_final, $player->username]);
     				} else {
     					echo showAlert("Digite uma cor válida", "red");
     				}
@@ -46,9 +46,10 @@ if ($_POST['upload']) {
      $errmsg .= "O endereço desta imagem não é válido!";
      $error = 1;
  }
+
  if ($error == 0) {
      $avat = $_POST['avatar'] ?: "anonimo.gif";
-     $query = $db->execute("update `players` set `avatar`=? where `id`=?", array($avat, $player->id));
+     $query = $db->execute("update `players` set `avatar`=? where `id`=?", [$avat, $player->id]);
      $msg .= "Você alterou seu avatar com sucesso!";
      // Espera 1.5 segundos antes de atualizar a página
      //  echo "<p><font color='green'>$msg</font></p>";
@@ -56,6 +57,7 @@ if ($_POST['upload']) {
      echo '<meta http-equiv="refresh" content="1.3">';
      exit;
  }
+
  // Espera 1.5 segundos antes de atualizar a página
  //  echo "<p><font color='green'>$msg</font></p>";
  echo showAlert("<b>" . $errmsg . "</b>", "red");
@@ -70,12 +72,12 @@ if ($_POST['upload']) {
 // 	echo showAlert("<b>Erro:</b> A imagem enviada não é suportada.<br/>Verifique se a imagem enviada atende todos os requisitos listados abaixo do formulário de envio.", "red", "left");
 // }
 
-$procuramengperfil = $db->execute("select `perfil` from `profile` where `player_id`=?", array($player->id));
+$procuramengperfil = $db->execute("select `perfil` from `profile` where `player_id`=?", [$player->id]);
 if ($procuramengperfil->recordcount() == 0) {
 	$mencomentario = "Sem comentários.";
 } else {
 	$comentdocara = $procuramengperfil->fetchrow();
-	$quebras = array('<br />', '<br>', '<br/>');
+	$quebras = ['<br />', '<br>', '<br/>'];
 	$mencomentario = str_replace($quebras, "", $comentdocara['perfil']);
 }
 

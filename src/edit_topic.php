@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Frum");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 include(__DIR__ . "/checkforum.php");
 include(__DIR__ . "/templates/private_header.php");
@@ -18,9 +18,9 @@ if (!$_GET['topic'])
 }
 
 	if ($player->gm_rank > 2) {
-	$procuramensagem = $db->execute("select `topic`, `detail`, `fixo`, `closed`, `vota` from `forum_question` where `id`=?", array($_GET['topic']));
+	$procuramensagem = $db->execute("select `topic`, `detail`, `fixo`, `closed`, `vota` from `forum_question` where `id`=?", [$_GET['topic']]);
 	}else{
-	$procuramensagem = $db->execute("select `topic`, `detail`, `fixo`, `closed`, `vota` from `forum_question` where `id`=? and `user_id`=?", array($_GET['topic'], $player->id));
+	$procuramensagem = $db->execute("select `topic`, `detail`, `fixo`, `closed`, `vota` from `forum_question` where `id`=? and `user_id`=?", [$_GET['topic'], $player->id]);
 	}
  
 	if ($procuramensagem->recordcount() == 0)
@@ -29,9 +29,10 @@ if (!$_GET['topic'])
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 	}
+
  $editmsg = $procuramensagem->fetchrow();
  $texto = $editmsg['detail'];
- $quebras = Array( '<br />', '<br>', '<br/>' );
+ $quebras = ['<br />', '<br>', '<br/>'];
  $editandomensagem = str_replace($quebras, "", $texto);
  
 if(isset($_POST['submit']))
@@ -45,7 +46,7 @@ if (!$_POST['detail'])
 }
 
 $novaresposto=strip_tags($_POST['detail']);
-	$quebras = Array( '<br />', '<br>', '<br/>' );
+	$quebras = ['<br />', '<br>', '<br/>'];
 	$newresposta = str_replace($quebras, "\n", $novaresposto);
 $texto=nl2br($newresposta);
 
@@ -55,7 +56,7 @@ $closed = !$_POST['closed'] || $player->gm_rank < 2 ? "f" : "t";
 
 $vota = !$_POST['vota'] || $player->gm_rank < 2 ? "f" : "t";
 
-$real = $db->execute("update `forum_question` set `topic`=?, `detail`=?, `fixo`=?, `closed`=?, `vota`=? where `id`=?", array($_POST['topic'], $texto, $fixo, $closed, $vota, $_GET['topic']));
+$real = $db->execute("update `forum_question` set `topic`=?, `detail`=?, `fixo`=?, `closed`=?, `vota`=? where `id`=?", [$_POST['topic'], $texto, $fixo, $closed, $vota, $_GET['topic']]);
 	echo 'Postagem editada com sucesso! <a href="view_topic.php?id=' . $_GET['topic'] . '">Voltar</a>.';
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;

@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Abandonar Clã");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkguild.php");
 
 //Populates $guild variable
-$query = $db->execute("select * from `guilds` where `id`=?", array($player->guild));
+$query = $db->execute("select * from `guilds` where `id`=?", [$player->guild]);
 if ($query->recordcount() == 0) {
       header("Location: home.php");
 }else{ 
@@ -18,12 +18,12 @@ $guild = $query->fetchrow();
 include(__DIR__ . "/templates/private_header.php");
   
 if ($_GET['act'] == "go") {
-	$leader = $db->GetOne("select `leader` from `guilds` where `id`=?", array($player->guild));
-	$vice = $db->GetOne("select `vice` from `guilds` where `id`=?", array($player->guild));
+	$leader = $db->GetOne("select `leader` from `guilds` where `id`=?", [$player->guild]);
+	$vice = $db->GetOne("select `vice` from `guilds` where `id`=?", [$player->guild]);
       
     if ($player->username != $leader && $player->username != $vice) {
-    	$query = $db->execute("update `guilds` set `members`=? where `id`=?", array($guild['members'] - 1, $player->guild));
-        $query = $db->execute("update `players` set `guild`=? where `username`=?", array(NULL, $player->username));
+    	$query = $db->execute("update `guilds` set `members`=? where `id`=?", [$guild['members'] - 1, $player->guild]);
+        $query = $db->execute("update `players` set `guild`=? where `username`=?", [NULL, $player->username]);
 	echo "<fieldset>";
 	echo "<legend><b>" . $guild['name'] . " :: Abandonar Clã</b></legend>";
         echo "Você abandonou seu clã com sucesso.<br />";

@@ -6,13 +6,13 @@ $mana = $player->reino == '1' || $player->vip > time() ? $selectmana - 5 : $sele
 
 $log = explode(", ", $_SESSION['battlelog'][0]);
 
-				$pak0 = rand($player->mindmg, $player->maxdmg);
-				$pak1 = rand($player->mindmg, $player->maxdmg);
-				$pak2 = rand($player->mindmg, $player->maxdmg);
-				$pak3 = rand($player->mindmg, $player->maxdmg);
+				$pak0 = random_int(intval($player->mindmg), intval($player->maxdmg));
+				$pak1 = random_int(intval($player->mindmg), intval($player->maxdmg));
+				$pak2 = random_int(intval($player->mindmg), intval($player->maxdmg));
+				$pak3 = random_int(intval($player->mindmg), intval($player->maxdmg));
 				$totalpak = ceil($pak0 + $pak1 + $pak2 + $pak3);
 				
-				$magiaatual = $db->execute("select `magia`, `turnos` from `bixos` where `player_id`=?", array($player->id));
+				$magiaatual = $db->execute("select `magia`, `turnos` from `bixos` where `player_id`=?", [$player->id]);
 				$magiaatual2 = $magiaatual->fetchrow();
 
 			if ($magiaatual2['magia'] == 1) {
@@ -39,22 +39,22 @@ $log = explode(", ", $_SESSION['battlelog'][0]);
 				}else{
 
 
-				$misschance = intval(rand(0, 100));
+				$misschance = intval(random_int(0, 100));
 				if ($misschance <= $player->miss)
 				{
 					array_unshift($_SESSION['battlelog'], "5, Você tentou lançar um feitiço n" . $enemy->prepo . " " . $enemy->username . " mas errou!");
-					$db->execute("update `bixos` set `vez`='e' where `player_id`=?", array($player->id));
+					$db->execute("update `bixos` set `vez`='e' where `player_id`=?", [$player->id]);
 				}else{
 					if (($bixo->hp - $totalpak) < 1){
-					$db->execute("update `bixos` set `hp`=0 where `player_id`=?", array($player->id));
+					$db->execute("update `bixos` set `hp`=0 where `player_id`=?", [$player->id]);
 					$matou = 5;
 					}else{
-					$db->execute("update `bixos` set `hp`=`hp`-? where `player_id`=?", array($totalpak, $player->id));
+					$db->execute("update `bixos` set `hp`=`hp`-? where `player_id`=?", [$totalpak, $player->id]);
 					}
 
-				$db->execute("update `players` set `mana`=`mana`-? where `id`=?", array($mana, $player->id));
+				$db->execute("update `players` set `mana`=`mana`-? where `id`=?", [$mana, $player->id]);
       				array_unshift($_SESSION['battlelog'], "3, Você deu um ataque quádruplo n" . $enemy->prepo . " " . $enemy->username . " e tirou " . $totalpak . " pontos de vida.");
-				$db->execute("update `bixos` set `vez`='e' where `player_id`=?", array($player->id));
+				$db->execute("update `bixos` set `vez`='e' where `player_id`=?", [$player->id]);
 				}
 				}
 ?>

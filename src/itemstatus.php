@@ -2,16 +2,11 @@
 
 declare(strict_types=1);
 
-$types = array('amulet', 'armor', 'boots', 'helmet', 'legs', 'shield', 'weapon', 'ring');
-$attributes = array('for', 'vit', 'agi', 'res');
+$types = ['amulet', 'armor', 'boots', 'helmet', 'legs', 'shield', 'weapon', 'ring'];
+$attributes = ['for', 'vit', 'agi', 'res'];
 
 // Initialize arrays to store bonuses
-$bonuses = array(
-    'for' => 0,
-    'vit' => 0,
-    'agi' => 0,
-    'res' => 0
-);
+$bonuses = ['for' => 0, 'vit' => 0, 'agi' => 0, 'res' => 0];
 
 foreach ($attributes as $attribute) {
     foreach ($types as $type) {
@@ -22,7 +17,7 @@ foreach ($attributes as $attribute) {
                   AND blueprint_items.type = ? 
                   AND items.status = 'equipped'";
 
-        $result = $db->execute($query, array($player->id, $type));
+        $result = $db->execute($query, [$player->id, $type]);
         $row = $result->fetchrow();
 
         // Sum the respective attribute bonus

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Missões");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
@@ -81,7 +81,7 @@ switch($_GET['act'])
 	break;
 
 	case "confirmpay":
-	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 2));
+	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 2]);
 	if ($verificacao->recordcount() == 0)
 		{
 		if ($player->gold - 120000 < 0){
@@ -93,7 +93,8 @@ switch($_GET['act'])
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 		}
-  $query = $db->execute("update `players` set `gold`=? where `id`=?", array($player->gold - 120000, $player->id));
+
+  $query = $db->execute("update `players` set `gold`=? where `id`=?", [$player->gold - 120000, $player->id]);
   $insert['player_id'] = $player->id;
   $insert['quest_id'] = 2;
   $insert['quest_status'] = 1;
@@ -106,6 +107,7 @@ switch($_GET['act'])
   include(__DIR__ . "/templates/private_footer.php");
   exit;
 		}
+
  include(__DIR__ . "/templates/private_header.php");
  echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
  echo "Você já me pagou esta taixa!</i><br/><br/>\n";
@@ -113,11 +115,9 @@ switch($_GET['act'])
  echo "</fieldset>";
  include(__DIR__ . "/templates/private_footer.php");
  exit;
- 
-	break;
 
 	case "continue1":
-	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 2));
+	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 2]);
 	$statux = $verificacao->fetchrow();
 
 		if ($verificacao->recordcount() == 0){
@@ -141,7 +141,7 @@ switch($_GET['act'])
 		}
 
 		
-		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", array($player->id, 112));
+		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", [$player->id, 112]);
 		if ($selectfirstitem->recordcount() == 0){
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
@@ -151,8 +151,9 @@ switch($_GET['act'])
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 		}
-  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(2, $player->id, 2));
-  $query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", array(112, $player->id, 1));
+
+  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [2, $player->id, 2]);
+  $query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", [112, $player->id, 1]);
   include(__DIR__ . "/templates/private_header.php");
   echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
   echo "<i>Obrigado, agora podemos passar para a próxima missão.</i><br>\n";
@@ -163,7 +164,7 @@ switch($_GET['act'])
 	break;
 
 	case "continue2":
-	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 2));
+	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 2]);
 	$statux = $verificacao->fetchrow();
 
 		if ($verificacao->recordcount() == 0){
@@ -187,7 +188,7 @@ switch($_GET['act'])
 		}
 
 		
-		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", array($player->id, 112));
+		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", [$player->id, 112]);
 		if ($selectfirstitem->recordcount() == 0){
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
@@ -197,8 +198,9 @@ switch($_GET['act'])
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 		}
-  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(3, $player->id, 2));
-  $query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", array(112, $player->id, 1));
+
+  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [3, $player->id, 2]);
+  $query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", [112, $player->id, 1]);
   include(__DIR__ . "/templates/private_header.php");
   echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
   echo "<i>Obrigado, agora podemos passar para a próxima missão.</i><br>\n";
@@ -209,7 +211,7 @@ switch($_GET['act'])
 	break;
 
 	case "continue3":
-	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 2));
+	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 2]);
 	$statux = $verificacao->fetchrow();
 
 		if ($verificacao->recordcount() == 0){
@@ -233,7 +235,7 @@ switch($_GET['act'])
 		}
 
 		
-		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", array($player->id, 112));
+		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", [$player->id, 112]);
 		if ($selectfirstitem->recordcount() == 0){
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
@@ -243,8 +245,9 @@ switch($_GET['act'])
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 		}
-  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(4, $player->id, 2));
-  $query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", array(112, $player->id, 1));
+
+  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [4, $player->id, 2]);
+  $query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", [112, $player->id, 1]);
   include(__DIR__ . "/templates/private_header.php");
   echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
   echo "<i>Obrigado, agora podemos passar para a próxima missão.</i><br>\n";
@@ -256,7 +259,7 @@ switch($_GET['act'])
 
 
 	case "titanium":
-	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 2));
+	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 2]);
 	$statux = $verificacao->fetchrow();
 
 		if ($verificacao->recordcount() == 0){
@@ -280,7 +283,7 @@ switch($_GET['act'])
 		}
 
 		
-		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", array($player->id, 111));
+		$selectfirstitem = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", [$player->id, 111]);
 		if ($selectfirstitem->recordcount() == 0){
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
@@ -290,13 +293,14 @@ switch($_GET['act'])
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 		}
-  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", array(90, $player->id, 2));
-  $query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", array(111, $player->id, 1));
+
+  $query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [90, $player->id, 2]);
+  $query = $db->execute("delete from `items` where `item_id`=? and `player_id`=? limit ?", [111, $player->id, 1]);
   $insert['player_id'] = $player->id;
   $insert['item_id'] = 163;
   $db->autoexecute('items', $insert, 'INSERT');
   $ringid = $db->Insert_ID();
-  $db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", array(20, 20, 20, 20, $ringid));
+  $db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", [20, 20, 20, 20, $ringid]);
   include(__DIR__ . "/templates/private_header.php");
   echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
   echo "<i>Pronto, ai está seu Jeweled Ring.</i><br>\n";
@@ -310,7 +314,7 @@ switch($_GET['act'])
 }
 ?>
 <?php
-	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, 2));
+	$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 2]);
 	$quest = $verificacao->fetchrow();
 
 	if ($verificacao->recordcount() == 0)

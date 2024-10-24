@@ -3,18 +3,18 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Administração do Clã");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkguild.php");
 
-$guildquery = $db->execute("select * from `guilds` where `id`=?", array($player->guild));
+$guildquery = $db->execute("select * from `guilds` where `id`=?", [$player->guild]);
 if ($guildquery->recordcount() == 0) {
 	header("Location: home.php");
 } else {
 	$guild = $guildquery->fetchrow();
 }
 
-$enyguildquery = $db->execute("select * from `guilds` where `id`=?", array($_GET['id']));
+$enyguildquery = $db->execute("select * from `guilds` where `id`=?", [$_GET['id']]);
 if ($enyguildquery->recordcount() == 0) {
 	header("Location: guild_admin_enemy.php");
 } else {
@@ -28,7 +28,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
     echo '<a href="home.php">Principal</a><p />';
 } else {
 
-	$checkwarquery = $db->execute("select * from `pwar` where ((`guild_id`=?) or (`enemy_id`=?)) and `status`='p'", array($guild['id'], $guild['id']));
+	$checkwarquery = $db->execute("select * from `pwar` where ((`guild_id`=?) or (`enemy_id`=?)) and `status`='p'", [$guild['id'], $guild['id']]);
 	if ($checkwarquery->recordcount() > 0) {
 		echo "JÁ existe um chamado de guerra contra o clã " . $enyguild['name'] . ".";
 		echo '<br/><a href="guild_admin_enemy.php">Voltar</a>.';
@@ -59,7 +59,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 			echo '<br/><a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
 		} elseif (!$_POST['startwar']) {
       echo "<center>Selecione os " . $_POST['wnumber'] . " membros do seu clã que irão lutar na guerra.</center><center><font size=\"1px\">(eles não precisam estar online no momento da guerra para lutarem)</font></center>";
-      $guildmembers = $db->execute("select * from `players` where `guild`=? order by `level` desc", array($guild['id']));
+      $guildmembers = $db->execute("select * from `players` where `guild`=? order by `level` desc", [$guild['id']]);
       echo '<form method="post" action="guild_admin_war.php?id=' . $_GET['id'] . "\">\n";
       echo '<input type="hidden" name="wnumber" value="' . $_POST['wnumber'] . '">';
       echo '<input type="hidden" name="gold" value="' . $_POST['gold'] . '">';
@@ -104,6 +104,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
    				echo "</td>";
    				echo '<td width="25%">' . ceil(($member['kills']*6) + ($member['monsterkilled']/3) + ($member['groupmonsterkilled']/12) - ($member['deaths']*35)) . "</td></tr>";
    			}
+
       echo "</table>";
       echo '<br/><input type="submit" name="startwar" value="Proclamar Guerra"> <a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
   }else{
@@ -141,7 +142,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 					echo "Você precisa selecionar " . $_POST['wnumber'] . " membros do clã para a guerra.";
 					echo '<br/><a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
 				}else{
-					$db->execute("update `guilds` set `gold`=`gold`-?, `blocked`=`blocked`+? where `id`=?", array($_POST['gold'], $_POST['gold'], $guild['id']));
+					$db->execute("update `guilds` set `gold`=`gold`-?, `blocked`=`blocked`+? where `id`=?", [$_POST['gold'], $_POST['gold'], $guild['id']]);
 
 					$insert['guild_id'] = $guild['id'];
 					$insert['enemy_id'] = $enyguild['id'];
@@ -162,11 +163,11 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 					$insert['players_guild'] = $addmemb;
 					$db->autoexecute('pwar', $insert, 'INSERT');
 
-					$lider = $db->GetOne("select `id` from `players` where `username`=?", array($enyguild['leader']));
+					$lider = $db->GetOne("select `id` from `players` where `username`=?", [$enyguild['leader']]);
    					$logmsg = "O clã <b>" . $guild['name'] . "</b> está enviando um pedido de guerra estilo <b>". $_POST['wnumber'] . "x". $_POST['wnumber'] . "</b>.<br/>O valor da aposta é de <b>" . $_POST['gold'] . ' moedas de ouro</b>. <a href="guild_war_request.php?id=' . $db->Insert_ID() . '">Clique aqui</a> para aceitar o convite.';
 					addlog($lider, $logmsg, $db);
 					if ($enyguild['vice'] != NULL){
-						$vice = $db->GetOne("select `id` from `players` where `username`=?", array($enyguild['vice']));
+						$vice = $db->GetOne("select `id` from `players` where `username`=?", [$enyguild['vice']]);
 						addlog($vice, $logmsg, $db);
 					}
 

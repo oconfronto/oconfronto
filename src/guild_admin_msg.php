@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Administração do Clã");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkguild.php");
 
 $error = 0;
 $username = ($_POST['username']);
 
-$guildquery = $db->execute("select * from `guilds` where `id`=?", array($player->guild));
+$guildquery = $db->execute("select * from `guilds` where `id`=?", [$player->guild]);
 
 if ($guildquery->recordcount() == 0) {
     header("Location: home.php");
@@ -54,12 +54,12 @@ if ($_POST['submit']) {
 		if ($error == 0){
 				$mensagem = "<div style='width:100%; background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px' align='center'><font size=1><b>Esta mensagem foi enviada para todos os membros do clã: " . $guild['name'] . ".</b></font></div><br/>" . $_POST['body'] . "";
 
-				$database = $db->execute("select `id` from `players` where `guild`=?", array($guild['id']));
+				$database = $db->execute("select `id` from `players` where `guild`=?", [$guild['id']]);
   					while($member = $database->fetchrow()) {
-					$query = $db->execute("insert into `mail` (`to`, `from`, `body`, `subject`, `time`) values (?, ?, ?, ?, ?)", array($member['id'], $player->id, $mensagem, $_POST['subject'], time()));
+					$query = $db->execute("insert into `mail` (`to`, `from`, `body`, `subject`, `time`) values (?, ?, ?, ?, ?)", [$member['id'], $player->id, $mensagem, $_POST['subject'], time()]);
 					}
        
-			$query = $db->execute("update `guilds` set `msgs`=? where `id`=?", array($guild['msgs'] + 1, $player->guild));
+			$query = $db->execute("update `guilds` set `msgs`=? where `id`=?", [$guild['msgs'] + 1, $player->guild]);
 			$errmsg .= "Mensagem enviada com sucesso.";
 			}
 	}

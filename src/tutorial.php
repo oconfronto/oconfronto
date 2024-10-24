@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Tutorial");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 if ($_GET['skip'] == true)
 {
-$query = $db->execute("update `pending` set `pending_status`=90 where `pending_id`=2 and `player_id`=?", array($player->id));
+$query = $db->execute("update `pending` set `pending_status`=90 where `pending_id`=2 and `player_id`=?", [$player->id]);
 header("Location: home.php");
 exit;
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 include(__DIR__ . "/lib.php");
 include(__DIR__ . '/bbcode.php');
 define("PAGENAME", "Frum");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkforum.php");
 
 if (!$_GET['id'])
@@ -12,17 +12,20 @@ if (!$_GET['id'])
 	header("Location: select_forum.php");
 	exit;
 }
+
 include(__DIR__ . "/templates/private_header.php");
 foreach($_GET as $key => $value) {
 	$data[$key] = filtro($value);
 }
+
 $id = $data['id'];
-$foruminfo = $db->execute("select * from `forum_question` where `id`=?", array($data['id']));
+$foruminfo = $db->execute("select * from `forum_question` where `id`=?", [$data['id']]);
 if ($foruminfo->recordcount() != 1){
 		echo "Este tpico no existe. <a href=\"select_forum.php\">Voltar</a>.";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
+
 $rows = $foruminfo->fetchrow();
 $id = $data['id'];
 
@@ -36,7 +39,7 @@ if (($rows['category'] == 'gangues' || $rows['category'] == 'trade') && $player-
  
 if ($_GET['up'] || $_GET['down'])
 {
-	$jaupou = $db->execute("select * from `thumb` where `topic_id`=? and `player_id`=?", array($data['id'], $player->id));
+	$jaupou = $db->execute("select * from `thumb` where `topic_id`=? and `player_id`=?", [$data['id'], $player->id]);
 	if ($jaupou->recordcount() > 0){
 		echo showAlert("Voc j votou neste tpico!", "red");
 	} else {
@@ -46,9 +49,9 @@ if ($_GET['up'] || $_GET['down'])
 		$db->autoexecute('thumb', $insert, 'INSERT');
 
 		if ($_GET['up']) {
-			$db->execute("update `forum_question` set `up`=`up`+1 where `id`=?", array($data['id']));
+			$db->execute("update `forum_question` set `up`=`up`+1 where `id`=?", [$data['id']]);
 		} elseif ($_GET['down']) {
-			$db->execute("update `forum_question` set `down`=`down`+1 where `id`=?", array($data['id']));
+			$db->execute("update `forum_question` set `down`=`down`+1 where `id`=?", [$data['id']]);
 		}
 
 		echo showAlert("Obrigado por votar!");
@@ -57,11 +60,11 @@ if ($_GET['up'] || $_GET['down'])
 }
 
 if ($_POST['a_answer']) {
-	$fecxhado = $db->GetOne("select `closed` from `forum_question` where `id`=?", array($id));
-	$foruminfo = $db->execute("select * from `forum_question` where `id`=?", array($id));
-	$categoryae = $db->GetOne("select `category` from `forum_question` where `id`=?", array($id));
-	$servae = $db->GetOne("select `serv` from `forum_question` where `id`=?", array($id));
-	$lastpost = $db->execute("select * from `forum_answer` where `a_user_id`=? and `a_datetime`>?", array($player->id, (time() - 20)));
+	$fecxhado = $db->GetOne("select `closed` from `forum_question` where `id`=?", [$id]);
+	$foruminfo = $db->execute("select * from `forum_question` where `id`=?", [$id]);
+	$categoryae = $db->GetOne("select `category` from `forum_question` where `id`=?", [$id]);
+	$servae = $db->GetOne("select `serv` from `forum_question` where `id`=?", [$id]);
+	$lastpost = $db->execute("select * from `forum_answer` where `a_user_id`=? and `a_datetime`>?", [$player->id, (time() - 20)]);
 
 	if ($fecxhado['closed'] == 't') {
 		echo showAlert("Este tpico est fechado.", "red");
@@ -85,14 +88,14 @@ if ($_POST['a_answer']) {
 		$insert['a_datetime'] = time();
 		$db->autoexecute('forum_answer', $insert, 'INSERT');
 
-		$total_answers = $db->execute("select `id` from `forum_answer` where `question_id`=?", array($id));
+		$total_answers = $db->execute("select `id` from `forum_answer` where `question_id`=?", [$id]);
 		$page = ceil($total_answers->recordcount() / 5);
 		if ($page < 1){
 			$page = 1;
 		}
 
-		$db->execute("update `forum_question` set `last_post`=?, `reply`=`reply`+1 where `id`=?", array(time(), $id));
-		$db->execute("update `players` set `posts`=`posts`+1 where `id`=?", array($player->id));
+		$db->execute("update `forum_question` set `last_post`=?, `reply`=`reply`+1 where `id`=?", [time(), $id]);
+		$db->execute("update `players` set `posts`=`posts`+1 where `id`=?", [$player->id]);
 		echo showAlert("Resposta enviada com sucesso.", "green");
 	}
 }
@@ -119,7 +122,7 @@ $categoria = $rows['category'];
 
 echo "<b><font size=\"1px\"><a href=\"select_forum.php\">Fruns</a> -> <a href=\"main_forum.php?cat=" . $rows['category'] . '">' . ucfirst($categoria) . '</a> -> <a href="view_topic.php?id=' . $rows['id'] . '">' . ucfirst(stripslashes($rows['topic'])) . "</a></font></b>";
 
-$query = $db->execute("select `id`, `username`, `avatar`, `posts`, `ban`, `alerts`, `gm_rank`, `serv` from `players` where `id`=?", array($rows['user_id']));
+$query = $db->execute("select `id`, `username`, `avatar`, `posts`, `ban`, `alerts`, `gm_rank`, `serv` from `players` where `id`=?", [$rows['user_id']]);
 $topicouser = $query->fetchrow();
 ?>
 
@@ -183,13 +186,13 @@ echo '&nbsp;&nbsp;&nbsp;<font size="1px"><a href="edit_topic.php?topic=' . $rows
 }
 
     $topiko = stripslashes($rows['detail']);
-    echo bbcode::parse($topiko);
+    echo (new bbcode())->parse($topiko);
 ?></div>
         </td>
   </tr>
 </table>
 <?php
-	$alertado = $db->execute("select `msg` from `log_forum` where `type`=1 and `post`=? order by `time` desc limit 1", array($rows['id']));
+	$alertado = $db->execute("select `msg` from `log_forum` where `type`=1 and `post`=? order by `time` desc limit 1", [$rows['id']]);
 	if ($alertado->recordcount() > 0) {
 		$alert = $alertado->fetchrow();
 		echo showAlert('<font size="1px">' . $alert['msg'] . "</font>", "red");
@@ -198,7 +201,7 @@ echo '&nbsp;&nbsp;&nbsp;<font size="1px"><a href="edit_topic.php?topic=' . $rows
 
 
 <?php
-if ($rows['vota'] == t) {
+if ($rows['vota'] == "t") {
 $total = $rows['up'] + $rows['down'];
 if ($total > 0){
 $porcentoup = intval($rows['up'] / $total * 100);
@@ -228,7 +231,7 @@ $limit = isset($page) && is_numeric($page) ? "limit ".(($page-1)*$items).(',' . 
 $sqlStr = sprintf('SELECT * FROM forum_answer WHERE question_id=%s order by a_datetime asc %s', $id, $limit);
 $sqlStrAux = sprintf('SELECT count(*) as total FROM forum_answer WHERE question_id=%s order by a_datetime asc', $id);
 
-$aux = Mysql_Fetch_Assoc(mysql_query($sqlStrAux));
+$aux = $db->execute($sqlStrAux)->fetchrow();
 $query = $db->execute($sqlStr);
 
 
@@ -241,7 +244,7 @@ if ($aux['total'] > 0) {
          $p->currentPage($page);
 
          while($rows = $query->fetchrow()){
-		$info = $db->execute("select `id`, `username`, `avatar`, `posts`, `ban`, `alerts`, `gm_rank`, `serv` from `players` where `id`=?", array($rows['a_user_id']));
+		$info = $db->execute("select `id`, `username`, `avatar`, `posts`, `ban`, `alerts`, `gm_rank`, `serv` from `players` where `id`=?", [$rows['a_user_id']]);
 		$user = $info->fetchrow();
 
 		echo '<table width="100%" bgcolor="#f2e1ce">';
@@ -292,13 +295,13 @@ if ($aux['total'] > 0) {
 			}
 
 		$resposta = stripslashes($rows['a_answer']);
-        echo bbcode::parse($resposta);
+        echo (new bbcode())->parse($resposta);
 
 		echo "</td>";
         echo "</tr>";
              
 		echo "</table>";
-			$alertado = $db->execute("select `msg` from `log_forum` where `type`=2 and `post`=? order by `time` desc limit 1", array($rows['id']));
+			$alertado = $db->execute("select `msg` from `log_forum` where `type`=2 and `post`=? order by `time` desc limit 1", [$rows['id']]);
 			if ($alertado->recordcount() > 0) {
 				$alert = $alertado->fetchrow();
 				echo showAlert('<font size="1px">' . $alert['msg'] . "</font>", "red");
@@ -311,9 +314,9 @@ if ($aux['total'] > 0) {
 }
 
 
-$db->execute("update `forum_question` set `view`=`view`+1 where `id`=?", array($id));
+$db->execute("update `forum_question` set `view`=`view`+1 where `id`=?", [$id]);
 
-$fecxhado = $db->GetOne("select `closed` from `forum_question` where `id`=?", array($id));
+$fecxhado = $db->GetOne("select `closed` from `forum_question` where `id`=?", [$id]);
 if ($fecxhado['closed'] != 't'){
 ?>
 <BR><BR>

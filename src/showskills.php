@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 if ($_GET['voltar'] == true) {
     include(__DIR__ . "/lib.php");

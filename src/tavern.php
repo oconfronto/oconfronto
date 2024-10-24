@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Taverna");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
@@ -13,15 +13,16 @@ switch($_GET['p'])
     case "quests":
         if ($_GET['start'])
         {
-            $query = $db->execute("select * from `allquests` where `id`=?", array($_GET['start']));
+            $query = $db->execute("select * from `allquests` where `id`=?", [$_GET['start']]);
             if ($query->recordcount() != 1) {
                 header("Location: tavern.php?p=quests");
                 exit;
             }
+
             $quest = $query->fetchrow();
                    
             //verifica se a missão está disponível ou se foi completa
-            $qStatus = $db->GetOne("select `quest_status` from `quests` where `player_id`=? and `quest_id`=?", array($player->id, $quest['id']));
+            $qStatus = $db->GetOne("select `quest_status` from `quests` where `player_id`=? and `quest_id`=?", [$player->id, $quest['id']]);
             if ($qStatus == 90) {
                 $a = "Você já concluiu esta missão!";
                 $b = '<center><a href="tavern.php?p=quests">Voltar</a></center>';
@@ -29,7 +30,7 @@ switch($_GET['p'])
                 $a = "Você não possui o nível nescesário para esta missão!";
                 $b = '<center><a href="tavern.php?p=quests">Voltar</a></center>';
             } elseif ($qStatus > 0) {
-                $query = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", array($player->id, $quest['id']));
+                $query = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, $quest['id']]);
                 $missao = $query->fetchrow();
                 if ($_GET['pay'])
                 {
@@ -37,8 +38,8 @@ switch($_GET['p'])
                         $a = "Voc&ecirc; não possui esta quantia de ouro!";
                         $b = '<a href="tavern.php?p=quests&start='.$quest['id'].'">Voltar</a>';
                     } else {
-                        $db->execute("update `players` set `gold`=`gold`-? where `id`=?", array($quest['cost'], $player->id));
-                        $db->execute("update `quests` set `pago`='t' where `id`=?", array($missao['id']));
+                        $db->execute("update `players` set `gold`=`gold`-? where `id`=?", [$quest['cost'], $player->id]);
+                        $db->execute("update `quests` set `pago`='t' where `id`=?", [$missao['id']]);
                         $a = "Você pagou " . $quest['cost'] . " moedas de ouro.";
                         $b = '<a href="tavern.php?p=quests&start='.$quest['id'].'">Continuar</a>';
                     }
@@ -91,7 +92,7 @@ switch($_GET['p'])
             $q .= '<td width="70%"><b>'.$quest['name']."</b><br/><i>".$quest['desc']."</i><br/><br/></td>";
             
             //verifica se a missão está disponível ou se foi completa
-            $qStatus = $db->GetOne("select `quest_status` from `quests` where `player_id`=? and `quest_id`=?", array($player->id, $quest['id']));
+            $qStatus = $db->GetOne("select `quest_status` from `quests` where `player_id`=? and `quest_id`=?", [$player->id, $quest['id']]);
             if ($qStatus == 90) {
                 $q .= "<td width=\"30%\" align=\"right\"><p><b>Concluída</b></p></td></tr>";
             } elseif ($quest['lvl'] > $player->level || $quest['to_lvl'] < $player->level && $quest['to_lvl'] > 0) {
@@ -157,11 +158,11 @@ switch($_GET['p'])
         }else{
             while($task = $gettasks->fetchrow())
             {
-                $checkcompleted = $db->execute("select * from `completed_tasks` where `player_id`=? and `task_id`=?", array($player->id, $task['id']));
+                $checkcompleted = $db->execute("select * from `completed_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id']]);
                 if ($checkcompleted->recordcount() == 0){
                     if ($task['obj_type'] == 'monster' && $task['obj_extra'] > 0){
-                        $mname = $db->GetOne("select `username` from `monsters` where `id`=?", array($task['obj_value']));
-                        $pcento = $db->GetOne("select `value` from `monster_tasks` where `player_id`=? and `task_id`=?", array($player->id, $task['id']));
+                        $mname = $db->GetOne("select `username` from `monsters` where `id`=?", [$task['obj_value']]);
+                        $pcento = $db->GetOne("select `value` from `monster_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id']]);
                         $pcento = ceil(($pcento / $task['obj_extra']) * 100);
                         $msg = "Matar " . $task['obj_extra'] . "x o monstro " . $mname . ".<br/>";
                     }elseif ($task['obj_type'] == 'monster' && $task['obj_extra'] == 0){
@@ -181,7 +182,7 @@ switch($_GET['p'])
                     }elseif ($task['win_type'] == 'exp'){
                         $win = "<b>Recompensa:</b> " . $task['win_value'] . " pontos de experi&ecirc;ncia.<br/>";
                     }elseif ($task['win_type'] == 'item'){
-                        $itname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", array($task['win_value']));
+                        $itname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$task['win_value']]);
                         $win = "<b>Recompensa:</b> " . $itname . ".<br/>";
                     }
                     
@@ -196,7 +197,7 @@ switch($_GET['p'])
                 }
             }
             
-            $countcompleted = $db->execute("select `id` from `completed_tasks` where `player_id`=?", array($player->id));
+            $countcompleted = $db->execute("select `id` from `completed_tasks` where `player_id`=?", [$player->id]);
             if ($gettasks->recordcount() == $countcompleted->recordcount()){
                 echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa disponível.</font></center></td></tr>";
             }
@@ -218,7 +219,7 @@ switch($_GET['p'])
                 break;
             }
             
-            $bebid = $db->execute("select `id`, `name`, `price`, `effectiveness` from `blueprint_items` where `id`=? and `type`='potion' and `effectiveness`>0", array($_GET['id']));
+            $bebid = $db->execute("select `id`, `name`, `price`, `effectiveness` from `blueprint_items` where `id`=? and `type`='potion' and `effectiveness`>0", [$_GET['id']]);
             if ($bebid->recordcount() != 1){
                 include(__DIR__ . "/templates/private_header.php");
                 echo "<b>Taverna:</b><br />\n";
@@ -229,7 +230,7 @@ switch($_GET['p'])
             }
             
             $buy = $bebid->fetchrow();
-            $bebado = $db->execute("select `item_id` from `in_use` where `player_id`=?", array($player->id));
+            $bebado = $db->execute("select `item_id` from `in_use` where `player_id`=?", [$player->id]);
             if ($buy['id'] == 182 && $bebado->recordcount() == 0) {
                 include(__DIR__ . "/templates/private_header.php");
                 echo "<b>Taverna:</b><br />\n";
@@ -251,8 +252,8 @@ switch($_GET['p'])
             }
             
             
-            $db->execute("update `players` set `gold`=`gold`-? where `id`=?", array($itemprice, $player->id));
-            $db->execute("delete from `in_use` where `player_id`=?", array($player->id));
+            $db->execute("update `players` set `gold`=`gold`-? where `id`=?", [$itemprice, $player->id]);
+            $db->execute("delete from `in_use` where `player_id`=?", [$player->id]);
             
             if ($buy['id'] != 182){
                 $insert['player_id'] = $player->id;
@@ -287,10 +288,10 @@ switch($_GET['p'])
         echo "</p></center>";
         
         echo "<center><i>Bem-Vindo a Taverna. Tome uma bebida e sinta-se á vontade.</i></center><br />";
-        $verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", array($player->id, time()));
+        $verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", [$player->id, time()]);
         if ($verificpotion->recordcount() > 0){
             $selct = $verificpotion->fetchrow();
-            $potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", array($selct['item_id']));
+            $potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id']]);
             echo "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center>Se você tomar outra bebida o efeito do/da <b>" . $potname . "</b> irá acabar.</center></div>";
         }
         

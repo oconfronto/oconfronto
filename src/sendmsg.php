@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 if ($_GET['msg']) {
 	$msg = strip_tags($_GET['msg']);
@@ -18,7 +18,7 @@ if ($_GET['msg']) {
 			}
 		} else {
 
-			$check = $db->execute("select * from `pending` where `pending_id`=31 and `player_id`=?", array($player->id));
+			$check = $db->execute("select * from `pending` where `pending_id`=31 and `player_id`=?", [$player->id]);
 			if ($check->recordcount() == 0){
 				$insert['player_id'] = $player->id;
 				$insert['msg'] = $msg;

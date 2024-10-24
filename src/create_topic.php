@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Fórum");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkforum.php");
 
 if ($_POST['submit']) {
-	$verifica = $db->GetOne("select `imperador` from `reinos` where `id`=?", array($player->reino));
+	$verifica = $db->GetOne("select `imperador` from `reinos` where `id`=?", [$player->reino]);
 
 	if (!$_POST['detail'] || !$_POST['topic']) {
 		$error = "Você precisa preencher todos os campos.";
@@ -40,7 +40,7 @@ if ($_POST['submit']) {
      $insert['serv'] = $player->serv;
      $insert['reino'] = $player->reino;
      $db->autoexecute('forum_question', $insert, 'INSERT');
-     $db->execute("update `players` set `posts`=`posts`+1 where `id`=?", array($player->id));
+     $db->execute("update `players` set `posts`=`posts`+1 where `id`=?", [$player->id]);
      header("Location: main_forum.php?cat=" . $_POST['category'] . "&success=true");
      exit;
  }
@@ -61,7 +61,7 @@ echo '<script type="text/javascript" src="static/bbeditor/ed.js"></script>';
 			echo "<b>Título:</b> <input name=\"topic\" type=\"text\" id=\"topic\" size=\"35\" value=\"" . $_POST['topic'] . '" />';
 			echo ' <b>Categoria:</b> <select name="category">';
 
-				$verifica = $db->GetOne("select `imperador` from `reinos` where `id`=?", array($player->reino));
+				$verifica = $db->GetOne("select `imperador` from `reinos` where `id`=?", [$player->reino]);
 
 				if ($_POST['category'] == 'none' || !$_POST['category']){
 					echo '<option value="none" selected="selected">Selecione</option>';

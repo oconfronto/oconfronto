@@ -3,32 +3,32 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 
-$query = $db->execute("select `username`, `level`, `guild`, `voc`, `promoted` from `players` where `id`=?", array($_GET['id']));
+$query = $db->execute("select `username`, `level`, `guild`, `voc`, `promoted` from `players` where `id`=?", [$_GET['id']]);
 $user = $query->fetchrow();
 
 if ($user['voc'] == 'archer') {
 	$useimage = "images/arqueiro.png";
-	if ($user['promoted'] == f) {
+	if ($user['promoted'] == "f") {
 		$voca = "Cacador";
-	} elseif ($user['promoted'] == p) {
+	} elseif ($user['promoted'] == "p") {
 		$voca = "Arqueiro Royal";
 	} else {
 		$voca = "Arqueiro";
 	}
 } elseif ($user['voc'] == 'knight') {
 	$useimage = "images/cavaleiro.png";
-	if ($user['promoted'] != f) {
+	if ($user['promoted'] != "f") {
 		$voca = "Guerreiro";
-	} elseif ($user['promoted'] == p) {
+	} elseif ($user['promoted'] == "p") {
 		$voca = "Cavaleiro";
 	} else {
 		$voca = "Espadachim";
 	}
 } elseif ($user['voc'] == 'mage') {
 	$useimage = "images/mago.png";
-	if ($user['promoted'] != f) {
+	if ($user['promoted'] != "f") {
 		$voca = "Bruxo";
-	} elseif ($user['promoted'] == p) {
+	} elseif ($user['promoted'] == "p") {
 		$voca = "Arquimago";
 	} else {
 		$voca = "Mago";
@@ -69,9 +69,9 @@ imagettftext($img, 15, 0, 63, 30, $color, "font.ttf", ucfirst($user['username'])
 imagettftext($img, 15, 0, 59, 60, $color, "font.ttf", $user['level']);
 
 if ($user['guild'] == NULL || $user['guild'] == '') {
-	$gangue = Nenhum;
+	$gangue = "nenhum";
 } else {
-	$gangue = $db->GetOne("select `name` from `guilds` where `id`=?", array($user['guild']));
+	$gangue = $db->GetOne("select `name` from `guilds` where `id`=?", [$user['guild']]);
 }
 
 imagettftext($img, 15, 0, 48, 90, $color, "font.ttf", $gangue);

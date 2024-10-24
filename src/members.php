@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Membros");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 $limit = 10;
 
@@ -31,7 +31,7 @@ if ($_GET['reino'] == 1) {
 	$searchrei = "";
 }
 
-$total_players = $db->getone(sprintf("select count(ID) as `count` from `players` where `reino`!='0' and `serv`=? %s %s", $searchvoc, $searchrei), array($player->serv));
+$total_players = $db->getone(sprintf("select count(ID) as `count` from `players` where `reino`!='0' and `serv`=? %s %s", $searchvoc, $searchrei), [$player->serv]);
 
 include(__DIR__ . "/templates/private_header.php");
     
@@ -61,13 +61,13 @@ echo "<table width=\"100%\" class=\"brown\"  style='border:1px solid #b6804e;hei
 
 	if (!$_GET['orderby']) {
      $selecum = "selected";
- } elseif ($_GET['orderby'] == level) {
+ } elseif ($_GET['orderby'] == "level") {
      $selecum = "selected";
- } elseif ($_GET['orderby'] == gold) {
+ } elseif ($_GET['orderby'] == "gold") {
      $selecdois = "selected";
- } elseif ($_GET['orderby'] == kills) {
+ } elseif ($_GET['orderby'] == "kills") {
      $selectres = "selected";
- } elseif ($_GET['orderby'] == monsterkilled) {
+ } elseif ($_GET['orderby'] == "monsterkilled") {
      $selecquatro = "selected";
  } else{
 	$selecum = "selected";
@@ -94,13 +94,13 @@ echo "<table width=\"100%\" class=\"brown\"  style='border:1px solid #b6804e;hei
 
 	if (!$_GET['voctype']) {
      $selvocum = "selected";
- } elseif ($_GET['voctype'] == all) {
+ } elseif ($_GET['voctype'] == "all") {
      $selvocum = "selected";
- } elseif ($_GET['voctype'] == archer) {
+ } elseif ($_GET['voctype'] == "archer") {
      $selvocdois = "selected";
- } elseif ($_GET['voctype'] == knight) {
+ } elseif ($_GET['voctype'] == "knight") {
      $selvoctres = "selected";
- } elseif ($_GET['voctype'] == mage) {
+ } elseif ($_GET['voctype'] == "mage") {
      $selvocquatro = "selected";
  } else{
 	$selvocum = "selected";
@@ -113,20 +113,20 @@ echo "</form>";
 
 if (!$_GET['orderby']) {
     $ordenarpor = "order by `level` desc, `exp` desc";
-} elseif ($_GET['orderby'] == level) {
+} elseif ($_GET['orderby'] == "level") {
     $ordenarpor = "order by `level` desc, `exp` desc";
-} elseif ($_GET['orderby'] == gold) {
+} elseif ($_GET['orderby'] == "gold") {
     $ordenarpor = "order by `gold`+`bank` desc";
-} elseif ($_GET['orderby'] == kills) {
+} elseif ($_GET['orderby'] == "kills") {
     $ordenarpor = "order by `kills` desc";
-} elseif ($_GET['orderby'] == monsterkilled) {
+} elseif ($_GET['orderby'] == "monsterkilled") {
     $ordenarpor = "order by `monsterkilled` desc";
 } else{
 $ordenarpor = "order by `level` desc, `exp` desc";
 }
 
 //Select all members ordered by level (highest first, members table also doubles as rankings table)
-$query = $db->execute(sprintf("select `id`, `username`, `gm_rank`, `level`, `guild`, `avatar`, `voc`, `promoted` from `players` where `gm_rank`<10 and `reino`!='0' and `serv`=? %s %s %s limit ?,?", $searchvoc, $searchrei, $ordenarpor), array($player->serv, $begin, $limit));
+$query = $db->execute(sprintf("select `id`, `username`, `gm_rank`, `level`, `guild`, `avatar`, `voc`, `promoted` from `players` where `gm_rank`<10 and `reino`!='0' and `serv`=? %s %s %s limit ?,?", $searchvoc, $searchrei, $ordenarpor), [$player->serv, $begin, $limit]);
 
 if ($query->recordcount() > 0){
 echo '<br/><table width="100%" border="0">';
@@ -146,7 +146,7 @@ while($member = $query->fetchrow())
 	echo '<td height="64px"><div style="position: relative;">';
 	echo '<img src="static/' . $member['avatar'] . '" width="64px" height="64px" style="position: absolute; top: 1; left: 1;" alt="' . $member['username'] . '" border="0">';
 
-	$checkranknosite = $db->execute("select `time` from `user_online` where `player_id`=?", array($member['id']));
+	$checkranknosite = $db->execute("select `time` from `user_online` where `player_id`=?", [$member['id']]);
 	if ($checkranknosite->recordcount() > 0) {
 	echo "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ","_",$member['username']) . "')\"><img src=\"static/images/online1.png\" width=\"64px\" height=\"64px\" style=\"position: absolute; top: 1; left: 1;\" alt=\"" . $member['username'] . '" border="0px"></a>';
 	}
@@ -155,7 +155,7 @@ while($member = $query->fetchrow())
 
 	echo "<td>";
 	if ($member['guild'] != NULL){
-		$gtag = $db->GetOne("select `tag` from `guilds` where `id`=?", array($member['guild']));
+		$gtag = $db->GetOne("select `tag` from `guilds` where `id`=?", [$member['guild']]);
 		echo "[" . $gtag . "] ";
 	}
  

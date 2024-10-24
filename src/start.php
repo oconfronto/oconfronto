@@ -2,16 +2,16 @@
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
-$query = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`!=90 and `player_id`=?", array($player->id));
+$query = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`!=90 and `player_id`=?", [$player->id]);
 if ($query->recordcount() == 0) {
 	header("Location: home.php");
 } else {
 	$get = $query->fetchrow();
 }
 
-if (($get['pending_status'] > 1 and $get['pending_status'] < 90) && ($_GET['act'] > 1 && $_GET['act'] <= 90)) {
+if (($get['pending_status'] > 1 && $get['pending_status'] < 90) && ($_GET['act'] > 1 && $_GET['act'] <= 90)) {
     if ($_GET['act'] == 90 && !$_GET['comfirm']) {
   			define("PAGENAME", "Tutorial");
   			include(__DIR__ . "/templates/private_header.php");
@@ -20,14 +20,16 @@ if (($get['pending_status'] > 1 and $get['pending_status'] < 90) && ($_GET['act'
   			include(__DIR__ . "/templates/private_footer.php");
   			exit;
   		}
-    $db->execute("update `pending` set `pending_status`=? where `pending_id`=2 and `player_id`=?", array($_GET['act'], $player->id));
+
+    $db->execute("update `pending` set `pending_status`=? where `pending_id`=2 and `player_id`=?", [$_GET['act'], $player->id]);
     header("Location: home.php");
     exit;
 }
+
 if ($get['pending_status'] == 1 || $player->reino == 0) {
     if ($_GET['reino'] == 1) {
-        $db->execute("update `players` set `reino`='1' where `id`=?", array($player->id));
-        $db->execute("update `pending` set `pending_status`=2 where `pending_id`=2 and `player_id`=?", array($player->id));
+        $db->execute("update `players` set `reino`='1' where `id`=?", [$player->id]);
+        $db->execute("update `pending` set `pending_status`=2 where `pending_id`=2 and `player_id`=?", [$player->id]);
         define("PAGENAME", "Reino Cathal");
         include(__DIR__ . "/templates/private_header.php");
         echo "<center>Bem vindo ao reino de Cathal, voc&ecirc; fez uma sábia escolha ao unir-se a nós.<br/><br/>";
@@ -35,9 +37,10 @@ if ($get['pending_status'] == 1 || $player->reino == 0) {
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
+
     if ($_GET['reino'] == 2) {
-        $db->execute("update `players` set `reino`='2' where `id`=?", array($player->id));
-        $db->execute("update `pending` set `pending_status`=2 where `pending_id`=2 and `player_id`=?", array($player->id));
+        $db->execute("update `players` set `reino`='2' where `id`=?", [$player->id]);
+        $db->execute("update `pending` set `pending_status`=2 where `pending_id`=2 and `player_id`=?", [$player->id]);
         define("PAGENAME", "Reino Eroda");
         include(__DIR__ . "/templates/private_header.php");
         echo "<center>Bem vindo ao reino de Eroda, voc&ecirc; fez uma sábia escolha ao unir-se a nós.<br/><br/>";
@@ -45,9 +48,10 @@ if ($get['pending_status'] == 1 || $player->reino == 0) {
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
+
     if ($_GET['reino'] == 3) {
-        $db->execute("update `players` set `reino`='3', `hp`=?, `maxhp`=? where `id`=?", array(maxHp($db, $player->id, ($player->level - 1), 3, $player->vip), maxHp($db, $player->id, ($player->level - 1), 3, $player->vip), $player->id));
-        $db->execute("update `pending` set `pending_status`=2 where `pending_id`=2 and `player_id`=?", array($player->id));
+        $db->execute("update `players` set `reino`='3', `hp`=?, `maxhp`=? where `id`=?", [maxHp($db, $player->id, ($player->level - 1), 3, $player->vip), maxHp($db, $player->id, ($player->level - 1), 3, $player->vip), $player->id]);
+        $db->execute("update `pending` set `pending_status`=2 where `pending_id`=2 and `player_id`=?", [$player->id]);
         define("PAGENAME", "Reino Turkic");
         include(__DIR__ . "/templates/private_header.php");
         echo "<center>Bem vindo ao reino de Turkic, voc&ecirc; fez uma sábia escolha ao unir-se a nós.<br/><br/>";
@@ -55,6 +59,7 @@ if ($get['pending_status'] == 1 || $player->reino == 0) {
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
+
     define("PAGENAME", "Escolha seu Reino");
     include(__DIR__ . "/templates/private_header.php");
     echo "O mundo de O Confronto é dividido em 3 grandes reinos, Cathal, Eroda e Turkic.<br/>";
@@ -84,6 +89,7 @@ if ($get['pending_status'] == 1 || $player->reino == 0) {
     include(__DIR__ . "/templates/private_footer.php");
     exit;
 }
+
 if ($get['pending_status'] == 2) {
     define("PAGENAME", "Tutorial");
     include(__DIR__ . "/templates/private_header.php");
@@ -93,31 +99,38 @@ if ($get['pending_status'] == 2) {
     include(__DIR__ . "/templates/private_footer.php");
     exit;
 }
+
 if ($get['pending_status'] == 3) {
     header("Location: stat_points.php");
     exit;
 }
+
 if ($get['pending_status'] == 4) {
-    $userAgent = $$_SERVER['HTTP_USER_AGENT'];
+    $userAgent = ${$_SERVER}['HTTP_USER_AGENT'];
     function isMobile($userAgent)
    	{
    		return preg_match('/Mobile|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/', $userAgent);
    	}
+
     if (isMobile($userAgent)) {
    		header("Location: inventory_mobile.php");
    		exit;
    	}
+
     header("Location: inventory.php");
     exit;
 }
+
 if ($get['pending_status'] == 5) {
     header("Location: home.php");
     exit;
 }
+
 if ($get['pending_status'] == 6) {
     header("Location: monster.php");
     exit;
 }
+
 if ($get['pending_status'] == 7) {
     define("PAGENAME", "Tutorial");
     include(__DIR__ . "/templates/private_header.php");
@@ -136,9 +149,9 @@ if ($get['pending_status'] == 7) {
 if ($get['pending_status'] == 8) {
     define("PAGENAME", "Tutorial");
     include(__DIR__ . "/templates/private_header.php");
-    $reino = $db->GetOne("select `nome` from `reinos` where `id`=?", array($player->reino));
-    $imperador = $db->GetOne("select `imperador` from `reinos` where `id`=?", array($player->reino));
-    $taxa = $db->GetOne("select `tax` from `reinos` where `id`=?", array($player->reino));
+    $reino = $db->GetOne("select `nome` from `reinos` where `id`=?", [$player->reino]);
+    $imperador = $db->GetOne("select `imperador` from `reinos` where `id`=?", [$player->reino]);
+    $taxa = $db->GetOne("select `tax` from `reinos` where `id`=?", [$player->reino]);
     echo "Voc&ecirc; faz parte do reino <b>" . $reino . "</b>, cujo imperador é " . showName($imperador, $db, 'off') . ". A cada 2 semanas uma <u>eleição para imperador</u> é realizada, onde os usuários que possuem a maior média de horas online por dia podem se candidatar.<br/>";
     echo "Os <u>impostos que voc&ecirc; paga</u> diariamente (" . $taxa . "% do ouro que voc&ecirc; possui) vai para os cofres do reino. O imperador poderá investir este dinheiro em:<br/>";
     echo "<ul>";
@@ -152,7 +165,6 @@ if ($get['pending_status'] == 8) {
     include(__DIR__ . "/templates/private_footer.php");
     exit;
 }
-else {
-	header("Location: home.php");
-	exit;
-}
+
+header("Location: home.php");
+exit;

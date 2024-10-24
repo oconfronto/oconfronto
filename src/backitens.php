@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "GM");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
 
 if ($player->gm_rank < 75)
@@ -30,9 +30,9 @@ if (!$_GET['from'])
 elseif ($_GET['from'] && !$_POST['devolve'])
 {
 	if ($_GET['to']){
-	$query = $db->execute("select * from `log_item` where `name1`=? and `name2`=? order by `time` desc", array($_GET['from'], $_GET['to']));
+	$query = $db->execute("select * from `log_item` where `name1`=? and `name2`=? order by `time` desc", [$_GET['from'], $_GET['to']]);
 	}else{
-	$query = $db->execute("select * from `log_item` where `name1`=? order by `time` desc", array($_GET['from']));
+	$query = $db->execute("select * from `log_item` where `name1`=? order by `time` desc", [$_GET['from']]);
 	}
 	
 	if ($query->recordcount() == 0)
@@ -41,12 +41,13 @@ elseif ($_GET['from'] && !$_POST['devolve'])
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
- $to = $db->GetOne("select `id` from `players` where `username`=?", array($_GET['from']));
+
+ $to = $db->GetOne("select `id` from `players` where `username`=?", [$_GET['from']]);
  echo '<form method="post" action="backitens.php?from=' . $_GET['from'] . '">';
  while($log = $query->fetchrow())
 			{
 
-				$queryver = $db->execute("select * from `items` where `id`=? and `player_id`!=?", array($log['itemid'], $to));
+				$queryver = $db->execute("select * from `items` where `id`=? and `player_id`!=?", [$log['itemid'], $to]);
 				if ($queryver->recordcount() == 0)
 				{
 				echo "" . $log['value'] . " para " . $log['name2'] . " já devolvidada ou não encontrada.<br/>";
@@ -78,12 +79,12 @@ elseif ($_GET['from'] && !$_POST['devolve'])
 }
 elseif ($_GET['from'] && $_POST['devolve'])
 {
-	$to = $db->GetOne("select `id` from `players` where `username`=?", array($_GET['from']));
+	$to = $db->GetOne("select `id` from `players` where `username`=?", [$_GET['from']]);
 
 	foreach($_POST['id'] as $item)
 	{
 	$cancel = 0;
-	$selitem = $db->execute("select items.item_id, items.player_id, items.mark, items.status, items.item_bonus, items.vit, blueprint_items.name, blueprint_items.type, blueprint_items.effectiveness from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.id=? and items.player_id!=?", array($item, $to));
+	$selitem = $db->execute("select items.item_id, items.player_id, items.mark, items.status, items.item_bonus, items.vit, blueprint_items.name, blueprint_items.type, blueprint_items.effectiveness from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.id=? and items.player_id!=?", [$item, $to]);
 	if ($selitem->recordcount() == 0)
 	{
 		$error += 1;
@@ -97,17 +98,17 @@ elseif ($_GET['from'] && $_POST['devolve'])
 				$menoshp = 0;
 					if ($it['type'] == 'amulet'){
 					$menoshp = (($it['effectiveness'] + ($it['item_bonus'] * 2) + $it['vit']) * 25);
-					$query = $db->execute("update `players` set `hp`=`hp`-?, `maxhp`=`maxhp`-? where `id`=?", array($menoshp, $menoshp, $it['player_id']));
+					$query = $db->execute("update `players` set `hp`=`hp`-?, `maxhp`=`maxhp`-? where `id`=?", [$menoshp, $menoshp, $it['player_id']]);
 					}elseif ($it['type'] != 'amulet'){
 					$menoshp = ($it['vit'] * 25);
-					$query = $db->execute("update `players` set `hp`=`hp`-?, `maxhp`=`maxhp`-? where `id`=?", array($menoshp, $menoshp, $it['player_id']));
+					$query = $db->execute("update `players` set `hp`=`hp`-?, `maxhp`=`maxhp`-? where `id`=?", [$menoshp, $menoshp, $it['player_id']]);
 					}
 			
 	}
 
-	$from = $db->GetOne("select `username` from `players` where `id`=?", array($it['player_id']));
-	$mandaitens = $db->execute("update `items` set `player_id`=?, `status`='unequipped' where `id`=?", array($to, $item));
-	$deshackeia = $db->execute("update `players` set `hack`='f' where `id`=?", array($to));
+	$from = $db->GetOne("select `username` from `players` where `id`=?", [$it['player_id']]);
+	$mandaitens = $db->execute("update `items` set `player_id`=?, `status`='unequipped' where `id`=?", [$to, $item]);
+	$deshackeia = $db->execute("update `players` set `hack`='f' where `id`=?", [$to]);
 
 		$insert['player_id'] = $to;
 		$insert['name1'] = $_GET['from'];

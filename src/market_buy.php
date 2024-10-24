@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Mercado");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
@@ -21,7 +21,7 @@ switch($_GET['act'])
 		}
 
 		$market_id=$_POST['market_id'];
-		$seleciona_market = $db->execute("select market.price, market.seller, market.serv, blueprint_items.id, blueprint_items.name, items.item_bonus, items.for, items.vit, items.agi, items.res from `market`, `blueprint_items`, `items` where market.ite_id=blueprint_items.id and market.market_id=items.id and market.market_id=?", array($_POST['market_id']));
+		$seleciona_market = $db->execute("select market.price, market.seller, market.serv, blueprint_items.id, blueprint_items.name, items.item_bonus, items.for, items.vit, items.agi, items.res from `market`, `blueprint_items`, `items` where market.ite_id=blueprint_items.id and market.market_id=items.id and market.market_id=?", [$_POST['market_id']]);
 
 		if ($seleciona_market->recordcount() == 0)
 		{
@@ -58,7 +58,7 @@ switch($_GET['act'])
 		}
 
 
-		$seleciona_seller = $db->execute("select `id` from `players` where `username`=?",array($seleciona_market['seller']));
+		$seleciona_seller = $db->execute("select `id` from `players` where `username`=?",[$seleciona_market['seller']]);
 		if ($seleciona_seller->recordcount() == 0)
 		{
 		include(__DIR__ . "/templates/private_header.php");
@@ -68,17 +68,17 @@ switch($_GET['act'])
 		}
 
 
-	  	$query_switch=$db->execute("update `items` set `player_id`=?, `status`='unequipped' where `id`=?",array($player->id, $market_id));
-		$query_buyer_gold = $db->execute("update `players` set `gold`=? where `id`=?", array($player->gold - $seleciona_market['price'], $player->id));
+	  	$query_switch=$db->execute("update `items` set `player_id`=?, `status`='unequipped' where `id`=?",[$player->id, $market_id]);
+		$query_buyer_gold = $db->execute("update `players` set `gold`=? where `id`=?", [$player->gold - $seleciona_market['price'], $player->id]);
 
 		$seleciona_seller = $seleciona_seller->fetchrow();
-		$query_seller_gold = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", array($seleciona_market['price'], $seleciona_seller['id']));
+		$query_seller_gold = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", [$seleciona_market['price'], $seleciona_seller['id']]);
 
 		$logmsg = "Você vendeu um iten no mercado. <a href=\"profile.php?id=" . $player->username . '">' . $player->username . "</a> comprou seu/sua " . $seleciona_market['name'] . " e você ganhou " . $seleciona_market['price'] . " de ouro.";
 		addlog($seleciona_seller['id'], $logmsg, $db);
 
-		$query_delete=$db->execute("delete from `market` where `market_id`=?", array($market_id));
-		$mark_sold=$db->execute("update `items` set `mark`='f' where `id`=?", array($market_id));
+		$query_delete=$db->execute("delete from `market` where `market_id`=?", [$market_id]);
+		$mark_sold=$db->execute("update `items` set `mark`='f' where `id`=?", [$market_id]);
 
 		$insert['player_id'] = $player->id;
 		$insert['name1'] = $player->username;
@@ -103,7 +103,7 @@ switch($_GET['act'])
 		$query = $db->autoexecute('log_item', $insert, 'INSERT');
 
 
- 		$player = check_user($secret_key, $db);
+ 		$player = check_user($db);
 		include(__DIR__ . "/templates/private_header.php");
 		echo 'Obrigado por comprar. <a href="market.php">Voltar</a>.';
 		include(__DIR__ . "/templates/private_footer.php");
@@ -125,7 +125,7 @@ switch($_GET['act'])
 
 		$market_id=$_GET['item'];
 
-			$query_market = $db->execute("select market.market_id, market.price, market.seller, blueprint_items.name, blueprint_items.type, blueprint_items.effectiveness, blueprint_items.img, blueprint_items.description, blueprint_items.needpromo, blueprint_items.needlvl, blueprint_items.voc, items.item_bonus, items.for, items.vit, items.agi, items.res from `market`, `blueprint_items`, `items` where market.ite_id=blueprint_items.id and market.market_id=items.id and market.market_id=?", array($market_id));
+			$query_market = $db->execute("select market.market_id, market.price, market.seller, blueprint_items.name, blueprint_items.type, blueprint_items.effectiveness, blueprint_items.img, blueprint_items.description, blueprint_items.needpromo, blueprint_items.needlvl, blueprint_items.voc, items.item_bonus, items.for, items.vit, items.agi, items.res from `market`, `blueprint_items`, `items` where market.ite_id=blueprint_items.id and market.market_id=items.id and market.market_id=?", [$market_id]);
 			while ($market = $query_market->fetchrow())
 			{
 

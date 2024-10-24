@@ -13,7 +13,7 @@
 </div>
 
 <?php
-$check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", array($player->id));
+$check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", [$player->id]);
 if ($check->recordcount() == 0){
     echo '<script type="text/javascript" src="static/js/chat.js"></script>';
 } else {
