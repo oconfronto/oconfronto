@@ -1,14 +1,16 @@
 <?php
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Perfil");
 $player = check_user($secret_key, $db);
 
-include("templates/private_header.php");
+include(__DIR__ . "/templates/private_header.php");
 
 ?>
 
-<link rel="stylesheet" type="text/css" href="css/private/tabs.css" />
-<script src="js/jquery.tabs.js"></script>
+<link rel="stylesheet" type="text/css" href="static/css/private/tabs.css" />
+<script src="static/js/jquery.tabs.js"></script>
 
 <ul class="tabs">
     <li><a href="#tab1">Gallery</a></li>
@@ -26,5 +28,5 @@ include("templates/private_header.php");
 
 
 <?php
-	include("templates/private_footer.php");
+	include(__DIR__ . "/templates/private_footer.php");
 ?>

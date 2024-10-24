@@ -1,27 +1,25 @@
 <?php
-$selectmana = $db->GetOne("select `mana` from `blueprint_magias` where `id`=3");
-if (($player->reino == '1') or ($player->vip > time())) {
-	$mana = ($selectmana - 5);
-} else {
-	$mana = $selectmana;
-}
+declare(strict_types=1);
 
-$pak0 = rand($player->mindmg, $player->maxdmg);
-$pak1 = rand($player->mindmg, $player->maxdmg);
+$selectmana = $db->GetOne("select `mana` from `blueprint_magias` where `id`=3");
+$mana = $player->reino == '1' || $player->vip > time() ? $selectmana - 5 : $selectmana;
+
+$pak0 = random_int($player->mindmg, $player->maxdmg);
+$pak1 = random_int($player->mindmg, $player->maxdmg);
 $totalpak = ceil($pak0 + $pak1);
 
-if ($fastmagia == 1){
-	$porcento = $totalpak / 100;
-	$porcento = ceil($porcento * 15);
-	$totalpak = $totalpak + $porcento;
-}else if($fastmagia == 2){
-	$porcento = $totalpak / 100;
-	$porcento = ceil($porcento * 45);
-	$totalpak = $totalpak + $porcento;
-}else if($fastmagia == 12){
-	$porcento = $totalpak / 100;
-	$porcento = ceil($porcento * 35);
-	$totalpak = $totalpak + $porcento;
+if ($fastmagia == 1) {
+    $porcento = $totalpak / 100;
+    $porcento = ceil($porcento * 15);
+    $totalpak += $porcento;
+} elseif ($fastmagia == 2) {
+    $porcento = $totalpak / 100;
+    $porcento = ceil($porcento * 45);
+    $totalpak += $porcento;
+} elseif ($fastmagia == 12) {
+    $porcento = $totalpak / 100;
+    $porcento = ceil($porcento * 35);
+    $totalpak += $porcento;
 }
 
 	if (($bixo->hp - $totalpak) < 1){

@@ -153,7 +153,7 @@ function chatHeartbeat(){
 			if (newMessagesWin[x] == true) {
 				++blinkNumber;
 				if (blinkNumber >= blinkOrder) {
-                    // $('#playSound').html("<embed src='bip2.mp3' hidden='true' autostart='true' loop='false'>");
+                    // $('#playSound').html("<embed src='static/bip2.mp3' hidden='true' autostart='true' loop='false'>");
 					document.title = x+' diz...';
 					titleChanged = 1;
 					break;	
@@ -181,7 +181,7 @@ function chatHeartbeat(){
 				$('#chatbox_'+x+' .chatboxhead').toggleClass('chatboxblink');
                 
                 if ($.cookie('#chatbox_'+x+' .chatboxhead') == null) {
-                    $('#playSound').html("<embed src='bip2.mp3' hidden='true' autostart='true' loop='false'>");
+                    $('#playSound').html("<embed src='static/bip2.mp3' hidden='true' autostart='true' loop='false'>");
                     $.cookie('#chatbox_'+x+' .chatboxhead', 1, { path: '/', expires: 1 });
                 }
 			}
@@ -242,7 +242,7 @@ function chatHeartbeat(){
 }
 
 function closeChatBox(chatboxtitle) {
-    $('#playSound').html("<embed src='msg.wav' hidden='true' autostart='true' loop='false'>");
+    $('#playSound').html("<embed src='static/msg.wav' hidden='true' autostart='true' loop='false'>");
     
 	$('#chatbox_'+chatboxtitle).css('display','none');
 	restructureChatBoxes();

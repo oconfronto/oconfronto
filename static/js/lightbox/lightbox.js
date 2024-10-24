@@ -106,7 +106,7 @@ Lightbox.prototype = {
         //              </div>
         //              <div id="loading">
         //                  <a href="#" id="loadingLink">
-        //                      <img src="images/lightbox/loading.gif">
+        //                      <img src="static/images/lightbox/loading.gif">
         //                  </a>
         //              </div>
         //          </div>
@@ -119,7 +119,7 @@ Lightbox.prototype = {
         //              </div>
         //              <div id="bottomNav">
         //                  <a href="#" id="bottomNavClose">
-        //                      <img src="images/lightbox/close.gif">
+        //                      <img src="static/images/lightbox/close.gif">
         //                  </a>
         //              </div>
         //          </div>

@@ -7,12 +7,12 @@
 
     <title>O Confronto :: <?php echo PAGENAME ?></title>
 
-    <link rel="stylesheet" type="text/css" href="./css/index.css" />
-    <link rel="stylesheet" type="text/css" href="example2.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="static/example2.css" />
 
-    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="static/js/jquery.js"></script>
 
-    <script type="text/javascript" src="jMyCarousel.js"></script>
+    <script type="text/javascript" src="static/jMyCarousel.js"></script>
     <script type="text/javascript">
         $(function() {
 
@@ -60,7 +60,7 @@
         <div id="topo"></div>
 
         <?php
-        include("notice_board.php");
+        include(__DIR__ . "/notice_board.php");
         ?>
 
         <div id="box">

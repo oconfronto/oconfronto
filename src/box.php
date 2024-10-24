@@ -1,4 +1,4 @@
-<script src="js/jquery.js" type="text/javascript" language="javascript"></script>
+<script src="static/js/jquery.js" type="text/javascript" language="javascript"></script>
 
 <script language="javascript">
 	//Novo character

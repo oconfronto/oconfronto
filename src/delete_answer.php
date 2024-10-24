@@ -1,47 +1,49 @@
 <?php
 
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Frum");
 $player = check_user($secret_key, $db);
 
-include("templates/private_header.php");
+include(__DIR__ . "/templates/private_header.php");
 
-if (!$_GET['topic'] | !$_GET['a'])
+if ((!$_GET['topic'] | !$_GET['a']) !== 0)
 {
-	echo "Um erro desconhecido ocorreu! <a href=\"main_forum.php\">Voltar</a>.";
-	include("templates/private_footer.php");
+	echo 'Um erro desconhecido ocorreu! <a href="main_forum.php">Voltar</a>.';
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
 
-	$procuramensagem = $db->execute("select * from `forum_answer` where `question_id`=? and `id`=?", array($_GET['topic'], $_GET['a']));
+	$procuramensagem = $db->execute("select * from `forum_answer` where `question_id`=? and `id`=?", [$_GET['topic'], $_GET['a']]);
 	if ($procuramensagem->recordcount() == 0)
 	{
 	echo "Voc no pode apagar esta mensagem! <a href=\"main_forum.php\">Voltar</a>.";
-	include("templates/private_footer.php");
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 	}
+ 
 		$editmsg = $procuramensagem->fetchrow();
 
-	if (($editmsg['a_user_id'] != $player->id) and ($player->gm_rank < 3))
+	if ($editmsg['a_user_id'] != $player->id && $player->gm_rank < 3)
 	{
 	echo "Voc no pode apagar esta mensagem! <a href=\"main_forum.php\">Voltar</a>.";
-	include("templates/private_footer.php");
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 	}
-	else
-	{
-		$editandomensagem = $editmsg['a_answer'];
-	}
+
+ $editandomensagem = $editmsg['a_answer'];
+ 
 if(isset($_POST['submit']))
 {
-        $removeposts = $db->execute("select `a_user_id` from `forum_answer` where `question_id`=? and `id`=? ", array($_GET['topic'], $_GET['a']));
+        $removeposts = $db->execute("select `a_user_id` from `forum_answer` where `question_id`=? and `id`=? ", [$_GET['topic'], $_GET['a']]);
 	$player = $removeposts->fetchrow();
-	$query = $db->execute("update `players` set `posts`=`posts`-1 where `id`=?", array($player['a_user_id']));
+	$query = $db->execute("update `players` set `posts`=`posts`-1 where `id`=?", [$player['a_user_id']]);
 
-        $real = $db->execute("delete from `forum_answer` where `question_id`=? and `id`=? ", array($_GET['topic'], $_GET['a']));
-	$real2 = $db->execute("update `forum_question` set `reply`=`reply`-1 where `id`=?", array($_GET['topic']));
-	echo "Postagem removida com sucesso! <a href=\"view_topic.php?id=" . $_GET['topic'] . "\">Voltar</a>.";
-	include("templates/private_footer.php");
+        $real = $db->execute("delete from `forum_answer` where `question_id`=? and `id`=? ", [$_GET['topic'], $_GET['a']]);
+	$real2 = $db->execute("update `forum_question` set `reply`=`reply`-1 where `id`=?", [$_GET['topic']]);
+	echo 'Postagem removida com sucesso! <a href="view_topic.php?id=' . $_GET['topic'] . '">Voltar</a>.';
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
 
@@ -67,5 +69,5 @@ if(isset($_POST['submit']))
 </tr>
 </table>
 <?php
-include("templates/private_footer.php");
+include(__DIR__ . "/templates/private_footer.php");
 ?>

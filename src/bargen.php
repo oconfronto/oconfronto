@@ -1,12 +1,14 @@
 <?php 
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 $player = check_user($secret_key, $db);
 
 $pbonusfor = 0;
 $pbonusvit = 0;
 $pbonusagi = 0;
 $pbonusres = 0;
-	$countstats = $db->query("select `for`, `vit`, `agi`, `res` from `items` where `player_id`=? and `status`='equipped'", array($player->id));
+	$countstats = $db->query("select `for`, `vit`, `agi`, `res` from `items` where `player_id`=? and `status`='equipped'", [$player->id]);
 	while($count = $countstats->fetchrow())
 	{
 		$pbonusfor += $count['for'];
@@ -16,7 +18,7 @@ $pbonusres = 0;
 	}
 
 
-include('barclass.php');
+include(__DIR__ . '/barclass.php');
 if(isset($_REQUEST['exp']))
 {
 	$bar = new barGen();	// Load the class

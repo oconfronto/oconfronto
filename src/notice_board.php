@@ -1,5 +1,5 @@
 <!-- TODO:Codigo provisorio, possivelmente noticias vai entrar para o banco de dados. -->
-<link rel="stylesheet" type="text/css" href="./css/board.css" />
+<link rel="stylesheet" type="text/css" href="static/css/board.css" />
 
 <div class="news-board">
     <h1>Últimas Notícias</h1>

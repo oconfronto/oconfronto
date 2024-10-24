@@ -1,4 +1,6 @@
 <?php 
+declare(strict_types=1);
+
 header('Content-Type: image/png');
 
    //Input file 
@@ -20,7 +22,8 @@ header('Content-Type: image/png');
       $percentage = ($width / ($height / $max_height)) > $max_width ?  
            $width / $max_width : 
            $height / $max_height; 
-   } 
+   }
+    
    $new_width = $width / $percentage; 
    $new_height = $height / $percentage; 
    //scaled image 
