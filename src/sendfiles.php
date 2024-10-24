@@ -81,9 +81,6 @@ if (($_POST['upload']) and ($_FILES["foto"])) {
                 $db->execute("update `guilds` set `img`=? where `id`=?", array($imagem_dir, $player->guild));
                 header("Location: guild_admin.php?success=true");
                 exit;
-            } elseif ($_GET['pay']) {
-                header("Location: payment.php?submit=true&manda=true&img=" . $imagem_dir . "&conta=" . $_GET['conta'] . "&id=" . $_GET['id'] . "&comprovante=true&submit=true");
-                exit;
             }
 
             $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443 ? "https://" : "http://";
@@ -104,9 +101,6 @@ if ($_GET['avatar']) {
     exit;
 } elseif ($_GET['cla']) {
     header("Location: guild_admin.php?msg=error");
-    exit;
-} elseif ($_GET['pay']) {
-    header("Location: payment.php?submit=true&manda=true&send=false&conta=" . $_GET['conta'] . "&id=" . $_GET['id'] . "&comprovante=true&submit=true");
     exit;
 } else {
     $player = check_user($secret_key, $db);
