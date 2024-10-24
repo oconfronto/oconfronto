@@ -16,11 +16,11 @@ include(__DIR__ . "/lib.php");
 
 
 <?php
-$read0 = $db->execute("update `logbat` set `status`='read' where `player_id`=? and `status`='unread'", array($player->id));
+$read0 = $db->execute("update `logbat` set `status`='read' where `player_id`=? and `status`='unread'", [$player->id]);
 
 echo '<table width="100%">';
 echo '<tr><td align="center" bgcolor="#E1CBA4"><b>Logs de Batalha</b></td></tr>';
-$query0 = $db->execute("select `msg`, `status`, `time` from `logbat` where `player_id`=? order by `time` desc", array($player->id));
+$query0 = $db->execute("select `msg`, `status`, `time` from `logbat` where `player_id`=? order by `time` desc", [$player->id]);
 if ($query0->recordcount() > 0)
 {
 	while ($log0 = $query0->fetchrow())

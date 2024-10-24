@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-$luck = rand(0, 10);
-$playerdamage = rand($player->mindmg, $player->maxdmg);
-$enemydamage = rand($enemy->mindmg, $enemy->maxdmg);
+$luck = random_int(0, 10);
+$playerdamage = random_int($player->mindmg, $player->maxdmg);
+$enemydamage = random_int($enemy->mindmg, $enemy->maxdmg);
 
 $enemyhp = $enemy->hp / $enemy->maxhp;
 $enemyhp = ceil($enemyhp * 100);

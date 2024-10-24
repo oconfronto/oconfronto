@@ -12,14 +12,14 @@ if ($_GET['action'] == "closechat") { closeChat(); }
 if ($_GET['action'] == "startchatsession") { startChatSession(); } 
 
 if (!isset($_SESSION['chatHistory'])) {
-	$_SESSION['chatHistory'] = array();	
+	$_SESSION['chatHistory'] = [];	
 }
 
 if (!isset($_SESSION['openChatBoxes'])) {
-	$_SESSION['openChatBoxes'] = array();	
+	$_SESSION['openChatBoxes'] = [];	
 }
 
-function chatHeartbeat() {
+function chatHeartbeat(): void {
 
 	include(__DIR__ . "/lib.php");
 	$player = check_user($secret_key, $db);
@@ -28,7 +28,7 @@ function chatHeartbeat() {
 	$query = mysql_query($sql);
 	$items = '';
 
-	$chatBoxes = array();
+	$chatBoxes = [];
 
 	while ($chat = mysql_fetch_array($query)) {
 
@@ -131,13 +131,10 @@ header('Content-type: application/json');
 
 function chatBoxSession($chatbox) {
 	
-	if (isset($_SESSION['chatHistory'][$chatbox])) {
-     return $_SESSION['chatHistory'][$chatbox];
- }
- return '';
+	return $_SESSION['chatHistory'][$chatbox] ?? '';
 }
 
-function startChatSession() {
+function startChatSession(): void {
 	$items = '';
 	if (!empty($_SESSION['openChatBoxes'])) {
 		foreach ($_SESSION['openChatBoxes'] as $chatbox => $void) {
@@ -168,7 +165,7 @@ header('Content-type: application/json');
 	exit(0);
 }
 
-function sendChat() {
+function sendChat(): void {
 	include(__DIR__ . "/lib.php");
 	$player = check_user($secret_key, $db);
 	$from = str_replace(" ","_",$player->username);
@@ -200,7 +197,7 @@ EOD;
 	exit(0);
 }
 
-function closeChat() {
+function closeChat(): void {
 
 	unset($_SESSION['openChatBoxes'][$_POST['chatbox']]);
 	
@@ -208,7 +205,7 @@ function closeChat() {
 	exit(0);
 }
 
-function sanitize($text) {
+function sanitize($text): string {
 	$text = htmlspecialchars($text, ENT_QUOTES);
 	$text = str_replace("\n\r","\n",$text);
 	$text = str_replace("\r\n","\n",$text);

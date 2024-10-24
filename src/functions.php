@@ -22,6 +22,7 @@ class OCv2
 			$query = mysql_query('SELECT * FROM ' . $data);
 			return mysql_num_rows($query);
 		}
+
   ($query = mysql_query(sprintf("SELECT * FROM %s WHERE %s %s '%s'", $data, $data2, $vll, $data3))) || (print(ERROR));
   if (empty($erro)) {
 				return mysql_num_rows($query);
@@ -49,7 +50,7 @@ class OCv2
 
 // FIM DO MEU CODE LINDO //
 
-function encodePassword(string $password)
+function encodePassword(string $password): string
 {
 
 	$salt = getenv('PASSWORD_SALT');
@@ -62,7 +63,7 @@ function encodePassword(string $password)
 	return $hash;
 }
 
-function encodeSession(string $account_id)
+function encodeSession(string $account_id): string
 {
 
 	$pepper = $n203hc29 . '*&%&Hd';
@@ -84,7 +85,8 @@ function check_acc($secret_key, &$db)
 		header("Location: index.php");
 		exit;
 	}
- $query = $db->execute("select * from `accounts` where `id`=? and `conta`=?", array($_SESSION['Login']['account_id'], $_SESSION['Login']['account']));
+
+ $query = $db->execute("select * from `accounts` where `id`=? and `conta`=?", [$_SESSION['Login']['account_id'], $_SESSION['Login']['account']]);
  $accarray = $query->fetchrow();
  if ($query->recordcount() != 1 || encodeSession($accarray['password']) != $_SESSION['Login']['key']) {
 			session_unset();
@@ -92,9 +94,11 @@ function check_acc($secret_key, &$db)
 			header("Location: index.php");
 			exit;
 		}
+
  foreach ($accarray as $key => $value) {
 				$acc->$key = $value;
 			}
+
  return $acc;
 }
 
@@ -108,7 +112,8 @@ function check_user($secret_key, &$db)
 		header("Location: index.php");
 		exit;
 	}
- $query = $db->execute("select * from `accounts` where `id`=? and `conta`=?", array($_SESSION['Login']['account_id'], $_SESSION['Login']['account']));
+
+ $query = $db->execute("select * from `accounts` where `id`=? and `conta`=?", [$_SESSION['Login']['account_id'], $_SESSION['Login']['account']]);
  $accarray = $query->fetchrow();
  if ($query->recordcount() != 1 || encodeSession($accarray['password']) != $_SESSION['Login']['key']) {
      session_unset();
@@ -116,8 +121,9 @@ function check_user($secret_key, &$db)
      header("Location: index.php");
      exit;
  }
+
  if ($_SESSION['Login']['player_id']) {
-     $query = $db->execute("select * from `players` where `id`=? and `acc_id`=?", array($_SESSION['Login']['player_id'], $_SESSION['Login']['account_id']));
+     $query = $db->execute("select * from `players` where `id`=? and `acc_id`=?", [$_SESSION['Login']['player_id'], $_SESSION['Login']['account_id']]);
      $playerarray = $query->fetchrow();
      if ($query->recordcount() == 1) {
  					foreach ($playerarray as $key => $value) {
@@ -126,17 +132,16 @@ function check_user($secret_key, &$db)
  
  					return $player;
  				}
+
      header("Location: characters.php");
      exit;
  }
- else {
-				header("Location: characters.php");
-				exit;
-			}
- return null;
+
+ header("Location: characters.php");
+ exit;
 }
 
-function multiploCinco($valor)
+function multiploCinco($valor): float
 {
 	return round($valor / 5) * 5;
 }
@@ -149,38 +154,39 @@ function multiploCinco($valor)
 	}
 } */
 
-function maxHp(&$db, $phpid, $level, $reino = '1', $vip = '0')
+function maxHp(&$db, $phpid, $level, $reino = '1', $vip = '0'): float
 {
 	$bonus = 0;
-	$queryBonuz = $db->execute("select `item_id`, `vit`, `item_bonus` from `items` where `player_id`=? and `status`='equipped'", array($phpid));
+	$queryBonuz = $db->execute("select `item_id`, `vit`, `item_bonus` from `items` where `player_id`=? and `status`='equipped'", [$phpid]);
 	while ($itemBonus = $queryBonuz->fetchrow()) {
 		if ($itemBonus['vit'] > 0) {
 			$bonus += ($itemBonus['vit'] * 20);
 		} else {
-			$itemBonusType = $db->GetOne("select `type` from `blueprint_items` where `id`=?", array($itemBonus['item_id']));
+			$itemBonusType = $db->GetOne("select `type` from `blueprint_items` where `id`=?", [$itemBonus['item_id']]);
 			if ($itemBonusType == 'amulet') {
-				$itemBonusValue = $db->GetOne("select `effectiveness` from `blueprint_items` where `id`=?", array($itemBonus['item_id']));
+				$itemBonusValue = $db->GetOne("select `effectiveness` from `blueprint_items` where `id`=?", [$itemBonus['item_id']]);
 				$bonus += (($itemBonusValue + ($itemBonus['item_bonus'] * 2)) * 20);
 			}
 		}
 	}
 
-	$playerVit = $db->GetOne("select `vitality` from `players` where `id`=?", array($phpid));
+	$playerVit = $db->GetOne("select `vitality` from `players` where `id`=?", [$phpid]);
 
 	if ($reino == '3' || $vip > time()) {
 		return multiploCinco(ceil(150 + ($level * 20)) * 1.08 + $bonus + (($playerVit - 1) * 20));
 	}
+
  return ceil(150 + ($level * 20) + $bonus + (($playerVit - 1) * 20));
 }
 
-function maxMana($level, $extramana = '0')
+function maxMana($level, $extramana = '0'): float
 {
 	$dividecinco = (($level + 1) / 5);
 	$dividecinco = floor($dividecinco);
 	return 75 + ($dividecinco * 15) + $extramana;
 }
 
-function maxExp($level)
+function maxExp($level): float
 {
 	if ($level < 10) {
 		$bonus = 5;
@@ -200,12 +206,12 @@ function maxExp($level)
 }
 
 
-function maxExpr($level)
+function maxExpr($level): float
 {
 	return multiploCinco((30 + ($level / 15)) * ($level + 1) * ($level + 1) - 20);
 }
 
-function maxEnergy($level, $vip = '0')
+function maxEnergy($level, $vip = '0'): float
 {
 	$fdividevinte = $vip > time() ? ($level + 1) / 10 : ($level + 1) / 20;
 
@@ -222,19 +228,19 @@ function maxEnergy($level, $vip = '0')
 //Gets the number of unread messages
 function unread_messages($id, &$db)
 {
-	$query = $db->getone("select count(*) as `count` from `mail` where `to`=? and `status`='unread'", array($id));
+	$query = $db->getone("select count(*) as `count` from `mail` where `to`=? and `status`='unread'", [$id]);
 	return $query['count'];
 }
 
 //Gets new log messages
 function unread_log($id, &$db)
 {
-	$query = $db->getone("select count(*) as `count` from `user_log` where `player_id`=? and `status`='unread'", array($id));
+	$query = $db->getone("select count(*) as `count` from `user_log` where `player_id`=? and `status`='unread'", [$id]);
 	return $query['count'];
 }
 
 //Insert a log message into the user logs
-function addlog($id, $msg, &$db)
+function addlog($id, $msg, &$db): void
 {
 	$insert['player_id'] = $id;
 	$insert['msg'] = $msg;
@@ -243,7 +249,7 @@ function addlog($id, $msg, &$db)
 }
 
 //Insert a log message into the error log
-function errorlog($msg, &$db)
+function errorlog($msg, &$db): void
 {
 	$insert['msg'] = $msg;
 	$insert['time'] = time();
@@ -251,7 +257,7 @@ function errorlog($msg, &$db)
 }
 
 //Insert a log message into the GM log
-function gmlog($msg, &$db)
+function gmlog($msg, &$db): void
 {
 	$insert['msg'] = $msg;
 	$insert['time'] = time();
@@ -259,7 +265,7 @@ function gmlog($msg, &$db)
 }
 
 //Insert a log message into the forum log
-function forumlog($msg, &$db, $type = 0, $post = 0)
+function forumlog($msg, &$db, $type = 0, $post = 0): void
 {
 	if ($type == 1 && $post > 0) {
 		$insert['msg'] = $msg;
@@ -304,7 +310,7 @@ function textLimit($string, $length, $lineBreak = null, string $replacer = '...'
 }
 
 
-function antiBreak($comment, $leght)
+function antiBreak($comment, $leght): void
 {
 	$array = explode(" ", $comment);
 
@@ -315,18 +321,18 @@ function antiBreak($comment, $leght)
 }
 
 //Get the player's IP address
-$ip = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
+$ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
 
 
 //Gets the number of items owned
 function item_count($id, $item, &$db)
 {
-	$query = $db->getone("select count(*) as `count` from `items` where `item_id`=? and `player_id`=?", array($item, $id));
+	$query = $db->getone("select count(*) as `count` from `items` where `item_id`=? and `player_id`=?", [$item, $id]);
 	return $query['count'];
 }
 
 
-function show_prog_bar($width, $percent, string $show, $type = 'green', string $color = '#000')
+function show_prog_bar($width, $percent, string $show, $type = 'green', string $color = '#000'): string
 {
 	$font = 'Tahoma';
 	$font_size = '8px';
@@ -346,7 +352,7 @@ function show_prog_bar($width, $percent, string $show, $type = 'green', string $
 	return $return . '</div>';
 }
 
-function showAlert(string $msg, $color = '#FFFDE0', string $align = 'center', $link = NULL, $id = NULL)
+function showAlert(string $msg, $color = '#FFFDE0', string $align = 'center', $link = NULL, $id = NULL): string
 {
 
 	if ($color == 'red') {
@@ -360,14 +366,14 @@ function showAlert(string $msg, $color = '#FFFDE0', string $align = 'center', $l
 	if ($link) {
 		$return .= '<a href="' . $link . '" style="text-decoration: none;">';
 		$return .= "<div ";
-		if (id) {
+		if (\ID) {
 			$return .= 'id = "' . $id . '" ';
 		}
   
 		$return .= "class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" style=\"color: #000000; padding: 5px; border: 1px solid #DEDEDE; margin-bottom: 10px; text-align: " . $align . ';">';
 	} else {
 		$return .= "<div ";
-		if (id) {
+		if (\ID) {
 			$return .= 'id = "' . $id . '" ';
 		}
   
@@ -390,32 +396,33 @@ function parseInt($string)
 	if (preg_match('/(\d+)/', $string, $array)) {
 		return $array[1];
 	}
+
  return 0;
 }
 
 
-function showName($name, &$db, $status = 'on', $link = 'on')
+function showName($name, &$db, $status = 'on', $link = 'on'): string
 {
 	$ninguem = 0;
 	if ($name == NULL || is_numeric($name) && $name < 1) {
 		$ninguem = 5;
 	} elseif (is_numeric($name)) {
-		$user = $db->GetOne("select `username` from `players` where `id`=?", array($name));
+		$user = $db->GetOne("select `username` from `players` where `id`=?", [$name]);
 	} else {
 		$user = $name;
-		$name = $db->GetOne("select `id` from `players` where `username`=?", array($name));
+		$name = $db->GetOne("select `id` from `players` where `username`=?", [$name]);
 	}
 
 
 
 	if ($ninguem != 5) {
 
-		if ($status != off) {
+		if ($status != \OFF) {
 			$player = check_user($secret_key, $db);
-			$online = $db->execute("select `time` from `user_online` where `player_id`=?", array($name));
-			$ignorado = $db->execute("select * from `ignored` where `uid`=? and `bid`=?", array($name, $player->id));
+			$online = $db->execute("select `time` from `user_online` where `player_id`=?", [$name]);
+			$ignorado = $db->execute("select * from `ignored` where `uid`=? and `bid`=?", [$name, $player->id]);
 			if ($online->recordcount() > 0 && $ignorado->recordcount() == 0) {
-				$check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", array($name));
+				$check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", [$name]);
 				if ($check->recordcount() == 0) {
 					$return .= "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $user) . "')\"><img src=\"static/images/online.png\" border=\"0px\"></a>";
 				} else {
@@ -443,16 +450,16 @@ function showName($name, &$db, $status = 'on', $link = 'on')
 		}
   
 		$closevip = false;
-		$pvipaccid = $db->execute("select `acc_id` from `players` where `id`=?", array($name));
-		$pviptime = $db->execute("select `vip` from `players` where `id`=?", array($name));
+		$pvipaccid = $db->execute("select `acc_id` from `players` where `id`=?", [$name]);
+		$pviptime = $db->execute("select `vip` from `players` where `id`=?", [$name]);
 		if (parseInt($pviptime) > time()) {
-			$hidevip = $db->execute("select * from `other` where `value`=? and `player_id`=?", array('hidevip', parseInt($pvipaccid)));
+			$hidevip = $db->execute("select * from `other` where `value`=? and `player_id`=?", ['hidevip', parseInt($pvipaccid)]);
 			if ($hidevip->recordcount() == 0) {
 				$closevip = true;
 			}
 		}
 
-		if ($link != off) {
+		if ($link != \OFF) {
       if ($closevip) {
    				$return .= '<a href="profile.php?id=' . $user . '"><font color="blue">';
    			} else {

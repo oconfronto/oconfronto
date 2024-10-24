@@ -13,7 +13,7 @@ if ($_GET['voltar'] == true){
 $magiasdisponiveis = $db->execute("select * from `blueprint_magias`");
 while($spell = $magiasdisponiveis->fetchrow())
 {
-	$magia1 = $db->execute("select * from `magias` where `magia_id`=? and `player_id`=?", array($spell['id'], $player->id));
+	$magia1 = $db->execute("select * from `magias` where `magia_id`=? and `player_id`=?", [$spell['id'], $player->id]);
 
 	if ($spell['mana'] > 0) {
      $mana = $player->reino == '1' ? "<b>Mana:</b> " . ($spell['mana'] - 5) . "" : "<b>Mana:</b> " . $spell['mana'] . "";
@@ -69,7 +69,7 @@ while($spell = $magiasdisponiveis->fetchrow())
 		echo '<div title="header=[' . $spell['nome'] . "] body=[" . $spell['descri'] . "<br/><b>Custo:</b> " . $spell['cost'] . " <b>|</b> " . $mana . "]\"><a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_spells.php?act=buy&spell=" . $spell['id'] . "', 'comfirm')\"><img src=\"static/images/magias/" . $spell['id'] . '.jpg" id="magia' . $spell['id'] . '" border="0"/><img src="static/images/magias/none.png" id="block' . $spell['id'] . '" border="0"/>';
 
 
-			$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=5 and `player_id`=?", array($player->id));
+			$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=5 and `player_id`=?", [$player->id]);
 			if ($spell['id'] == 4 && $tutorial->recordcount() > 0){
 				echo '<img src="static/images/itens/show.gif" id="tutorial" border="0"/>';
 			}

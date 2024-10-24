@@ -8,7 +8,7 @@ include(__DIR__ . "/lib.php");
 <head>
 <title>O Confronto :: Logs de Amigos</title>
 <?php
-		$checknocur = $db->execute("select * from `other` where `value`=? and `player_id`=?", array(cursor, $player->id));
+		$checknocur = $db->execute("select * from `other` where `value`=? and `player_id`=?", [\CURSOR, $player->id]);
 		if ($checknocur->recordcount() > 0) {
 		echo '<link rel="stylesheet" type="text/css" href="css/private_style_2.css" />';
 		}else{
@@ -25,7 +25,7 @@ include(__DIR__ . "/lib.php");
 <?php
 echo '<table width="100%">';
 echo '<tr><td align="center" bgcolor="#E1CBA4"><b>Logs de Amigos</b></td></tr>';
-$query0 = $db->execute("select log_friends.log, log_friends.time from `log_friends`, `friends` where friends.uid=? and log_friends.fname=friends.fname order by log_friends.time desc", array($player->id));
+$query0 = $db->execute("select log_friends.log, log_friends.time from `log_friends`, `friends` where friends.uid=? and log_friends.fname=friends.fname order by log_friends.time desc", [$player->id]);
 if ($query0->recordcount() > 0)
 {
 	while ($trans = $query0->fetchrow())

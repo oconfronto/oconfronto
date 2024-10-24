@@ -16,11 +16,11 @@ include(__DIR__ . "/lib.php");
 
 
 <?php
-$read0 = $db->execute("update `account_log` set `status`='read' where `player_id`=? and `status`='unread'", array($acc->id));
+$read0 = $db->execute("update `account_log` set `status`='read' where `player_id`=? and `status`='unread'", [$acc->id]);
 
 echo '<table width="100%">';
 echo '<tr><td align="center" bgcolor="#E1CBA4"><b>Logs da Conta</b></td></tr>';
-$query0 = $db->execute("select `msg`, `status`, `time` from `account_log` where `player_id`=? order by `time` desc", array($acc->id));
+$query0 = $db->execute("select `msg`, `status`, `time` from `account_log` where `player_id`=? order by `time` desc", [$acc->id]);
 if ($query0->recordcount() > 0)
 {
 	while ($log0 = $query0->fetchrow())

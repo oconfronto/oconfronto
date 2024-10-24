@@ -11,7 +11,7 @@ $price = 500000;
 $error = 0;
 
 //Populates $guild variable
-$guildquery = $db->execute("select * from `guilds` where `id`=?", array($player->guild));
+$guildquery = $db->execute("select * from `guilds` where `id`=?", [$player->guild]);
 
 if ($guildquery->recordcount() == 0) {
     header("Location: home.php");
@@ -27,7 +27,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
     echo '<a href="home.php">Principal</a><p />';
 } else {
 
-if ($_GET['upgrade'] == maxplayers) {
+if ($_GET['upgrade'] == \MAXPLAYERS) {
 	if ($guild['maxmembers'] > 29) {
      $errmsg .= "<center><b>Você não pode adicionar mais vagas para o clã.</b></center>";
      $error = 1;
@@ -37,7 +37,7 @@ if ($_GET['upgrade'] == maxplayers) {
  }
  
 		if ($error == 0){
-		$query = $db->execute("update `guilds` set `maxmembers`=?, `gold`=? where `id`=?", array($guild['maxmembers'] + 5, $guild['gold'] - $price, $guild['id']));
+		$query = $db->execute("update `guilds` set `maxmembers`=?, `gold`=? where `id`=?", [$guild['maxmembers'] + 5, $guild['gold'] - $price, $guild['id']]);
 		$msg .= "<center><b>Agora seu clã pode possuir " . ($guild['maxmembers'] + 5) . " membros.</b></center>";
 		}
 }

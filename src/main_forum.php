@@ -95,7 +95,7 @@ if ($aux['total'] > 0) {
        echo "<b>Fechado:</b> ";
    }
    
-		$total_answers = $db->execute("select * from `forum_answer` where `question_id`=?", array($rows['id']));
+		$total_answers = $db->execute("select * from `forum_answer` where `question_id`=?", [$rows['id']]);
 		$pagenumber = ceil($total_answers->recordcount() / 5);
 		if ($pagenumber < 1){
 			$pagenumber = 1;
@@ -104,7 +104,7 @@ if ($aux['total'] > 0) {
 		echo '<b><a href="view_topic.php?page=' . $pagenumber . "&id=" . $rows['id'] . '">' . textLimit(stripslashes($rows['topic']), 75) . "</a></b><br />";
 
 			if ($rows['reply'] > 0){
-			$lastpostid = $db->GetOne("select SQL_CACHE `a_user_id` from `forum_answer` where `question_id`=? order by `a_datetime` DESC", array($rows['id']));
+			$lastpostid = $db->GetOne("select SQL_CACHE `a_user_id` from `forum_answer` where `question_id`=? order by `a_datetime` DESC", [$rows['id']]);
 				echo "<font size=\"1\">último post por " . showName($lastpostid, $db) . "</font></td>";
 			}else{
 				echo '<font size="1">Iniciado por ' . showName($rows['user_id'], $db) . "</font></td>";

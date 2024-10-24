@@ -16,20 +16,20 @@ include(__DIR__ . "/lib.php");
 
 
 <?php
-$read0 = $db->execute("update `user_log` set `status`='read' where `player_id`=? and `status`='unread'", array($player->id));
+$read0 = $db->execute("update `user_log` set `status`='read' where `player_id`=? and `status`='unread'", [$player->id]);
 
 echo '<table width="100%">';
 echo '<tr><td align="center" bgcolor="#E1CBA4"><b>Logs de Ouro</b></td></tr>';
-$query0 = $db->execute("select * from `log_gold` where `player_id`=? order by `time` desc", array($player->id));
+$query0 = $db->execute("select * from `log_gold` where `player_id`=? order by `time` desc", [$player->id]);
 if ($query0->recordcount() > 0)
 {
 	while ($trans = $query0->fetchrow())
 	{
-		$read1 = $db->execute("update `log_gold` set `status`='read' where `player_id`=? and `status`='unread' and `id`=?", array($player->id, $trans['id']));
+		$read1 = $db->execute("update `log_gold` set `status`='read' where `player_id`=? and `status`='unread' and `id`=?", [$player->id, $trans['id']]);
 
 		echo "<tr>";
 
-		$auxiliar = $trans['action'] == enviou ? "para" : "de";
+		$auxiliar = $trans['action'] == \ENVIOU ? "para" : "de";
 
 		$valortempo = time() -  $trans['time'];
 		if ($valortempo < 60) {
@@ -47,9 +47,9 @@ if ($query0->recordcount() > 0)
   }
 
 		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[Log] body=[" . $valortempo2 . " " . $auxiliar2 . ']">';
-		if ($trans['action'] == doou){
+		if ($trans['action'] == \DOOU){
 		echo "<font size=\"1\">Você enviou <b>" . $trans['value'] . "</b> de ouro para o clã <b><a href=\"guild_profile.php?id=" . $trans['name2'] . '">' . $trans['name2'] . "</a></b></font></div></td>";
-		}elseif ($trans['action'] == ganhou){
+		}elseif ($trans['action'] == \GANHOU){
 		echo "<font size=\"1\">Você recebeu <b>" . $trans['value'] . "</b> de ouro para o clã <b><a href=\"guild_profile.php?id=" . $trans['name2'] . '">' . $trans['name2'] . "</a></b></font></div></td>";
 		}else{
 		echo "<font size=\"1\">Você " . $trans['action'] . " <b>" . $trans['value'] . "</b> de ouro " . $auxiliar . ' <b><a href="profile.php?id=' . $trans['name2'] . '">' . $trans['name2'] . "</a></b></font></div></td>";

@@ -18,7 +18,7 @@ if (!$_POST['detail']) {
 }
 
 
-	$procuramengperfil = $db->execute("select `perfil` from `profile` where `player_id`=?", array($player->id));
+	$procuramengperfil = $db->execute("select `perfil` from `profile` where `player_id`=?", [$player->id]);
 
     $topic=$_POST['detail'];
     $topic2=strip_tags($topic);
@@ -35,7 +35,7 @@ if (!$_POST['detail']) {
 	}
 	else
 	{
-        $db->execute("update `profile` set `perfil`=? where `player_id`=?", array($texto, $player->id));
+        $db->execute("update `profile` set `perfil`=? where `player_id`=?", [$texto, $player->id]);
         echo "<fieldset><legend><b>Sucesso</b></legend>Perfil atualizado com sucesso!<BR>";
         echo '<a href="profile.php?id=' . $player->username . '">Visualizar perfil</a></fieldset>';
 	}

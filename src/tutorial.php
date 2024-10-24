@@ -7,7 +7,7 @@ $player = check_user($secret_key, $db);
 
 if ($_GET['skip'] == true)
 {
-$query = $db->execute("update `pending` set `pending_status`=90 where `pending_id`=2 and `player_id`=?", array($player->id));
+$query = $db->execute("update `pending` set `pending_status`=90 where `pending_id`=2 and `player_id`=?", [$player->id]);
 header("Location: home.php");
 exit;
 }

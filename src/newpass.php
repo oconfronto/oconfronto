@@ -12,11 +12,11 @@ $email = strip_tags($email); //strips out possible HTML
 $string = trim($string);
 $string = strip_tags($string);
 
-srand((float)microtime() * 1023487);  //sets random seed
-$newstring = md5(rand(0, 999999999));
+mt_srand((float)microtime() * 1023487);  //sets random seed
+$newstring = md5(random_int(0, 999999999));
 
 
-$real = $db->execute("select `id`, `validkey`, `conta` from `accounts` where `email`=? and `validkey`=?", array($email, $string));
+$real = $db->execute("select `id`, `validkey`, `conta` from `accounts` where `email`=? and `validkey`=?", [$email, $string]);
 if ($real->recordcount() == 0) {
 	include(__DIR__ . "/templates/header.php");
 	echo "Endereço inválido ou antigo. <a href=\"index.php\">Voltar</a>.";
@@ -30,10 +30,11 @@ if (!$_GET['email'] || !$_GET['string'] || !$_GET['email'] & !$_GET['string']) {
 	include(__DIR__ . "/templates/footer.php");
 	exit;
 }
+
 include(__DIR__ . "/templates/header.php");
-$newpassword = rand(10000000, 99999999);
+$newpassword = random_int(10000000, 99999999);
 $newpasswordcoded = encodePassword($newpassword);
-$query = $db->execute("update `accounts` set `password`=?, `validkey`=? where `email`=? and `validkey`=?", array($newpasswordcoded, $newstring, $email, $string));
+$query = $db->execute("update `accounts` set `password`=?, `validkey`=? where `email`=? and `validkey`=?", [$newpasswordcoded, $newstring, $email, $string]);
 $memberto = $real->fetchrow();
 $insert['player_id'] = $memberto['id'];
 $insert['msg'] = "Você recuperou a senha de sua conta pelo seu email.";

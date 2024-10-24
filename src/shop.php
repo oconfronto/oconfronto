@@ -18,7 +18,7 @@ switch($_GET['act'])
 		}
 		
 		//Select the item from the database
-		$query = $db->execute("select `id`, `name`, `price`, `type`, `voc`, `canbuy` from `blueprint_items` where `id`=?", array($_GET['id']));
+		$query = $db->execute("select `id`, `name`, `price`, `type`, `voc`, `canbuy` from `blueprint_items` where `id`=?", [$_GET['id']]);
 		
 		//Invalid item (it doesn't exist)
 		if ($query->recordcount() == 0)
@@ -106,7 +106,7 @@ switch($_GET['act'])
 		if ($item['canbuy'] == 's')
 		{
 			
-			$checaquest = $db->execute("select `id` from `quests` where `player_id`=? and `quest_status`=90 and `quest_id`=11", array($player->id));
+			$checaquest = $db->execute("select `id` from `quests` where `player_id`=? and `quest_status`=90 and `quest_id`=11", [$player->id]);
 			if ($checaquest->recordcount() == 0)
 			{
 				include(__DIR__ . "/templates/private_header.php");
@@ -118,14 +118,14 @@ switch($_GET['act'])
 			}
 		}
 
-		$db->execute("update `players` set `gold`=? where `id`=?", array($player->gold - $itemprice, $player->id));
+		$db->execute("update `players` set `gold`=? where `id`=?", [$player->gold - $itemprice, $player->id]);
 		$insert['player_id'] = $player->id;
 		$insert['item_id'] = $item['id'];
 		$query = $db->autoexecute('items', $insert, 'INSERT');
 
 		if ($item['id'] == 176){
 			$ringid = $db->Insert_ID();
-			$db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", array(30, 40, 30, 40, $ringid));
+			$db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", [30, 40, 30, 40, $ringid]);
 		}
 
 			$player = check_user($secret_key, $db); //Get new user stats
@@ -152,7 +152,7 @@ switch($_GET['act'])
 				echo "<b>Deseja vender:</b><br/>";
 				foreach($_POST['id'] as $msg)
 				{
-				$multipleitem = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", array($player->id, $msg));
+				$multipleitem = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", [$player->id, $msg]);
 					if ($multipleitem->recordcount() == 0)
 					{
 					echo "Este item não te pertence.<br />";
@@ -170,6 +170,7 @@ switch($_GET['act'])
 						}else{
 						$precodavenda = floor(($multisell['price']/2) + (($multisell['item_bonus']*$multisell['price'])/5));
 						}
+
       $multisellfor = $multisell['for'] == 0 ? "" : ' +<font color="gray">' . $multisell['for'] . "F</font>";
       $multisellvit = $multisell['vit'] == 0 ? "" : ' +<font color="green">' . $multisell['vit'] . "V</font>";
       $multisellagi = $multisell['agi'] == 0 ? "" : ' +<font color="blue">' . $multisell['agi'] . "A</font>";
@@ -200,7 +201,7 @@ switch($_GET['act'])
 				$totalprico2 = 0;
 				foreach($_POST['id'] as $msg)
 				{
-					$multipleitem = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", array($player->id, $msg));
+					$multipleitem = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", [$player->id, $msg]);
 					if ($multipleitem->recordcount() == 0)
 					{
 					echo "Este item não te pertence.<br />";
@@ -223,10 +224,10 @@ switch($_GET['act'])
 				$totalprico2 += $precodavenda;
 
 					if ($multisell['mark'] == 't'){
-					$query = $db->execute("delete from `market` where `market_id`=?", array($msg));
+					$query = $db->execute("delete from `market` where `market_id`=?", [$msg]);
 					}
      
-					$query = $db->execute("delete from `items` where `id`=?", array($msg));
+					$query = $db->execute("delete from `items` where `id`=?", [$msg]);
      $multisellfor = $multisell['for'] == 0 ? "" : ' +<font color="gray">' . $multisell['for'] . "F</font>";
      $multisellvit = $multisell['vit'] == 0 ? "" : ' +<font color="green">' . $multisell['vit'] . "V</font>";
      $multisellagi = $multisell['agi'] == 0 ? "" : ' +<font color="blue">' . $multisell['agi'] . "A</font>";
@@ -237,7 +238,7 @@ switch($_GET['act'])
 					}
 					}
     
-					$query = $db->execute("update `players` set `gold`=? where `id`=?", array($player->gold + $totalprico2, $player->id));
+					$query = $db->execute("update `players` set `gold`=? where `id`=?", [$player->gold + $totalprico2, $player->id]);
 					echo '<br/><a href="inventory.php">Voltar</a>.';
 				include(__DIR__ . "/templates/private_footer.php");
 				break;
@@ -250,7 +251,7 @@ switch($_GET['act'])
 		}
 
 		//Select the item from the database
-		$query = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", array($player->id, $_GET['id']));
+		$query = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", [$player->id, $_GET['id']]);
 		
 		//Either item doesn't exist, or item doesn't belong to user
 		if ($query->recordcount() == 0)
@@ -307,11 +308,11 @@ switch($_GET['act'])
 		
 		//Delete item from database, add gold to player's account
 			if ($sell['mark'] == 't'){
-			$query = $db->execute("delete from `market` where `market_id`=?", array($sell['id']));
+			$query = $db->execute("delete from `market` where `market_id`=?", [$sell['id']]);
 			}
    
-		$query = $db->execute("delete from `items` where `id`=?", array($sell['id']));
-		$query = $db->execute("update `players` set `gold`=? where `id`=?", array($player->gold + $valordavenda, $player->id));
+		$query = $db->execute("delete from `items` where `id`=?", [$sell['id']]);
+		$query = $db->execute("update `players` set `gold`=? where `id`=?", [$player->gold + $valordavenda, $player->id]);
 		
 		$player = check_user($secret_key, $db); //Get updated user info
 		
@@ -405,7 +406,7 @@ switch($_GET['act'])
 		$query .= "`type`='" . $_GET['type'] . "' and `canbuy`='t' and (`voc`=" . $voc . " or `voc`=0) and `needlvl`<" . ($player->level + 10) . " order by `needlvl` asc";
 		
 		//Construct values array for adoDB
-		$values = array();
+		$values = [];
   if ($_GET['name'] != "") {
       $values[] = "%".trim($_GET['name'])."%";
   }

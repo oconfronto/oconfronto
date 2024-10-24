@@ -12,7 +12,7 @@ if (time() < 1345222800 && !$_GET['login'] && !$_POST['login'])
     
     if ($_SESSION['Login'] != null)
     {
-        $rematual = $db->GetOne("select `remember` from `accounts` where `id`=?", array($_SESSION['Login']['account_id']));
+        $rematual = $db->GetOne("select `remember` from `accounts` where `id`=?", [$_SESSION['Login']['account_id']]);
         if ($rematual == 't'){
             header("Location: characters.php");
             exit;
@@ -25,7 +25,7 @@ if (time() < 1345222800 && !$_GET['login'] && !$_POST['login'])
     
     if ($_POST['login'])
     {
-        $tentativas = $db->GetOne("select `tries` from `login_tries` where `ip`=?", array($ip));
+        $tentativas = $db->GetOne("select `tries` from `login_tries` where `ip`=?", [$ip]);
         
         if (!$_POST['username'] && !$_POST['password'])
         {
@@ -51,17 +51,18 @@ if (time() < 1345222800 && !$_GET['login'] && !$_POST['login'])
             $showerror = 3;
             $error = 1;
         } elseif ($error === 0) {
-            $query = $db->execute("select * from `accounts` where `conta`=? and `password`=?", array($_POST['username'], encodePassword($_POST['password'])));
+            $query = $db->execute("select * from `accounts` where `conta`=? and `password`=?", [$_POST['username'], encodePassword($_POST['password'])]);
             if ($query->recordcount() == 1) {
                 $account = $query->fetchrow();
-                $db->execute("update `accounts` set `ip`=? where `id`=?", array($ip, $account['id']));
+                $db->execute("update `accounts` set `ip`=? where `id`=?", [$ip, $account['id']]);
                 
-                $_SESSION['Login'] = array("account_id" => $account['id'],"account" => $account['conta'],"key" => encodeSession($account['password'])); 
+                $_SESSION['Login'] = ["account_id" => $account['id'], "account" => $account['conta'], "key" => encodeSession($account['password'])]; 
                 header("Location: characters.php");
                 exit;
             }
+
             $restantes = ceil(10 - $tentativas);
-            $verificaConta = $db->execute("select `id` from `accounts` where `conta`=?", array($_POST['username']));
+            $verificaConta = $db->execute("select `id` from `accounts` where `conta`=?", [$_POST['username']]);
             if ($verificaConta->recordcount() == 0) {
                 $errormsg = "Conta incorreta! (" . $restantes . " tentativas restantes).";
                  $showerror = 1;
@@ -70,15 +71,17 @@ if (time() < 1345222800 && !$_GET['login'] && !$_POST['login'])
                  $showerror = 2;
                  $showcerto = 1;
             }
-            $bloqueiaip = $db->execute("select `tries` from `login_tries` where `ip`=?", array($ip));
+
+            $bloqueiaip = $db->execute("select `tries` from `login_tries` where `ip`=?", [$ip]);
             if ($bloqueiaip->recordcount() == 0) {
                 $insert['ip'] = $ip;
                 $insert['tries'] = 1;
                 $insert['time'] = time();
                 $db->autoexecute('login_tries', $insert, 'INSERT');
             }elseif ($bloqueiaip->recordcount() > 0) {
-                $db->execute("update `login_tries` set `tries`=`tries`+1 where `ip`=?", array($ip));
+                $db->execute("update `login_tries` set `tries`=`tries`+1 where `ip`=?", [$ip]);
             }
+
             $error = 1;
             //Clear user's session data
             session_unset();

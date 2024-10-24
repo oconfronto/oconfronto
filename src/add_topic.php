@@ -23,7 +23,7 @@ if ($_POST['category'] == 'none') {
             exit;
 }
 
-$verifica = $db->GetOne("select `imperador` from `reinos` where `id`=?", array($player->reino));
+$verifica = $db->GetOne("select `imperador` from `reinos` where `id`=?", [$player->reino]);
 if ($_POST['category'] != 'sugestoes' && $_POST['category'] != 'gangues' && $_POST['category'] != 'trade' && $_POST['category'] != 'duvidas' && $_POST['category'] != 'outros' && $_POST['category'] != 'fan' && $_POST['category'] != 'off' && $player->gm_rank < 9) {
 		echo "<fieldset><legend><b>Erro</b></legend>Você não tem autorização para criar tópicos nesta categoria!<BR>";
 		echo "<a href=\"#\" onClick='javascript: history.back();'>Voltar</a></fieldset>";
@@ -58,7 +58,7 @@ $time = time();
 	$insert['serv'] = $player->serv;
 	$result = $db->autoexecute('forum_question', $insert, 'INSERT');
 
-$sql5 = $db->execute("update `players` set `posts`=`posts`+1 where `id`=?", array($player->id));
+$sql5 = $db->execute("update `players` set `posts`=`posts`+1 where `id`=?", [$player->id]);
 
 if($result){
 echo "<fieldset><legend><b>Sucesso</b></legend>Tópico postado com sucesso!<BR>";

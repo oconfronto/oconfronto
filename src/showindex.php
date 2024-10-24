@@ -6,7 +6,7 @@ include(__DIR__ . "/lib.php");
     $error = 0;
     if ($_POST['login'])
     {
-        $tentativas = $db->GetOne("select `tries` from `login_tries` where `ip`=?", array($ip));
+        $tentativas = $db->GetOne("select `tries` from `login_tries` where `ip`=?", [$ip]);
         
         if (!$_POST['username'])
         {
@@ -23,26 +23,28 @@ include(__DIR__ . "/lib.php");
             $errormsg = "Você errou sua senha 10 vezes seguidas. Aguarde 30 minutos para poder tentar novamente.";
             $error = 1;
         } elseif ($error === 0) {
-            $query = $db->execute("select * from `accounts` where `conta`=? and `password`=?", array($_POST['username'], encodePassword($_POST['password'])));
+            $query = $db->execute("select * from `accounts` where `conta`=? and `password`=?", [$_POST['username'], encodePassword($_POST['password'])]);
             if ($query->recordcount() == 1) {
                 $account = $query->fetchrow();
-                $db->execute("update `accounts` set `ip`=? where `id`=?", array($ip, $account['id']));
+                $db->execute("update `accounts` set `ip`=? where `id`=?", [$ip, $account['id']]);
                 
-                $_SESSION['Login'] = array("account_id" => $account['id'],"account" => $account['conta'],"key" => encodeSession($account['password'])); 
+                $_SESSION['Login'] = ["account_id" => $account['id'], "account" => $account['conta'], "key" => encodeSession($account['password'])]; 
                 header("Location: characters.php");
                 exit;
             }
+
             $restantes = ceil(10 - $tentativas);
             $errormsg = "Conta ou senha incorreta! (" . $restantes . " tentativas restantes).";
-            $bloqueiaip = $db->execute("select `tries` from `login_tries` where `ip`=?", array($ip));
+            $bloqueiaip = $db->execute("select `tries` from `login_tries` where `ip`=?", [$ip]);
             if ($bloqueiaip->recordcount() == 0) {
                 $insert['ip'] = $ip;
                 $insert['tries'] = 1;
                 $insert['time'] = time();
                 $query = $db->autoexecute('login_tries', $insert, 'INSERT');
             }elseif ($bloqueiaip->recordcount() > 0) {
-                $query = $db->execute("update `ip` set `login_tries`=`tries`+1 where `ip`=?", array($ip));
+                $query = $db->execute("update `ip` set `login_tries`=`tries`+1 where `ip`=?", [$ip]);
             }
+
             $error = 1;
             //Clear user's session data
             session_unset();

@@ -80,14 +80,14 @@ if ($setting->event_convidados = true) {
 	<br/><b>Convidados: <?php echo $row['qt']; ?></b><br/><b>Gold Bônus: <?php echo $row['gold']; ?></b>
 	</font></td>
 
-	<td width=35%><font size=1px>+<font color=gray><?php echo rand(1, 5); ?> for</font></font>
+	<td width=35%><font size=1px>+<font color=gray><?php echo random_int(1, 5); ?> for</font></font>
 	
 	</br>
-	<font size=1px>+<font color=green><?php echo rand(1, 5); ?> vit</font></font>
+	<font size=1px>+<font color=green><?php echo random_int(1, 5); ?> vit</font></font>
 	</br>
-	<font size=1px>+<font color=blue><?php echo rand(1, 5); ?> agi</font></font>
+	<font size=1px>+<font color=blue><?php echo random_int(1, 5); ?> agi</font></font>
 	</br>
-	<font size=1px>+<font color=red><?php echo rand(1, 5); ?> res</font></font>
+	<font size=1px>+<font color=red><?php echo random_int(1, 5); ?> res</font></font>
 		
 	</td>
 	</table>]">

@@ -24,17 +24,17 @@ if ($player->gm_rank < 2)
 }
 
 if (isset($_GET['move'])) {	
-	$query = $db->execute("update `bugs` set `status`='Fixed' where `id`=?", array($_GET['move']));	    
+	$query = $db->execute("update `bugs` set `status`='Fixed' where `id`=?", [$_GET['move']]);	    
 	echo "<b><center>Mensagem marcada como resolvida com sucesso.</center></b>";
 }
 
 if (isset($_GET['remove'])) {	
-	$query = $db->execute("update `bugs` set `status`='Pending' where `id`=?", array($_GET['remove']));	    
+	$query = $db->execute("update `bugs` set `status`='Pending' where `id`=?", [$_GET['remove']]);	    
 	echo "<b><center>Mensagem marcada como não resolvida com sucesso.</center></b>";
 }
 
 if (isset($_GET['validate'])) {	
-	$query = $db->execute("update `players` set `validated`='1' where `username`=?", array($_GET['validate']));	    
+	$query = $db->execute("update `players` set `validated`='1' where `username`=?", [$_GET['validate']]);	    
 	echo "<b><center>A conta bancária do usuário " . $_GET['validate'] . " foi ativa.</center></b>";
 }
 

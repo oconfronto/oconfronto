@@ -3,7 +3,7 @@
     "description": "Browser multiplayer RPG game",
     "type": "project",
     "require": {
-        "php": ">=5.3",
+        "php": ">=7.4.33",
         "adodb/adodb-php": "5.20.21",
         "phpmailer/phpmailer": "5.2.28"
     },

@@ -9,8 +9,8 @@ if (time() < 1345222800) {
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Criar Conta");
 
-srand((float)microtime() * 1000000);  //sets random seed
-$string = md5(rand(0, 1000000));
+mt_srand((float)microtime() * 1000000);  //sets random seed
+$string = md5(random_int(0, 1000000));
 
 if ($_GET['r']) {
     $_SESSION['ref'] = $_GET['r'];
@@ -41,7 +41,7 @@ $msg5 = "";
 
 if ($_POST['register'] || $_GET['confirm']) {
     //Check if conta has already been used
-    $query = $db->execute("select `id` from `accounts` where `conta`=?", array($_POST['conta2']));
+    $query = $db->execute("select `id` from `accounts` where `conta`=?", [$_POST['conta2']]);
     //Check conta
     if (!$_POST['conta2']) { //If conta isn't filled in...
         $msg1 = "Voc&ecirc; precisa digitar o nome da conta desejada.<br />\n"; //Add to error message
@@ -126,8 +126,8 @@ if ($_POST['register'] || $_GET['confirm']) {
         $erro3 = 1;
     } else {
         //Check if email has already been used
-        $query = $db->execute("select `id` from `accounts` where `email`=?", array($_POST['email2']));
-        $query2 = $db->execute("select * from `pending` where `pending_id`=1 and `pending_status`=?", array($_POST['email2']));
+        $query = $db->execute("select `id` from `accounts` where `email`=?", [$_POST['email2']]);
+        $query2 = $db->execute("select * from `pending` where `pending_id`=1 and `pending_status`=?", [$_POST['email2']]);
         if ($query->recordcount() > 0) {
             $msg3 = "Este email já está sendo usado por outra conta!<br />\n";
             $error = 1;
@@ -187,7 +187,7 @@ if ($_POST['register'] || $_GET['confirm']) {
         if ($registra) {
             session_unset();
             session_start();
-            $_SESSION['Login'] = array("account_id" => $id, "account" => $_POST['conta2'], "key" => encodeSession(encodePassword($_POST['password2'])));
+            $_SESSION['Login'] = ["account_id" => $id, "account" => $_POST['conta2'], "key" => encodeSession(encodePassword($_POST['password2']))];
 
 
             include(__DIR__ . "/templates/header.php");

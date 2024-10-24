@@ -11,7 +11,7 @@ $error = 0;
 $username = ($_GET['username']);
 
 //Populates $guild variable
-$guildquery = $db->execute("select * from `guilds` where `id`=?", array($player->guild));
+$guildquery = $db->execute("select * from `guilds` where `id`=?", [$player->guild]);
 
 if ($guildquery->recordcount() == 0) {
     header("Location: home.php");

@@ -38,7 +38,7 @@ if ($_POST['changepassword']) {
 		$insert['time'] = time();
 		$query = $db->autoexecute('account_log', $insert, 'INSERT');
 
-        $query = $db->execute("update `accounts` set `password`=? where `id`=?", array(encodePassword($_POST['password']), $acc->id));
+        $query = $db->execute("update `accounts` set `password`=? where `id`=?", [encodePassword($_POST['password']), $acc->id]);
         $msg .= "Senha alterada com sucesso.";
 	$sucess1 = 1;
     }

@@ -19,9 +19,9 @@ include(__DIR__ . "/templates/private_header.php");
 
 $tuto = false;
 
-$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=4 and `player_id`=?", array($player->id));
+$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=4 and `player_id`=?", [$player->id]);
 if ($tutorial->recordcount() > 0) {
-    $tutorial = $db->execute("select * from `items` where `player_id`=? and `status`='equipped'", array($player->id));
+    $tutorial = $db->execute("select * from `items` where `player_id`=? and `status`='equipped'", [$player->id]);
     if ($tutorial->recordcount() == 0) {
         global $tuto;
         $tuto = true;
@@ -33,7 +33,7 @@ if ($tutorial->recordcount() > 0) {
     }
 }
 
-function displayItemOptions(array $item, $action, $label)
+function displayItemOptions(array $item, $action, $label): ?string
 {
     if ($item['item_bonus'] == 0) {
         $precol = ceil($item['price'] / 3.5);
@@ -52,6 +52,7 @@ function displayItemOptions(array $item, $action, $label)
     } else {
         $valordavenda = floor(($item['price'] / 2) + (($item['item_bonus'] * $item['price']) / 5));
     }
+
     if ($action == 'sell') {
         return sprintf("<a onclick=\"return confirm('Tem certeza que deseja VENDER o item %s +%s no valor de: %s ?');\" href=\"inventory_mobile.php?%s=%s\">%s</a>", $item['name'], $item['item_bonus'], $valordavenda, $action, $item['id'], $label);
     }
@@ -59,10 +60,10 @@ function displayItemOptions(array $item, $action, $label)
     if ($action == 'mature') {
         return sprintf("<a onclick=\"return confirm('Tem certeza que deseja MATURAR o item %s +%s no valor de: %s ?');\" href=\"inventory_mobile.php?%s=%s\">%s</a>", $item['name'], $item['item_bonus'], $precol, $action, $item['id'], $label);
     }
-    else {
-        global $tuto;
-        if ($tuto) {
-            echo "<style>
+
+    global $tuto;
+    if ($tuto) {
+        echo "<style>
             .txt-tutorial-equip{
             font-size:14px;
             animation: piscar 2.5s infinite;
@@ -73,16 +74,15 @@ function displayItemOptions(array $item, $action, $label)
             }
             </style>";
 
-            return sprintf("<a href=\"inventory_mobile.php?%s=%s\"><b class='txt-tutorial-equip'>->%s<-</b></a>", $action, $item['id'], $label);
-        }
-        return sprintf('<a href="inventory_mobile.php?%s=%s">%s</a>', $action, $item['id'], $label);
+        return sprintf("<a href=\"inventory_mobile.php?%s=%s\"><b class='txt-tutorial-equip'>->%s<-</b></a>", $action, $item['id'], $label);
     }
-    return null;
+
+    return sprintf('<a href="inventory_mobile.php?%s=%s">%s</a>', $action, $item['id'], $label);
 }
 
-function displayItem(array $item, $type, $player, string $bool)
+function displayItem(array $item, $type, $player, string $bool): string
 {
-    $options = array(); // Use array() instead of []
+    $options = []; // Use array() instead of []
     if ($type === 'equipped') {
         $options[] = displayItemOptions($item, 'unequip', 'Desequipar');
     } else {
@@ -221,16 +221,16 @@ function fetchItems($playerId, $status)
                         blueprint_items.name, blueprint_items.img, blueprint_items.effectiveness, blueprint_items.type, blueprint_items.description, blueprint_items.price
                         FROM `items` 
                         JOIN `blueprint_items` ON items.item_id=blueprint_items.id 
-                        WHERE items.player_id=? AND items.status=? AND blueprint_items.type !='potion' AND blueprint_items.type!='stone' AND items.mark='f' ORDER BY items.tile", array($playerId, $status));
+                        WHERE items.player_id=? AND items.status=? AND blueprint_items.type !='potion' AND blueprint_items.type!='stone' AND items.mark='f' ORDER BY items.tile", [$playerId, $status]);
 }
 
 function fetchPlayers($playerId)
 {
     global $db;
-    return $db->execute("select * FROM players where id=?", array($playerId));
+    return $db->execute("select * FROM players where id=?", [$playerId]);
 }
 
-function displayItems($playerId, $status, $title)
+function displayItems($playerId, $status, $title): void
 {
     $items = fetchItems($playerId, $status);
     $player = fetchPlayers($playerId);

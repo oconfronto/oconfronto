@@ -7,7 +7,7 @@ $acc = check_acc($secret_key, $db);
 
 include(__DIR__ . "/templates/acc-header.php");
 
-function generateAccountOptionLink($url, $text)
+function generateAccountOptionLink($url, $text): string
 {
 	return sprintf('<center><a href="%s">%s</a><br/></center>', $url, $text);
 }

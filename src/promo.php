@@ -10,7 +10,7 @@ include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
 
 
-if ($setting->promo == a) {
+if ($setting->promo == \A) {
 
 	$query = $db->execute("update `settings` set `value`='ff' where `name`='promo'");
 	$query = $db->execute("update `settings` set `value`=0 where `name`='end_promo'");
@@ -28,7 +28,7 @@ if ($setting->promo == a) {
 
 
 
-if ($setting->promo == ff) {
+if ($setting->promo == \FF) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Anulada</b></legend>\n";
 	echo "A promoção foi anulada por fraude.";
@@ -40,7 +40,7 @@ if ($setting->promo == ff) {
 }
 
 
-if ($setting->promo == t) {
+if ($setting->promo == \T) {
 
 	if (time() > $setting->end_promo) {
 
@@ -51,12 +51,12 @@ if ($setting->promo == t) {
 		$wpaodsla = $db->execute("select * from `promo` order by `refs` desc limit 0,1");
 		$ipwpwpwpa = $wpaodsla->fetchrow();
 
-		$query = $db->execute("update `players` set `bank`=? where `id`=?", array($player->bank + $setting->promo_premio, $ipwpwpwpa['player_id']));
+		$query = $db->execute("update `players` set `bank`=? where `id`=?", [$player->bank + $setting->promo_premio, $ipwpwpwpa['player_id']]);
 		$logmsg = "Você ganhou a promoção do jogo e <b>" . $setting->promo_premio . " de ouro</b> foram depositados na sua conta bancï¿½ria.";
 		addlog($ipwpwpwpa['player_id'], $logmsg, $db);
 		$premiorecebido = "" . $setting->win_id . " de ouro";
 
-		$query = $db->execute("update `settings` set `value`=? where `name`='promo_last_winner'", array($ipwpwpwpa['username']));
+		$query = $db->execute("update `settings` set `value`=? where `name`='promo_last_winner'", [$ipwpwpwpa['username']]);
 		$query = $db->execute("update `settings` set `value`=0 where `name`='end_promo'");
 		$query = $db->execute("truncate `promo`");
 
@@ -82,7 +82,7 @@ if ($setting->promo == t) {
 
 
 	if ($_POST['join']) {
-		$checausuario = $db->execute("select `id` from `promo` where `player_id`=?", array($player->id));
+		$checausuario = $db->execute("select `id` from `promo` where `player_id`=?", [$player->id]);
 		if ($checausuario->recordcount() > 0) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "Você jï¿½ estï¿½ participando da promoção!<br/><a href=\"promo.php\">Voltar</a>.";
@@ -165,7 +165,7 @@ if ($setting->promo == t) {
 
 
 
-	$checausuario2 = $db->execute("select `refs` from `promo` where `player_id`=?", array($player->id));
+	$checausuario2 = $db->execute("select `refs` from `promo` where `player_id`=?", [$player->id]);
 	if ($checausuario2->recordcount() > 0) {
 		$checausuario3 = $checausuario2->fetchrow();
 		echo " <b>Você já convidou:</b> <font size=\"1\">" . $checausuario3['refs'] . " usuários</font> | <b>Link de referência:</b> <font size=\"1\">" . $domain_url . "/?r=" . $player->id . "</font>";
@@ -179,6 +179,7 @@ if ($setting->promo == t) {
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
+
 include(__DIR__ . "/templates/private_header.php");
 echo "<fieldset><legend><b>Nï¿½o existem promoï¿½ï¿½es no momento</b></legend>\n";
 echo "<table>";

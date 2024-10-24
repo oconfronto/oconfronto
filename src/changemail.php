@@ -7,8 +7,8 @@ include(__DIR__ . "/lib.php");
 
 	include(__DIR__ . "/templates/acc-header.php");
 
-if ($_GET['act'] == cancel){
-    $query = $db->execute("delete from `pending` where `pending_id`=1 and `player_id`=?", array($acc->id));
+if ($_GET['act'] == \CANCEL){
+    $query = $db->execute("delete from `pending` where `pending_id`=1 and `player_id`=?", [$acc->id]);
     echo '<span id="aviso-a"></span>';
     echo "<br/><p><center>A solicitação para mudança de email foi removida. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
     include(__DIR__ . "/templates/acc-footer.php");
@@ -42,9 +42,9 @@ if ($_POST['submit']) {
         $errmsg .= "O formato do seu email é inválido!";
         $error = 1;
     } else {
-        $query = $db->execute("select `id` from `accounts` where `email`=?", array($_POST['emaill']));
-        $query2 = $db->execute("select * from `pending` where `pending_id`=1 and `player_id`=?", array($acc->id));
-        $query3 = $db->execute("select * from `pending` where `pending_id`=1 and `pending_status`=?", array($_POST['emaill']));
+        $query = $db->execute("select `id` from `accounts` where `email`=?", [$_POST['emaill']]);
+        $query2 = $db->execute("select * from `pending` where `pending_id`=1 and `player_id`=?", [$acc->id]);
+        $query3 = $db->execute("select * from `pending` where `pending_id`=1 and `pending_status`=?", [$_POST['emaill']]);
         if ($query->recordcount() > 0) {
             $errmsg .= "Este email já está em uso.";
             $error = 1;

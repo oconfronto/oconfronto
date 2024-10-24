@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='1'", array($player->id, 'Imortal'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='1'", [$player->id, 'Imortal']);
 if ($medalha->recordcount() < 1 && ($player->level > 14 && $player->deaths == 0)) {
     $insert['player_id'] = $player->id;
     $insert['medalha'] = "Imortal";
@@ -18,7 +18,7 @@ if ($medalha->recordcount() < 1 && ($player->level > 14 && $player->deaths == 0)
     exit;
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='2'", array($player->id, 'Imortal'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='2'", [$player->id, 'Imortal']);
 if ($medalha->recordcount() < 1 && ($player->level > 24 && $player->deaths == 0)) {
     $insert['player_id'] = $player->id;
     $insert['medalha'] = "Imortal";
@@ -35,7 +35,7 @@ if ($medalha->recordcount() < 1 && ($player->level > 24 && $player->deaths == 0)
     exit;
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='3'", array($player->id, 'Imortal'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='3'", [$player->id, 'Imortal']);
 if ($medalha->recordcount() < 1 && ($player->level > 34 && $player->deaths == 0)) {
     $insert['player_id'] = $player->id;
     $insert['medalha'] = "Imortal";
@@ -52,7 +52,7 @@ if ($medalha->recordcount() < 1 && ($player->level > 34 && $player->deaths == 0)
     exit;
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='1'", array($player->id, 'Assassino'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='1'", [$player->id, 'Assassino']);
 if ($medalha->recordcount() < 1 && $player->kills > 500) {
     $insert['player_id'] = $player->id;
     $insert['medalha'] = "Assassino";
@@ -69,7 +69,7 @@ if ($medalha->recordcount() < 1 && $player->kills > 500) {
     exit;
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='2'", array($player->id, 'Assassino'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='2'", [$player->id, 'Assassino']);
 if ($medalha->recordcount() < 1 && $player->kills > 1000) {
     $insert['player_id'] = $player->id;
     $insert['medalha'] = "Assassino";
@@ -86,7 +86,7 @@ if ($medalha->recordcount() < 1 && $player->kills > 1000) {
     exit;
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='3'", array($player->id, 'Assassino'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='3'", [$player->id, 'Assassino']);
 if ($medalha->recordcount() < 1 && $player->kills > 2000) {
     $insert['player_id'] = $player->id;
     $insert['medalha'] = "Assassino";
@@ -103,7 +103,7 @@ if ($medalha->recordcount() < 1 && $player->kills > 2000) {
     exit;
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='1'", array($player->id, 'Exterminador'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='1'", [$player->id, 'Exterminador']);
 if ($medalha->recordcount() < 1 && $player->monsterkilled > 10000) {
     $insert['player_id'] = $player->id;
     $insert['medalha'] = "Exterminador";
@@ -120,7 +120,7 @@ if ($medalha->recordcount() < 1 && $player->monsterkilled > 10000) {
     exit;
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='2'", array($player->id, 'Exterminador'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='2'", [$player->id, 'Exterminador']);
 if ($medalha->recordcount() < 1 && $player->monsterkilled > 50000) {
     $insert['player_id'] = $player->id;
     $insert['medalha'] = "Exterminador";
@@ -137,7 +137,7 @@ if ($medalha->recordcount() < 1 && $player->monsterkilled > 50000) {
     exit;
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='3'", array($player->id, 'Exterminador'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='3'", [$player->id, 'Exterminador']);
 if ($medalha->recordcount() < 1 && $player->monsterkilled > 100000) {
     $insert['player_id'] = $player->id;
     $insert['medalha'] = "Exterminador";
@@ -154,7 +154,7 @@ if ($medalha->recordcount() < 1 && $player->monsterkilled > 100000) {
     exit;
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='1'", array($player->id, 'Milionário'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='1'", [$player->id, 'Milionário']);
 if ($medalha->recordcount() < 1 && ($player->gold + $player->bank) > 10000000) {
     $insert['player_id'] = $player->id;
     $insert['medalha'] = "Milionário";
@@ -171,7 +171,7 @@ if ($medalha->recordcount() < 1 && ($player->gold + $player->bank) > 10000000) {
     exit;
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='2'", array($player->id, 'Milionário'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='2'", [$player->id, 'Milionário']);
 if ($medalha->recordcount() < 1 && ($player->gold + $player->bank) > 50000000) {
     $insert['player_id'] = $player->id;
     $insert['medalha'] = "Milionário";
@@ -188,7 +188,7 @@ if ($medalha->recordcount() < 1 && ($player->gold + $player->bank) > 50000000) {
     exit;
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='3'", array($player->id, 'Milionário'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='3'", [$player->id, 'Milionário']);
 if ($medalha->recordcount() < 1 && ($player->gold + $player->bank) > 100000000) {
     $insert['player_id'] = $player->id;
     $insert['medalha'] = "Milionário";
@@ -205,7 +205,7 @@ if ($medalha->recordcount() < 1 && ($player->gold + $player->bank) > 100000000) 
     exit;
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='1'", array($player->id, 'Indicador'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='1'", [$player->id, 'Indicador']);
 if ($medalha->recordcount() < 1 && $player->ref > 10) {
     $insert['player_id'] = $player->id;
     $insert['medalha'] = "Indicador";
@@ -222,7 +222,7 @@ if ($medalha->recordcount() < 1 && $player->ref > 10) {
     exit;
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='2'", array($player->id, 'Indicador'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='2'", [$player->id, 'Indicador']);
 if ($medalha->recordcount() < 1 && $player->ref > 25) {
     $insert['player_id'] = $player->id;
     $insert['medalha'] = "Indicador";
@@ -239,7 +239,7 @@ if ($medalha->recordcount() < 1 && $player->ref > 25) {
     exit;
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='3'", array($player->id, 'Indicador'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='3'", [$player->id, 'Indicador']);
 if ($medalha->recordcount() < 1 && $player->ref > 50) {
     $insert['player_id'] = $player->id;
     $insert['medalha'] = "Indicador";
@@ -256,7 +256,7 @@ if ($medalha->recordcount() < 1 && $player->ref > 50) {
     exit;
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='1'", array($player->id, 'Veterano'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='1'", [$player->id, 'Veterano']);
 if ($medalha->recordcount() < 1) {
 
 	$diff = time() - $player->registered;
@@ -281,7 +281,7 @@ exit;
 }
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='2'", array($player->id, 'Veterano'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='2'", [$player->id, 'Veterano']);
 if ($medalha->recordcount() < 1) {
 
 	$diff = time() - $player->registered;
@@ -306,7 +306,7 @@ exit;
 }
 }
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='3'", array($player->id, 'Veterano'));
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=? and `type`='3'", [$player->id, 'Veterano']);
 if ($medalha->recordcount() < 1) {
 
 	$diff = time() - $player->registered;

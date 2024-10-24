@@ -8,7 +8,7 @@ $pbonusfor = 0;
 $pbonusvit = 0;
 $pbonusagi = 0;
 $pbonusres = 0;
-	$countstats = $db->query("select `for`, `vit`, `agi`, `res` from `items` where `player_id`=? and `status`='equipped'", array($player->id));
+	$countstats = $db->query("select `for`, `vit`, `agi`, `res` from `items` where `player_id`=? and `status`='equipped'", [$player->id]);
 	while($count = $countstats->fetchrow())
 	{
 		$pbonusfor += $count['for'];

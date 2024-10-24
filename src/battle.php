@@ -20,7 +20,7 @@ switch($_GET['act'])
 		}
 		
 		//Otherwise, get player data:
-		$query = $db->execute("select * from `players` where `username`=?", array($_GET['username']));
+		$query = $db->execute("select * from `players` where `username`=?", [$_GET['username']]);
 		if ($query->recordcount() == 0) //Player doesn't exist
 		{
 			include(__DIR__ . "/templates/private_header.php");
@@ -123,7 +123,7 @@ switch($_GET['act'])
 
 
 		//Checa se o usuario jah foi morto recentemente
-		$recentlyattacked = $db->execute("select * from `attacked` where `time`>? and `player_id`=? and `attacker_id`=?", array(time() - 1200, $enemy->id, $player->id));
+		$recentlyattacked = $db->execute("select * from `attacked` where `time`>? and `player_id`=? and `attacker_id`=?", [time() - 1200, $enemy->id, $player->id]);
 		if ($recentlyattacked->recordcount() > 0)
 		{
 			if ($enemy->tour == 'f'){
@@ -151,9 +151,9 @@ switch($_GET['act'])
 		}
 
 
-		$checkenyrowk = $db->GetOne("select `status` from `work` where `player_id`=? order by `start` DESC", array($enemy->id));
-		$checkenyhunt = $db->GetOne("select `status` from `hunt` where `player_id`=? order by `start` DESC", array($enemy->id));
-		if (($checkenyrowk == t || $checkenyhunt == t) && $enemy->tour == 'f')
+		$checkenyrowk = $db->GetOne("select `status` from `work` where `player_id`=? order by `start` DESC", [$enemy->id]);
+		$checkenyhunt = $db->GetOne("select `status` from `hunt` where `player_id`=? order by `start` DESC", [$enemy->id]);
+		if (($checkenyrowk == \T || $checkenyhunt == \T) && $enemy->tour == 'f')
 		{
 			include(__DIR__ . "/templates/private_header.php");
 			echo "Você não encontrou o usuário " . $enemy->username . "! Ele deve estar trabalhando ou caçando. <a href=\"battle.php\">Voltar</a>.";
@@ -161,7 +161,7 @@ switch($_GET['act'])
 			break;
 		}
 
-		$checarevenge = $db->execute("select * from `revenge` where `player_id`=? and `enemy_id`=?", array($player->id, $enemy->id));
+		$checarevenge = $db->execute("select * from `revenge` where `player_id`=? and `enemy_id`=?", [$player->id, $enemy->id]);
 
 		//checa os niveis
 		if ($player->level > $enemy->level*1.25 && $enemy->tour == 't' && ($enemy->killed > 0 || $mytier != $enytier) && $checarevenge->recordcount() < 1)
@@ -223,16 +223,16 @@ switch($_GET['act'])
             
 			echo "</fieldset><br/>";
 
-			$query = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=136 and `mark`='f' order by rand()", array($player->id));
+			$query = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=136 and `mark`='f' order by rand()", [$player->id]);
 			$numerodepocoes = $query->recordcount();
 
-			$query2 = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=137 and `mark`='f' order by rand()", array($player->id));
+			$query2 = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=137 and `mark`='f' order by rand()", [$player->id]);
 			$numerodepocoes2 = $query2->recordcount();
 
-			$query3 = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=148 and `mark`='f' order by rand()", array($player->id));
+			$query3 = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=148 and `mark`='f' order by rand()", [$player->id]);
 			$numerodepocoes3 = $query3->recordcount();
 
-			$query4 = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=150 and `mark`='f' order by rand()", array($player->id));
+			$query4 = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=150 and `mark`='f' order by rand()", [$player->id]);
 			$numerodepocoes4 = $query4->recordcount();
 
 			echo "<fieldset>";
@@ -296,7 +296,7 @@ switch($_GET['act'])
 		//Player In Same Guild
 		if ($enemy->guild != NULL && $player->guild != NULL && !$_GET['comfirm'])
 		{
-			$ganguesaliadas = $db->execute("select `id` from `guild_aliance` where `guild_na`=? and `aled_na`=?", array($player->guild, $enemy->guild));
+			$ganguesaliadas = $db->execute("select `id` from `guild_aliance` where `guild_na`=? and `aled_na`=?", [$player->guild, $enemy->guild]);
 			if ($ganguesaliadas->recordcount() > 0){
 			include(__DIR__ . "/templates/private_header.php");
 			echo "Este usuário é membro do clã " . $enemy->guild . ", um clã aliado do seu clã.<br/>Tem certeza que deseja ataca-lo?<br/><br/><a href=\"battle.php?act=attack&username=" . $enemy->username . '&comfirm=true">Atacar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="battle.php">Voltar</a>';
@@ -306,7 +306,7 @@ switch($_GET['act'])
 		}
 
 		//Player is friend
-		$checkfriendname = $db->execute("select * from `friends` where `fname`=? and `uid`=?", array($enemy->username, $player->id));
+		$checkfriendname = $db->execute("select * from `friends` where `fname`=? and `uid`=?", [$enemy->username, $player->id]);
 		if ($checkfriendname->recordcount() > 0 && !$_GET['comfirm']){
 			include(__DIR__ . "/templates/private_header.php");
 			echo "Este usuário é seu amigo.<br/>Tem certeza que deseja ataca-lo?<br/><br/><a href=\"battle.php?act=attack&username=" . $enemy->username . '&comfirm=true">Atacar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="battle.php">Voltar</a>';
@@ -332,23 +332,23 @@ switch($_GET['act'])
 		}
 		
 		//Get enemy's bonuses from equipment
-		$query = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='weapon' and items.status='equipped'", array($enemy->id));
+		$query = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='weapon' and items.status='equipped'", [$enemy->id]);
   		$enemy->atkbonus = ($query->recordcount() == 1)?$query->fetchrow():0;
-		$query50 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='armor' and items.status='equipped'", array($enemy->id));
+		$query50 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='armor' and items.status='equipped'", [$enemy->id]);
 		$enemy->defbonus1 = ($query50->recordcount() == 1)?$query50->fetchrow():0;
-		$query51 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='helmet' and items.status='equipped'", array($enemy->id));
+		$query51 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='helmet' and items.status='equipped'", [$enemy->id]);
 		$enemy->defbonus2 = ($query51->recordcount() == 1)?$query51->fetchrow():0;
-		$query52 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='legs' and items.status='equipped'", array($enemy->id));
+		$query52 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='legs' and items.status='equipped'", [$enemy->id]);
 		$enemy->defbonus3 = ($query52->recordcount() == 1)?$query52->fetchrow():0;
-		$query54 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='shield' and items.status='equipped'", array($enemy->id));
+		$query54 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='shield' and items.status='equipped'", [$enemy->id]);
 		$enemy->defbonus5 = ($query54->recordcount() == 1)?$query54->fetchrow():0;
-		$query55 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='boots' and items.status='equipped'", array($enemy->id));
+		$query55 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='boots' and items.status='equipped'", [$enemy->id]);
 		$enemy->agibonus6 = ($query55->recordcount() == 1)?$query55->fetchrow():0;
 
 		$enybonusfor = 0;
 		$enybonusagi = 0;
 		$enybonusres = 0;
-			$countstats = $db->query("select `for`, `vit`, `agi`, `res` from `items` where `player_id`=? and `status`='equipped'", array($enemy->id));
+			$countstats = $db->query("select `for`, `vit`, `agi`, `res` from `items` where `player_id`=? and `status`='equipped'", [$enemy->id]);
 			while($count = $countstats->fetchrow())
 			{
 				$enybonusfor += $count['for'];
@@ -356,10 +356,10 @@ switch($_GET['act'])
 				$enybonusres += $count['res'];
 			}
 
-			$everificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", array($enemy->id, time()));
+			$everificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", [$enemy->id, time()]);
 				if ($everificpotion->recordcount() > 0){
 					$selct = $everificpotion->fetchrow();
-					$getpotion = $db->execute("select * from `for_use` where `item_id`=?", array($selct['item_id']));
+					$getpotion = $db->execute("select * from `for_use` where `item_id`=?", [$selct['item_id']]);
 						$potbonus = $getpotion->fetchrow();
 						$enemy->strength = ceil($enemy->strength + (($enemy->strength / 100) * ($potbonus['for'])));
 						$enemy->vitality = ceil($enemy->vitality + (($enemy->vitality / 100) * ($potbonus['vit'])));
@@ -369,23 +369,23 @@ switch($_GET['act'])
 		
 
 		//Get player's bonuses from equipment
-		$query = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='weapon' and items.status='equipped'", array($player->id));
+		$query = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='weapon' and items.status='equipped'", [$player->id]);
 		$player->atkbonus = ($query->recordcount() == 1)?$query->fetchrow():0;
-		$query50 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='armor' and items.status='equipped'", array($player->id));
+		$query50 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='armor' and items.status='equipped'", [$player->id]);
 		$player->defbonus1 = ($query50->recordcount() == 1)?$query50->fetchrow():0;
-		$query51 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='helmet' and items.status='equipped'", array($player->id));
+		$query51 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='helmet' and items.status='equipped'", [$player->id]);
 		$player->defbonus2 = ($query51->recordcount() == 1)?$query51->fetchrow():0;
-		$query52 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='legs' and items.status='equipped'", array($player->id));
+		$query52 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='legs' and items.status='equipped'", [$player->id]);
 		$player->defbonus3 = ($query52->recordcount() == 1)?$query52->fetchrow():0;
-		$query54 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='shield' and items.status='equipped'", array($player->id));
+		$query54 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='shield' and items.status='equipped'", [$player->id]);
 		$player->defbonus5 = ($query54->recordcount() == 1)?$query54->fetchrow():0;
-		$query55 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='boots' and items.status='equipped'", array($player->id));
+		$query55 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='boots' and items.status='equipped'", [$player->id]);
 		$player->agibonus6 = ($query55->recordcount() == 1)?$query55->fetchrow():0;
 
 		$pbonusfor = 0;
 		$pbonusagi = 0;
 		$pbonusres = 0;
-			$countstats = $db->query("select `for`, `vit`, `agi`, `res` from `items` where `player_id`=? and `status`='equipped'", array($player->id));
+			$countstats = $db->query("select `for`, `vit`, `agi`, `res` from `items` where `player_id`=? and `status`='equipped'", [$player->id]);
 			while($count = $countstats->fetchrow())
 			{
 				$pbonusfor += $count['for'];
@@ -393,10 +393,10 @@ switch($_GET['act'])
 				$pbonusres += $count['res'];
 			}
 
-			$pverificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", array($player->id, time()));
+			$pverificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", [$player->id, time()]);
 				if ($pverificpotion->recordcount() > 0){
 					$selct = $pverificpotion->fetchrow();
-					$getpotion = $db->execute("select * from `for_use` where `item_id`=?", array($selct['item_id']));
+					$getpotion = $db->execute("select * from `for_use` where `item_id`=?", [$selct['item_id']]);
 						$potbonus = $getpotion->fetchrow();
 						$player->strength = ceil($player->strength + (($player->strength / 100) * ($potbonus['for'])));
 						$player->vitality = ceil($player->vitality + (($player->vitality / 100) * ($potbonus['vit'])));
@@ -405,7 +405,7 @@ switch($_GET['act'])
 				}
 
 
-	$checamagiastatus = $db->execute("select * from `magias` where `magia_id`=5 and `player_id`=?", array($player->id));
+	$checamagiastatus = $db->execute("select * from `magias` where `magia_id`=5 and `player_id`=?", [$player->id]);
 		if ($player->voc == 'archer') {
       if ($checamagiastatus->recordcount() > 0){
    			$varataque = 0.31;
@@ -456,7 +456,7 @@ switch($_GET['act'])
 				exit;
 			}
 
-	$enychecamagiastatus = $db->execute("select * from `magias` where `magia_id`=5 and `player_id`=?", array($enemy->id));
+	$enychecamagiastatus = $db->execute("select * from `magias` where `magia_id`=5 and `player_id`=?", [$enemy->id]);
 		if ($enemy->voc == 'archer') {
       if ($enychecamagiastatus->recordcount() > 0){
    			$varataque = 0.31;
@@ -569,14 +569,14 @@ switch($_GET['act'])
 			for($i = 0;$i < $attacking->combo;++$i)
 			{
 				//Chance to miss?
-				$misschance = intval(rand(0, 100));
+				$misschance = intval(random_int(0, 100));
 				if ($misschance <= $attacking->miss)
 				{
 					$output .= $attacking->username . " tentou atacar " . $defending->username . " mas errou!<br />";
 				}
 				else
 				{
-					$damage = rand($attacking->mindmg, $attacking->maxdmg); //Calculate random damage				
+					$damage = random_int($attacking->mindmg, $attacking->maxdmg); //Calculate random damage				
 					$defending->hp -= $damage;
 					$output .= ($player->username == $defending->username)?'<font color="red">':'<font color="green">';
 					$output .= $attacking->username . " atacou " . $defending->username . " e tirou " . $damage . " de vida! (";
@@ -603,14 +603,14 @@ switch($_GET['act'])
 			for($i = 0;$i < $defending->combo;++$i)
 			{
 				//Chance to miss?
-				$misschance = intval(rand(0, 100));
+				$misschance = intval(random_int(0, 100));
 				if ($misschance <= $defending->miss)
 				{
 					$output .= $defending->username . " tentou atacar " . $attacking->username . " mas errou!<br />";
 				}
 				else
 				{
-					$damage = rand($defending->mindmg, $defending->maxdmg); //Calculate random damage
+					$damage = random_int($defending->mindmg, $defending->maxdmg); //Calculate random damage
 					$attacking->hp -= $damage;
 					$output .= ($player->username == $defending->username)?'<font color="green">':'<font color="red">';
 					$output .= $defending->username . " atacou " . $attacking->username . " e tirou " . $damage . " de vida! (";
@@ -645,10 +645,11 @@ switch($_GET['act'])
       $exploss2 = (($player->level - $enemy->level) > 0)?($enemy->level - $player->level) * 4:0;
       $exploss = $exploss1 + $exploss2;
       $goldloss = intval(0.35 * $player->gold);
-      $goldloss = intval(rand(1, $goldloss));
+      $goldloss = intval(random_int(1, $goldloss));
       if ($goldloss < 1){
    				$goldloss = 0;
    			}
+
       $depoput .= "<br/><div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>Você foi assassinado por " . $enemy->username . "!</u></b></div>";
       $depoput .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Você perdeu <b>" . number_format($exploss) . "</b> de EXP e <b>" . number_format($goldloss) . "</b> de ouro.</div>";
       $exploss3 = (($player->exp - $exploss) <= 0)?$player->exp:$exploss;
@@ -661,15 +662,17 @@ switch($_GET['act'])
    			}else{
    			$tourlose = $player->killed;
    			}
-      $checkwanted = $db->execute("select * from `wanted` where `player_id`=?", array($player->id));
+
+      $checkwanted = $db->execute("select * from `wanted` where `player_id`=?", [$player->id]);
       if ($checkwanted->recordcount() > 0) {
-   				$db->execute("delete from `wanted` where `player_id`=?", array($player->id));
+   				$db->execute("delete from `wanted` where `player_id`=?", [$player->id]);
    			}
-      $query = $db->execute("update `players` set `energy`=?, `exp`=?, `gold`=?, `deaths`=?, `killed`=?, `died`=?, `hp`=0, `deadtime`=? where `id`=?", array($player->energy - 10, $player->exp - $exploss3, $player->gold - $goldloss2, $player->deaths + 1, $tourlose, $player->died + 1, time() + $setting->dead_time, $player->id));
+
+      $query = $db->execute("update `players` set `energy`=?, `exp`=?, `gold`=?, `deaths`=?, `killed`=?, `died`=?, `hp`=0, `deadtime`=? where `id`=?", [$player->energy - 10, $player->exp - $exploss3, $player->gold - $goldloss2, $player->deaths + 1, $tourlose, $player->died + 1, time() + $setting->dead_time, $player->id]);
       //Update enemy (the winner)
       if ($exploss + $enemy->exp < maxExp($enemy->level))
    			{
-   				$query = $db->execute("update `players` set `exp`=?, `gold`=?, `kills`=?, `hp`=? where `id`=?", array($enemy->exp + $exploss, $enemy->gold + $goldloss, $enemy->kills + 1, $enemy->hp, $enemy->id));
+   				$query = $db->execute("update `players` set `exp`=?, `gold`=?, `kills`=?, `hp`=? where `id`=?", [$enemy->exp + $exploss, $enemy->gold + $goldloss, $enemy->kills + 1, $enemy->hp, $enemy->id]);
    				//Add log message for winner
    
    				$logmsg3 = "Você foi atacado por <a href=\"profile.php?id=" . $player->username . '">' . $player->username . "</a> mas venceu!<br />\nVocê ganhou " . number_format($exploss) . " de EXP e " . number_format($goldloss) . " de ouro.";
@@ -680,10 +683,10 @@ switch($_GET['act'])
    			}
    			else //Defender has gained a level! =)
    			{
-   				$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", array(maxMana($enemy->level, $enemy->extramana), maxMana($enemy->level, $enemy->extramana), $enemy->id));
-   				$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", array(maxEnergy($enemy->level, $enemy->vip), $enemy->id));
+   				$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [maxMana($enemy->level, $enemy->extramana), maxMana($enemy->level, $enemy->extramana), $enemy->id]);
+   				$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", [maxEnergy($enemy->level, $enemy->vip), $enemy->id]);
                    
-                   $db->execute("update `players` set `magic_points`=`magic_points`+1, `stat_points`=`stat_points`+1, `level`=`level`+1, `exp`=?, `gold`=?, `kills`=`kills`+1, `hp`=?, `maxhp`=? where `id`=?", array(($enemy->exp + $exploss) - maxExp($enemy->level), $enemy->gold + $goldloss, maxHp($db, $enemy->id, $enemy->level, $enemy->reino, $enemy->vip), maxHp($db, $enemy->id, $enemy->level, $enemy->reino, $enemy->vip), $enemy->id));
+                   $db->execute("update `players` set `magic_points`=`magic_points`+1, `stat_points`=`stat_points`+1, `level`=`level`+1, `exp`=?, `gold`=?, `kills`=`kills`+1, `hp`=?, `maxhp`=? where `id`=?", [($enemy->exp + $exploss) - maxExp($enemy->level), $enemy->gold + $goldloss, maxHp($db, $enemy->id, $enemy->level, $enemy->reino, $enemy->vip), maxHp($db, $enemy->id, $enemy->level, $enemy->reino, $enemy->vip), $enemy->id]);
    				//Add log message for winner
    
    				$logmsg4 = "Você foi atacado por <a href=\"profile.php?id=" . $player->username . '">' . $player->username . "</a> mas venceu!<br />\nVocê ganhou um nível e " . number_format($goldloss) . " de ouro.";
@@ -698,29 +701,32 @@ switch($_GET['act'])
       $expwin2 = (($player->level - $enemy->level) > 0)?$expwin1 - (($player->level - $enemy->level) * 3):$expwin1 + (($player->level - $enemy->level) * 3);
       $expwin2 = ($expwin2 <= 0)?1:$expwin2;
       $expwin3 = round(0.9 * $expwin2);
-      $expwin = ceil(rand($expwin3, $expwin2));
+      $expwin = ceil(random_int($expwin3, $expwin2));
       $goldwin = ceil(0.35 * $enemy->gold);
-      $goldwin = intval(rand(1, $goldwin));
+      $goldwin = intval(random_int(1, $goldwin));
       if ($goldwin < 1){
    			$goldwin = 0;
    			}
+
       $depoput .= "<br/><div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>Você matou " . $enemy->username . "!</u></b></div>";
-      $checkwanted = $db->execute("select * from `wanted` where `player_id`=?", array($player->id));
+      $checkwanted = $db->execute("select * from `wanted` where `player_id`=?", [$player->id]);
       if ($checkwanted->recordcount() < 1) {
     			$insert['player_id'] = $player->id;
     			$db->autoexecute('wanted', $insert, 'INSERT');
     		}else{
-    			$db->execute("update `wanted` set `kills`=`kills`+1 where `player_id`=?", array($player->id));
+    			$db->execute("update `wanted` set `kills`=`kills`+1 where `player_id`=?", [$player->id]);
     		}
-      $checkaward = $db->execute("select * from `wanted` where `player_id`=?", array($enemy->id));
+
+      $checkaward = $db->execute("select * from `wanted` where `player_id`=?", [$enemy->id]);
       if ($checkaward->recordcount() == 1) {
-    			$kills = $db->GetOne("select `kills` from `wanted` where `player_id`=?", array($enemy->id));
+    			$kills = $db->GetOne("select `kills` from `wanted` where `player_id`=?", [$enemy->id]);
     			$awardgold = ceil($kills * $enemy->level);
     
-    			$db->execute("delete from `wanted` where `player_id`=?", array($enemy->id));
-    			$db->execute("update `players` set `gold`=`gold`+? where `id`=?", array($awardgold, $player->id));
+    			$db->execute("delete from `wanted` where `player_id`=?", [$enemy->id]);
+    			$db->execute("update `players` set `gold`=`gold`+? where `id`=?", [$awardgold, $player->id]);
     			$depoput .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center>O usuário que você matou era um procurado!<br/>Você ganhou uma recompensa de " . number_format($awardgold) . " moedas de ouro.</center></div>";
     		}
+
       $depoput .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Você ganhou <b>" . number_format($expwin) . "</b> de EXP e <b>" . number_format($goldwin) . "</b> de ouro.</div>";
       if ($expwin + $player->exp >= maxExp($player->level)) //Player gained a level!
    			{
@@ -728,21 +734,23 @@ switch($_GET['act'])
    				$depoput .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><u><b>Você passou de nível!</b></u></div>";
    				$newexp = $expwin + $player->exp - maxExp($player->level);
    
-   				$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", array(maxMana($player->level, $player->extramana), maxMana($player->level, $player->extramana), $player->id));
-   				$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", array(maxEnergy($player->level, $player->vip), $player->id));
+   				$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [maxMana($player->level, $player->extramana), maxMana($player->level, $player->extramana), $player->id]);
+   				$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", [maxEnergy($player->level, $player->vip), $player->id]);
    
-   				$query = $db->execute("update `players` set `magic_points`=`magic_points`+1, `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=?, `maxhp`=?, `exp`=?, `gold`=?, `energy`=? where `id`=?", array(maxHp($db, $player->id, $player->level, $player->reino, $player->vip), maxHp($db, $player->id, $player->level, $player->reino, $player->vip), $newexp, $player->gold + $goldwin + $awardgold, $player->energy - 10, $player->id));
+   				$query = $db->execute("update `players` set `magic_points`=`magic_points`+1, `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=?, `maxhp`=?, `exp`=?, `gold`=?, `energy`=? where `id`=?", [maxHp($db, $player->id, $player->level, $player->reino, $player->vip), maxHp($db, $player->id, $player->level, $player->reino, $player->vip), $newexp, $player->gold + $goldwin + $awardgold, $player->energy - 10, $player->id]);
    			}
    			else
    			{
    				//Update player
-   				$query = $db->execute("update `players` set `exp`=?, `gold`=?, `hp`=?, `energy`=? where `id`=?", array($player->exp + $expwin, $player->gold + $goldwin + $awardgold, $player->hp, $player->energy - 10, $player->id));
+   				$query = $db->execute("update `players` set `exp`=?, `gold`=?, `hp`=?, `energy`=? where `id`=?", [$player->exp + $expwin, $player->gold + $goldwin + $awardgold, $player->hp, $player->energy - 10, $player->id]);
    			}
+
       if ($player->reino == $enemy->reino) {
-   				$db->execute("update `players` set `akills`=`akills`+1 where `id`=?", array($player->id));
+   				$db->execute("update `players` set `akills`=`akills`+1 where `id`=?", [$player->id]);
    			} else {
-   				$db->execute("update `players` set `kills`=`kills`+1 where `id`=?", array($player->id));
+   				$db->execute("update `players` set `kills`=`kills`+1 where `id`=?", [$player->id]);
    			}
+
       $heal = $player->maxhp - $player->hp;
       if ($heal > 0){
    			if ($player->level < 36) {
@@ -755,6 +763,7 @@ switch($_GET['act'])
       
    			$depoput .= '<div style="background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px"><a href="hospt.php?act=heal">Clique aqui</a> para recuperar toda sua vida por <b>' . number_format($cost) . "</b> de ouro.</div>";
    			}
+
       //Add log message
       if ($player->level*1.25 < $enemy->level){
     			$insert['player_id'] = $enemy->id;
@@ -762,6 +771,7 @@ switch($_GET['act'])
     			$insert['time'] = time();
     			$addrevenge = $db->autoexecute('revenge', $insert, 'INSERT');
     		}
+
       $insert['player_id'] = $enemy->id;
       $insert['enemy_id'] = $player->id;
       $insert['time'] = time();
@@ -779,7 +789,8 @@ switch($_GET['act'])
    			}else{
    			$tourlose = $enemy->killed;
    			}
-      $query = $db->execute("update `players` set `gold`=?, `hp`=0, `deaths`=?, `killed`=?, `died`=?, `deadtime`=? where `id`=?", array($enemy->gold + 1 - $goldwin, $enemy->deaths + 1, $tourlose, $enemy->died + 1, time() + $setting->dead_time, $enemy->id));
+
+      $query = $db->execute("update `players` set `gold`=?, `hp`=0, `deaths`=?, `killed`=?, `died`=?, `deadtime`=? where `id`=?", [$enemy->gold + 1 - $goldwin, $enemy->deaths + 1, $tourlose, $enemy->died + 1, time() + $setting->dead_time, $enemy->id]);
   } else
 		{
 			$depoput .= "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>Os dois estáo cançados. Ninguém venceu.</center></b></div>";
@@ -788,9 +799,9 @@ switch($_GET['act'])
 		
 		if ($checarevenge->recordcount() > 0 && $player->level > $enemy->level*1.25){
 			if ($enemy->tour != 't'){
-			$deleterevenge = $db->execute("delete from `revenge` where `player_id`=? and `enemy_id`=? limit ?", array($player->id, $enemy->id, 1));
+			$deleterevenge = $db->execute("delete from `revenge` where `player_id`=? and `enemy_id`=? limit ?", [$player->id, $enemy->id, 1]);
 			}elseif ($enemy->killed != 0){
-			$deleterevenge = $db->execute("delete from `revenge` where `player_id`=? and `enemy_id`=? limit ?", array($player->id, $enemy->id, 1));
+			$deleterevenge = $db->execute("delete from `revenge` where `player_id`=? and `enemy_id`=? limit ?", [$player->id, $enemy->id, 1]);
 			}
 		}
 
@@ -806,7 +817,7 @@ switch($_GET['act'])
 		$player = check_user($secret_key, $db); //Get new stats
 		include(__DIR__ . "/templates/private_header.php");
 
-			$verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", array($player->id, time()));
+			$verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", [$player->id, time()]);
 				if ($verificpotion->recordcount() > 0){
 					$selct = $verificpotion->fetchrow();
 					$valortempo = $selct['time'] - time();
@@ -820,8 +831,8 @@ switch($_GET['act'])
          $auxiliar = "hora(s)";
      }
 
-					$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", array($selct['item_id']));
-					$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", array($selct['item_id']));
+					$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id']]);
+					$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id']]);
 					echo '<div style="background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px"><center><b>' . $potname . ":</b> " . $valortempo . " " . $auxiliar . " restante(s).<br/>" . $potdesc . "</center></div>";
 				}
 
@@ -884,7 +895,7 @@ switch($_GET['act'])
 	
 		//Display search form again
 
-			$verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", array($player->id, time()));
+			$verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", [$player->id, time()]);
 				if ($verificpotion->recordcount() > 0){
 					$selct = $verificpotion->fetchrow();
 					$valortempo = $selct['time'] - time();
@@ -898,8 +909,8 @@ switch($_GET['act'])
          $auxiliar = "hora(s)";
      }
 
-					$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", array($selct['item_id']));
-					$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", array($selct['item_id']));
+					$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id']]);
+					$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id']]);
 					echo '<div style="background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px"><center><b>' . $potname . ":</b> " . $valortempo . " " . $auxiliar . " restante(s).<br/>" . $potdesc . "</center></div>";
 				}
 
@@ -964,8 +975,8 @@ switch($_GET['act'])
 			$bool = 1;
 			while ($result = $query->fetchrow())
 			{
-				$checkquerywork = $db->GetOne("select `status` from `work` where `player_id`=? order by `start` DESC", array($result['id']));
-				if ($checkquerywork != t) {
+				$checkquerywork = $db->GetOne("select `status` from `work` where `player_id`=? order by `start` DESC", [$result['id']]);
+				if ($checkquerywork != \T) {
 				echo '<tr class="row' . $bool . "\">\n";
 				echo '<td width="35%"><a href="profile.php?id=' . $result['username'] . '">' . $result['username'] . "</a></td>\n";
 				echo '<td width="15%">' . $result['level'] . "</td>\n";
@@ -1011,7 +1022,7 @@ if ($result['voc'] == 'archer' && $result['promoted'] == 'f') {
 	default:
 		include(__DIR__ . "/templates/private_header.php");
 
-			$verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", array($player->id, time()));
+			$verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", [$player->id, time()]);
 				if ($verificpotion->recordcount() > 0){
 					$selct = $verificpotion->fetchrow();
 					$valortempo = $selct['time'] - time();
@@ -1025,8 +1036,8 @@ if ($result['voc'] == 'archer' && $result['promoted'] == 'f') {
          $auxiliar = "hora(s)";
      }
 
-					$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", array($selct['item_id']));
-					$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", array($selct['item_id']));
+					$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id']]);
+					$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id']]);
 					echo '<div style="background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px"><center><b>' . $potname . ":</b> " . $valortempo . " " . $auxiliar . " restante(s).<br/>" . $potdesc . "</center></div>";
 				}
 
@@ -1035,7 +1046,7 @@ if ($player->stat_points > 0 && $player->level < 15)
 	echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">Antes de batalhar, utilize seus <b>' . $player->stat_points . "</b> pontos de status disponíveis, assim você fica mais forte! <a href=\"stat_points.php\">Clique aqui para utiliza-los!</a></div>";
 }
 
-$query = $db->execute("select * from `items` where `player_id`=? and `status`='equipped'", array($player->id));
+$query = $db->execute("select * from `items` where `player_id`=? and `status`='equipped'", [$player->id]);
 if ($query->recordcount() < 2 && $player->level > 4 && $player->level < 20)
 {
 	echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">JÁ está na hora de você comprar seus própios itens. <a href=\"shop.php\">Clique aqui e visite o ferreiro</a>.</div>";
@@ -1103,7 +1114,7 @@ if ($query->recordcount() < 2 && $player->level > 4 && $player->level < 20)
 
 			$bool = 1;
 			while ($pw = $serchwanted->fetchrow()){
-				$wantedinfo = $db->execute("select * from `players` where `id`=?", array($pw['player_id']));
+				$wantedinfo = $db->execute("select * from `players` where `id`=?", [$pw['player_id']]);
 				while($wanted = $wantedinfo->fetchrow())
 				{
 					echo '<tr class="row' . $bool . '">';

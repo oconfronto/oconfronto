@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 if ($_POST['transferitems']) {
-$verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `quest_status`=90 and `player_id`=?", array($player->id));
+$verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `quest_status`=90 and `player_id`=?", [$player->id]);
    	 if ($verifikeuser->recordcount() == 0) {
 		include(__DIR__ . "/templates/private_header.php");
 	echo"<fieldset><legend><b>Enviar Itens</b></legend>";
@@ -73,11 +73,11 @@ $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `
 	 }
 
 
-    $quhjdjn = $db->execute("select items.item_bonus, items.status, items.mark, blueprint_items.id, blueprint_items.name, blueprint_items.type from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.id=? and items.player_id=?", array($_POST['itselected'], $player->id));
+    $quhjdjn = $db->execute("select items.item_bonus, items.status, items.mark, blueprint_items.id, blueprint_items.name, blueprint_items.type from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.id=? and items.player_id=?", [$_POST['itselected'], $player->id]);
     $item5 = $quhjdjn->fetchrow();
 
 
-    	$checkuser = $db->execute("select `id`, `username`, `serv` from `players` where `username`=?", array($_POST['username']));
+    	$checkuser = $db->execute("select `id`, `username`, `serv` from `players` where `username`=?", [$_POST['username']]);
     	$destination = $checkuser->fetchrow();
 
 
@@ -149,7 +149,7 @@ $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `
 
 
 		if ($error == 0){
-            $sendit = $db->execute("update `items` set `player_id`=? where `id`=?", array($destination['id'], $_POST['itselected']));
+            $sendit = $db->execute("update `items` set `player_id`=? where `id`=?", [$destination['id'], $_POST['itselected']]);
 
 		$insert['player_id'] = $player->id;
 		$insert['name1'] = $player->username;
