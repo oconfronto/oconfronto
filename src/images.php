@@ -1,9 +1,11 @@
 <?php
 
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Imagens");
 
-include("templates/header.php");
+include(__DIR__ . "/templates/header.php");
 
 ?>
 <style>
@@ -46,5 +48,5 @@ background: #FFFDE0;
 </table>
 
 <?php
-include("templates/footer.php");
+include(__DIR__ . "/templates/footer.php");
 ?>

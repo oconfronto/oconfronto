@@ -1,61 +1,64 @@
 <?php
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Mercado");
 $player = check_user($secret_key, $db);
-include("checkbattle.php");
-include("checkhp.php");
-include("checkwork.php");
+include(__DIR__ . "/checkbattle.php");
+include(__DIR__ . "/checkhp.php");
+include(__DIR__ . "/checkwork.php");
 
 switch($_GET['act'])
 {
 	case "remove":
 		if (!$_GET['item']){
-		include("templates/private_header.php");
-		echo "Um erro desconhecido ocorreu.<br/><a href=\"market.php\">Voltar</a>.";
-		include("templates/private_footer.php");
+		include(__DIR__ . "/templates/private_header.php");
+		echo 'Um erro desconhecido ocorreu.<br/><a href="market.php">Voltar</a>.';
+		include(__DIR__ . "/templates/private_footer.php");
 		break;
 		}
 
 		$verifik = $db->execute("select market.seller, blueprint_items.name, items.item_bonus, items.mark from `market`, `blueprint_items`, `items` where market.ite_id=blueprint_items.id and market.market_id=items.id and market.market_id=?", array($_GET['item']));
 		if ($verifik->recordcount() == 0)
 		{
-		include("templates/private_header.php");
-		echo "Um erro desconhecido ocorreu.<br/><a href=\"market.php\">Voltar</a>.";
-		include("templates/private_footer.php");
+		include(__DIR__ . "/templates/private_header.php");
+		echo 'Um erro desconhecido ocorreu.<br/><a href="market.php">Voltar</a>.';
+		include(__DIR__ . "/templates/private_footer.php");
 		break;
 		}
 
 		$item = $verifik->fetchrow();
 
 		if ($item['seller'] != $player->username){
-		include("templates/private_header.php");
+		include(__DIR__ . "/templates/private_header.php");
 		echo "Você não pode remover este item do mercado.<br/><a href=\"market.php\">Voltar</a>.";
-		include("templates/private_footer.php");
+		include(__DIR__ . "/templates/private_footer.php");
 		break;
 		}
 
 		if (!$_GET['confirm']){
-		include("templates/private_header.php");
-		echo "Tem certeza que seseja remover seu item do mercado? (" . $item['name'] . ")<br/><a href=\"market.php?act=remove&item=" . $_GET['item'] . "&confirm=yes\">Sim</a> | <a href=\"market.php\">Voltar</a>.";
-		include("templates/private_footer.php");
+		include(__DIR__ . "/templates/private_header.php");
+		echo "Tem certeza que seseja remover seu item do mercado? (" . $item['name'] . ')<br/><a href="market.php?act=remove&item=' . $_GET['item'] . '&confirm=yes">Sim</a> | <a href="market.php">Voltar</a>.';
+		include(__DIR__ . "/templates/private_footer.php");
 		}else{
 		$mark_sold=$db->execute("update `items` set `mark`='f' where `id`=?", array($_GET['item']));
 		$query_delete=$db->execute("delete from `market` where `market_id`=?", array($_GET['item']));
-		include("templates/private_header.php");
+		include(__DIR__ . "/templates/private_header.php");
 		echo "Você removeu seu item do mercado<br/><a href=\"market.php\">Voltar</a>.";
-		include("templates/private_footer.php");
+		include(__DIR__ . "/templates/private_footer.php");
 		}
+  
 	break;
 
 
 	default:
 		//Show search form		
-		include("templates/private_header.php");		
+		include(__DIR__ . "/templates/private_header.php");		
 		echo "<form method=\"GET\" action=\"market.php\">\n";
 		echo "<table width=\"100%\" class=\"brown\" style='border:1px solid #b6804e;height:28px;'><tr>";
 			echo "<th width=\"35%\"><b>Procurar por:</b> <select name=\"type\">\n";
 
-			if ((!$_GET['type']) or ($_GET['type'] == 'none')) {
+			if (!$_GET['type'] || $_GET['type'] == 'none') {
 				echo "<option value=\"none\" selected=\"selected\">Selecione</option>\n";
 			} else {
 				echo "<option value=\"none\">Selecione</option>\n";
@@ -125,7 +128,7 @@ switch($_GET['act'])
 
 			echo "<th width=\"35%\">Ordenar por: <select name=\"orderby\">\n";
 
-			if ((!$_GET['orderby']) or ($_GET['orderby'] == 'none')) {
+			if (!$_GET['orderby'] || $_GET['orderby'] == 'none') {
 				echo "<option value=\"none\" selected=\"selected\">Selecione</option>\n";
 			} else {
 				echo "<option value=\"none\">Selecione</option>\n";
@@ -158,13 +161,13 @@ switch($_GET['act'])
 			echo "</select></th>";
 
 
-			echo "<th width=\"30%\" align=\"right\"><input  id=\"link\" class=\"neg\" type=\"submit\" value=\"Procurar\" /></th>";
+			echo '<th width="30%" align="right"><input  id="link" class="neg" type="submit" value="Procurar" /></th>';
 			echo "</tr></table>";
 			echo "</form>";
-		echo showAlert("<i>Deseja vender algum item? <a href=\"market_sell.php\"><b>Clique aqui</b></a>.</i>", "white", "left");
+		echo showAlert('<i>Deseja vender algum item? <a href="market_sell.php"><b>Clique aqui</b></a>.</i>', "white", "left");
 		echo "<br/>";
 
-		if (($_GET['type'] == 'armor') or ($_GET['type'] == 'boots') or ($_GET['type'] == 'helmet') or ($_GET['type'] == 'legs') or (($_GET['type'] == 'shield') and ($player->voc != 'archer')) or ($_GET['type'] == 'weapon') or ($_GET['type'] == 'amulet') or ($_GET['type'] == 'potion') or ($_GET['type'] == 'ring') or ($_GET['type'] == 'addon')) {
+		if ($_GET['type'] == 'armor' || $_GET['type'] == 'boots' || $_GET['type'] == 'helmet' || $_GET['type'] == 'legs' || $_GET['type'] == 'shield' && $player->voc != 'archer' || $_GET['type'] == 'weapon' || $_GET['type'] == 'amulet' || $_GET['type'] == 'potion' || $_GET['type'] == 'ring' || $_GET['type'] == 'addon') {
 
 			if ($_GET['orderby'] == 'nome') {
 				$orderby = "blueprint_items.name";
@@ -178,11 +181,7 @@ switch($_GET['act'])
 				$orderby = "market.price";
 			}
 			
-			if ($_GET['sort'] == 'desc') {
-				$sort = "desc";
-			} else {
-				$sort = "asc";
-			}
+			$sort = $_GET['sort'] == 'desc' ? "desc" : "asc";
 			
 			$filtrobusca = "" . $orderby . " " . $sort . "";
 
@@ -207,11 +206,7 @@ switch($_GET['act'])
 						$type = "Defesa";
 					}
 					
-				if ($sort == "asc") {
-					$linksort = "desc";
-				} else {
-					$linksort = "asc";
-				}
+				$linksort = $sort === "asc" ? "desc" : "asc";
 
 				$btnsort = 0;
 
@@ -220,9 +215,9 @@ switch($_GET['act'])
 				echo "<thead>";
 				echo "<tr>";
 				echo "<th style='width:5%;text-align: center;'>Imagem</td>";
-				echo "<th style='width:50%;text-align: center;'><a href=\"market.php?type=" . $_GET['type'] . "&orderby=nome&sort=" . $linksort . "\">Item</a> "; if ($_GET['orderby'] == 'nome') { $btnsort = 1; echo $sort; } echo "</th>";
-				echo "<th style='width:10%;text-align: center;'><a href=\"market.php?type=" . $_GET['type'] . "&orderby=efetividade&sort=" . $linksort . "\">" . $type . "</a> "; if ($_GET['orderby'] == 'efetividade') { $btnsort = 1; echo $sort; } echo "</th>";
-				echo "<th style='width:15%;text-align: center;'><a href=\"market.php?type=" . $_GET['type'] . "&orderby=preco&sort=" . $linksort . "\">Preço</a> "; if (($_GET['orderby'] == 'preco') or (($btnsort == 0) and ($_GET['orderby'] != 'vocacao'))) { $btnsort = 1; echo $sort; } echo "</th>";
+				echo "<th style='width:50%;text-align: center;'><a href=\"market.php?type=" . $_GET['type'] . "&orderby=nome&sort=" . $linksort . '">Item</a> '; if ($_GET['orderby'] == 'nome') { $btnsort = 1; echo $sort; } echo "</th>";
+				echo "<th style='width:10%;text-align: center;'><a href=\"market.php?type=" . $_GET['type'] . "&orderby=efetividade&sort=" . $linksort . '">' . $type . "</a> "; if ($_GET['orderby'] == 'efetividade') { $btnsort = 1; echo $sort; } echo "</th>";
+				echo "<th style='width:15%;text-align: center;'><a href=\"market.php?type=" . $_GET['type'] . "&orderby=preco&sort=" . $linksort . "\">Preço</a> "; if ($_GET['orderby'] == 'preco' || $btnsort == 0 && $_GET['orderby'] != 'vocacao') { $btnsort = 1; echo $sort; } echo "</th>";
 				echo "<th style='width:15%;text-align: center;'><a href=\"market.php?type=" . $_GET['type'] . "&orderby=vocacao&sort=" . $linksort . "\">Vocação</a> "; if ($_GET['orderby'] == 'vocacao') { $btnsort = 1; echo $sort; } echo "</th>";
 				echo "<th style='width:5%;text-align: center;'>Ação</td>";
 				echo "</tr>";
@@ -231,38 +226,21 @@ switch($_GET['act'])
 				$bool = 1;
 				while ($item = $query->fetchrow())
 				{
-					if ($item['item_bonus'] > 0){
-						$bonus1 = " (+" . $item['item_bonus'] . ")";
-					}else{
-						$bonus1 = "";
-					}
-					if ($item['for'] > 0){
-						$bonus2 = " <font color=\"gray\">+" . $item['for'] . "F</font>";
-					}else{
-						$bonus2 = "";
-					}
-					if ($item['vit'] > 0){
-						$bonus3 = " <font color=\"green\">+" . $item['vit'] . "V</font>";
-					}else{
-						$bonus3 = "";
-					}
-					if ($item['agi'] > 0){
-						$bonus4 = " <font color=\"blue\">+" . $item['agi'] . "A</font>";
-					}else{
-						$bonus4 = "";
-					}
-					if ($item['res'] > 0){
-						$bonus5 = " <font color=\"red\">+" . $item['res'] . "R</font>";
-					}else{
-						$bonus5 = "";
-					}
+					$bonus1 = $item['item_bonus'] > 0 ? " (+" . $item['item_bonus'] . ")" : "";
 
-					echo "<tr class=\"row" . $bool . "\">";
+     $bonus2 = $item['for'] > 0 ? ' <font color="gray">+' . $item['for'] . "F</font>" : "";
 
-					echo "<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><img src=\"static/images/itens/{$item['img']}\" alt=\"{$item['name']}\"></td>";
+     $bonus3 = $item['vit'] > 0 ? ' <font color="green">+' . $item['vit'] . "V</font>" : "";
+
+     $bonus4 = $item['agi'] > 0 ? ' <font color="blue">+' . $item['agi'] . "A</font>" : "";
+
+     $bonus5 = $item['res'] > 0 ? ' <font color="red">+' . $item['res'] . "R</font>" : "";
+     echo '<tr class="row' . $bool . '">';
+
+					echo sprintf("<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><img src=\"static/images/itens/%s\" alt=\"%s\"></td>", $item['img'], $item['name']);
 					echo "<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $item['name'] . " " . $bonus1 . "" . $bonus2 . "" . $bonus3 . "" . $bonus4 . "" . $bonus5 . "</td>";
 
-					if (($_GET['type'] == 'potion') or ($_GET['type'] == 'ring') or ($_GET['type'] == 'addon')) {
+					if ($_GET['type'] == 'potion' || $_GET['type'] == 'ring' || $_GET['type'] == 'addon') {
 						echo "<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . showName($item['seller'], $db) . "</td>";
 					} else {
 						echo "<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . ($item['effectiveness'] + ($item['item_bonus'] * 2)) . "</td>";
@@ -271,27 +249,27 @@ switch($_GET['act'])
 					echo "<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $item['price'] . "</td>";
 					echo "<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>";
 
-					if ($item['voc'] == 1 and $item['needpromo'] == 'f') {
+					if ($item['voc'] == 1 && $item['needpromo'] == 'f') {
 						echo "Caçador";
-					} elseif ($item['voc'] == 2 and $item['needpromo'] == 'f') {
+					} elseif ($item['voc'] == 2 && $item['needpromo'] == 'f') {
 						echo "Espadachim";
-					} elseif ($item['voc'] == 3 and $item['needpromo'] == 'f') {
+					} elseif ($item['voc'] == 3 && $item['needpromo'] == 'f') {
 						echo "Bruxo";
-					} elseif ($item['voc'] == 1 and $item['needpromo'] == 't') {
+					} elseif ($item['voc'] == 1 && $item['needpromo'] == 't') {
 						echo "Arqueiro";
-					} elseif ($item['voc'] == 2 and $item['needpromo'] == 't') {
+					} elseif ($item['voc'] == 2 && $item['needpromo'] == 't') {
 						echo "Guerreiro";
-					} elseif ($item['voc'] == 3 and $item['needpromo'] == 't') {
+					} elseif ($item['voc'] == 3 && $item['needpromo'] == 't') {
 						echo "Mago";
-					} elseif ($item['voc'] == 0 and $item['needpromo'] == 't') {
+					} elseif ($item['voc'] == 0 && $item['needpromo'] == 't') {
 						echo "Vocações superiores";
-					} elseif ($item['voc'] == 1 and $item['needpromo'] == 'p') {
+					} elseif ($item['voc'] == 1 && $item['needpromo'] == 'p') {
 						echo "Arqueiro Royal";
-					} elseif ($item['voc'] == 2 and $item['needpromo'] == 'p') {
+					} elseif ($item['voc'] == 2 && $item['needpromo'] == 'p') {
 						echo "Cavaleiro";
-					} elseif ($item['voc'] == 3 and $item['needpromo'] == 'p') {
+					} elseif ($item['voc'] == 3 && $item['needpromo'] == 'p') {
 						echo "Arquimago";
-					} elseif ($item['voc'] == 0 and $item['needpromo'] == 'p') {
+					} elseif ($item['voc'] == 0 && $item['needpromo'] == 'p') {
 						echo "Vocações supremas";
 					} else {
 						echo "Todas";
@@ -307,7 +285,8 @@ switch($_GET['act'])
 					
 					$bool = ($bool==1)?2:1;
 					echo "</tr>";
-				}				
+				}
+    				
 				echo "</tbody></table></fieldset>";
 			}
 
@@ -315,6 +294,6 @@ switch($_GET['act'])
 			echo "<p><i><center>Selecione o tipo de item que você deseja procurar.</center></i></p>";
 		}
 
-		include("templates/private_footer.php");
+		include(__DIR__ . "/templates/private_footer.php");
 		break;
 }

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 if ($enemy->loot > 1)
 	{
 	$chanceloot = rand(1, $enemy->loot);
@@ -77,58 +79,57 @@ if ($enemy->loot > 1)
 		if ($lootstatus == 2){
 		$sorteioitem2 = rand(1, 55);
 		if ($sorteioitem2 == 43){
-			if ($player->level < 50){
-			$sorteiapotion = rand(1, 3);
-			if ($sorteiapotion == 3){
-			$mensagem = "<u><b>Você encontrou uma Mana Potion com " . $enemy->prepo . " " . $enemy->username . "</b></u>";
-			$lootstatus = 5;
-			$loot_id = 150;
-			$lootbonus1 = 0;
-			$lootbonus2 = 0;
-			$lootbonus3 = 0;
-			$lootbonus4 = 0;
-			}else{
-			$mensagem = "<u><b>Você encontrou uma Health Potion com " . $enemy->prepo . " " . $enemy->username . "</b></u>";
-			$lootstatus = 5;
-			$loot_id = 136;
-			$lootbonus1 = 0;
-			$lootbonus2 = 0;
-			$lootbonus3 = 0;
-			$lootbonus4 = 0;
-			}
-			}
-			else if (($player->level > 49) and ($player->level < 100)){
+			if ($player->level < 50) {
+       $sorteiapotion = rand(1, 3);
+       if ($sorteiapotion == 3){
+    			$mensagem = "<u><b>Você encontrou uma Mana Potion com " . $enemy->prepo . " " . $enemy->username . "</b></u>";
+    			$lootstatus = 5;
+    			$loot_id = 150;
+    			$lootbonus1 = 0;
+    			$lootbonus2 = 0;
+    			$lootbonus3 = 0;
+    			$lootbonus4 = 0;
+    			}else{
+    			$mensagem = "<u><b>Você encontrou uma Health Potion com " . $enemy->prepo . " " . $enemy->username . "</b></u>";
+    			$lootstatus = 5;
+    			$loot_id = 136;
+    			$lootbonus1 = 0;
+    			$lootbonus2 = 0;
+    			$lootbonus3 = 0;
+    			$lootbonus4 = 0;
+    			}
+   } elseif ($player->level > 49 && $player->level < 100) {
+       $sorteiapotion = rand(1, 4);
+       if ($sorteiapotion == 1 || $sorteiapotion == 2){
+    			$mensagem = "<u><b>Você encontrou uma Health Potion com " . $enemy->prepo . " " . $enemy->username . "</b></u>";
+    			$lootstatus = 5;
+    			$loot_id = 136;
+    			$lootbonus1 = 0;
+    			$lootbonus2 = 0;
+    			$lootbonus3 = 0;
+    			$lootbonus4 = 0;
+    			}
+    			elseif ($sorteiapotion == 3){
+    			$mensagem = "<u><b>Você encontrou uma Mana Potion com " . $enemy->prepo . " " . $enemy->username . "</b></u>";
+    			$lootstatus = 5;
+    			$loot_id = 150;
+    			$lootbonus1 = 0;
+    			$lootbonus2 = 0;
+    			$lootbonus3 = 0;
+    			$lootbonus4 = 0;
+    			}else{
+    			$mensagem = "<u><b>Você encontrou uma Energy Potion com " . $enemy->prepo . " " . $enemy->username . "</b></u>";
+    			$lootstatus = 5;
+    			$loot_id = 137;
+    			$lootbonus1 = 0;
+    			$lootbonus2 = 0;
+    			$lootbonus3 = 0;
+    			$lootbonus4 = 0;
+    
+    			}
+   } else{
 			$sorteiapotion = rand(1, 4);
-			if (($sorteiapotion == 1) or ($sorteiapotion == 2)){
-			$mensagem = "<u><b>Você encontrou uma Health Potion com " . $enemy->prepo . " " . $enemy->username . "</b></u>";
-			$lootstatus = 5;
-			$loot_id = 136;
-			$lootbonus1 = 0;
-			$lootbonus2 = 0;
-			$lootbonus3 = 0;
-			$lootbonus4 = 0;
-			}
-			elseif ($sorteiapotion == 3){
-			$mensagem = "<u><b>Você encontrou uma Mana Potion com " . $enemy->prepo . " " . $enemy->username . "</b></u>";
-			$lootstatus = 5;
-			$loot_id = 150;
-			$lootbonus1 = 0;
-			$lootbonus2 = 0;
-			$lootbonus3 = 0;
-			$lootbonus4 = 0;
-			}else{
-			$mensagem = "<u><b>Você encontrou uma Energy Potion com " . $enemy->prepo . " " . $enemy->username . "</b></u>";
-			$lootstatus = 5;
-			$loot_id = 137;
-			$lootbonus1 = 0;
-			$lootbonus2 = 0;
-			$lootbonus3 = 0;
-			$lootbonus4 = 0;
-
-			}
-			}else{
-			$sorteiapotion = rand(1, 4);
-			if (($sorteiapotion == 1) or ($sorteiapotion == 2)){
+			if ($sorteiapotion == 1 || $sorteiapotion == 2){
 			$mensagem = "<u><b>Você encontrou uma Big Health Potion com " . $enemy->prepo . " " . $enemy->username . "</b></u>";
 			$lootstatus = 5;
 			$loot_id = 148;
@@ -158,7 +159,7 @@ if ($enemy->loot > 1)
 		}
 		}
 
-	if (($lootstatus == 2) and ($player->level > 10) and ($player->level < 90)){
+	if ($lootstatus == 2 && $player->level > 10 && $player->level < 90){
 		$sorteiarings = rand(1, 600);
 			if ($sorteiarings == 278){
 			$choosering = rand(1, 4);
@@ -201,7 +202,7 @@ if ($enemy->loot > 1)
 			}
 	}
 
-	if (($lootstatus == 2) and ($player->level < 90)){
+	if ($lootstatus == 2 && $player->level < 90){
 		$sorteiarings = rand(1, 1200);
 			if ($sorteiarings == 567){
 			$choosering = rand(1, 2);
@@ -227,7 +228,7 @@ if ($enemy->loot > 1)
 			}
 	}
 
-	if (($lootstatus == 2) and ($player->level > 75)){
+	if ($lootstatus == 2 && $player->level > 75){
 		$sorteiaorbsinho = rand(1, 9500);
 			if ($sorteiaorbsinho == 2523){
 			$mensagem = "<u><b>Você encontrou um Oddin Orb com " . $enemy->prepo . " " . $enemy->username . "</b></u>";
@@ -242,7 +243,7 @@ if ($enemy->loot > 1)
 			}
 	}
 
-	if (($lootstatus == 2) and ($player->level > 90)){
+	if ($lootstatus == 2 && $player->level > 90){
 		$sorteiaorbsinho = rand(1, 13650);
 			if ($sorteiaorbsinho == 3599){
 			$mensagem = "<u><b>Você encontrou uma Magic Golden Bar com " . $enemy->prepo . " " . $enemy->username . "</b></u>";
@@ -257,7 +258,7 @@ if ($enemy->loot > 1)
 			}
 	}
 
-	if (($lootstatus == 2) and ($player->level > 120)){
+	if ($lootstatus == 2 && $player->level > 120){
 		$sorteiaorbsinho = rand(1, 11600);
 			if ($sorteiaorbsinho == 4853){
 			$mensagem = "<u><b>Você encontrou um Magic Crystal com " . $enemy->prepo . " " . $enemy->username . "</b></u>";

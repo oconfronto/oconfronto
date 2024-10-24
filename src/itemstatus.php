@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 $types = array('amulet', 'armor', 'boots', 'helmet', 'legs', 'shield', 'weapon', 'ring');
 $attributes = array('for', 'vit', 'agi', 'res');
 
@@ -13,7 +15,7 @@ $bonuses = array(
 
 foreach ($attributes as $attribute) {
     foreach ($types as $type) {
-        $query = "SELECT items.$attribute, blueprint_items.id 
+        $query = "SELECT items.{$attribute}, blueprint_items.id 
                   FROM `items`, `blueprint_items` 
                   WHERE items.player_id = ? 
                   AND blueprint_items.id = items.item_id 

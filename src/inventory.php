@@ -1,21 +1,23 @@
 <?php
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Inventário");
 $player = check_user($secret_key, $db);
-include("checkbattle.php");
-include("checkhp.php");
-include("checkwork.php");
+include(__DIR__ . "/checkbattle.php");
+include(__DIR__ . "/checkhp.php");
+include(__DIR__ . "/checkwork.php");
 
 $fieldnumber = 1;
 $newline = 0;
 
-include("includes/items/gift.php");
-include("includes/items/goldbar.php");
-include("includes/items/magiccrystal.php");
-include("includes/actions/transfer-potions.php");
-include("includes/actions/transfer-items.php");
+include(__DIR__ . "/includes/items/gift.php");
+include(__DIR__ . "/includes/items/goldbar.php");
+include(__DIR__ . "/includes/items/magiccrystal.php");
+include(__DIR__ . "/includes/actions/transfer-potions.php");
+include(__DIR__ . "/includes/actions/transfer-items.php");
 
-include("templates/private_header.php");
+include(__DIR__ . "/templates/private_header.php");
 
 if ($_GET['sellit']) {
 	$query = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.img, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", array($player->id, $_GET['sellit']));
@@ -30,38 +32,38 @@ if ($_GET['sellit']) {
 	}
 
 	if ($query->recordcount() == 0) {
-		echo "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-		echo "<table width=\"100%\" align=\"center\"><tr>";
+		echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
+		echo '<table width="100%" align="center"><tr>';
 		echo "<td width=\"100%\" align=\"center\">Este item não existe!</td>";
 		echo "</tr></table>";
 		echo "</div>";
-	} elseif (($sell['item_id'] == 111) or ($sell['item_id'] == 116) or ($sell['item_id'] == 163) or ($sell['item_id'] == 168)) {
-		echo "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-		echo "<table width=\"100%\" align=\"center\"><tr>";
+	} elseif ($sell['item_id'] == 111 || $sell['item_id'] == 116 || $sell['item_id'] == 163 || $sell['item_id'] == 168) {
+		echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
+		echo '<table width="100%" align="center"><tr>';
 		echo "<td width=\"100%\" align=\"center\">Voc&ecirc; não pode vender este item!</td>";
 		echo "</tr></table>";
 		echo "</div>";
 	} elseif ($sell['type'] == 'stone') {
-		echo "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-		echo "<table width=\"100%\" align=\"center\"><tr>";
+		echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
+		echo '<table width="100%" align="center"><tr>';
 		echo "<td width=\"100%\" align=\"center\">Voc&ecirc; não pode vender pedras.</td>";
 		echo "</tr></table>";
 		echo "</div>";
 	} elseif ($sell['status'] == 'equipped') {
-		echo "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-		echo "<table width=\"100%\" align=\"center\"><tr>";
+		echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
+		echo '<table width="100%" align="center"><tr>';
 		echo "<td width=\"100%\" align=\"center\">Voc&ecirc; não pode vender um item que está em uso.</td>";
 		echo "</tr></table>";
 		echo "</div>";
-	} elseif (($_GET['sellit'] > 0) and ($_GET['comfirm'] != true)) {
-		echo "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-		echo "<table width=\"100%\" align=\"center\"><tr>";
-		echo "<td width=\"10%\" align=\"center\"><img src=\"static/images/itens/" . $sell['img'] . "\" border=\"0\"></td>";
-		echo "<td width=\"55%\">Deseja vender seu(a) " . $sell['name'] . " + " . $sell['item_bonus'] . "<br/>por " . $valordavenda . " moedas de ouro?</td>";
-		echo "<td width=\"35%\" align=\"right\"><a href=\"inventory.php\">Não, obrigado.</a><br/><b><a href=\"inventory.php?sellit=" . $_GET['sellit'] . "&comfirm=true\">Desejo vender o item.</a></b></td>";
+	} elseif ($_GET['sellit'] > 0 && $_GET['comfirm'] != true) {
+		echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
+		echo '<table width="100%" align="center"><tr>';
+		echo '<td width="10%" align="center"><img src="static/images/itens/' . $sell['img'] . '" border="0"></td>';
+		echo '<td width="55%">Deseja vender seu(a) ' . $sell['name'] . " + " . $sell['item_bonus'] . "<br/>por " . $valordavenda . " moedas de ouro?</td>";
+		echo "<td width=\"35%\" align=\"right\"><a href=\"inventory.php\">Não, obrigado.</a><br/><b><a href=\"inventory.php?sellit=" . $_GET['sellit'] . '&comfirm=true">Desejo vender o item.</a></b></td>';
 		echo "</tr></table>";
 		echo "</div>";
-	} elseif (($_GET['sellit'] > 0) and ($_GET['comfirm'] == true)) {
+	} elseif ($_GET['sellit'] > 0 && $_GET['comfirm'] == true) {
 		if ($sell['mark'] == 't') {
 			$db->execute("delete from `market` where `market_id`=?", array($_GET['sellit']));
 		}
@@ -69,9 +71,9 @@ if ($_GET['sellit']) {
 		$db->execute("delete from `items` where `id`=?", array($_GET['sellit']));
 		$db->execute("update `players` set `gold`=`gold`+? where `id`=?", array($valordavenda, $player->id));
 
-		echo "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-		echo "<table width=\"100%\" align=\"center\"><tr>";
-		echo "<td width=\"100%\" align=\"center\">Voc&ecirc; vendeu seu(a) " . $sell['name'] . " + " . $sell['item_bonus'] . " por " . $valordavenda . " moedas de ouro.</td>";
+		echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
+		echo '<table width="100%" align="center"><tr>';
+		echo '<td width="100%" align="center">Voc&ecirc; vendeu seu(a) ' . $sell['name'] . " + " . $sell['item_bonus'] . " por " . $valordavenda . " moedas de ouro.</td>";
 		echo "</tr></table>";
 		echo "</div>";
 	}
@@ -97,56 +99,56 @@ if ($_GET['mature']) {
 	}
 
 	if ($querymature->recordcount() == 0) {
-		echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-		echo "<table width=\"100%\" align=\"center\"><tr>";
+		echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
+		echo '<table width="100%" align="center"><tr>';
 		echo "<td width=\"100%\" align=\"center\">Este item não existe!</td>";
 		echo "</tr></table>";
 		echo "</div>";
 	} elseif ($mature['item_bonus'] > 8) {
-		echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-		echo "<table width=\"100%\" align=\"center\"><tr>";
+		echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
+		echo '<table width="100%" align="center"><tr>';
 		echo "<td width=\"100%\" align=\"center\">Seu item já está maturado ao máximo! (+9)</td>";
 		echo "</tr></table>";
 		echo "</div>";
 	} elseif ($mature['mark'] == 't') {
-		echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-		echo "<table width=\"100%\" align=\"center\"><tr>";
+		echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
+		echo '<table width="100%" align="center"><tr>';
 		echo "<td width=\"100%\" align=\"center\">Voc&ecirc; não pode maturar itens a venda no mercado.</td>";
 		echo "</tr></table>";
 		echo "</div>";
-	} elseif (($mature['type'] == 'addon') or ($mature['type'] == 'potion') or ($mature['type'] == 'stone') or ($mature['type'] == 'ring')) {
-		echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-		echo "<table width=\"100%\" align=\"center\"><tr>";
+	} elseif ($mature['type'] == 'addon' || $mature['type'] == 'potion' || $mature['type'] == 'stone' || $mature['type'] == 'ring') {
+		echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
+		echo '<table width="100%" align="center"><tr>';
 		echo "<td width=\"100%\" align=\"center\">Voc&ecirc; não pode maturar este tipo de item.</td>";
 		echo "</tr></table>";
 		echo "</div>";
 	} elseif ($mature['price'] < 1000) {
-		echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-		echo "<table width=\"100%\" align=\"center\"><tr>";
+		echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
+		echo '<table width="100%" align="center"><tr>';
 		echo "<td width=\"100%\" align=\"center\">Voc&ecirc; não pode maturar este item.";
 		echo "<br/>Itens com preços mais baixos que mil moedas de ouro não podem ser maturados.";
 		echo "</td></tr></table>";
 		echo "</div>";
-	} elseif (($_GET['mature'] > 0) and ($_GET['comfirm'] != true)) {
-		echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-		echo "<table width=\"100%\" align=\"center\"><tr>";
-		echo "<td width=\"10%\" align=\"center\"><img src=\"static/images/itens/" . $mature['img'] . "\" border=\"0\"></td>";
-		echo "<td width=\"55%\">Deseja maturar seu(a) " . $mature['name'] . " + " . $mature['item_bonus'] . "<br/>por " . $precol . " moedas de ouro?</td>";
-		echo "<td width=\"35%\" align=\"right\"><a href=\"inventory.php\">Não, obrigado.</a><br/><b><a href=\"inventory.php?mature=" . $_GET['mature'] . "&comfirm=true\">Desejo maturar o item.</a></b></td>";
+	} elseif ($_GET['mature'] > 0 && $_GET['comfirm'] != true) {
+		echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
+		echo '<table width="100%" align="center"><tr>';
+		echo '<td width="10%" align="center"><img src="static/images/itens/' . $mature['img'] . '" border="0"></td>';
+		echo '<td width="55%">Deseja maturar seu(a) ' . $mature['name'] . " + " . $mature['item_bonus'] . "<br/>por " . $precol . " moedas de ouro?</td>";
+		echo "<td width=\"35%\" align=\"right\"><a href=\"inventory.php\">Não, obrigado.</a><br/><b><a href=\"inventory.php?mature=" . $_GET['mature'] . '&comfirm=true">Desejo maturar o item.</a></b></td>';
 		echo "</tr></table>";
 		echo "</div>";
-	} elseif (($_GET['mature'] > 0) and ($_GET['comfirm'] == true)) {
+	} elseif ($_GET['mature'] > 0 && $_GET['comfirm'] == true) {
 
 		if ($precol > $player->gold) {
-			echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-			echo "<table width=\"100%\" align=\"center\"><tr>";
+			echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
+			echo '<table width="100%" align="center"><tr>';
 			echo "<td width=\"100%\" align=\"center\">Voc&ecirc; não pode pagar pela maturação. (" . $precol . " moedas de ouro)</td>";
 			echo "</tr></table>";
 			echo "</div>";
 		} else {
 
 
-			if (($mature['type'] == 'amulet') and ($mature['status'] == 'equipped')) {
+			if ($mature['type'] == 'amulet' && $mature['status'] == 'equipped') {
 				$addhp = 40;
 				$extramana = 10;
 			} else {
@@ -157,9 +159,9 @@ if ($_GET['mature']) {
 			$db->execute("update `items` set `item_bonus`=? where `id`=?", array($mature['item_bonus'] + 1, $mature['id']));
 			$db->execute("update `players` set `hp`=`hp`+?, `maxhp`=`maxhp`+?, `mana`=`mana`+?, `maxmana`=`maxmana`+?, `extramana`=`extramana`+?, `gold`=`gold`-? where `id`=?", array($addhp, $addhp, $extramana, $extramana, $extramana, $precol, $player->id));
 
-			echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
-			echo "<table width=\"100%\" align=\"center\"><tr>";
-			echo "<td width=\"100%\" align=\"center\">Voc&ecirc; maturou seu(a) " . $mature['name'] . " por " . $precol . " moedas de ouro.<br />Os atributos de seu item subiram em 2 pontos.</td>";
+			echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
+			echo '<table width="100%" align="center"><tr>';
+			echo '<td width="100%" align="center">Voc&ecirc; maturou seu(a) ' . $mature['name'] . " por " . $precol . " moedas de ouro.<br />Os atributos de seu item subiram em 2 pontos.</td>";
 			echo "</tr></table>";
 			echo "</div>";
 		}
@@ -177,40 +179,41 @@ if ($tutorial->recordcount() > 0) {
 }
 
 
-echo "<div id=\"main_container\">";
-echo "<div id=\"drag\">";
+echo '<div id="main_container">';
+echo '<div id="drag">';
 echo "<div id=\"left\" style='width:200px;min-height:230px;'>";
 echo "<fieldset style='border:0px;text-align:center;'><b>Inventário</b></fieldset>";
-include("showit2.php");
+include(__DIR__ . "/showit2.php");
 
-echo "<table align=\"center\">";
-echo "<tr><td class=\"sell\">Vender</td></tr>";
-echo "<tr><td class=\"mature\">Maturar</td></tr>";
+echo '<table align="center">';
+echo '<tr><td class="sell">Vender</td></tr>';
+echo '<tr><td class="mature">Maturar</td></tr>';
 echo "</table>";
 
 $backpackquery = $db->execute("select items.id, items.tile, items.item_bonus, items.for, items.vit, items.agi, items.res, items.status, blueprint_items.name, blueprint_items.effectiveness, blueprint_items.img, blueprint_items.type, blueprint_items.description, blueprint_items.needlvl, blueprint_items.needpromo from `items`, `blueprint_items` where items.player_id=? and items.status='unequipped' and items.item_id=blueprint_items.id and blueprint_items.type!='potion' and blueprint_items.type!='stone' and items.mark='f' order by items.tile asc limit 55", array($player->id));
 
-echo "<center><font size=\"1px\"><b>Capacidade:</b> 60</font><br/>";
+echo '<center><font size="1px"><b>Capacidade:</b> 60</font><br/>';
 echo "<font size=\"1px\"><b>Espaço Restante:</b> ";
 if ((60 - $backpackquery->recordcount()) >= 0) {
 	echo (60 - $backpackquery->recordcount());
 } else {
 	echo "0";
 }
+
 echo "</font></center>";
 
 echo "</div><div id=\"right\" style='padding:0px;height:230px;'>";
 echo "<fieldset style='border:0px;text-align:center;'><b>Mochila</b></fieldset>";
 
-echo "<table id=\"table2\" style=\"margin:5px;\" align=\"center\">";
+echo '<table id="table2" style="margin:5px;" align="center">';
 echo "<tr>";
 while ($bag = $backpackquery->fetchrow()) {
 
 
 
-	if (($bag['item_bonus'] > 2) and ($bag['item_bonus'] < 6)) {
+	if ($bag['item_bonus'] > 2 && $bag['item_bonus'] < 6) {
 		$colorbg = "itembg2";
-	} elseif (($bag['item_bonus'] > 5) and ($bag['item_bonus'] < 9)) {
+	} elseif ($bag['item_bonus'] > 5 && $bag['item_bonus'] < 9) {
 		$colorbg = "itembg3";
 	} elseif ($bag['item_bonus'] == 9) {
 		$colorbg = "itembg4";
@@ -258,7 +261,7 @@ while ($bag = $backpackquery->fetchrow()) {
 		$nametype = "Defesa";
 	}
 
-	if (($bag['type'] != 'addon') and ($bag['type'] != 'ring')) {
+	if ($bag['type'] != 'addon' && $bag['type'] != 'ring') {
 		$newefec = ($bag['effectiveness']) + ($bag['item_bonus'] * 2);
 		$showitname = "" . $bag['name'] . " + " . $bag['item_bonus'] . "";
 	} else {
@@ -267,17 +270,15 @@ while ($bag = $backpackquery->fetchrow()) {
 
 	$need = NULL;
 	if ($bag['needlvl'] > 1) {
-		if ($player->vip > time()) {
-			$lvlbonus = 10;
-		} else {
-			$lvlbonus = 0;
-		}
-		if ($bag['needlvl'] > ($player->level + $lvlbonus)) {
+		$lvlbonus = $player->vip > time() ? 10 : 0;
+
+  if ($bag['needlvl'] > ($player->level + $lvlbonus)) {
 			$need .= "<br/><font color=red><b>Requer nível " . $bag['needlvl'] . ".</b></font>";
 		} else {
 			$need .= "<br/><b>Requer nível " . $bag['needlvl'] . ".</b>";
 		}
 	}
+ 
 	if ($bag['needpromo'] == "t") {
 		if ($player->promoted != "f") {
 			$need .= "<br/><b>Voc superior.</b>";
@@ -285,6 +286,7 @@ while ($bag = $backpackquery->fetchrow()) {
 			$need .= "<br/><font color=red><b>Voc superior.</b></font>";
 		}
 	}
+ 
 	if ($bag['needpromo'] == "p") {
 		if ($player->promoted == "p") {
 			$need .= "<br/><b>Voc suprema.</b>";
@@ -300,14 +302,15 @@ while ($bag = $backpackquery->fetchrow()) {
 	} else {
 		$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>" . $nametype . ": " . $newefec . "" . $need . "</font></td><td width=35%><font size=1px>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></table>";
 	}
-	echo "<td class=\"" . $colorbg . " " . $fieldnumber . "\">";
-	echo "<div id=\"" . $bag['type'] . "\" class=\"drag " . $bag['id'] . "\" title=\"header=[" . $showitname . "] body=[" . $showitinfo . "]\">";
-	echo "<img src=\"static/images/itens/" . $bag['img'] . "\" border=\"0\">";
+ 
+	echo '<td class="' . $colorbg . " " . $fieldnumber . '">';
+	echo '<div id="' . $bag['type'] . '" class="drag ' . $bag['id'] . '" title="header=[' . $showitname . "] body=[" . $showitinfo . ']">';
+	echo '<img src="static/images/itens/' . $bag['img'] . '" border="0">';
 	echo "</div>";
 	echo "</td>";
 
-	$fieldnumber = $fieldnumber + 1;
-	$newline = $newline + 1;
+	$fieldnumber += 1;
+	$newline += 1;
 	if ($newline == 12) {
 		echo "</tr><tr>";
 		$newline = 0;
@@ -316,12 +319,12 @@ while ($bag = $backpackquery->fetchrow()) {
 
 $total = $backpackquery->recordcount();
 while ($total < 60) {
-	echo "<td class=\"itembg1 " . $fieldnumber . "\">&nbsp;</td>";
+	echo '<td class="itembg1 ' . $fieldnumber . '">&nbsp;</td>';
 
-	$fieldnumber = $fieldnumber + 1;
-	$total = $total + 1;
+	$fieldnumber += 1;
+	$total += 1;
 
-	$newline = $newline + 1;
+	$newline += 1;
 	if ($newline == 12) {
 		echo "</tr><tr>";
 		$newline = 0;
@@ -335,12 +338,12 @@ echo "</div>";
 echo "</div>";
 
 if ($backpackquery->recordcount() > 60) {
-	echo "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
+	echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 	echo "<center><font size=\"1\"><b>Espaço insuficiente na mochila.<br/>Venda alguns de seus itens para ver os outros.</b></font></center>";
 	echo "</div>";
 }
 
-echo "<div id=\"btn_mobile\" style=\"display: none; justify-content: center; align-items: center;padding:20px;text-align:center\">";
+echo '<div id="btn_mobile" style="display: none; justify-content: center; align-items: center;padding:20px;text-align:center">';
 echo "<br />";
 echo "<br />";
 echo "<a id=\"link\" class=\"neg\" style='color:#fff;' href=\"inventory_mobile.php\">Inventário Mobile</a>";
@@ -367,26 +370,30 @@ echo "<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Poç�
 echo "<table width=\"100%\"><tr><td><table width=\"80px\"><tr><td><div title=\"header=[Health Potion] body=[Recupera até 5 mil de vida.]\"><img src=\"static/images/itens/healthpotion.gif\"></div></td><td><b>x" . $numerodepocoes . "</b>";
 if ($numerodepocoes > 0) {
 	$item = $query->fetchrow();
-	echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item['id'] . "\">Usar</a>";
+	echo '<br/><a href="hospt.php?act=potion&pid=' . $item['id'] . '">Usar</a>';
 }
+
 echo "</td></tr></table></td>";
 echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Big Health Potion] body=[Recupera até 10 mil de vida.]\"><img src=\"static/images/itens/bighealthpotion.gif\"></div></td><td><b>x" . $numerodepocoes3 . "</b>";
 if ($numerodepocoes3 > 0) {
 	$item3 = $query3->fetchrow();
-	echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item3['id'] . "\">Usar</a>";
+	echo '<br/><a href="hospt.php?act=potion&pid=' . $item3['id'] . '">Usar</a>';
 }
+
 echo "</td></tr></table></td>";
 echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Mana Potion] body=[Recupera até 500 de mana.]\"><img src=\"static/images/itens/manapotion.gif\"></div></td><td><b>x" . $numerodepocoes4 . "</b>";
 if ($numerodepocoes4 > 0) {
 	$item4 = $query4->fetchrow();
-	echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item4['id'] . "\">Usar</a>";
+	echo '<br/><a href="hospt.php?act=potion&pid=' . $item4['id'] . '">Usar</a>';
 }
+
 echo "</td></tr></table></td>";
 echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Energy Potion] body=[Recupera até 50 de energia.]\"><img src=\"static/images/itens/energypotion.gif\"></div></td><td><b>x" . $numerodepocoes2 . "</b>";
 if ($numerodepocoes2 > 0) {
 	$item2 = $query2->fetchrow();
-	echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item2['id'] . "\">Usar</a>";
+	echo '<br/><a href="hospt.php?act=potion&pid=' . $item2['id'] . '">Usar</a>';
 }
+
 echo "</td></tr></table></td><td><font size=\"1\">
 <a id=\"link\" class=\"neg\" style='float:right;color:#fff;margin-top:-5px;' href=\"hospt.php?act=sell\">Vender Poções</a>
 <br/>
@@ -407,21 +414,21 @@ if ($player->level < $setting->activate_level) {
 		echo "<center><font size=\"1\"><a href=\"quest2.php\"><b>Clique aqui para fazer a missão.</b></a></font></center>";
 	}
 } elseif ($player->transpass == 'f') {
-	echo "<form method=\"POST\" action=\"transferpass.php\">";
+	echo '<form method="POST" action="transferpass.php">';
 	echo "<center><i>Escolha uma senha de transfer&ecirc;ncia para enviar ouro e itens</i><p><font size=\"1px\"><b>Senha:</b></font> <input type=\"password\" name=\"pass\" size=\"15\"/> <font size=\"1px\"><b>Confirme:</b></font> <input type=\"password\" name=\"pass2\" size=\"15\"/> <input type=\"submit\" name=\"submit\" value=\"Definir Senha\"></p><br/><font size=\"1px\">Lembre-se desta senha, ela sempre será usada para fazer transfer&ecirc;ncias bancárias.</font></center>";
 	echo "</form>";
 } else {
 
-	echo "<table width=\"100%\">";
-	echo "<form method=\"POST\" action=\"inventory.php\">";
+	echo '<table width="100%">';
+	echo '<form method="POST" action="inventory.php">';
 	echo "<tr><td width=\"40%\">Usuário:</td><td><input autocomplete='off' type=\"text\" name=\"username\" size=\"20\"/></td></tr>";
-	echo "<tr><td width=\"40%\">Item:</td><td>";
+	echo '<tr><td width="40%">Item:</td><td>';
 
 	$queoppa = $db->execute("select items.id, items.item_bonus, items.item_id, items.mark, items.for, items.vit, items.agi, items.res, blueprint_items.name from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type!='stone' and blueprint_items.type!='potion' and items.mark='f' order by blueprint_items.type, blueprint_items.name asc", array($player->id));
 	if ($queoppa->recordcount() == 0) {
 		echo "<b>Voc&ecirc; não possui itens.</b>";
 	} else {
-		echo "<select name=\"itselected\">";
+		echo '<select name="itselected">';
 		while ($item = $queoppa->fetchrow()) {
 			$bonus1 = " (+" . $item['item_bonus'] . ") ";
 			$bonus2 = "";
@@ -432,29 +439,34 @@ if ($player->level < $setting->activate_level) {
 			if ($item['for'] > 0) {
 				$bonus2 = " +" . $item['for'] . "F";
 			}
+   
 			if ($item['vit'] > 0) {
 				$bonus3 = " +" . $item['vit'] . "V";
 			}
+   
 			if ($item['agi'] > 0) {
 				$bonus4 = " +" . $item['agi'] . "A";
 			}
+   
 			if ($item['res'] > 0) {
 				$bonus5 = " +" . $item['res'] . "R";
 			}
 
-			echo "<option value=\"" . $item['id'] . "\">" . $item['name'] . " " . $bonus1 . "" . $bonus2 . "" . $bonus3 . "" . $bonus4 . "" . $bonus5 . "</option>";
+			echo '<option value="' . $item['id'] . '">' . $item['name'] . " " . $bonus1 . "" . $bonus2 . "" . $bonus3 . "" . $bonus4 . "" . $bonus5 . "</option>";
 		}
+  
 		echo "</select>";
 	}
 
 	echo "</td></tr>";
 	echo "<tr><td width=\"40%\">Senha de transfer&ecirc;ncia:</td><td><input autocomplete='off' type=\"password\" name=\"passcode\" size=\"20\"/></td></tr>";
-	echo "<tr><td colspan=\"2\" align=\"center\"><input type=\"submit\" name=\"transferitems\" value=\"Enviar\"></td></tr>";
+	echo '<tr><td colspan="2" align="center"><input type="submit" name="transferitems" value="Enviar"></td></tr>';
 	echo "</table></form>";
-	echo "<font size=\"1\"><a href=\"forgottrans.php\">Esqueceu sua senha de transfer&ecirc;ncia?</a></font>";
+	echo '<font size="1"><a href="forgottrans.php">Esqueceu sua senha de transfer&ecirc;ncia?</a></font>';
 
 	$morelogs = 1;
 }
+
 echo "</fieldset>";
 if ($morelogs == 1) {
 	echo "<center><font size=\"1\"><a href=\"#\" onclick=\"javascript:window.open('logitem.php', '_blank','top=100, left=100, height=350, width=450, status=no, menubar=no, resizable=no, scrollbars=yes, toolbar=no, location=no, directories=no');\">Transfer&ecirc;ncias realizadas nos últimos 14 dias.</a></font></center>";
@@ -463,4 +475,4 @@ if ($morelogs == 1) {
 
 echo "</div>";
 
-include("templates/private_footer.php");
+include(__DIR__ . "/templates/private_footer.php");

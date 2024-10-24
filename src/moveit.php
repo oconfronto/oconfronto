@@ -1,14 +1,16 @@
 <?php
-	include("lib.php");
+	declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 	$player = check_user($secret_key, $db);
 	$error = 0;
 
-if (($_GET['itid']) and ($_GET['tile'])) {
-	if (($_GET['itid'] < 1) or (!is_numeric($_GET['itid']))){
+if ($_GET['itid'] && $_GET['tile']) {
+	if ($_GET['itid'] < 1 || !is_numeric($_GET['itid'])){
 		$error = 1;
 	}
 
-	elseif (($_GET['tile'] < 1) or (!is_numeric($_GET['tile']))){
+	elseif ($_GET['tile'] < 1 || !is_numeric($_GET['tile'])){
 		$error = 1;
 	}
 
@@ -34,12 +36,7 @@ if (($_GET['itid']) and ($_GET['tile'])) {
                         $extramana = ($item['vit'] * 5);
                     }
                     
-                    if ($player->hp > $extrahp)
-                    {
-                        $playerhp = $player->hp - $extrahp;
-                    } else {
-                        $playerhp = 1;
-                    }
+                    $playerhp = $player->hp > $extrahp ? $player->hp - $extrahp : 1;
                     
                     $playermana = $player->mana - $extramana;
                     if ($playermana < 0) {

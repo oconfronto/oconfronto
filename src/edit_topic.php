@@ -1,17 +1,19 @@
 <?php
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Frum");
 $player = check_user($secret_key, $db);
 
-include("checkforum.php");
-include("templates/private_header.php");
+include(__DIR__ . "/checkforum.php");
+include(__DIR__ . "/templates/private_header.php");
 ?>
 <script type="text/javascript" src="static/bbeditor/ed.js"></script>
 <?php
 if (!$_GET['topic'])
 {
-	echo "Um erro desconhecido ocorreu! <a href=\"main_forum.php\">Voltar</a>.";
-	include("templates/private_footer.php");
+	echo 'Um erro desconhecido ocorreu! <a href="main_forum.php">Voltar</a>.';
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
 
@@ -20,57 +22,42 @@ if (!$_GET['topic'])
 	}else{
 	$procuramensagem = $db->execute("select `topic`, `detail`, `fixo`, `closed`, `vota` from `forum_question` where `id`=? and `user_id`=?", array($_GET['topic'], $player->id));
 	}
+ 
 	if ($procuramensagem->recordcount() == 0)
 	{
 	echo "Voc no pode editar este topico! <a href=\"main_forum.php\">Voltar</a>.";
-	include("templates/private_footer.php");
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 	}
-	else
-	{
-		$editmsg = $procuramensagem->fetchrow();
-		$texto = $editmsg['detail'];
-		$quebras = Array( '<br />', '<br>', '<br/>' );
-		$editandomensagem = str_replace($quebras, "", $texto);
-	}
+ $editmsg = $procuramensagem->fetchrow();
+ $texto = $editmsg['detail'];
+ $quebras = Array( '<br />', '<br>', '<br/>' );
+ $editandomensagem = str_replace($quebras, "", $texto);
+ 
 if(isset($_POST['submit']))
 {
 
 if (!$_POST['detail'])
 {
-	echo "Voc precisa preencher todos os campos! <a href=\"edit_topic.php?topic=" . $_GET['topic'] . "\">Voltar</a>.";
-	include("templates/private_footer.php");
+	echo "Voc precisa preencher todos os campos! <a href=\"edit_topic.php?topic=" . $_GET['topic'] . '">Voltar</a>.';
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
+
 $novaresposto=strip_tags($_POST['detail']);
 	$quebras = Array( '<br />', '<br>', '<br/>' );
 	$newresposta = str_replace($quebras, "\n", $novaresposto);
 $texto=nl2br($newresposta);
 
-if ((!$_POST['fixo']) or ($player->gm_rank < 2))
-{
-$fixo = "f";
-}else{
-$fixo = "t";
-}
+$fixo = !$_POST['fixo'] || $player->gm_rank < 2 ? "f" : "t";
 
-if ((!$_POST['closed']) or ($player->gm_rank < 2))
-{
-$closed = "f";
-}else{
-$closed = "t";
-}
+$closed = !$_POST['closed'] || $player->gm_rank < 2 ? "f" : "t";
 
-if ((!$_POST['vota']) or ($player->gm_rank < 2))
-{
-$vota = "f";
-}else{
-$vota = "t";
-}
+$vota = !$_POST['vota'] || $player->gm_rank < 2 ? "f" : "t";
 
 $real = $db->execute("update `forum_question` set `topic`=?, `detail`=?, `fixo`=?, `closed`=?, `vota`=? where `id`=?", array($_POST['topic'], $texto, $fixo, $closed, $vota, $_GET['topic']));
-	echo "Postagem editada com sucesso! <a href=\"view_topic.php?id=" . $_GET['topic'] . "\">Voltar</a>.";
-	include("templates/private_footer.php");
+	echo 'Postagem editada com sucesso! <a href="view_topic.php?id=' . $_GET['topic'] . '">Voltar</a>.';
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
 
@@ -101,16 +88,18 @@ if ($player->gm_rank > 2){
 	}
 
 	if ($editmsg['closed'] == 't'){
-	echo "&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"closed\" VALUE=\"yes\" checked> Fechado";
+	echo '&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="closed" VALUE="yes" checked> Fechado';
 	}else{
-	echo "&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"closed\" VALUE=\"yes\"> Fechado";
+	echo '&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="closed" VALUE="yes"> Fechado';
 	}
 }
+
 	if ($editmsg['vota'] == 't'){
 	echo "&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"vota\" VALUE=\"yes\" checked> Ativar Votao";
 	}else{
 	echo "&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"vota\" VALUE=\"yes\"> Ativar Votao";
 	}
+ 
 ?></td>
 </tr>
 </table>
@@ -119,5 +108,5 @@ if ($player->gm_rank > 2){
 </tr>
 </table>
 <?php
-include("templates/private_footer.php");
+include(__DIR__ . "/templates/private_footer.php");
 ?>

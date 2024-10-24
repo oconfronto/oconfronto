@@ -1,5 +1,7 @@
 <?php 
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 $player = check_user($secret_key, $db);
 
 $pbonusfor = 0;
@@ -16,7 +18,7 @@ $pbonusres = 0;
 	}
 
 
-include('barclass.php');
+include(__DIR__ . '/barclass.php');
 if(isset($_REQUEST['exp']))
 {
 	$bar = new barGen();	// Load the class

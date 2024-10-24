@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
+
 if ($missao['quest_status'] == 1) {
     $db->execute("update `quests` set `quest_status`='2' where `id`=?", array($missao['id']));
     $a = "<i>Meu nome  Hastakk, sou um treinador de guerreiros. Eu no costumo me apresentar assim, mas algo me diz que h algo muito especial em voc.</i>";
-    $b = "<a href=\"tavern.php?p=quests&start=".$quest['id']."\">Continuar</a>";
+    $b = '<a href="tavern.php?p=quests&start='.$quest['id'].'">Continuar</a>';
     
 } elseif ($missao['quest_status'] == 2) {
     if ($missao['pago'] == 't') {
@@ -20,14 +22,14 @@ if ($missao['quest_status'] == 1) {
         {
             $db->execute("update `quests` set `quest_status`='3' where `id`=?", array($missao['id']));
             $a = "<i>Voc&ecirc; já matou todos os usuários nescesários.</i>";
-            $b = "<a href=\"tavern.php?p=quests&start=".$quest['id']."\">Continuar</a>.";
+            $b = '<a href="tavern.php?p=quests&start='.$quest['id'].'">Continuar</a>.';
         } else {
             $a = "<i>Grandes guerreiros precisam aprender a matar desde cedo, então minha missão à voc&ecirc; será simples. <b>Mate " . $remaining . " usuários</b>, volte aqui, e voc&ecirc; consiguirá os 3 níveis.</i>";
-            $b = "<a href=\"home.php\">Principal</a>";
+            $b = '<a href="home.php">Principal</a>';
         }
     } else {
         $a = "<i>Gostaria de começar seu treinamento por " . $quest['cost'] . " de ouro?<br>Se eu te treinar, voc&ecirc; poderá adiquirir até tr&ecirc;s níveis!</i>";
-        $b = "<a href=\"tavern.php?p=quests&start=".$quest['id']."&pay=true\">Pagar</a>";
+        $b = '<a href="tavern.php?p=quests&start='.$quest['id'].'&pay=true">Pagar</a>';
     }
 } elseif ($missao['quest_status'] == 3) {
     //d o prmio
@@ -38,7 +40,7 @@ if ($missao['quest_status'] == 1) {
     //finaliza a quest
     $db->execute("update `quests` set `quest_status`='90' where `id`=?", array($missao['id']));
     $a = "<i>Bom, espero que voc&ecirc; tenha aprendido a matar.<br><b>(Voc&ecirc; passou para o nível " . ($player->level+3) . ")</i>";
-    $b = "<a href=\"tavern.php?p=quests\">Voltar</a>";
+    $b = '<a href="tavern.php?p=quests">Voltar</a>';
 }
     
 /*

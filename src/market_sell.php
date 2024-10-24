@@ -1,71 +1,77 @@
 <?php
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Mercado");
 $player = check_user($secret_key, $db);
-include("checkbattle.php");
-include("checkhp.php");
-include("checkwork.php");
+include(__DIR__ . "/checkbattle.php");
+include(__DIR__ . "/checkhp.php");
+include(__DIR__ . "/checkwork.php");
 
 if ($player->level < 15) {
-	include("templates/private_header.php");
+	include(__DIR__ . "/templates/private_header.php");
 	echo "<i>Você precisa ter nível 15 ou mais para vender items.</i><br/>\n";
 	echo '<a href="market.php">Voltar</a>.';
 	echo "</fieldset>";
-	include("templates/private_footer.php");
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
 
 switch ($_GET['act']) {
 	case "sell": {
-			include("templates/private_header.php");			
+			include(__DIR__ . "/templates/private_header.php");			
 
 			$gsadasdiiii = $db->execute("select items.item_id, items.item_bonus, items.for, items.vit, items.agi, items.res, items.status, blueprint_items.name, blueprint_items.type from `items`, `blueprint_items` where items.id=? and items.player_id=? and items.item_id=blueprint_items.id", array($_GET['item'], $player->id));
 			$goooosdsfds = $gsadasdiiii->fetchrow();
 
 			if ($gsadasdiiii->recordcount() == 0) {
 				echo "Você não possui este item.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 			if ($goooosdsfds['mark'] == 't') {
 				echo "Este item já está á venda!<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 			if ($goooosdsfds['status'] == 'equipped') {
 				echo "O item que você deseja vender está em uso. Desequipe-o e tente novamente.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
-			if (($goooosdsfds['item_id'] == 111) or ($goooosdsfds['item_id'] == 116) or ($goooosdsfds['item_id'] == 163) or ($goooosdsfds['item_id'] == 168)) {
+			if ($goooosdsfds['item_id'] == 111 || $goooosdsfds['item_id'] == 116 || $goooosdsfds['item_id'] == 163 || $goooosdsfds['item_id'] == 168) {
 				echo "Você não pode vender este item.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 			if ($goooosdsfds['type'] == 'stone') {
 				echo "Você não pode vender pedras no mercado.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 			if ($goooosdsfds['item_bonus'] > 0) {
 				$bonus1 = " +" . $goooosdsfds['item_bonus'] . "";
 			}
+   
 			if ($goooosdsfds['for'] > 0) {
-				$bonus2 = " <font color=\"gray\">+" . $goooosdsfds['for'] . "F</font>";
+				$bonus2 = ' <font color="gray">+' . $goooosdsfds['for'] . "F</font>";
 			}
+   
 			if ($goooosdsfds['vit'] > 0) {
-				$bonus3 = " <font color=\"green\">+" . $goooosdsfds['vit'] . "V</font>";
+				$bonus3 = ' <font color="green">+' . $goooosdsfds['vit'] . "V</font>";
 			}
+   
 			if ($goooosdsfds['agi'] > 0) {
-				$bonus4 = " <font color=\"blue\">+" . $goooosdsfds['agi'] . "A</font>";
+				$bonus4 = ' <font color="blue">+' . $goooosdsfds['agi'] . "A</font>";
 			}
+   
 			if ($goooosdsfds['res'] > 0) {
-				$bonus5 = " <font color=\"red\">+" . $goooosdsfds['res'] . "R</font>";
+				$bonus5 = ' <font color="red">+' . $goooosdsfds['res'] . "R</font>";
 			}
 
 ?>
@@ -91,7 +97,7 @@ switch ($_GET['act']) {
 				<input type="submit" value="Adicionar ao mercado">
 			</form>
 		<?php
-			include("templates/private_footer.php");
+			include(__DIR__ . "/templates/private_footer.php");
 			//end of sell action
 			break;
 		}
@@ -99,54 +105,54 @@ switch ($_GET['act']) {
 
 			if ($player->transpass != 'f') {
 				if (!$_POST['passcode']) {
-					include("templates/private_header.php");
+					include(__DIR__ . "/templates/private_header.php");
 					echo "<fieldset><legend><b>Erro</b></legend>\n";
 					echo "Preencha todos os campos.<br />";
-					echo "<a href=\"market.php\">Voltar</a>.";
+					echo '<a href="market.php">Voltar</a>.';
 					echo "</fieldset>";
-					include("templates/private_footer.php");
+					include(__DIR__ . "/templates/private_footer.php");
 					break;
 				}
 
-				if (strtolower($_POST['passcode']) != strtolower($player->transpass)) {
-					include("templates/private_header.php");
+				if (strtolower($_POST['passcode']) !== strtolower($player->transpass)) {
+					include(__DIR__ . "/templates/private_header.php");
 					echo "<fieldset><legend><b>Erro</b></legend>\n";
 					echo "Sua senha de transferência está incorreta.<br />";
-					echo "<a href=\"market.php\">Voltar</a>.";
+					echo '<a href="market.php">Voltar</a>.';
 					echo "</fieldset>";
-					include("templates/private_footer.php");
+					include(__DIR__ . "/templates/private_footer.php");
 					break;
 				}
 			}
 
 			if (!$_POST['item']) {
-				include("templates/private_header.php");
-				echo "Um erro desconhecido ocorreu.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_header.php");
+				echo 'Um erro desconhecido ocorreu.<br/><a href="market.php">Voltar</a>.';
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 			$verificaall = $db->execute("select items.item_id, items.status, items.mark, items.item_bonus, items.for, items.vit, items.agi, items.res, blueprint_items.name, blueprint_items.type from `items`, `blueprint_items` where items.id=? and items.player_id=? and items.item_id=blueprint_items.id", array($_POST['item'], $player->id));
 			if ($verificaall->recordcount() == 0) {
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "Você não possui este item.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 			$ver = $verificaall->fetchrow();
 
 			if ($ver['mark'] == 't') {
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "Este item já está no mercado.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 			if ($ver['status'] == 'equipped') {
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "O item que você deseja vender está em uso. Desequipe-o e tente novamente.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
@@ -155,31 +161,31 @@ switch ($_GET['act']) {
 			$item = stripslashes($_POST['item']);
 
 			if (!$_POST['price']) {
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "Você precisa preencher todos os campos.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 			if (!is_numeric($_POST['price'])) {
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "O valor que você inseriu não é válido.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 			if ($_POST['price'] < 100) {
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "O preço não pode ser menor que 100.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 
 			if ($_POST['price'] > 50000000) {
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "O preço não pode ser maior que 50 milhões.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
@@ -189,14 +195,15 @@ switch ($_GET['act']) {
 			$fee = ceil($price / 100);
 			$fee = ceil($fee * 5);
 			if ($price <= 0) {
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "Desculpe, mas nós não permitimos que os usuários dêem itens. <a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
+   
 			$gsassaaa = $db->execute("select blueprint_items.name, items.item_id from `blueprint_items`, `items` where items.id=? and blueprint_items.id=items.item_id", array($item));
 			$gooooa = $gsassaaa->fetchrow();
-			include("templates/private_header.php");
+			include(__DIR__ . "/templates/private_header.php");
 		?>
 			Você tem certeza que quer vender seu/sua <b><?php echo $gooooa['name']; ?> por <?php echo $price; ?> de ouro</b>? Você precisará nos pagar <b><?php echo $fee; ?> de ouro</b>, que é nossa comissão.<br /><br />
 			<form method="post" action="market_sell.php?act=list">
@@ -206,40 +213,40 @@ switch ($_GET['act']) {
 			</form>
 		<?php
 		}
-		include("templates/private_footer.php");
+		include(__DIR__ . "/templates/private_footer.php");
 		break;
 
 
 	case "list": {
 
 			if (!$_POST['item']) {
-				include("templates/private_header.php");
-				echo "Um erro desconhecido ocorreu.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_header.php");
+				echo 'Um erro desconhecido ocorreu.<br/><a href="market.php">Voltar</a>.';
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 			$verificaall = $db->execute("select items.item_id, items.status, items.mark, items.item_bonus, items.for, items.vit, items.agi, items.res, blueprint_items.name, blueprint_items.type from `items`, `blueprint_items` where items.id=? and items.player_id=? and items.item_id=blueprint_items.id", array($_POST['item'], $player->id));
 			if ($verificaall->recordcount() == 0) {
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "Você não possui este item.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 			$ver = $verificaall->fetchrow();
 
 			if ($ver['mark'] == 't') {
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "Este item já está no mercado.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 			if ($ver['status'] == 'equipped') {
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "O item que você deseja vender está em uso. Desequipe-o e tente novamente.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
@@ -247,31 +254,31 @@ switch ($_GET['act']) {
 
 
 			if (!$_POST['price']) {
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "Você precisa preencher todos os campos.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 			if (!is_numeric($_POST['price'])) {
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "O valor que você inseriu não é válido.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 			if ($_POST['price'] < 100) {
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "O preço não pode ser menor que 100.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 
 			if ($_POST['price'] > 50000000) {
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "O preço não pode ser maior que 50 milhões.<br/><a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
@@ -282,9 +289,9 @@ switch ($_GET['act']) {
 			$fee = ceil($fee * 5);
 
 			if ($player->gold < $fee) {
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "Você não tem ouro para pagar nossa comissão.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 			} else {
 				$insert['market_id'] = $item;
 				$insert['ite_id'] = $ver['item_id'];
@@ -297,16 +304,17 @@ switch ($_GET['act']) {
 				$query02 = $db->execute("update `players` set `gold`=? where `id`=?", array($player->gold - $fee, $player->id));
 				$query03 = $db->execute("update `items` set `mark`='t', `status`='unequipped' where `id`=?", array($item));
 
-				include("templates/private_header.php");
+				include(__DIR__ . "/templates/private_header.php");
 				echo "Agora seu item está disponivel no mercado! <a href=\"market.php\">Voltar</a>.";
-				include("templates/private_footer.php");
+				include(__DIR__ . "/templates/private_footer.php");
 			}
+   
 			break;
 		}
 	default:
 
 		//Default Page
-		include("templates/private_header.php");
+		include(__DIR__ . "/templates/private_header.php");
 		echo showAlert("<i style='text-align:center'><b>Aqui você pode vender seus itens listados abaixo. Eles ficarão disponíveis no mercado por até 14 dias, com um custo de comissão de 5% do valor ofertado a venda.</b></i><br/>", "white", "left");
 		?>
 		<?php
@@ -315,61 +323,46 @@ switch ($_GET['act']) {
 		if ($query->recordcount() == 0) {
 			echo "<br /><b>Você não tem itens para vender.</b>";
 		}
+  
 		$abaioepa = $db->execute("select `id` from `items` where `player_id`=?", array($player->id));
 		if ($abaioepa->recordcount() == 0) {
 			echo "<br /><b>Você não tem itens para vender.</b>";
-			include("templates/private_footer.php");
+			include(__DIR__ . "/templates/private_footer.php");
 			exit;
-		} else {
-			echo "<fieldset><legend><b>Quais itens você gostaria de vender?</b></legend>";
-			echo "<table style='width:100%;border-collapse: collapse;'>";
-			echo "<thead>";
-			echo "<tr>";
-			echo "<th style='width:10%;text-align: center;'><b>imagem</b></th>";
-			echo "<th style='width:76%;text-align: center;'><b>Item</b></th>";
-			echo "<th style='width:20%;text-align: center;'><b>Ação</b></th>";
-			echo "</tr>";
-			echo "</thead>";
-			echo "<tbody>";
-			$gettheitemuniqid = $db->execute("select items.id, items.item_bonus, items.for, items.vit, items.agi, items.res, blueprint_items.name, blueprint_items.img from `items`, `blueprint_items` where `player_id`=? and mark!='t' and status != 'equipped'  and items.item_id=blueprint_items.id order by blueprint_items.name asc", array($player->id));
-			$bool = 1;
-			while ($gettheitemuniqiditem = $gettheitemuniqid->fetchrow()) {
-				if ($gettheitemuniqiditem['item_bonus'] > 0) {
-					$bonus01 = " (+" . $gettheitemuniqiditem['item_bonus'] . ")";
-				} else {
-					$bonus01 = "";
-				}
-				if ($gettheitemuniqiditem['for'] > 0) {
-					$bonus02 = " <font color=\"gray\">+" . $gettheitemuniqiditem['for'] . "F</font>";
-				} else {
-					$bonus02 = "";
-				}
-				if ($gettheitemuniqiditem['vit'] > 0) {
-					$bonus03 = " <font color=\"green\">+" . $gettheitemuniqiditem['vit'] . "V</font>";
-				} else {
-					$bonus03 = "";
-				}
-				if ($gettheitemuniqiditem['agi'] > 0) {
-					$bonus04 = " <font color=\"blue\">+" . $gettheitemuniqiditem['agi'] . "A</font>";
-				} else {
-					$bonus04 = "";
-				}
-				if ($gettheitemuniqiditem['res'] > 0) {
-					$bonus05 = " <font color=\"red\">+" . $gettheitemuniqiditem['res'] . "R</font>";
-				} else {
-					$bonus05 = "";
-				}
-				echo "<tr class=\"row" . $bool . "\">
+		}
+  echo "<fieldset><legend><b>Quais itens você gostaria de vender?</b></legend>";
+  echo "<table style='width:100%;border-collapse: collapse;'>";
+  echo "<thead>";
+  echo "<tr>";
+  echo "<th style='width:10%;text-align: center;'><b>imagem</b></th>";
+  echo "<th style='width:76%;text-align: center;'><b>Item</b></th>";
+  echo "<th style='width:20%;text-align: center;'><b>Ação</b></th>";
+  echo "</tr>";
+  echo "</thead>";
+  echo "<tbody>";
+  $gettheitemuniqid = $db->execute("select items.id, items.item_bonus, items.for, items.vit, items.agi, items.res, blueprint_items.name, blueprint_items.img from `items`, `blueprint_items` where `player_id`=? and mark!='t' and status != 'equipped'  and items.item_id=blueprint_items.id order by blueprint_items.name asc", array($player->id));
+  $bool = 1;
+  while ($gettheitemuniqiditem = $gettheitemuniqid->fetchrow()) {
+				$bonus01 = $gettheitemuniqiditem['item_bonus'] > 0 ? " (+" . $gettheitemuniqiditem['item_bonus'] . ")" : "";
+
+   $bonus02 = $gettheitemuniqiditem['for'] > 0 ? ' <font color="gray">+' . $gettheitemuniqiditem['for'] . "F</font>" : "";
+
+   $bonus03 = $gettheitemuniqiditem['vit'] > 0 ? ' <font color="green">+' . $gettheitemuniqiditem['vit'] . "V</font>" : "";
+
+   $bonus04 = $gettheitemuniqiditem['agi'] > 0 ? ' <font color="blue">+' . $gettheitemuniqiditem['agi'] . "A</font>" : "";
+
+   $bonus05 = $gettheitemuniqiditem['res'] > 0 ? ' <font color="red">+' . $gettheitemuniqiditem['res'] . "R</font>" : "";
+
+   echo '<tr class="row' . $bool . "\">
 				<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><img src=\"static/images/itens/{$gettheitemuniqiditem['img']}\" alt=\"{$gettheitemuniqiditem['name']}\"></td>
 				<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $gettheitemuniqiditem['name'] . "" . $bonus01 . "" . $bonus02 . "" . $bonus03 . "" . $bonus04 . "" . $bonus05 . "</td>
-				<td style='text-align:center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><a href=\"market_sell.php?act=sell&item=" . $gettheitemuniqiditem['id'] . "\">Vender</a></td></tr>";
+				<td style='text-align:center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><a href=\"market_sell.php?act=sell&item=" . $gettheitemuniqiditem['id'] . '">Vender</a></td></tr>';
 
 				$bool = ($bool==1)?2:1;
 			}
-			echo "</tbody></table></fieldset>";
-		}
+  echo "</tbody></table></fieldset>";
 		?>
 <?php
-		include("templates/private_footer.php");
+		include(__DIR__ . "/templates/private_footer.php");
 }
 ?>

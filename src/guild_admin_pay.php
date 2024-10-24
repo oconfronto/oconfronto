@@ -1,9 +1,11 @@
 <?php
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Administração do Clã");
 $player = check_user($secret_key, $db);
-include("checkbattle.php");
-include("checkguild.php");
+include(__DIR__ . "/checkbattle.php");
+include(__DIR__ . "/checkguild.php");
 
 $error = 0;
 
@@ -17,30 +19,30 @@ if ($guildquery->recordcount() == 0) {
 }
 
 
-include("templates/private_header.php");
+include(__DIR__ . "/templates/private_header.php");
 
 $price = (500 * $guild['members']);
 
 //Guild Leader Admin check
-if (($player->username != $guild['leader']) and ($player->username != $guild['vice'])) {
+if ($player->username != $guild['leader'] && $player->username != $guild['vice']) {
     echo "<p />Você não pode acessar esta página.<p />";
-    echo "<a href=\"home.php\">Principal</a><p />";
+    echo '<a href="home.php">Principal</a><p />';
 } else {
 
 		$valortempo = $guild['pagopor'] - time();
-		if ($valortempo < 60){
-		$valortempo2 = $valortempo;
-		$auxiliar2 = "segundo(s)";
-		}else if($valortempo < 3600){
-		$valortempo2 = floor($valortempo / 60);
-		$auxiliar2 = "minuto(s)";
-		}else if($valortempo < 86400){
-		$valortempo2 = floor($valortempo / 3600);
-		$auxiliar2 = "hora(s)";
-		}else if($valortempo > 86400){
-		$valortempo2 = floor($valortempo / 86400);
-		$auxiliar2 = "dia(s)";
-		}
+		if ($valortempo < 60) {
+      $valortempo2 = $valortempo;
+      $auxiliar2 = "segundo(s)";
+  } elseif ($valortempo < 3600) {
+      $valortempo2 = floor($valortempo / 60);
+      $auxiliar2 = "minuto(s)";
+  } elseif ($valortempo < 86400) {
+      $valortempo2 = floor($valortempo / 3600);
+      $auxiliar2 = "hora(s)";
+  } elseif ($valortempo > 86400) {
+      $valortempo2 = floor($valortempo / 86400);
+      $auxiliar2 = "dia(s)";
+  }
 
 if ($_POST['submit']) {
 
@@ -48,23 +50,19 @@ $arredonda = floor($_POST['days']);
 $maximodedias = ($guild['pagopor'] + ($arredonda * 86400)) - time();
 $price2 = ceil($price * $_POST['days']);
 
-	if (!$_POST['days']){
-    	$errmsg .= "Você precisa preencher todos os campos.";
-    	$error = 1;
-   	}
-	else if(!is_numeric($_POST['days'])){
-    	$errmsg .= "Este número de dias não é válido.";
-    	$error = 1;
-   	}
-	else if($arredonda < 1){
-    	$errmsg .= "Este número de dias não é válido.";
-    	$error = 1;
-   	}
-	else if($price2 > $guild['gold']){
-    	$errmsg .= "Seu clã não possui ouro suficiente para pagar por " . $arredonda . " dia(s).";
-    	$error = 1;
-   	}
-	elseif($maximodedias > 5183999){
+	if (!$_POST['days']) {
+     $errmsg .= "Você precisa preencher todos os campos.";
+     $error = 1;
+ } elseif (!is_numeric($_POST['days'])) {
+     $errmsg .= "Este número de dias não é válido.";
+     $error = 1;
+ } elseif ($arredonda < 1) {
+     $errmsg .= "Este número de dias não é válido.";
+     $error = 1;
+ } elseif ($price2 > $guild['gold']) {
+     $errmsg .= "Seu clã não possui ouro suficiente para pagar por " . $arredonda . " dia(s).";
+     $error = 1;
+ } elseif($maximodedias > 5183999){
     	$errmsg .= "Você não pode deixar sue clã pago por mais de 60 dias.";
     	$error = 1;
    	}
@@ -90,5 +88,6 @@ Ele será deletado se o tempo acabar e você não pagar mais.
 
 <?php
 }
-include("templates/private_footer.php");
+
+include(__DIR__ . "/templates/private_footer.php");
 ?>

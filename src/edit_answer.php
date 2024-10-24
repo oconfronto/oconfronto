@@ -1,18 +1,20 @@
 <?php
 
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Frum");
 $player = check_user($secret_key, $db);
 
-include("checkforum.php");
-include("templates/private_header.php");
+include(__DIR__ . "/checkforum.php");
+include(__DIR__ . "/templates/private_header.php");
 ?>
 <script type="text/javascript" src="static/bbeditor/ed.js"></script>
 <?php
-if (!$_GET['topic'] | !$_GET['a'])
+if ((!$_GET['topic'] | !$_GET['a']) !== 0)
 {
-	echo "Um erro desconhecido ocorreu! <a href=\"main_forum.php\">Voltar</a>.";
-	include("templates/private_footer.php");
+	echo 'Um erro desconhecido ocorreu! <a href="main_forum.php">Voltar</a>.';
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
 
@@ -20,40 +22,40 @@ if (!$_GET['topic'] | !$_GET['a'])
 	if ($procuramensagem->recordcount() == 0)
 	{
 	echo "Voc no pode editar esta mensagem! <a href=\"main_forum.php\">Voltar</a>.";
-	include("templates/private_footer.php");
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 	}
+ 
 		$editmsg = $procuramensagem->fetchrow();
 
-	if (($editmsg['a_user_id'] != $player->id) and ($player->gm_rank < 2))
+	if ($editmsg['a_user_id'] != $player->id && $player->gm_rank < 2)
 	{
 	echo "Voc no pode editar esta mensagem! <a href=\"main_forum.php\">Voltar</a>.";
-	include("templates/private_footer.php");
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 	}
-	else
-	{
-		$texto = $editmsg['a_answer'];
-		$quebras = Array( '<br />', '<br>', '<br/>' );
-		$editandomensagem = str_replace($quebras, "", $texto);
-	}
+ $texto = $editmsg['a_answer'];
+ $quebras = Array( '<br />', '<br>', '<br/>' );
+ $editandomensagem = str_replace($quebras, "", $texto);
+ 
 if(isset($_POST['submit']))
 {
 
 if (!$_POST['detail'])
 {
-	echo "Voc precisa preencher todos os campos! <a href=\"edit_answer.php?topic=" . $_GET['topic'] . "&a=" . $_GET['a'] . "\">Voltar</a>.";
-	include("templates/private_footer.php");
+	echo "Voc precisa preencher todos os campos! <a href=\"edit_answer.php?topic=" . $_GET['topic'] . "&a=" . $_GET['a'] . '">Voltar</a>.';
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
+
 $novaresposto=strip_tags($_POST['detail'], '');
 	$quebras = Array( '<br />', '<br>', '<br/>' );
 	$newresposta = str_replace($quebras, "\n", $novaresposto);
 $texto=nl2br($newresposta);
 
 $real = $db->execute("update `forum_answer` set `a_answer`=? where `question_id`=? and `id`=? ", array($texto, $_GET['topic'], $_GET['a']));
-	echo "Postagem editada com sucesso! <a href=\"view_topic.php?id=" . $_GET['topic'] . "\">Voltar</a>.";
-	include("templates/private_footer.php");
+	echo 'Postagem editada com sucesso! <a href="view_topic.php?id=' . $_GET['topic'] . '">Voltar</a>.';
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
 
@@ -79,5 +81,5 @@ $real = $db->execute("update `forum_answer` set `a_answer`=? where `question_id`
 </tr>
 </table>
 <?php
-include("templates/private_footer.php");
+include(__DIR__ . "/templates/private_footer.php");
 ?>

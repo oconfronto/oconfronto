@@ -1,9 +1,14 @@
 <?php
+declare(strict_types=1);
+
 session_start();
 
-if ($_GET['action'] == "chatheartbeat") { chatHeartbeat(); } 
-if ($_GET['action'] == "sendchat") { sendChat(); } 
-if ($_GET['action'] == "closechat") { closeChat(); } 
+if ($_GET['action'] == "chatheartbeat") { chatHeartbeat(); }
+ 
+if ($_GET['action'] == "sendchat") { sendChat(); }
+ 
+if ($_GET['action'] == "closechat") { closeChat(); }
+ 
 if ($_GET['action'] == "startchatsession") { startChatSession(); } 
 
 if (!isset($_SESSION['chatHistory'])) {
@@ -16,7 +21,7 @@ if (!isset($_SESSION['openChatBoxes'])) {
 
 function chatHeartbeat() {
 
-	include("lib.php");
+	include(__DIR__ . "/lib.php");
 	$player = check_user($secret_key, $db);
 	
 	$sql = "select * from chat where (chat.to = '" . str_replace(" ","_",$player->username) . "' AND recd = 0) order by id ASC";
@@ -83,7 +88,7 @@ EOD;
 				$items .= <<<EOD
 {
 "s": "2",
-"f": "$chatbox",
+"f": "{$chatbox}",
 "m": "{$message}"
 },
 EOD;
@@ -95,7 +100,7 @@ EOD;
 	$_SESSION['chatHistory'][$chatbox] .= <<<EOD
 		{
 "s": "2",
-"f": "$chatbox",
+"f": "{$chatbox}",
 "m": "{$message}"
 },
 EOD;
@@ -108,9 +113,10 @@ EOD;
 	$sql = "update chat set recd = 1 where chat.to = '" . str_replace(" ","_",$player->username) . "' and recd = 0";
 	$query = mysql_query($sql);
 
-	if ($items != '') {
+	if ($items !== '') {
 		$items = substr($items, 0, -1);
 	}
+ 
 header('Content-type: application/json');
 ?>
 {
@@ -125,13 +131,10 @@ header('Content-type: application/json');
 
 function chatBoxSession($chatbox) {
 	
-	$items = '';
-	
 	if (isset($_SESSION['chatHistory'][$chatbox])) {
-		$items = $_SESSION['chatHistory'][$chatbox];
-	}
-
-	return $items;
+     return $_SESSION['chatHistory'][$chatbox];
+ }
+ return '';
 }
 
 function startChatSession() {
@@ -143,12 +146,12 @@ function startChatSession() {
 	}
 
 
-	if ($items != '') {
+	if ($items !== '') {
 		$items = substr($items, 0, -1);
 	}
 
 header('Content-type: application/json');
-    include("lib.php");
+    include(__DIR__ . "/lib.php");
 	$player = check_user($secret_key, $db);
 ?>
 {
@@ -166,7 +169,7 @@ header('Content-type: application/json');
 }
 
 function sendChat() {
-	include("lib.php");
+	include(__DIR__ . "/lib.php");
 	$player = check_user($secret_key, $db);
 	$from = str_replace(" ","_",$player->username);
 	$to = str_replace(" ","_",$_POST['to']);
@@ -209,6 +212,5 @@ function sanitize($text) {
 	$text = htmlspecialchars($text, ENT_QUOTES);
 	$text = str_replace("\n\r","\n",$text);
 	$text = str_replace("\r\n","\n",$text);
-	$text = str_replace("\n","<br>",$text);
-	return $text;
+	return str_replace("\n","<br>",$text);
 }

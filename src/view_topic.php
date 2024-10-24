@@ -1,45 +1,40 @@
 <?php
-include("lib.php");
-include('bbcode.php');
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
+include(__DIR__ . '/bbcode.php');
 define("PAGENAME", "Frum");
 $player = check_user($secret_key, $db);
-include("checkforum.php");
+include(__DIR__ . "/checkforum.php");
 
 if (!$_GET['id'])
 {
 	header("Location: select_forum.php");
 	exit;
-}else{
-
-include("templates/private_header.php");
-
+}
+include(__DIR__ . "/templates/private_header.php");
 foreach($_GET as $key => $value) {
 	$data[$key] = filtro($value);
 }
-
+$id = $data['id'];
+$foruminfo = $db->execute("select * from `forum_question` where `id`=?", array($data['id']));
+if ($foruminfo->recordcount() != 1){
+		echo "Este tpico no existe. <a href=\"select_forum.php\">Voltar</a>.";
+		include(__DIR__ . "/templates/private_footer.php");
+		exit;
+	}
+$rows = $foruminfo->fetchrow();
 $id = $data['id'];
 
-
-	$foruminfo = $db->execute("select * from `forum_question` where `id`=?", array($data['id']));
-	if ($foruminfo->recordcount() != 1){
-		echo "Este tpico no existe. <a href=\"select_forum.php\">Voltar</a>.";
-		include("templates/private_footer.php");
-		exit;
-	}else{
-		$rows = $foruminfo->fetchrow();
-		$id = $data['id'];
-	}
-}
-
-if ((($rows['category'] == 'gangues') or ($rows['category'] == 'trade')) and ($player->serv != $rows['serv'])){
+if (($rows['category'] == 'gangues' || $rows['category'] == 'trade') && $player->serv != $rows['serv']){
 		echo "<fieldset><legend><b>Erro</b></legend>Voc no pode visualizar este tpico.<BR>";
 		echo "<a href='select_forum.php'>Voltar</a></fieldset>";
-            include("templates/private_footer.php");
+            include(__DIR__ . "/templates/private_footer.php");
             exit;
 }
 
  
-if (($_GET['up']) or ($_GET['down']))
+if ($_GET['up'] || $_GET['down'])
 {
 	$jaupou = $db->execute("select * from `thumb` where `topic_id`=? and `player_id`=?", array($data['id'], $player->id));
 	if ($jaupou->recordcount() > 0){
@@ -74,7 +69,7 @@ if ($_POST['a_answer']) {
 	} elseif ($foruminfo->recordcount() != 1) {
 		echo showAlert("Este tpico no existe.", "red");
 
-	} elseif ((($categoryae == 'gangues') or ($categoryae == 'trade')) and ($player->serv != $servae)){
+	} elseif (($categoryae == 'gangues' || $categoryae == 'trade') && $player->serv != $servae){
 		echo showAlert("Voc no pode postar aqui.", "red");
 	
 	} elseif ($lastpost->recordcount() != 0) {
@@ -122,7 +117,7 @@ $categoria = "Off-Topic";
 $categoria = $rows['category'];
 }
 
-echo "<b><font size=\"1px\"><a href=\"select_forum.php\">Fruns</a> -> <a href=\"main_forum.php?cat=" . $rows['category'] . "\">" . ucfirst($categoria) . "</a> -> <a href=\"view_topic.php?id=" . $rows['id'] . "\">" . ucfirst(stripslashes($rows['topic'])) . "</a></font></b>";
+echo "<b><font size=\"1px\"><a href=\"select_forum.php\">Fruns</a> -> <a href=\"main_forum.php?cat=" . $rows['category'] . '">' . ucfirst($categoria) . '</a> -> <a href="view_topic.php?id=' . $rows['id'] . '">' . ucfirst(stripslashes($rows['topic'])) . "</a></font></b>";
 
 $query = $db->execute("select `id`, `username`, `avatar`, `posts`, `ban`, `alerts`, `gm_rank`, `serv` from `players` where `id`=?", array($rows['user_id']));
 $topicouser = $query->fetchrow();
@@ -134,33 +129,34 @@ $topicouser = $query->fetchrow();
     <td width="120px" bgcolor="#E1CBA4"><center><img src="static/<? echo $topicouser['avatar']; ?>" width="100px" height="100px" border="0"></center>
 	<?php
 	if($topicouser['gm_rank'] == 2){
-		echo "<center><img src=\"static/images/designer.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
-	} elseif (($topicouser['gm_rank'] > 2) and ($topicouser['gm_rank'] < 10)){
-		echo "<center><img src=\"static/images/mod.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
+		echo '<center><img src="static/images/designer.png" width="100px" height="21px" border="0"></center>';
+	} elseif ($topicouser['gm_rank'] > 2 && $topicouser['gm_rank'] < 10){
+		echo '<center><img src="static/images/mod.png" width="100px" height="21px" border="0"></center>';
 	} elseif ($topicouser['gm_rank'] > 9){
-		echo "<center><img src=\"static/images/admin.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
-	} elseif (($topicouser['alerts'] == 'forever') or ($topicouser['alerts'] > 99)){
-		echo "<center><img src=\"static/images/banido.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
+		echo '<center><img src="static/images/admin.png" width="100px" height="21px" border="0"></center>';
+	} elseif ($topicouser['alerts'] == 'forever' || $topicouser['alerts'] > 99){
+		echo '<center><img src="static/images/banido.png" width="100px" height="21px" border="0"></center>';
 	} else {
-		echo "<center><img src=\"static/images/membro.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
+		echo '<center><img src="static/images/membro.png" width="100px" height="21px" border="0"></center>';
 	}
 	?>
 <center><font size="1px"><b><?php echo showName($topicouser['id'], $db); ?></b><br/><b>Posts:</b> <?php echo $topicouser['posts']; ?>
 <br/><?php
-if (($topicouser['alerts'] != 0) and ($topicouser['alerts'] < 100) and ($topicouser['ban'] < time())) {
+if ($topicouser['alerts'] != 0 && $topicouser['alerts'] < 100 && $topicouser['ban'] < time()) {
 echo "<b>Alerta:</b> " . $topicouser['alerts'] . "%</br>";
 }elseif ($topicouser['ban'] > time()){
 echo "Banido</br>";
-}else if (($topicouser['alerts'] == 'forever') or ($topicouser['alerts'] > 99)){
-echo "Banido do Frum</br>";
+} elseif ($topicouser['alerts'] == 'forever' || $topicouser['alerts'] > 99) {
+    echo "Banido do Frum</br>";
 }
+ 
 if ($player->gm_rank > 2) 
 {
 if ($player->gm_rank > 10) 
 {
-echo "<br/><a href=\"forum_ban.php?player=" . $topicouser['id'] . "\">Banir</a><br/><a href=\"delete_all.php?player=" . $topicouser['id'] . "\">Apagar todos Posts</a><br/>";
+echo '<br/><a href="forum_ban.php?player=' . $topicouser['id'] . '">Banir</a><br/><a href="delete_all.php?player=' . $topicouser['id'] . '">Apagar todos Posts</a><br/>';
 }else{
-echo "<br/><a href=\"forum_ban.php?player=" . $topicouser['id'] . "\">Banir</a><br/>";
+echo '<br/><a href="forum_ban.php?player=' . $topicouser['id'] . '">Banir</a><br/>';
 }
 }
 
@@ -177,13 +173,13 @@ echo "<br/><a href=\"forum_ban.php?player=" . $topicouser['id'] . "\">Banir</a><
 
 <div class=\"scroll\" style="width : 100%; overflow : auto; ">
 <?php
-if (($player->username == $topicouser['username']) and ($player->gm_rank < 3))
+if ($player->username == $topicouser['username'] && $player->gm_rank < 3)
 {
-echo "&nbsp;&nbsp;&nbsp;<font size=\"1px\"><a href=\"edit_topic.php?topic=" . $rows['id'] . "\">Editar</a> | <a href=\"move_topic.php?topic=" . $rows['id'] . "\">Mover</a> | <a href=\"delete_topic.php?topic=" . $rows['id'] . "\">Deletar</a></font><br/>";
+echo '&nbsp;&nbsp;&nbsp;<font size="1px"><a href="edit_topic.php?topic=' . $rows['id'] . '">Editar</a> | <a href="move_topic.php?topic=' . $rows['id'] . '">Mover</a> | <a href="delete_topic.php?topic=' . $rows['id'] . '">Deletar</a></font><br/>';
 }
 elseif ($player->gm_rank > 2) 
 {
-echo "&nbsp;&nbsp;&nbsp;<font size=\"1px\"><a href=\"edit_topic.php?topic=" . $rows['id'] . "\">Editar</a> | <a href=\"forum_alert.php?topic=" . $rows['id'] . "\">Alertar</a> | <a href=\"move_topic.php?topic=" . $rows['id'] . "\">Mover</a> | <a href=\"delete_topic.php?topic=" . $rows['id'] . "\">Deletar</a></font><br/>";
+echo '&nbsp;&nbsp;&nbsp;<font size="1px"><a href="edit_topic.php?topic=' . $rows['id'] . '">Editar</a> | <a href="forum_alert.php?topic=' . $rows['id'] . '">Alertar</a> | <a href="move_topic.php?topic=' . $rows['id'] . '">Mover</a> | <a href="delete_topic.php?topic=' . $rows['id'] . '">Deletar</a></font><br/>';
 }
 
     $topiko = stripslashes($rows['detail']);
@@ -196,7 +192,7 @@ echo "&nbsp;&nbsp;&nbsp;<font size=\"1px\"><a href=\"edit_topic.php?topic=" . $r
 	$alertado = $db->execute("select `msg` from `log_forum` where `type`=1 and `post`=? order by `time` desc limit 1", array($rows['id']));
 	if ($alertado->recordcount() > 0) {
 		$alert = $alertado->fetchrow();
-		echo showAlert("<font size=\"1px\">" . $alert['msg'] . "</font>", "red");
+		echo showAlert('<font size="1px">' . $alert['msg'] . "</font>", "red");
 	}
 ?>
 
@@ -212,29 +208,25 @@ $porcentoup = 0;
 $porcentodown = 0;
 }
 
-echo "<b><font size=\"1px\">De sua nota: <a href=\"view_topic.php?id=" . $data['id'] . "&up=true\"><img src=\"static/images/thumb_up.png\" border=\"0\"></a>" . $porcentoup . "%&nbsp;&nbsp;&nbsp;<a href=\"view_topic.php?id=" . $data['id'] . "&down=true\"><img src=\"static/images/thumb_down.png\" border=\"0\"></a>" . $porcentodown . "%</b> (" . $total . " Votos)</font>";
+echo '<b><font size="1px">De sua nota: <a href="view_topic.php?id=' . $data['id'] . '&up=true"><img src="static/images/thumb_up.png" border="0"></a>' . $porcentoup . '%&nbsp;&nbsp;&nbsp;<a href="view_topic.php?id=' . $data['id'] . '&down=true"><img src="static/images/thumb_down.png" border="0"></a>' . $porcentodown . "%</b> (" . $total . " Votos)</font>";
 }
 
 echo "<br/><br/>";
 
-include("pagination.class.php");
+include(__DIR__ . "/pagination.class.php");
 
 $items = 5;
 
-if ((isset($data['page'])) and (is_numeric($data['page']))) {
+if (isset($data['page']) && is_numeric($data['page'])) {
 	$page = $data['page'];
 } elseif (!$page) {
 	$page = 1;
 }
 
-if ((isset($page)) and (is_numeric($page))) {
-         $limit = "limit ".(($page-1)*$items).",$items";
-} else {
-         $limit = "limit $items";
-}
+$limit = isset($page) && is_numeric($page) ? "limit ".(($page-1)*$items).(',' . $items) : 'limit ' . $items;
 
-$sqlStr = "SELECT * FROM forum_answer WHERE question_id=$id order by a_datetime asc $limit";
-$sqlStrAux = "SELECT count(*) as total FROM forum_answer WHERE question_id=$id order by a_datetime asc";
+$sqlStr = sprintf('SELECT * FROM forum_answer WHERE question_id=%s order by a_datetime asc %s', $id, $limit);
+$sqlStrAux = sprintf('SELECT count(*) as total FROM forum_answer WHERE question_id=%s order by a_datetime asc', $id);
 
 $aux = Mysql_Fetch_Assoc(mysql_query($sqlStrAux));
 $query = $db->execute($sqlStr);
@@ -252,51 +244,51 @@ if ($aux['total'] > 0) {
 		$info = $db->execute("select `id`, `username`, `avatar`, `posts`, `ban`, `alerts`, `gm_rank`, `serv` from `players` where `id`=?", array($rows['a_user_id']));
 		$user = $info->fetchrow();
 
-		echo "<table width=\"100%\" bgcolor=\"#f2e1ce\">";
+		echo '<table width="100%" bgcolor="#f2e1ce">';
 		echo "<tr>";
-		echo "<td width=\"120px\" bgcolor=\"#E1CBA4\"><center><img src=\"static/" . $user['avatar'] . "\" width=\"100px\" height=\"100px\" border=\"0\"></center>";
+		echo '<td width="120px" bgcolor="#E1CBA4"><center><img src="static/' . $user['avatar'] . '" width="100px" height="100px" border="0"></center>';
 
 			if ($user['gm_rank'] == 2) {
-				echo "<center><img src=\"static/images/designer.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
-			} elseif (($user['gm_rank'] > 2) and ($user['gm_rank'] < 10)){
-				echo "<center><img src=\"static/images/mod.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
+				echo '<center><img src="static/images/designer.png" width="100px" height="21px" border="0"></center>';
+			} elseif ($user['gm_rank'] > 2 && $user['gm_rank'] < 10){
+				echo '<center><img src="static/images/mod.png" width="100px" height="21px" border="0"></center>';
 			} elseif ($user['gm_rank'] > 9){
-				echo "<center><img src=\"static/images/admin.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
-			} elseif (($user['alerts'] == 'forever') or ($user['alerts'] > 99)){
-				echo "<center><img src=\"static/images/banido.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
+				echo '<center><img src="static/images/admin.png" width="100px" height="21px" border="0"></center>';
+			} elseif ($user['alerts'] == 'forever' || $user['alerts'] > 99){
+				echo '<center><img src="static/images/banido.png" width="100px" height="21px" border="0"></center>';
 			} else {
-				echo "<center><img src=\"static/images/membro.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
+				echo '<center><img src="static/images/membro.png" width="100px" height="21px" border="0"></center>';
 			}
 
 
-		echo "<center><font size=\"1px\"><b>" . showName($user['id'], $db) . "</b><br/><b>Posts:</b> " . $user['posts'] . "";
+		echo '<center><font size="1px"><b>' . showName($user['id'], $db) . "</b><br/><b>Posts:</b> " . $user['posts'] . "";
 		echo "<br/>";
 
 
-			if (($user['alerts'] != 0) and ($user['alerts'] < 100) and ($user['ban'] < time())) {
+			if ($user['alerts'] != 0 && $user['alerts'] < 100 && $user['ban'] < time()) {
 				echo "<b>Alerta:</b> " . $user['alerts'] . "%</br>";
 			}elseif ($user['ban'] > time()){
 				echo "Banido</br>";
-			}else if (($user['alerts'] == 'forever') or ($user['alerts'] > 99)){
-				echo "Banido do Frum</br>";
-			}
+			} elseif ($user['alerts'] == 'forever' || $user['alerts'] > 99) {
+       echo "Banido do Frum</br>";
+   }
 
 			if ($player->gm_rank > 2) {
 				if ($player->gm_rank > 10) {
-					echo "<br/><a href=\"forum_ban.php?player=" . $user['id'] . "\">Banir</a><br/><a href=\"delete_all.php?player=" . $user['id'] . "\">Apagar todos Posts</a><br/>";
+					echo '<br/><a href="forum_ban.php?player=' . $user['id'] . '">Banir</a><br/><a href="delete_all.php?player=' . $user['id'] . '">Apagar todos Posts</a><br/>';
 				}else{
-					echo "<br/><a href=\"forum_ban.php?player=" . $user['id'] . "\">Banir</a><br/>";
+					echo '<br/><a href="forum_ban.php?player=' . $user['id'] . '">Banir</a><br/>';
 				}
 			}
 
 		echo "</font></center></td>";
-    		echo "<td bgcolor=\"#f2e1ce\">";
+    		echo '<td bgcolor="#f2e1ce">';
 
 
 			if ($player->username == $user['username']) {
-				echo "<font size=\"1px\"><a href=\"edit_answer.php?topic=" . $rows['question_id'] . "&a=" . $rows['id'] . "\">Editar</a> | <a href=\"delete_answer.php?topic=" . $rows['question_id'] . "&a=" . $rows['id'] . "\">Deletar</a></font><br/>";
+				echo '<font size="1px"><a href="edit_answer.php?topic=' . $rows['question_id'] . "&a=" . $rows['id'] . '">Editar</a> | <a href="delete_answer.php?topic=' . $rows['question_id'] . "&a=" . $rows['id'] . '">Deletar</a></font><br/>';
 			} elseif ($player->gm_rank > 2) {
-				echo "<font size=\"1px\"><a href=\"edit_answer.php?topic=" . $rows['question_id'] . "&a=" . $rows['id'] . "\">Editar</a> | <a href=\"forum_alert.php?answer=" . $rows['id'] . "\">Alertar</a> | <a href=\"delete_answer.php?topic=" . $rows['question_id'] . "&a=" . $rows['id'] . "\">Deletar</a></font><br/>";
+				echo '<font size="1px"><a href="edit_answer.php?topic=' . $rows['question_id'] . "&a=" . $rows['id'] . '">Editar</a> | <a href="forum_alert.php?answer=' . $rows['id'] . '">Alertar</a> | <a href="delete_answer.php?topic=' . $rows['question_id'] . "&a=" . $rows['id'] . '">Deletar</a></font><br/>';
 			}
 
 		$resposta = stripslashes($rows['a_answer']);
@@ -309,8 +301,9 @@ if ($aux['total'] > 0) {
 			$alertado = $db->execute("select `msg` from `log_forum` where `type`=2 and `post`=? order by `time` desc limit 1", array($rows['id']));
 			if ($alertado->recordcount() > 0) {
 				$alert = $alertado->fetchrow();
-				echo showAlert("<font size=\"1px\">" . $alert['msg'] . "</font>", "red");
+				echo showAlert('<font size="1px">' . $alert['msg'] . "</font>", "red");
 			}
+   
 		echo "<br/>";
 	}
 
@@ -347,5 +340,6 @@ if ($fecxhado['closed'] != 't'){
 }else{
 echo "<br/><center><b>Tpico fechado.</b></center>";
 }
-include("templates/private_footer.php");
+
+include(__DIR__ . "/templates/private_footer.php");
 ?>

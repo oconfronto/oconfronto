@@ -1,10 +1,12 @@
 <?php
 
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Administração do Clã");
 $player = check_user($secret_key, $db);
-include("checkbattle.php");
-include("checkguild.php");
+include(__DIR__ . "/checkbattle.php");
+include(__DIR__ . "/checkguild.php");
 
 $error = 0;
 $username = ($_POST['username']);
@@ -17,17 +19,19 @@ if ($guildquery->recordcount() == 0) {
     $guild = $guildquery->fetchrow();
 }
 
-include("templates/private_header.php");
+include(__DIR__ . "/templates/private_header.php");
+//Guild Leader Admin check
+if ($player->username != $guild['leader'] && $player->username != $guild['vice']) {
+    echo "Você não pode acessar esta página. <a href=\"home.php\">Voltar</a>.";
+    include(__DIR__ . "/templates/private_footer.php");
+    exit;
+}
 
 //Guild Leader Admin check
-if (($player->username != $guild['leader']) and ($player->username != $guild['vice'])){
-	echo "Você não pode acessar esta página. <a href=\"home.php\">Voltar</a>.";
-	include("templates/private_footer.php");
-	exit;
-}elseif ($guild['msgs'] > 3){
-	echo "Seu clã já enviou mensagens demais hoje.<br>Máximo de 3 mensagens por dia. <a href=\"home.php\">Voltar</a>.";
-	include("templates/private_footer.php");
-	exit;
+if ($guild['msgs'] > 3) {
+    echo "Seu clã já enviou mensagens demais hoje.<br>Máximo de 3 mensagens por dia. <a href=\"home.php\">Voltar</a>.";
+    include(__DIR__ . "/templates/private_footer.php");
+    exit;
 }
 
 if ($_POST['submit']) {
@@ -35,10 +39,12 @@ if ($_POST['submit']) {
     		$errmsg .= "<font color=red>Você precisa adicionar um titulo para sua mensagem.</font>";
     		$error = 1;
 	}
+ 
 	if (!$_POST['body']) {
     		$errmsg .= "<font color=red>Você precisa escrever uma mensagem.</font>";
     		$error = 1;
 	}
+ 
 	if (strlen($_POST['body']) > 5000) {
     		$errmsg .= "<font color=red>Sua mensagem deve ter menos que 5000 caracteres.</font>";
     		$error = 1;
@@ -52,6 +58,7 @@ if ($_POST['submit']) {
   					while($member = $database->fetchrow()) {
 					$query = $db->execute("insert into `mail` (`to`, `from`, `body`, `subject`, `time`) values (?, ?, ?, ?, ?)", array($member['id'], $player->id, $mensagem, $_POST['subject'], time()));
 					}
+       
 			$query = $db->execute("update `guilds` set `msgs`=? where `id`=?", array($guild['msgs'] + 1, $player->guild));
 			$errmsg .= "Mensagem enviada com sucesso.";
 			}
@@ -75,5 +82,5 @@ if ($_POST['submit']) {
 <a href="guild_admin.php">Voltar</a>.
 
 <?php
-include("templates/private_footer.php");
+include(__DIR__ . "/templates/private_footer.php");
 ?>

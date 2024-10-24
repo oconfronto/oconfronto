@@ -1,29 +1,31 @@
 <?php
 
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Fórum");
 $player = check_user($secret_key, $db);
 
 
-include("templates/private_header.php");
+include(__DIR__ . "/templates/private_header.php");
+if (!$_GET['player']) {
+    echo "Nenhum usuário foi selecionado! <a href=\"select_forum.php\">Voltar</a>.";
+    include(__DIR__ . "/templates/private_footer.php");
+    exit;
+}
 
 
-if (!$_GET['player'])
-{
-	echo "Nenhum usuário foi selecionado! <a href=\"select_forum.php\">Voltar</a>.";
-	include("templates/private_footer.php");
-	exit;
-}elseif ($player->gm_rank < 50)
-	{
-	echo "Só o administrador pode acessar esta página! <a href=\"select_forum.php\">Voltar</a>.";
-	include("templates/private_footer.php");
-	exit;
-}else{
+if ($player->gm_rank < 50) {
+    echo "Só o administrador pode acessar esta página! <a href=\"select_forum.php\">Voltar</a>.";
+    include(__DIR__ . "/templates/private_footer.php");
+    exit;
+}
+else{
 
 $user = $db->execute("select `username`, `gm_rank` from `players` where `id`=?", array($_GET['player']));
 if ($user->recordcount() == 0) {
 	echo "Este usuário não existe! <a href=\"select_forum.php\">Voltar</a>.";
-	include("templates/private_footer.php");
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
 
@@ -51,17 +53,18 @@ if(isset($_POST['deleteall']))
         $real = $db->execute("delete from `forum_answer` where `a_user_id`=?", array($_GET['player']));
 	$query = $db->execute("update `players` set `posts`=0 where `id`=?", array($_GET['player']));
 
-	echo "Todas as postagens de " . $user2['username'] . " foram deletadas! <a href=\"select_forum.php\">Voltar</a>.";
-	include("templates/private_footer.php");
+	echo "Todas as postagens de " . $user2['username'] . ' foram deletadas! <a href="select_forum.php">Voltar</a>.';
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
 
 
-	echo "<form method=\"POST\" action=\"delete_all.php?player=" . $_GET['player'] . "\">";
+	echo '<form method="POST" action="delete_all.php?player=' . $_GET['player'] . '">';
 	echo "<b>Tem certeza que deseja apagar todas as mensagens de " . $user2['username'] . "? Essa é uma ação irreversivel!</b><br/>";
-	echo "<input type=\"submit\" name=\"deleteall\" value=\"Deletar todas as mensagens de " . $user2['username'] . "\"></form>";
+	echo '<input type="submit" name="deleteall" value="Deletar todas as mensagens de ' . $user2['username'] . '"></form>';
 
 
 }
-include("templates/private_footer.php");
+
+include(__DIR__ . "/templates/private_footer.php");
 ?>

@@ -1,5 +1,7 @@
 <?php
-	include("lib.php");
+	declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 	$player = check_user($secret_key, $db);
 ?>
 <html>
@@ -65,7 +67,7 @@ a:visited {
 		}
 
 		$log = $query->fetchrow();
-		echo "<br/><center><div id=\"logdebatalha\" align=\"left\" class=\"scroll\" style=\"background-color:#FFFDE0; overflow: auto; width:95%; height:270px; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
+		echo '<br/><center><div id="logdebatalha" align="left" class="scroll" style="background-color:#FFFDE0; overflow: auto; width:95%; height:270px; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo $log['log'];
 		echo "</div></center>";
 		echo "</body>";

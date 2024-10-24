@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 $fiun = $db->execute("select * from `cron`");
 
 if(!$fiun){
@@ -23,8 +25,8 @@ if($diff >= 60)
 	$addhp = (70 * $timedif);
 	$addenergy = (20 * $timedif);
 	$addmana = (70 * $timedif);
-	$sql = "update `players` set hp = IF((hp + $addhp)>maxhp, maxhp, (hp + $addhp)), mana = IF((mana + $addmana)>maxmana, maxmana, (mana + $addmana)) where hp > 0";
-	$sql2 = "update `players` set energy = IF((energy + $addenergy)>maxenergy, maxenergy, (energy + $addenergy))";
+	$sql = sprintf('update `players` set hp = IF((hp + %s)>maxhp, maxhp, (hp + %s)), mana = IF((mana + %s)>maxmana, maxmana, (mana + %s)) where hp > 0', $addhp, $addhp, $addmana, $addmana);
+	$sql2 = sprintf('update `players` set energy = IF((energy + %s)>maxenergy, maxenergy, (energy + %s))', $addenergy, $addenergy);
 	$result=mysql_query($sql);
 	$result=mysql_query($sql2);
 	}
@@ -47,24 +49,20 @@ if($diff >= $cron['interest_time'])
 		$db->execute("update `players` set `last_level`=`level` where `username`=?", array($flog['username']));
 
 		$upo = ceil($flog['level'] - $flog['last_level']);
-		if ($upo == 1){
-
-      $plural = "nível";
-		}else{
-		$plural = "níveis";
-		}
+		$plural = $upo == 1 ? "nível" : "níveis";
 
 		$insert['fname'] = $flog['username'];
-		$insert['log'] = "Seu(a) amigo(a) <a href=\"profile.php?id=" . $flog['username'] . "\">" . $flog['username'] . "</a> avançou " . $upo . " " . $plural . " nas últimas 24 horas.";
+		$insert['log'] = 'Seu(a) amigo(a) <a href="profile.php?id=' . $flog['username'] . '">' . $flog['username'] . "</a> avançou " . $upo . " " . $plural . " nas últimas 24 horas.";
 		$insert['time'] = time();
 		$query = $db->autoexecute('log_friends', $insert, 'INSERT');
 	}
+ 
 	$db->execute("update `players` set `last_level`=`level`");
 	$db->execute("update `settings` set `value`=0 where `name`='wanteds'");
 }
 
 $diff = ($now - $cron['tuesday_next']);
-if(($diff >= 0) and ($setting->lottery_1 == 'f'))
+if($diff >= 0 && $setting->lottery_1 == 'f')
 {
 	$next = strtotime("next Tuesday");
 	$db->execute("update `cron` set `value`=? where `name`=?", array($next, "tuesday_next"));
@@ -197,8 +195,8 @@ while($newhunt = $updategeralhunt->fetchrow())
 		$usedexp = maxExp($autoplevel) - $autopexp;
       		$autopexp = 0;
 
-		$expdomonstro = $expdomonstro - $usedexp;
-		$autoplevel = $autoplevel + 1;
+		$expdomonstro -= $usedexp;
+		$autoplevel += 1;
         }
 
 	$db->execute("update `players` set `exp`=`exp`+? where `id`=?", array($expdomonstro, $newhunt['player_id']));

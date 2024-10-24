@@ -1,5 +1,7 @@
 <?php
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 
     $error = 0;
     if ($_POST['login'])
@@ -20,10 +22,7 @@ include("lib.php");
         {
             $errormsg = "Você errou sua senha 10 vezes seguidas. Aguarde 30 minutos para poder tentar novamente.";
             $error = 1;
-        }
-        
-        else if ($error == 0)
-        {
+        } elseif ($error === 0) {
             $query = $db->execute("select * from `accounts` where `conta`=? and `password`=?", array($_POST['username'], encodePassword($_POST['password'])));
             if ($query->recordcount() == 1) {
                 $account = $query->fetchrow();
@@ -33,32 +32,26 @@ include("lib.php");
                 header("Location: characters.php");
                 exit;
             }
-            else
-            {
-                $restantes = ceil(10 - $tentativas);
-                $errormsg = "Conta ou senha incorreta! (" . $restantes . " tentativas restantes).";
-                
-                $bloqueiaip = $db->execute("select `tries` from `login_tries` where `ip`=?", array($ip));
-                if ($bloqueiaip->recordcount() == 0) {
-                    $insert['ip'] = $ip;
-                    $insert['tries'] = 1;
-                    $insert['time'] = time();
-                    $query = $db->autoexecute('login_tries', $insert, 'INSERT');
-                }elseif ($bloqueiaip->recordcount() > 0) {
-                    $query = $db->execute("update `ip` set `login_tries`=`tries`+1 where `ip`=?", array($ip));
-                }
-                
-                $error = 1;
-                
-                //Clear user's session data
-                session_unset();
-                session_destroy();
+            $restantes = ceil(10 - $tentativas);
+            $errormsg = "Conta ou senha incorreta! (" . $restantes . " tentativas restantes).";
+            $bloqueiaip = $db->execute("select `tries` from `login_tries` where `ip`=?", array($ip));
+            if ($bloqueiaip->recordcount() == 0) {
+                $insert['ip'] = $ip;
+                $insert['tries'] = 1;
+                $insert['time'] = time();
+                $query = $db->autoexecute('login_tries', $insert, 'INSERT');
+            }elseif ($bloqueiaip->recordcount() > 0) {
+                $query = $db->execute("update `ip` set `login_tries`=`tries`+1 where `ip`=?", array($ip));
             }
+            $error = 1;
+            //Clear user's session data
+            session_unset();
+            session_destroy();
         }
         
     }
     
-    include("templates/header.php");
+    include(__DIR__ . "/templates/header.php");
     ?>
 
 <span id="aviso-a">

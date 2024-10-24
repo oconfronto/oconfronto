@@ -1,10 +1,12 @@
 <?php
+declare(strict_types=1);
+
 session_start();
 
 if ($_GET['header']) {
 	header('Content-type: text/html; charset=utf-8');
-	include("config.php");
-	include("functions.php");
+	include(__DIR__ . "/config.php");
+	include(__DIR__ . "/functions.php");
 }
 
 $ipp = $_SERVER['REMOTE_ADDR'];
@@ -33,7 +35,7 @@ if ($_SESSION['Login']['player_id'] > 0) {
 
 	$mailcount = $db->execute("select `id` from `mail` where `to`=? and `status`='unread'", array($player->id));
 	if ($mailcount->recordcount() > 0) {
-		echo showAlert("Voc&ecirc; tem " . $mailcount->recordcount() . " <a href=\"mail.php\">mensagem(s)</a> n&atilde;o lida(s)!");
+		echo showAlert("Voc&ecirc; tem " . $mailcount->recordcount() . ' <a href="mail.php">mensagem(s)</a> n&atilde;o lida(s)!');
 	}
 
 	$queryloginfriend = $db->execute("select `fname` from `friends` where `uid`=?", array($player->acc_id));
@@ -76,14 +78,14 @@ if ($_SESSION['Login']['player_id'] > 0) {
 	$progressExp = is_numeric($progressExp) && $progressExp > 0 && $progressExp <= 100 ? round($progressExp) : 0;
 
 
-	echo "<script language=\"javascript\">";
+	echo '<script language="javascript">';
 	echo "$('#bar-hp').animate({width: '" . ceil(($player->hp * 100) / $player->maxhp) . "%'}).html('<span>" . $player->hp . " / " . $player->maxhp . "</span>');";
 	echo "$('#bar-mp').animate({width: '" . ceil(($player->mana * 100) / $player->maxmana) . "%'}).html('<span>" . $player->mana . " / " . $player->maxmana . "</span>');";
 	echo "$('#bar-en').animate({width: '" . ceil(($player->energy * 100) / $player->maxenergy) . "%'}).html('<span>" . $player->energy . " / " . $player->maxenergy . "</span>');";
 	echo "$('#player-gold').html('" . number_format($player->gold) . " moedas');";
 	echo "$('#expbar').animate({width: '" . $progressExp . "%'});";
 	echo "$('#expbarText').text('" . number_format($player->exp) . " / " . number_format(maxExp($player->level)) . " (" . number_format($progressExp) . "%)');";
-	echo "$('#vl_pontos').html('<div style=\"font-size:11px;text-align:center\" id=\"vl_pontos\"><b>Pontos de status: </b>$player->stat_points</div>');";
+	echo sprintf("\$('#vl_pontos').html('<div style=\"font-size:11px;text-align:center\" id=\"vl_pontos\"><b>Pontos de status: </b>%s</div>');", $player->stat_points);
 	echo "$('#vl_pontosMisticos').html('<font size=\"1px\"><b>Pontos místicos:</b> " . $player->magic_points . "</font>');";
 	echo "$('#player-gold').html('" . number_format($player->gold, 0, '', '.') . " moedas');";
 	echo "$('#nv_atual').html('<b>Nível:</b>" . $player->level . "');";

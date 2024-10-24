@@ -1,7 +1,9 @@
 <?php
-	include("lib.php");
+	declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 	define("PAGENAME", "Alterar Senha");
-	include("templates/acc-header.php");
+	include(__DIR__ . "/templates/acc-header.php");
 
 	$acc = check_acc($secret_key, $db);
 
@@ -13,22 +15,23 @@ if ($_POST['changepassword']) {
     if (!$_POST['password']) {
         $errmsg .= "Você precisa preencher todos os campos!";
         $error = 1;
-    } else if (!$_POST['password2']) {
+    } elseif (!$_POST['password2']) {
         $errmsg .= "Você precisa preencher todos os campos!";
         $error = 1;
-    } else if (!$_POST['oldpassword']) {
+    } elseif (!$_POST['oldpassword']) {
         $errmsg .= "Você precisa preencher todos os campos!";
         $error = 1;
-    } else if ($acc->password != encodePassword($_POST['oldpassword'])) {
-	$errmsg .= "Sua senha atual está incorreta!";
+    } elseif ($acc->password != encodePassword($_POST['oldpassword'])) {
+        $errmsg .= "Sua senha atual está incorreta!";
         $error = 1;
-    } else if ($_POST['password'] != $_POST['password2']) {
+    } elseif ($_POST['password'] != $_POST['password2']) {
         $errmsg .= "Você não digitou as duas senhas corretamente!";
         $error = 1;
-    } else if (strlen($_POST['password']) < 4) {
+    } elseif (strlen($_POST['password']) < 4) {
         $errmsg .= "Sua senha deve ter mais que 3 caracteres.";
         $error = 1;
     }
+    
     if ($error == 0) {
 		$insert['player_id'] = $acc->id;
 		$insert['msg'] = "Você alterou a senha de sua conta.";
@@ -43,10 +46,11 @@ if ($_POST['changepassword']) {
 
 
 
-echo "<span id=\"aviso-a\">";
+echo '<span id="aviso-a">';
 if ($errmsg != "") {
     echo $errmsg;
 }
+
 echo "</span>";
 
 if ($sucess1 == 0){
@@ -63,9 +67,9 @@ if ($sucess1 == 0){
 <p />
 <?php
 }else{
-echo "<br/><p><center><b>" . $msg . " <a href=\"characters.php\">Voltar</a>.</b></center></p><br/>";
+echo "<br/><p><center><b>" . $msg . ' <a href="characters.php">Voltar</a>.</b></center></p><br/>';
 }
 
-	include("templates/acc-footer.php");
+	include(__DIR__ . "/templates/acc-footer.php");
 
 ?>

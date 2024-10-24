@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*************************************/
 /*           ezRPG script            */
 /*         Written by Khashul        */
@@ -7,17 +9,17 @@
 /*    http://www.bbgamezone.com/     */
 /*************************************/
 
-include("lib.php");
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Bug List");
 $player = check_user($secret_key, $db);
 
-include("templates/private_header.php");
+include(__DIR__ . "/templates/private_header.php");
 
 
 if ($player->gm_rank < 2)
 {
 	echo "Você não tem permisão para acessar esta página!";
-	include("templates/private_footer.php");
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
 
@@ -48,9 +50,9 @@ if (isset($_GET['fixed'])) {
     $statusstr = "<font color=green>" . $buglist['status'] . "</font>";
 
     echo "<table>";
-    echo "<tr><td><b>Username: </b>$usernamestr</td></tr>";
-    echo "<tr><td><b>Bug Report: </b>$messagestr</td></tr>";
-    echo "<tr><td><b>Status: </b>$statusstr | <a href=\"bugslist.php?fixed=true&remove=" . $idstr . "\">Marcar como não resolvido</a></td></tr>";
+    echo sprintf('<tr><td><b>Username: </b>%s</td></tr>', $usernamestr);
+    echo sprintf('<tr><td><b>Bug Report: </b>%s</td></tr>', $messagestr);
+    echo sprintf('<tr><td><b>Status: </b>%s | <a href="bugslist.php?fixed=true&remove=', $statusstr) . $idstr . "\">Marcar como não resolvido</a></td></tr>";
     echo "</table><p />";
 	}
 }
@@ -67,21 +69,22 @@ if (isset($_GET['pending'])) {
     
 
     echo "<table>";
-    echo "<tr><td><b>Usuário: </b>$usernamestr | <a href=\"bugslist.php?pending=true&validate=" . $usernamestr . "\">Ativar conta de " . $usernamestr . "</a></td></tr>";
-    echo "<tr><td><b>Mensagem: </b>$messagestr</td></tr>";
+    echo sprintf('<tr><td><b>Usuário: </b>%s | <a href="bugslist.php?pending=true&validate=', $usernamestr) . $usernamestr . '">Ativar conta de ' . $usernamestr . "</a></td></tr>";
+    echo sprintf('<tr><td><b>Mensagem: </b>%s</td></tr>', $messagestr);
 			echo "<tr><td><form method=\"post\" action=\"mail.php?act=compose\">\n";
-			echo "<input type=\"hidden\" name=\"to\" value=\"" . $usernamestr . "\" />\n";
+			echo '<input type="hidden" name="to" value="' . $usernamestr . "\" />\n";
 			echo "<input type=\"hidden\" name=\"subject\" value=\"Resposta\"\" />\n";
 			$reply = explode("\n", $messagestr);
 			foreach($reply as $key=>$value)
 			{
 				$reply[$key] = ">>" . $value;
 			}
+   
 			$reply = implode("\n", $reply);
 			echo "<input type=\"hidden\" name=\"body\" value=\"\n\n\n" . $reply . "\" />\n";
 			echo "<input type=\"submit\" value=\"Responder\" />\n";
 			echo "</form></td></tr>\n";
-    echo "<tr><td><b>Status: </b>$statusstr | <a href=\"bugslist.php?pending=true&move=" . $idstr . "\">Marcar como resolvido</a></td></tr>";
+    echo sprintf('<tr><td><b>Status: </b>%s | <a href="bugslist.php?pending=true&move=', $statusstr) . $idstr . '">Marcar como resolvido</a></td></tr>';
     echo "</table><p />";
 	}
 
@@ -97,5 +100,5 @@ if (isset($_GET['pending'])) {
 <p /><b>Selecione quais mensagens você quer checar.</b><p />
 </center>
 
-<?php include("templates/private_footer.php")
+<?php include(__DIR__ . "/templates/private_footer.php")
 ?>

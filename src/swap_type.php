@@ -1,8 +1,10 @@
 <?php
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 $player = check_user($secret_key, $db);
 
-if (($_GET['type'] != 96) and ($_GET['type'] < 98) and ($_GET['type'] > 0)) {
+if ($_GET['type'] != 96 && $_GET['type'] < 98 && $_GET['type'] > 0) {
 	$db->execute("update `bixos` set `type`=? where `hp`>0 and `player_id`=?", array($_GET['type'], $player->id));
 
 } elseif ($_GET['type'] == 96) {
@@ -33,7 +35,7 @@ if (($_GET['type'] != 96) and ($_GET['type'] < 98) and ($_GET['type'] > 0)) {
     
     if ($_GET['times']) {
         $vezes = floor($_GET['times']);
-        if (($vezes > 1) and ($player->energy >= ($vezes * 10)))
+        if ($vezes > 1 && $player->energy >= ($vezes * 10))
         {
             $enemyid = $db->GetOne("select `id` from `bixos` where `hp`>0 and `player_id`=?", array($player->id));
             if ($enemyid) {

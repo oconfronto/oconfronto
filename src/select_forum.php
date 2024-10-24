@@ -1,11 +1,13 @@
 <?php
 
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Fórum");
 $player = check_user($secret_key, $db);
 
-include("checkforum.php");
-include("templates/private_header.php");
+include(__DIR__ . "/checkforum.php");
+include(__DIR__ . "/templates/private_header.php");
 
 $dtopictempo = ceil(time() - 10368000);
 	$oldtopicselect = $db->execute("select `id`, `user_id` from `forum_question` where `last_post`<?", array($dtopictempo));
@@ -45,6 +47,7 @@ while($selecate1 =$cate1->fetchrow())
 {
 $totalreply += $selecate1['reply'];
 }
+
 $topicos1 = $cate1->recordcount();
 
 ?>
@@ -61,6 +64,7 @@ while($selecate2 = $cate2->fetchrow())
 {
 $totalreply2 += $selecate2['reply'];
 }
+
 $topicos2 = $cate2->recordcount();
 
 ?>
@@ -77,6 +81,7 @@ while($selecate3 = $cate3->fetchrow())
 {
 $totalreply3 += $selecate3['reply'];
 }
+
 $topicos3 = $cate3->recordcount();
 
 ?>
@@ -93,6 +98,7 @@ while($selecate4 = $cate4->fetchrow())
 {
 $totalreply4 += $selecate4['reply'];
 }
+
 $topicos4 = $cate4->recordcount();
 
 ?>
@@ -109,6 +115,7 @@ while($selecate5 = $cate5->fetchrow())
 {
 $totalreply5 += $selecate5['reply'];
 }
+
 $topicos5 = $cate5->recordcount();
 
 ?>
@@ -125,6 +132,7 @@ while($selecate6 = $cate6->fetchrow())
 {
 $totalreply6 += $selecate6['reply'];
 }
+
 $topicos6 = $cate6->recordcount();
 
 ?>
@@ -141,6 +149,7 @@ while($selecate7 = $cate7->fetchrow())
 {
 $totalreply7 += $selecate7['reply'];
 }
+
 $topicos7 = $cate7->recordcount();
 
 ?>
@@ -158,6 +167,7 @@ while($selecate8 = $cate8->fetchrow())
 {
 $totalreply8 += $selecate8['reply'];
 }
+
 $topicos8 = $cate8->recordcount();
 
 ?>
@@ -174,6 +184,7 @@ while($selecate9 = $cate9->fetchrow())
 {
 $totalreply9 += $selecate9['reply'];
 }
+
 $topicos9 = $cate9->recordcount();
 
 ?>
@@ -205,5 +216,5 @@ echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"thi
 
 
 <?php
-include("templates/private_footer.php");
+include(__DIR__ . "/templates/private_footer.php");
 ?>

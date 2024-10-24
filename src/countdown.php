@@ -1,8 +1,10 @@
 <?php
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Principal");
 
-include("templates/header.php");
+include(__DIR__ . "/templates/header.php");
 ?>
 <span id="aviso-a"></span>
 
@@ -16,5 +18,5 @@ include("templates/header.php");
 <script src="static/assets/js/script.js"></script>
 
 <?php
-include("templates/footer.php");
+include(__DIR__ . "/templates/footer.php");
 ?>

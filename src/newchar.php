@@ -1,26 +1,25 @@
 <?php
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Criar Personagem");
 $acc = check_acc($secret_key, $db);
-include("templates/acc-header.php");
+include(__DIR__ . "/templates/acc-header.php");
 
 $querynumplayers = $db->execute("select `id` from `players` where `acc_id`=?", array($acc->id));
 
 if ($querynumplayers->recordcount() >= 12) {
-	echo "<span id=\"aviso-a\"></span>";
+	echo '<span id="aviso-a"></span>';
 	echo "<br/><p><center>Voc&ecirc; já atingiu o número máximo de personagens por conta.<br/>Voc&ecirc; não pode mais criar usuários nesta conta. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
-	include("templates/acc-footer.php");
+	include(__DIR__ . "/templates/acc-footer.php");
 	exit;
-} else {
-
-
-	$msg1 = "";
-	$msg2 = "";
-	$error = 0;
-	$erro1 = 0;
-	$erro2 = 0;
-
-	if ($_POST['register']) {
+}
+$msg1 = "";
+$msg2 = "";
+$error = 0;
+$erro1 = 0;
+$erro2 = 0;
+if ($_POST['register']) {
 
 		$pat[0] = "/^\s+/";
 		$pat[1] = "/\s{2,}/";
@@ -41,19 +40,26 @@ if ($querynumplayers->recordcount() >= 12) {
 			$msg1 .= "Seu nome de usuário deve ter mais que 2 caracteres!<br />\n"; //Add to error message
 			$error = 1; //Set error check
 			$erro1 = 1;
-		} else if (strlen($nomedeusuari0) > 15) { //If username is too short...
-			$msg1 .= "Seu nome de usuário deve ser de 15 caracteres ou menos!<br />\n"; //Add to error message
-			$error = 1; //Set error check
-			$erro1 = 1;
-		} else if (!preg_match("/^[A-Za-z[:space:]\-]+$/", $_POST['username'])) { //If username contains illegal characters...
-			$msg1 .= "Seu nome de usuário não pode conter <b>números</b> ou <b>caracteres especiais</b>!<br />\n"; //Add to error message
-			$error = 1; //Set error check
-			$erro1 = 1;
-		} else if ($query->recordcount() > 0) {
-			$msg1 .= "Este nome de usuário já está sendo usado!<br />\n";
-			$error = 1; //Set error check
-			$erro1 = 1;
-		}
+		} elseif (strlen($nomedeusuari0) > 15) {
+     //If username is too short...
+     $msg1 .= "Seu nome de usuário deve ser de 15 caracteres ou menos!<br />\n";
+     //Add to error message
+     $error = 1;
+     //Set error check
+     $erro1 = 1;
+ } elseif (!preg_match("/^[A-Za-z[:space:]\-]+$/", $_POST['username'])) {
+     //If username contains illegal characters...
+     $msg1 .= "Seu nome de usuário não pode conter <b>números</b> ou <b>caracteres especiais</b>!<br />\n";
+     //Add to error message
+     $error = 1;
+     //Set error check
+     $erro1 = 1;
+ } elseif ($query->recordcount() > 0) {
+     $msg1 .= "Este nome de usuário já está sendo usado!<br />\n";
+     $error = 1;
+     //Set error check
+     $erro1 = 1;
+ }
 
 		if ($_POST['voc'] == 'none') {
 			$msg2 .= "Voc&ecirc; precisa escolher uma vocação!";
@@ -61,7 +67,7 @@ if ($querynumplayers->recordcount() >= 12) {
 			$erro2 = 1;
 		}
 
-		if (($_POST['voc'] != 'archer') and ($_POST['voc'] != 'knight') and ($_POST['voc'] != 'mage') and ($_POST['voc'] != 'none')) {
+		if ($_POST['voc'] != 'archer' && $_POST['voc'] != 'knight' && $_POST['voc'] != 'mage' && $_POST['voc'] != 'none') {
 			$msg2 .= "Voc&ecirc; precisa escolher uma vocação!";
 			$error = 1; //Set error check
 			$erro2 = 1;
@@ -116,55 +122,56 @@ if ($querynumplayers->recordcount() >= 12) {
 			$numpots = 3;
 			$playerpots = $player['id'];
 
-			for ($i = 0; $i < $numpots; $i++) {
+			for ($i = 0; $i < $numpots; ++$i) {
 				$insert['player_id'] = $playerpots;
 				$insert['item_id'] = 136;
 				$query = $db->autoExecute('items', $insert, 'INSERT');
 			}
 
 			if ($query) {
-				echo "<span id=\"aviso-a\"></span>";
-				echo "<br/><p><center style=\"font-size: 14px;font-weight: bold;text-align: center;\">Seu personagem foi criado com sucesso!<br />";
-				echo "<a style=\"color:#ffef8f;\" href=\"login.php?id=" . $player['id'] . "\">Clique aqui</a> e comece a jogar com " . $nomedeusuario . ".</center></p><br />";
-				include("templates/acc-footer.php");
+				echo '<span id="aviso-a"></span>';
+				echo '<br/><p><center style="font-size: 14px;font-weight: bold;text-align: center;">Seu personagem foi criado com sucesso!<br />';
+				echo '<a style="color:#ffef8f;" href="login.php?id=' . $player['id'] . '">Clique aqui</a> e comece a jogar com ' . $nomedeusuario . ".</center></p><br />";
+				include(__DIR__ . "/templates/acc-footer.php");
 				exit;
 			}
 		}
 	}
-
-?>
 	<span id="aviso-a">
-		<?php
-		if ($msg1 != "") {
-			echo $msg1;
-		} else if ($msg2 != "") {
-			echo $msg2;
-		}
 
-		if ($_POST['register']) {
+if ($msg1 != "") {
+    echo $msg1;
+} elseif ($msg2 != "") {
+    echo $msg2;
+}
+if ($_POST['register']) {
 			if ($msg1 == "") {
 				$certo1 = 1;
 			}
+ 
 			if ($msg2 == "") {
 				$certo2 = 1;
 			}
 		}
-		?>
 	</span>
 
 	<br />
-	<?php include("box.php"); ?>
+
+include(__DIR__ . "/box.php");
 	<form method="POST" action="newchar.php">
 		<table width="90%" align="center" border=\"0px\">
 			<tr>
 				<td width="28%"><b>Nome</b>:</td>
-				<td width="72%"><input type="text" name="username" id="username" value="<?= $_POST['username']; ?>"
-						class="inp" size="20" /><span id="msgbox"><?php
-																	if ($erro1 == 1) {
-																		echo "<span id=\"erro\"></span>";
-																	} else if ($certo1 == 1) {
-																		echo "<span id=\"certo\"></span>";
-																	} ?></span></td>
+				<td width="72%"><input type="text" name="username" id="username" value="
+<?= $_POST['username'];
+"
+						class="inp" size="20" /><span id="msgbox">
+if ($erro1 == 1) {
+    echo '<span id="erro"></span>';
+} elseif ($certo1 == 1) {
+    echo '<span id="certo"></span>';
+}
+</span></td>
 			</tr>
 			<tr>
 				<td width="28%"><b>Vocação</b>:</td>
@@ -173,12 +180,13 @@ if ($querynumplayers->recordcount() >= 12) {
 						<option value="knight">Guerreiro</option>
 						<option value="mage">Mago</option>
 						<option value="archer">Arqueiro</option>
-					</select><?php
-								if ($erro2 == 1) {
-									echo "<span id=\"erro\"></span>";
-								} else if ($certo2 == 1) {
-									echo "<span id=\"certo\"></span>";
-								} ?></td>
+					</select>
+if ($erro2 == 1) {
+    echo '<span id="erro"></span>';
+} elseif ($certo2 == 1) {
+    echo '<span id="certo"></span>';
+}
+</td>
 			</tr>
 			<tr>
 				<td colspan="2" style="font-size: 14px;font-weight: bold;text-align: center;padding: 15px;">
@@ -190,7 +198,6 @@ if ($querynumplayers->recordcount() >= 12) {
 		<br />
 		<center><button type="submit" name="register" value="Criar Personagem" class="personagem"></button></center>
 	</form>
-<?php
-	include("templates/acc-footer.php");
-}
+
+include(__DIR__ . "/templates/acc-footer.php");
 ?>

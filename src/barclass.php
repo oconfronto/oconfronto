@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * ***************************
  *	Bar Generator
@@ -12,26 +15,40 @@
  *     and redistribute this code, provided that the original copyright remain in-tact.
  * 
  *******************************/
-
 class barGen
 {
 	
-	function setWidth($value)
+	public $bar_w;
+ public $bar_h;
+ public $fontSize;
+ public $cr;
+ public $cg;
+ public $value;
+ public $fill_color;
+ public $backColor;
+ public $max;
+ /**
+  * @var int
+  */
+ public $dataPercent;
+ public $bar;
+ public $barPercent;
+ public function setWidth($value)
 	{
 		$this->bar_w = $value;
 	}
 
-	function setHeight($value)
+	public function setHeight($value)
 	{
 		$this->bar_h = $value;
 	}
 
-	function setFontSize($value)
+	public function setFontSize($value)
 	{
 		$this->fontSize = $value;
 	}
 
-	function setFillColor($cr, $cg, $value)
+	public function setFillColor($cr, $cg, $value)
 	{
 		$this->cr = $cr;
 		$this->cg = $cg;
@@ -41,7 +58,7 @@ class barGen
 	}
 
 	
-	function setBackColor()
+	public function setBackColor()
 	{
 		if ($this->fontSize > 0){
 		$this->backColor = imagecolorallocate($this->bar, 171, 171, 179);
@@ -50,7 +67,7 @@ class barGen
 		}
 	}
 
-	function setData($max, $value)
+	public function setData($max, $value)
 	{
 		$this->max = $max;
 		$this->value = $value;
@@ -58,13 +75,13 @@ class barGen
 		$this->dataPercent = intval($this->value / $this->max * 100);
 	}
 	
-	function makeBar()
+	public function makeBar()
 	{
 		$this->bar = imagecreate($this->bar_w, $this->bar_h);
 		$this->setBackColor();
 	}
 
-	function generateBar()
+	public function generateBar()
 	{
 		header('Content-type: image/png');
 
@@ -72,7 +89,7 @@ class barGen
 
 		$white 	= imagecolorallocate($this->bar, 255, 255, 255);
 		$grey 	= imagecolorallocate($this->bar, 120, 120, 120);
-		$black 	= imagecolorallocate($this->bar, 0, 0, 0);
+		imagecolorallocate($this->bar, 0, 0, 0);
 		$brown 	= imagecolorallocate($this->bar, 185, 137, 47);
 		
 		// Background
@@ -91,6 +108,7 @@ class barGen
 		if ($this->fontSize > 0){
 		imagestring($this->bar, $this->fontSize, round(($this->bar_w/2)-((strlen($text)*imagefontwidth($this->fontSize))/2), 1), round(($this->bar_h/2)-(imagefontheight($this->fontSize)/2)), $text, $white);
 		}
+  
 		// Output
 		imagepng($this->bar);
 		imagedestroy($this->bar);

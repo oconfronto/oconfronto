@@ -1,38 +1,60 @@
-ï»¿<?php
+<?php
 
+?>
+ï»¿<?php 
 if(isset($_POST['treinar_strength'])){
 	if($_POST['restante']<0){ echo "<script>self.location='?p=home'</script>"; break; }
+ 
 	$strength=$_POST['treinar_strength'];
 	$vitality=$_POST['treinar_vitality'];
 	$agility=$_POST['treinar_agility'];
-	if(($strength<=0)or($vitality<=0)or($agility<=0)){ echo "<script>self.location='?p=home'</script>"; break; }
+	if($strength<=0 || $vitality<=0 || $agility<=0){ echo "<script>self.location='?p=home'</script>"; break; }
+ 
 	$total=0;
-	if($strength>$player->strength) do{
-		$total=$total+round(($player->strength*2)+($player->strength*$player->strength)+($player->strength*0.2));
-		$player->strength=$player->strength+1;
-	} while($strength>$player->strength);
-	if($vitality>$player->vitality) do{
-		$total=$total+round(($player->vitality*2)+($player->vitality*$player->vitality)+($player->vitality*0.2));
-		$player->vitality=$player->vitality+1;
-	} while($vitality>$player->vitality);
-	if($agility>$player->agility) do{
-		$total=$total+round(($player->agility*2)+($player->agility*$player->agility)+($player->agility*0.2));
-		$player->agility=$player->agility+1;
-	} while($agility>$player->agility);
+ if ($strength>$player->strength) {
+     do{
+    		$total += round(($player->strength*2)+($player->strength*$player->strength)+($player->strength*0.2));
+    		$player->strength += 1;
+    	} while($strength>$player->strength);
+ }
+
+ if ($vitality>$player->vitality) {
+     do{
+    		$total += round(($player->vitality*2)+($player->vitality*$player->vitality)+($player->vitality*0.2));
+    		$player->vitality += 1;
+    	} while($vitality>$player->vitality);
+ }
+
+ if ($agility>$player->agility) {
+     do{
+    		$total += round(($player->agility*2)+($player->agility*$player->agility)+($player->agility*0.2));
+    		$player->agility += 1;
+    	} while($agility>$player->agility);
+ }
+ 
 	if($total>$player->gold){ echo "<script>self.location='?p=treinar&msg=2'</script>"; break; }
-	mysql_query("UPDATE players SET gold=gold-$total, strength=$strength, vitality=$vitality, agility=$agility WHERE id=".$player->id);
+ 
+	mysql_query(sprintf('UPDATE players SET gold=gold-%s, strength=%s, vitality=%s, agility=%s WHERE id=', $total, $strength, $vitality, $agility).$player->id);
 	echo "<script>self.location='?p=treinar&msg=1&gold=".$total."'</script>";
 }
 ?>
 <script>
-var strength=<?php echo $player->strength; ?>;
+var strength=<?php 
+echo $player->strength;
+?>;
 var taipadrao=strength;
-var vitality=<?php echo $player->vitality; ?>;
+var vitality=<?php 
+echo $player->vitality;
+?>;
 var ninpadrao=vitality;
-var agility=<?php echo $player->agility; ?>;
+var agility=<?php 
+echo $player->agility;
+?>;
 var genpadrao=agility;
 var total=0;
-var gold=<?php echo $player->gold; ?>;
+var gold=<?php 
+echo $player->gold;
+?>;
 function visibility(){
 	setastrength=document.getElementById('taidown');
 	setavitality=document.getElementById('nindown');
@@ -155,12 +177,12 @@ function change(at,dir){
 	atualizabarras();
 }
 </script>
-<?php
+<?php 
 $max=194;
 function equacao($atr){
-	$resultado=round(($atr*2)+($atr*$atr)+($atr*0.2));
-	return $resultado;
+	return round(($atr*2)+($atr*$atr)+($atr*0.2));
 }
+
 $src="static/_images/bars/bar.png";
 $array=array("t"=>$player->strength,"n"=>$player->vitality,"g"=>$player->agility);
 rsort($array);
@@ -169,64 +191,108 @@ arsort($array2);
 ?>
 <div class="box_top">Treino</div>
 <form method="post" action="?p=treinar" onsubmit="subm.value='Carregando...';subm.disabled=true;">
-<input type="hidden" id="treinar_strength" name="treinar_strength" value="<?php echo $player->strength; ?>" />
-<input type="hidden" id="treinar_vitality" name="treinar_vitality" value="<?php echo $player->vitality; ?>" />
-<input type="hidden" id="treinar_agility" name="treinar_agility" value="<?php echo $player->agility; ?>" />
+<input type="hidden" id="treinar_strength" name="treinar_strength" value="<?php 
+echo $player->strength;
+?>" />
+<input type="hidden" id="treinar_vitality" name="treinar_vitality" value="<?php 
+echo $player->vitality;
+?>" />
+<input type="hidden" id="treinar_agility" name="treinar_agility" value="<?php 
+echo $player->agility;
+?>" />
 <input type="hidden" id="restante" name="restante" value="" />
 <div class="box_middle">Esta é sua área de treino de atributos. Utilize as setas abaixo para aumentar ou diminuir os atributos, e assim que estiver satisfeito, clique no botão Treinar. Os gold só serão gastos após a confirmação do treino.<div class="sep"></div><img src="static/http://img36.imageshack.us/img36/5319/treinoo.jpg" border="0">
-	<?php if(isset($_GET['msg'])){
+	<?php 
+if(isset($_GET['msg'])){
 		switch($_GET['msg']){
-			case 1: if(isset($_GET['gold'])) $gold=$_GET['gold']; else $gold=0; $msg='Treino realizado com sucesso! Foram gastos <b>'.number_format($gold,2,',','.').' gold</b> para realizar o treino.'; break;
+			case 1: $gold = isset($_GET['gold']) ? $_GET['gold'] : 0; $msg='Treino realizado com sucesso! Foram gastos <b>'.number_format($gold,2,',','.').' gold</b> para realizar o treino.'; break;
 			case 2: $msg='gold insuficientes!'; break;
 		}
+  
 	echo '<div class="aviso">'.$msg.'</div><div class="sep"></div>';
-	} ?>
-	<div style="padding-left:5px;background:url(_images/gradient.jpg) repeat-y;color:#FFFFAA;"><img src="static/_images/gold.png" width="14" height="14" align="absmiddle" /> <b>Meus gold: <?php echo number_format($player->gold,2,',','.'); ?> gold</b></div>
+	}
+
+?>
+	<div style="padding-left:5px;background:url(_images/gradient.jpg) repeat-y;color:#FFFFAA;"><img src="static/_images/gold.png" width="14" height="14" align="absmiddle" /> <b>Meus gold: <?php 
+echo number_format($player->gold,2,',','.');
+?> gold</b></div>
     <div class="sep"></div>
 	<table width="100%" cellpadding="0" cellspacing="0">
   <tr>
         	<td width="13%" align="right" style="padding-right:10px;"><b>strength:</b></td>
-          <td><img src="static/_images/bars/bar_left.jpg" /><?php
-			if($array[0]==$array2["t"]) echo '<img id="taibar" src="static/'.$src.'" width="'.($max*$array[0])/$array[0].'" height="22" />'; else
-			if($array[1]==$array2["t"]) echo '<img id="taibar" src="static/'.$src.'" width="'.($max*$array[1])/$array[0].'" height="22" />'; else
-			if($array[2]==$array2["t"]) echo '<img id="taibar" src="static/'.$src.'" width="'.($max*$array[2])/$array[0].'" height="22" />';
-			?><img src="static/_images/bars/bar_right.jpg" />
+          <td><img src="static/_images/bars/bar_left.jpg" /><?php 
+if ($array[0]==$array2["t"]) {
+    echo '<img id="taibar" src="static/'.$src.'" width="'.($max*$array[0])/$array[0].'" height="22" />';
+} elseif ($array[1]==$array2["t"]) {
+    echo '<img id="taibar" src="static/'.$src.'" width="'.($max*$array[1])/$array[0].'" height="22" />';
+} elseif ($array[2]==$array2["t"]) {
+    echo '<img id="taibar" src="static/'.$src.'" width="'.($max*$array[2])/$array[0].'" height="22" />';
+}
+
+?><img src="static/_images/bars/bar_right.jpg" />
     		</td>
             <td width="8%"><img src="static/_images/up_arrow.png" style="cursor:pointer" onclick="change('tai',1);" /> <img id="taidown" src="static/_images/down_arrow.png" style="cursor:pointer;visibility:hidden;" onclick="change('tai',-1);" /></td>
-            <td width="12%" align="center"><b>| <span id="tai"><?php echo $player->strength; ?></span> |</b></td>
-          <td width="22%" align="right"><b><div id="taivalue"><?php echo number_format(equacao($player->strength),2,',','.'); ?> gold</div></b></td>
+            <td width="12%" align="center"><b>| <span id="tai"><?php 
+echo $player->strength;
+?></span> |</b></td>
+          <td width="22%" align="right"><b><div id="taivalue"><?php 
+echo number_format(equacao($player->strength),2,',','.');
+?> gold</div></b></td>
         </tr>
         <tr>
         	<td align="right" style="padding-right:10px;"><b>vitality:</b></td>
-          <td><img src="static/_images/bars/bar_left.jpg" /><?php
-			if($array[0]==$array2["n"]) echo '<img id="ninbar" src="static/'.$src.'" width="'.($max*$array[0])/$array[0].'" height="22" />'; else
-			if($array[1]==$array2["n"]) echo '<img id="ninbar" src="static/'.$src.'" width="'.($max*$array[1])/$array[0].'" height="22" />'; else
-			if($array[2]==$array2["n"]) echo '<img id="ninbar" src="static/'.$src.'" width="'.($max*$array[2])/$array[0].'" height="22" />';
-			?><img src="static/_images/bars/bar_right.jpg" />
+          <td><img src="static/_images/bars/bar_left.jpg" /><?php 
+if ($array[0]==$array2["n"]) {
+    echo '<img id="ninbar" src="static/'.$src.'" width="'.($max*$array[0])/$array[0].'" height="22" />';
+} elseif ($array[1]==$array2["n"]) {
+    echo '<img id="ninbar" src="static/'.$src.'" width="'.($max*$array[1])/$array[0].'" height="22" />';
+} elseif ($array[2]==$array2["n"]) {
+    echo '<img id="ninbar" src="static/'.$src.'" width="'.($max*$array[2])/$array[0].'" height="22" />';
+}
+
+?><img src="static/_images/bars/bar_right.jpg" />
             </td>
             <td><img src="static/_images/up_arrow.png" style="cursor:pointer" onclick="change('nin',1);" /> <img id="nindown" src="static/_images/down_arrow.png" style="cursor:pointer;visibility:hidden;" onclick="change('nin',-1);" /></td>
-            <td align="center"><b>| <span id="nin"><?php echo $player->vitality; ?></span> |</b></td>
-          <td align="right"><b><div id="ninvalue"><?php echo number_format(equacao($player->vitality),2,',','.'); ?> gold</div></b></td>
+            <td align="center"><b>| <span id="nin"><?php 
+echo $player->vitality;
+?></span> |</b></td>
+          <td align="right"><b><div id="ninvalue"><?php 
+echo number_format(equacao($player->vitality),2,',','.');
+?> gold</div></b></td>
         </tr>
         <tr>
         	<td align="right" style="padding-right:10px;"><b>agility:</b></td>
-          <td><img src="static/_images/bars/bar_left.jpg" /><?php
-			if($array[0]==$array2["g"]) echo '<img id="genbar" src="static/'.$src.'" width="'.($max*$array[0])/$array[0].'" height="22" />'; else
-			if($array[1]==$array2["g"]) echo '<img id="genbar" src="static/'.$src.'" width="'.($max*$array[1])/$array[0].'" height="22" />'; else
-			if($array[2]==$array2["g"]) echo '<img id="genbar" src="static/'.$src.'" width="'.($max*$array[2])/$array[0].'" height="22" />';
-			?><img src="static/_images/bars/bar_right.jpg" />
+          <td><img src="static/_images/bars/bar_left.jpg" /><?php 
+if ($array[0]==$array2["g"]) {
+    echo '<img id="genbar" src="static/'.$src.'" width="'.($max*$array[0])/$array[0].'" height="22" />';
+} elseif ($array[1]==$array2["g"]) {
+    echo '<img id="genbar" src="static/'.$src.'" width="'.($max*$array[1])/$array[0].'" height="22" />';
+} elseif ($array[2]==$array2["g"]) {
+    echo '<img id="genbar" src="static/'.$src.'" width="'.($max*$array[2])/$array[0].'" height="22" />';
+}
+
+?><img src="static/_images/bars/bar_right.jpg" />
           </td>
             <td><img src="static/_images/up_arrow.png" style="cursor:pointer" onclick="change('gen',1);" /> <img id="gendown" src="static/_images/down_arrow.png" style="cursor:pointer;visibility:hidden;" onclick="change('gen',-1);" /></td>
-            <td align="center"><b>| <span id="gen"><?php echo $player->agility; ?></span> |</b></td>
-          <td align="right"><b><div id="genvalue"><?php echo number_format(equacao($player->agility),2,',','.'); ?> gold</div></b></td>
+            <td align="center"><b>| <span id="gen"><?php 
+echo $player->agility;
+?></span> |</b></td>
+          <td align="right"><b><div id="genvalue"><?php 
+echo number_format(equacao($player->agility),2,',','.');
+?> gold</div></b></td>
         </tr>
     </table>
   <div class="sep"></div>
-    <div style="padding-left:5px;background:url(_images/gradient.jpg) repeat-y"><img src="static/_images/gold_neg.png" align="absmiddle" /> <b>Total: <span id="totaltreinar"><?php echo number_format(0,2,',','.'); ?></span> gold</b></div>
+    <div style="padding-left:5px;background:url(_images/gradient.jpg) repeat-y"><img src="static/_images/gold_neg.png" align="absmiddle" /> <b>Total: <span id="totaltreinar"><?php 
+echo number_format(0,2,',','.');
+?></span> gold</b></div>
     <div class="sep"></div>
-    <div style="padding-left:5px;background:url(_images/gradient.jpg) repeat-y"><img src="static/_images/gold.png" width="14" height="14" align="absmiddle" /> <b>Restará: <span id="resttreinar"><?php echo number_format($player->gold,2,',','.'); ?></span> gold</b></div>
+    <div style="padding-left:5px;background:url(_images/gradient.jpg) repeat-y"><img src="static/_images/gold.png" width="14" height="14" align="absmiddle" /> <b>Restará: <span id="resttreinar"><?php 
+echo number_format($player->gold,2,',','.');
+?></span> gold</b></div>
     <div id="treinar_button" style="display:none;"><div class="sep"></div>
     <div align="center"><input type="submit" id="subm" name="subm" class="botao" value="Treinar" /></div></div>
 </div>
 </form>
 <div class="box_bottom"></div>
+<?php 

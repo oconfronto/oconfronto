@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 if ($player->id == $luta['p_id']) {
     $magia = $luta['p_magia'];
     $emagia = $luta['e_magia'];
@@ -8,35 +10,35 @@ if ($player->id == $luta['p_id']) {
 }
 
 $misschance = intval(rand(0, 100));
-if (($misschance <= $player->miss) or ($emagia == 6))
+if ($misschance <= $player->miss || $emagia == 6)
 {
     array_unshift($duellog, "5, " . $player->username . ", " . $enemy->username . "");
 }else{
     $totalpak = rand($player->mindmg, $player->maxdmg);
     
-    if ($magia == 1){
+    if ($magia == 1) {
         $porcento = $totalpak / 100;
         $porcento = ceil($porcento * 15);
-        $totalpak = $totalpak + $porcento;
-    }else if($magia == 2){
+        $totalpak += $porcento;
+    } elseif ($magia == 2) {
         $porcento = $totalpak / 100;
         $porcento = ceil($porcento * 45);
-        $totalpak = $totalpak + $porcento;
-    }else if($magia == 12){
+        $totalpak += $porcento;
+    } elseif ($magia == 12) {
         $porcento = $totalpak / 100;
         $porcento = ceil($porcento * 35);
-        $totalpak = $totalpak + $porcento;
+        $totalpak += $porcento;
     }
     
-    if ($emagia == 2){
+    if ($emagia == 2) {
         $porcento = $totalpak / 100;
         $porcento = ceil($porcento * 15);
-        $totalpak = $totalpak + $porcento;
-    }else if ($emagia == 7){
+        $totalpak += $porcento;
+    } elseif ($emagia == 7) {
         $porcento = $totalpak / 100;
         $porcento = ceil($porcento * 20);
-        $totalpak = $totalpak - $porcento;
-    }else if ($emagia == 11){
+        $totalpak -= $porcento;
+    } elseif ($emagia == 11) {
         $totalpak = ceil($totalpak / 2);
     }
     
@@ -47,6 +49,7 @@ if (($misschance <= $player->miss) or ($emagia == 6))
         }else{
             $db->execute("update `players` set `hp`=`hp`-? where `id`=?", array($totalpak, $player->id));
         }
+        
         array_unshift($duellog, "10, " . $player->username . ", " . $enemy->username . ", " . $totalpak . "");
     } else {
         if (($enemy->hp - $totalpak) < 1){
@@ -55,6 +58,7 @@ if (($misschance <= $player->miss) or ($emagia == 6))
         }else{
             $db->execute("update `players` set `hp`=`hp`-? where `id`=?", array($totalpak, $enemy->id));
         }
+        
         array_unshift($duellog, "1, " . $player->username . ", " . $enemy->username . ", " . $totalpak . "");
     }
 }

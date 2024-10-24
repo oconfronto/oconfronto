@@ -1,9 +1,11 @@
 <?php
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Personagens");
 $acc = check_acc($secret_key, $db);
 
-include("templates/acc-header.php");
+include(__DIR__ . "/templates/acc-header.php");
     
     //verifica se pediu pra transferir personagem
     $playerstrans = $db->execute("select * from `pending` where `pending_id`=4 and `pending_other`=?", array($acc->id));
@@ -15,7 +17,7 @@ include("templates/acc-header.php");
         if ($change['pending_time'] < time()){
             $trocaperso = $db->execute("update `players` set `acc_id`=?, `transpass`='f' where `username`=?", array($change['player_id'], $change['pending_status']));
             $query = $db->execute("delete from `pending` where `id`=?", array($change['id']));
-            echo "<span id=\"aviso-v\">O personagem <b>" . $change['pending_status'] . "</b> foi transferido para a conta <b>" . $coconta . "</b>.</span>";
+            echo '<span id="aviso-v">O personagem <b>' . $change['pending_status'] . "</b> foi transferido para a conta <b>" . $coconta . "</b>.</span>";
             $insert['player_id'] = $acc->id;
             $insert['msg'] = "O personagem <b>" . $change['pending_status'] . "</b> foi transferido para a conta <b>" . $coconta . "</b>.";
             $insert['time'] = time();
@@ -28,21 +30,21 @@ include("templates/acc-header.php");
             $aviso = 1;
         }else{
             $valortempo = $change['pending_time'] - time();
-            if ($valortempo < 60){
-            $valortempo2 = $valortempo;
-            $auxiliar2 = "segundo(s)";
-            }else if($valortempo < 3600){
-            $valortempo2 = floor($valortempo / 60);
-            $auxiliar2 = "minuto(s)";
-            }else if($valortempo < 86400){
-            $valortempo2 = floor($valortempo / 3600);
-            $auxiliar2 = "hora(s)";
-            }else if($valortempo > 86400){
-            $valortempo2 = floor($valortempo / 86400);
-            $auxiliar2 = "dia(s)";
+            if ($valortempo < 60) {
+                $valortempo2 = $valortempo;
+                $auxiliar2 = "segundo(s)";
+            } elseif ($valortempo < 3600) {
+                $valortempo2 = floor($valortempo / 60);
+                $auxiliar2 = "minuto(s)";
+            } elseif ($valortempo < 86400) {
+                $valortempo2 = floor($valortempo / 3600);
+                $auxiliar2 = "hora(s)";
+            } elseif ($valortempo > 86400) {
+                $valortempo2 = floor($valortempo / 86400);
+                $auxiliar2 = "dia(s)";
             }
 
-            echo "<span id=\"aviso-a\"><font size=\"1px\"><b>" . $change['pending_status'] . "</b> será transferido para a conta: <b>" . $coconta . "</b>.<br/>Ele será transferido em " . $valortempo2 . " " . $auxiliar2 . ", para cancelar o envio, <a href=\"transferchar.php?cancel=true\">clique aqui</a>.</font></span>";
+            echo '<span id="aviso-a"><font size="1px"><b>' . $change['pending_status'] . "</b> será transferido para a conta: <b>" . $coconta . "</b>.<br/>Ele será transferido em " . $valortempo2 . " " . $auxiliar2 . ', para cancelar o envio, <a href="transferchar.php?cancel=true">clique aqui</a>.</font></span>';
             $aviso = 1;
         }
     }
@@ -57,7 +59,7 @@ include("templates/acc-header.php");
         if ($change2['pending_time'] < time()){
         $trocachare = $db->execute("update `players` set `acc_id`=?, `transpass`='f' where `username`=?", array($change2['player_id'], $change2['pending_status']));
         $query = $db->execute("delete from `pending` where `id`=?", array($change2['id']));
-        echo "<span id=\"aviso-v\">O personagem <b>" . $change2['pending_status'] . "</b> foi transferido para sua conta.</span>";
+        echo '<span id="aviso-v">O personagem <b>' . $change2['pending_status'] . "</b> foi transferido para sua conta.</span>";
 
             $insert['player_id'] = $acc->id;
             $insert['msg'] = "O personagem <b>" . $change2['pending_status'] . "</b> foi transferido para sua conta.";
@@ -71,21 +73,21 @@ include("templates/acc-header.php");
             $aviso = 1;
         }else{
             $valortempo = $change2['pending_time'] - time();
-            if ($valortempo < 60){
-            $valortempo2 = $valortempo;
-            $auxiliar2 = "segundo(s)";
-            }else if($valortempo < 3600){
-            $valortempo2 = floor($valortempo / 60);
-            $auxiliar2 = "minuto(s)";
-            }else if($valortempo < 86400){
-            $valortempo2 = floor($valortempo / 3600);
-            $auxiliar2 = "hora(s)";
-            }else if($valortempo > 86400){
-            $valortempo2 = floor($valortempo / 86400);
-            $auxiliar2 = "dia(s)";
+            if ($valortempo < 60) {
+                $valortempo2 = $valortempo;
+                $auxiliar2 = "segundo(s)";
+            } elseif ($valortempo < 3600) {
+                $valortempo2 = floor($valortempo / 60);
+                $auxiliar2 = "minuto(s)";
+            } elseif ($valortempo < 86400) {
+                $valortempo2 = floor($valortempo / 3600);
+                $auxiliar2 = "hora(s)";
+            } elseif ($valortempo > 86400) {
+                $valortempo2 = floor($valortempo / 86400);
+                $auxiliar2 = "dia(s)";
             }
 
-            echo "<span id=\"aviso-a\"><font size=\"1px\"><b>" . $change2['pending_status'] . "</b> será transferido para sua conta em " . $valortempo2 . " " . $auxiliar2 . ".</font></span>";
+            echo '<span id="aviso-a"><font size="1px"><b>' . $change2['pending_status'] . "</b> será transferido para sua conta em " . $valortempo2 . " " . $auxiliar2 . ".</font></span>";
             $aviso = 1;
         }
     }
@@ -99,7 +101,7 @@ include("templates/acc-header.php");
         if ($change['pending_time'] < time()){
             $trocaemail = $db->execute("update `accounts` set `email`=? where `id`=?", array($change['pending_status'], $acc->id));
             $query = $db->execute("delete from `pending` where `pending_id`=1 and `player_id`=?", array($acc->id));
-            echo "<span id=\"aviso-v\">Seu email foi alterado para: <b>" . $change['pending_status'] . "</b>.</span>";
+            echo '<span id="aviso-v">Seu email foi alterado para: <b>' . $change['pending_status'] . "</b>.</span>";
             $insert['player_id'] = $acc->id;
             $insert['msg'] = "Seu email foi alterado para: <b>" . $change['pending_status'] . "</b>.";
             $insert['time'] = time();
@@ -107,18 +109,18 @@ include("templates/acc-header.php");
             $aviso = 1;
         }else{
             $valortempo = $change['pending_time'] - time();
-            if ($valortempo < 60){
-            $valortempo2 = $valortempo;
-            $auxiliar2 = "segundo(s)";
-            }else if($valortempo < 3600){
-            $valortempo2 = floor($valortempo / 60);
-            $auxiliar2 = "minuto(s)";
-            }else if($valortempo < 86400){
-            $valortempo2 = floor($valortempo / 3600);
-            $auxiliar2 = "hora(s)";
-            }else if($valortempo > 86400){
-            $valortempo2 = floor($valortempo / 86400);
-            $auxiliar2 = "dia(s)";
+            if ($valortempo < 60) {
+                $valortempo2 = $valortempo;
+                $auxiliar2 = "segundo(s)";
+            } elseif ($valortempo < 3600) {
+                $valortempo2 = floor($valortempo / 60);
+                $auxiliar2 = "minuto(s)";
+            } elseif ($valortempo < 86400) {
+                $valortempo2 = floor($valortempo / 3600);
+                $auxiliar2 = "hora(s)";
+            } elseif ($valortempo > 86400) {
+                $valortempo2 = floor($valortempo / 86400);
+                $auxiliar2 = "dia(s)";
             }
 
             echo "<span id=\"aviso-a\"><font size=\"1px\">Foi solicitada a mudança de seu email para: <b>" . $change['pending_status'] . "</b><br/>Seu email será alterado em " . $valortempo2 . " " . $auxiliar2 . ".<br/>Se não quiser mais mudar de email <a href=\"changemail.php?act=cancel\">clique aqui</a>.</font></span>";
@@ -129,7 +131,7 @@ include("templates/acc-header.php");
 
 	 //d'a ouro pro cara q te convidou
     $queryactivate = $db->execute("select `id` from `players` where `acc_id`=? and `level`>=?", array($acc->id, $setting->activate_level));
-    if (($acc->ref != t) and ($queryactivate->recordcount() > 0)){
+    if ($acc->ref != t && $queryactivate->recordcount() > 0){
 	$query7 = $db->execute("update `players_ref` set `session_id`=? where `id_p_c`=?", array(1, $acc->id));
 	
             if($setting->promo == 't'){
@@ -142,18 +144,18 @@ include("templates/acc-header.php");
 	
 		
 		
-		$query2 = mysql_query("select * from `players_ref` where `id_p_c` = $acc->id and session_id = 1");
+		$query2 = mysql_query(sprintf('select * from `players_ref` where `id_p_c` = %s and session_id = 1', $acc->id));
 				while($row = mysql_fetch_array($query2)) {
 				$qt_ref = $row['id_p_ref'];
 				}
 				
 				
 			
-		$query3 = $db->execute("select * from `players_ref` where `id_p_ref` = $qt_ref and session_id = 1");
+		$query3 = $db->execute(sprintf('select * from `players_ref` where `id_p_ref` = %s and session_id = 1', $qt_ref));
 		
 		//SELECIONANDO TABELA DE PREMIOS
 		$variavel = $query3->recordcount();
-			$query2 = $db->execute("select * from `ref_list_prem` where `qt` = $variavel and `event` = $setting->event_convidados order by rand()");
+			$query2 = $db->execute(sprintf('select * from `ref_list_prem` where `qt` = %s and `event` = %s order by rand()', $variavel, $setting->event_convidados));
 				while($row = $query2->fetchrow()){
 					$type_qt = $row['qt'];
 					$type_item = $row['item_id'];
@@ -161,6 +163,7 @@ include("templates/acc-header.php");
 					$type_event = $row['event'];
 					$item_bonus = $row['bonus'];
 					}
+    
 		if($query2->recordcount()){	
 		// INSERINDO ITEM		
 		if($type_item > 0){
@@ -200,74 +203,73 @@ include("templates/acc-header.php");
 
     if ($aviso != 1)
     {
-        echo "<span id=\"aviso-a\"></span>";
+        echo '<span id="aviso-a"></span>';
     }
 
     $query = $db->execute("select `id`, `username`, `level`, `avatar`, `ban`, `serv` from `players` where `acc_id`=? order by `level` desc", array($acc->id));
     if ($query->recordcount() == 0) {
         echo "<br/><p><center><b>Você ainda não possui nenhum personagem.</b></center></p><br/>";
-    } else {
-
-        if ($query->recordcount() <= 3) {
-            echo "<p><table align=\"center\" width=\"95%\"><tr>";
-            while($member = $query->fetchrow())
-            {
-                echo "<td><table align=\"center\" style=\"height:132px; border:1px solid #444; padding:3px;\" onmouseover=\"this.bgColor='#cccccc';\" onmouseout=\"this.bgColor='#000000';\" onclick='window.location=\"login.php?id=" . $member['id'] . "\"'>";
-                echo "<tr><td>";
-                echo "<center><a href=\"login.php?id=" . $member['id'] . "\"><img src=\"static/" . $member['avatar'] . "\" alt=\"" . $member['username'] . "\" width=\"85px\" height=\"80px\"/></a></center>";
-                echo "</td></tr>";
-                
-                if (strlen($member['username']) < 8) {
-                    echo "<tr><td><center><b><font size=\"3px\">" . $member['username'] . "</font></b></center></td></tr>";
-                } else if (strlen($member['username']) < 12) {
-                    echo "<tr><td><center><b><font size=\"2px\">" . $member['username'] . "</font></b></center></td></tr>";
-                } else {
-                    echo "<tr><td><center><b><font size=\"1px\">" . $member['username'] . "</font></b></center></td></tr>";
-                }
-                
-                if ($member['ban'] > time()){
-                    echo "<tr><td><center><font size=\"1px\" color=\"red\"><b>Banido</b></font></center></td></tr>";
-                }else{
-                    echo "<tr><td><center><font size=\"1px\">nível " . $member['level'] . "</font></center></td></tr>";
-                }
-                echo "</table></td>";
+    } elseif ($query->recordcount() <= 3) {
+        echo '<p><table align="center" width="95%"><tr>';
+        while($member = $query->fetchrow())
+        {
+            echo "<td><table align=\"center\" style=\"height:132px; border:1px solid #444; padding:3px;\" onmouseover=\"this.bgColor='#cccccc';\" onmouseout=\"this.bgColor='#000000';\" onclick='window.location=\"login.php?id=" . $member['id'] . "\"'>";
+            echo "<tr><td>";
+            echo '<center><a href="login.php?id=' . $member['id'] . '"><img src="static/' . $member['avatar'] . '" alt="' . $member['username'] . '" width="85px" height="80px"/></a></center>';
+            echo "</td></tr>";
+            
+            if (strlen($member['username']) < 8) {
+                echo '<tr><td><center><b><font size="3px">' . $member['username'] . "</font></b></center></td></tr>";
+            } elseif (strlen($member['username']) < 12) {
+                echo '<tr><td><center><b><font size="2px">' . $member['username'] . "</font></b></center></td></tr>";
+            } else {
+                echo '<tr><td><center><b><font size="1px">' . $member['username'] . "</font></b></center></td></tr>";
             }
-            echo "</tr></table></p>";
-        } else {
-            echo "<p><div id=\"jMyCarousel\" class=\"jMyCarousel\"><ul>";
-            while($member = $query->fetchrow())
-            {
-                    echo "<li><table align=\"center\" style=\"height:132px; border:1px solid #444; padding:3px;\" onmouseover=\"this.bgColor='#cccccc';\" onmouseout=\"this.bgColor='#000000';\" onclick='window.location=\"login.php?id=" . $member['id'] . "\"'>";
-                        echo "<tr><td>";
-                            echo "<center><a href=\"login.php?id=" . $member['id'] . "\"><img src=\"static/" . $member['avatar'] . "\" alt=\"" . $member['username'] . "\" width=\"85px\" height=\"80px\"/></a></center>";
-                        echo "</td></tr>";
-
-                        if (strlen($member['username']) < 8) {
-                            echo "<tr><td><center><b><font size=\"3px\">" . $member['username'] . "</font></b></center></td></tr>";
-                        } else if (strlen($member['username']) < 12) {
-                            echo "<tr><td><center><b><font size=\"2px\">" . $member['username'] . "</font></b></center></td></tr>";
-                        } else {
-                            echo "<tr><td><center><b><font size=\"1px\">" . $member['username'] . "</font></b></center></td></tr>";
-                        }
-                
-                        if ($member['ban'] > time()){
-                            echo "<tr><td><center><font size=\"1px\" color=\"red\"><b>Banido</b></font></center></td></tr>";
-                        }else{
-                            echo "<tr><td><center><font size=\"1px\">nível " . $member['level'] . "</font></center></td></tr>";
-                        }
-                echo "</table></li>";
+            
+            if ($member['ban'] > time()){
+                echo '<tr><td><center><font size="1px" color="red"><b>Banido</b></font></center></td></tr>';
+            }else{
+                echo "<tr><td><center><font size=\"1px\">nível " . $member['level'] . "</font></center></td></tr>";
             }
-            echo "</ul></div></p>";
+            
+            echo "</table></td>";
         }
+        echo "</tr></table></p>";
+    } else {
+        echo '<p><div id="jMyCarousel" class="jMyCarousel"><ul>';
+        while($member = $query->fetchrow())
+        {
+                echo "<li><table align=\"center\" style=\"height:132px; border:1px solid #444; padding:3px;\" onmouseover=\"this.bgColor='#cccccc';\" onmouseout=\"this.bgColor='#000000';\" onclick='window.location=\"login.php?id=" . $member['id'] . "\"'>";
+                    echo "<tr><td>";
+                        echo '<center><a href="login.php?id=' . $member['id'] . '"><img src="static/' . $member['avatar'] . '" alt="' . $member['username'] . '" width="85px" height="80px"/></a></center>';
+                    echo "</td></tr>";
 
+                    if (strlen($member['username']) < 8) {
+                        echo '<tr><td><center><b><font size="3px">' . $member['username'] . "</font></b></center></td></tr>";
+                    } elseif (strlen($member['username']) < 12) {
+                        echo '<tr><td><center><b><font size="2px">' . $member['username'] . "</font></b></center></td></tr>";
+                    } else {
+                        echo '<tr><td><center><b><font size="1px">' . $member['username'] . "</font></b></center></td></tr>";
+                    }
+            
+                    if ($member['ban'] > time()){
+                        echo '<tr><td><center><font size="1px" color="red"><b>Banido</b></font></center></td></tr>';
+                    }else{
+                        echo "<tr><td><center><font size=\"1px\">nível " . $member['level'] . "</font></center></td></tr>";
+                    }
+                    
+            echo "</table></li>";
+        }
+        
+        echo "</ul></div></p>";
     }
     
-    echo "<span id=\"aviso-v\"><table width=\"95%\" align=\"center\"><tr>";
-    echo "<td width=\"15%\"><font size=\"1px\"><a href=\"logout.php\">Sair</a></font></td>";
-    echo "<td width=\"30%\" align=\"center\"><font size=\"1px\"><a href=\"newchar.php\"><b>Criar novo Personagem</b></a></font></td>";
-    echo "<td width=\"30%\" align=\"center\"><font size=\"1px\"><a href=\"deletechar.php\"><b>Excluir Personagem</b></a></font></td>";
-    echo "<td width=\"25%\" align=\"right\"><font size=\"1px\"><a href=\"acc_options.php\">Editar Conta</a></font></td>";
+    echo '<span id="aviso-v"><table width="95%" align="center"><tr>';
+    echo '<td width="15%"><font size="1px"><a href="logout.php">Sair</a></font></td>';
+    echo '<td width="30%" align="center"><font size="1px"><a href="newchar.php"><b>Criar novo Personagem</b></a></font></td>';
+    echo '<td width="30%" align="center"><font size="1px"><a href="deletechar.php"><b>Excluir Personagem</b></a></font></td>';
+    echo '<td width="25%" align="right"><font size="1px"><a href="acc_options.php">Editar Conta</a></font></td>';
     echo "</tr></table></span>";
-include("templates/footer.php");
+include(__DIR__ . "/templates/footer.php");
 exit;
 ?>

@@ -1,31 +1,33 @@
 <?php
 
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Principal");
 $player = check_user($secret_key, $db);
 
-include("checkforum.php");
-include("templates/private_header.php");
+include(__DIR__ . "/checkforum.php");
+include(__DIR__ . "/templates/private_header.php");
 
-if (!$_POST['detail'] or !$_POST['topic']) {
+if (!$_POST['detail'] || !$_POST['topic']) {
 		echo "<fieldset><legend><b>Erro</b></legend>Você precisa preencher todos os campos!<BR>";
 		echo "<a href=\"#\" onClick='javascript: history.back();'>Voltar</a></fieldset>";
-            include("templates/private_footer.php");
+            include(__DIR__ . "/templates/private_footer.php");
             exit;
 }
 
 if ($_POST['category'] == 'none') {
 		echo "<fieldset><legend><b>Erro</b></legend>Você precisa escolher uma categoria!<BR>";
 		echo "<a href=\"#\" onClick='javascript: history.back();'>Voltar</a></fieldset>";
-            include("templates/private_footer.php");
+            include(__DIR__ . "/templates/private_footer.php");
             exit;
 }
 
 $verifica = $db->GetOne("select `imperador` from `reinos` where `id`=?", array($player->reino));
-if (($_POST['category'] != 'sugestoes') and ($_POST['category'] != 'gangues') and ($_POST['category'] != 'trade') and ($_POST['category'] != 'duvidas') and ($_POST['category'] != 'outros') and ($_POST['category'] != 'fan') and ($_POST['category'] != 'off') and ($player->gm_rank < 9)) {
+if ($_POST['category'] != 'sugestoes' && $_POST['category'] != 'gangues' && $_POST['category'] != 'trade' && $_POST['category'] != 'duvidas' && $_POST['category'] != 'outros' && $_POST['category'] != 'fan' && $_POST['category'] != 'off' && $player->gm_rank < 9) {
 		echo "<fieldset><legend><b>Erro</b></legend>Você não tem autorização para criar tópicos nesta categoria!<BR>";
 		echo "<a href=\"#\" onClick='javascript: history.back();'>Voltar</a></fieldset>";
-            include("templates/private_footer.php");
+            include(__DIR__ . "/templates/private_footer.php");
             exit;
 }
 
@@ -40,12 +42,7 @@ $notavel=strip_tags($detail);
 $texto=nl2br($notavel);
 
 
-if (!$_POST['vota'])
-{
-$vota = "f";
-}else{
-$vota = "t";
-}
+$vota = $_POST['vota'] ? "t" : "f";
 
 $time = time();
 
@@ -71,8 +68,9 @@ else {
 echo "<fieldset><legend><b>Erro</b></legend>Um erro inesperado ocorreu.<BR>";
 echo "<a href=select_forum.php>Voltar</a></fieldset>";
 }
+
 mysql_close();
 ?>
 <?php
-include("templates/private_footer.php");
+include(__DIR__ . "/templates/private_footer.php");
 ?>

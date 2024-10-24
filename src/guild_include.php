@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*************************************/
 /*           ezRPG script            */
 /*         Written by Khashul        */
@@ -8,7 +10,7 @@
 /*************************************/
 
 //Populates $guild variable
-$query = $db->execute("select * from guilds where `id`= $player->guild_id");
+$query = $db->execute('select * from guilds where `id`= ' . $player->guild_id);
 
 if ($query->recordcount() == 0) {
     header("Location: home.php");

@@ -1,6 +1,8 @@
 <?php
 
- 		$magiaaff = $db->execute("select `magia`, `turnos` from `bixos` where `player_id`=?", array($player->id));
+ 		declare(strict_types=1);
+
+   $magiaaff = $db->execute("select `magia`, `turnos` from `bixos` where `player_id`=?", array($player->id));
 		$tornosrestantes = $magiaaff->fetchrow();
 
 		if ($tornosrestantes['turnos'] != 0){

@@ -1,34 +1,35 @@
 <?php
 
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Fórum");
 $player = check_user($secret_key, $db);
 
-include("templates/private_header.php");
+include(__DIR__ . "/templates/private_header.php");
 
 if (!$_GET['topic'])
 {
-	echo "Um erro desconhecido ocorreu! <a href=\"main_forum.php\">Voltar</a>.";
-	include("templates/private_footer.php");
+	echo 'Um erro desconhecido ocorreu! <a href="main_forum.php">Voltar</a>.';
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
+
 	if ($player->gm_rank > 2){
 	$procuramensagem = $db->execute("select `topic`, `detail` from `forum_question` where `id`=?", array($_GET['topic']));
 	}else{
 	$procuramensagem = $db->execute("select `topic`, `detail` from `forum_question` where `id`=? and `user_id`=?", array($_GET['topic'], $player->id));
 	}
+ 
 	if ($procuramensagem->recordcount() == 0)
 	{
 	echo "Você não pode apagar este tópico! <a href=\"main_forum.php\">Voltar</a>.";
-	include("templates/private_footer.php");
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 	}
-	else
-	{
-		
-		$editmsg = $procuramensagem->fetchrow();
-		$editandomensagem = "" . $editmsg['detail'] . "";
-	}
+ $editmsg = $procuramensagem->fetchrow();
+ $editandomensagem = "" . $editmsg['detail'] . "";
+ 
 if(isset($_POST['submit']))
 {
 	if ($player->gm_rank > 2){
@@ -50,7 +51,7 @@ if(isset($_POST['submit']))
         $real = $db->execute("delete from `forum_answer` where `question_id`=?", array($_GET['topic']));
         $real = $db->execute("delete from `thumb` where `topic_id`=?", array($_GET['topic']));
 	echo "Tópico removido com sucesso! <a href=\"main_forum.php\">Voltar</a>.";
-	include("templates/private_footer.php");
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
 
@@ -76,5 +77,5 @@ if(isset($_POST['submit']))
 </tr>
 </table>
 <?php
-include("templates/private_footer.php");
+include(__DIR__ . "/templates/private_footer.php");
 ?>

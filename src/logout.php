@@ -1,5 +1,7 @@
 <?php
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 
 if ($_SESSION['Login']['player_id'] > 0){
 $player = check_user($secret_key, $db);

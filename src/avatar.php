@@ -1,79 +1,66 @@
 <?php
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Editar perfil");
 $player = check_user($secret_key, $db);
 
 $error = 0;
 
-include("templates/private_header.php");
+include(__DIR__ . "/templates/private_header.php");
 
 
-$get = $db->execute("select * from `players` where `username` = '$player->username' and subname > '0'");
-if ($get->recordcount() > 0) {
-
-	if ($_POST['subname'] == Alterar) {
-		$subtitle = $_POST['subtitle'];
-		$sub_color = $_POST['categoria_color'];
-		$numero = "10";
-		$total = strlen($subtitle);
-		if ($total > $numero) {
-			echo showAlert("Ta maluco? Só são aceitos nicks com 10 caracteres ou menos.", "red");
-		} else {
-			if (!empty($subtitle) and !empty($sub_color)) {
-				if ($sub_color == "red" or $sub_color == "blue" or $sub_color == "green" or $sub_color == "black") {
-
-					if ($_POST['clean'] == 'yes') {
-						$sub_final = "1";
-						echo showAlert("Subnick foi removido", "green");
-					} else {
-						$sub_final = "" . $subtitle . ", " . $sub_color . "";
-						echo showAlert("Nick alterado: $player->username [<font color=\"" . $sub_color . "\">" . $subtitle . "</font>]", "green");
-					}
-					$trocachare = $db->execute("update `players` set `subname`=? where `username`=?", array($sub_final, $player->username));
-				} else {
-					echo showAlert("Digite uma cor válida", "red");
-				}
-			} else {
-				echo showAlert("Digite um sub nick válido", "red");
-			}
-		}
-	}
+$get = $db->execute(sprintf("select * from `players` where `username` = '%s' and subname > '0'", $player->username));
+if ($get->recordcount() > 0 && $_POST['subname'] == Alterar) {
+    $subtitle = $_POST['subtitle'];
+    $sub_color = $_POST['categoria_color'];
+    $numero = "10";
+    $total = strlen($subtitle);
+    if ($total > $numero) {
+        echo showAlert("Ta maluco? Só são aceitos nicks com 10 caracteres ou menos.", "red");
+    } elseif (!empty($subtitle) && !empty($sub_color)) {
+        if ($sub_color == "red" || $sub_color == "blue" || $sub_color == "green" || $sub_color == "black") {
+    
+    					if ($_POST['clean'] == 'yes') {
+    						$sub_final = "1";
+    						echo showAlert("Subnick foi removido", "green");
+    					} else {
+    						$sub_final = "" . $subtitle . ", " . $sub_color . "";
+    						echo showAlert(sprintf('Nick alterado: %s [<font color="', $player->username) . $sub_color . '">' . $subtitle . "</font>]", "green");
+    					}
+         
+    					$trocachare = $db->execute("update `players` set `subname`=? where `username`=?", array($sub_final, $player->username));
+    				} else {
+    					echo showAlert("Digite uma cor válida", "red");
+    				}
+    } else {
+ 				echo showAlert("Digite um sub nick válido", "red");
+ 			}
 }
 
 if ($_POST['upload']) {
 	if (!$_POST['avatar']) {
-		$errmsg .= "Por favor preencha todos os campos!";
-		$error = 1;
-	} else if (($_POST['avatar']) and (!@GetImageSize($_POST['avatar']))) {
-		$errmsg .= "O endereço desta imagem não é válido!";
-		$error = 1;
-	}
-
-	if ($error == 0) {
-
-		if (!$_POST['avatar']) {
-			$avat = "anonimo.gif";
-		} else {
-			$avat = $_POST['avatar'];
-		}
-
-		$query = $db->execute("update `players` set `avatar`=? where `id`=?", array($avat, $player->id));
-		$msg .= "Você alterou seu avatar com sucesso!";
-
-		// Espera 1.5 segundos antes de atualizar a página
-		//  echo "<p><font color='green'>$msg</font></p>";
-		echo showAlert("<b>" . $msg . "</b>", "green");
-		echo '<meta http-equiv="refresh" content="1.3">';
-		exit;
-
-	} else {
-
-		// Espera 1.5 segundos antes de atualizar a página
-		//  echo "<p><font color='green'>$msg</font></p>";
-		echo showAlert("<b>" . $errmsg . "</b>", "red");
-		echo '<meta http-equiv="refresh" content="1.3">';
-		exit;
-	}
+     $errmsg .= "Por favor preencha todos os campos!";
+     $error = 1;
+ } elseif ($_POST['avatar'] && !@GetImageSize($_POST['avatar'])) {
+     $errmsg .= "O endereço desta imagem não é válido!";
+     $error = 1;
+ }
+ if ($error == 0) {
+     $avat = $_POST['avatar'] ?: "anonimo.gif";
+     $query = $db->execute("update `players` set `avatar`=? where `id`=?", array($avat, $player->id));
+     $msg .= "Você alterou seu avatar com sucesso!";
+     // Espera 1.5 segundos antes de atualizar a página
+     //  echo "<p><font color='green'>$msg</font></p>";
+     echo showAlert("<b>" . $msg . "</b>", "green");
+     echo '<meta http-equiv="refresh" content="1.3">';
+     exit;
+ }
+ // Espera 1.5 segundos antes de atualizar a página
+ //  echo "<p><font color='green'>$msg</font></p>";
+ echo showAlert("<b>" . $errmsg . "</b>", "red");
+ echo '<meta http-equiv="refresh" content="1.3">';
+ exit;
 }
 
 
@@ -147,5 +134,5 @@ if ($procuramengperfil->recordcount() == 0) {
 </table>
 
 
-<?php include("templates/private_footer.php");
+<?php include(__DIR__ . "/templates/private_footer.php");
 ?>

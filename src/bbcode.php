@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 function remoteFileExists($url)
 {
     $curl = curl_init($url);
@@ -51,12 +53,13 @@ function FunSmile($text, $smile = '0')
         ':cry:' => 'cryy',
         ';)' => 10
     );
-    if ($smile == 1)
+    if ($smile == 1) {
         return $text;
-    else {
+    } else {
         // Altera os caracteres por imagens
         foreach ($smilefun as $search => $replace)
             $text = str_replace($search, '<img src="static/images/smile/' . $replace . '.gif" />', $text);
+        
         return $text;
     }
 }
@@ -65,7 +68,7 @@ function FunSmile($text, $smile = '0')
 // Class BBCODE
 class bbcode
 {
-    function parse($text, $smile = '0')
+    public function parse($text, $smile = '0')
     {
         // Lista de função BBCODE  
 
@@ -77,7 +80,7 @@ class bbcode
             $quote = substr($text, stripos($text, '[quote]') + 7, stripos($text, '[/quote]') - stripos($text, '[quote]') - 7);
             $text = str_ireplace('[quote]' . $quote . '[/quote]', '<blockquote>' . $quote . '</blockquote>', $text);
         }
-        $rows = 0;
+        
 
         // BBCODE "URL=" -> VERSAO ANTIGA
         $text = preg_replace("/\[url=(.*)\](.*)\[\/url\]/Usi", "<a href=\"\\1\" target=\"_blank\" border=\"0px\">\\2</a>", $text);

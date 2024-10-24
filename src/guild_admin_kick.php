@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*************************************/
 /*           ezRPG script            */
 /*         Written by Khashul        */
@@ -7,11 +9,11 @@
 /*    http://www.bbgamezone.com/     */
 /*************************************/
 
-include("lib.php");
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Administração do Clã");
 $player = check_user($secret_key, $db);
-include("checkbattle.php");
-include("checkguild.php");
+include(__DIR__ . "/checkbattle.php");
+include(__DIR__ . "/checkguild.php");
 
 $error = 0;
 
@@ -24,12 +26,12 @@ if ($guildquery->recordcount() == 0) {
     $guild = $guildquery->fetchrow();
 }
 
-include("templates/private_header.php");
+include(__DIR__ . "/templates/private_header.php");
 
 //Guild Leader Admin check
-if (($player->username != $guild['leader']) and ($player->username != $guild['vice'])) {
+if ($player->username != $guild['leader'] && $player->username != $guild['vice']) {
     echo "Você não pode acessar esta página.";
-    echo "<br/><a href=\"home.php\">Voltar</a>.";
+    echo '<br/><a href="home.php">Voltar</a>.';
 } else {
 
 if (isset($_POST['username']) && ($_POST['submit'])) {
@@ -37,27 +39,27 @@ if (isset($_POST['username']) && ($_POST['submit'])) {
 	$queryuser = $db->execute("select `id`, `username`, `guild` from `players` where `username`=?", array($_POST['username']));
 
     if ($queryuser->recordcount() == 0) {
-    	$errmsg .= "Este usuário não existe!<p />";
-    	$error = 1;
-   	} else if ($_POST['username'] == $guild['leader']) {
-   		$errmsg .= "Você não pode expulsar o lider do clã!<p />";
-   		$error = 1;
-   	} else if ($_POST['username'] == $guild['vice']) {
-   		$errmsg .= "Você não pode expulsar o vice-lider do clã!<p />";
-   		$error = 1;
-	} else {
-   		$member = $queryuser->fetchrow();
-	   		if ($member['guild'] != $guild['id']) {
-    			$errmsg .= "O usuário " . $member['username'] ." não faz parte do clã " . $guild['name'] ."!<p />";
-    			$error = 1;
-    			} else {
-    			$query = $db->execute("update `guilds` set `members`=? where `id`=?", array($guild['members'] - 1, $guild['id']));
-    			$query1 = $db->execute("update `players` set `guild`=? where `username`=?", array(NULL, $member['username']));
-    			$logmsg = "Você foi expulso do clã: ". $guild['name'] .".";
-				addlog($member['id'], $logmsg, $db);
-    			$msg .= "Você expulsou " . $member['username'] . " do clã.<p />";
-    		}
-    	}
+        $errmsg .= "Este usuário não existe!<p />";
+        $error = 1;
+    } elseif ($_POST['username'] == $guild['leader']) {
+        $errmsg .= "Você não pode expulsar o lider do clã!<p />";
+        $error = 1;
+    } elseif ($_POST['username'] == $guild['vice']) {
+        $errmsg .= "Você não pode expulsar o vice-lider do clã!<p />";
+        $error = 1;
+    } else {
+      		$member = $queryuser->fetchrow();
+   	   		if ($member['guild'] != $guild['id']) {
+       			$errmsg .= "O usuário " . $member['username'] ." não faz parte do clã " . $guild['name'] ."!<p />";
+       			$error = 1;
+       			} else {
+       			$query = $db->execute("update `guilds` set `members`=? where `id`=?", array($guild['members'] - 1, $guild['id']));
+       			$query1 = $db->execute("update `players` set `guild`=? where `username`=?", array(NULL, $member['username']));
+       			$logmsg = "Você foi expulso do clã: ". $guild['name'] .".";
+   				addlog($member['id'], $logmsg, $db);
+       			$msg .= "Você expulsou " . $member['username'] . " do clã.<p />";
+       		}
+       	}
 	}
 
 ?>
@@ -68,8 +70,9 @@ if (isset($_POST['username']) && ($_POST['submit'])) {
 <b>Usuário:</b> <?php $query = $db->execute("select `id`, `username` from `players` where `guild`=?", array($guild['id']));
 echo "<select name=\"username\"><option value=''>Selecione</option>";
 while($result = $query->fetchrow()){
-echo "<option value=\"$result[username]\">$result[username]</option>";
+echo sprintf('<option value="%s">%s</option>', $result[username], $result[username]);
 }
+
 echo "</select>"; ?> <input type="submit" name="submit" value="Expulsar">
 </form>
 </fieldset>
@@ -80,5 +83,6 @@ echo "</select>"; ?> <input type="submit" name="submit" value="Expulsar">
 
 <?php
 }
-include("templates/private_footer.php");
+
+include(__DIR__ . "/templates/private_footer.php");
 ?>

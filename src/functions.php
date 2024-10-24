@@ -1,74 +1,74 @@
 <?php
+declare(strict_types=1);
+
 // CLASSES NOVAS PARA OC VERSÃO 2.0 //
 class OCv2
 {
-	function info_db($data, $data2, $data3, $data4)
+	public function info_db($data, $data2, $data3, $data4)
 	{
-		$query = mysql_query("SELECT * FROM `$data` WHERE `$data2` = '$data3'");
+		$query = mysql_query(sprintf("SELECT * FROM `%s` WHERE `%s` = '%s'", $data, $data2, $data3));
 		while ($row = mysql_fetch_array($query)) {
 			return $row[$data4];
 		}
+  
 		return false;
 	}
-	function totaldados($data, $data2 = false, $data3 = true, $vl = false)
+ 
+	public function totaldados(string $data, $data2 = false, $data3 = true, $vl = false)
 	{
-		if (!$vl) {
-			$vll = '=';
-		} else {
-			$vll = '>';
-		}
-		if (!$data2 || !$data3) {
-			$query = mysql_query("SELECT * FROM $data");
+		$vll = $vl ? '>' : '=';
+
+  if (!$data2 || !$data3) {
+			$query = mysql_query('SELECT * FROM ' . $data);
 			return mysql_num_rows($query);
-		} else {
-			$query = mysql_query("SELECT * FROM $data WHERE $data2 $vll '$data3'")
-				or print(ERROR);
-			if (empty($erro)) {
+		}
+  ($query = mysql_query(sprintf("SELECT * FROM %s WHERE %s %s '%s'", $data, $data2, $vll, $data3))) || (print(ERROR));
+  if (empty($erro)) {
 				return mysql_num_rows($query);
 			}
-		}
+  
 		return false;
 	}
 
-	function tirarCMoeda($valor)
+	public function tirarCMoeda($valor)
 	{
 		$pontos = '.';
 		$virgula = ',';
 		$result = str_replace($pontos, "", $valor);
-		$result2 = str_replace($virgula, "", $result);
-		return $result2;
+		return str_replace($virgula, "", $result);
 	}
-	function verificar($valor)
+ 
+	public function verificar($valor)
 	{
 		$pontos = ',';
 		$virgula = '0';
 		$result = str_replace($pontos, "", $valor);
-		$result2 = str_replace($virgula, "", $result);
-		return $result2;
+		return str_replace($virgula, "", $result);
 	}
 }
+
 // FIM DO MEU CODE LINDO //
 
-function encodePassword($password)
+function encodePassword(string $password)
 {
 
 	$salt = getenv('PASSWORD_SALT');
 	$hash = sha1($password . $salt);
 
-	for ($i = 0; $i < 1000; $i++) {
+	for ($i = 0; $i < 1000; ++$i) {
 		$hash = sha1($hash);
 	}
 
 	return $hash;
 }
 
-function encodeSession($account_id)
+function encodeSession(string $account_id)
 {
 
-	$pepper = "$n203hc29*&%&Hd";
+	$pepper = $n203hc29 . '*&%&Hd';
 	$hash = sha1($account_id . $pepper . $_SERVER["REMOTE_ADR"]);
 
-	for ($i = 0; $i < 1000; $i++) {
+	for ($i = 0; $i < 1000; ++$i) {
 		$hash = sha1($hash);
 	}
 
@@ -83,23 +83,19 @@ function check_acc($secret_key, &$db)
 		session_destroy();
 		header("Location: index.php");
 		exit;
-	} else {
-		$query = $db->execute("select * from `accounts` where `id`=? and `conta`=?", array($_SESSION['Login']['account_id'], $_SESSION['Login']['account']));
-		$accarray = $query->fetchrow();
-
-		if (($query->recordcount() != 1) or (encodeSession($accarray['password']) != $_SESSION['Login']['key'])) {
+	}
+ $query = $db->execute("select * from `accounts` where `id`=? and `conta`=?", array($_SESSION['Login']['account_id'], $_SESSION['Login']['account']));
+ $accarray = $query->fetchrow();
+ if ($query->recordcount() != 1 || encodeSession($accarray['password']) != $_SESSION['Login']['key']) {
 			session_unset();
 			session_destroy();
 			header("Location: index.php");
 			exit;
-		} else {
-			foreach ($accarray as $key => $value) {
+		}
+ foreach ($accarray as $key => $value) {
 				$acc->$key = $value;
 			}
-
-			return $acc;
-		}
-	}
+ return $acc;
 }
 
 
@@ -111,36 +107,33 @@ function check_user($secret_key, &$db)
 		session_destroy();
 		header("Location: index.php");
 		exit;
-	} else {
-		$query = $db->execute("select * from `accounts` where `id`=? and `conta`=?", array($_SESSION['Login']['account_id'], $_SESSION['Login']['account']));
-		$accarray = $query->fetchrow();
-
-		if (($query->recordcount() != 1) or (encodeSession($accarray['password']) != $_SESSION['Login']['key'])) {
-			session_unset();
-			session_destroy();
-			header("Location: index.php");
-			exit;
-		} else {
-			if ($_SESSION['Login']['player_id']) {
-				$query = $db->execute("select * from `players` where `id`=? and `acc_id`=?", array($_SESSION['Login']['player_id'], $_SESSION['Login']['account_id']));
-				$playerarray = $query->fetchrow();
-
-				if ($query->recordcount() == 1) {
-					foreach ($playerarray as $key => $value) {
-						$player->$key = $value;
-					}
-
-					return $player;
-				} else {
-					header("Location: characters.php");
-					exit;
-				}
-			} else {
+	}
+ $query = $db->execute("select * from `accounts` where `id`=? and `conta`=?", array($_SESSION['Login']['account_id'], $_SESSION['Login']['account']));
+ $accarray = $query->fetchrow();
+ if ($query->recordcount() != 1 || encodeSession($accarray['password']) != $_SESSION['Login']['key']) {
+     session_unset();
+     session_destroy();
+     header("Location: index.php");
+     exit;
+ }
+ if ($_SESSION['Login']['player_id']) {
+     $query = $db->execute("select * from `players` where `id`=? and `acc_id`=?", array($_SESSION['Login']['player_id'], $_SESSION['Login']['account_id']));
+     $playerarray = $query->fetchrow();
+     if ($query->recordcount() == 1) {
+ 					foreach ($playerarray as $key => $value) {
+ 						$player->$key = $value;
+ 					}
+ 
+ 					return $player;
+ 				}
+     header("Location: characters.php");
+     exit;
+ }
+ else {
 				header("Location: characters.php");
 				exit;
 			}
-		}
-	}
+ return null;
 }
 
 function multiploCinco($valor)
@@ -174,11 +167,10 @@ function maxHp(&$db, $phpid, $level, $reino = '1', $vip = '0')
 
 	$playerVit = $db->GetOne("select `vitality` from `players` where `id`=?", array($phpid));
 
-	if (($reino == '3') or ($vip > time())) {
+	if ($reino == '3' || $vip > time()) {
 		return multiploCinco(ceil(150 + ($level * 20)) * 1.08 + $bonus + (($playerVit - 1) * 20));
-	} else {
-		return ceil(150 + ($level * 20) + $bonus + (($playerVit - 1) * 20));
 	}
+ return ceil(150 + ($level * 20) + $bonus + (($playerVit - 1) * 20));
 }
 
 function maxMana($level, $extramana = '0')
@@ -203,6 +195,7 @@ function maxExp($level)
 	} else {
 		$bonus = 0;
 	}
+ 
 	return multiploCinco((30 + ($level / 15) - $bonus) * ($level + 1) * ($level + 1));
 }
 
@@ -214,12 +207,9 @@ function maxExpr($level)
 
 function maxEnergy($level, $vip = '0')
 {
-	if ($vip > time()) {
-		$fdividevinte = (($level + 1) / 10);
-	} else {
-		$fdividevinte = (($level + 1) / 20);
-	}
-	$fdividevinte = floor($fdividevinte);
+	$fdividevinte = $vip > time() ? ($level + 1) / 10 : ($level + 1) / 20;
+
+ $fdividevinte = floor($fdividevinte);
 	return 100 + ($fdividevinte * 10);
 }
 
@@ -249,7 +239,7 @@ function addlog($id, $msg, &$db)
 	$insert['player_id'] = $id;
 	$insert['msg'] = $msg;
 	$insert['time'] = time();
-	$query = $db->autoexecute('user_log', $insert, 'INSERT');
+	$db->autoexecute('user_log', $insert, 'INSERT');
 }
 
 //Insert a log message into the error log
@@ -257,7 +247,7 @@ function errorlog($msg, &$db)
 {
 	$insert['msg'] = $msg;
 	$insert['time'] = time();
-	$query = $db->autoexecute('log_errors', $insert, 'INSERT');
+	$db->autoexecute('log_errors', $insert, 'INSERT');
 }
 
 //Insert a log message into the GM log
@@ -265,19 +255,19 @@ function gmlog($msg, &$db)
 {
 	$insert['msg'] = $msg;
 	$insert['time'] = time();
-	$query = $db->autoexecute('log_gm', $insert, 'INSERT');
+	$db->autoexecute('log_gm', $insert, 'INSERT');
 }
 
 //Insert a log message into the forum log
 function forumlog($msg, &$db, $type = 0, $post = 0)
 {
-	if (($type == 1) and ($post > 0)) {
+	if ($type == 1 && $post > 0) {
 		$insert['msg'] = $msg;
 		$insert['time'] = time();
 		$insert['type'] = $type;
 		$insert['post'] = $post;
 		$query = $db->autoexecute('log_forum', $insert, 'INSERT');
-	} elseif (($type == 2) and ($post > 0)) {
+	} elseif ($type == 2 && $post > 0) {
 		$insert['msg'] = $msg;
 		$insert['time'] = time();
 		$insert['type'] = $type;
@@ -298,7 +288,7 @@ while ($set = $query->fetchrow()) {
 	$setting->$set['name'] = $set['value'];
 }
 
-function textLimit($string, $length, $lineBreak = null, $replacer = '...')
+function textLimit($string, $length, $lineBreak = null, string $replacer = '...')
 {
 	// Limitar o texto e adicionar reticências, se necessário
 	if (strlen($string) > $length) {
@@ -318,9 +308,9 @@ function antiBreak($comment, $leght)
 {
 	$array = explode(" ", $comment);
 
-	for ($i = 0, $array_num = count($array); $i < $array_num; $i++) {
+	for ($i = 0, $array_num = count($array); $i < $array_num; ++$i) {
 		$word_split = wordwrap($array[$i], $leght, " ", true);
-		echo "$word_split ";
+		echo $word_split . ' ';
 	}
 }
 
@@ -336,7 +326,7 @@ function item_count($id, $item, &$db)
 }
 
 
-function show_prog_bar($width, $percent, $show, $type = 'green', $color = '#000')
+function show_prog_bar($width, $percent, string $show, $type = 'green', string $color = '#000')
 {
 	$font = 'Tahoma';
 	$font_size = '8px';
@@ -349,15 +339,14 @@ function show_prog_bar($width, $percent, $show, $type = 'green', $color = '#000'
 	$return .= '<div name="progress">';
 	$return .= '<div style="background: url(\'images/bars//progress.gif\') no-repeat; height: 13px; width: 1px; display: block; float: left"><!-- --></div>';
 	$return .= '<div style="background: url(\'images/bars//bg.gif\'); height: 13px; width: ' . $width . 'px; display: block; float: left">';
-	$return .= '<span style="background: url(\'images/bars/on_' . strtolower($type) . '.gif\'); display: block; float: left; width: ' . $result . 'px; height: 11px; margin: 1px 0; font-size: ' . $font_size . '; font-family: \'' . $font . '\'; line-height: 11px; font-weight: ' . $font_weight . '; text-align: right; color: ' . $color . '; letter-spacing: 1px;">&nbsp;' . $show . '&nbsp;</span>';
+	$return .= '<span style="background: url(\'images/bars/on_' . strtolower($type) . ".gif'); display: block; float: left; width: " . $result . 'px; height: 11px; margin: 1px 0; font-size: ' . $font_size . "; font-family: '" . $font . "'; line-height: 11px; font-weight: " . $font_weight . '; text-align: right; color: ' . $color . '; letter-spacing: 1px;">&nbsp;' . $show . '&nbsp;</span>';
 
 	$return .= '</div>';
 	$return .= '<div style="background: url(\'images/bars//progress.gif\') no-repeat; height: 13px; width: 1px; display: block; float: left"><!-- --></div>';
-	$return .= '</div>';
-	return $return;
+	return $return . '</div>';
 }
 
-function showAlert($msg, $color = '#FFFDE0', $align = 'center', $link = NULL, $id = NULL)
+function showAlert(string $msg, $color = '#FFFDE0', string $align = 'center', $link = NULL, $id = NULL)
 {
 
 	if ($color == 'red') {
@@ -369,25 +358,29 @@ function showAlert($msg, $color = '#FFFDE0', $align = 'center', $link = NULL, $i
 	}
 
 	if ($link) {
-		$return .= "<a href=\"" . $link . "\" style=\"text-decoration: none;\">";
+		$return .= '<a href="' . $link . '" style="text-decoration: none;">';
 		$return .= "<div ";
 		if (id) {
-			$return .= "id = \"" . $id . "\" ";
+			$return .= 'id = "' . $id . '" ';
 		}
-		$return .= "class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" style=\"color: #000000; padding: 5px; border: 1px solid #DEDEDE; margin-bottom: 10px; text-align: " . $align . ";\">";
+  
+		$return .= "class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" style=\"color: #000000; padding: 5px; border: 1px solid #DEDEDE; margin-bottom: 10px; text-align: " . $align . ';">';
 	} else {
 		$return .= "<div ";
 		if (id) {
-			$return .= "id = \"" . $id . "\" ";
+			$return .= 'id = "' . $id . '" ';
 		}
-		$return .= "style=\"background-color:" . $color . "; padding: 5px; border: 1px solid #DEDEDE; margin-bottom: 10px; text-align: " . $align . ";\">";
+  
+		$return .= 'style="background-color:' . $color . "; padding: 5px; border: 1px solid #DEDEDE; margin-bottom: 10px; text-align: " . $align . ';">';
 	}
+ 
 	$return .= $msg;
 	$return .= "</div>";
 
 	if ($link) {
 		$return .= "</a>";
 	}
+ 
 	return $return;
 }
 
@@ -396,16 +389,15 @@ function parseInt($string)
 	//	return intval($string); 
 	if (preg_match('/(\d+)/', $string, $array)) {
 		return $array[1];
-	} else {
-		return 0;
 	}
+ return 0;
 }
 
 
 function showName($name, &$db, $status = 'on', $link = 'on')
 {
 	$ninguem = 0;
-	if (($name == NULL) or ((is_numeric($name)) and ($name < 1))) {
+	if ($name == NULL || is_numeric($name) && $name < 1) {
 		$ninguem = 5;
 	} elseif (is_numeric($name)) {
 		$user = $db->GetOne("select `username` from `players` where `id`=?", array($name));
@@ -422,7 +414,7 @@ function showName($name, &$db, $status = 'on', $link = 'on')
 			$player = check_user($secret_key, $db);
 			$online = $db->execute("select `time` from `user_online` where `player_id`=?", array($name));
 			$ignorado = $db->execute("select * from `ignored` where `uid`=? and `bid`=?", array($name, $player->id));
-			if (($online->recordcount() > 0) and ($ignorado->recordcount() == 0)) {
+			if ($online->recordcount() > 0 && $ignorado->recordcount() == 0) {
 				$check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", array($name));
 				if ($check->recordcount() == 0) {
 					$return .= "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $user) . "')\"><img src=\"static/images/online.png\" border=\"0px\"></a>";
@@ -431,12 +423,13 @@ function showName($name, &$db, $status = 'on', $link = 'on')
 					if ($stattus['pending_status'] == 'ocp') {
 						$return .= "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $user) . "')\"><img src=\"static/images/ocupado.png\" border=\"0px\"></a>";
 					} elseif ($stattus['pending_status'] == 'inv') {
-						$return .= "<img src=\"static/images/invisivel.png\" border=\"0px\">";
+						$return .= '<img src="static/images/invisivel.png" border="0px">';
 					}
 				}
 			}
 		}
-		$get = $db->execute("select * from `players` where `username` = '$user' and subname > '2'");
+  
+		$get = $db->execute(sprintf("select * from `players` where `username` = '%s' and subname > '2'", $user));
 
 		if ($get->recordcount() > 0) {
 
@@ -445,9 +438,10 @@ function showName($name, &$db, $status = 'on', $link = 'on')
 				$pieces = explode(", ", $sub);
 
 
-				$subname_set = " [<font color=\"" . $pieces[1] . "\">" . $pieces[0] . "</font>]";
+				$subname_set = ' [<font color="' . $pieces[1] . '">' . $pieces[0] . "</font>]";
 			}
 		}
+  
 		$closevip = false;
 		$pvipaccid = $db->execute("select `acc_id` from `players` where `id`=?", array($name));
 		$pviptime = $db->execute("select `vip` from `players` where `id`=?", array($name));
@@ -459,24 +453,25 @@ function showName($name, &$db, $status = 'on', $link = 'on')
 		}
 
 		if ($link != off) {
-			if ($closevip) {
-				$return .= "<a href=\"profile.php?id=" . $user . "\"><font color=\"blue\">";
-			} else {
-				$return .= "<a href=\"profile.php?id=" . $user . "\">";
-			}
-			if ($user == $player->username) {
-				$return .= "<b>" . $player->username . "</b>" . $subname_set . "";
-			} else {
-				$return .= "" . $user . "" . $subname_set . "";
-			}
-			$return .= "</a>";
-		} else {
-			if ($user == $player->username) {
-				$return .= "<b>" . $player->username . "</b>";
-			} else {
+      if ($closevip) {
+   				$return .= '<a href="profile.php?id=' . $user . '"><font color="blue">';
+   			} else {
+   				$return .= '<a href="profile.php?id=' . $user . '">';
+   			}
+
+      if ($user == $player->username) {
+   				$return .= "<b>" . $player->username . "</b>" . $subname_set . "";
+   			} else {
+   				$return .= "" . $user . "" . $subname_set . "";
+   			}
+
+      $return .= "</a>";
+  } elseif ($user == $player->username) {
+      $return .= "<b>" . $player->username . "</b>";
+  } else {
 				$return .= $user;
 			}
-		}
+  
 		if ($closevip) {
 			$return .= "</font>";
 		}
@@ -490,20 +485,22 @@ function showName($name, &$db, $status = 'on', $link = 'on')
 function filtro($data)
 {
 	$data = trim(htmlentities(strip_tags($data)));
-	if (get_magic_quotes_gpc())
-		$data = stripslashes($data);
+ if (get_magic_quotes_gpc()) {
+     $data = stripslashes($data);
+ }
+ 
 	$data = mysql_real_escape_string($data);
-	$data = str_replace("([^0-9])", "", $data) . "";
-	return $data;
+	return str_replace("([^0-9])", "", $data) . "";
 }
 
 function send_mail($from_name, $mail_to, $subject, $body)
 {
-	include("config.php");
-	require("../vendor/phpmailer/phpmailer/class.phpmailer.php");
+	include(__DIR__ . "/config.php");
+	require(__DIR__ . "/../vendor/phpmailer/phpmailer/class.phpmailer.php");
 
 	$mail = new PHPMailer();
 	$mail->isSMTP();
+ 
 	$mail->Host = $smtp_host;
 	$mail->SMTPAuth = $has_smtp_auth;
 	$mail->Username = $smtp_username;
@@ -516,6 +513,7 @@ function send_mail($from_name, $mail_to, $subject, $body)
 	$mail->addAddress($mail_to);
 
 	$mail->isHTML(true);
+ 
 	$mail->Subject = $subject;
 	$mail->Body = $body;
 

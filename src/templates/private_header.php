@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 $currentfile = $_SERVER["SCRIPT_NAME"];
 $parts = explode('/', $currentfile);
 $currentfile = $parts[count($parts) - 1];
@@ -20,42 +22,46 @@ if ($tutorial->recordcount() == 0) {
         $query = $db->autoexecute('pending', $insert, 'INSERT');
         header("Location: start.php");
         exit;
-    } else {
-        $tut = $checatutoriallido->fetchrow();
-        if ((($tut['pending_status'] == 1) or ($player->reino == 0)) and ($currentfile != 'start.php')) {
-            header("Location: start.php");
-            exit;
-        } elseif (($tut['pending_status'] == 2) and ($currentfile != 'start.php')) {
-            header("Location: start.php");
-            exit;
-        } elseif (($tut['pending_status'] == 3) and ($currentfile != 'stat_points.php')) {
-            header("Location: stat_points.php");
-            exit;
-        } elseif ($tut['pending_status'] == 4) {
-            if (isMobile($userAgent)) {
-                if ($currentfile != 'inventory_mobile.php') {
-                    header("Location: inventory_mobile.php");
-                    exit;
-                }
-            } else {
-                if ($currentfile != 'inventory.php') {
-                    header("Location: inventory.php");
-                    exit;
-                }
+    }
+    $tut = $checatutoriallido->fetchrow();
+    if (($tut['pending_status'] == 1 || $player->reino == 0) && $currentfile !== 'start.php') {
+        header("Location: start.php");
+        exit;
+    }
+    if ($tut['pending_status'] == 2 && $currentfile !== 'start.php') {
+        header("Location: start.php");
+        exit;
+    }
+    if ($tut['pending_status'] == 3 && $currentfile !== 'stat_points.php') {
+        header("Location: stat_points.php");
+        exit;
+    }
+    if ($tut['pending_status'] == 4) {
+        if (isMobile($userAgent)) {
+            if ($currentfile !== 'inventory_mobile.php') {
+                header("Location: inventory_mobile.php");
+                exit;
             }
-        } elseif (($tut['pending_status'] == 5) and ($currentfile != 'home.php')) {
-            header("Location: home.php");
-            exit;
-        } elseif (($tut['pending_status'] == 6) and ($currentfile != 'monster.php')) {
-            header("Location: monster.php");
-            exit;
-        } elseif (($tut['pending_status'] == 7) and ($currentfile != 'start.php')) {
-            header("Location: start.php");
-            exit;
-        } elseif (($tut['pending_status'] == 8) and ($currentfile != 'start.php')) {
-            header("Location: start.php");
+        } elseif ($currentfile !== 'inventory.php') {
+            header("Location: inventory.php");
             exit;
         }
+    }
+    elseif ($tut['pending_status'] == 5 && $currentfile !== 'home.php') {
+        header("Location: home.php");
+        exit;
+    }
+    elseif ($tut['pending_status'] == 6 && $currentfile !== 'monster.php') {
+        header("Location: monster.php");
+        exit;
+    }
+    elseif ($tut['pending_status'] == 7 && $currentfile !== 'start.php') {
+        header("Location: start.php");
+        exit;
+    }
+    elseif ($tut['pending_status'] == 8 && $currentfile !== 'start.php') {
+        header("Location: start.php");
+        exit;
     }
 }
 
@@ -228,8 +234,8 @@ if ($tutorial->recordcount() == 0) {
     <script type="text/javascript" src="static/bbeditor/ed.js"></script>
 
     <?php
-    if ($currentfile == 'stat_points.php') {
-        echo "<script type=\"text/javascript\" src=\"static/js/checkStatus.js\"></script>";
+    if ($currentfile === 'stat_points.php') {
+        echo '<script type="text/javascript" src="static/js/checkStatus.js"></script>';
     }
     ?>
     <script
@@ -251,10 +257,10 @@ if ($tutorial->recordcount() == 0) {
      <iframe id="applixir_parent" ></iframe>
 </div>
 <?php
-if ($currentfile == 'inventory.php') {
+if ($currentfile === 'inventory.php') {
     echo "<body>";
-} elseif ($currentfile == 'stat_points.php') {
-    echo "<body onload=\"testee(" . $player->stat_points . ");\">";
+} elseif ($currentfile === 'stat_points.php') {
+    echo '<body onload="testee(' . $player->stat_points . ');">';
 } else {
     echo "<body>";
 }
@@ -271,7 +277,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
 <div id="tudo" style="position: relative;">
     <img src="static/images/topo.jpg" style="position:absolute;width:100%;z-index: 0;">
     <div class="msg">
-        <div class="ic-msg"></div><?php include("showmsg.php"); ?>
+        <div class="ic-msg"></div><?php include(__DIR__ . "/showmsg.php"); ?>
     </div>
     <table class="lol">
         <tr>
@@ -288,12 +294,11 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                             $selct = $verificpotion->fetchrow();
                             $valortempo = $selct['time'] - time();
                             if ($valortempo < 60) {
-                                $valortempo = $valortempo;
                                 $auxiliar = "segundo(s)";
-                            } else if ($valortempo < 3600) {
+                            } elseif ($valortempo < 3600) {
                                 $valortempo = ceil($valortempo / 60);
                                 $auxiliar = "minuto(s)";
-                            } else if ($valortempo < 86400) {
+                            } elseif ($valortempo < 86400) {
                                 $valortempo = ceil($valortempo / 3600);
                                 $auxiliar = "hora(s)";
                             }
@@ -309,7 +314,8 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                                             src="static/images/itens/<?php echo $potimg; ?>" border=0></a>
                                 </div>
                             </div>
-                        <?php } ?>
+                        <?php }
+                         ?>
                         <div class="avatar"><a href="avatar.php"><img src="static/<?php echo $player->avatar ?>"
                                     border="0px"></a></div>
 
@@ -344,7 +350,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
 
                         <span id="mudar1"><img src="static/images/menu/on1.png" border="0px"></span>
                         <div id="gaita1">
-                            <?php include("showit.php"); ?>
+                            <?php include(__DIR__ . "/showit.php"); ?>
 
                             <div class="moedas">
                                 <div class="ic-moeda"></div>
@@ -357,7 +363,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                         <div id="gaita2">
 
                             <?php
-                            echo "<table border=\"0px\" cellpadding=\"0px\" cellspacing=\"0px\"  class=\"friend\">";
+                            echo '<table border="0px" cellpadding="0px" cellspacing="0px"  class="friend">';
                             $query = $db->execute("select `fname` from `friends` WHERE `uid`=? order by `fname` asc", array($player->acc_id));
                             if ($query->recordcount() == 0) {
                                 echo "<tr class=\"amigo\"><th><center>Você não tem amigos.</center></th></tr>";
@@ -367,14 +373,14 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                                     $name = $db->GetOne("select `id` from `players` where `username`=?", array($friend['fname']));
                                     $friendlevel = $db->getone("select `level` from `players` where `id`=?", array($name));
 
-                                    echo "<tr class=\"amig" . $bool . "\">";
+                                    echo '<tr class="amig' . $bool . '">';
                                     echo "<th>&nbsp;<b>" . showName($name, $db, 'off', 'off') . "</b></th>";
                                     echo "<th><b>Nv. " . $friendlevel . "</b></th>";
 
 
                                     $online = $db->execute("select `time` from `user_online` where `player_id`=?", array($name));
                                     $ignorado = $db->execute("select * from `ignored` where `uid`=? and `bid`=?", array($name, $player->id));
-                                    if (($online->recordcount() > 0) and ($ignorado->recordcount() == 0)) {
+                                    if ($online->recordcount() > 0 && $ignorado->recordcount() == 0) {
                                         $check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", array($name));
                                         if ($check->recordcount() == 0) {
                                             echo "<th><center><a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", showName($name, $db, 'off', 'off')) . "')\"><img src=\"static/images/images/on.png\" border=\"0px\"></a></center></th>";
@@ -383,17 +389,18 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                                             if ($stattus['pending_status'] == 'ocp') {
                                                 echo "<th><center><a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", showName($name, $db, 'off', 'off')) . "')\"><img src=\"static/images/images/ocp.png\" border=\"0px\"></a></center></th>";
                                             } elseif ($stattus['pending_status'] == 'inv') {
-                                                echo "<th><center><img src=\"static/images/images/off.png\" border=\"0px\"></center></th>";
+                                                echo '<th><center><img src="static/images/images/off.png" border="0px"></center></th>';
                                             }
                                         }
                                     } else {
-                                        echo "<th><center><img src=\"static/images/images/off.png\" border=\"0px\"></center></th>";
+                                        echo '<th><center><img src="static/images/images/off.png" border="0px"></center></th>';
                                     }
 
                                     echo "</tr>";
-                                    $bool = ($bool == "o") ? "oo" : "o";
+                                    $bool = ($bool === "o") ? "oo" : "o";
                                 }
                             }
+                            
                             echo "</table>";
                             ?>
                         </div>
@@ -497,4 +504,4 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
         }, 2500);
     </script>
 
-    <div id="usr"><?php include("engine.php"); ?></div>
+    <div id="usr"><?php include(__DIR__ . "/engine.php"); ?></div>

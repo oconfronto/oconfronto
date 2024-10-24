@@ -1,19 +1,21 @@
 <?php
+declare(strict_types=1);
+
 ob_start(); // Inicia o buffer de saída
-include("lib.php");
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Inventário");
 $player = check_user($secret_key, $db);
-include("checkbattle.php");
-include("checkhp.php");
-include("checkwork.php");
+include(__DIR__ . "/checkbattle.php");
+include(__DIR__ . "/checkhp.php");
+include(__DIR__ . "/checkwork.php");
 
-include("includes/items/gift.php");
-include("includes/items/goldbar.php");
-include("includes/items/magiccrystal.php");
-include("includes/actions/transfer-potions.php");
-include("includes/actions/transfer-items.php");
+include(__DIR__ . "/includes/items/gift.php");
+include(__DIR__ . "/includes/items/goldbar.php");
+include(__DIR__ . "/includes/items/magiccrystal.php");
+include(__DIR__ . "/includes/actions/transfer-potions.php");
+include(__DIR__ . "/includes/actions/transfer-items.php");
 
-include("templates/private_header.php");
+include(__DIR__ . "/templates/private_header.php");
 
 $tuto = false;
 
@@ -31,7 +33,7 @@ if ($tutorial->recordcount() > 0) {
     }
 }
 
-function displayItemOptions($item, $action, $label)
+function displayItemOptions(array $item, $action, $label)
 {
     if ($item['item_bonus'] == 0) {
         $precol = ceil($item['price'] / 3.5);
@@ -50,12 +52,14 @@ function displayItemOptions($item, $action, $label)
     } else {
         $valordavenda = floor(($item['price'] / 2) + (($item['item_bonus'] * $item['price']) / 5));
     }
-
     if ($action == 'sell') {
-        return "<a onclick=\"return confirm('Tem certeza que deseja VENDER o item {$item['name']} +{$item['item_bonus']} no valor de: {$valordavenda} ?');\" href=\"inventory_mobile.php?{$action}={$item['id']}\">{$label}</a>";
-    } else if ($action == 'mature') {
-        return "<a onclick=\"return confirm('Tem certeza que deseja MATURAR o item {$item['name']} +{$item['item_bonus']} no valor de: {$precol} ?');\" href=\"inventory_mobile.php?{$action}={$item['id']}\">{$label}</a>";
-    } else {
+        return sprintf("<a onclick=\"return confirm('Tem certeza que deseja VENDER o item %s +%s no valor de: %s ?');\" href=\"inventory_mobile.php?%s=%s\">%s</a>", $item['name'], $item['item_bonus'], $valordavenda, $action, $item['id'], $label);
+    }
+
+    if ($action == 'mature') {
+        return sprintf("<a onclick=\"return confirm('Tem certeza que deseja MATURAR o item %s +%s no valor de: %s ?');\" href=\"inventory_mobile.php?%s=%s\">%s</a>", $item['name'], $item['item_bonus'], $precol, $action, $item['id'], $label);
+    }
+    else {
         global $tuto;
         if ($tuto) {
             echo "<style>
@@ -69,14 +73,14 @@ function displayItemOptions($item, $action, $label)
             }
             </style>";
 
-            return "<a href=\"inventory_mobile.php?{$action}={$item['id']}\"><b class='txt-tutorial-equip'>->{$label}<-</b></a>";
-        } else {
-            return "<a href=\"inventory_mobile.php?{$action}={$item['id']}\">{$label}</a>";
+            return sprintf("<a href=\"inventory_mobile.php?%s=%s\"><b class='txt-tutorial-equip'>->%s<-</b></a>", $action, $item['id'], $label);
         }
+        return sprintf('<a href="inventory_mobile.php?%s=%s">%s</a>', $action, $item['id'], $label);
     }
+    return null;
 }
 
-function displayItem($item, $type, $player, $bool)
+function displayItem(array $item, $type, $player, string $bool)
 {
     $options = array(); // Use array() instead of []
     if ($type === 'equipped') {
@@ -84,6 +88,7 @@ function displayItem($item, $type, $player, $bool)
     } else {
         $options[] = displayItemOptions($item, 'equip', 'Equipar');
     }
+    
     $options[] = displayItemOptions($item, 'sell', 'Vender');
     $options[] = displayItemOptions($item, 'mature', 'Maturar');
 
@@ -91,12 +96,15 @@ function displayItem($item, $type, $player, $bool)
     if ($item['type'] == 'amulet') {
         $type = "Vitalidade";
     }
+    
     if ($item['type'] == 'weapon') {
         $type = "Ataque";
     }
+    
     if ($item['type'] == 'armor') {
         $type = "Defesa";
     }
+    
     if ($item['type'] == 'boots') {
         $type = "Agilidade";
     }
@@ -115,7 +123,7 @@ function displayItem($item, $type, $player, $bool)
 
     $atributo = "";
     if ($item['type'] != 'ring') {
-        $atributo =  $type . ": {$item['effectiveness']}";
+        $atributo =  $type . (': ' . $item['effectiveness']);
     } else {
         switch ($item['item_id']) {
             case 163:
@@ -179,23 +187,24 @@ function displayItem($item, $type, $player, $bool)
     if ($item['item_bonus'] > 0) {
         $bonus1 = " (+" . $item['item_bonus'] . ")";
     }
+    
     if ($item['for'] > 0) {
-        $bonus2 = " <font color=\"gray\">+" . $item['for'] . "F</font>";
+        $bonus2 = ' <font color="gray">+' . $item['for'] . "F</font>";
     }
+    
     if ($item['vit'] > 0) {
-        $bonus3 = " <font color=\"green\">+" . $item['vit'] . "V</font>";
+        $bonus3 = ' <font color="green">+' . $item['vit'] . "V</font>";
     }
+    
     if ($item['agi'] > 0) {
-        $bonus4 = " <font color=\"blue\">+" . $item['agi'] . "A</font>";
+        $bonus4 = ' <font color="blue">+' . $item['agi'] . "A</font>";
     }
+    
     if ($item['res'] > 0) {
-        $bonus5 = " <font color=\"red\">+" . $item['res'] . "R</font>";
+        $bonus5 = ' <font color="red">+' . $item['res'] . "R</font>";
     }
 
-
-
-
-    $string = "<tr class=\"row" . $bool . "\">
+    return '<tr class="row' . $bool . "\">
                 <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><img src=\"static/images/itens/{$item['img']}\" alt=\"{$item['name']}\"></td>
                 <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $atributo . "</td>
                 <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $item['name'] . " " . $bonus1 . "" . $bonus2 . "" . $bonus3 . "" . $bonus4 . "" . $bonus5 . "</td>
@@ -203,8 +212,6 @@ function displayItem($item, $type, $player, $bool)
                 <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $options[1] . "</td>
                 <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $options[2] . "</td>
                 </tr>";
-
-    return $string;
 }
 
 function fetchItems($playerId, $status)
@@ -227,7 +234,7 @@ function displayItems($playerId, $status, $title)
 {
     $items = fetchItems($playerId, $status);
     $player = fetchPlayers($playerId);
-    echo "<div style='text-align:center'><h3>{$title}</h3></div>";
+    echo sprintf("<div style='text-align:center'><h3>%s</h3></div>", $title);
     if ($items->recordcount() > 0) {
         $bool = 1;
         echo "<fieldset>";
@@ -245,6 +252,7 @@ function displayItems($playerId, $status, $title)
             echo displayItem($item, $status, $player, $bool);
             $bool = ($bool == 1) ? 2 : 1;
         }
+        
         echo "</tbody></table></fieldset>";
     } else {
         echo "<div style='text-align:center'><p>Nenhum item encontrado.</p></div>";
@@ -283,12 +291,12 @@ if (isset($_GET['unequip'])) {
     exit;
 }
 
-echo "<div id=\"main_container\">";
-echo "<div id=\"inventory\">";
+echo '<div id="main_container">';
+echo '<div id="inventory">';
 displayItems($player->id, 'equipped', 'Itens Equipados');
 displayItems($player->id, 'unequipped', 'Itens na Mochila');
 echo "</div>";
 echo "</div>";
 
-include("templates/private_footer.php");
+include(__DIR__ . "/templates/private_footer.php");
 ob_end_flush(); // Envia o conteúdo do buffer e limpa

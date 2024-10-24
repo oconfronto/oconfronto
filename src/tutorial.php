@@ -1,5 +1,7 @@
 <?php
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Tutorial");
 $player = check_user($secret_key, $db);
 
@@ -10,34 +12,31 @@ header("Location: home.php");
 exit;
 }
 
-include("templates/private_header.php");
+include(__DIR__ . "/templates/private_header.php");
 
-if (!$_GET['act'])
-{
-$numero = 1;
-}else{
-$numero = $_GET['act'];
-}
+$numero = $_GET['act'] ?: 1;
 
-echo"<br/><center><img src=\"static/images/tutorial/" . $numero . ".png\" border=\"0\"></center>";
+echo'<br/><center><img src="static/images/tutorial/' . $numero . '.png" border="0"></center>';
 
 
-	echo "<table width=\"100%\" border=\"0\"><tr>";
-	echo "<td width=\"50%\">";
+	echo '<table width="100%" border="0"><tr>';
+	echo '<td width="50%">';
 		if ($numero == 1){
-			echo"<a href=\"tutorial.php?skip=true\"><img src=\"static/images/tutorial/skip.png\" border=\"0\"></a>";
+			echo'<a href="tutorial.php?skip=true"><img src="static/images/tutorial/skip.png" border="0"></a>';
 		}else{
-			echo"<a href=\"tutorial.php?act=" . ($numero - 1) . "\"><img src=\"static/images/tutorial/previous.png\" border=\"0\"></a>";
+			echo'<a href="tutorial.php?act=' . ($numero - 1) . '"><img src="static/images/tutorial/previous.png" border="0"></a>';
 		}
+  
 	echo "</td>";
-	echo "<td width=\"50%\" align=\"right\">";
+	echo '<td width="50%" align="right">';
 		if ($numero == 14){
-			echo"<a href=\"tutorial.php?skip=true\"><img src=\"static/images/tutorial/end.png\" border=\"0\"></a>";
+			echo'<a href="tutorial.php?skip=true"><img src="static/images/tutorial/end.png" border="0"></a>';
 		}else{
-			echo"<a href=\"tutorial.php?act=" . ($numero + 1) . "\"><img src=\"static/images/tutorial/next.png\" border=\"0\"></a>";
+			echo'<a href="tutorial.php?act=' . ($numero + 1) . '"><img src="static/images/tutorial/next.png" border="0"></a>';
 		}
+  
 	echo "</td>";
 	echo "</tr></table>";
 
-include("templates/private_footer.php");
+include(__DIR__ . "/templates/private_footer.php");
 ?>

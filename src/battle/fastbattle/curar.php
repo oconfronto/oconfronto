@@ -1,16 +1,10 @@
 <?php
-$selectmana = $db->GetOne("select `mana` from `blueprint_magias` where `id`=4");
-if (($player->reino == '1') or ($player->vip > time())) {
-	$mana = ($selectmana - 5);
-} else {
-	$mana = $selectmana;
-}
+declare(strict_types=1);
 
-if ($player->level < 50){
-	$curar = rand(30, 100);
-}else{
-	$curar = rand($player->level, ($player->level * 2));
-}
+$selectmana = $db->GetOne("select `mana` from `blueprint_magias` where `id`=4");
+$mana = $player->reino == '1' || $player->vip > time() ? $selectmana - 5 : $selectmana;
+
+$curar = $player->level < 50 ? rand(30, 100) : rand($player->level, ($player->level * 2));
 
 	$player->mana -= $mana;
 

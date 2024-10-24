@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*************************************/
 /*           ezRPG script            */
 /*         Written by Khashul        */
@@ -7,12 +9,12 @@
 /*    http://www.bbgamezone.com/     */
 /*************************************/
 
-include("lib.php");
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Tranferir Ouro");
 $player = check_user($secret_key, $db);
-include("checkbattle.php");
-include("checkhp.php");
-include("checkwork.php");
+include(__DIR__ . "/checkbattle.php");
+include(__DIR__ . "/checkhp.php");
+include(__DIR__ . "/checkwork.php");
 
 $username = ($_POST['username']);
 $password = strtolower($_POST['passcode']);
@@ -21,64 +23,71 @@ $amount = ($_POST['amount']);
 if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['passcode']) && ($_POST['submit'])) {
     $destinatario = $db->execute("select * from `players` where `username`=?", array($username));
     $member = $destinatario->fetchrow();
-
     if ($destinatario->recordcount() == 0) {
-        include("templates/private_header.php");
+        include(__DIR__ . "/templates/private_header.php");
         echo "<fieldset><legend><b>Banco</b></legend>";
         echo "Este usuário não existe!";
         echo "</fieldset>";
-	echo"<br/><a href=\"bank.php\">Voltar</a>.</br>";
-        include("templates/private_footer.php");
+        echo'<br/><a href="bank.php">Voltar</a>.</br>';
+        include(__DIR__ . "/templates/private_footer.php");
         exit;
-    } else if ($player->serv != $member['serv']) {
-        include("templates/private_header.php");
+    }
+    if ($player->serv != $member['serv']) {
+        include(__DIR__ . "/templates/private_header.php");
         echo "<fieldset><legend><b>Banco</b></legend>";
         echo "Este usuário pertence a outro servidor.";
         echo "</fieldset>";
-	echo"<br/><a href=\"bank.php\">Voltar</a>.</br>";
-        include("templates/private_footer.php");
+        echo'<br/><a href="bank.php">Voltar</a>.</br>';
+        include(__DIR__ . "/templates/private_footer.php");
         exit;
-    } else if ($player->gold < $amount) {
-        include("templates/private_header.php");
+    }
+    if ($player->gold < $amount) {
+        include(__DIR__ . "/templates/private_header.php");
         echo "<fieldset><legend><b>Banco</b></legend>";
         echo "Você não pode enviar esta quantia de ouro!";
         echo "</fieldset>";
-	echo"<br/><a href=\"bank.php\">Voltar</a>.</br>";
-        include("templates/private_footer.php");
+        echo'<br/><a href="bank.php">Voltar</a>.</br>';
+        include(__DIR__ . "/templates/private_footer.php");
         exit;
-    } else if (!is_numeric($amount)) {
-        include("templates/private_header.php");
+    }
+    if (!is_numeric($amount)) {
+        include(__DIR__ . "/templates/private_header.php");
         echo "<fieldset><legend><b>Banco</b></legend>";
         echo "Você não pode enviar esta quantia de ouro!";
         echo "</fieldset>";
-	echo"<br/><a href=\"bank.php\">Voltar</a>.</br>";
-        include("templates/private_footer.php");
+        echo'<br/><a href="bank.php">Voltar</a>.</br>';
+        include(__DIR__ . "/templates/private_footer.php");
         exit;
-    } else if ($amount < 1 ) {
-        include("templates/private_header.php");
+    }
+    if ($amount < 1) {
+        include(__DIR__ . "/templates/private_header.php");
         echo "<fieldset><legend><b>Banco</b></legend>";
         echo "Você não pode enviar esta quantia de ouro!";
         echo "</fieldset>";
-	echo"<br/><a href=\"bank.php\">Voltar</a>.</br>";
-        include("templates/private_footer.php");
+        echo'<br/><a href="bank.php">Voltar</a>.</br>';
+        include(__DIR__ . "/templates/private_footer.php");
         exit;
-    } else if ($player->username == $username) {
-        include("templates/private_header.php");
+    }
+    if ($player->username == $username) {
+        include(__DIR__ . "/templates/private_header.php");
         echo "<fieldset><legend><b>Banco</b></legend>";
         echo "Você não pode enviar ouro para você mesmo!";
         echo "</fieldset>";
-	echo"<br/><a href=\"bank.php\">Voltar</a>.</br>";
-        include("templates/private_footer.php");
+        echo'<br/><a href="bank.php">Voltar</a>.</br>';
+        include(__DIR__ . "/templates/private_footer.php");
         exit;
-    } else if (strtolower($player->transpass) != $password) {
-        include("templates/private_header.php");
+    }
+
+    if (strtolower($player->transpass) !== $password) {
+        include(__DIR__ . "/templates/private_header.php");
         echo "<fieldset><legend><b>Banco</b></legend>";
         echo "Sua senha de transferência está incorreta.";
         echo "</fieldset>";
-	echo"<br/><a href=\"bank.php\">Voltar</a>.</br>";
-        include("templates/private_footer.php");
+	echo'<br/><a href="bank.php">Voltar</a>.</br>';
+        include(__DIR__ . "/templates/private_footer.php");
         exit;
-    } else {
+    }
+    else {
     
             $query = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", array($amount, $member['id']));
             $query1 = $db->execute("update `players` set `gold`=`gold`-? where `id`=?", array($amount, $player->id));
@@ -99,20 +108,19 @@ if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['passcode']) && (
 		$insert['time'] = time();
 		$query = $db->autoexecute('log_gold', $insert, 'INSERT');
 
-            include("templates/private_header.php");
+            include(__DIR__ . "/templates/private_header.php");
        		echo "<fieldset><legend><b>Banco</b></legend>";
-       		echo "Você enviou <b>$amount</b> de ouro para $username.";
+       		echo sprintf('Você enviou <b>%s</b> de ouro para %s.', $amount, $username);
         	echo "</fieldset>";
-		echo"<br/><a href=\"bank.php\">Voltar</a>.</br>";
-            include("templates/private_footer.php");
+		echo'<br/><a href="bank.php">Voltar</a>.</br>';
+            include(__DIR__ . "/templates/private_footer.php");
             exit;
     }
-}else{
-        include("templates/private_header.php");
-        echo "<fieldset><legend><b>Banco</b></legend>";
-        echo "Você precisa preencher todos os campos.";
-        echo "</fieldset>";
-	echo"<br/><a href=\"bank.php\">Voltar</a>.</br>";
-        include("templates/private_footer.php");
 }
+include(__DIR__ . "/templates/private_header.php");
+echo "<fieldset><legend><b>Banco</b></legend>";
+echo "Você precisa preencher todos os campos.";
+echo "</fieldset>";
+echo'<br/><a href="bank.php">Voltar</a>.</br>';
+include(__DIR__ . "/templates/private_footer.php");
 ?>

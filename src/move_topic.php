@@ -1,30 +1,32 @@
 <?php
 
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Fórum");
 $player = check_user($secret_key, $db);
 
-include("templates/private_header.php");
+include(__DIR__ . "/templates/private_header.php");
 
 if (!$_GET['topic'])
 {
-	echo "Um erro desconhecido ocorreu! <a href=\"main_forum.php\">Voltar</a>.";
-	include("templates/private_footer.php");
+	echo 'Um erro desconhecido ocorreu! <a href="main_forum.php">Voltar</a>.';
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
+
 	$procuramensagem = $db->execute("select `topic`, `user_id` from `forum_question` where `id`=?", array($_GET['topic']));
 	if ($procuramensagem->recordcount() == 0)
 	{
-		echo "Um erro desconhecido ocorreu! <a href=\"main_forum.php\">Voltar</a>.";
-		include("templates/private_footer.php");
+		echo 'Um erro desconhecido ocorreu! <a href="main_forum.php">Voltar</a>.';
+		include(__DIR__ . "/templates/private_footer.php");
 		exit;
-	}else{
-    		$nome = $procuramensagem->fetchrow();
 	}
+ $nome = $procuramensagem->fetchrow();
 
-	if (($player->gm_rank < 3) and ($player->id != $nome['user_id'])) {
-		echo "Você não tem permisões para mover este tópico! <a href=\"view_topic.php?id=" . $_GET['topic'] . "\">Voltar</a>.";
-		include("templates/private_footer.php");
+	if ($player->gm_rank < 3 && $player->id != $nome['user_id']) {
+		echo "Você não tem permisões para mover este tópico! <a href=\"view_topic.php?id=" . $_GET['topic'] . '">Voltar</a>.';
+		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
 
@@ -32,25 +34,22 @@ if (!$_GET['topic'])
 if(isset($_POST['submit']))
 {
 	$verifica = $db->GetOne("select `imperador` from `reinos` where `id`=?", array($player->reino));
+ if (!$_POST['category']) {
+     echo "Você precisa preencher todos os campos! <a href=\"move_topic.php?topic=" . $_GET['topic'] . '">Voltar</a>.';
+     include(__DIR__ . "/templates/private_footer.php");
+     exit;
+ }
+ if ($_POST['category'] != 'reino' && $_POST['category'] != 'sugestoes' && $_POST['category'] != 'gangues' && $_POST['category'] != 'trade' && $_POST['category'] != 'duvidas' && $_POST['category'] != 'outros' && $_POST['category'] != 'fan' && $_POST['category'] != 'off' && $player->gm_rank < 9) {
+     $error = "Você não possui autorização para mover tópicos para essa categoria.";
+     include(__DIR__ . "/templates/private_footer.php");
+     exit;
+ }
 
-	if (!$_POST['category'])
-	{
-		echo "Você precisa preencher todos os campos! <a href=\"move_topic.php?topic=" . $_GET['topic'] . "\">Voltar</a>.";
-		include("templates/private_footer.php");
-		exit;
-	}
-
-	elseif (($_POST['category'] != 'reino') and ($_POST['category'] != 'sugestoes') and ($_POST['category'] != 'gangues') and ($_POST['category'] != 'trade') and ($_POST['category'] != 'duvidas') and ($_POST['category'] != 'outros') and ($_POST['category'] != 'fan') and ($_POST['category'] != 'off') and ($player->gm_rank < 9)) {
-		$error = "Você não possui autorização para mover tópicos para essa categoria.";
-		include("templates/private_footer.php");
-		exit;
-	}
-
-	elseif (($_POST['category'] == 'reino') and ($player->id != $verifica) and ($player->gm_rank < 9)) {
-		$error = "Você não possui autorização para mover tópicos para essa categoria.";
-		include("templates/private_footer.php");
-		exit;
-	}
+	if ($_POST['category'] == 'reino' && $player->id != $verifica && $player->gm_rank < 9) {
+     $error = "Você não possui autorização para mover tópicos para essa categoria.";
+     include(__DIR__ . "/templates/private_footer.php");
+     exit;
+ }
 
 
 if ($_POST['category'] == 'gangues') {
@@ -78,8 +77,8 @@ $categoria = ucfirst($_POST['category']);
 
 
 $real = $db->execute("update `forum_question` set `category`=? where `id`=?", array($_POST['category'], $_GET['topic']));
-	echo "Postagem movida com sucesso! <a href=\"view_topic.php?id=" . $_GET['topic'] . "\">Voltar</a>.";
-	include("templates/private_footer.php");
+	echo 'Postagem movida com sucesso! <a href="view_topic.php?id=' . $_GET['topic'] . '">Voltar</a>.';
+	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
 
@@ -103,8 +102,8 @@ if ($player->gm_rank > 9) {
 	echo "<option value=\"noticias\">Notícias</option>";
 }
 
-if (($verifica == $player->id) or ($player->gm_rank > 9)) {
-	echo "<option value=\"reino\">Reino</option>";
+if ($verifica == $player->id || $player->gm_rank > 9) {
+	echo '<option value="reino">Reino</option>';
 }
 ?>
 <option value="sugestoes">Sugestões</option>
@@ -124,5 +123,5 @@ if (($verifica == $player->id) or ($player->gm_rank > 9)) {
 </tr>
 </table>
 <?php
-include("templates/private_footer.php");
+include(__DIR__ . "/templates/private_footer.php");
 ?>

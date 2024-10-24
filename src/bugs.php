@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /*************************************/
 /*           ezRPG script            */
 /*         Written by Khashul        */
@@ -7,11 +9,11 @@
 /*    http://www.bbgamezone.com/     */
 /*************************************/
 
-include("lib.php");
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Contato");
 $player = check_user($secret_key, $db);
 
-if (($_POST['comment']) and ($_POST['submit'])) {  
+if ($_POST['comment'] && $_POST['submit']) {  
 
 
 		$insert['to'] = 1;
@@ -22,13 +24,13 @@ if (($_POST['comment']) and ($_POST['submit'])) {
 		$insert['time'] = time();
 		$query = $db->execute("insert into `mail` (`to`, `from`, `body`, `subject`, `time`) values (?, ?, ?, ?, ?)", array($insert['to'], $insert['from'], $insert['body'], $insert['subject'], $insert['time']));
     
-    include("templates/private_header.php");
+    include(__DIR__ . "/templates/private_header.php");
     echo "<p /><center>Obrigado, em breve enviaremos uma resposta.<p />";
-    echo "<a href=\"home.php\">Principal</a></center><p />";
-    include("templates/private_footer.php");
+    echo '<a href="home.php">Principal</a></center><p />';
+    include(__DIR__ . "/templates/private_footer.php");
 }
 
-include("templates/private_header.php");
+include(__DIR__ . "/templates/private_header.php");
 ?>
 
 <fieldset>
@@ -41,5 +43,5 @@ include("templates/private_header.php");
 </form>
 </fieldset>
 
-<?php include("templates/private_footer.php");
+<?php include(__DIR__ . "/templates/private_footer.php");
 ?>

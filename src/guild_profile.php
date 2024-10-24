@@ -1,10 +1,12 @@
 <?php
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Clã");
 $player = check_user($secret_key, $db);
-include("bbcode.php");
-include("checkbattle.php");
-include("checkguild.php");
+include(__DIR__ . "/bbcode.php");
+include(__DIR__ . "/checkbattle.php");
+include(__DIR__ . "/checkguild.php");
 
 $totalgold = 0;
 $totalbattles = 0;
@@ -25,25 +27,25 @@ if (!$_GET['id']) {
 	}
 }
 
-if (($player->guild == $guild['id']) and (!$_GET['redirect'])) {
+if ($player->guild == $guild['id'] && !$_GET['redirect']) {
 	header("Location: guild_home.php");
 }
 
 
-include("templates/private_header.php");
+include(__DIR__ . "/templates/private_header.php");
 
 
-echo "<ul class=\"tabs\">";
-echo "<li><a href=\"#tab1\">" . $guild['name'] . "</a></li>";
-echo "<li><a href=\"#tab2\">Membros</a></li>";
-echo "<li><a href=\"#tab3\">Aliados</a></li>";
-echo "<li><a href=\"#tab4\">Inimigos</a></li>";
+echo '<ul class="tabs">';
+echo '<li><a href="#tab1">' . $guild['name'] . "</a></li>";
+echo '<li><a href="#tab2">Membros</a></li>';
+echo '<li><a href="#tab3">Aliados</a></li>';
+echo '<li><a href="#tab4">Inimigos</a></li>';
 echo "<li><a href=\"#tab5\">Estatásticas</a></li>";
 echo "</ul>";
 
 
-echo "<div class=\"tab_container\">";
-echo "<div id=\"tab1\" class=\"tab_content\">";
+echo '<div class="tab_container">';
+echo '<div id="tab1" class="tab_content">';
 ?>
 
 <table width="100%">
@@ -67,10 +69,10 @@ echo "<div id=\"tab1\" class=\"tab_content\">";
 							<td width="20%"><b>Vice-Lider:</b></td>
 							<td width="35%">
 								<?php
-								if (($guild['vice'] == NULL) or ($guild['vice'] == '')) {
+								if ($guild['vice'] == NULL || $guild['vice'] == '') {
 									echo "Ninguém";
 								} else {
-									echo "<a href=\"profile.php?id=" . $guild['vice'] . "\">" . $guild['vice'] . "</a></td>";
+									echo '<a href="profile.php?id=' . $guild['vice'] . '">' . $guild['vice'] . "</a></td>";
 								}
 								?>
 
@@ -84,14 +86,14 @@ echo "<div id=\"tab1\" class=\"tab_content\">";
 					<td width="35%">
 						<?php
 						if ($guild['reino'] == 1) {
-							echo "Cathal";
-						} else if ($guild['reino'] == 2) {
-							echo "Eroda";
-						} else if ($guild['reino'] == 3) {
-							echo "Turkic";
-						} else {
-							echo "Nenhum";
-						}
+            echo "Cathal";
+        } elseif ($guild['reino'] == 2) {
+            echo "Eroda";
+        } elseif ($guild['reino'] == 3) {
+            echo "Turkic";
+        } else {
+  							echo "Nenhum";
+  						}
 
 						$contvitoria = $db->execute("select `id` from `pwar` where ((`status`='g' and `guild_id`=?) or (`status`='e' and `enemy_id`=?))", array($guild['id'], $guild['id']));
 						?>
@@ -142,13 +144,14 @@ echo "<div id=\"tab1\" class=\"tab_content\">";
 		$bbcode = new bbcode();
 
 		echo "<p> ";
-		if ($guild['blurb'] == NULL or $guild['blurb'] == '') {
+		if ($guild['blurb'] == NULL || $guild['blurb'] == '') {
 			echo "Sem descrição.";
 		} else {
 			$descrikon = stripslashes($guild['blurb']);
 			$descrikon = $bbcode->parse($descrikon);
 			echo textLimit($descrikon, 5000, 105);
 		}
+  
 		echo "</p>";
 		?>
 	</td>
@@ -156,7 +159,7 @@ echo "<div id=\"tab1\" class=\"tab_content\">";
 </table>
 <?php
 echo "</div>";
-echo "<div id=\"tab2\" class=\"tab_content\">";
+echo '<div id="tab2" class="tab_content">';
 ?>
 <table width="100%" border="0">
 	<tr>
@@ -172,8 +175,8 @@ echo "<div id=\"tab2\" class=\"tab_content\">";
 
 	$bool = 1;
 	while ($member = $query->fetchrow()) {
-		echo "<tr class=\"row" . $bool . "\">\n";
-		echo "<td><a href=\"profile.php?id=" . $member['username'] . "\">";
+		echo '<tr class="row' . $bool . "\">\n";
+		echo '<td><a href="profile.php?id=' . $member['username'] . '">';
 		echo ($member['username'] == $player->username) ? "<b>" : "";
 		echo $member['username'];
 		echo ($member['username'] == $player->username) ? "</b>" : "";
@@ -181,36 +184,38 @@ echo "<div id=\"tab2\" class=\"tab_content\">";
 		echo "<td>" . $member['level'] . "</td>\n";
 
 		echo "<td>";
-		if ($member['voc'] == 'archer' and $member['promoted'] == 'f') {
-			echo "Caçador";
-		} else if ($member['voc'] == 'knight' and $member['promoted'] == 'f') {
-			echo "Espadachim";
-		} else if ($member['voc'] == 'mage' and $member['promoted'] == 'f') {
-			echo "Bruxo";
-		} else if (($member['voc'] == 'archer') and ($member['promoted'] == 't' or $member['promoted'] == 's' or $member['promoted'] == 'r')) {
-			echo "Arqueiro";
-		} else if (($member['voc'] == 'knight') and ($member['promoted'] == 't' or $member['promoted'] == 's' or $member['promoted'] == 'r')) {
-			echo "Guerreiro";
-		} else if (($member['voc'] == 'mage') and ($member['promoted'] == 't' or $member['promoted'] == 's' or $member['promoted'] == 'r')) {
-			echo "Mago";
-		} else if ($member['voc'] == 'archer' and $member['promoted'] == 'p') {
-			echo "Arqueiro Royal";
-		} else if ($member['voc'] == 'knight' and $member['promoted'] == 'p') {
-			echo "Cavaleiro";
-		} else if ($member['voc'] == 'mage' and $member['promoted'] == 'p') {
-			echo "Arquimago";
-		}
+		if ($member['voc'] == 'archer' && $member['promoted'] == 'f') {
+      echo "Caçador";
+  } elseif ($member['voc'] == 'knight' && $member['promoted'] == 'f') {
+      echo "Espadachim";
+  } elseif ($member['voc'] == 'mage' && $member['promoted'] == 'f') {
+      echo "Bruxo";
+  } elseif ($member['voc'] == 'archer' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
+      echo "Arqueiro";
+  } elseif ($member['voc'] == 'knight' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
+      echo "Guerreiro";
+  } elseif ($member['voc'] == 'mage' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
+      echo "Mago";
+  } elseif ($member['voc'] == 'archer' && $member['promoted'] == 'p') {
+      echo "Arqueiro Royal";
+  } elseif ($member['voc'] == 'knight' && $member['promoted'] == 'p') {
+      echo "Cavaleiro";
+  } elseif ($member['voc'] == 'mage' && $member['promoted'] == 'p') {
+      echo "Arquimago";
+  }
+  
 		echo "</td>\n";
 
 
 		echo "<td>";
 		if ($member['hp'] < 1) {
-			echo "<font color=\"red\">Morto</font>";
+			echo '<font color="red">Morto</font>';
 		} else {
-			echo "<font color=\"green\">Vivo</font>";
+			echo '<font color="green">Vivo</font>';
 		}
+  
 		echo "</td>\n";
-		echo "<td><font size=\"1\"><a href=\"mail.php?act=compose&to=" . $member['username'] . "\">Mensagem</a><br/><a href=\"battle.php?act=attack&username=" . $member['username'] . "\">Lutar</a></font></td>\n";
+		echo '<td><font size="1"><a href="mail.php?act=compose&to=' . $member['username'] . '">Mensagem</a><br/><a href="battle.php?act=attack&username=' . $member['username'] . "\">Lutar</a></font></td>\n";
 		echo "</tr>\n";
 
 		$totalgold += ($member['gold'] + $member['bank'])  / $guild['members']; //Add to total gold
@@ -224,7 +229,7 @@ echo "<div id=\"tab2\" class=\"tab_content\">";
 </table>
 <?php
 echo "</div>";
-echo "<div id=\"tab3\" class=\"tab_content\">";
+echo '<div id="tab3" class="tab_content">';
 
 echo "<br/>";
 $alyquery = $db->execute("select `aled_na` from `guild_aliance` where `guild_na`=?", array($guild['id']));
@@ -233,12 +238,12 @@ if ($alyquery->recordcount() < 1) {
 } else {
 	while ($aly = $alyquery->fetchrow()) {
 		$allyname = $db->GetOne("select `name` from `guilds` where `id`=?", array($aly['aled_na']));
-		echo "<center><b>O clã " . $guild['name'] . " possui alianças com o clã <a href=\"guild_profile.php?id=" . $aly['aled_na'] . "\">" . $allyname . "</a>.</b></center><br/>";
+		echo "<center><b>O clã " . $guild['name'] . " possui alianças com o clã <a href=\"guild_profile.php?id=" . $aly['aled_na'] . '">' . $allyname . "</a>.</b></center><br/>";
 	}
 }
 
 echo "</div>";
-echo "<div id=\"tab4\" class=\"tab_content\">";
+echo '<div id="tab4" class="tab_content">';
 
 $enyquery = $db->execute("select `enemy_na` from `guild_enemy` where `guild_na`=?", array($guild['id']));
 if ($enyquery->recordcount() < 1) {
@@ -246,15 +251,15 @@ if ($enyquery->recordcount() < 1) {
 } else {
 	while ($eny = $enyquery->fetchrow()) {
 		$ennyname = $db->GetOne("select `name` from `guilds` where `id`=?", array($eny['enemy_na']));
-		echo "<br/><center><b>O clã " . $guild['name'] . " é inimigo do clã <a href=\"guild_profile.php?id=" . $eny['enemy_na'] . "\">" . $ennyname . "</a>.</b></center><br/>";
+		echo "<br/><center><b>O clã " . $guild['name'] . " é inimigo do clã <a href=\"guild_profile.php?id=" . $eny['enemy_na'] . '">' . $ennyname . "</a>.</b></center><br/>";
 	}
 }
 
 
 echo "</div>";
-echo "<div id=\"tab5\" class=\"tab_content\">";
+echo '<div id="tab5" class="tab_content">';
 
-echo "<table width=\"100%\" border=\"0\">";
+echo '<table width="100%" border="0">';
 echo "<tr class=\"row1\"><td><b>Média de nível:</b></td><td>" . ceil($totallevel) . "</td></tr>";
 echo "<tr class=\"row2\"><td><b>Média de ouro:</b></td><td>" . ceil($totalgold) . "</td></tr>";
 echo "<tr class=\"row1\"><td><b>Média de usuários mortos:</b></td><td>" . ceil($totalbattles) . "</td></tr>";
@@ -263,5 +268,5 @@ echo "</table>";
 echo "</div>";
 echo "</div>";
 
-include("templates/private_footer.php");
+include(__DIR__ . "/templates/private_footer.php");
 ?>

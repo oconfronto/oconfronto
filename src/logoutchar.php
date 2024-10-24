@@ -1,5 +1,7 @@
 <?php
-include("lib.php");
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 $player = check_user($secret_key, $db);
 
 	$querydelete = $db->execute("select * from `user_online` where `player_id`=?", array($player->id));

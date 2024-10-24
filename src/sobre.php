@@ -1,13 +1,11 @@
 <?php
-include("lib.php");
-define("PAGENAME", "Sobre o Jogo");
-include("templates/header.php");
+declare(strict_types=1);
 
-if ($_GET['r']) {
-	$usaar = $_GET['r'];
-} else {
-	$usaar = "1";
-}
+include(__DIR__ . "/lib.php");
+define("PAGENAME", "Sobre o Jogo");
+include(__DIR__ . "/templates/header.php");
+
+$usaar = $_GET['r'] ?: "1";
 
 ?>
 
@@ -21,5 +19,5 @@ Comece já a jogar e descubra este novo mundo. <a href="register.php?r=<?php ech
 </fieldset>
 
 <?php
-include("templates/footer.php");
+include(__DIR__ . "/templates/footer.php");
 ?>

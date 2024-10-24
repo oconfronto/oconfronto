@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 $newday = $db->GetOne("select `value` from `cron` where `name`='tax_last'");
 $newtime = $db->GetOne("select `value` from `cron` where `name`='tax_time'");
 
@@ -28,11 +30,11 @@ if((time() - $newday) >= $newtime)
 			addlog($player['id'], $msg, $db);
 
 			if ($player['reino'] == 1){
-				$totalreinoa = $totalreinoa + $taxa;
+				$totalreinoa += $taxa;
 			} elseif ($player['reino'] == 2){
-				$totalreinob = $totalreinob + $taxa;
+				$totalreinob += $taxa;
 			} else {
-				$totalreinoc = $totalreinoc + $taxa;
+				$totalreinoc += $taxa;
 			}
 		}
 	}

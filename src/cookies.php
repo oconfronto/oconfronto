@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 //setcookie("battlelog", serialize(array()), time()+3600);
 //array_unshift(unserialize($_COOKIE["battlelog"]), "testkhdsjadhkasjdee");
 

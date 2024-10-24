@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 $numgoldbars = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=? and `mark`='f'", array($player->id, 157));
 if ($numgoldbars->recordcount() > 2){
 
@@ -8,12 +10,12 @@ if ($numgoldbars->recordcount() > 2){
 		$insert['item_id'] = 158;
 		$addgoldhelm = $db->autoexecute('items', $insert, 'INSERT');
 
-	include("templates/private_header.php");
+	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Atenção</b></legend>\n";
         echo "As três barras de ouro que você possuia em seu inventário parecem ter se misturado, e formado um novo elmo.<br />";
-        echo "<a href=\"inventory.php\">Voltar</a>.";
+        echo '<a href="inventory.php">Voltar</a>.';
 	echo "</fieldset>";
-        include("templates/private_footer.php");
+        include(__DIR__ . "/templates/private_footer.php");
         exit;
 }
 ?>
