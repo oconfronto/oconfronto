@@ -5,7 +5,7 @@ $config_database = $_ENV['MYSQL_DATABASE'];
 $config_username = $_ENV['MYSQL_USER'];
 $config_password = $_ENV['MYSQL_PASSWORD'];
 
-include('adodb/adodb.inc.php'); //Include adodb files
+include('../vendor/adodb/adodb-php/adodb.inc.php'); //Include adodb files
 $db = &ADONewConnection('mysql'); //Connect to database
 $conn = $db->Connect($config_server, $config_username, $config_password, $config_database); //Select table
 

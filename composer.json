@@ -1,0 +1,16 @@
+{
+    "name": "oconfronto/oconfronto",
+    "description": "Browser multiplayer RPG game",
+    "type": "project",
+    "require": {
+        "php": ">=5.3",
+        "adodb/adodb-php": "5.20.21",
+        "phpmailer/phpmailer": "5.2.28"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Oconfronto\\Oconfronto\\": "src/"
+        }
+    }
+}

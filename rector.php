@@ -25,8 +25,4 @@ return RectorConfig::configure()
         // SetList::PHP_82,
         // SetList::PHP_83,
     ])
-    ->withSkip([
-        __DIR__ . '/src/adodb',
-        __DIR__ . '/src/phpmailer',
-    ])
     ->withTypeCoverageLevel(0);

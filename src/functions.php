@@ -500,7 +500,7 @@ function filtro($data)
 function send_mail($from_name, $mail_to, $subject, $body)
 {
 	include("config.php");
-	require("phpmailer/class.phpmailer.php");
+	require("../vendor/phpmailer/phpmailer/class.phpmailer.php");
 
 	$mail = new PHPMailer();
 	$mail->isSMTP();

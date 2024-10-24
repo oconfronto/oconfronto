@@ -12,10 +12,12 @@ services:
       - ./src/init.sql:/docker-entrypoint-initdb.d/init.sql
       - mysql_data:/var/lib/mysql
 
-  legacy-php:
+  app:
     depends_on:
       - mysql
-    image: orsolin/docker-php-5.3-apache
+    build:
+      context: .
+      dockerfile: Dockerfile
     env_file:
       - .env
     volumes:
