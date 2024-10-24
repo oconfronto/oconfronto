@@ -36,7 +36,7 @@ if (isset($_POST['forgot'])) {
 
         $message = "<html><body style=\"background-color:#FFFDE0; color:#222\">\n";
         $message .= "<div style=\"padding:10px;margin-bottom:4px;background-color:#CEA663\">\n";
-        $message .= "<a href=\"" . $domain . "\" target=\"_blank\"><img alt=\"O Confronto\" height=\"30\" src=\"" . $domain . "/images/logo.gif\" style=\"display:block;border:0\" width=\"175\"></a>\n";
+        $message .= "<a href=\"" . $domain . "\" target=\"_blank\"><img alt=\"O Confronto\" height=\"30\" src=\"static/" . $domain . "/images/logo.gif\" style=\"display:block;border:0\" width=\"175\"></a>\n";
         $message .= "</div>\n";
         $message .= "<div style=\"font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;font-size:13px;margin:14px\">\n";
         $message .= "<p>Parece que você solicitou uma nova senha para a conta <b>" . $recu['conta'] . "</b>.<br/>\n";

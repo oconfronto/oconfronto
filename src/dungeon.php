@@ -161,7 +161,7 @@ if ($_GET['id']) {
                 echo "</tr>";
                 echo "<tr><td style=\"background-color: #FFFDE0;\">";
                 echo "<table width=\"100%\"><tr>";
-                echo "<td width=\"20%\"><center><img src=\"images/itens/medalha.gif\" style=\"padding-top: 5px;\" border=\"0px\"/></center></td>";
+                echo "<td width=\"20%\"><center><img src=\"static/images/itens/medalha.gif\" style=\"padding-top: 5px;\" border=\"0px\"/></center></td>";
                     $verstatus = $db->getone("select `status` from `dungeon_status` where `dungeon_id`=? and `player_id`=?", array($vipti['id'], $player->id));
                     $verstart = $db->getone("select `start` from `dungeon_status` where `dungeon_id`=? and `player_id`=?", array($vipti['id'], $player->id));
                     if ($verstatus > 90) {

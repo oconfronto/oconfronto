@@ -49,25 +49,25 @@ $numerodepocoes4 = $query4->recordcount();
 
 echo "<fieldset>";
 echo "<legend><b>Poções</b></legend>";
-echo "<table width=\"100%\"><tr><td><table width=\"80px\"><tr><td><div title=\"header=[Health Potion] body=[Recupera até 5 mil de vida.]\"><img src=\"images/itens/healthpotion.gif\"></div></td><td><b>x" . $numerodepocoes . "</b>";
+echo "<table width=\"100%\"><tr><td><table width=\"80px\"><tr><td><div title=\"header=[Health Potion] body=[Recupera até 5 mil de vida.]\"><img src=\"static/images/itens/healthpotion.gif\"></div></td><td><b>x" . $numerodepocoes . "</b>";
 if ($numerodepocoes > 0){
 $item = $query->fetchrow();
 echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item['id'] . "\">Usar</a>";
 }
 echo "</td></tr></table></td>";
-echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Big Health Potion] body=[Recupera até 10 mil de vida.]\"><img src=\"images/itens/bighealthpotion.gif\"></div></td><td><b>x" . $numerodepocoes3 . "</b>";
+echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Big Health Potion] body=[Recupera até 10 mil de vida.]\"><img src=\"static/images/itens/bighealthpotion.gif\"></div></td><td><b>x" . $numerodepocoes3 . "</b>";
 if ($numerodepocoes3 > 0){
 $item3 = $query3->fetchrow();
 echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item3['id'] . "\">Usar</a>";
 }
 echo "</td></tr></table></td>";
-echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Mana Potion] body=[Recupera toda sua mana.]\"><img src=\"images/itens/manapotion.gif\"></div></td><td><b>x" . $numerodepocoes4 . "</b>";
+echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Mana Potion] body=[Recupera toda sua mana.]\"><img src=\"static/images/itens/manapotion.gif\"></div></td><td><b>x" . $numerodepocoes4 . "</b>";
 if ($numerodepocoes4 > 0){
 $item4 = $query4->fetchrow();
 echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item4['id'] . "\">Usar</a>";
 }
 echo "</td></tr></table></td>";
-echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Energy Potion] body=[Recupera até 50 de energia.]\"><img src=\"images/itens/energypotion.gif\"></div></td><td><b>x" . $numerodepocoes2 . "</b>";
+echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Energy Potion] body=[Recupera até 50 de energia.]\"><img src=\"static/images/itens/energypotion.gif\"></div></td><td><b>x" . $numerodepocoes2 . "</b>";
 if ($numerodepocoes2 > 0){
 $item2 = $query2->fetchrow();
 echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item2['id'] . "\">Usar</a>";

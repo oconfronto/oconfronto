@@ -157,7 +157,7 @@ echo "</table>";
 echo "</td>";
 echo "<td width=\"40%\">";
 echo "<table width=\"100%\">";
-echo "<tr><td class=\"brown\" width=\"100%\" colspan=\"2\"><center><b>Pontos de Status</b><img src=\"images/help.gif\" title=\"header=[Pontos de Status] body=[<font size='1px'>São utilizados para aumentar sua agilidade, vitalidade, etc. A cada nível que voc&ecirc; passar voc&ecirc; ganha 3 pontos de status. Quando isso ocorrer não se esqueça de utiliza-los!</font>]\"></center></td></tr>";
+echo "<tr><td class=\"brown\" width=\"100%\" colspan=\"2\"><center><b>Pontos de Status</b><img src=\"static/images/help.gif\" title=\"header=[Pontos de Status] body=[<font size='1px'>São utilizados para aumentar sua agilidade, vitalidade, etc. A cada nível que voc&ecirc; passar voc&ecirc; ganha 3 pontos de status. Quando isso ocorrer não se esqueça de utiliza-los!</font>]\"></center></td></tr>";
 echo "<tr><td class=\"salmon\" height=\"80px\" colspan=\"2\"><div id=\"skills\">";
 include("showskills.php");
 echo "</div></td></tr>";
@@ -185,11 +185,11 @@ $magiascount = $db->execute("select * from `magias` where `player_id`=?", array(
 if ($magiascount->recordcount() < 11) {
     echo "<br/><br/><center>Apenas jogadores que possuem todas as magias liberadas podem estender sua mana.</center><br/><br/>";
 } else {
-    echo "<br/><center><img src=\"images/man.png\"><img src=\"bargen.php?man\">";
+    echo "<br/><center><img src=\"static/images/man.png\"><img src=\"static/bargen.php?man\">";
     if ($player->magic_points > 0) {
-        echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_spells.php?estender=true', 'maxmana')\"><img src=\"images/addstat.png\" border=\"0px\"></a>";
+        echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_spells.php?estender=true', 'maxmana')\"><img src=\"static/images/addstat.png\" border=\"0px\"></a>";
     } else {
-        echo "<img src=\"images/none.png\" border=\"0px\">";
+        echo "<img src=\"static/images/none.png\" border=\"0px\">";
     }
     echo "</center>";
     echo "<center><font size=\"1px\">Estenda 2 pontos da sua mana<br/>máxima por 1 ponto místico.<br/><br/><b>Voc&ecirc; " . $player->magic_points . " tem ponto(s) místico(s).</b></font></center>";
@@ -210,7 +210,7 @@ echo "<br/>";
 echo "<table width=\"100%\">";
 echo "<tr><td width=\"50%\">";
 echo "<table width=\"100%\">";
-echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Tarefas e Missões</b><img src=\"images/help.gif\" title=\"header=[Tarefas] body=[<font size='1px'>Tarefas são maneiras divertidas de se beneficiar no jogo. Apenas siga alguma das tarefas abaixo e seja recompensado com ouro, itens ou até mesmo ponto de experi&ecirc;ncia!</font>]\"></center></td></tr>";
+echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Tarefas e Missões</b><img src=\"static/images/help.gif\" title=\"header=[Tarefas] body=[<font size='1px'>Tarefas são maneiras divertidas de se beneficiar no jogo. Apenas siga alguma das tarefas abaixo e seja recompensado com ouro, itens ou até mesmo ponto de experi&ecirc;ncia!</font>]\"></center></td></tr>";
 $gettasks = $db->execute("select * from `tasks` where `needlvl`<=? order by `needlvl` asc", array($player->level));
 if ($gettasks->recordcount() < 1) {
     echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa disponível.</font></center></td></tr>";
@@ -281,7 +281,7 @@ echo "<center><font size=\"1\"><a href=\"tavern.php?p=tasks\">Exibir todas as ta
 echo "</td>";
 echo "<td width=\"50%\">";
 echo "<table width=\"100%\">";
-echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Amigos</b><img src=\"images/help.gif\" title=\"header=[Amigos] body=[<font size='1px'>Seus amigos são importantes no jogo. Além de poder caçar com eles voc&ecirc; sempre ficará informado do que seu amigo está fazendo no jogo, portanto, vá logo para o chat ou o fórum do jogo e comece novas amizades!</font>]\"></center></td></tr>";
+echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Amigos</b><img src=\"static/images/help.gif\" title=\"header=[Amigos] body=[<font size='1px'>Seus amigos são importantes no jogo. Além de poder caçar com eles voc&ecirc; sempre ficará informado do que seu amigo está fazendo no jogo, portanto, vá logo para o chat ou o fórum do jogo e comece novas amizades!</font>]\"></center></td></tr>";
 
 $countfriends = $db->execute("select * from `friends` where `uid`=?", array($player->acc_id));
 if ($countfriends->recordcount() == 0) {

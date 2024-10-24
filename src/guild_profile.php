@@ -52,7 +52,7 @@ echo "<div id=\"tab1\" class=\"tab_content\">";
 			<table width="100%">
 				<tr>
 					<td width="25%">
-						<center><img src="<?php echo $guild['img']; ?>" width="120px" height="120px" border="1"></center>
+						<center><img src="static/<?php echo $guild['img']; ?>" width="120px" height="120px" border="1"></center>
 					</td>
 					<td width="75%">
 						<table width="100%">

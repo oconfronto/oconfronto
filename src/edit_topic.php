@@ -6,7 +6,7 @@ $player = check_user($secret_key, $db);
 include("checkforum.php");
 include("templates/private_header.php");
 ?>
-<script type="text/javascript" src="bbeditor/ed.js"></script>
+<script type="text/javascript" src="static/bbeditor/ed.js"></script>
 <?php
 if (!$_GET['topic'])
 {

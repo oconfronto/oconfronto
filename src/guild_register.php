@@ -150,7 +150,7 @@ $msg3 .= "</font>";
 
 include("templates/private_header.php");
 ?>
-<script type="text/javascript" src="bbeditor/ed.js"></script>
+<script type="text/javascript" src="static/bbeditor/ed.js"></script>
 
 <form method="POST" action="guild_register.php">
 <?php

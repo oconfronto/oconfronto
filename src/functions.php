@@ -52,7 +52,7 @@ class OCv2
 function encodePassword($password)
 {
 
-	$salt = $_ENV['PASSWORD_SALT'];
+	$salt = getenv('PASSWORD_SALT');
 	$hash = sha1($password . $salt);
 
 	for ($i = 0; $i < 1000; $i++) {
@@ -425,13 +425,13 @@ function showName($name, &$db, $status = 'on', $link = 'on')
 			if (($online->recordcount() > 0) and ($ignorado->recordcount() == 0)) {
 				$check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", array($name));
 				if ($check->recordcount() == 0) {
-					$return .= "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $user) . "')\"><img src=\"images/online.png\" border=\"0px\"></a>";
+					$return .= "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $user) . "')\"><img src=\"static/images/online.png\" border=\"0px\"></a>";
 				} else {
 					$stattus = $check->fetchrow();
 					if ($stattus['pending_status'] == 'ocp') {
-						$return .= "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $user) . "')\"><img src=\"images/ocupado.png\" border=\"0px\"></a>";
+						$return .= "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $user) . "')\"><img src=\"static/images/ocupado.png\" border=\"0px\"></a>";
 					} elseif ($stattus['pending_status'] == 'inv') {
-						$return .= "<img src=\"images/invisivel.png\" border=\"0px\">";
+						$return .= "<img src=\"static/images/invisivel.png\" border=\"0px\">";
 					}
 				}
 			}

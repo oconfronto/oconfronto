@@ -85,7 +85,7 @@ if ($setting->event_convidados = true) {
 		
 	</td>
 	</table>]">
-						<img src="images/itens/<?php echo $row2['img']; ?>" border="0">
+						<img src="static/images/itens/<?php echo $row2['img']; ?>" border="0">
 					</div>
 					<p>
 
@@ -105,7 +105,7 @@ echo "<br /><br />";
 echo "<table width=\"100%\" border=\"0\">";
 echo "<tr>";
 echo "<td>";
-echo "<img src=\"imprime.php?id=" . $player->id . "\" alt=\"Jogue o confronto! é de graça!\" border=\"0\">";
+echo "<img src=\"static/imprime.php?id=" . $player->id . "\" alt=\"Jogue o confronto! é de graça!\" border=\"0\">";
 echo "</td>";
 echo "<tbody><tr>";
 echo "<td>";
@@ -126,7 +126,7 @@ echo "</table>";
 ?>
 
 <br />
-<img src="http://img121.imageshack.us/img121/3808/24gu1i8.png" alt="Jogue o confronto! é de graça!" width="360" height="21" border="0"></a>
+<img src="static/http://img121.imageshack.us/img121/3808/24gu1i8.png" alt="Jogue o confronto! é de graça!" width="360" height="21" border="0"></a>
 
 <table border="0">
 	<tr>

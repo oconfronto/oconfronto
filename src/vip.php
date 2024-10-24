@@ -205,7 +205,7 @@ switch($_GET['act'])
 			echo "<legend><b>Créditos Especiais</b></legend>\n";
 				echo "<table width=\"100%\">\n";
 				echo "<tr><td width=\"10%\">";
-					echo "<center><img src=\"images/itens/vgold1.gif\"/></center>";
+					echo "<center><img src=\"static/images/itens/vgold1.gif\"/></center>";
 				echo "</td>";
 				echo "<td width=\"35%\">";
 					echo "Ganhe 15 Créditos";
@@ -218,7 +218,7 @@ switch($_GET['act'])
 				echo "</td></tr>";
 
 				echo "<tr><td width=\"10%\">";
-					echo "<center><img src=\"images/itens/vgold2.gif\"/></center>";
+					echo "<center><img src=\"static/images/itens/vgold2.gif\"/></center>";
 				echo "</td>";
 				echo "<td width=\"35%\">";
 					echo "Ganhe 25 Créditos";
@@ -231,7 +231,7 @@ switch($_GET['act'])
 				echo "</td></tr>";
 
 				echo "<tr><td width=\"10%\">";
-					echo "<center><img src=\"images/itens/vgold3.gif\"/></center>";
+					echo "<center><img src=\"static/images/itens/vgold3.gif\"/></center>";
 				echo "</td>";
 				echo "<td width=\"35%\">";
 					echo "Ganhe 50 Créditos";
@@ -244,7 +244,7 @@ switch($_GET['act'])
 				echo "</td></tr>";
 
 				echo "<tr><td width=\"10%\">";
-					echo "<center><img src=\"images/itens/vgold4.gif\"/></center>";
+					echo "<center><img src=\"static/images/itens/vgold4.gif\"/></center>";
 				echo "</td>";
 				echo "<td width=\"35%\">";
 					echo "Ganhe 75 Créditos";
@@ -257,7 +257,7 @@ switch($_GET['act'])
 				echo "</td></tr>";
 
 				echo "<tr><td width=\"10%\">";
-					echo "<center><img src=\"images/itens/vgold5.gif\"/></center>";
+					echo "<center><img src=\"static/images/itens/vgold5.gif\"/></center>";
 				echo "</td>";
 				echo "<td width=\"35%\">";
 					echo "Ganhe 100 Créditos";
@@ -394,7 +394,7 @@ switch($_GET['act'])
 							$itinfo = $db->execute("select * from `blueprint_items` where `id`=?", array($key_value));
 							$item = $itinfo->fetchrow();
 
-							$itimages .= "<img src=\"images/itens/" . $item['img'] . "\"/>";
+							$itimages .= "<img src=\"static/images/itens/" . $item['img'] . "\"/>";
 
 							if ($item['type'] == 'amulet'){
 								$itnames .= "" . $item['name'] . " <font size=\"1px\">(Vitalidade: " . $item['effectiveness'] . ", Nível " . $item['needlvl'] . "+)</font><br/>";
@@ -434,7 +434,7 @@ switch($_GET['act'])
 					echo "<legend><b>Moedas de ouro</b></legend>\n";
 					echo "<table width=\"100%\">\n";
 						echo "<tr><td width=\"6%\">";
-							echo "<center><img src=\"images/itens/normalgold.gif\"/></center>";
+							echo "<center><img src=\"static/images/itens/normalgold.gif\"/></center>";
 						echo "</td><td width=\"69%\">";
 							echo "" . $vipti['value'] . " de moedas de ouro.";
 						echo "</td><td width=\"25%\">";

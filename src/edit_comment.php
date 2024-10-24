@@ -7,7 +7,7 @@ $player = check_user($secret_key, $db);
 
 include("templates/private_header.php");
 ?>
-<script type="text/javascript" src="bbeditor/ed.js"></script>
+<script type="text/javascript" src="static/bbeditor/ed.js"></script>
 <?php
 	$procuramengperfil = $db->execute("select `perfil` from `profile` where `player_id`=?", array($player->id));
 	if ($procuramengperfil->recordcount() == 0)

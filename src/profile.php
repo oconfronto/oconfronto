@@ -83,10 +83,10 @@ echo "<div class=\"tab_container\">";
 
 	echo "<table width=\"120px\" height=\"120px\" align=\"center\"><tr><td>";
 	echo "<div style=\"position: relative;\">";
-	echo "<img src=\"" . $profile['avatar'] . "\" width=\"120px\" height=\"120px\" style=\"position: absolute; top: 1; left: 1;\" alt=\"" . $profile['username'] . "\" border=\"1\">";
+	echo "<img src=\"static/" . $profile['avatar'] . "\" width=\"120px\" height=\"120px\" style=\"position: absolute; top: 1; left: 1;\" alt=\"" . $profile['username'] . "\" border=\"1\">";
 	$checkranknosite = $db->execute("select `time` from `user_online` where `player_id`=?", array($profile['id']));
 	if ($checkranknosite->recordcount() > 0) {
-	echo "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ","_",$profile['username']) . "')\"><img src=\"images/online2.png\" width=\"120px\" height=\"120px\" style=\"position: absolute; top: 1; left: 1;\" alt=\"" . $profile['username'] . "\" border=\"1px\"></a>";
+	echo "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ","_",$profile['username']) . "')\"><img src=\"static/images/online2.png\" width=\"120px\" height=\"120px\" style=\"position: absolute; top: 1; left: 1;\" alt=\"" . $profile['username'] . "\" border=\"1px\"></a>";
 	}
 	echo "</div>";
 	echo "</td></tr></table>";
@@ -338,9 +338,9 @@ echo "<div id=\"tab3\" class=\"tab_content\">";
 			$ouro = $db->execute("select * from `medalhas` where `player_id`=? and `type`='3'", array($profile['id']));
 
 			echo "<p><table width=\"100%\"><tr>";
-				echo "<th width=\"33%\" align=\"right\"><img src=\"images/itens/prata.png\"> X " . $prata->recordcount() . "</th>";
-				echo "<th width=\"34%\" align=\"center\"><img src=\"images/itens/medalha.gif\"> X " . $ouro->recordcount() . "</th>";
-				echo "<th width=\"33%\" align=\"left\"><img src=\"images/itens/bronze.png\"> X " . $bronze->recordcount() . "</th>";
+				echo "<th width=\"33%\" align=\"right\"><img src=\"static/images/itens/prata.png\"> X " . $prata->recordcount() . "</th>";
+				echo "<th width=\"34%\" align=\"center\"><img src=\"static/images/itens/medalha.gif\"> X " . $ouro->recordcount() . "</th>";
+				echo "<th width=\"33%\" align=\"left\"><img src=\"static/images/itens/bronze.png\"> X " . $bronze->recordcount() . "</th>";
 			echo "</tr></table></p>";
 
 			echo "<table>";
@@ -349,11 +349,11 @@ echo "<div id=\"tab3\" class=\"tab_content\">";
 				{
 					echo "<tr><td>";
 					if ($meda['type'] == '1') {
-						echo "<img src=\"images/itens/bronze.png\">";
+						echo "<img src=\"static/images/itens/bronze.png\">";
 					} elseif ($meda['type'] == '2') {
-						echo "<img src=\"images/itens/prata.png\">";
+						echo "<img src=\"static/images/itens/prata.png\">";
 					} else {
-						echo "<img src=\"images/itens/medalha.gif\">";
+						echo "<img src=\"static/images/itens/medalha.gif\">";
 					}
 				
 					echo "</td><td><b>" . $meda['medalha'] . ":</b> " . $meda['motivo'] . "</td></tr>";

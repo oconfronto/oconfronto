@@ -266,25 +266,25 @@ switch ($_GET['act']) {
 
 				echo "<fieldset>";
 				echo "<legend><b>Poções</b></legend>";
-				echo "<table width=\"100%\"><tr><td><table width=\"80px\"><tr><td><div title=\"header=[Health Potion] body=[Recupera até 5 mil de vida.]\"><img src=\"images/itens/healthpotion.gif\"></div></td><td><b>x" . $numerodepocoes . "</b>";
+				echo "<table width=\"100%\"><tr><td><table width=\"80px\"><tr><td><div title=\"header=[Health Potion] body=[Recupera até 5 mil de vida.]\"><img src=\"static/images/itens/healthpotion.gif\"></div></td><td><b>x" . $numerodepocoes . "</b>";
 				if ($numerodepocoes > 0) {
 					$item = $query->fetchrow();
 					echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item['id'] . "\">Usar</a>";
 				}
 				echo "</td></tr></table></td>";
-				echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Big Health Potion] body=[Recupera até 10 mil de vida.]\"><img src=\"images/itens/bighealthpotion.gif\"></div></td><td><b>x" . $numerodepocoes3 . "</b>";
+				echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Big Health Potion] body=[Recupera até 10 mil de vida.]\"><img src=\"static/images/itens/bighealthpotion.gif\"></div></td><td><b>x" . $numerodepocoes3 . "</b>";
 				if ($numerodepocoes3 > 0) {
 					$item3 = $query3->fetchrow();
 					echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item3['id'] . "\">Usar</a>";
 				}
 				echo "</td></tr></table></td>";
-				echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Mana Potion] body=[Recupera até 500 de mana.]\"><img src=\"images/itens/manapotion.gif\"></div></td><td><b>x" . $numerodepocoes4 . "</b>";
+				echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Mana Potion] body=[Recupera até 500 de mana.]\"><img src=\"static/images/itens/manapotion.gif\"></div></td><td><b>x" . $numerodepocoes4 . "</b>";
 				if ($numerodepocoes4 > 0) {
 					$item4 = $query4->fetchrow();
 					echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item4['id'] . "\">Usar</a>";
 				}
 				echo "</td></tr></table></td>";
-				echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Energy Potion] body=[Recupera até 50 de energia.]\"><img src=\"images/itens/energypotion.gif\"></div></td><td><b>x" . $numerodepocoes2 . "</b>";
+				echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Energy Potion] body=[Recupera até 50 de energia.]\"><img src=\"static/images/itens/energypotion.gif\"></div></td><td><b>x" . $numerodepocoes2 . "</b>";
 				if ($numerodepocoes2 > 0) {
 					$item2 = $query2->fetchrow();
 					echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item2['id'] . "\">Usar</a>";
@@ -928,7 +928,7 @@ switch ($_GET['act']) {
 			echo "<table width=\"100%\">";
 			echo "<tr>";
 			echo "<td width=\"8%\">";
-			echo "<center><img src=\"" . $player->avatar . "\" width=\"42px\" height=\"42px\" alt=\"" . $player->username . "\" border=\"1px\"></center>";
+			echo "<center><img src=\"static/" . $player->avatar . "\" width=\"42px\" height=\"42px\" alt=\"" . $player->username . "\" border=\"1px\"></center>";
 			echo "</td>";
 
 			echo "<td width=\"26%\">";
@@ -1051,7 +1051,7 @@ switch ($_GET['act']) {
 			echo showAlert("<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('heal.php', 'swap')\">Clique aqui</a> para recuperar toda sua vida por <b>" . number_format($cost) . "</b> de ouro. | <a href=\"monster.php\">Voltar</a>", "white", "left");
 		} else {
 			echo "<table width=\"100%\" height=\"43px\" border=\"0px\"><tr><td width=\"85%\" bgcolor=\"#E1CBA4\">";
-			echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_type.php?type=97', 'swap')\"><img src=\"images/magias/hit.png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 3;\" border=\"0\" /></a>";
+			echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_type.php?type=97', 'swap')\"><img src=\"static/images/magias/hit.png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 3;\" border=\"0\" /></a>";
 
 
 			$vermagia = $db->execute("select magias.magia_id, blueprint_magias.nome, blueprint_magias.descri, blueprint_magias.mana from `magias`, `blueprint_magias` where magias.magia_id=blueprint_magias.id and magias.used=? and magias.magia_id!=5 and magias.player_id=?", array('t', $player->id));
@@ -1060,10 +1060,10 @@ switch ($_GET['act']) {
 				echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_type.php?type=" . $result['magia_id'] . "', 'swap')\">";
 
 				if ($bixo->type != $result['magia_id']) {
-					echo "<img src=\"images/magias/black.png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; position: absolute; z-index: 3;\" title=\"header=[" . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . "]\"/>";
-					echo "<img src=\"images/magias/" . $result['magia_id'] . ".png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;\"/>";
+					echo "<img src=\"static/images/magias/black.png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; position: absolute; z-index: 3;\" title=\"header=[" . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . "]\"/>";
+					echo "<img src=\"static/images/magias/" . $result['magia_id'] . ".png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;\"/>";
 				} else {
-					echo "<img src=\"images/magias/" . $result['magia_id'] . ".png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;\" title=\"header=[" . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . "]\"/>";
+					echo "<img src=\"static/images/magias/" . $result['magia_id'] . ".png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;\" title=\"header=[" . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . "]\"/>";
 				}
 
 				echo "</a>";
@@ -1077,9 +1077,9 @@ switch ($_GET['act']) {
 		if (floor($player->energy / 10) > 1) {
 			$modefastbattle = $db->execute("select * from `other` where `value`=? and `player_id`=?", array('fastbattle', $player->id));
 			if ($modefastbattle->recordcount() > 0) {
-				echo "<div style='text-align:center' id='des_battle'><i><a href=\"monster.php?act=attack&id=" . ($bixo->id * $player->id) . "&times=" . floor($player->energy / 10) . "\">Clique aqui</a> para descarregar toda sua energia no monstro " . $enemy->username . ".</i><img src=\"images/help.gif\" title=\"header=[Descarregar Energia] body=[<font size='1px'>Você possui " . $player->energy . " pontos de energia, e pode matar " . floor($player->energy / 10) . " monstros. Esta opção faz com que você ataque " . floor($player->energy / 10) . "x o monstro " . $enemy->username . " de uma só vez.</font>]\"></div>";
+				echo "<div style='text-align:center' id='des_battle'><i><a href=\"monster.php?act=attack&id=" . ($bixo->id * $player->id) . "&times=" . floor($player->energy / 10) . "\">Clique aqui</a> para descarregar toda sua energia no monstro " . $enemy->username . ".</i><img src=\"static/images/help.gif\" title=\"header=[Descarregar Energia] body=[<font size='1px'>Você possui " . $player->energy . " pontos de energia, e pode matar " . floor($player->energy / 10) . " monstros. Esta opção faz com que você ataque " . floor($player->energy / 10) . "x o monstro " . $enemy->username . " de uma só vez.</font>]\"></div>";
 			} else {
-				echo "<div style='text-align:center' id='des_battle'><i><a href=\"swap_type.php?descarregar=true&times=" . floor($player->energy / 10) . "\">Clique aqui</a> para descarregar toda sua energia no monstro " . $enemy->username . ".</i><img src=\"images/help.gif\" title=\"header=[Descarregar Energia] body=[<font size='1px'>Você possui " . $player->energy . " pontos de energia, e pode matar " . floor($player->energy / 10) . " monstros. Esta opção faz com que você ataque " . floor($player->energy / 10) . "x o monstro " . $enemy->username . " de uma só vez.</font>]\"></div>";
+				echo "<div style='text-align:center' id='des_battle'><i><a href=\"swap_type.php?descarregar=true&times=" . floor($player->energy / 10) . "\">Clique aqui</a> para descarregar toda sua energia no monstro " . $enemy->username . ".</i><img src=\"static/images/help.gif\" title=\"header=[Descarregar Energia] body=[<font size='1px'>Você possui " . $player->energy . " pontos de energia, e pode matar " . floor($player->energy / 10) . " monstros. Esta opção faz com que você ataque " . floor($player->energy / 10) . "x o monstro " . $enemy->username . " de uma só vez.</font>]\"></div>";
 			}
 		}
 

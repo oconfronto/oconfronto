@@ -5,9 +5,9 @@
 <html>
 <head>
 <title>O Confronto :: Logs de Batalha</title>
-<link rel="stylesheet" type="text/css" href="css/style-a.css" />
-<link rel="stylesheet" type="text/css" href="css/boxover.css" />
-<script type="text/javascript" src="js/boxover.js"></script>
+<link rel="stylesheet" type="text/css" href="static/css/style-a.css" />
+<link rel="stylesheet" type="text/css" href="static/css/boxover.css" />
+<script type="text/javascript" src="static/js/boxover.js"></script>
 </head>
 
 <body>

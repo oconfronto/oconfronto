@@ -59,7 +59,7 @@ if ($error){
 	echo showAlert($error, "red");
 }
 
-echo "<script type=\"text/javascript\" src=\"bbeditor/ed.js\"></script>";
+echo "<script type=\"text/javascript\" src=\"static/bbeditor/ed.js\"></script>";
 	echo "<table width=\"100%\" border=\"0px\">";
 		echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Criar novo Tópico</b></center></td></tr>";
 		echo "<tr class=\"salmon\"><td>";

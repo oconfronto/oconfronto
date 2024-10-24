@@ -9,24 +9,24 @@ Author: Victor De la Rocha
 Author URI: http://www.mis-algoritmos.com
 */
 		/*Default values*/
-		var $total_pages = -1;//items
-		var $limit = null;
-		var $target = ""; 
-		var $page = 1;
-		var $adjacents = 2;
-		var $showCounter = false;
-		var $className = "pagination";
-		var $parameterName = "page";
-		var $urlF = false;//urlFriendly
+		public $total_pages = -1;//items
+		public $limit = null;
+		public $target = ""; 
+		public $page = 1;
+		public $adjacents = 2;
+		public $showCounter = false;
+		public $className = "pagination";
+		public $parameterName = "page";
+		public $urlF = false;//urlFriendly
 
 		/*Buttons next and previous*/
-		var $nextT = "Próxima";
-		var $nextI = "&#187;"; //&#9658;
-		var $prevT = "Anterior";
-		var $prevI = "&#171;"; //&#9668;
+		public $nextT = "Próxima";
+		public $nextI = "&#187;"; //&#9658;
+		public $prevT = "Anterior";
+		public $prevI = "&#171;"; //&#9668;
 
 		/*****/
-		var $calculate = false;
+		public $calculate = false;
 		
 		#Total items
 		function items($value){$this->total_pages = (int) $value;}
@@ -66,7 +66,7 @@ Author URI: http://www.mis-algoritmos.com
 				$this->urlF=$value;
 			}
 		
-		var $pagination;
+		public $pagination;
 
 		function pagination(){}
 		function show(){

@@ -14,7 +14,7 @@ if ($_GET['estender']) {
 		{
 			$db->execute("update `players` set `mana`=`maxmana`+2, `maxmana`=`maxmana`+2, `extramana`=`extramana`+2, `magic_points`=`magic_points`-1 where `id`=?", array($player->id));
 			$player = check_user($secret_key, $db);
-			echo "<br/><center><img src=\"images/man.png\"><img src=\"bargen.php?man\">"; if ($player->magic_points > 0){ echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_spells.php?estender=true', 'maxmana')\"><img src=\"images/addstat.png\" border=\"0px\"></a>"; }else{ echo "<img src=\"images/none.png\" border=\"0px\">"; } echo "</center>";
+			echo "<br/><center><img src=\"static/images/man.png\"><img src=\"static/bargen.php?man\">"; if ($player->magic_points > 0){ echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_spells.php?estender=true', 'maxmana')\"><img src=\"static/images/addstat.png\" border=\"0px\"></a>"; }else{ echo "<img src=\"static/images/none.png\" border=\"0px\">"; } echo "</center>";
 			echo "<center><font size=\"1px\">Estenda 2 pontos da sua mana<br/>máxima por 1 ponto místico.<br/><br/><b>Você " . $player->magic_points . " tem ponto(s) místico(s).</b></font></center>";
 			exit;
 		}

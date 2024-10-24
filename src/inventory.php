@@ -56,7 +56,7 @@ if ($_GET['sellit']) {
 	} elseif (($_GET['sellit'] > 0) and ($_GET['comfirm'] != true)) {
 		echo "<div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
 		echo "<table width=\"100%\" align=\"center\"><tr>";
-		echo "<td width=\"10%\" align=\"center\"><img src=\"images/itens/" . $sell['img'] . "\" border=\"0\"></td>";
+		echo "<td width=\"10%\" align=\"center\"><img src=\"static/images/itens/" . $sell['img'] . "\" border=\"0\"></td>";
 		echo "<td width=\"55%\">Deseja vender seu(a) " . $sell['name'] . " + " . $sell['item_bonus'] . "<br/>por " . $valordavenda . " moedas de ouro?</td>";
 		echo "<td width=\"35%\" align=\"right\"><a href=\"inventory.php\">Não, obrigado.</a><br/><b><a href=\"inventory.php?sellit=" . $_GET['sellit'] . "&comfirm=true\">Desejo vender o item.</a></b></td>";
 		echo "</tr></table>";
@@ -130,7 +130,7 @@ if ($_GET['mature']) {
 	} elseif (($_GET['mature'] > 0) and ($_GET['comfirm'] != true)) {
 		echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">";
 		echo "<table width=\"100%\" align=\"center\"><tr>";
-		echo "<td width=\"10%\" align=\"center\"><img src=\"images/itens/" . $mature['img'] . "\" border=\"0\"></td>";
+		echo "<td width=\"10%\" align=\"center\"><img src=\"static/images/itens/" . $mature['img'] . "\" border=\"0\"></td>";
 		echo "<td width=\"55%\">Deseja maturar seu(a) " . $mature['name'] . " + " . $mature['item_bonus'] . "<br/>por " . $precol . " moedas de ouro?</td>";
 		echo "<td width=\"35%\" align=\"right\"><a href=\"inventory.php\">Não, obrigado.</a><br/><b><a href=\"inventory.php?mature=" . $_GET['mature'] . "&comfirm=true\">Desejo maturar o item.</a></b></td>";
 		echo "</tr></table>";
@@ -302,7 +302,7 @@ while ($bag = $backpackquery->fetchrow()) {
 	}
 	echo "<td class=\"" . $colorbg . " " . $fieldnumber . "\">";
 	echo "<div id=\"" . $bag['type'] . "\" class=\"drag " . $bag['id'] . "\" title=\"header=[" . $showitname . "] body=[" . $showitinfo . "]\">";
-	echo "<img src=\"images/itens/" . $bag['img'] . "\" border=\"0\">";
+	echo "<img src=\"static/images/itens/" . $bag['img'] . "\" border=\"0\">";
 	echo "</div>";
 	echo "</td>";
 
@@ -364,25 +364,25 @@ $numerodepocoes4 = $query4->recordcount();
 
 echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
 echo "<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Poções</b></fieldset>";
-echo "<table width=\"100%\"><tr><td><table width=\"80px\"><tr><td><div title=\"header=[Health Potion] body=[Recupera até 5 mil de vida.]\"><img src=\"images/itens/healthpotion.gif\"></div></td><td><b>x" . $numerodepocoes . "</b>";
+echo "<table width=\"100%\"><tr><td><table width=\"80px\"><tr><td><div title=\"header=[Health Potion] body=[Recupera até 5 mil de vida.]\"><img src=\"static/images/itens/healthpotion.gif\"></div></td><td><b>x" . $numerodepocoes . "</b>";
 if ($numerodepocoes > 0) {
 	$item = $query->fetchrow();
 	echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item['id'] . "\">Usar</a>";
 }
 echo "</td></tr></table></td>";
-echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Big Health Potion] body=[Recupera até 10 mil de vida.]\"><img src=\"images/itens/bighealthpotion.gif\"></div></td><td><b>x" . $numerodepocoes3 . "</b>";
+echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Big Health Potion] body=[Recupera até 10 mil de vida.]\"><img src=\"static/images/itens/bighealthpotion.gif\"></div></td><td><b>x" . $numerodepocoes3 . "</b>";
 if ($numerodepocoes3 > 0) {
 	$item3 = $query3->fetchrow();
 	echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item3['id'] . "\">Usar</a>";
 }
 echo "</td></tr></table></td>";
-echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Mana Potion] body=[Recupera até 500 de mana.]\"><img src=\"images/itens/manapotion.gif\"></div></td><td><b>x" . $numerodepocoes4 . "</b>";
+echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Mana Potion] body=[Recupera até 500 de mana.]\"><img src=\"static/images/itens/manapotion.gif\"></div></td><td><b>x" . $numerodepocoes4 . "</b>";
 if ($numerodepocoes4 > 0) {
 	$item4 = $query4->fetchrow();
 	echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item4['id'] . "\">Usar</a>";
 }
 echo "</td></tr></table></td>";
-echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Energy Potion] body=[Recupera até 50 de energia.]\"><img src=\"images/itens/energypotion.gif\"></div></td><td><b>x" . $numerodepocoes2 . "</b>";
+echo "<td><table width=\"80px\"><tr><td><div title=\"header=[Energy Potion] body=[Recupera até 50 de energia.]\"><img src=\"static/images/itens/energypotion.gif\"></div></td><td><b>x" . $numerodepocoes2 . "</b>";
 if ($numerodepocoes2 > 0) {
 	$item2 = $query2->fetchrow();
 	echo "<br/><a href=\"hospt.php?act=potion&pid=" . $item2['id'] . "\">Usar</a>";

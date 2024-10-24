@@ -13,8 +13,8 @@
 		echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/private_style_1.css\" />";
 		}
 ?>
-<link rel="stylesheet" type="text/css" href="css/boxover.css" />
-<script type="text/javascript" src="js/boxover.js"></script>
+<link rel="stylesheet" type="text/css" href="static/css/boxover.css" />
+<script type="text/javascript" src="static/js/boxover.js"></script>
 </head>
 
 <body>

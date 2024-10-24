@@ -697,7 +697,7 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
 	            	echo "<tr>";
                         echo "<td width=\"39%\" align=\"center\">";
                         echo "<table width=\"100%\" align=\"center\"><tr>";
-                        echo "<th width=\"50px\"><center><img src=\"" . $player->avatar . "\" width=\"42px\" height=\"42px\" alt=\"" . $player->username . "\" border=\"1px\"></center></th>";
+                        echo "<th width=\"50px\"><center><img src=\"static/" . $player->avatar . "\" width=\"42px\" height=\"42px\" alt=\"" . $player->username . "\" border=\"1px\"></center></th>";
                         echo "<td>";
                         echo "<b>" . showName($player->id, $db, 'on', 'off') . "</b> <font size=\"1px\">n&ecirc;vel " . $player->level . "</font><br/>";
                         
@@ -767,7 +767,7 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
                                         echo "<div>";
 
                                     echo "</td>";
-                                    echo "<th width=\"50px\"><center><img src=\"" . $enemy->avatar . "\" width=\"42px\" height=\"42px\" alt=\"" . $enemy->username . "\" border=\"1px\"></center></th>";
+                                    echo "<th width=\"50px\"><center><img src=\"static/" . $enemy->avatar . "\" width=\"42px\" height=\"42px\" alt=\"" . $enemy->username . "\" border=\"1px\"></center></th>";
                                 echo "</tr></table><font size=\"1px\">";
                             if ($enemy->id == $luta['p_id'])
                             {
@@ -978,7 +978,7 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
             if (((($player->id == $luta['p_id']) and ($luta['vez'] == 'p')) or (($player->id != $luta['p_id']) and ($luta['vez'] == 'e'))) and ($luta['status'] != 'z'))
             {
                 echo "<table width=\"100%\" height=\"43px\" border=\"0px\"><tr><td width=\"85%\" bgcolor=\"#E1CBA4\">";
-                echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_duel.php?type=97', 'swap')\"><img src=\"images/magias/hit.png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 3;\" border=\"0\" /></a>";
+                echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_duel.php?type=97', 'swap')\"><img src=\"static/images/magias/hit.png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 3;\" border=\"0\" /></a>";
                 
                 
                 $vermagia = $db->execute("select magias.magia_id, blueprint_magias.nome, blueprint_magias.descri, blueprint_magias.mana from `magias`, `blueprint_magias` where magias.magia_id=blueprint_magias.id and magias.used=? and magias.magia_id!=5 and magias.player_id=?", array(t, $player->id));
@@ -987,10 +987,10 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
                     echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_duel.php?type=" . $result['magia_id'] . "', 'swap')\">";
                     
                     if ($bixo->type != $result['magia_id']){
-                        echo "<img src=\"images/magias/black.png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; position: absolute; z-index: 3;\" title=\"header=[" . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . "]\"/>";
-                        echo "<img src=\"images/magias/" . $result['magia_id'] . ".png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;\"/>";
+                        echo "<img src=\"static/images/magias/black.png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; position: absolute; z-index: 3;\" title=\"header=[" . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . "]\"/>";
+                        echo "<img src=\"static/images/magias/" . $result['magia_id'] . ".png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;\"/>";
                     } else {
-                        echo "<img src=\"images/magias/" . $result['magia_id'] . ".png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;\" title=\"header=[" . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . "]\"/>";
+                        echo "<img src=\"static/images/magias/" . $result['magia_id'] . ".png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;\" title=\"header=[" . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . "]\"/>";
                     }
                     
                     echo "</a>";
@@ -1002,16 +1002,16 @@ if (($_GET['luta']) or ($verificaLuta->recordcount() > 0))
             } else {
                 if ($luta['status'] != 'z') {
                     echo "<table width=\"100%\" height=\"43px\" border=\"0px\"><tr><td width=\"85%\" bgcolor=\"#cccccc\">";
-                    echo "<img src=\"images/magias/hit.png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 3;\" border=\"0\" />";
+                    echo "<img src=\"static/images/magias/hit.png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 3;\" border=\"0\" />";
                     
                     
                     $vermagia = $db->execute("select magias.magia_id, blueprint_magias.nome, blueprint_magias.descri, blueprint_magias.mana from `magias`, `blueprint_magias` where magias.magia_id=blueprint_magias.id and magias.used=? and magias.magia_id!=5 and magias.player_id=?", array(t, $player->id));
                     while($result = $vermagia->fetchrow()){
                         if ($bixo->type != $result['magia_id']){
-                            echo "<img src=\"images/magias/black.png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; position: absolute; z-index: 3;\" title=\"header=[" . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . "]\"/>";
-                            echo "<img src=\"images/magias/" . $result['magia_id'] . ".png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;\"/>";
+                            echo "<img src=\"static/images/magias/black.png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; position: absolute; z-index: 3;\" title=\"header=[" . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . "]\"/>";
+                            echo "<img src=\"static/images/magias/" . $result['magia_id'] . ".png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;\"/>";
                         } else {
-                            echo "<img src=\"images/magias/" . $result['magia_id'] . ".png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;\" title=\"header=[" . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . "]\"/>";
+                            echo "<img src=\"static/images/magias/" . $result['magia_id'] . ".png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;\" title=\"header=[" . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . "]\"/>";
                         }
                     }
                     

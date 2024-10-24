@@ -259,7 +259,7 @@ switch($_GET['act'])
 
 					echo "<tr class=\"row" . $bool . "\">";
 
-					echo "<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><img src=\"images/itens/{$item['img']}\" alt=\"{$item['name']}\"></td>";
+					echo "<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><img src=\"static/images/itens/{$item['img']}\" alt=\"{$item['name']}\"></td>";
 					echo "<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $item['name'] . " " . $bonus1 . "" . $bonus2 . "" . $bonus3 . "" . $bonus4 . "" . $bonus5 . "</td>";
 
 					if (($_GET['type'] == 'potion') or ($_GET['type'] == 'ring') or ($_GET['type'] == 'addon')) {

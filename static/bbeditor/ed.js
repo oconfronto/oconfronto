@@ -14,22 +14,22 @@ document.write("<link href=\"bbeditor/styles.css\" rel=\"stylesheet\" type=\"tex
 
 function edToolbar(obj) {
     document.write("<div class=\"toolbar\">");
-	document.write("<img class=\"button\" src=\"bbeditor/images/bold.png\" name=\"btnItalic\" onClick=\"doAddTags('[b]','[/b]','" + obj + "')\">");
-	document.write("<img class=\"button\" src=\"bbeditor/images/italic.png\" name=\"btnItalic\" onClick=\"doAddTags('[i]','[/i]','" + obj + "')\">");
-	document.write("<img class=\"button\" src=\"bbeditor/images/underline.png\" name=\"btnUnderline\" onClick=\"doAddTags('[u]','[/u]','" + obj + "')\">");
-	document.write("<img class=\"button\" src=\"bbeditor/images/strike.png\" name=\"btnStrike\" onClick=\"doAddTags('[s]','[/s]','" + obj + "')\">");
-	document.write("<img class=\"button\" src=\"bbeditor/images/link.png\" name=\"btnLink\" onClick=\"doURL('" + obj + "')\">");
-	document.write("<img class=\"button\" src=\"bbeditor/images/picture.png\" name=\"btnPicture\" onClick=\"doImage('" + obj + "')\">");
-	document.write("<img class=\"button\" src=\"bbeditor/images/film_add.png\" name=\"btnYou\" onClick=\"doYou('" + obj + "')\">");
-	document.write("<img class=\"button\" src=\"bbeditor/images/color.png\" name=\"btnColor\" onClick=\"doColor('" + obj + "')\">");
-	document.write("<img class=\"button\" src=\"bbeditor/images/ordered.png\" name=\"btnOrder\" onClick=\"doAddTags('[order]','[/order]','" + obj + "')\">");
-	document.write("<img class=\"button\" src=\"bbeditor/images/unordered.png\" name=\"btnList\" onClick=\"doAddTags('[list]','[/list]','" + obj + "')\">");
-	document.write("<img class=\"button\" src=\"bbeditor/images/left.png\" name=\"btnLeft\" onClick=\"doAddTags('[left]','[/left]','" + obj + "')\">");
-	document.write("<img class=\"button\" src=\"bbeditor/images/center.png\" name=\"btnCenter\" onClick=\"doAddTags('[center]','[/center]','" + obj + "')\">");
-	document.write("<img class=\"button\" src=\"bbeditor/images/right.png\" name=\"btnRight\" onClick=\"doAddTags('[right]','[/right]','" + obj + "')\">");
-	document.write("<img class=\"button\" src=\"bbeditor/images/small.png\" name=\"btnSmall\" onClick=\"doAddTags('[small]','[/small]','" + obj + "')\">");
-	document.write("<img class=\"button\" src=\"bbeditor/images/big.png\" name=\"btnBig\" onClick=\"doAddTags('[big]','[/big]','" + obj + "')\">");
-	document.write("<img class=\"button\" src=\"bbeditor/images/quote.png\" name=\"btnQuote\" onClick=\"doAddTags('[quote]','[/quote]','" + obj + "')\">"); 
+	document.write("<img class=\"button\" src=\"static/bbeditor/images/bold.png\" name=\"btnItalic\" onClick=\"doAddTags('[b]','[/b]','" + obj + "')\">");
+	document.write("<img class=\"button\" src=\"static/bbeditor/images/italic.png\" name=\"btnItalic\" onClick=\"doAddTags('[i]','[/i]','" + obj + "')\">");
+	document.write("<img class=\"button\" src=\"static/bbeditor/images/underline.png\" name=\"btnUnderline\" onClick=\"doAddTags('[u]','[/u]','" + obj + "')\">");
+	document.write("<img class=\"button\" src=\"static/bbeditor/images/strike.png\" name=\"btnStrike\" onClick=\"doAddTags('[s]','[/s]','" + obj + "')\">");
+	document.write("<img class=\"button\" src=\"static/bbeditor/images/link.png\" name=\"btnLink\" onClick=\"doURL('" + obj + "')\">");
+	document.write("<img class=\"button\" src=\"static/bbeditor/images/picture.png\" name=\"btnPicture\" onClick=\"doImage('" + obj + "')\">");
+	document.write("<img class=\"button\" src=\"static/bbeditor/images/film_add.png\" name=\"btnYou\" onClick=\"doYou('" + obj + "')\">");
+	document.write("<img class=\"button\" src=\"static/bbeditor/images/color.png\" name=\"btnColor\" onClick=\"doColor('" + obj + "')\">");
+	document.write("<img class=\"button\" src=\"static/bbeditor/images/ordered.png\" name=\"btnOrder\" onClick=\"doAddTags('[order]','[/order]','" + obj + "')\">");
+	document.write("<img class=\"button\" src=\"static/bbeditor/images/unordered.png\" name=\"btnList\" onClick=\"doAddTags('[list]','[/list]','" + obj + "')\">");
+	document.write("<img class=\"button\" src=\"static/bbeditor/images/left.png\" name=\"btnLeft\" onClick=\"doAddTags('[left]','[/left]','" + obj + "')\">");
+	document.write("<img class=\"button\" src=\"static/bbeditor/images/center.png\" name=\"btnCenter\" onClick=\"doAddTags('[center]','[/center]','" + obj + "')\">");
+	document.write("<img class=\"button\" src=\"static/bbeditor/images/right.png\" name=\"btnRight\" onClick=\"doAddTags('[right]','[/right]','" + obj + "')\">");
+	document.write("<img class=\"button\" src=\"static/bbeditor/images/small.png\" name=\"btnSmall\" onClick=\"doAddTags('[small]','[/small]','" + obj + "')\">");
+	document.write("<img class=\"button\" src=\"static/bbeditor/images/big.png\" name=\"btnBig\" onClick=\"doAddTags('[big]','[/big]','" + obj + "')\">");
+	document.write("<img class=\"button\" src=\"static/bbeditor/images/quote.png\" name=\"btnQuote\" onClick=\"doAddTags('[quote]','[/quote]','" + obj + "')\">"); 
     document.write("</div>");
 	//document.write("<textarea id=\""+ obj +"\" name = \"" + obj + "\" cols=\"" + width + "\" rows=\"" + height + "\"></textarea>");
 				}
@@ -37,7 +37,7 @@ function edToolbar(obj) {
 function doImage(obj)
 {
 textarea = document.getElementById(obj);
-var url = prompt('Digite o endereço da imagem:','http://');
+var url = prompt('Digite o endereï¿½o da imagem:','http://');
 var scrollTop = textarea.scrollTop;
 var scrollLeft = textarea.scrollLeft;
 
@@ -106,7 +106,7 @@ var scrollLeft = textarea.scrollLeft;
 function doURL(obj)
 {
 textarea = document.getElementById(obj);
-var url = prompt('Digite o endereço:','http://');
+var url = prompt('Digite o endereï¿½o:','http://');
 var scrollTop = textarea.scrollTop;
 var scrollLeft = textarea.scrollLeft;
 
@@ -151,7 +151,7 @@ var scrollLeft = textarea.scrollLeft;
 function doColor(obj)
 {
 textarea = document.getElementById(obj);
-var cor = prompt('Escreva uma cor: (em inglês)','black');
+var cor = prompt('Escreva uma cor: (em inglï¿½s)','black');
 var scrollTop = textarea.scrollTop;
 var scrollLeft = textarea.scrollLeft;
 

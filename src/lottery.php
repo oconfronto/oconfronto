@@ -196,7 +196,7 @@ if ($medalha7->recordcount() < 1) {
 	echo "<table width=\"100%\">\n";
 	}
 	echo "<tr><td width=\"5%\">";
-	echo "<img src=\"images/itens/" . $itchecked['img'] . "\"/>";
+	echo "<img src=\"static/images/itens/" . $itchecked['img'] . "\"/>";
 	echo "</td><td width=\"68%\">" . $itchecked['description'] . "<br />";
 
 	echo "<b>";

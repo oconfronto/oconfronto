@@ -97,7 +97,7 @@ if ($procuramengperfil->recordcount() == 0) {
 <table width="100%">
 	<tr>
 		<td width="25%">
-			<center><img src="<?php echo $player->avatar ?>" width="120px" height="120px"
+			<center><img src="static/<?php echo $player->avatar ?>" width="120px" height="120px"
 					alt="<?php echo $player->username ?>" border="1px"></center>
 		</td>
 		<td width="75%"><b>Enviar avatar:</b><br />

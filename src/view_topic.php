@@ -131,18 +131,18 @@ $topicouser = $query->fetchrow();
 
 <table width="100%" bgcolor="#f2e1ce">
   <tr>
-    <td width="120px" bgcolor="#E1CBA4"><center><img src="<? echo $topicouser['avatar']; ?>" width="100px" height="100px" border="0"></center>
+    <td width="120px" bgcolor="#E1CBA4"><center><img src="static/<? echo $topicouser['avatar']; ?>" width="100px" height="100px" border="0"></center>
 	<?php
 	if($topicouser['gm_rank'] == 2){
-		echo "<center><img src=\"images/designer.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
+		echo "<center><img src=\"static/images/designer.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
 	} elseif (($topicouser['gm_rank'] > 2) and ($topicouser['gm_rank'] < 10)){
-		echo "<center><img src=\"images/mod.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
+		echo "<center><img src=\"static/images/mod.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
 	} elseif ($topicouser['gm_rank'] > 9){
-		echo "<center><img src=\"images/admin.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
+		echo "<center><img src=\"static/images/admin.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
 	} elseif (($topicouser['alerts'] == 'forever') or ($topicouser['alerts'] > 99)){
-		echo "<center><img src=\"images/banido.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
+		echo "<center><img src=\"static/images/banido.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
 	} else {
-		echo "<center><img src=\"images/membro.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
+		echo "<center><img src=\"static/images/membro.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
 	}
 	?>
 <center><font size="1px"><b><?php echo showName($topicouser['id'], $db); ?></b><br/><b>Posts:</b> <?php echo $topicouser['posts']; ?>
@@ -212,7 +212,7 @@ $porcentoup = 0;
 $porcentodown = 0;
 }
 
-echo "<b><font size=\"1px\">De sua nota: <a href=\"view_topic.php?id=" . $data['id'] . "&up=true\"><img src=\"images/thumb_up.png\" border=\"0\"></a>" . $porcentoup . "%&nbsp;&nbsp;&nbsp;<a href=\"view_topic.php?id=" . $data['id'] . "&down=true\"><img src=\"images/thumb_down.png\" border=\"0\"></a>" . $porcentodown . "%</b> (" . $total . " Votos)</font>";
+echo "<b><font size=\"1px\">De sua nota: <a href=\"view_topic.php?id=" . $data['id'] . "&up=true\"><img src=\"static/images/thumb_up.png\" border=\"0\"></a>" . $porcentoup . "%&nbsp;&nbsp;&nbsp;<a href=\"view_topic.php?id=" . $data['id'] . "&down=true\"><img src=\"static/images/thumb_down.png\" border=\"0\"></a>" . $porcentodown . "%</b> (" . $total . " Votos)</font>";
 }
 
 echo "<br/><br/>";
@@ -254,18 +254,18 @@ if ($aux['total'] > 0) {
 
 		echo "<table width=\"100%\" bgcolor=\"#f2e1ce\">";
 		echo "<tr>";
-		echo "<td width=\"120px\" bgcolor=\"#E1CBA4\"><center><img src=\"" . $user['avatar'] . "\" width=\"100px\" height=\"100px\" border=\"0\"></center>";
+		echo "<td width=\"120px\" bgcolor=\"#E1CBA4\"><center><img src=\"static/" . $user['avatar'] . "\" width=\"100px\" height=\"100px\" border=\"0\"></center>";
 
 			if ($user['gm_rank'] == 2) {
-				echo "<center><img src=\"images/designer.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
+				echo "<center><img src=\"static/images/designer.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
 			} elseif (($user['gm_rank'] > 2) and ($user['gm_rank'] < 10)){
-				echo "<center><img src=\"images/mod.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
+				echo "<center><img src=\"static/images/mod.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
 			} elseif ($user['gm_rank'] > 9){
-				echo "<center><img src=\"images/admin.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
+				echo "<center><img src=\"static/images/admin.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
 			} elseif (($user['alerts'] == 'forever') or ($user['alerts'] > 99)){
-				echo "<center><img src=\"images/banido.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
+				echo "<center><img src=\"static/images/banido.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
 			} else {
-				echo "<center><img src=\"images/membro.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
+				echo "<center><img src=\"static/images/membro.png\" width=\"100px\" height=\"21px\" border=\"0\"></center>";
 			}
 
 

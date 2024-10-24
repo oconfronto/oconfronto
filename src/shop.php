@@ -468,7 +468,7 @@ switch($_GET['act'])
 				echo "<legend><b>" . $item['name'] . "</b></legend>\n";
 				echo "<table width=\"100%\">\n";
 				echo "<tr><td width=\"5%\">";
-				echo "<img src=\"images/itens/" . $item['img'] . "\"/>";
+				echo "<img src=\"static/images/itens/" . $item['img'] . "\"/>";
 				echo "</td><td width=\"75%\">";
 				echo $item['description'] . "\n<br />";
 

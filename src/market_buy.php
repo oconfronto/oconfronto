@@ -181,7 +181,7 @@ switch($_GET['act'])
 		}
 
 		echo "<tr><td width=\"5%\">";
-		echo "<img src=\"images/itens/" . $market['img'] . "\"/>";
+		echo "<img src=\"static/images/itens/" . $market['img'] . "\"/>";
 		echo "</td><td width=\"80%\">";
 		echo $market['description'] . "\n<br />";
 		if (($market['type'] == 'ring') or ($market['type'] == 'potion') or ($market['type'] == 'addon')) {

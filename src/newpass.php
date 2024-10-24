@@ -48,7 +48,7 @@ if (!$_GET['email'] or !$_GET['string'] or !$_GET['email'] & !$_GET['string']) {
 	$message .= "<body style=\"background-color:#FFFDE0; color:#222\">\n";
 
 	$message .= "<div style=\"padding:10px;margin-bottom:4px;background-color:#CEA663\">\n";
-	$message .= "<a href=\"" . $domain_url . "\" target=\"_blank\"><img alt=\"O Confronto\" height=\"30\" src=\"" . $domain_url . "/images/logo.gif" . "\" style=\"display:block;border:0\" width=\"175\"></a>\n";
+	$message .= "<a href=\"" . $domain_url . "\" target=\"_blank\"><img alt=\"O Confronto\" height=\"30\" src=\"static/" . $domain_url . "/images/logo.gif" . "\" style=\"display:block;border:0\" width=\"175\"></a>\n";
 	$message .= "</div>\n";
 
 	$message .= "<div style=\"font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;font-size:13px;margin:14px\">\n";

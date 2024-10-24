@@ -59,7 +59,7 @@ else
 		$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 		$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Vitalidade: " . $newefec . "</font></td><td width=35%><font size=1px>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 		echo "<div title=\"header=[" . $showitname . "] body=[" . $showitinfo . "]\">";
-		echo "<img src=\"images/itens/" . $showeditexs['img'] . "\"/>";
+		echo "<img src=\"static/images/itens/" . $showeditexs['img'] . "\"/>";
 		echo "</div>";
 	}
 }
@@ -123,14 +123,14 @@ else
 		$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 		$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Defesa: " . $newefec . "</font></td><td width=35%><font size=1px>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 		echo "<div title=\"header=[" . $showitname . "] body=[" . $showitinfo . "]\">";
-		echo "<img src=\"images/itens/" . $showeditexs['img'] . "\"/>";
+		echo "<img src=\"static/images/itens/" . $showeditexs['img'] . "\"/>";
 		echo "</div>";
 	}
 }
 echo "</div>";
 ?></td>
 
-<td style="padding: 5px;text-align: center;"><a href="inventory.php"><img src="images/bag.gif" ></a></td>
+<td style="padding: 5px;text-align: center;"><a href="inventory.php"><img src="static/images/bag.gif" ></a></td>
 <!-- <td>&nbsp;</td> -->
 
 </tr><tr>
@@ -191,7 +191,7 @@ else
 		$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 		$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Ataque: " . $newefec . "</font></td><td width=35%><font size=1px>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 		echo "<div title=\"header=[" . $showitname . "] body=[" . $showitinfo . "]\">";
-		echo "<img src=\"images/itens/" . $showeditexs['img'] . "\"/>";
+		echo "<img src=\"static/images/itens/" . $showeditexs['img'] . "\"/>";
 		echo "</div>";
 	}
 }
@@ -255,7 +255,7 @@ else
 		$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 		$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Defesa: " . $newefec . "</font></td><td width=35%><font size=1px>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 		echo "<div title=\"header=[" . $showitname . "] body=[" . $showitinfo . "]\">";
-		echo "<img src=\"images/itens/" . $showeditexs['img'] . "\"/>";
+		echo "<img src=\"static/images/itens/" . $showeditexs['img'] . "\"/>";
 		echo "</div>";
 	}
 }
@@ -319,7 +319,7 @@ else
 		$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 		$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Defesa: " . $newefec . "</font></td><td width=35%><font size=1px>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 		echo "<div title=\"header=[" . $showitname . "] body=[" . $showitinfo . "]\">";
-		echo "<img src=\"images/itens/" . $showeditexs['img'] . "\"/>";
+		echo "<img src=\"static/images/itens/" . $showeditexs['img'] . "\"/>";
 		echo "</div>";
 	}
 }
@@ -370,7 +370,7 @@ else
 		$newefec = ($showeditexs['effectiveness']) + ($showeditexs['item_bonus'] * 2);
 		$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>" . $showeditexs['description'] . "</font></td><td width=35%><font size=1px>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 		echo "<div title=\"header=[" . $showeditexs['name'] . "] body=[" . $showitinfo . "]\">";
-		echo "<img src=\"images/itens/" . $showeditexs['img'] . "\"/>";
+		echo "<img src=\"static/images/itens/" . $showeditexs['img'] . "\"/>";
 		echo "</div>";
 	}
 }
@@ -434,7 +434,7 @@ else
 		$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 		$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Defesa: " . $newefec . "</font></td><td width=35%><font size=1px>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 		echo "<div title=\"header=[" . $showitname . "] body=[" . $showitinfo . "]\">";
-		echo "<img src=\"images/itens/" . $showeditexs['img'] . "\"/>";
+		echo "<img src=\"static/images/itens/" . $showeditexs['img'] . "\"/>";
 		echo "</div>";
 	}
 }
@@ -497,7 +497,7 @@ else
 		$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 		$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Agilidade: " . $newefec . "</font></td><td width=35%><font size=1px>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 		echo "<div title=\"header=[" . $showitname . "] body=[" . $showitinfo . "]\">";
-		echo "<img src=\"images/itens/" . $showeditexs['img'] . "\"/>";
+		echo "<img src=\"static/images/itens/" . $showeditexs['img'] . "\"/>";
 		echo "</div>";
 	}
 }

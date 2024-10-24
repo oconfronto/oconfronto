@@ -18,7 +18,7 @@ if ($query->recordcount() == 0) {
 
 include("templates/private_header.php");
 ?>
-<script type="text/javascript" src="bbeditor/ed.js"></script>
+<script type="text/javascript" src="static/bbeditor/ed.js"></script>
 <?php
 //Guild Leader Admin check
 if (($player->username != $guild['leader']) and ($player->username != $guild['vice'])) {
@@ -210,7 +210,7 @@ echo "</table>";
     <table width="100%">
         <thead>
             <tr>
-                <div style="text-align: center;"><img src="<?php echo $guild['img'] ?>" width="120px" height="120px"
+                <div style="text-align: center;"><img src="static/<?php echo $guild['img'] ?>" width="120px" height="120px"
                         alt="<?php echo $guild['name'] ?>" border="1px"></div>
             </tr>
         </thead>
@@ -222,7 +222,7 @@ echo "</table>";
                         <input type="text" name="guild_admin" value="<?= $guild['img'] ?>" size="45" />
                         <input type="submit" name="upload" value="Enviar" />
                     </td>
-                    <!-- <td><input type="file" name="foto" size="30"><input style="margin-left: 5px;" type="submit" name="upload" value="Enviar"><img style="margin-left: 5px;" src="images/help.gif" title="header=[Atenção!!!] body=[<font size='1px'>Envie uma imagem para ser utilizada como imagem do clã. A imagem deve ter formato jpg, jpeg, png, bmp ou gif. O tamanho da imagem não deve ultrapassar 1 MB. A resolução máxima permitida é de 1400x1024.</font>]"></td> -->
+                    <!-- <td><input type="file" name="foto" size="30"><input style="margin-left: 5px;" type="submit" name="upload" value="Enviar"><img style="margin-left: 5px;" src="static/images/help.gif" title="header=[Atenção!!!] body=[<font size='1px'>Envie uma imagem para ser utilizada como imagem do clã. A imagem deve ter formato jpg, jpeg, png, bmp ou gif. O tamanho da imagem não deve ultrapassar 1 MB. A resolução máxima permitida é de 1400x1024.</font>]"></td> -->
                 </form>
             </tr>
             <form method="POST" action="guild_admin.php">

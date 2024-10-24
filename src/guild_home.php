@@ -68,7 +68,7 @@ $bbcode = new bbcode();
 	echo "</script>";
 
 echo "<table width=\"100%\"><tr><td width=\"20%\">";
-	echo "<center><img src=\"" . $guild['img'] . "\" alt=\"" . $guild['name'] . "\"  width=\"150\" height=\"150\" border=\"0\"></center>";
+	echo "<center><img src=\"static/" . $guild['img'] . "\" alt=\"" . $guild['name'] . "\"  width=\"150\" height=\"150\" border=\"0\"></center>";
 	echo "</td>";
 	echo "<td width=\"80%\">";
 			echo "<center><div id=\"envia\"></div><div id=\"chatdiv\" class=\"scroll\" style=\"background-color:#FFFDE0; overflow: auto; height:100px; width:98%; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px; text-align: left;\"></div></center>";

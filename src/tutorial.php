@@ -19,22 +19,22 @@ $numero = 1;
 $numero = $_GET['act'];
 }
 
-echo"<br/><center><img src=\"images/tutorial/" . $numero . ".png\" border=\"0\"></center>";
+echo"<br/><center><img src=\"static/images/tutorial/" . $numero . ".png\" border=\"0\"></center>";
 
 
 	echo "<table width=\"100%\" border=\"0\"><tr>";
 	echo "<td width=\"50%\">";
 		if ($numero == 1){
-			echo"<a href=\"tutorial.php?skip=true\"><img src=\"images/tutorial/skip.png\" border=\"0\"></a>";
+			echo"<a href=\"tutorial.php?skip=true\"><img src=\"static/images/tutorial/skip.png\" border=\"0\"></a>";
 		}else{
-			echo"<a href=\"tutorial.php?act=" . ($numero - 1) . "\"><img src=\"images/tutorial/previous.png\" border=\"0\"></a>";
+			echo"<a href=\"tutorial.php?act=" . ($numero - 1) . "\"><img src=\"static/images/tutorial/previous.png\" border=\"0\"></a>";
 		}
 	echo "</td>";
 	echo "<td width=\"50%\" align=\"right\">";
 		if ($numero == 14){
-			echo"<a href=\"tutorial.php?skip=true\"><img src=\"images/tutorial/end.png\" border=\"0\"></a>";
+			echo"<a href=\"tutorial.php?skip=true\"><img src=\"static/images/tutorial/end.png\" border=\"0\"></a>";
 		}else{
-			echo"<a href=\"tutorial.php?act=" . ($numero + 1) . "\"><img src=\"images/tutorial/next.png\" border=\"0\"></a>";
+			echo"<a href=\"tutorial.php?act=" . ($numero + 1) . "\"><img src=\"static/images/tutorial/next.png\" border=\"0\"></a>";
 		}
 	echo "</td>";
 	echo "</tr></table>";

@@ -7,8 +7,8 @@ include("templates/private_header.php");
 
 ?>
 
-<link rel="stylesheet" type="text/css" href="css/private/tabs.css" />
-<script src="js/jquery.tabs.js"></script>
+<link rel="stylesheet" type="text/css" href="static/css/private/tabs.css" />
+<script src="static/js/jquery.tabs.js"></script>
 
 <ul class="tabs">
     <li><a href="#tab1">Gallery</a></li>

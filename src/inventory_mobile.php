@@ -196,7 +196,7 @@ function displayItem($item, $type, $player, $bool)
 
 
     $string = "<tr class=\"row" . $bool . "\">
-                <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><img src=\"images/itens/{$item['img']}\" alt=\"{$item['name']}\"></td>
+                <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><img src=\"static/images/itens/{$item['img']}\" alt=\"{$item['name']}\"></td>
                 <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $atributo . "</td>
                 <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $item['name'] . " " . $bonus1 . "" . $bonus2 . "" . $bonus3 . "" . $bonus4 . "" . $bonus5 . "</td>
                 <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $options[0] . "</td>

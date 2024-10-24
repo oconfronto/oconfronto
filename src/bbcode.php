@@ -56,7 +56,7 @@ function FunSmile($text, $smile = '0')
     else {
         // Altera os caracteres por imagens
         foreach ($smilefun as $search => $replace)
-            $text = str_replace($search, '<img src="images/smile/' . $replace . '.gif" />', $text);
+            $text = str_replace($search, '<img src="static/images/smile/' . $replace . '.gif" />', $text);
         return $text;
     }
 }
@@ -94,7 +94,7 @@ class bbcode
 
             $exists = remoteFileExists($img);
             if ($exists) {
-                $text = str_ireplace('[img]' . $img . '[/img]', '<img style="max-width:460px; width: expression(this.width > 460 ? 460: true);" src="' . $img . '">', $text);
+                $text = str_ireplace('[img]' . $img . '[/img]', '<img style="max-width:460px; width: expression(this.width > 460 ? 460: true);" src="static/' . $img . '">', $text);
             } else {
                 $text = str_ireplace('[img]' . $img . '[/img]', '[Imagem Invlida]', $text);
             }
@@ -195,11 +195,11 @@ class bbcode
         //BBCODE "YOUTUBE"
         while (stripos($text, '[youtube]') !== false && stripos($text, '[/youtube]') !== false) {
             $d = substr($text, stripos($text, '[youtube]') + 9, stripos($text, '[/youtube]') - stripos($text, '[youtube]') - 9);
-            $text = str_ireplace('[youtube]' . $d . '[/youtube]', '<iframe width="420" height="315" src="http://www.youtube.com/embed/' . $d . '" frameborder="0" allowfullscreen></iframe>', $text);
+            $text = str_ireplace('[youtube]' . $d . '[/youtube]', '<iframe width="420" height="315" src="static/http://www.youtube.com/embed/' . $d . '" frameborder="0" allowfullscreen></iframe>', $text);
         }
 
         //YOUTUBE OLD
-        $text = str_replace("\\[youtube]([^\\[]*)\\[/youtube\\]", "<object width=\"425\" height=\"344\"><param name=\"movie\" value=\"http://www.youtube.com/v/\\1&hl=pt-br&fs=1&\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/\\1&hl=pt-br&fs=1&\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"425\" height=\"344\"></embed></object>", $text);
+        $text = str_replace("\\[youtube]([^\\[]*)\\[/youtube\\]", "<object width=\"425\" height=\"344\"><param name=\"movie\" value=\"http://www.youtube.com/v/\\1&hl=pt-br&fs=1&\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"static/http://www.youtube.com/v/\\1&hl=pt-br&fs=1&\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"425\" height=\"344\"></embed></object>", $text);
 
         //BBCODE "YOUTUBE INPUT"
         /* while(stripos($text, '[youtube]') !== false && stripos($text, '[/youtube]') !== false )
@@ -210,7 +210,7 @@ class bbcode
                        <param name="movie" value="http://www.youtube.com/v/'.$matches[2].'&hl=pt-br&fs=1"></param>
                        <param name="allowFullScreen" value="true"></param>
                        <param name="allowscriptaccess" value="always"></param>
-                       <embed src="http://www.youtube.com/v/'.$matches[2].'&hl=pt-br&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed>
+                       <embed src="static/http://www.youtube.com/v/'.$matches[2].'&hl=pt-br&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed>
                     </object>', $text);
            } */
 

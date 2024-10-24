@@ -70,16 +70,16 @@ if ($tutorial->recordcount() == 0) {
     <meta http-equiv="Expires" content="-1" />
 
     <title>O Confronto :: <?php echo PAGENAME ?></title>
-    <link href="css/styles.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="css/css.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="css/boxover.css" />
-    <link rel="stylesheet" type="text/css" href="css/inventory.css" />
-    <link rel="stylesheet" type="text/css" href="css/pagination.css" />
-    <link rel="stylesheet" type="text/css" href="css/private/menu-inventario.css" />
-    <link rel="stylesheet" type="text/css" href="css/private/magias.css" />
-    <link rel="stylesheet" type="text/css" href="css/private/tabs.css" />
-    <link rel="stylesheet" type="text/css" href="css/private/slidemenu.css" />
-    <link type="text/css" rel="stylesheet" media="all" href="css/chat.css" />
+    <link href="static/css/styles.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="static/css/css.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="static/css/boxover.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/inventory.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/pagination.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/private/menu-inventario.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/private/magias.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/private/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/private/slidemenu.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="static/css/chat.css" />
     <script type="text/javascript">
         function Ajax(page, usediv) {
             var
@@ -134,14 +134,14 @@ if ($tutorial->recordcount() == 0) {
         }
     </script>
 
-    <script src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/jquery.cookie.js"></script>
-    <script type="text/javascript" src="js/gaitamenu.js"></script>
-    <script type="text/javascript" src="js/timecountdown.js"></script>
-    <script src="js/jquery.tabs.js"></script>
+    <script src="static/js/jquery.js"></script>
+    <script type="text/javascript" src="static/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="static/js/gaitamenu.js"></script>
+    <script type="text/javascript" src="static/js/timecountdown.js"></script>
+    <script src="static/js/jquery.tabs.js"></script>
 
 
-    <script type="text/javascript" src="js/drag.js"></script>
+    <script type="text/javascript" src="static/js/drag.js"></script>
     <!-- initialize drag and drop -->
     <?php
     // Exemplo de inclusão condicional do script no cabeçalho
@@ -212,8 +212,8 @@ if ($tutorial->recordcount() == 0) {
     }
     ?>
 
-    <script type="text/javascript" src="js/ajax.js"></script>
-    <script type="text/javascript" src="js/boxover.js"></script>
+    <script type="text/javascript" src="static/js/ajax.js"></script>
+    <script type="text/javascript" src="static/js/boxover.js"></script>
 
     <script language="JavaScript">
         function BattleDivDown() {
@@ -224,12 +224,12 @@ if ($tutorial->recordcount() == 0) {
             document.getElementById('chatdiv').scrollTop += 1000000;
         }
     </script>
-    <script type="text/javascript" src="js/pagamentos.js"></script>
-    <script type="text/javascript" src="bbeditor/ed.js"></script>
+    <script type="text/javascript" src="static/js/pagamentos.js"></script>
+    <script type="text/javascript" src="static/bbeditor/ed.js"></script>
 
     <?php
     if ($currentfile == 'stat_points.php') {
-        echo "<script type=\"text/javascript\" src=\"js/checkStatus.js\"></script>";
+        echo "<script type=\"text/javascript\" src=\"static/js/checkStatus.js\"></script>";
     }
     ?>
     <script
@@ -269,7 +269,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
 ?>
 
 <div id="tudo" style="position: relative;">
-    <img src="images/topo.jpg" style="position:absolute;width:100%;z-index: 0;">
+    <img src="static/images/topo.jpg" style="position:absolute;width:100%;z-index: 0;">
     <div class="msg">
         <div class="ic-msg"></div><?php include("showmsg.php"); ?>
     </div>
@@ -279,7 +279,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                 <div class="left" style="position:relative;z-index: 1;">
                     <div class="leftcon">
 
-                        <img src="images/menu/personagem.png"
+                        <img src="static/images/menu/personagem.png"
                             style="-webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;" border="0">
 
                         <?php
@@ -306,11 +306,11 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                             <div
                                 title="header=[<?php echo $potname; ?>] body=[<?php echo $potdesc; ?><br><font size=1><?php echo $valortempo; ?> <?php echo $auxiliar; ?> restante(s).</font>]">
                                 <div class="potionimg"><a href="tavern.php?act=buy&id=182"><img
-                                            src="images/itens/<?php echo $potimg; ?>" border=0></a>
+                                            src="static/images/itens/<?php echo $potimg; ?>" border=0></a>
                                 </div>
                             </div>
                         <?php } ?>
-                        <div class="avatar"><a href="avatar.php"><img src="<?php echo $player->avatar ?>"
+                        <div class="avatar"><a href="avatar.php"><img src="static/<?php echo $player->avatar ?>"
                                     border="0px"></a></div>
 
 
@@ -342,7 +342,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                             </div>
                         </div>
 
-                        <span id="mudar1"><img src="images/menu/on1.png" border="0px"></span>
+                        <span id="mudar1"><img src="static/images/menu/on1.png" border="0px"></span>
                         <div id="gaita1">
                             <?php include("showit.php"); ?>
 
@@ -353,7 +353,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                         </div>
 
                         <br />
-                        <span id="mudar2"><img src="images/menu/on2.png" border="0px"></span>
+                        <span id="mudar2"><img src="static/images/menu/on2.png" border="0px"></span>
                         <div id="gaita2">
 
                             <?php
@@ -377,17 +377,17 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                                     if (($online->recordcount() > 0) and ($ignorado->recordcount() == 0)) {
                                         $check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", array($name));
                                         if ($check->recordcount() == 0) {
-                                            echo "<th><center><a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", showName($name, $db, 'off', 'off')) . "')\"><img src=\"images/images/on.png\" border=\"0px\"></a></center></th>";
+                                            echo "<th><center><a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", showName($name, $db, 'off', 'off')) . "')\"><img src=\"static/images/images/on.png\" border=\"0px\"></a></center></th>";
                                         } else {
                                             $stattus = $check->fetchrow();
                                             if ($stattus['pending_status'] == 'ocp') {
-                                                echo "<th><center><a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", showName($name, $db, 'off', 'off')) . "')\"><img src=\"images/images/ocp.png\" border=\"0px\"></a></center></th>";
+                                                echo "<th><center><a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", showName($name, $db, 'off', 'off')) . "')\"><img src=\"static/images/images/ocp.png\" border=\"0px\"></a></center></th>";
                                             } elseif ($stattus['pending_status'] == 'inv') {
-                                                echo "<th><center><img src=\"images/images/off.png\" border=\"0px\"></center></th>";
+                                                echo "<th><center><img src=\"static/images/images/off.png\" border=\"0px\"></center></th>";
                                             }
                                         }
                                     } else {
-                                        echo "<th><center><img src=\"images/images/off.png\" border=\"0px\"></center></th>";
+                                        echo "<th><center><img src=\"static/images/images/off.png\" border=\"0px\"></center></th>";
                                     }
 
                                     echo "</tr>";

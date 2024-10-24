@@ -77,7 +77,7 @@ if ($query->recordcount() == 0) {
 	while ($guild = $query->fetchrow()) {
 		echo "<table width=\"100%\">";
 		echo "<tr>";
-		echo "<td width=\"135px\" class=\"brown\"><center><a href=\"guild_profile.php?id=" . $guild['id'] . "\"><img src=\"" . $guild['img'] . "\" alt=\"" . $guild['name'] . "\"  width=\"128\" height=\"128\" border=\"0\"></a></center></td>";
+		echo "<td width=\"135px\" class=\"brown\"><center><a href=\"guild_profile.php?id=" . $guild['id'] . "\"><img src=\"static/" . $guild['img'] . "\" alt=\"" . $guild['name'] . "\"  width=\"128\" height=\"128\" border=\"0\"></a></center></td>";
 		echo "<td class=\"salmon\"><center><b><a href=\"guild_profile.php?id=" . $guild['id'] . "\">" . $guild['name'] . "</a></b></center>";
 		$guilddes = stripslashes($guild['blurb']);
 		$guilddes = $bbcode->parse($guilddes);

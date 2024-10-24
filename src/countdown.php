@@ -11,9 +11,9 @@ include("templates/header.php");
 <p id="note"></p>
 
 <!-- JavaScript includes -->
-<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-<script src="assets/countdown/jquery.countdown.js"></script>
-<script src="assets/js/script.js"></script>
+<script src="static/http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script src="static/assets/countdown/jquery.countdown.js"></script>
+<script src="static/assets/js/script.js"></script>
 
 <?php
 include("templates/footer.php");

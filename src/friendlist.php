@@ -250,11 +250,11 @@ include("templates/private_header.php");
 			echo "<tr>\n";
 
 			echo "<td height=\"64px\"><div style=\"position: relative;\">";
-			echo "<img src=\"" . $member['avatar'] . "\" width=\"64px\" height=\"64px\" style=\"position: absolute; top: 1; left: 1;\" alt=\"" . $member['username'] . "\" border=\"0\">";
+			echo "<img src=\"static/" . $member['avatar'] . "\" width=\"64px\" height=\"64px\" style=\"position: absolute; top: 1; left: 1;\" alt=\"" . $member['username'] . "\" border=\"0\">";
 
 			$checkranknosite = $db->execute("select `time` from `user_online` where `player_id`=?", array($member['id']));
 			if ($checkranknosite->recordcount() > 0) {
-				echo "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $member['username']) . "')\"><img src=\"images/online1.png\" width=\"64px\" height=\"64px\" style=\"position: absolute; top: 1; left: 1;\" alt=\"" . $member['username'] . "\" border=\"0px\"></a>";
+				echo "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $member['username']) . "')\"><img src=\"static/images/online1.png\" width=\"64px\" height=\"64px\" style=\"position: absolute; top: 1; left: 1;\" alt=\"" . $member['username'] . "\" border=\"0px\"></a>";
 			}
 
 			echo "</div></td>";

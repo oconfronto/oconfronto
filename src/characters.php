@@ -214,7 +214,7 @@ include("templates/acc-header.php");
             {
                 echo "<td><table align=\"center\" style=\"height:132px; border:1px solid #444; padding:3px;\" onmouseover=\"this.bgColor='#cccccc';\" onmouseout=\"this.bgColor='#000000';\" onclick='window.location=\"login.php?id=" . $member['id'] . "\"'>";
                 echo "<tr><td>";
-                echo "<center><a href=\"login.php?id=" . $member['id'] . "\"><img src=\"" . $member['avatar'] . "\" alt=\"" . $member['username'] . "\" width=\"85px\" height=\"80px\"/></a></center>";
+                echo "<center><a href=\"login.php?id=" . $member['id'] . "\"><img src=\"static/" . $member['avatar'] . "\" alt=\"" . $member['username'] . "\" width=\"85px\" height=\"80px\"/></a></center>";
                 echo "</td></tr>";
                 
                 if (strlen($member['username']) < 8) {
@@ -239,7 +239,7 @@ include("templates/acc-header.php");
             {
                     echo "<li><table align=\"center\" style=\"height:132px; border:1px solid #444; padding:3px;\" onmouseover=\"this.bgColor='#cccccc';\" onmouseout=\"this.bgColor='#000000';\" onclick='window.location=\"login.php?id=" . $member['id'] . "\"'>";
                         echo "<tr><td>";
-                            echo "<center><a href=\"login.php?id=" . $member['id'] . "\"><img src=\"" . $member['avatar'] . "\" alt=\"" . $member['username'] . "\" width=\"85px\" height=\"80px\"/></a></center>";
+                            echo "<center><a href=\"login.php?id=" . $member['id'] . "\"><img src=\"static/" . $member['avatar'] . "\" alt=\"" . $member['username'] . "\" width=\"85px\" height=\"80px\"/></a></center>";
                         echo "</td></tr>";
 
                         if (strlen($member['username']) < 8) {

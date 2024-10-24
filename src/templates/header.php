@@ -7,17 +7,17 @@
 
     <title>O Confronto :: <?php echo PAGENAME ?></title>
 
-    <link rel="stylesheet" type="text/css" href="./css/index.css" />    
-    <link rel="stylesheet" type="text/css" href="example2.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/index.css" />    
+    <link rel="stylesheet" type="text/css" href="static/example2.css" />
 
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" />
-    <link rel="stylesheet" href="./assets/countdown/jquery.countdown.css" />
+    <link rel="stylesheet" href="static/assets/countdown/jquery.countdown.css" />
     <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="static/http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="jMyCarousel.js"></script>
+    <script type="text/javascript" src="static/js/jquery.js"></script>
+    <script type="text/javascript" src="static/jMyCarousel.js"></script>
     <!-- Optional -->
     <script type="text/javascript">
         $(function() {

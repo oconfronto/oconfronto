@@ -76,17 +76,17 @@ if (($get['pending_status'] == 1) or ($player->reino == 0)) {
 	echo "<td width=\"33%\">";
 	$reinoa = $db->execute("select `id` from `players` where `reino`=1");
 	$imperador = $db->GetOne("select `imperador` from `reinos` where `id`=1");
-	echo showAlert("<b>Reino Cathal</b><br/><img src=\"images/reinoa.png\" width=\"82px\" height=\"82px\" border=\"0px\" alt=\"Cathal\"/><br/><br/><font size=\"1px\"><b>Membros:</b> " . $reinoa->recordcount() . "<br/><b>Líder:</b> " . showName($imperador, $db, 'off', 'off') . "</font>", "white", "center", "start.php?reino=1");
+	echo showAlert("<b>Reino Cathal</b><br/><img src=\"static/images/reinoa.png\" width=\"82px\" height=\"82px\" border=\"0px\" alt=\"Cathal\"/><br/><br/><font size=\"1px\"><b>Membros:</b> " . $reinoa->recordcount() . "<br/><b>Líder:</b> " . showName($imperador, $db, 'off', 'off') . "</font>", "white", "center", "start.php?reino=1");
 	echo "</td>";
 	echo "<td width=\"33%\">";
 	$reinob = $db->execute("select `id` from `players` where `reino`=2");
 	$imperador = $db->GetOne("select `imperador` from `reinos` where `id`=2");
-	echo showAlert("<b>Reino Eroda</b><br/><img src=\"images/reinob.png\" width=\"82px\" height=\"82px\" border=\"0px\" alt=\"Eroda\"/><br/><br/><font size=\"1px\"><b>Membros:</b> " . $reinob->recordcount() . "<br/><b>Líder:</b> " . showName($imperador, $db, 'off', 'off') . "</font>", "white", "center", "start.php?reino=2");
+	echo showAlert("<b>Reino Eroda</b><br/><img src=\"static/images/reinob.png\" width=\"82px\" height=\"82px\" border=\"0px\" alt=\"Eroda\"/><br/><br/><font size=\"1px\"><b>Membros:</b> " . $reinob->recordcount() . "<br/><b>Líder:</b> " . showName($imperador, $db, 'off', 'off') . "</font>", "white", "center", "start.php?reino=2");
 	echo "</td>";
 	echo "<td width=\"34%\">";
 	$reinoc = $db->execute("select `id` from `players` where `reino`=3");
 	$imperador = $db->GetOne("select `imperador` from `reinos` where `id`=3");
-	echo showAlert("<b>Reino Turkic</b><br/><img src=\"images/reinoc.png\" width=\"82px\" height=\"82px\" border=\"0px\" alt=\"Turkic\"/><br/><br/><font size=\"1px\"><b>Membros:</b> " . $reinoc->recordcount() . "<br/><b>Líder:</b> " . showName($imperador, $db, 'off', 'off') . "</font>", "white", "center", "start.php?reino=3");
+	echo showAlert("<b>Reino Turkic</b><br/><img src=\"static/images/reinoc.png\" width=\"82px\" height=\"82px\" border=\"0px\" alt=\"Turkic\"/><br/><br/><font size=\"1px\"><b>Membros:</b> " . $reinoc->recordcount() . "<br/><b>Líder:</b> " . showName($imperador, $db, 'off', 'off') . "</font>", "white", "center", "start.php?reino=3");
 	echo "</td>";
 	echo "</tr></table>";
 

@@ -151,7 +151,7 @@ switch($_GET['p'])
         echo "<center><i>As tarefas são ativadas automaticamente, basta fazer seu objetivos após atiginir o nível mínimo nescesário.</i></center><br />\n";
         
         echo "<table width=\"100%\">";
-        echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Lista de Tarefas</b><img src=\"images/help.gif\" title=\"header=[Tarefas] body=[<font size='1px'>Tarefas são maneiras divertidas de se beneficiar no jogo. Apenas siga alguma das tarefas abaixo e seja recompensado com ouro, itens ou até mesmo ponto de experi&ecirc;ncia!</font>]\"></center></td></tr>";
+        echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Lista de Tarefas</b><img src=\"static/images/help.gif\" title=\"header=[Tarefas] body=[<font size='1px'>Tarefas são maneiras divertidas de se beneficiar no jogo. Apenas siga alguma das tarefas abaixo e seja recompensado com ouro, itens ou até mesmo ponto de experi&ecirc;ncia!</font>]\"></center></td></tr>";
         $gettasks = $db->execute("select * from `tasks` order by `needlvl` asc");
         if ($gettasks->recordcount() < 1){
             echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa disponível.</font></center></td></tr>";
@@ -307,7 +307,7 @@ switch($_GET['p'])
             echo "<legend><b>" . $item['name'] . "</b></legend>\n";
             echo "<table width=\"100%\">\n";
             echo "<tr><td width=\"6%\">";
-            echo "<img src=\"images/itens/" . $item['img'] . "\"/>";
+            echo "<img src=\"static/images/itens/" . $item['img'] . "\"/>";
             echo "</td><td width=\"74%\">";
             echo $item['description'] . "";
             if ($item['effectiveness'] >= 60){

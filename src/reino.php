@@ -51,7 +51,7 @@ include("templates/private_header.php");
 echo "<table width=\"100%\">";
 	echo "<tr><th width=\"20%\">";
 
-		echo "<center><img src=\"images/" . $reino['imagem'] . "\" width=\"82px\" height=\"82px\" border=\"0px\" alt=\"" . $reino['nome'] . "\"/></center>";
+		echo "<center><img src=\"static/images/" . $reino['imagem'] . "\" width=\"82px\" height=\"82px\" border=\"0px\" alt=\"" . $reino['nome'] . "\"/></center>";
 
 	echo "</th>";
 	echo "<td width=\"80%\">";
