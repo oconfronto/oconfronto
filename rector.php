@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 
 return RectorConfig::configure()
@@ -10,18 +11,14 @@ return RectorConfig::configure()
         __DIR__ . '/src',
     ])
     ->withSets([
-        SetList::PHP_53,
-        SetList::PHP_54,
-        // SetList::PHP_55,
-        // SetList::PHP_56,
-        // SetList::PHP_70,
-        // SetList::PHP_71,
-        // SetList::PHP_72,
-        // SetList::PHP_73,
-        // SetList::PHP_74,
-        // SetList::PHP_80,
-        // SetList::PHP_81,
-        // SetList::PHP_82,
-        // SetList::PHP_83,
-    ])
-    ->withTypeCoverageLevel(0);
+        LevelSetList::UP_TO_PHP_56,
+        SetList::CODE_QUALITY,
+        SetList::CODING_STYLE,
+        SetList::DEAD_CODE,
+        SetList::EARLY_RETURN,
+        SetList::INSTANCEOF,
+        SetList::NAMING,
+        SetList::PRIVATIZATION,
+        SetList::RECTOR_PRESET,
+        SetList::TYPE_DECLARATION,
+    ]);
