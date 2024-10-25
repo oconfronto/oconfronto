@@ -1,3 +1,6 @@
 .env
 rector-standalone/vendor
 /vendor/
+html/
+certs/
+logs/

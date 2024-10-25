@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 function remoteFileExists($url)
 {
     $curl = curl_init($url);
@@ -29,58 +32,35 @@ function remoteFileExists($url)
 // Função SmileEmoticons
 function FunSmile($text, $smile = '0')
 {
-    $smilefun = array(
-        ';D' => 1,
-        ':D' => 1,
-        '(b)' => 2,
-        ':O' => 3,
-        ';o' => 4,
-        ';O' => 4,
-        ':(' => 5,
-        ';(' => 5,
-        ':@' => 6,
-        ';@' => 6,
-        ':)' => 8,
-        ';d' => 9,
-        ':d' => 9,
-        ':megusta:' => 'megusta',
-        ':omg:' => 'omg',
-        ':trollface:' => 'trollface',
-        ':NAAO:' => 'NAAAO',
-        ':chacc:' => 'challengeaccepted',
-        ':cry:' => 'cryy',
-        ';)' => 10
-    );
-    if ($smile == 1)
-        return $text;
-    else {
-        // Altera os caracteres por imagens
-        foreach ($smilefun as $search => $replace)
-            $text = str_replace($search, '<img src="images/smile/' . $replace . '.gif" />', $text);
+    $smilefun = [';D' => 1, ':D' => 1, '(b)' => 2, ':O' => 3, ';o' => 4, ';O' => 4, ':(' => 5, ';(' => 5, ':@' => 6, ';@' => 6, ':)' => 8, ';d' => 9, ':d' => 9, ':megusta:' => 'megusta', ':omg:' => 'omg', ':trollface:' => 'trollface', ':NAAO:' => 'NAAAO', ':chacc:' => 'challengeaccepted', ':cry:' => 'cryy', ';)' => 10];
+    if ($smile == 1) {
         return $text;
     }
+
+    // Altera os caracteres por imagens
+    foreach ($smilefun as $search => $replace)
+        $text = str_replace($search, '<img src="static/images/smile/' . $replace . '.gif" />', $text);
+
+    return $text;
 }
 
 
 // Class BBCODE
 class bbcode
 {
-    function parse($text, $smile = '0')
+    public function parse($text, $smile = '0')
     {
         // Lista de função BBCODE  
 
-        $print = ''; // Inicializando a variável $print
-
-        // BBOCDE "QUOTE"
-        $rows = 0;
-        while (stripos($text, '[quote]') !== false && stripos($text, '[/quote]') !== false) {
-            $quote = substr($text, stripos($text, '[quote]') + 7, stripos($text, '[/quote]') - stripos($text, '[quote]') - 7);
+        $print = '';
+        while (stripos((string) $text, '[quote]') !== false && stripos((string) $text, '[/quote]') !== false) {
+            $quote = substr((string) $text, stripos((string) $text, '[quote]') + 7, stripos((string) $text, '[/quote]') - stripos((string) $text, '[quote]') - 7);
             $text = str_ireplace('[quote]' . $quote . '[/quote]', '<blockquote>' . $quote . '</blockquote>', $text);
         }
-        $rows = 0;
+
 
         // BBCODE "URL=" -> VERSAO ANTIGA
-        $text = preg_replace("/\[url=(.*)\](.*)\[\/url\]/Usi", "<a href=\"\\1\" target=\"_blank\" border=\"0px\">\\2</a>", $text);
+        $text = preg_replace("/\[url=(.*)\](.*)\[\/url\]/Usi", "<a href=\"\\1\" target=\"_blank\" border=\"0px\">\\2</a>", (string) $text);
 
         // BBCODE "URL"
         while (stripos($text, '[url]') !== false && stripos($text, '[/url]') !== false) {
@@ -94,7 +74,7 @@ class bbcode
 
             $exists = remoteFileExists($img);
             if ($exists) {
-                $text = str_ireplace('[img]' . $img . '[/img]', '<img style="max-width:460px; width: expression(this.width > 460 ? 460: true);" src="' . $img . '">', $text);
+                $text = str_ireplace('[img]' . $img . '[/img]', '<img style="max-width:460px; width: expression(this.width > 460 ? 460: true);" src="static/' . $img . '">', $text);
             } else {
                 $text = str_ireplace('[img]' . $img . '[/img]', '[Imagem Invlida]', $text);
             }
@@ -195,11 +175,11 @@ class bbcode
         //BBCODE "YOUTUBE"
         while (stripos($text, '[youtube]') !== false && stripos($text, '[/youtube]') !== false) {
             $d = substr($text, stripos($text, '[youtube]') + 9, stripos($text, '[/youtube]') - stripos($text, '[youtube]') - 9);
-            $text = str_ireplace('[youtube]' . $d . '[/youtube]', '<iframe width="420" height="315" src="http://www.youtube.com/embed/' . $d . '" frameborder="0" allowfullscreen></iframe>', $text);
+            $text = str_ireplace('[youtube]' . $d . '[/youtube]', '<iframe width="420" height="315" src="static/http://www.youtube.com/embed/' . $d . '" frameborder="0" allowfullscreen></iframe>', $text);
         }
 
         //YOUTUBE OLD
-        $text = str_replace("\\[youtube]([^\\[]*)\\[/youtube\\]", "<object width=\"425\" height=\"344\"><param name=\"movie\" value=\"http://www.youtube.com/v/\\1&hl=pt-br&fs=1&\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/\\1&hl=pt-br&fs=1&\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"425\" height=\"344\"></embed></object>", $text);
+        $text = str_replace("\\[youtube]([^\\[]*)\\[/youtube\\]", "<object width=\"425\" height=\"344\"><param name=\"movie\" value=\"http://www.youtube.com/v/\\1&hl=pt-br&fs=1&\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"static/http://www.youtube.com/v/\\1&hl=pt-br&fs=1&\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"425\" height=\"344\"></embed></object>", $text);
 
         //BBCODE "YOUTUBE INPUT"
         /* while(stripos($text, '[youtube]') !== false && stripos($text, '[/youtube]') !== false )
@@ -210,7 +190,7 @@ class bbcode
                        <param name="movie" value="http://www.youtube.com/v/'.$matches[2].'&hl=pt-br&fs=1"></param>
                        <param name="allowFullScreen" value="true"></param>
                        <param name="allowscriptaccess" value="always"></param>
-                       <embed src="http://www.youtube.com/v/'.$matches[2].'&hl=pt-br&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed>
+                       <embed src="static/http://www.youtube.com/v/'.$matches[2].'&hl=pt-br&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed>
                     </object>', $text);
            } */
 

@@ -31,4 +31,3 @@ include("class/captchaZDR.php");
 
 $capt = new captchaZDR;
 $capt->display();
-?>

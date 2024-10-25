@@ -1,17 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 $currentfile = $_SERVER["SCRIPT_NAME"];
-$parts = explode('/', $currentfile);
+$parts = explode('/', (string) $currentfile);
 $currentfile = $parts[count($parts) - 1];
 
 $userAgent = $_SERVER['HTTP_USER_AGENT'];
-function isMobile($userAgent)
+function isMobile($userAgent): int|false
 {
-    return preg_match('/Mobile|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/', $userAgent);
+    return preg_match('/Mobile|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/', (string) $userAgent);
 }
 
-$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=90 and `player_id`=?", array($player->id));
+$tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=90 and `player_id`=?", [$player->id]);
 if ($tutorial->recordcount() == 0) {
-    $checatutoriallido = $db->execute("select * from `pending` where `pending_id`=2 and `player_id`=?", array($player->id));
+    $checatutoriallido = $db->execute("select * from `pending` where `pending_id`=2 and `player_id`=?", [$player->id]);
     if ($checatutoriallido->recordcount() == 0) {
         $insert['player_id'] = $player->id;
         $insert['pending_id'] = 2;
@@ -20,42 +23,46 @@ if ($tutorial->recordcount() == 0) {
         $query = $db->autoexecute('pending', $insert, 'INSERT');
         header("Location: start.php");
         exit;
-    } else {
-        $tut = $checatutoriallido->fetchrow();
-        if ((($tut['pending_status'] == 1) or ($player->reino == 0)) and ($currentfile != 'start.php')) {
-            header("Location: start.php");
-            exit;
-        } elseif (($tut['pending_status'] == 2) and ($currentfile != 'start.php')) {
-            header("Location: start.php");
-            exit;
-        } elseif (($tut['pending_status'] == 3) and ($currentfile != 'stat_points.php')) {
-            header("Location: stat_points.php");
-            exit;
-        } elseif ($tut['pending_status'] == 4) {
-            if (isMobile($userAgent)) {
-                if ($currentfile != 'inventory_mobile.php') {
-                    header("Location: inventory_mobile.php");
-                    exit;
-                }
-            } else {
-                if ($currentfile != 'inventory.php') {
-                    header("Location: inventory.php");
-                    exit;
-                }
+    }
+
+    $tut = $checatutoriallido->fetchrow();
+    if (($tut['pending_status'] == 1 || $player->reino == 0) && $currentfile !== 'start.php') {
+        header("Location: start.php");
+        exit;
+    }
+
+    if ($tut['pending_status'] == 2 && $currentfile !== 'start.php') {
+        header("Location: start.php");
+        exit;
+    }
+
+    if ($tut['pending_status'] == 3 && $currentfile !== 'stat_points.php') {
+        header("Location: stat_points.php");
+        exit;
+    }
+
+    if ($tut['pending_status'] == 4) {
+        if (isMobile($userAgent)) {
+            if ($currentfile !== 'inventory_mobile.php') {
+                header("Location: inventory_mobile.php");
+                exit;
             }
-        } elseif (($tut['pending_status'] == 5) and ($currentfile != 'home.php')) {
-            header("Location: home.php");
-            exit;
-        } elseif (($tut['pending_status'] == 6) and ($currentfile != 'monster.php')) {
-            header("Location: monster.php");
-            exit;
-        } elseif (($tut['pending_status'] == 7) and ($currentfile != 'start.php')) {
-            header("Location: start.php");
-            exit;
-        } elseif (($tut['pending_status'] == 8) and ($currentfile != 'start.php')) {
-            header("Location: start.php");
+        } elseif ($currentfile !== 'inventory.php') {
+            header("Location: inventory.php");
             exit;
         }
+    } elseif ($tut['pending_status'] == 5 && $currentfile !== 'home.php') {
+        header("Location: home.php");
+        exit;
+    } elseif ($tut['pending_status'] == 6 && $currentfile !== 'monster.php') {
+        header("Location: monster.php");
+        exit;
+    } elseif ($tut['pending_status'] == 7 && $currentfile !== 'start.php') {
+        header("Location: start.php");
+        exit;
+    } elseif ($tut['pending_status'] == 8 && $currentfile !== 'start.php') {
+        header("Location: start.php");
+        exit;
     }
 }
 
@@ -70,16 +77,17 @@ if ($tutorial->recordcount() == 0) {
     <meta http-equiv="Expires" content="-1" />
 
     <title>O Confronto :: <?php echo PAGENAME ?></title>
-    <link href="css/styles.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="css/css.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="css/boxover.css" />
-    <link rel="stylesheet" type="text/css" href="css/inventory.css" />
-    <link rel="stylesheet" type="text/css" href="css/pagination.css" />
-    <link rel="stylesheet" type="text/css" href="css/private/menu-inventario.css" />
-    <link rel="stylesheet" type="text/css" href="css/private/magias.css" />
-    <link rel="stylesheet" type="text/css" href="css/private/tabs.css" />
-    <link rel="stylesheet" type="text/css" href="css/private/slidemenu.css" />
-    <link type="text/css" rel="stylesheet" media="all" href="css/chat.css" />
+    <link rel="icon" type="image/x-icon" href="static/favicon.ico">
+    <link href="static/css/styles.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="static/css/css.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="static/css/boxover.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/inventory.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/pagination.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/private/menu-inventario.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/private/magias.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/private/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/private/slidemenu.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="static/css/chat.css" />
     <script type="text/javascript">
         function Ajax(page, usediv) {
             var
@@ -134,14 +142,14 @@ if ($tutorial->recordcount() == 0) {
         }
     </script>
 
-    <script src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/jquery.cookie.js"></script>
-    <script type="text/javascript" src="js/gaitamenu.js"></script>
-    <script type="text/javascript" src="js/timecountdown.js"></script>
-    <script src="js/jquery.tabs.js"></script>
+    <script src="static/js/jquery.js"></script>
+    <script type="text/javascript" src="static/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="static/js/gaitamenu.js"></script>
+    <script type="text/javascript" src="static/js/timecountdown.js"></script>
+    <script src="static/js/jquery.tabs.js"></script>
 
 
-    <script type="text/javascript" src="js/drag.js"></script>
+    <script type="text/javascript" src="static/js/drag.js"></script>
     <!-- initialize drag and drop -->
     <?php
     // Exemplo de inclusão condicional do script no cabeçalho
@@ -212,8 +220,8 @@ if ($tutorial->recordcount() == 0) {
     }
     ?>
 
-    <script type="text/javascript" src="js/ajax.js"></script>
-    <script type="text/javascript" src="js/boxover.js"></script>
+    <script type="text/javascript" src="static/js/ajax.js"></script>
+    <script type="text/javascript" src="static/js/boxover.js"></script>
 
     <script language="JavaScript">
         function BattleDivDown() {
@@ -224,54 +232,56 @@ if ($tutorial->recordcount() == 0) {
             document.getElementById('chatdiv').scrollTop += 1000000;
         }
     </script>
-    <script type="text/javascript" src="js/pagamentos.js"></script>
-    <script type="text/javascript" src="bbeditor/ed.js"></script>
+    <script type="text/javascript" src="static/js/pagamentos.js"></script>
+    <script type="text/javascript" src="static/bbeditor/ed.js"></script>
 
     <?php
-    if ($currentfile == 'stat_points.php') {
-        echo "<script type=\"text/javascript\" src=\"js/checkStatus.js\"></script>";
+    if ($currentfile === 'stat_points.php') {
+        echo '<script type="text/javascript" src="static/js/checkStatus.js"></script>';
     }
     ?>
     <script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1892370805366558"
-        crossorigin="anonymous"
-    >
+        crossorigin="anonymous">
     </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5C9CTZE98D"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
 
-    gtag('config', 'G-5C9CTZE98D');
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-5C9CTZE98D');
     </script>
 </head>
 <div id="applixir_vanishing_div" hidden style="z-index: 1000">
-     <iframe id="applixir_parent" ></iframe>
+    <iframe id="applixir_parent"></iframe>
 </div>
 <?php
-if ($currentfile == 'inventory.php') {
+if ($currentfile === 'inventory.php') {
     echo "<body>";
-} elseif ($currentfile == 'stat_points.php') {
-    echo "<body onload=\"testee(" . $player->stat_points . ");\">";
+} elseif ($currentfile === 'stat_points.php') {
+    echo '<body onload="testee(' . $player->stat_points . ');">';
 } else {
     echo "<body>";
 }
 
-$mailcount = $db->execute("select `id` from `mail` where `to`=? and `status`='unread'", array($player->id));
-$logcount0 = $db->execute("select `id` from `user_log` where `player_id`=? and `status`='unread'", array($player->id));
-$logcount1 = $db->execute("select `id` from `logbat` where `player_id`=? and `status`='unread'", array($player->id));
-$logcount2 = $db->execute("select `id` from `log_gold` where `player_id`=? and `status`='unread'", array($player->id));
-$logcount3 = $db->execute("select `id` from `log_item` where `player_id`=? and `status`='unread'", array($player->id));
-$logcount4 = $db->execute("select `id` from `account_log` where `player_id`=? and `status`='unread'", array($player->acc_id));
+$mailcount = $db->execute("select `id` from `mail` where `to`=? and `status`='unread'", [$player->id]);
+$logcount0 = $db->execute("select `id` from `user_log` where `player_id`=? and `status`='unread'", [$player->id]);
+$logcount1 = $db->execute("select `id` from `logbat` where `player_id`=? and `status`='unread'", [$player->id]);
+$logcount2 = $db->execute("select `id` from `log_gold` where `player_id`=? and `status`='unread'", [$player->id]);
+$logcount3 = $db->execute("select `id` from `log_item` where `player_id`=? and `status`='unread'", [$player->id]);
+$logcount4 = $db->execute("select `id` from `account_log` where `player_id`=? and `status`='unread'", [$player->acc_id]);
 $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2->recordcount() + $logcount3->recordcount() + $logcount4->recordcount();
 ?>
 
 <div id="tudo" style="position: relative;">
-    <img src="images/topo.jpg" style="position:absolute;width:100%;z-index: 0;">
+    <img src="static/images/topo.jpg" style="position:absolute;width:100%;z-index: 0;">
     <div class="msg">
-        <div class="ic-msg"></div><?php include("showmsg.php"); ?>
+        <div class="ic-msg"></div><?php include(__DIR__ . "/../showmsg.php"); ?>
     </div>
     <table class="lol">
         <tr>
@@ -279,38 +289,38 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                 <div class="left" style="position:relative;z-index: 1;">
                     <div class="leftcon">
 
-                        <img src="images/menu/personagem.png"
+                        <img src="static/images/menu/personagem.png"
                             style="-webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;" border="0">
 
                         <?php
-                        $verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", array($player->id, time()));
+                        $verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", [$player->id, time()]);
                         if ($verificpotion->recordcount() > 0) {
                             $selct = $verificpotion->fetchrow();
                             $valortempo = $selct['time'] - time();
                             if ($valortempo < 60) {
-                                $valortempo = $valortempo;
                                 $auxiliar = "segundo(s)";
-                            } else if ($valortempo < 3600) {
+                            } elseif ($valortempo < 3600) {
                                 $valortempo = ceil($valortempo / 60);
                                 $auxiliar = "minuto(s)";
-                            } else if ($valortempo < 86400) {
+                            } elseif ($valortempo < 86400) {
                                 $valortempo = ceil($valortempo / 3600);
                                 $auxiliar = "hora(s)";
                             }
 
-                            $potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", array($selct['item_id']));
-                            $potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", array($selct['item_id']));
-                            $potimg = $db->GetOne("select `img` from `blueprint_items` where `id`=?", array($selct['item_id']));
+                            $potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id']]);
+                            $potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id']]);
+                            $potimg = $db->GetOne("select `img` from `blueprint_items` where `id`=?", [$selct['item_id']]);
 
                         ?>
                             <div
                                 title="header=[<?php echo $potname; ?>] body=[<?php echo $potdesc; ?><br><font size=1><?php echo $valortempo; ?> <?php echo $auxiliar; ?> restante(s).</font>]">
                                 <div class="potionimg"><a href="tavern.php?act=buy&id=182"><img
-                                            src="images/itens/<?php echo $potimg; ?>" border=0></a>
+                                            src="static/images/itens/<?php echo $potimg; ?>" border=0></a>
                                 </div>
                             </div>
-                        <?php } ?>
-                        <div class="avatar"><a href="avatar.php"><img src="<?php echo $player->avatar ?>"
+                        <?php }
+                        ?>
+                        <div class="avatar"><a href="avatar.php"><img src="static/<?php echo $player->avatar ?>"
                                     border="0px"></a></div>
 
 
@@ -342,9 +352,9 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                             </div>
                         </div>
 
-                        <span id="mudar1"><img src="images/menu/on1.png" border="0px"></span>
+                        <span id="mudar1"><img src="static/images/menu/on1.png" border="0px"></span>
                         <div id="gaita1">
-                            <?php include("showit.php"); ?>
+                            <?php include(__DIR__ . "/../showit.php"); ?>
 
                             <div class="moedas">
                                 <div class="ic-moeda"></div>
@@ -353,47 +363,48 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                         </div>
 
                         <br />
-                        <span id="mudar2"><img src="images/menu/on2.png" border="0px"></span>
+                        <span id="mudar2"><img src="static/images/menu/on2.png" border="0px"></span>
                         <div id="gaita2">
 
                             <?php
-                            echo "<table border=\"0px\" cellpadding=\"0px\" cellspacing=\"0px\"  class=\"friend\">";
-                            $query = $db->execute("select `fname` from `friends` WHERE `uid`=? order by `fname` asc", array($player->acc_id));
+                            echo '<table border="0px" cellpadding="0px" cellspacing="0px"  class="friend">';
+                            $query = $db->execute("select `fname` from `friends` WHERE `uid`=? order by `fname` asc", [$player->acc_id]);
                             if ($query->recordcount() == 0) {
                                 echo "<tr class=\"amigo\"><th><center>Você não tem amigos.</center></th></tr>";
                             } else {
                                 $bool = "o";
                                 while ($friend = $query->fetchrow()) {
-                                    $name = $db->GetOne("select `id` from `players` where `username`=?", array($friend['fname']));
-                                    $friendlevel = $db->getone("select `level` from `players` where `id`=?", array($name));
+                                    $name = $db->GetOne("select `id` from `players` where `username`=?", [$friend['fname']]);
+                                    $friendlevel = $db->getone("select `level` from `players` where `id`=?", [$name]);
 
-                                    echo "<tr class=\"amig" . $bool . "\">";
+                                    echo '<tr class="amig' . $bool . '">';
                                     echo "<th>&nbsp;<b>" . showName($name, $db, 'off', 'off') . "</b></th>";
                                     echo "<th><b>Nv. " . $friendlevel . "</b></th>";
 
 
-                                    $online = $db->execute("select `time` from `user_online` where `player_id`=?", array($name));
-                                    $ignorado = $db->execute("select * from `ignored` where `uid`=? and `bid`=?", array($name, $player->id));
-                                    if (($online->recordcount() > 0) and ($ignorado->recordcount() == 0)) {
-                                        $check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", array($name));
+                                    $online = $db->execute("select `time` from `user_online` where `player_id`=?", [$name]);
+                                    $ignorado = $db->execute("select * from `ignored` where `uid`=? and `bid`=?", [$name, $player->id]);
+                                    if ($online->recordcount() > 0 && $ignorado->recordcount() == 0) {
+                                        $check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", [$name]);
                                         if ($check->recordcount() == 0) {
-                                            echo "<th><center><a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", showName($name, $db, 'off', 'off')) . "')\"><img src=\"images/images/on.png\" border=\"0px\"></a></center></th>";
+                                            echo "<th><center><a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", showName($name, $db, 'off', 'off')) . "')\"><img src=\"static/images/images/on.png\" border=\"0px\"></a></center></th>";
                                         } else {
                                             $stattus = $check->fetchrow();
                                             if ($stattus['pending_status'] == 'ocp') {
-                                                echo "<th><center><a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", showName($name, $db, 'off', 'off')) . "')\"><img src=\"images/images/ocp.png\" border=\"0px\"></a></center></th>";
+                                                echo "<th><center><a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", showName($name, $db, 'off', 'off')) . "')\"><img src=\"static/images/images/ocp.png\" border=\"0px\"></a></center></th>";
                                             } elseif ($stattus['pending_status'] == 'inv') {
-                                                echo "<th><center><img src=\"images/images/off.png\" border=\"0px\"></center></th>";
+                                                echo '<th><center><img src="static/images/images/off.png" border="0px"></center></th>';
                                             }
                                         }
                                     } else {
-                                        echo "<th><center><img src=\"images/images/off.png\" border=\"0px\"></center></th>";
+                                        echo '<th><center><img src="static/images/images/off.png" border="0px"></center></th>';
                                     }
 
                                     echo "</tr>";
-                                    $bool = ($bool == "o") ? "oo" : "o";
+                                    $bool = ($bool === "o") ? "oo" : "o";
                                 }
                             }
+
                             echo "</table>";
                             ?>
                         </div>
@@ -497,4 +508,4 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
         }, 2500);
     </script>
 
-    <div id="usr"><?php include("engine.php"); ?></div>
+    <div id="usr"><?php include(__DIR__ . "/../engine.php"); ?></div>

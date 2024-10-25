@@ -1,0 +1,51 @@
+body {
+  margin: 0em auto;
+  padding: 0em;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 0.8em;
+  background: url("../images/dot.jpg") center top repeat-x #ffffff;
+}
+
+a:link,
+a.menu1:active,
+a.menu1:visited {
+  color: #8c6b2f;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  text-decoration: none;
+}
+a:hover {
+  color: #745927;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  text-decoration: underline;
+}
+
+#wrapper {
+  width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+  border-left: 3px solid #cea663;
+  border-right: 3px solid #cea663;
+  padding: 0px 0px 0px 0px;
+  height: 100%;
+  background-color: #faf0e4;
+}
+
+#header {
+  width: 360px;
+  clear: both;
+  padding: 0px 0px 20px 0px;
+}
+
+#footer {
+  width: 360px;
+  clear: both;
+  padding: 20px 0px 0px 0px;
+}
+
+#baixo-text {
+  width: 360px;
+  padding: 1px;
+  background-color: #cea663;
+  text-align: center;
+  color: rgb(0, 0, 0);
+}

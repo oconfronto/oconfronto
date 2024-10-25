@@ -1,0 +1,59 @@
+/* drag container */
+#main_container {
+  margin: auto;
+  width: 100%;
+}
+
+/* container for the left table */
+#main_container #left {
+  width: 145px;
+  height: 210px;
+  float: left;
+  margin-right: 20px;
+  /* make it visible */
+  border: 1px solid #dedede;
+  background-color: #eee;
+}
+/* container for the right table */
+#main_container #right {
+  width: 494px;
+  height: 210px;
+  padding-top: 5px;
+  padding-left: 5px;
+  /* align div to the right */
+  margin-left: auto;
+  /* make it visible */
+  border: 1px solid #dedede;
+  background-color: #fffde0;
+}
+
+/* make left and right DIV container scrollable */
+#main_container #left,
+#right {
+  /* overflow: auto; */
+  position: relative;
+}
+
+/* drag objects (DIV inside table cells) */
+.drag {
+  position: relative;
+  cursor: move;
+  margin: auto;
+  z-index: 10;
+  filter: alpha(opacity=70);
+  border: 0px;
+  /* without width, IE6/7 will not apply filter/opacity to the element ?! */
+}
+
+.sell {
+  color: white;
+  background-color: #2d4b7a;
+  width: 130px;
+  text-align: center;
+}
+.mature {
+  color: white;
+  background-color: #2d4b7a;
+  width: 130px;
+  text-align: center;
+}

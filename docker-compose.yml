@@ -8,6 +8,8 @@ services:
     ports:
       - 3306:3306
       - 33060:33060
+    networks:
+      - app-tier
     volumes:
       - ./src/init.sql:/docker-entrypoint-initdb.d/init.sql
       - mysql_data:/var/lib/mysql
@@ -20,10 +22,47 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
+    networks:
+      - app-tier
     volumes:
-      - ./src:/var/www/html
+      - ./src:/app
+    environment:
+      - VIRTUAL_HOST=${DOMAIN}
+      - VIRTUAL_ROOT="/app"
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    restart: always
+    depends_on:
+      - app
     ports:
       - "5000:80"
+    networks:
+      - app-tier
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./vhost.d:/etc/nginx/vhost.d
+      - ./certs:/etc/nginx/certs:ro
+      - ./static:/app/static
+      - ./logs:/var/log/nginx
+    environment:
+      ENABLE_IPV6: "true"
+    labels:
+      - "com.github.nginx-proxy.nginx=true"
+
+  docker-gen:
+    image: jwilder/docker-gen
+    networks:
+      - app-tier
+    command: -notify-sighup nginx-proxy -watch /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    depends_on:
+      - nginx-proxy
 
 volumes:
   mysql_data:
+
+networks:
+  app-tier:
+    driver: bridge

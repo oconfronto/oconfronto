@@ -1,0 +1,96 @@
+ul.menubar {
+  padding-left: 18px;
+  float: left;
+  width: 100%;
+  list-style: none;
+}
+
+ul.menubar .submenu {
+  list-style: none;
+  width: 170px;
+  margin-top: -10px;
+  background: url("../images/menu/menuoff2.png") repeat-x top;
+  font: bold 12px Verdana, Helvetica, sans-serif;
+  color: white;
+  float: left;
+}
+
+ul.menubar ul.menu {
+  display: none;
+  position: absolute;
+  margin: 0px;
+}
+
+ul.menubar a {
+  padding: 5px;
+  display: block;
+  text-decoration: none;
+  color: white;
+}
+
+ul.menubar li a:hover {
+  background-image: ur("../images/menu/barramenu.png") repeat-x top;
+  color: white;
+}
+
+ul.menu,
+ul.menu ul {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #ccc;
+  width: 170px; /* Width of Menu Items */
+  background-color: #ffffff; /* IE6 Bug, funto submenus */
+
+  z-index: 20;
+}
+
+/*submenus*/
+ul.menu li {
+  position: relative;
+  list-style: none;
+  border: 0px;
+}
+
+/*submenus mouse*/
+ul.menu li a {
+  display: block;
+  text-decoration: none;
+  border: 1px solid #ccc;
+  padding: 5px 10px 5px 5px; /* volume dos submenus */
+  background-color: #ddd;
+  width: 170px;
+  color: #f9eecd;
+}
+
+/*barramenu mouse*/
+ul.menubar li a:hover {
+  color: #f9eecd;
+  height: 22px; /* espaço entre os submenus */
+  background: url("../images/menu/menuhover.png") repeat-x top;
+}
+
+/* Fix IE. Hide from IE Mac \*/
+* html ul.menu li {
+  float: left;
+  height: 1%;
+}
+* html ul.menu li a {
+  height: 1%;
+}
+/* End */
+
+ul.menu ul {
+  background-color: red;
+  position: absolute;
+  display: none;
+  left: 160px; /* Set 1px less than menu width */
+  top: 0px;
+}
+
+ul.menu li.submenu ul {
+  display: none;
+} /* Hide sub-menus initially */
+
+ul.menu li a:hover {
+  color: #ffffff;
+}

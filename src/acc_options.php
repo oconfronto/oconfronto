@@ -1,13 +1,16 @@
 <?php
-include("lib.php");
+
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Opções da conta");
-$acc = check_acc($secret_key, $db);
+$acc = check_acc($db);
 
-include("templates/acc-header.php");
+include(__DIR__ . "/templates/acc-header.php");
 
-function generateAccountOptionLink($url, $text)
+function generateAccountOptionLink($url, $text): string
 {
-	return "<center><a href=\"$url\">$text</a><br/></center>";
+	return sprintf('<center><a href="%s">%s</a><br/></center>', $url, $text);
 }
 ?>
 
@@ -40,5 +43,5 @@ function generateAccountOptionLink($url, $text)
 </p>
 
 <?php
-include("templates/acc-footer.php");
+include(__DIR__ . "/templates/acc-footer.php");
 ?>

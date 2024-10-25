@@ -1,22 +1,24 @@
 <?php
 
-$player = check_user($secret_key, $db);
+declare(strict_types=1);
+
+$player = check_user($db);
 
 if ($_GET['voltar'] == true) {
-    include("lib.php");
+    include(__DIR__ . "/lib.php");
     header("Content-Type: text/html; charset=utf-8", true);
 }
 
-include("itemstatus.php");
+include(__DIR__ . "/itemstatus.php");
 
 $tipoAtributo = "";
 
 
 if ($player->voc == 'archer') {
     $tipoAtributo = "Pontaria";
-} else if ($player->voc == 'knight') {
+} elseif ($player->voc == 'knight') {
     $tipoAtributo = "Força";
-} else if ($player->voc == 'mage') {
+} elseif ($player->voc == 'mage') {
     $tipoAtributo = "Magia";
 }
 
@@ -30,10 +32,10 @@ if ($player->promoted == 't') {
         if ($player->voc == 'archer') {
             $atk = "30%";
             $def = "20%";
-        } else if ($player->voc == 'knight') {
+        } elseif ($player->voc == 'knight') {
             $atk = "25%";
             $def = "21%";
-        } else if ($player->voc == 'mage') {
+        } elseif ($player->voc == 'mage') {
             $atk = "27%";
             $def = "20%";
         }
@@ -41,10 +43,10 @@ if ($player->promoted == 't') {
         if ($player->voc == 'archer') {
             $atk = "28%";
             $def = "18%";
-        } else if ($player->voc == 'knight') {
+        } elseif ($player->voc == 'knight') {
             $atk = "23%";
             $def = "20%";
-        } else if ($player->voc == 'mage') {
+        } elseif ($player->voc == 'mage') {
             $atk = "26%";
             $def = "18%";
         }
@@ -52,10 +54,10 @@ if ($player->promoted == 't') {
         if ($player->voc == 'archer') {
             $atk = "25%";
             $def = "16%";
-        } else if ($player->voc == 'knight') {
+        } elseif ($player->voc == 'knight') {
             $atk = "20%";
             $def = "17%";
-        } else if ($player->voc == 'mage') {
+        } elseif ($player->voc == 'mage') {
             $atk = "23%";
             $def = "16%";
         }
@@ -63,10 +65,10 @@ if ($player->promoted == 't') {
         if ($player->voc == 'archer') {
             $atk = "21%";
             $def = "13%";
-        } else if ($player->voc == 'knight') {
+        } elseif ($player->voc == 'knight') {
             $atk = "17%";
             $def = "15%";
-        } else if ($player->voc == 'mage') {
+        } elseif ($player->voc == 'mage') {
             $atk = "19%";
             $def = "13%";
         }
@@ -74,33 +76,31 @@ if ($player->promoted == 't') {
         if ($player->voc == 'archer') {
             $atk = "17%";
             $def = "11%";
-        } else if ($player->voc == 'knight') {
+        } elseif ($player->voc == 'knight') {
             $atk = "14%";
             $def = "12%";
-        } else if ($player->voc == 'mage') {
+        } elseif ($player->voc == 'mage') {
             $atk = "16%";
             $def = "11%";
         }
-    } else {
-        if ($player->voc == 'archer') {
-            $atk = "13%";
-            $def = "8%";
-        } else if ($player->voc == 'knight') {
-            $atk = "10%";
-            $def = "9%";
-        } else if ($player->voc == 'mage') {
-            $atk = "12%";
-            $def = "8%";
-        }
+    } elseif ($player->voc == 'archer') {
+        $atk = "13%";
+        $def = "8%";
+    } elseif ($player->voc == 'knight') {
+        $atk = "10%";
+        $def = "9%";
+    } elseif ($player->voc == 'mage') {
+        $atk = "12%";
+        $def = "8%";
     }
 } elseif ($player->promoted == 'p') {
     if ($player->voc == 'archer') {
         $atk = "36%";
         $def = "24%";
-    } else if ($player->voc == 'knight') {
+    } elseif ($player->voc == 'knight') {
         $atk = "30%";
         $def = "26%";
-    } else if ($player->voc == 'mage') {
+    } elseif ($player->voc == 'mage') {
         $atk = "33%";
         $def = "24%";
     }

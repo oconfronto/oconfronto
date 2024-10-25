@@ -1,17 +1,19 @@
 <?php
-include("lib.php");
+
+declare(strict_types=1);
+
+include(__DIR__ . "/lib.php");
 define("PAGENAME", "Membros");
-$player = check_user($secret_key, $db);
+$player = check_user($db);
 
-include("templates/private_header.php");
+include(__DIR__ . "/templates/private_header.php");
 
 
-    for ($i = 1; $i <= 800; $i++) {
-        echo $i;
-        echo " - ";
-        echo maxExp($i);
-        echo "<br/>";
-    }
+for ($i = 1; $i <= 800; ++$i) {
+    echo $i;
+    echo " - ";
+    echo maxExp($i);
+    echo "<br/>";
+}
 
-include("templates/private_footer.php");
-?>
+include(__DIR__ . "/templates/private_footer.php");

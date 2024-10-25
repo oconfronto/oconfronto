@@ -1,0 +1,18 @@
+location / {
+    root /app;
+    try_files $uri $uri/ /index.php?$query_string;
+}
+
+location ~ \.php$ {
+    root /app;
+    fastcgi_pass app:9000;
+    fastcgi_index index.php;
+    include fastcgi_params;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    add_header X-Debug-Message "Trying to access: $document_root$fastcgi_script_name" always;
+    add_header X-Script-Filename $document_root$fastcgi_script_name always;
+}
+
+location /static/ {
+    alias /app/static/;
+}

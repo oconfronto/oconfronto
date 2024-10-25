@@ -1,10 +1,10 @@
 <?php
-include("../config.php");
+
+declare(strict_types=1);
+
+include(__DIR__ . "/../config.php");
 $tb_name = "accounts";
-mysql_connect($config_server, $config_username, $config_password) or die ("Cant connect to Datebase");
-mysql_select_db($config_database) or die ("Couldnt successfully connected");
-$username=$_POST['username'];
-$username=$_POST['user_name'];
+$username = $_POST['user_name'];
 
 $pat[0] = "/^\s+/";
 $pat[1] = "/\s{2,}/";
@@ -12,20 +12,20 @@ $pat[2] = "/\s+\$/";
 $rep[0] = "";
 $rep[1] = " ";
 $rep[2] = "";
-$nomedouser = ucwords(preg_replace($pat,$rep,$username));
+$nomedouser = ucwords(preg_replace($pat, (string) $rep, (string) $username));
 
-$query=("Select * from $tb_name where conta='$nomedouser'");
-$result= mysql_query($query);
-$num=mysql_num_rows($result);
-if ($num > 0) {//Username already exist
-echo "no";
-} else if (strlen($nomedouser) < 3){
-echo "no";
-} else if (strlen($nomedouser) > 20){
-echo "no";
-} else if (!preg_match("/^[A-Za-z[:space:]\-]+$/", $username)){
-echo "no";
-}else{
-echo "yes";
+$query = (sprintf("Select * from %s where conta='%s'", $tb_name, $nomedouser));
+$result = $db->execute($query);
+$num = $result->recordCount();
+if ($num > 0) {
+    //Username already exist
+    echo "no";
+} elseif (strlen($nomedouser) < 3) {
+    echo "no";
+} elseif (strlen($nomedouser) > 20) {
+    echo "no";
+} elseif (preg_match("/^[A-Za-z[:space:]\-]+$/", (string) $username) === 0 || preg_match("/^[A-Za-z[:space:]\-]+$/", (string) $username) === false) {
+    echo "no";
+} else {
+    echo "yes";
 }
-?>

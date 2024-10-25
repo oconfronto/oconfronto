@@ -7,17 +7,18 @@
 
     <title>O Confronto :: <?php echo PAGENAME ?></title>
 
-    <link rel="stylesheet" type="text/css" href="./css/index.css" />    
-    <link rel="stylesheet" type="text/css" href="example2.css" />
+    <link rel="icon" type="image/x-icon" href="static/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="static/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="static/example2.css" />
 
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" />
-    <link rel="stylesheet" href="./assets/countdown/jquery.countdown.css" />
+    <link rel="stylesheet" href="static/assets/countdown/jquery.countdown.css" />
     <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="static/http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="jMyCarousel.js"></script>
+    <script type="text/javascript" src="static/js/jquery.js"></script>
+    <script type="text/javascript" src="static/jMyCarousel.js"></script>
     <!-- Optional -->
     <script type="text/javascript">
         $(function() {
@@ -34,22 +35,24 @@
     <script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1892370805366558"
-        crossorigin="anonymous"
-    >
+        crossorigin="anonymous">
     </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5C9CTZE98D"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
 
-    gtag('config', 'G-5C9CTZE98D');
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-5C9CTZE98D');
     </script>
 </head>
 
-<body>    
+<body>
     <?php
-    if ($_GET['r']) {
+    if (isset($_GET['r'])) {
         $_SESSION['ref'] = $_GET['r'];
         $linkref = $_GET['r'];
     } else {
@@ -61,7 +64,7 @@
         <div id="topo"></div>
 
         <?php
-        include("notice_board.php");
+        include(__DIR__ . "/../notice_board.php");
         ?>
 
         <div id="box">
