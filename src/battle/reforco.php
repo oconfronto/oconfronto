@@ -4,7 +4,7 @@ declare(strict_types=1);
 $selectmana = $db->GetOne("select `mana` from `blueprint_magias` where `id`=1");
 $mana = $player->reino == '1' || $player->vip > time() ? $selectmana - 5 : $selectmana;
 
-$log = explode(", ", $_SESSION['battlelog'][0]);
+$log = explode(", ", (string) $_SESSION['battlelog'][0]);
 $magiaatual = $db->GetOne("select `magia` from `bixos` where `player_id`=?", [$player->id]);
 
 if ($player->mana < $mana){

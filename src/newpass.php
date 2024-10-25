@@ -7,9 +7,9 @@ define("PAGENAME", "Recuperar senha");
 
 $email = $_GET['email'];
 $string = $_GET['string'];
-$email = trim($email); //trims whitespace
+$email = trim((string) $email); //trims whitespace
 $email = strip_tags($email); //strips out possible HTML
-$string = trim($string);
+$string = trim((string) $string);
 $string = strip_tags($string);
 
 mt_srand((float)microtime() * 1023487);  //sets random seed

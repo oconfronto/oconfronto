@@ -79,7 +79,7 @@ if ($_POST['a_answer']) {
 		echo showAlert("No faa postagens seguidas.<br/>Aguarde 20 segundos para poder postar novamente.", "red");
 
 	} else {
-        $texto = strip_tags($_POST['a_answer']);
+        $texto = strip_tags((string) $_POST['a_answer']);
         $texto = nl2br($texto);
 
 		$insert['question_id'] = $id;
@@ -120,7 +120,7 @@ $categoria = "Off-Topic";
 $categoria = $rows['category'];
 }
 
-echo "<b><font size=\"1px\"><a href=\"select_forum.php\">Fruns</a> -> <a href=\"main_forum.php?cat=" . $rows['category'] . '">' . ucfirst($categoria) . '</a> -> <a href="view_topic.php?id=' . $rows['id'] . '">' . ucfirst(stripslashes($rows['topic'])) . "</a></font></b>";
+echo "<b><font size=\"1px\"><a href=\"select_forum.php\">Fruns</a> -> <a href=\"main_forum.php?cat=" . $rows['category'] . '">' . ucfirst((string) $categoria) . '</a> -> <a href="view_topic.php?id=' . $rows['id'] . '">' . ucfirst(stripslashes((string) $rows['topic'])) . "</a></font></b>";
 
 $query = $db->execute("select `id`, `username`, `avatar`, `posts`, `ban`, `alerts`, `gm_rank`, `serv` from `players` where `id`=?", [$rows['user_id']]);
 $topicouser = $query->fetchrow();
@@ -167,7 +167,7 @@ echo '<br/><a href="forum_ban.php?player=' . $topicouser['id'] . '">Banir</a><br
 </font></center></td>
     <td><table width="95%" align="center">
           <tr>
-            <th width="70%" bgcolor="#E1CBA4"><?php echo stripslashes($rows['topic']); ?></th>
+            <th width="70%" bgcolor="#E1CBA4"><?php echo stripslashes((string) $rows['topic']); ?></th>
             <th width="30%" bgcolor="#E1CBA4"><font size="1px"><center><?php echo date("m/d/y", $rows['postado']);
                 echo " &#224;s ";
                 echo date("G:i", $rows['postado']); ?></center><font></th>
@@ -185,7 +185,7 @@ elseif ($player->gm_rank > 2)
 echo '&nbsp;&nbsp;&nbsp;<font size="1px"><a href="edit_topic.php?topic=' . $rows['id'] . '">Editar</a> | <a href="forum_alert.php?topic=' . $rows['id'] . '">Alertar</a> | <a href="move_topic.php?topic=' . $rows['id'] . '">Mover</a> | <a href="delete_topic.php?topic=' . $rows['id'] . '">Deletar</a></font><br/>';
 }
 
-    $topiko = stripslashes($rows['detail']);
+    $topiko = stripslashes((string) $rows['detail']);
     echo (new bbcode())->parse($topiko);
 ?></div>
         </td>
@@ -294,7 +294,7 @@ if ($aux['total'] > 0) {
 				echo '<font size="1px"><a href="edit_answer.php?topic=' . $rows['question_id'] . "&a=" . $rows['id'] . '">Editar</a> | <a href="forum_alert.php?answer=' . $rows['id'] . '">Alertar</a> | <a href="delete_answer.php?topic=' . $rows['question_id'] . "&a=" . $rows['id'] . '">Deletar</a></font><br/>';
 			}
 
-		$resposta = stripslashes($rows['a_answer']);
+		$resposta = stripslashes((string) $rows['a_answer']);
         echo (new bbcode())->parse($resposta);
 
 		echo "</td>";

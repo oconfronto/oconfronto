@@ -4,7 +4,7 @@ declare(strict_types=1);
 $selectmana = $db->GetOne("select `mana` from `blueprint_magias` where `id`=3");
 $mana = $player->reino == '1' || $player->vip > time() ? $selectmana - 5 : $selectmana;
 
-$log = explode(", ", $duellog[0]);
+$log = explode(", ", (string) $duellog[0]);
 if ($player->mana < $mana){
     if ($log[0] != 6) {
         array_unshift($duellog, "6, " . $player->username . "");

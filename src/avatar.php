@@ -15,7 +15,7 @@ if ($get->recordcount() > 0 && $_POST['subname'] == "alterar") {
     $subtitle = $_POST['subtitle'];
     $sub_color = $_POST['categoria_color'];
     $numero = "10";
-    $total = strlen($subtitle);
+    $total = strlen((string) $subtitle);
     if ($total > $numero) {
         echo showAlert("Ta maluco? Só são aceitos nicks com 10 caracteres ou menos.", "red");
     } elseif (!empty($subtitle) && !empty($sub_color)) {
@@ -42,7 +42,7 @@ if ($_POST['upload']) {
 	if (!$_POST['avatar']) {
      $errmsg .= "Por favor preencha todos os campos!";
      $error = 1;
- } elseif ($_POST['avatar'] && !@GetImageSize($_POST['avatar'])) {
+ } elseif ($_POST['avatar'] && (@GetImageSize($_POST['avatar']) === [] || @GetImageSize($_POST['avatar']) === false)) {
      $errmsg .= "O endereço desta imagem não é válido!";
      $error = 1;
  }

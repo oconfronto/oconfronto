@@ -297,7 +297,7 @@ echo '<div id="tab2" class="tab_content">';
 	else
 	{
 		$comentdocara = $procuramengperfil->fetchrow();
-		$mencomentario = stripslashes($comentdocara['perfil']);
+		$mencomentario = stripslashes((string) $comentdocara['perfil']);
 	}
 ?>
 <tr><td width="15%"><b>Nome real:</b></td><td><?php

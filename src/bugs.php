@@ -19,7 +19,7 @@ if ($_POST['comment'] && $_POST['submit']) {
 		$insert['to'] = 1;
 		$insert['from'] = $player->id;
 		$insert['body'] = $_POST['comment'];
-		$insert['body'] = htmlentities($_POST['comment'], ENT_QUOTES);
+		$insert['body'] = htmlentities((string) $_POST['comment'], ENT_QUOTES);
 		$insert['subject'] = "contato";
 		$insert['time'] = time();
 		$query = $db->execute("insert into `mail` (`to`, `from`, `body`, `subject`, `time`) values (?, ?, ?, ?, ?)", [$insert['to'], $insert['from'], $insert['body'], $insert['subject'], $insert['time']]);

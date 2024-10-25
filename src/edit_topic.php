@@ -45,7 +45,7 @@ if (!$_POST['detail'])
 	exit;
 }
 
-$novaresposto=strip_tags($_POST['detail']);
+$novaresposto=strip_tags((string) $_POST['detail']);
 	$quebras = ['<br />', '<br>', '<br/>'];
 	$newresposta = str_replace($quebras, "\n", $novaresposto);
 $texto=nl2br($newresposta);

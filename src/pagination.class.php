@@ -78,7 +78,7 @@ Author URI: http://www.mis-algoritmos.com
 
 		#to change urlFriendly
 		public function urlFriendly($value="%"): ?bool{
-				if(preg_match('#^ *$#mi',$value)){
+				if(preg_match('#^ *$#mi',(string) $value)){
 						$this->urlF=false;
 						return false;
 					}
@@ -108,8 +108,8 @@ Author URI: http://www.mis-algoritmos.com
       return null;
   }
   
-		public function get_pagenum_link($id){
-				if (strpos($this->target,'?') !== false) {
+		public function get_pagenum_link($id): string|array{
+				if (str_contains((string) $this->target,'?')) {
         return sprintf('%s&%s=%s', $this->target, $this->parameterName, $id);
     }
 
@@ -123,11 +123,11 @@ Author URI: http://www.mis-algoritmos.com
 		public function calculate(): bool{
 				$this->pagination = "";
 				$error = false;
-				if($this->urlF && $this->urlF != '%' && strpos($this->target,(string) $this->urlF)===false){
+				if($this->urlF && $this->urlF != '%' && (str_contains((string) $this->target,(string) $this->urlF) === 0 || str_contains((string) $this->target,(string) $this->urlF) === false)){
 						//Es necesario especificar el comodin para sustituir
 						echo "Especificaste un wildcard para sustituir, pero no existe en el target<br />";
 						$error = true;
-					}elseif($this->urlF && $this->urlF == '%' && strpos($this->target,(string) $this->urlF)===false){
+					}elseif($this->urlF && $this->urlF == '%' && (str_contains((string) $this->target,(string) $this->urlF) === 0 || str_contains((string) $this->target,(string) $this->urlF) === false)){
 						echo "Es necesario especificar en el target el comodin % para sustituir el número de página<br />";
 						$error = true;
 					}

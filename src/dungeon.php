@@ -14,7 +14,7 @@ while($dungeonInfo = $dungeonVerificaPremiacoes->fetchrow())
 	$getAllDungeonInfo = $db->execute("select * from `dungeon` where `id`=?", [$dungeonInfo['dungeon_id']]);
 	$AllDungeonInfo = $getAllDungeonInfo->fetchrow();
 	
-	$divideDungeonMosters = explode (", ", $AllDungeonInfo['monsters']);
+	$divideDungeonMosters = explode (", ", (string) $AllDungeonInfo['monsters']);
  if (($dungeonInfo['start'] + $AllDungeonInfo['time']) < time()) {
      $db->execute("update `dungeon_status` set `fail`='2', `status`=? where `dungeon_id`=? and `player_id`=?", [(time() + 86400), $dungeonInfo['dungeon_id'], $player->id]);
      include(__DIR__ . "/templates/private_header.php");
@@ -31,7 +31,7 @@ while($dungeonInfo = $dungeonVerificaPremiacoes->fetchrow())
      echo "Você adiquiriu 1 dungeon point por completar esta arena.<br/>";
      echo "<br/><i>Os seguintes prêmios foram adicionados ao seu inventário:</i><br/>";
      echo "<ul>";
-     $itid = explode (", ", $AllDungeonInfo['prize']);
+     $itid = explode (", ", (string) $AllDungeonInfo['prize']);
      foreach ($itid as $key_value)
      {
          if ($key_value > 999) {
@@ -185,7 +185,7 @@ if ($_GET['id']) {
                     
                 echo "</tr></table>";
                 echo '</td><td style="background-color: #FFFDE0;">';
-                $itid = explode (", ", $vipti['monsters']);
+                $itid = explode (", ", (string) $vipti['monsters']);
                 $itcount = 1;
                 foreach ($itid as $key_value)
                 {
@@ -213,7 +213,7 @@ if ($_GET['id']) {
                 
                 echo '</td><td style="background-color: #FFFDE0;">';
 
-					$itid = explode (", ", $vipti['prize']);
+					$itid = explode (", ", (string) $vipti['prize']);
                     foreach ($itid as $key_value)
                     {
                         if ($key_value > 999) {

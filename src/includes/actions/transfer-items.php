@@ -50,7 +50,7 @@ $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `
         	exit;
 	 }
 
-	 if (strtolower($_POST['passcode']) !== strtolower($player->transpass)){
+	 if (strtolower((string) $_POST['passcode']) !== strtolower($player->transpass)){
 		$error = 1;
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";

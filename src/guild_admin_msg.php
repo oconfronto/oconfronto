@@ -45,7 +45,7 @@ if ($_POST['submit']) {
     		$error = 1;
 	}
  
-	if (strlen($_POST['body']) > 5000) {
+	if (strlen((string) $_POST['body']) > 5000) {
     		$errmsg .= "<font color=red>Sua mensagem deve ter menos que 5000 caracteres.</font>";
     		$error = 1;
 	}

@@ -41,7 +41,7 @@ while ($war = $query->fetchrow()) {
 		echo "</td></tr>";
 	} elseif ($war['status'] == 't' && time() < $war['time']) {
 		$i = 0;
-		$array = explode(", ", $war['players_guild']);
+		$array = explode(", ", (string) $war['players_guild']);
 		foreach ($array as $value) {
 			$i += 1;
 		}
@@ -81,9 +81,9 @@ if ($query->recordcount() == 0) {
 		echo "<tr>";
 		echo '<td width="135px" class="brown"><center><a href="guild_profile.php?id=' . $guild['id'] . '"><img src="static/' . $guild['img'] . '" alt="' . $guild['name'] . '"  width="128" height="128" border="0"></a></center></td>';
 		echo '<td class="salmon"><center><b><a href="guild_profile.php?id=' . $guild['id'] . '">' . $guild['name'] . "</a></b></center>";
-		$guilddes = stripslashes($guild['blurb']);
+		$guilddes = stripslashes((string) $guild['blurb']);
 		$guilddes = $bbcode->parse($guilddes);
-		$guilddes = strip_tags($guilddes);
+		$guilddes = strip_tags((string) $guilddes);
 		echo textLimit($guilddes, 300, 80);
 		echo "</td>";
 

@@ -5,7 +5,7 @@ include(__DIR__ . "/lib.php");
 $player = check_user($db);
 
 if ($_GET['msg']) {
-	$msg = strip_tags($_GET['msg']);
+	$msg = strip_tags((string) $_GET['msg']);
 	if ($msg != NULL && strlen($msg) < 240){
 
 		if ($_GET['guild'] == 'true') {

@@ -6,7 +6,7 @@ $mana = $player->reino == '1' || $player->vip > time() ? $selectmana - 5 : $sele
 
 $magiaatual = $player->id == $luta['p_id'] ? $luta['p_turnos'] : $luta['e_turnos'];
 
-$log = explode(", ", $duellog[0]);
+$log = explode(", ", (string) $duellog[0]);
 if ($player->mana < $mana){
     if ($log[0] != 6) {
         array_unshift($duellog, "6, " . $player->username . "");

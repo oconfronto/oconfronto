@@ -39,10 +39,10 @@ if ($_POST['changetrans']) {
     } elseif ($_POST['trans'] != $_POST['trans2']) {
         $errmsg2 .= "Você não digitou as duas senhas corretamente!";
         $error2 = 1;
-    } elseif (strlen($_POST['trans']) < 4) {
+    } elseif (strlen((string) $_POST['trans']) < 4) {
         $errmsg2 .= "Sua senha de transferência não pode ter menos de 4 caracteres.";
         $error2 = 1;
-    } elseif (strlen($_POST['trans']) > 30) {
+    } elseif (strlen((string) $_POST['trans']) > 30) {
         $errmsg2 .= "Sua senha de transferência não pode ter mais de 30 caracteres.";
         $error2 = 1;
     }

@@ -69,7 +69,7 @@ $categoria = "Fanwork";
 }elseif ($_POST['category'] == 'off') {
 $categoria = "Off-Topic";
 }else{
-$categoria = ucfirst($_POST['category']);
+$categoria = ucfirst((string) $_POST['category']);
 }
 
 	if ($player->gm_rank > 2) {

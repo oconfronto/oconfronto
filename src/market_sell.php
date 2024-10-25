@@ -114,7 +114,7 @@ switch ($_GET['act']) {
 					break;
 				}
 
-				if (strtolower($_POST['passcode']) !== strtolower($player->transpass)) {
+				if (strtolower((string) $_POST['passcode']) !== strtolower($player->transpass)) {
 					include(__DIR__ . "/templates/private_header.php");
 					echo "<fieldset><legend><b>Erro</b></legend>\n";
 					echo "Sua senha de transferência está incorreta.<br />";
@@ -158,7 +158,7 @@ switch ($_GET['act']) {
 
 
 
-			$item = stripslashes($_POST['item']);
+			$item = stripslashes((string) $_POST['item']);
 
 			if (!$_POST['price']) {
 				include(__DIR__ . "/templates/private_header.php");
@@ -250,7 +250,7 @@ switch ($_GET['act']) {
 				break;
 			}
 
-			$item = stripslashes($_POST['item']);
+			$item = stripslashes((string) $_POST['item']);
 
 
 			if (!$_POST['price']) {

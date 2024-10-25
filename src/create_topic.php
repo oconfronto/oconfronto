@@ -26,7 +26,7 @@ if ($_POST['submit']) {
 	
 	} else {
      $vota = $_POST['vota'] ? "t" : "f";
-     $texto = strip_tags($_POST['detail']);
+     $texto = strip_tags((string) $_POST['detail']);
      $texto = nl2br($texto);
      $insert['topic'] = $_POST['topic'];
      $insert['category'] = $_POST['category'];

@@ -4,7 +4,7 @@ declare(strict_types=1);
 $selectmana = $db->GetOne("select `mana` from `blueprint_magias` where `id`=3");
 $mana = $player->reino == '1' || $player->vip > time() ? $selectmana - 5 : $selectmana;
 
-$log = explode(", ", $_SESSION['battlelog'][0]);
+$log = explode(", ", (string) $_SESSION['battlelog'][0]);
 
 $pak0 = random_int(intval($player->mindmg), intval($player->maxdmg));
 $pak1 = random_int(intval($player->mindmg), intval($player->maxdmg));

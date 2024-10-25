@@ -51,7 +51,7 @@ $msg3 = '<font color="red">';
 		$rep[0] = "";
 		$rep[1] = " ";
 		$rep[2] = "";
-		$nomedecla = ucwords(preg_replace($pat,$rep,$_POST['name']));
+		$nomedecla = ucwords(preg_replace($pat,(string) $rep,(string) $_POST['name']));
 
     $query2 = $db->execute("select `id` from `guilds` where `name`=? and `serv`=?", [$nomedecla, $player->serv]);
 
@@ -59,15 +59,15 @@ $msg3 = '<font color="red">';
         //Add to error message
         $msg1 .= "Você precisa digitar um nome para o clã!<br />\n";
         $error = 1;
-    } elseif (strlen($_POST['name']) < 3) {
+    } elseif (strlen((string) $_POST['name']) < 3) {
         //Add to error message
         $msg1 .= "O nome do seu clã deve ser maior que 3 caracteres!<br />\n";
         $error = 1;
-    } elseif (strlen($_POST['name']) > 20) {
+    } elseif (strlen((string) $_POST['name']) > 20) {
         //Add to error message
         $msg1 .= "O nome do seu clã não pode ser maior que 20 caracteres!<br />\n";
         $error = 1;
-    } elseif (!preg_match("/^[A-Za-z[:space:]\-]+$/", $_POST['name'])) {
+    } elseif (preg_match("/^[A-Za-z[:space:]\-]+$/", (string) $_POST['name']) === 0 || preg_match("/^[A-Za-z[:space:]\-]+$/", (string) $_POST['name']) === false) {
         $msg1 .= "O nome de seu clã não pode conter <b>caracteres especiais!<br />\n";
         $error = 1;
         //Set error check
@@ -85,15 +85,15 @@ $msg3 = '<font color="red">';
         //Add to error message
         $msg2 .= "Você precisa digitar uma tag para o clâ!<br />\n";
         $error = 1;
-    } elseif (strlen($_POST['tag']) < 2) {
+    } elseif (strlen((string) $_POST['tag']) < 2) {
         $msg2 .= "A tag do seu clã deve conter de 2 á 4 caracteres!<br />\n";
         //Set error check
         $error = 1;
-    } elseif (strlen($_POST['tag']) > 4) {
+    } elseif (strlen((string) $_POST['tag']) > 4) {
         $msg2 .= "A tag do seu clã deve conter de 2 á 4 caracteres!<br />\n";
         //Set error check
         $error = 1;
-    } elseif (!preg_match("/^[-_a-zA-Z0-9]+$/", $_POST['tag'])) {
+    } elseif (preg_match("/^[-_a-zA-Z0-9]+$/", (string) $_POST['tag']) === 0 || preg_match("/^[-_a-zA-Z0-9]+$/", (string) $_POST['tag']) === false) {
         $msg2 .= "A tag do seu clã não pode conter <b>caracteres especiais!<br />\n";
         $error = 1;
         //Set error check
@@ -103,7 +103,7 @@ $msg3 = '<font color="red">';
         //Add to error message
         $msg3 .= "Você precisa digitar uma descrição para o clã!<br />\n";
         $error = 1;
-    } elseif (strlen($_POST['tag']) > 5000) {
+    } elseif (strlen((string) $_POST['tag']) > 5000) {
         $msg3 .= "A descrição do seu clã passou de 5000 caracteres!<br />\n";
         //Set error check
         $error = 1;
@@ -116,12 +116,12 @@ if ($error == 0) {
 		$rep[0] = "";
 		$rep[1] = " ";
 		$rep[2] = "";
-		$nomedecla = ucwords(preg_replace($pat,$rep,$_POST['name']));
+		$nomedecla = ucwords(preg_replace($pat,(string) $rep,(string) $_POST['name']));
 
     $insert['name'] = $nomedecla;
     $insert['tag'] = $_POST['tag'];
     $insert['leader'] = $player->username;
-    $tirahtmldades = strip_tags($_POST['blurb']);
+    $tirahtmldades = strip_tags((string) $_POST['blurb']);
     $texto = nl2br($tirahtmldades);
 
     $insert['reino'] = $player->reino;

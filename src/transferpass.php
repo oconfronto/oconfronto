@@ -8,8 +8,8 @@ $player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkwork.php");
 
-$pass1 = strtolower($_POST['pass']);
-$pass2 = strtolower($_POST['pass2']);
+$pass1 = strtolower((string) $_POST['pass']);
+$pass2 = strtolower((string) $_POST['pass2']);
 if (($_POST['pass']) && ($_POST['pass2'])) {
     if ($player->transpass != "f") {
         include(__DIR__ . "/templates/private_header.php");

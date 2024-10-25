@@ -52,14 +52,14 @@ class bbcode
         // Lista de função BBCODE  
 
         $print = '';
-        while (stripos($text, '[quote]') !== false && stripos($text, '[/quote]') !== false) {
-            $quote = substr($text, stripos($text, '[quote]') + 7, stripos($text, '[/quote]') - stripos($text, '[quote]') - 7);
+        while (stripos((string) $text, '[quote]') !== false && stripos((string) $text, '[/quote]') !== false) {
+            $quote = substr((string) $text, stripos((string) $text, '[quote]') + 7, stripos((string) $text, '[/quote]') - stripos((string) $text, '[quote]') - 7);
             $text = str_ireplace('[quote]' . $quote . '[/quote]', '<blockquote>' . $quote . '</blockquote>', $text);
         }
         
 
         // BBCODE "URL=" -> VERSAO ANTIGA
-        $text = preg_replace("/\[url=(.*)\](.*)\[\/url\]/Usi", "<a href=\"\\1\" target=\"_blank\" border=\"0px\">\\2</a>", $text);
+        $text = preg_replace("/\[url=(.*)\](.*)\[\/url\]/Usi", "<a href=\"\\1\" target=\"_blank\" border=\"0px\">\\2</a>", (string) $text);
 
         // BBCODE "URL"
         while (stripos($text, '[url]') !== false && stripos($text, '[/url]') !== false) {

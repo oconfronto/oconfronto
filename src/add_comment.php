@@ -21,7 +21,7 @@ if (!$_POST['detail']) {
 	$procuramengperfil = $db->execute("select `perfil` from `profile` where `player_id`=?", [$player->id]);
 
     $topic=$_POST['detail'];
-    $topic2=strip_tags($topic);
+    $topic2=strip_tags((string) $topic);
     $texto=nl2br($topic2);
 
 	if ($procuramengperfil->recordcount() == 0)

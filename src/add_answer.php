@@ -57,7 +57,7 @@ $Max_id = $rows ? $rows['Maxa_id']+1 : 1;
 // get values that sent from form
 $a_answer=$_POST['a_answer'];
 
-$notavelreply=strip_tags($a_answer);
+$notavelreply=strip_tags((string) $a_answer);
 $texto=nl2br($notavelreply);
 
 $time = time();

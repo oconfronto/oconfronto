@@ -13,7 +13,7 @@ define("PAGENAME", "Criar Conta");
 $string = bin2hex(random_bytes(16));
 
 if (isset($_GET['r'])) {
-    $_SESSION['ref'] = htmlspecialchars($_GET['r'], ENT_QUOTES, 'UTF-8');
+    $_SESSION['ref'] = htmlspecialchars((string) $_GET['r'], ENT_QUOTES, 'UTF-8');
 }
 
 $usaar = $_SESSION['ref'] != null && is_numeric($_SESSION['ref']) ? $_SESSION['ref'] : "1";
@@ -47,18 +47,18 @@ if ($_POST['register'] || $_GET['confirm']) {
         $msg1 = "Voc&ecirc; precisa digitar o nome da conta desejada.<br />\n"; //Add to error message
         $error = 1; //Set error check
         $erro1 = 1;
-    } elseif (strlen($_POST['conta2']) < 3) { //If conta is too short...
+    } elseif (strlen((string) $_POST['conta2']) < 3) { //If conta is too short...
         $msg1 = "Sua conta não pode ter menos de 3 caracteres!<br />\n"; //Add to error message
         $error = 1; //Set error check
         $erro1 = 1;
-    } elseif (strlen($_POST['conta2']) > 20) {
+    } elseif (strlen((string) $_POST['conta2']) > 20) {
         //If conta is too short...
         $msg1 = "Sua conta deve ter 20 caracteres ou menos!<br />\n";
         //Add to error message
         $error = 1;
         //Set error check
         $erro1 = 1;
-    } elseif (!preg_match("/^[-_a-zA-Z0-9]+$/", $_POST['conta2'])) {
+    } elseif (preg_match("/^[-_a-zA-Z0-9]+$/", (string) $_POST['conta2']) === 0 || preg_match("/^[-_a-zA-Z0-9]+$/", (string) $_POST['conta2']) === false) {
         //If conta contains illegal characters...
         $msg1 = "Sua conta não pode conter <b>caracteres especiais</b>!<br />\n";
         //Add to error message
@@ -80,7 +80,7 @@ if ($_POST['register'] || $_GET['confirm']) {
         $error = 1;
         //Set error check
         $erro2 = 1;
-    } elseif (strlen($_POST['user_pass2']) < 4) {
+    } elseif (strlen((string) $_POST['user_pass2']) < 4) {
         //If password is too short...
         $msg2 = "Sua senha deve ser maior que 3 caracteres!<br />\n";
         //Add to error message
@@ -111,14 +111,14 @@ if ($_POST['register'] || $_GET['confirm']) {
         $error = 1;
         //Set error check
         $erro3 = 1;
-    } elseif (strlen($_POST['email2']) < 5) {
+    } elseif (strlen((string) $_POST['email2']) < 5) {
         //If email is too short...
         $msg3 = "O seu endereço de email deve conter mais de 5 caracteres.<br />\n";
         //Add to error message
         $error = 1;
         //Set error check
         $erro3 = 1;
-    } elseif (!preg_match("/^[-!#$%&\'*+\\.\/0-9=?A-Z^_`{|}~]+@([-0-9A-Z]+\.)+([0-9A-Z]){2,4}$/i", $_POST['email2'])) {
+    } elseif (preg_match("/^[-!#$%&\'*+\\.\/0-9=?A-Z^_`{|}~]+@([-0-9A-Z]+\.)+([0-9A-Z]){2,4}$/i", (string) $_POST['email2']) === 0 || preg_match("/^[-!#$%&\'*+\\.\/0-9=?A-Z^_`{|}~]+@([-0-9A-Z]+\.)+([0-9A-Z]){2,4}$/i", (string) $_POST['email2']) === false) {
         $msg3 = "O formato do seu email é inválido!<br />\n";
         //Add to error message
         $error = 1;

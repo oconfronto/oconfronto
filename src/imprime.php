@@ -36,7 +36,7 @@ if ($user['voc'] == 'archer') {
 }
 
 
-function LoadPNG($imgname)
+function LoadPNG($imgname): \GdImage|false
 {
 	$im = @imagecreatefrompng($imgname); /* Attempt to open */
 	if (!$im || !$_GET['id']) { /* See if it failed */
@@ -62,11 +62,11 @@ if ($user['voc'] == 'archer') {
 	$color = imagecolorallocate($img, 255, 255, 255);
 }
 
-imagestring($img, 2, 10, 135, $domain, $color);
+imagestring($img, 2, 10, 135, (string) $domain, $color);
 
 
-imagettftext($img, 15, 0, 63, 30, $color, "font.ttf", ucfirst($user['username']));
-imagettftext($img, 15, 0, 59, 60, $color, "font.ttf", $user['level']);
+imagettftext($img, 15, 0, 63, 30, $color, "font.ttf", ucfirst((string) $user['username']));
+imagettftext($img, 15, 0, 59, 60, $color, "font.ttf", (string) $user['level']);
 
 if ($user['guild'] == NULL || $user['guild'] == '') {
 	$gangue = "nenhum";
@@ -74,8 +74,8 @@ if ($user['guild'] == NULL || $user['guild'] == '') {
 	$gangue = $db->GetOne("select `name` from `guilds` where `id`=?", [$user['guild']]);
 }
 
-imagettftext($img, 15, 0, 48, 90, $color, "font.ttf", $gangue);
-imagettftext($img, 15, 0, 83, 120, $color, "font.ttf", $voca);
+imagettftext($img, 15, 0, 48, 90, $color, "font.ttf", (string) $gangue);
+imagettftext($img, 15, 0, 83, 120, $color, "font.ttf", (string) $voca);
 
 
 

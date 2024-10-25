@@ -169,7 +169,7 @@ switch ($_GET['act']) {
 		if ($checkdDungeon != null && $checkdDungeon != 0) {
 			$getDungeonMonsters = $db->execute("select `monsters` from `dungeon` where `id`=?", [$checkdDungeon]);
 			if ($getDungeonMonsters->recordcount() > 0) {
-				$splitDungeonMosters = explode(", ", $getDungeonMonsters);
+				$splitDungeonMosters = explode(", ", (string) $getDungeonMonsters);
 				$dungeonSaveStatus = $db->getone("select `status` from `dungeon_status` where `status`<90 and `fail`=0 and `player_id`=?", [$player->id]);
 				$dungeonMonsterId = $splitDungeonMosters[$dungeonSaveStatus];
 				if (preg_replace('/\D+/', '', $splitDungeonMosters[$dungeonSaveStatus]) == $enemy->id) {

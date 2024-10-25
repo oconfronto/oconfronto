@@ -38,7 +38,7 @@ $category=$_POST['category'];
 $detail=$_POST['detail'];
 $datetime=date("d/m/y H:i:s");
 
-$notavel=strip_tags($detail);
+$notavel=strip_tags((string) $detail);
 $texto=nl2br($notavel);
 
 

@@ -60,18 +60,18 @@ if ($player->gm_rank <= $user2['gm_rank']){
 
 if ($_POST['days'] > 998){
 $ban = $db->execute("update `players` set `alerts`=? where `id`=?", ["forever", $_GET['player']]);
-	$logmsg = "Você foi banido do fórum permanentemente.<br/><b>Motivo:</b> " . strip_tags($_POST['motivo']) . "";
+	$logmsg = "Você foi banido do fórum permanentemente.<br/><b>Motivo:</b> " . strip_tags((string) $_POST['motivo']) . "";
 }else{
 $tempo = time();
 $dias = ceil($_POST['days'] * 86400);
 $totaldias = ceil($tempo + $dias);
 $ban = $db->execute("update `players` set `alerts`=? where `id`=?", [$totaldias, $_GET['player']]);
-	$logmsg = "Você foi banido do fórum por " . strip_tags($_POST['days']) . " dias.<br/><b>Motivo:</b> " . strip_tags($_POST['motivo']) . "";
+	$logmsg = "Você foi banido do fórum por " . strip_tags((string) $_POST['days']) . " dias.<br/><b>Motivo:</b> " . strip_tags((string) $_POST['motivo']) . "";
 }
 
 	addlog($_GET['player'], $logmsg, $db);
 
-	$logalert2 = "" . $user2['username'] . " foi banido do fórum por " . strip_tags($_POST['days']) . " dia(s) pelo moderador <b>" . $player->username . "</b><br/><b>Motivo:</b> " . strip_tags($_POST['motivo']) . "";
+	$logalert2 = "" . $user2['username'] . " foi banido do fórum por " . strip_tags((string) $_POST['days']) . " dia(s) pelo moderador <b>" . $player->username . "</b><br/><b>Motivo:</b> " . strip_tags((string) $_POST['motivo']) . "";
 	forumlog($logalert2, $db);
 
 	echo "" . $user2['username'] . " foi banido do fórum! <a href=\"select_forum.php\">Voltar</a>.";

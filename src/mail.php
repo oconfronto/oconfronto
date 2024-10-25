@@ -63,7 +63,7 @@ if ($_POST['sendmail'])
 		$insert['to'] = $sendto['id'];
 		$insert['from'] = $player->id;
 		$insert['body'] = $_POST['body'];
-		$insert['body'] = htmlentities($_POST['body'], ENT_QUOTES);
+		$insert['body'] = htmlentities((string) $_POST['body'], ENT_QUOTES);
 		$insert['subject'] = ($_POST['subject'] == "")?"Sem Assunto":$_POST['subject'];
 		$insert['time'] = time();
 		$query = $db->execute("insert into `mail` (`to`, `from`, `body`, `subject`, `time`) values (?, ?, ?, ?, ?)", [$insert['to'], $insert['from'], $insert['body'], $insert['subject'], $insert['time']]);
@@ -249,8 +249,8 @@ break;
                                 $mes_ano["Dec"] = "Dezembro";
 
 			echo '<tr><td width="20%"><b>Data:</b></td><td width="80%">' . date("d", $msg['time']) . " de " . $mes_ano[$mes] . " de " . date("Y, g:i A", $msg['time']) . "</td></tr>";
-			echo '<tr><td width="20%"><b>Assunto:</b></td><td width="80%">' . stripslashes($msg['subject']) . "</td></tr>";
-			echo '<tr><td width="20%"><b>Mensagem:</b></td><td width="80%">' . (new bbcode())->parse(stripslashes(nl2br($msg['body']))) . "</td></tr>";
+			echo '<tr><td width="20%"><b>Assunto:</b></td><td width="80%">' . stripslashes((string) $msg['subject']) . "</td></tr>";
+			echo '<tr><td width="20%"><b>Mensagem:</b></td><td width="80%">' . (new bbcode())->parse(stripslashes(nl2br((string) $msg['body']))) . "</td></tr>";
 			echo "</table>";
   			if ($player->id == $msg['to'] && $msg['status'] == "unread"){
 			$query = $db->execute("update `mail` set `status`='read' where `id`=?", [$msg['id']]);
@@ -262,8 +262,8 @@ break;
   			if ($player->id == $msg['to']){
 			echo "<form method=\"post\" action=\"mail.php?act=compose\">\n";
 			echo '<input type="hidden" name="to" value="' . showName($msg['from'], $db, "off", "off") . "\" />\n";
-			echo '<input type="hidden" name="subject" value="RE: ' . stripslashes($msg['subject']) . "\" />\n";
-			$reply = explode("\n", $msg['body']);
+			echo '<input type="hidden" name="subject" value="RE: ' . stripslashes((string) $msg['subject']) . "\" />\n";
+			$reply = explode("\n", (string) $msg['body']);
 			foreach($reply as $key=>$value)
 			{
 				$reply[$key] = ">>" . $value;
@@ -297,10 +297,10 @@ break;
 		echo ($_POST['to'] != "")?$_POST['to']:$_GET['to'];
 		echo "\" /></td></tr>\n";
 		echo '<tr><td width="20%"><b>Assunto:</b></td><td width="80%"><input type="text" name="subject" value="';
-		echo ($_POST['subject'] != "")?stripslashes($_POST['subject']):stripslashes($_GET['subject']);
+		echo ($_POST['subject'] != "")?stripslashes((string) $_POST['subject']):stripslashes((string) $_GET['subject']);
 		echo "\" /></td></tr>\n";
 		echo '<tr><td width="20%"><b>Mensagem:</b></td><td width="80%"><textarea name="body" rows="15" cols="50">';
-		echo ($_POST['body'] != "")?stripslashes(stripslashes($_POST['body'])):stripslashes(stripslashes($_GET['body']));
+		echo ($_POST['body'] != "")?stripslashes(stripslashes((string) $_POST['body'])):stripslashes(stripslashes((string) $_GET['body']));
 		echo "</textarea></td></tr>\n";
 		echo "<tr><td></td><td><input type=\"submit\" value=\"Enviar Mensagem\" name=\"sendmail\" /></td></tr>\n";
 		echo "</table>\n";
@@ -406,7 +406,7 @@ break;
 				echo "</td>\n";
 
 				echo '<td width="40%" style="vertical-align: middle;">';
-				echo '<a href="mail.php?act=read&id=' . $msg['id'] . '">' . stripslashes($msg['subject']) . "</a>";
+				echo '<a href="mail.php?act=read&id=' . $msg['id'] . '">' . stripslashes((string) $msg['subject']) . "</a>";
 				echo "</td>\n";
 
                                 $mes = date("M", $msg['time']);
@@ -471,7 +471,7 @@ break;
 
 				echo '<td width="35%" style="vertical-align: middle;">';
 				echo ($msg['status'] == "unread")?"<b>":"";
-				echo '<a href="mail.php?act=read&id=' . $msg['id'] . '">' . stripslashes($msg['subject']) . "</a>";
+				echo '<a href="mail.php?act=read&id=' . $msg['id'] . '">' . stripslashes((string) $msg['subject']) . "</a>";
 				echo ($msg['status'] == "unread")?"</b>":"";
 				echo "</td>\n";
 

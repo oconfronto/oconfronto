@@ -29,7 +29,7 @@ if ($_POST['register']) {
 	$rep[0] = "";
 	$rep[1] = " ";
 	$rep[2] = "";
-	$nomedeusuari0 = ucwords(preg_replace($pat, $rep, strtolower($_POST['username'])));
+	$nomedeusuari0 = ucwords((string) preg_replace($pat, (string) $rep, strtolower((string) $_POST['username'])));
 
 	//Check if username has already been used
 	$query = $db->execute("select `id` from `players` where `username`=?", [$nomedeusuari0]);
@@ -49,7 +49,7 @@ if ($_POST['register']) {
 		$error = 1;
 		//Set error check
 		$erro1 = 1;
-	} elseif (!preg_match("/^[A-Za-z[:space:]\-]+$/", $_POST['username'])) {
+	} elseif (preg_match("/^[A-Za-z[:space:]\-]+$/", (string) $_POST['username']) === 0 || preg_match("/^[A-Za-z[:space:]\-]+$/", (string) $_POST['username']) === false) {
 		//If username contains illegal characters...
 		$msg1 .= "Seu nome de usuário não pode conter <b>números</b> ou <b>caracteres especiais</b>!<br />\n";
 		//Add to error message
@@ -83,8 +83,8 @@ if ($_POST['register']) {
 		$rep[0] = "";
 		$rep[1] = " ";
 		$rep[2] = "";
-		$nomedeusuario = ucwords(preg_replace($pat, $rep, strtolower($_POST['username'])));
-		$nomedeusuario2 = ucwords(strtolower($_POST['username']));
+		$nomedeusuario = ucwords((string) preg_replace($pat, (string) $rep, strtolower((string) $_POST['username'])));
+		$nomedeusuario2 = ucwords(strtolower((string) $_POST['username']));
 
 		$checkvip = $db->execute("select `vip` from `players` where `acc_id`=? and `vip`>? limit 1", [$acc->id, time()]);
 		if ($checkvip->recordcount() > 0) {

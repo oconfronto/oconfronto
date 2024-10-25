@@ -19,10 +19,10 @@ function displayItem($db, $player, $itemType): void {
             echo '&nbsp;';
         } else {
             while ($showeditexs = $showitenx->fetchrow()) {
-                $showitfor2 = $showeditexs['for'] > 0 ? "+<font color=gray>" . htmlspecialchars($showeditexs['for']) . " For</font><br/>" : "";
-                $showitvit2 = $showeditexs['vit'] > 0 ? "+<font color=green>" . htmlspecialchars($showeditexs['vit']) . " Vit</font><br/>" : "";
-                $showitagi2 = $showeditexs['agi'] > 0 ? "+<font color=blue>" . htmlspecialchars($showeditexs['agi']) . " Agi</font><br/>" : "";
-                $showitres2 = $showeditexs['res'] > 0 ? "+<font color=red>" . htmlspecialchars($showeditexs['res']) . " Res</font>" : "";
+                $showitfor2 = $showeditexs['for'] > 0 ? "+<font color=gray>" . htmlspecialchars((string) $showeditexs['for']) . " For</font><br/>" : "";
+                $showitvit2 = $showeditexs['vit'] > 0 ? "+<font color=green>" . htmlspecialchars((string) $showeditexs['vit']) . " Vit</font><br/>" : "";
+                $showitagi2 = $showeditexs['agi'] > 0 ? "+<font color=blue>" . htmlspecialchars((string) $showeditexs['agi']) . " Agi</font><br/>" : "";
+                $showitres2 = $showeditexs['res'] > 0 ? "+<font color=red>" . htmlspecialchars((string) $showeditexs['res']) . " Res</font>" : "";
 
                 $itemClass = 'bg_item1';
                 if ($showeditexs['item_bonus'] > 9) {
@@ -41,7 +41,7 @@ function displayItem($db, $player, $itemType): void {
 
                 echo sprintf("<div class='%s'>", $itemClass);
                 echo sprintf('<div title="header=[%s] body=[%s]">', $showitname, $showitinfo);
-                echo '<img src="static/images/itens/' . htmlspecialchars($showeditexs['img']) . '"/>';
+                echo '<img src="static/images/itens/' . htmlspecialchars((string) $showeditexs['img']) . '"/>';
                 echo "</div></div>";
             }
         }

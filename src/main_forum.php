@@ -45,7 +45,7 @@ if ($_GET['success'] == 'true'){
 }
 
 
-echo "<b><font size=\"1\"><a href=\"select_forum.php\">Fóruns</a> -> <a href=\"main_forum.php?cat=" . $cate . '">' . ucfirst($categoria) . "</a></font></b>";
+echo "<b><font size=\"1\"><a href=\"select_forum.php\">Fóruns</a> -> <a href=\"main_forum.php?cat=" . $cate . '">' . ucfirst((string) $categoria) . "</a></font></b>";
 
 
 if (isset($_GET['page']) && is_numeric($_GET['page']) && ($page = $_GET['page'])) {
@@ -101,7 +101,7 @@ if ($aux['total'] > 0) {
 			$pagenumber = 1;
 		}
   
-		echo '<b><a href="view_topic.php?page=' . $pagenumber . "&id=" . $rows['id'] . '">' . textLimit(stripslashes($rows['topic']), 75) . "</a></b><br />";
+		echo '<b><a href="view_topic.php?page=' . $pagenumber . "&id=" . $rows['id'] . '">' . textLimit(stripslashes((string) $rows['topic']), 75) . "</a></b><br />";
 
 			if ($rows['reply'] > 0){
 			$lastpostid = $db->GetOne("select SQL_CACHE `a_user_id` from `forum_answer` where `question_id`=? order by `a_datetime` DESC", [$rows['id']]);

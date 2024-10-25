@@ -71,7 +71,7 @@ if ($_GET['estender']) {
     		$magia = $magic->fetchrow();
 
 		if ($magia['precisa'] != 'f'){
-			$nescecita = explode (", ", $magia['precisa']);
+			$nescecita = explode (", ", (string) $magia['precisa']);
 			$verifica1 = $db->execute("select * from `magias` where `magia_id`=? and `player_id`=?", [$nescecita[0], $player->id]);
 			$verifica2 = $db->execute("select * from `magias` where `magia_id`=? and `player_id`=?", [$nescecita[1], $player->id]);
 			$verifica3 = $db->execute("select * from `magias` where `magia_id`=? and `player_id`=?", [$nescecita[2], $player->id]);

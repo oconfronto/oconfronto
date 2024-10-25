@@ -178,7 +178,7 @@ elseif ($msgtype == 3 && $messaged === 0){
   			}
  }
 
-	if (strstr($_SERVER["HTTP_USER_AGENT"], "MSIE") && $sorteia == 7) {
+	if (strstr((string) $_SERVER["HTTP_USER_AGENT"], "MSIE") && $sorteia == 7) {
      echo "Seu navegador pode não suportar o jogo. Experimente Firefox ou Chrome.";
      $messaged = 1;
  }

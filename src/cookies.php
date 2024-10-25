@@ -20,7 +20,7 @@ declare(strict_types=1);
 //print_r($array);
 
 //setcookie("battlelog", implode("+",array()), time()+3600);
-$battlelog = explode("+",$_COOKIE["battlelog"]);
+$battlelog = explode("+",(string) $_COOKIE["battlelog"]);
 array_unshift($battlelog, "atacou blablabla");
 print_r($battlelog);
 

@@ -51,14 +51,14 @@ if ($_GET['answer']) {
   			
   
   			$db->execute("update `players` set `alerts`=`alerts`+? where `id`=?", [$_POST['days'], $usuario['id']]);
-  			$logmsg = "Você foi alertado no fórum em " . strip_tags($_POST['days']) . "%.<br/><b>Motivo:</b> " . strip_tags($_POST['motivo']) . "";
+  			$logmsg = "Você foi alertado no fórum em " . strip_tags((string) $_POST['days']) . "%.<br/><b>Motivo:</b> " . strip_tags((string) $_POST['motivo']) . "";
   			addlog($usuario['id'], $logmsg, $db);
   
-  			$logmsg = "" . showName($usuario['id'], $db, 'off', 'off') . " foi alertado em " . strip_tags($_POST['days']) . "% pelo moderador <b>" . $player->username . "</b><br/><b>Motivo:</b> " . strip_tags($_POST['motivo']) . "";
+  			$logmsg = "" . showName($usuario['id'], $db, 'off', 'off') . " foi alertado em " . strip_tags((string) $_POST['days']) . "% pelo moderador <b>" . $player->username . "</b><br/><b>Motivo:</b> " . strip_tags((string) $_POST['motivo']) . "";
   			forumlog($logmsg, $db, 2, $_GET['answer']);
   
   			include(__DIR__ . "/templates/private_header.php");
-  			echo "" . showName($usuario['id'], $db, 'off') . " foi alertado em " . strip_tags($_POST['days']) . '%! <a href="view_topic.php?id=' . $postagem['question_id'] . '">Voltar</a>.';
+  			echo "" . showName($usuario['id'], $db, 'off') . " foi alertado em " . strip_tags((string) $_POST['days']) . '%! <a href="view_topic.php?id=' . $postagem['question_id'] . '">Voltar</a>.';
   			include(__DIR__ . "/templates/private_footer.php");
   			exit;
   
@@ -114,14 +114,14 @@ if ($_GET['topic']) {
   
   
   			$db->execute("update `players` set `alerts`=`alerts`+? where `id`=?", [$_POST['days'], $usuario['id']]);
-  			$logmsg = "Você foi alertado no fórum em " . strip_tags($_POST['days']) . "%.<br/><b>Motivo:</b> " . strip_tags($_POST['motivo']) . "";
+  			$logmsg = "Você foi alertado no fórum em " . strip_tags((string) $_POST['days']) . "%.<br/><b>Motivo:</b> " . strip_tags((string) $_POST['motivo']) . "";
   			addlog($usuario['id'], $logmsg, $db);
   
-  			$logmsg = "" . showName($usuario['id'], $db, 'off', 'off') . " foi alertado em " . strip_tags($_POST['days']) . "% pelo moderador <b>" . $player->username . "</b><br/><b>Motivo:</b> " . strip_tags($_POST['motivo']) . "";
+  			$logmsg = "" . showName($usuario['id'], $db, 'off', 'off') . " foi alertado em " . strip_tags((string) $_POST['days']) . "% pelo moderador <b>" . $player->username . "</b><br/><b>Motivo:</b> " . strip_tags((string) $_POST['motivo']) . "";
   			forumlog($logmsg, $db, 1, $_GET['topic']);
   
   			include(__DIR__ . "/templates/private_header.php");
-  			echo "" . showName($usuario['id'], $db, 'off') . " foi alertado em " . strip_tags($_POST['days']) . '%! <a href="view_topic.php?id=' . $postagem['id'] . '">Voltar</a>.';
+  			echo "" . showName($usuario['id'], $db, 'off') . " foi alertado em " . strip_tags((string) $_POST['days']) . '%! <a href="view_topic.php?id=' . $postagem['id'] . '">Voltar</a>.';
   			include(__DIR__ . "/templates/private_footer.php");
   			exit;
   

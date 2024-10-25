@@ -47,7 +47,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
      				addlog($vice, $logmsg, $db);
      			}
         
-        $array1 = explode(", ",$war['players_guild']);
+        $array1 = explode(", ",(string) $war['players_guild']);
         foreach ($array1 as $gplayer) {
          				$logmsg = "O pedido de guerra contra o clã <b>" . $warguild['name'] . "</b> foi retirado.";
      				addlog($gplayer, $logmsg, $db);

@@ -352,8 +352,8 @@ switch($_GET['act'])
 
 			echo "</select></th>";
 
-			$fromprice = isset($_GET['fromprice']) ? htmlspecialchars($_GET['fromprice']) : '';
-			$toprice = isset($_GET['toprice']) ? htmlspecialchars($_GET['toprice']) : '';
+			$fromprice = isset($_GET['fromprice']) ? htmlspecialchars((string) $_GET['fromprice']) : '';
+			$toprice = isset($_GET['toprice']) ? htmlspecialchars((string) $_GET['toprice']) : '';
 
 			echo sprintf('<th width="35%%">Preço de: <input type="text" name="fromprice" size="4" value="%s" /> á  <input type="text" name="toprice" size="5" value="%s" /></th>', $fromprice, $toprice);
 

@@ -27,7 +27,7 @@ if ($_POST['upload'] && $_FILES["foto"]) {
     // Formulário postado... executa as ações
     if ($arquivo) {
         // Verifica se o mime-type do arquivo é de imagem
-        if (!@GetImageSize($arquivo["tmp_name"]) || !preg_match("/^image\/(gif|bmp|png|jpg|jpeg)$/i", $arquivo["type"])) {
+        if (@GetImageSize($arquivo["tmp_name"]) === [] || @GetImageSize($arquivo["tmp_name"]) === false || (preg_match("/^image\/(gif|bmp|png|jpg|jpeg)$/i", (string) $arquivo["type"]) === 0 || preg_match("/^image\/(gif|bmp|png|jpg|jpeg)$/i", (string) $arquivo["type"]) === false)) {
             $erro[] = "<span style=\"color: white; border: solid 1px ; background: red;\">Arquivo em formato inválido!</span><br/>- A imagem deve ser jpg, jpeg, png, bmp ou gif.";
         } else {
             // Verifica tamanho do arquivo
@@ -59,7 +59,7 @@ if ($_POST['upload'] && $_FILES["foto"]) {
         // Verificaçãoo de dados OK, nenhum erro ocorrido, executa então o upload...
         else {
             // Pega extensão do arquivo
-            preg_match("/\.(gif|bmp|png|jpg|jpeg){1}$/i", $arquivo["name"], $ext);
+            preg_match("/\.(gif|bmp|png|jpg|jpeg){1}$/i", (string) $arquivo["name"], $ext);
 
 
             // Gera um nome único para a imagem

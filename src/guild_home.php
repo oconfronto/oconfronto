@@ -91,7 +91,7 @@ echo '<table width="100%">';
 	echo "<td><table width=\"100%\" class=\"brown\" style='background:#ffe8aa;'>";
   	echo "<tr>";
     		echo '<td class="salmon">';
-			$descrikon = stripslashes($guild['blurb']);
+			$descrikon = stripslashes((string) $guild['blurb']);
             $descrikon = $bbcode->parse($descrikon);
 			echo textLimit($descrikon, 5000, 125);
 		echo "</td>";

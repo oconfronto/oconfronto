@@ -17,7 +17,7 @@ include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
 
 $username = ($_POST['username']);
-$password = strtolower($_POST['passcode']);
+$password = strtolower((string) $_POST['passcode']);
 $amount = ($_POST['amount']);
 
 if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['passcode']) && ($_POST['submit'])) {

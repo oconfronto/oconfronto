@@ -49,7 +49,7 @@ define("RECAPTCHA_VERIFY_SERVER", "www.google.com");
 function _recaptcha_qsencode ($data): string {
         $req = "";
         foreach ( $data as $key => $value )
-                $req .= $key . '=' . urlencode( stripslashes($value) ) . '&';
+                $req .= $key . '=' . urlencode( stripslashes((string) $value) ) . '&';
 
         // Cut the last '&'
         $req=substr($req,0,strlen($req)-1);
@@ -174,7 +174,7 @@ function recaptcha_check_answer ($privkey, $remoteip, $challenge, array $respons
                                           ['privatekey' => $privkey, 'remoteip' => $remoteip, 'challenge' => $challenge, 'response' => $response] + $extra_params
                                           );
 
-        $answers = explode ("\n", $response [1]);
+        $answers = explode ("\n", (string) $response [1]);
         $recaptcha_response = new ReCaptchaResponse();
 
         if (trim ($answers [0]) === 'true') {
@@ -202,8 +202,8 @@ function recaptcha_get_signup_url ($domain = null, $appname = null): string {
 
 function _recaptcha_aes_pad($val): string {
 	$block_size = 16;
-	$numpad = $block_size - (strlen ($val) % $block_size);
-	return str_pad($val, strlen ($val) + $numpad, chr($numpad));
+	$numpad = $block_size - (strlen ((string) $val) % $block_size);
+	return str_pad((string) $val, strlen ((string) $val) + $numpad, chr($numpad));
 }
 
 /* Mailhide related code */
@@ -221,7 +221,7 @@ function _recaptcha_aes_encrypt($val,$ky) {
 
 
 function _recaptcha_mailhide_urlbase64 ($x): string {
-	return strtr(base64_encode ($x), '+/', '-_');
+	return strtr(base64_encode ((string) $x), '+/', '-_');
 }
 
 /* gets the reCAPTCHA Mailhide url for a given email, public key and private key */
@@ -244,7 +244,7 @@ function recaptcha_mailhide_url(?string $pubkey, $privkey, $email): string {
  * the email is then displayed as john...@example.com
  */
 function _recaptcha_mailhide_email_parts ($email) {
-	$arr = preg_split("/@/", $email );
+	$arr = preg_split("/@/", (string) $email );
 
 	if (strlen ($arr[0]) <= 4) {
      $arr[0] = substr ($arr[0], 0, 1);
@@ -267,8 +267,8 @@ function recaptcha_mailhide_html($pubkey, $privkey, $email): string {
 	$emailparts = _recaptcha_mailhide_email_parts ($email);
 	$url = recaptcha_mailhide_url ($pubkey, $privkey, $email);
 	
-	return htmlentities($emailparts[0]) . "<a href='" . htmlentities ($url) .
-		"' onclick=\"window.open('" . htmlentities ($url) . "', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;\" title=\"Reveal this e-mail address\">...</a>@" . htmlentities ($emailparts [1]);
+	return htmlentities((string) $emailparts[0]) . "<a href='" . htmlentities ($url) .
+		"' onclick=\"window.open('" . htmlentities ($url) . "', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;\" title=\"Reveal this e-mail address\">...</a>@" . htmlentities ((string) $emailparts [1]);
 
 }
 

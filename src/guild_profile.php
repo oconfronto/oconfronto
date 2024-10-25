@@ -147,7 +147,7 @@ echo '<div id="tab1" class="tab_content">';
 		if ($guild['blurb'] == NULL || $guild['blurb'] == '') {
 			echo "Sem descrição.";
 		} else {
-			$descrikon = stripslashes($guild['blurb']);
+			$descrikon = stripslashes((string) $guild['blurb']);
 			$descrikon = $bbcode->parse($descrikon);
 			echo textLimit($descrikon, 5000, 105);
 		}

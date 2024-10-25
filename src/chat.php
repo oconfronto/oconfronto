@@ -66,9 +66,9 @@ EOD;
 	foreach ($_SESSION['openChatBoxes'] as $chatbox => $time) {
 		if (!isset($_SESSION['tsChatBoxes'][$chatbox])) {
 
-			$now = time() - strtotime($time);
+			$now = time() - strtotime((string) $time);
 
-                                $mes = date("M", strtotime($time));
+                                $mes = date("M", strtotime((string) $time));
                                 $mes_ano["Jan"] = "Jan";
                                 $mes_ano["Feb"] = "Fev";
                                 $mes_ano["Mar"] = "Mar";
@@ -82,7 +82,7 @@ EOD;
                                 $mes_ano["Nov"] = "Nov";
                                 $mes_ano["Dec"] = "Dez";
 
-			$message = "Enviado em " . date('d', strtotime($time)) . " " . $mes_ano[$mes] . ", " . date('g:i A', strtotime($time)) . "";
+			$message = "Enviado em " . date('d', strtotime((string) $time)) . " " . $mes_ano[$mes] . ", " . date('g:i A', strtotime((string) $time)) . "";
             
 			if ($now > (10800 + 240)) {
 				$items .= <<<EOD
@@ -206,7 +206,7 @@ function closeChat(): void {
 }
 
 function sanitize($text): string {
-	$text = htmlspecialchars($text, ENT_QUOTES);
+	$text = htmlspecialchars((string) $text, ENT_QUOTES);
 	$text = str_replace("\n\r","\n",$text);
 	$text = str_replace("\r\n","\n",$text);
 	return str_replace("\n","<br>",$text);

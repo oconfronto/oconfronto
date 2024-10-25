@@ -22,7 +22,7 @@ while($member = $query->fetchrow())
     $numero += 1;
     }
     
-	echo strtolower($member['email']);
+	echo strtolower((string) $member['email']);
 }
 
     echo $query->recordcount();

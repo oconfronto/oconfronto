@@ -810,7 +810,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0)
     
             echo '<div id="logdebatalha" class="scroll" style="background-color:#FFFDE0; overflow: auto; height:220px; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
             foreach ($duellog as $log){
-                $log = explode(", ", $log);
+                $log = explode(", ", (string) $log);
                 if ($log[1] == $player->username) { 
                     echo '<div style="text-align: left">';
                     $lado = 1;

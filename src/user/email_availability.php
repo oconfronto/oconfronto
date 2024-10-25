@@ -8,9 +8,9 @@ $query = $db->execute("Select `id` from `accounts` where `email`=?", [$email]);
 if ($query->recordcount() > 0) {
     //Username already exist
     echo "no";
-} elseif (!preg_match("/^[-!#$%&\'*+\\.\/0-9=?A-Z^_`{|}~]+@([-0-9A-Z]+\.)+([0-9A-Z]){2,4}$/i", $email)) {
+} elseif (preg_match("/^[-!#$%&\'*+\\.\/0-9=?A-Z^_`{|}~]+@([-0-9A-Z]+\.)+([0-9A-Z]){2,4}$/i", (string) $email) === 0 || preg_match("/^[-!#$%&\'*+\\.\/0-9=?A-Z^_`{|}~]+@([-0-9A-Z]+\.)+([0-9A-Z]){2,4}$/i", (string) $email) === false) {
     echo "no";
-} elseif (strlen($email) < 5) {
+} elseif (strlen((string) $email) < 5) {
     echo "no";
 } else{
 echo "yes";

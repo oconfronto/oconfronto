@@ -32,13 +32,13 @@ if ($_POST['submit']) {
     } elseif ($_POST['emaill'] != $_POST['emaill2']) {
         $errmsg .= "Você não digitou os dois emails corretamente!";
         $error = 1;
-    } elseif (strlen($_POST['emaill']) < 3) {
+    } elseif (strlen((string) $_POST['emaill']) < 3) {
         $errmsg .= "O seu endereço de email deve conter mais de 5 caracteres.";
         $error = 1;
-    } elseif (strlen($_POST['emaill']) > 200) {
+    } elseif (strlen((string) $_POST['emaill']) > 200) {
         $errmsg .= "O seu endereço de email deve conter menos de 200 caracteres.";
         $error = 1;
-    } elseif (!preg_match("/^[-!#$%&\'*+\\.\/0-9=?A-Z^_`{|}~]+@([-0-9A-Z]+\.)+([0-9A-Z]){2,4}$/i", $_POST['emaill'])) {
+    } elseif (preg_match("/^[-!#$%&\'*+\\.\/0-9=?A-Z^_`{|}~]+@([-0-9A-Z]+\.)+([0-9A-Z]){2,4}$/i", (string) $_POST['emaill']) === 0 || preg_match("/^[-!#$%&\'*+\\.\/0-9=?A-Z^_`{|}~]+@([-0-9A-Z]+\.)+([0-9A-Z]){2,4}$/i", (string) $_POST['emaill']) === false) {
         $errmsg .= "O formato do seu email é inválido!";
         $error = 1;
     } else {

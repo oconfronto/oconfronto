@@ -14,7 +14,7 @@ if ($_POST['submit']) {
     if ((!$_POST['rlname'] | !$_POST['showmail'] | !$_POST['remember'] | !$_POST['sex']) !== 0) {
         $errmsg .= "Por favor preencha todos os campos!";
         $error = 1;
-    } elseif (strlen($_POST['rlname']) < 3) {
+    } elseif (strlen((string) $_POST['rlname']) < 3) {
         $errmsg .= "Seu nome deve ter mais que três caracteres!";
         $error = 1;
     } elseif ($_POST['showmail'] != 1 && $_POST['showmail'] != 2) {

@@ -27,7 +27,7 @@ if ($_POST['changepassword']) {
     } elseif ($_POST['password'] != $_POST['password2']) {
         $errmsg .= "Você não digitou as duas senhas corretamente!";
         $error = 1;
-    } elseif (strlen($_POST['password']) < 4) {
+    } elseif (strlen((string) $_POST['password']) < 4) {
         $errmsg .= "Sua senha deve ter mais que 3 caracteres.";
         $error = 1;
     }

@@ -69,7 +69,7 @@ if ($_POST['upload']) {
     if (!$_POST['guild_admin']) {
         $errmsg .= "Por favor preencha todos os campos!";
         $error = 1;
-    } elseif ($_POST['guild_admin'] && !@GetImageSize($_POST['guild_admin'])) {
+    } elseif ($_POST['guild_admin'] && (@GetImageSize($_POST['guild_admin']) === [] || @GetImageSize($_POST['guild_admin']) === false)) {
         $errmsg .= "O endereço desta imagem não é válido!";
         $error = 1;
     }
@@ -99,12 +99,12 @@ if ($_POST['upload']) {
 // }
 //If motd set then update query
 if (isset($_POST['motd']) && ($_POST['submit'])) {
-    if (strlen($_POST['motd']) < 3) {
+    if (strlen((string) $_POST['motd']) < 3) {
         $msg3 .= "<font color=\"red\">A mensagem do seu clã deve conter de 3 é 220 caracteres!</font><p />";
         $error = 1;
     } elseif ($_POST['motd'] == $guild['motd']) {
         $error = 1;
-    } elseif (strlen($_POST['motd']) > 220) {
+    } elseif (strlen((string) $_POST['motd']) > 220) {
         $msg3 .= "<font color=\"red\">A mensagem do seu clã deve conter de 3 é 220 caracteres!</font><p />";
         $error = 1;
     } else {
@@ -115,16 +115,16 @@ if (isset($_POST['motd']) && ($_POST['submit'])) {
 
 //If blurb set then update query
 if (isset($_POST['blurb']) && ($_POST['submit'])) {
-    if (strlen($_POST['blurb']) < 50) {
+    if (strlen((string) $_POST['blurb']) < 50) {
         $msg4 .= "<font color=\"red\">A descrição deve ser maior que 50 caracteres!</font><p />";
         $error = 1;
     } elseif ($_POST['blurb'] == $guild['blurb']) {
         $error = 1;
-    } elseif (strlen($_POST['blurb']) > 5000) {
+    } elseif (strlen((string) $_POST['blurb']) > 5000) {
         $msg4 .= "<font color=\"red\">A descrição deve ser menor que 5000 caracteres!</font><p />";
         $error = 1;
     } else {
-        $tirahtmldades = strip_tags($_POST['blurb']);
+        $tirahtmldades = strip_tags((string) $_POST['blurb']);
         $texto = nl2br($tirahtmldades);
 
 

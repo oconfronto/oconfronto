@@ -20,5 +20,6 @@ return RectorConfig::configure()
         SetList::NAMING,
         SetList::PRIVATIZATION,
         SetList::RECTOR_PRESET,
+        SetList::STRICT_BOOLEANS,
         SetList::TYPE_DECLARATION,
     ]);

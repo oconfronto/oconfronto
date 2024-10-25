@@ -218,9 +218,9 @@ include(__DIR__ . "/templates/acc-header.php");
             echo '<center><a href="login.php?id=' . $member['id'] . '"><img src="static/' . $member['avatar'] . '" alt="' . $member['username'] . '" width="85px" height="80px"/></a></center>';
             echo "</td></tr>";
             
-            if (strlen($member['username']) < 8) {
+            if (strlen((string) $member['username']) < 8) {
                 echo '<tr><td><center><b><font size="3px">' . $member['username'] . "</font></b></center></td></tr>";
-            } elseif (strlen($member['username']) < 12) {
+            } elseif (strlen((string) $member['username']) < 12) {
                 echo '<tr><td><center><b><font size="2px">' . $member['username'] . "</font></b></center></td></tr>";
             } else {
                 echo '<tr><td><center><b><font size="1px">' . $member['username'] . "</font></b></center></td></tr>";
@@ -245,9 +245,9 @@ include(__DIR__ . "/templates/acc-header.php");
                         echo '<center><a href="login.php?id=' . $member['id'] . '"><img src="static/' . $member['avatar'] . '" alt="' . $member['username'] . '" width="85px" height="80px"/></a></center>';
                     echo "</td></tr>";
 
-                    if (strlen($member['username']) < 8) {
+                    if (strlen((string) $member['username']) < 8) {
                         echo '<tr><td><center><b><font size="3px">' . $member['username'] . "</font></b></center></td></tr>";
-                    } elseif (strlen($member['username']) < 12) {
+                    } elseif (strlen((string) $member['username']) < 12) {
                         echo '<tr><td><center><b><font size="2px">' . $member['username'] . "</font></b></center></td></tr>";
                     } else {
                         echo '<tr><td><center><b><font size="1px">' . $member['username'] . "</font></b></center></td></tr>";
