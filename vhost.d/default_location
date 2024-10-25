@@ -1,6 +1,11 @@
+location = / {
+    return 301 $scheme://$host/index.php$is_args$args;
+}
+
 location / {
     root /app;
-    try_files $uri $uri/ /index.php?$query_string;
+    try_files $uri $uri/ /index.php$is_args$args;
+    index index.php;
 }
 
 location ~ \.php$ {
