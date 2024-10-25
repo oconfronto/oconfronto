@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Bem-Vindo!");
 $escolheper = 33;
 
-if ($setting->closed < time() && $_GET['beta'] != 'imjusttesting'){
+if ($setting->closed < time() && $_GET['beta'] != 'imjusttesting') {
 	echo time();
 	exit;
 }
@@ -33,4 +34,3 @@ echo '<td><a href="images/ss/ss4.png" rel="lightbox[screens]" title="Comunidade 
 echo "<td><a href=\"images/ss/ss5.png\" rel=\"lightbox[screens]\" title=\"Sistema de reinos, onde jogadores mais experientes poderão ser eleitos imperadores e realizar eventos no reino.\"><img src=\"static/images/ss/ss5.png\" width=\"128\" height=\"114\" border=\"2px\" alt=\"Trabalho\"/></a></td>";
 echo "</tr></table>";
 include(__DIR__ . "/templates/acc_footer.php");
-?>

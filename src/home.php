@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -48,7 +49,7 @@ if ($query2 = $db->execute(sprintf('select * from `items` where `player_id`= %s 
             while ($row2 = $query3->fetchrow()) {
                 $item_name = $row2['name'];
             }
-            
+
             echo showAlert("Você acaba de ganhar o Item <u>" . $item_name . " +" . $item_bonus . "</u> do Evento Convide Amigos, Parabéns !", "green");
             $db->execute("update `items` set `item_event`=? where `id`=? ", ['0', $id]);
         }
@@ -203,7 +204,7 @@ if ($magiascount->recordcount() < 11) {
     } else {
         echo '<img src="static/images/none.png" border="0px">';
     }
-    
+
     echo "</center>";
     echo "<center><font size=\"1px\">Estenda 2 pontos da sua mana<br/>máxima por 1 ponto místico.<br/><br/><b>Voc&ecirc; " . $player->magic_points . " tem ponto(s) místico(s).</b></font></center>";
 }
@@ -347,4 +348,3 @@ if ($totalon->recordcount() > $setting->user_record) {
 
 include(__DIR__ . "/templates/private_footer.php");
 exit;
-

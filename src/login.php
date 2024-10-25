@@ -1,14 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Login");
 $acc = check_acc($db);
 
-if (!$_GET['id'])
-{
-	header("Location: characters.php");
-	exit;
+if (!$_GET['id']) {
+    header("Location: characters.php");
+    exit;
 }
 
 $loginban = $db->GetOne("select `ban` from `players` where `id`=?", [$_GET['id']]);
@@ -32,4 +32,3 @@ if ($youracc->recordcount() != 1) {
 $_SESSION['Login']['player_id'] = $_GET['id'];
 header("Location: home.php");
 exit;
-?>

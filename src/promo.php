@@ -159,7 +159,7 @@ if ($setting->promo == "t") {
 			echo "</tr>\n";
 		}
 	}
- 
+
 	echo "</table>";
 	echo "</fieldset>";
 
@@ -197,5 +197,3 @@ echo "<br/>";
 echo '<a href="home.php">Voltar</a>.';
 include(__DIR__ . "/templates/private_footer.php");
 exit;
-
-?>

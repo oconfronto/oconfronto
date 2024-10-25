@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 $selectmana = $db->GetOne("select `mana` from `blueprint_magias` where `id`=3");
@@ -22,13 +23,12 @@ if ($fastmagia == 1) {
     $totalpak += $porcento;
 }
 
-	if (($bixo->hp - $totalpak) < 1){
-		$bixo->hp = 0;
-		$matou = 5;
-	}else{
-		$bixo->hp -= $totalpak;
-	}
+if (($bixo->hp - $totalpak) < 1) {
+    $bixo->hp = 0;
+    $matou = 5;
+} else {
+    $bixo->hp -= $totalpak;
+}
 
-		$player->mana -= $mana;
-		array_unshift($_SESSION['battlelog'], "3, Você deu um ataque duplo n" . $enemy->prepo . " " . $enemy->username . " e tirou " . $totalpak . " de vida.");
-?>
+$player->mana -= $mana;
+array_unshift($_SESSION['battlelog'], "3, Você deu um ataque duplo n" . $enemy->prepo . " " . $enemy->username . " e tirou " . $totalpak . " de vida.");

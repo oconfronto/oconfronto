@@ -21,10 +21,8 @@ if ($player->gm_rank < 3) {
 
 $user = $db->execute("select `username`, `gm_rank` from `players` where `id`=?", [$_GET['player']]);
 if ($user->recordcount() == 0) {
-		echo "Este usuário não existe! <a href=\"select_forum.php\">Voltar</a>.";
-	}
+    echo "Este usuário não existe! <a href=\"select_forum.php\">Voltar</a>.";
+}
 
 include(__DIR__ . "/templates/private_footer.php");
 exit;
-
-?>

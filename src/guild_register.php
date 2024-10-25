@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*************************************/
@@ -39,19 +40,19 @@ if ($player->gold < $goldcost) {
 
 if ($_POST['register']) {
 
-$msg1 = '<font color="red">';
-$msg2 = '<font color="red">';
-$msg3 = '<font color="red">';
+    $msg1 = '<font color="red">';
+    $msg2 = '<font color="red">';
+    $msg3 = '<font color="red">';
 
     $query = $db->execute("select `id` from `guilds` where `name`=? and `serv`=?", [$_POST['name'], $player->serv]);
 
-		$pat[0] = "/^\s+/";
-		$pat[1] = "/\s{2,}/";
-		$pat[2] = "/\s+\$/";
-		$rep[0] = "";
-		$rep[1] = " ";
-		$rep[2] = "";
-		$nomedecla = ucwords(preg_replace($pat,(string) $rep,(string) $_POST['name']));
+    $pat[0] = "/^\s+/";
+    $pat[1] = "/\s{2,}/";
+    $pat[2] = "/\s+\$/";
+    $rep[0] = "";
+    $rep[1] = " ";
+    $rep[2] = "";
+    $nomedecla = ucwords(preg_replace($pat, (string) $rep, (string) $_POST['name']));
 
     $query2 = $db->execute("select `id` from `guilds` where `name`=? and `serv`=?", [$nomedecla, $player->serv]);
 
@@ -109,45 +110,44 @@ $msg3 = '<font color="red">';
         $error = 1;
     }
 
-if ($error == 0) {
-		$pat[0] = "/^\s+/";
-		$pat[1] = "/\s{2,}/";
-		$pat[2] = "/\s+\$/";
-		$rep[0] = "";
-		$rep[1] = " ";
-		$rep[2] = "";
-		$nomedecla = ucwords(preg_replace($pat,(string) $rep,(string) $_POST['name']));
+    if ($error == 0) {
+        $pat[0] = "/^\s+/";
+        $pat[1] = "/\s{2,}/";
+        $pat[2] = "/\s+\$/";
+        $rep[0] = "";
+        $rep[1] = " ";
+        $rep[2] = "";
+        $nomedecla = ucwords(preg_replace($pat, (string) $rep, (string) $_POST['name']));
 
-    $insert['name'] = $nomedecla;
-    $insert['tag'] = $_POST['tag'];
-    $insert['leader'] = $player->username;
-    $tirahtmldades = strip_tags((string) $_POST['blurb']);
-    $texto = nl2br($tirahtmldades);
+        $insert['name'] = $nomedecla;
+        $insert['tag'] = $_POST['tag'];
+        $insert['leader'] = $player->username;
+        $tirahtmldades = strip_tags((string) $_POST['blurb']);
+        $texto = nl2br($tirahtmldades);
 
-    $insert['reino'] = $player->reino;
-    $insert['blurb'] = $texto;
-    $insert['pagopor'] = (time() + 950400);
-    $insert['registered'] = time();
-    $insert['serv'] = $player->serv;
-    $query = $db->autoexecute('guilds', $insert, 'INSERT');
-    
+        $insert['reino'] = $player->reino;
+        $insert['blurb'] = $texto;
+        $insert['pagopor'] = (time() + 950400);
+        $insert['registered'] = time();
+        $insert['serv'] = $player->serv;
+        $query = $db->autoexecute('guilds', $insert, 'INSERT');
+
         $insertid = $db->Insert_ID();
         $query = $db->execute("update `players` set `guild`=?, `gold`=? where `id`=?", [$insertid, $player->gold - $goldcost, $player->id]);
-        
-	include(__DIR__ . "/templates/private_header.php");
-	echo "<fieldset><legend><b>Clãs</b></legend>\n";
-	echo "Parabéns! Você acaba de criar um novo clã!";
-	echo "</fieldset>\n";
-	echo '<a href="guild_listing.php">Voltar</a>.';
-	include(__DIR__ . "/templates/private_footer.php");
-	exit;
-	}
 
-//Username error
-$msg1 .= "</font>";
-$msg2 .= "</font>";
-$msg3 .= "</font>";
+        include(__DIR__ . "/templates/private_header.php");
+        echo "<fieldset><legend><b>Clãs</b></legend>\n";
+        echo "Parabéns! Você acaba de criar um novo clã!";
+        echo "</fieldset>\n";
+        echo '<a href="guild_listing.php">Voltar</a>.';
+        include(__DIR__ . "/templates/private_footer.php");
+        exit;
+    }
 
+    //Username error
+    $msg1 .= "</font>";
+    $msg2 .= "</font>";
+    $msg3 .= "</font>";
 }
 
 
@@ -156,43 +156,51 @@ include(__DIR__ . "/templates/private_header.php");
 <script type="text/javascript" src="static/bbeditor/ed.js"></script>
 
 <form method="POST" action="guild_register.php">
-<?php
-echo showAlert("Criar um clã custa " . $goldcost . " moedas de ouro.");
-?>
-<table width="100%">
-<tr><td width="25%"><span class="style1"><b>Nome do clã</b>:</span></td>
-<td><input name="name" type="text" value="<?=$_POST['name'];?>" /></td>
-</tr>
-<tr><td colspan="2"><span class="style1">Insira o nome desejado para o clã. <i>Ex: Dragon Killers</i><br />
-<?=$msg1;?>
-<br />
-</span></td>
-</tr>
+    <?php
+    echo showAlert("Criar um clã custa " . $goldcost . " moedas de ouro.");
+    ?>
+    <table width="100%">
+        <tr>
+            <td width="25%"><span class="style1"><b>Nome do clã</b>:</span></td>
+            <td><input name="name" type="text" value="<?= $_POST['name']; ?>" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><span class="style1">Insira o nome desejado para o clã. <i>Ex: Dragon Killers</i><br />
+                    <?= $msg1; ?>
+                    <br />
+                </span></td>
+        </tr>
 
-<tr><td width="25%"><span class="style1"><b>Tag do clã</b>:</span></td>
-<td><input name="tag" type="text" value="<?=$_POST['tag'];?>" /></td>
-</tr>
-<tr><td colspan="2"><span class="style1">Abreviação do seu clã. <i>Ex: DK</i><br />
-<?=$msg2;?>
-<br />
-</span></td>
-</tr>
+        <tr>
+            <td width="25%"><span class="style1"><b>Tag do clã</b>:</span></td>
+            <td><input name="tag" type="text" value="<?= $_POST['tag']; ?>" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><span class="style1">Abreviação do seu clã. <i>Ex: DK</i><br />
+                    <?= $msg2; ?>
+                    <br />
+                </span></td>
+        </tr>
 
-<tr><td width="25%"><span class="style1"><b>Descrição do clã</b>:</span></td>
-<td><script>edToolbar('blurb'); </script><textarea name="blurb" id="blurb" rows="12" class="ed"><?=$_POST['blurb'];?></textarea><br>Máximo 5000 caracteres.<br />
-<?=$msg3;?>
-<br />
-</td>
-</tr>
+        <tr>
+            <td width="25%"><span class="style1"><b>Descrição do clã</b>:</span></td>
+            <td>
+                <script>
+                    edToolbar('blurb');
+                </script><textarea name="blurb" id="blurb" rows="12" class="ed"><?= $_POST['blurb']; ?></textarea><br>Máximo 5000 caracteres.<br />
+                <?= $msg3; ?>
+                <br />
+            </td>
+        </tr>
 
-<tr>
-<td colspan="2" align="center">
-	<input type="submit" name="register" value="Criar Clã">
-</td>
-<br />
-</tr>
-</table>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" name="register" value="Criar Clã">
+            </td>
+            <br />
+        </tr>
+    </table>
 </form>
 <p />
 
-<?php include(__DIR__ . "/templates/private_footer.php");?>
+<?php include(__DIR__ . "/templates/private_footer.php"); ?>

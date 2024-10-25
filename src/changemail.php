@@ -1,13 +1,14 @@
 <?php
-	declare(strict_types=1);
+
+declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
-	define("PAGENAME", "Alterar Email");
-	$acc = check_acc($db);
+define("PAGENAME", "Alterar Email");
+$acc = check_acc($db);
 
-	include(__DIR__ . "/templates/acc-header.php");
+include(__DIR__ . "/templates/acc-header.php");
 
-if ($_GET['act'] == "cancel"){
+if ($_GET['act'] == "cancel") {
     $query = $db->execute("delete from `pending` where `pending_id`=1 and `player_id`=?", [$acc->id]);
     echo '<span id="aviso-a"></span>';
     echo "<br/><p><center>A solicitação para mudança de email foi removida. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
@@ -56,14 +57,14 @@ if ($_POST['submit']) {
             $error = 1;
         }
     }
-    
+
     if ($error == 0) {
-        	$insert['player_id'] = $acc->id;
-		$insert['pending_id'] = 1;   	  
-		$insert['pending_status'] = $_POST['emaill'];
-		$insert['pending_time'] = (time() + 1296000);
-		$query = $db->autoexecute('pending', $insert, 'INSERT');
-        
+        $insert['player_id'] = $acc->id;
+        $insert['pending_id'] = 1;
+        $insert['pending_status'] = $_POST['emaill'];
+        $insert['pending_time'] = (time() + 1296000);
+        $query = $db->autoexecute('pending', $insert, 'INSERT');
+
         echo '<span id="aviso-a"></span>';
         echo "<br/><p><center>Seu email ser alterado para: " . $_POST['emaill'] . ".<br/>Aguarde 14 dias para que a mudana seja efetuada. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
         include(__DIR__ . "/templates/acc-footer.php");
@@ -71,24 +72,34 @@ if ($_POST['submit']) {
     }
 }
 
-    echo '<span id="aviso-a">';
-    if ($errmsg != "") {
-        echo $errmsg;
-    }
-    
-    echo "</span>";
-    
-    echo '<br/><center><font size="1px"><b>Email Atual:</b> ' . $acc->email . ".</font></center>";
+echo '<span id="aviso-a">';
+if ($errmsg != "") {
+    echo $errmsg;
+}
+
+echo "</span>";
+
+echo '<br/><center><font size="1px"><b>Email Atual:</b> ' . $acc->email . ".</font></center>";
 ?>
 
 <p>
 <form method="POST" action="changemail.php">
-<table width="90%" align="center">
-<tr><td width="38%"><b>Senha da conta</b>:</td><td width="62%"><input type="password" name="senhadaconta" value="<?=$_POST['senhadaconta'];?>" class="inp" size="20"/></td></tr>
-<tr><td width="38%"><b>Novo email</b>:</td><td width="62%"><input type="text" name="emaill" value="<?=$_POST['emaill'];?>" class="inp" size="20"/></td></tr>
-<tr><td width="38%"><b>Repita o email</b>:</td><td width="62%"><input type="text" name="emaill2" value="<?=$_POST['emaill2'];?>" class="inp" size="20"/></td></tr>
-</table>
-<br/><center><button type="submit" name="submit" value="Atualizar" class="atualizar"></button></center>
+    <table width="90%" align="center">
+        <tr>
+            <td width="38%"><b>Senha da conta</b>:</td>
+            <td width="62%"><input type="password" name="senhadaconta" value="<?= $_POST['senhadaconta']; ?>" class="inp" size="20" /></td>
+        </tr>
+        <tr>
+            <td width="38%"><b>Novo email</b>:</td>
+            <td width="62%"><input type="text" name="emaill" value="<?= $_POST['emaill']; ?>" class="inp" size="20" /></td>
+        </tr>
+        <tr>
+            <td width="38%"><b>Repita o email</b>:</td>
+            <td width="62%"><input type="text" name="emaill2" value="<?= $_POST['emaill2']; ?>" class="inp" size="20" /></td>
+        </tr>
+    </table>
+    <br />
+    <center><button type="submit" name="submit" value="Atualizar" class="atualizar"></button></center>
 </form>
 </p>
 

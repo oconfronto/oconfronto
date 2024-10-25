@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 if (time() < 1345222800) {
@@ -346,19 +347,19 @@ if ($_POST['register']) {
     if ($msg1 === "") {
         $certo1 = 1;
     }
-    
+
     if ($msg2 === "") {
         $certo2 = 1;
     }
-    
+
     if ($msg3 === "") {
         $certo3 = 1;
     }
-    
+
     if ($msg4 === "") {
         $certo4 = 1;
     }
-    
+
     if ($msg5 === "") {
         $certo4 = 1;
     }
@@ -432,4 +433,3 @@ echo "</center>";
 echo "</form>";
 include(__DIR__ . "/templates/footer.php");
 exit;
-

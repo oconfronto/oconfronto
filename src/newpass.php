@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -67,5 +68,3 @@ echo "Sua nova senha foi gerada com sucesso, ela é: <b>" . $newpassword . "</b>
 echo "Para que você não se esqueça novamente, sua nova senha foi enviada para seu email. <a href=\"index.php\">Voltar</a>.";
 include(__DIR__ . "/templates/footer.php");
 exit;
-
-?>

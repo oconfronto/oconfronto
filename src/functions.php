@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/config.php");
@@ -6,9 +7,7 @@ include(__DIR__ . "/config.php");
 // CLASSES NOVAS PARA OC VERSÃO 2.0 //
 class OCv2
 {
-    public function __construct(private $db)
-    {
-    }
+    public function __construct(private $db) {}
 
     public function info_db($data, $data2, $data3, $data4)
     {
@@ -20,7 +19,7 @@ class OCv2
         $row = $query->FetchRow();
         return $row ? $row[$data4] : false;
     }
- 
+
     public function totaldados(string $data, $data2 = false, $data3 = true, $vl = false)
     {
         $vll = $vl ? '>' : '=';
@@ -45,7 +44,7 @@ class OCv2
         $result = str_replace($pontos, "", $valor);
         return str_replace($virgula, "", $result);
     }
- 
+
     public function verificar($valor): array|string
     {
         $pontos = ',';
@@ -138,7 +137,7 @@ function check_user(&$db)
             foreach ($playerarray as $key => $value) {
                 $player->$key = $value;
             }
- 
+
             return $player;
         }
 
@@ -210,7 +209,7 @@ function maxExp($level): float
     } else {
         $bonus = 0;
     }
- 
+
     return multiploCinco((30 + ($level / 15) - $bonus) * ($level + 1) * ($level + 1));
 }
 
@@ -381,22 +380,22 @@ function showAlert(string $msg, $color = '#FFFDE0', string $align = 'center', $l
         $return .= '<a href="' . $link . '" style="text-decoration: none;">';
         $return .= "<div ";
         $return .= 'id = "' . $id . '" ';
-  
+
         $return .= "class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" style=\"color: #000000; padding: 5px; border: 1px solid #DEDEDE; margin-bottom: 10px; text-align: " . $align . ';">';
     } else {
         $return .= "<div ";
         $return .= 'id = "' . $id . '" ';
-  
+
         $return .= 'style="background-color:' . $color . "; padding: 5px; border: 1px solid #DEDEDE; margin-bottom: 10px; text-align: " . $align . ';">';
     }
- 
+
     $return .= $msg;
     $return .= "</div>";
 
     if ($link) {
         $return .= "</a>";
     }
- 
+
     return $return;
 }
 
@@ -445,7 +444,7 @@ function showName($name, &$db, $status = 'on', $link = 'on'): string
                 }
             }
         }
-  
+
         $get = $db->execute(sprintf("SELECT * FROM `players` WHERE `username` = '%s' AND subname > '2'", $user));
 
         if ($get->RecordCount() > 0) {
@@ -458,7 +457,7 @@ function showName($name, &$db, $status = 'on', $link = 'on'): string
                 $subname_set = ' [<font color="' . $pieces[1] . '">' . $pieces[0] . "</font>]";
             }
         }
-  
+
         $closevip = false;
         $pvipaccid = $db->execute("SELECT `acc_id` FROM `players` WHERE `id`=?", [$name]);
         $pviptime = $db->execute("SELECT `vip` FROM `players` WHERE `id`=?", [$name]);
@@ -488,7 +487,7 @@ function showName($name, &$db, $status = 'on', $link = 'on'): string
         } else {
             $return .= $user;
         }
-  
+
         if ($closevip) {
             $return .= "</font>";
         }
@@ -502,7 +501,7 @@ function showName($name, &$db, $status = 'on', $link = 'on'): string
 function filtro($data)
 {
     $data = trim(htmlentities(strip_tags((string) $data)));
- 
+
     // Remove the deprecated check
     $data = $db->real_escape_string($data);
     return str_replace("([^0-9])", "", $data) . "";
@@ -515,7 +514,7 @@ function send_mail($from_name, $mail_to, $subject, $body)
 
     $mail = new PHPMailer();
     $mail->isSMTP();
- 
+
     $mail->Host = $smtp_host;
     $mail->SMTPAuth = $has_smtp_auth;
     $mail->Username = $smtp_username;
@@ -528,12 +527,9 @@ function send_mail($from_name, $mail_to, $subject, $body)
     $mail->addAddress($mail_to);
 
     $mail->isHTML(true);
- 
+
     $mail->Subject = $subject;
     $mail->Body = $body;
 
     return $mail->send();
 }
-
-
-

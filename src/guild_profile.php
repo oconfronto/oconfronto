@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -86,14 +87,14 @@ echo '<div id="tab1" class="tab_content">';
 					<td width="35%">
 						<?php
 						if ($guild['reino'] == 1) {
-            echo "Cathal";
-        } elseif ($guild['reino'] == 2) {
-            echo "Eroda";
-        } elseif ($guild['reino'] == 3) {
-            echo "Turkic";
-        } else {
-  							echo "Nenhum";
-  						}
+							echo "Cathal";
+						} elseif ($guild['reino'] == 2) {
+							echo "Eroda";
+						} elseif ($guild['reino'] == 3) {
+							echo "Turkic";
+						} else {
+							echo "Nenhum";
+						}
 
 						$contvitoria = $db->execute("select `id` from `pwar` where ((`status`='g' and `guild_id`=?) or (`status`='e' and `enemy_id`=?))", [$guild['id'], $guild['id']]);
 						?>
@@ -151,7 +152,7 @@ echo '<div id="tab1" class="tab_content">';
 			$descrikon = $bbcode->parse($descrikon);
 			echo textLimit($descrikon, 5000, 105);
 		}
-  
+
 		echo "</p>";
 		?>
 	</td>
@@ -185,25 +186,25 @@ echo '<div id="tab2" class="tab_content">';
 
 		echo "<td>";
 		if ($member['voc'] == 'archer' && $member['promoted'] == 'f') {
-      echo "Caçador";
-  } elseif ($member['voc'] == 'knight' && $member['promoted'] == 'f') {
-      echo "Espadachim";
-  } elseif ($member['voc'] == 'mage' && $member['promoted'] == 'f') {
-      echo "Bruxo";
-  } elseif ($member['voc'] == 'archer' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
-      echo "Arqueiro";
-  } elseif ($member['voc'] == 'knight' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
-      echo "Guerreiro";
-  } elseif ($member['voc'] == 'mage' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
-      echo "Mago";
-  } elseif ($member['voc'] == 'archer' && $member['promoted'] == 'p') {
-      echo "Arqueiro Royal";
-  } elseif ($member['voc'] == 'knight' && $member['promoted'] == 'p') {
-      echo "Cavaleiro";
-  } elseif ($member['voc'] == 'mage' && $member['promoted'] == 'p') {
-      echo "Arquimago";
-  }
-  
+			echo "Caçador";
+		} elseif ($member['voc'] == 'knight' && $member['promoted'] == 'f') {
+			echo "Espadachim";
+		} elseif ($member['voc'] == 'mage' && $member['promoted'] == 'f') {
+			echo "Bruxo";
+		} elseif ($member['voc'] == 'archer' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
+			echo "Arqueiro";
+		} elseif ($member['voc'] == 'knight' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
+			echo "Guerreiro";
+		} elseif ($member['voc'] == 'mage' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
+			echo "Mago";
+		} elseif ($member['voc'] == 'archer' && $member['promoted'] == 'p') {
+			echo "Arqueiro Royal";
+		} elseif ($member['voc'] == 'knight' && $member['promoted'] == 'p') {
+			echo "Cavaleiro";
+		} elseif ($member['voc'] == 'mage' && $member['promoted'] == 'p') {
+			echo "Arquimago";
+		}
+
 		echo "</td>\n";
 
 
@@ -213,7 +214,7 @@ echo '<div id="tab2" class="tab_content">';
 		} else {
 			echo '<font color="green">Vivo</font>';
 		}
-  
+
 		echo "</td>\n";
 		echo '<td><font size="1"><a href="mail.php?act=compose&to=' . $member['username'] . '">Mensagem</a><br/><a href="battle.php?act=attack&username=' . $member['username'] . "\">Lutar</a></font></td>\n";
 		echo "</tr>\n";

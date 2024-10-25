@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*************************************/
@@ -17,4 +18,3 @@ include(__DIR__ . "/autocron.php");
 
 ini_set("allow_url_fopen", "On");
 date_default_timezone_set('America/Sao_Paulo');
-?>

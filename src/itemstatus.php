@@ -32,5 +32,3 @@ $forcaadebonus = $bonuses['for'];
 $vitalidadeeeeebonus = $bonuses['vit'];
 $agilidadeeedebonus = $bonuses['agi'];
 $resistenciaaaadebonus = $bonuses['res'];
-
-?>

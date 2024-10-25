@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -38,19 +39,19 @@ if ($setting->event_convidados = true) {
 			if ($row2['type'] == "shield") {
 				$itemtd = "Defesa";
 			}
-   
+
 			if ($row2['type'] == "helmet") {
 				$itemtd = "Defesa";
 			}
-   
+
 			if ($row2['type'] == "legs") {
 				$itemtd = "Defesa";
 			}
-   
+
 			if ($row2['type'] == "boots") {
 				$itemtd = "Defesa";
 			}
-   
+
 			if ($row2['type'] == "weapon") {
 				$itemtd = "Ataque";
 			}
@@ -102,7 +103,7 @@ if ($setting->event_convidados = true) {
 <?php
 		}
 	}
- 
+
 	echo "Obs: O prazo para recebimento do item esta vigente apenas no prazo de validade do evento, sendo assim após o termino do evento se seu amigo convidado não atingiu o nível requerido você estará sujeito a receber um item diferente dos presentes nesta lista.";
 }
 

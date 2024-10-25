@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 function remoteFileExists($url)
@@ -56,7 +57,7 @@ class bbcode
             $quote = substr((string) $text, stripos((string) $text, '[quote]') + 7, stripos((string) $text, '[/quote]') - stripos((string) $text, '[quote]') - 7);
             $text = str_ireplace('[quote]' . $quote . '[/quote]', '<blockquote>' . $quote . '</blockquote>', $text);
         }
-        
+
 
         // BBCODE "URL=" -> VERSAO ANTIGA
         $text = preg_replace("/\[url=(.*)\](.*)\[\/url\]/Usi", "<a href=\"\\1\" target=\"_blank\" border=\"0px\">\\2</a>", (string) $text);

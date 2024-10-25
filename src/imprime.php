@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -47,7 +48,7 @@ function LoadPNG($imgname): \GdImage|false
 		/* Output an errmsg */
 		imagestring($im, 1, 5, 5, "Erro carregando a imagem...", $tc);
 	}
- 
+
 	return $im;
 }
 
@@ -80,5 +81,3 @@ imagettftext($img, 15, 0, 83, 120, $color, "font.ttf", (string) $voca);
 
 
 imagepng($img);
-
-?>

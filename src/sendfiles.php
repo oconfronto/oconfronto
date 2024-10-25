@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -92,7 +93,6 @@ if ($_POST['upload'] && $_FILES["foto"]) {
 
             $msg .= '<span style="color: white; border: solid 1px; background: green;">Sua imagem foi enviada com sucesso!</span><br/>';
             $msg .= sprintf('<b>Endereço:</b> <font size="1">%s/imgs/', $baseUrl) . $imagem_nome . sprintf(' <a href="%s/imgs/', $baseUrl) . $imagem_nome . '" target="blank"><b>Visualizar</b></a><font>';
-
         }
     }
 }
@@ -118,4 +118,3 @@ echo "</fieldset>";
 echo "<font size=\"1\">Aqui você pode enviar imagens para usar como avatar, no fórum, no perfil, etc.</font><br/><br/>";
 echo $msg;
 include(__DIR__ . "/templates/private_footer.php");
-?>

@@ -159,11 +159,11 @@ if ($_POST['submit']) {
 $heal = $player->maxhp - $player->hp;
 
 if ($player->level < 36) {
-    $cost = ceil($heal * 1);
-    $cost2 = floor($player->gold / 1);
+	$cost = ceil($heal * 1);
+	$cost2 = floor($player->gold / 1);
 } elseif ($player->level > 35 && $player->level < 90) {
-    $cost = ceil($heal * 1.45);
-    $cost2 = floor($player->gold / 1.45);
+	$cost = ceil($heal * 1.45);
+	$cost2 = floor($player->gold / 1.45);
 } else {
 	$cost = ceil($heal * 1.8);
 	$cost2 = floor($player->gold / 1.8);
@@ -181,7 +181,7 @@ if ($_GET['act']) {
 			include(__DIR__ . "/templates/private_footer.php");
 			exit;
 		}
-  
+
 		$query = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=136 and `mark`='f'", [$player->id]);
 		$numerodepocoes = $query->recordcount();
 
@@ -220,237 +220,236 @@ if ($_GET['act']) {
 		exit;
 	}
 
- if ($_GET['act'] == 'heal') {
-     if ($player->hp == $player->maxhp) {
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
-   			echo "<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
-   			echo '<div style="float:left;width:80px;"></div>';
-   			echo '<div style="padding-left:25px;"><b>Bem vindo ao Hospital!</b><p>';
-   			echo "<i>Você esta com a vida cheia! Você não precisa ser curado.</i><br/>\n";
-   			echo "</p></div></fieldset>";
-   
-   			echo "<table style='border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
-   			echo "<td width=\"50%\"><a href=\"hospt.php\"  id=\"link\" style='color:#fff;text-align:center;' class=\"normal\"><b>Voltar</b>.</a></td>";
-   			echo '<td width="50%" align="right"></td>';
-   			echo "</tr></table>";
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
+	if ($_GET['act'] == 'heal') {
+		if ($player->hp == $player->maxhp) {
+			include(__DIR__ . "/templates/private_header.php");
+			echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
+			echo "<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
+			echo '<div style="float:left;width:80px;"></div>';
+			echo '<div style="padding-left:25px;"><b>Bem vindo ao Hospital!</b><p>';
+			echo "<i>Você esta com a vida cheia! Você não precisa ser curado.</i><br/>\n";
+			echo "</p></div></fieldset>";
 
-     if ($player->gold < $cost && $player->gold < 1) {
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset><legend><b>Hospital</b></legend>\n";
-   			echo "<i>Você não possui ouro suficiente!</i><br>\n";
-   			echo "</fieldset>\n";
-   			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
+			echo "<table style='border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
+			echo "<td width=\"50%\"><a href=\"hospt.php\"  id=\"link\" style='color:#fff;text-align:center;' class=\"normal\"><b>Voltar</b>.</a></td>";
+			echo '<td width="50%" align="right"></td>';
+			echo "</tr></table>";
+			include(__DIR__ . "/templates/private_footer.php");
+			exit;
+		}
 
-     if ($player->gold < $cost) {
-  				$query = $db->execute("update `players` set `gold`=0, `hp`=? where `id`=?", [$player->hp + $cost2, $player->id]);
-  				$player = check_user($db); //Get new stats
-  			} else {
-  				$query = $db->execute("update `players` set `gold`=?, `hp`=? where `id`=?", [$player->gold - $cost, $player->maxhp, $player->id]);
-  				$player = check_user($db); //Get new stats
-  			}
+		if ($player->gold < $cost && $player->gold < 1) {
+			include(__DIR__ . "/templates/private_header.php");
+			echo "<fieldset><legend><b>Hospital</b></legend>\n";
+			echo "<i>Você não possui ouro suficiente!</i><br>\n";
+			echo "</fieldset>\n";
+			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
+			include(__DIR__ . "/templates/private_footer.php");
+			exit;
+		}
 
-     include(__DIR__ . "/templates/private_header.php");
-     echo "<fieldset><legend><b>Hospital</b></legend>\n";
-     echo "<i>Você acaba de ser curado!<br/></i>\n";
-     echo "</fieldset>\n";
-     echo '<a href="hospt.php">Retornar ao Hospital.</a>';
-     include(__DIR__ . "/templates/private_footer.php");
-     exit;
- }
+		if ($player->gold < $cost) {
+			$query = $db->execute("update `players` set `gold`=0, `hp`=? where `id`=?", [$player->hp + $cost2, $player->id]);
+			$player = check_user($db); //Get new stats
+		} else {
+			$query = $db->execute("update `players` set `gold`=?, `hp`=? where `id`=?", [$player->gold - $cost, $player->maxhp, $player->id]);
+			$player = check_user($db); //Get new stats
+		}
+
+		include(__DIR__ . "/templates/private_header.php");
+		echo "<fieldset><legend><b>Hospital</b></legend>\n";
+		echo "<i>Você acaba de ser curado!<br/></i>\n";
+		echo "</fieldset>\n";
+		echo '<a href="hospt.php">Retornar ao Hospital.</a>';
+		include(__DIR__ . "/templates/private_footer.php");
+		exit;
+	}
 
 
 	if ($_GET['act'] == 'potion') {
-     if (!$_GET['pid']) {
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset><legend><b>Erro</b></legend>\n";
-   			echo "<i>Um erro desconhecido ocorreu. Contate o administrador.<br/></i>\n";
-   			echo "</fieldset>\n";
-   			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
+		if (!$_GET['pid']) {
+			include(__DIR__ . "/templates/private_header.php");
+			echo "<fieldset><legend><b>Erro</b></legend>\n";
+			echo "<i>Um erro desconhecido ocorreu. Contate o administrador.<br/></i>\n";
+			echo "</fieldset>\n";
+			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
+			include(__DIR__ . "/templates/private_footer.php");
+			exit;
+		}
 
-     $query = $db->execute("select * from `items` where `id`=? and `player_id`=?", [$_GET['pid'], $player->id]);
-     if ($query->recordcount() == 0) {
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset><legend><b>Erro</b></legend>\n";
-   			echo "<i>Você não pode usar esta poção.<br/></i>\n";
-   			echo "</fieldset>\n";
-   			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
+		$query = $db->execute("select * from `items` where `id`=? and `player_id`=?", [$_GET['pid'], $player->id]);
+		if ($query->recordcount() == 0) {
+			include(__DIR__ . "/templates/private_header.php");
+			echo "<fieldset><legend><b>Erro</b></legend>\n";
+			echo "<i>Você não pode usar esta poção.<br/></i>\n";
+			echo "</fieldset>\n";
+			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
+			include(__DIR__ . "/templates/private_footer.php");
+			exit;
+		}
 
-     $potion = $query->fetchrow();
-     if ($potion['mark'] == 't') {
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset><legend><b>Erro</b></legend>\n";
-   			echo "<i>Você não pode usar um item que está a venda no mercado.<br/></i>\n";
-   			echo "</fieldset>\n";
-   			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
+		$potion = $query->fetchrow();
+		if ($potion['mark'] == 't') {
+			include(__DIR__ . "/templates/private_header.php");
+			echo "<fieldset><legend><b>Erro</b></legend>\n";
+			echo "<i>Você não pode usar um item que está a venda no mercado.<br/></i>\n";
+			echo "</fieldset>\n";
+			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
+			include(__DIR__ . "/templates/private_footer.php");
+			exit;
+		}
 
-     if ($potion['item_id'] != 136 && $potion['item_id'] != 137 && $potion['item_id'] != 148 && $potion['item_id'] != 150) {
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset><legend><b>Erro</b></legend>\n";
-   			echo "<i>Este item não é uma poção.<br/></i>\n";
-   			echo "</fieldset>\n";
-   			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
+		if ($potion['item_id'] != 136 && $potion['item_id'] != 137 && $potion['item_id'] != 148 && $potion['item_id'] != 150) {
+			include(__DIR__ . "/templates/private_header.php");
+			echo "<fieldset><legend><b>Erro</b></legend>\n";
+			echo "<i>Este item não é uma poção.<br/></i>\n";
+			echo "</fieldset>\n";
+			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
+			include(__DIR__ . "/templates/private_footer.php");
+			exit;
+		}
 
-     if ($potion['item_id'] == 136) {
-   			if ($player->hp == $player->maxhp) {
-   				include(__DIR__ . "/templates/private_header.php");
-   				echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
-   				echo "<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
-   				echo '<div style="float:left;width:80px;"></div>';
-   				echo '<div style="padding-left:25px;"><b>Bem vindo ao Hospital!</b><p>';
-   				echo "<i>Você esta com a vida cheia! Você não precisa ser curado.</i><br/>\n";
-   				echo "</p></div></fieldset>";
-   
-   				echo "<table style='border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
-   				echo "<td width=\"50%\"><a href=\"hospt.php\"  id=\"link\" style='color:#fff;text-align:center;' class=\"normal\"><b>Voltar</b>.</a></td>";
-   				echo '<td width="50%" align="right"></td>';
-   				echo "</tr></table>";
-   				include(__DIR__ . "/templates/private_footer.php");
-   				exit;
-   			}
-      
-   			$pocaoajuda = $player->hp + 5000;
-   			if ($pocaoajuda < $player->maxhp) {
-   				$query = $db->execute("update `players` set `hp`=? where `id`=?", [$player->hp + 5000, $player->id]);
-   				$palavra = "parte de";
-   			} else {
-   				$query = $db->execute("update `players` set `hp`=? where `id`=?", [$player->maxhp, $player->id]);
-   				$palavra = "toda";
-   			}
-      
-   			$query = $db->execute("delete from `items` where `id`=?", [$potion['id']]);
-   			$player = check_user($db); //Get new stats
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset><legend><b>Hospital</b></legend>\n";
-   			echo "<i>Você usou sua poção e recuperou " . $palavra . " sua vida.<br/></i>\n";
-   			echo "</fieldset>\n";
-   			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
+		if ($potion['item_id'] == 136) {
+			if ($player->hp == $player->maxhp) {
+				include(__DIR__ . "/templates/private_header.php");
+				echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
+				echo "<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
+				echo '<div style="float:left;width:80px;"></div>';
+				echo '<div style="padding-left:25px;"><b>Bem vindo ao Hospital!</b><p>';
+				echo "<i>Você esta com a vida cheia! Você não precisa ser curado.</i><br/>\n";
+				echo "</p></div></fieldset>";
 
-     if ($potion['item_id'] == 148) {
-   			if ($player->hp == $player->maxhp) {
-   				include(__DIR__ . "/templates/private_header.php");
-   				echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
-   				echo "<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
-   				echo '<div style="float:left;width:80px;"></div>';
-   				echo '<div style="padding-left:25px;"><b>Bem vindo ao Hospital!</b><p>';
-   				echo "<i>Você esta com a vida cheia! Você não precisa ser curado.</i><br/>\n";
-   				echo "</p></div></fieldset>";
-   
-   				echo "<table style='border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
-   				echo "<td width=\"50%\"><a href=\"hospt.php\"  id=\"link\" style='color:#fff;text-align:center;' class=\"normal\"><b>Voltar</b>.</a></td>";
-   				echo '<td width="50%" align="right"></td>';
-   				echo "</tr></table>";
-   
-   
-   
-   
-   
-   				include(__DIR__ . "/templates/private_footer.php");
-   				exit;
-   			}
-      
-   			$pocaoajuda = $player->hp + 10000;
-   			if ($pocaoajuda < $player->maxhp) {
-   				$query = $db->execute("update `players` set `hp`=? where `id`=?", [$player->hp + 10000, $player->id]);
-   				$palavra = "parte de";
-   			} else {
-   				$query = $db->execute("update `players` set `hp`=? where `id`=?", [$player->maxhp, $player->id]);
-   				$palavra = "toda";
-   			}
-      
-   			$query = $db->execute("delete from `items` where `id`=?", [$potion['id']]);
-   			$player = check_user($db); //Get new stats
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset><legend><b>Hospital</b></legend>\n";
-   			echo "<i>Você usou sua poção e recuperou " . $palavra . " sua vida.<br/></i>\n";
-   			echo "</fieldset>\n";
-   			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
+				echo "<table style='border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
+				echo "<td width=\"50%\"><a href=\"hospt.php\"  id=\"link\" style='color:#fff;text-align:center;' class=\"normal\"><b>Voltar</b>.</a></td>";
+				echo '<td width="50%" align="right"></td>';
+				echo "</tr></table>";
+				include(__DIR__ . "/templates/private_footer.php");
+				exit;
+			}
 
-     if ($potion['item_id'] == 137) {
-   			if ($player->energy == $player->maxenergy) {
-   				include(__DIR__ . "/templates/private_header.php");
-   				echo "<fieldset><legend><b>Hospital</b></legend>\n";
-   				echo "<i>Você esta com a energia máxima! Você não precisa desta poção.</i><br/>\n";
-   				echo "</fieldset>\n";
-   				echo '<a href="hospt.php">Retornar ao Hospital.</a>';
-   				include(__DIR__ . "/templates/private_footer.php");
-   				exit;
-   			}
-   
-   			if (($player->energy + $setting->energy_potion) > $player->maxenergy) {
-   				$query = $db->execute("update `players` set `energy`=? where `id`=?", [$player->maxenergy, $player->id]);
-   				$palavra = "parte de";
-   			} else {
-   				$query = $db->execute("update `players` set `energy`=? where `id`=?", [$player->energy + $setting->energy_potion, $player->id]);
-   				$palavra = "toda";
-   			}
-      
-   			$query = $db->execute("delete from `items` where `id`=?", [$potion['id']]);
-   			$player = check_user($db); //Get new stats
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset><legend><b>Hospital</b></legend>\n";
-   			echo "<i>Você usou sua poção e recuperou " . $palavra . " sua energia.<br/></i>\n";
-   			echo "</fieldset>\n";
-   			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
+			$pocaoajuda = $player->hp + 5000;
+			if ($pocaoajuda < $player->maxhp) {
+				$query = $db->execute("update `players` set `hp`=? where `id`=?", [$player->hp + 5000, $player->id]);
+				$palavra = "parte de";
+			} else {
+				$query = $db->execute("update `players` set `hp`=? where `id`=?", [$player->maxhp, $player->id]);
+				$palavra = "toda";
+			}
 
-     if ($potion['item_id'] == 150) {
-   			if ($player->mana == $player->maxmana) {
-   				include(__DIR__ . "/templates/private_header.php");
-   				echo "<fieldset><legend><b>Hospital</b></legend>\n";
-   				echo "<i>Você esta com a mana ao máximo! Você não precisa desta poção.</i><br/>\n";
-   				echo "</fieldset>\n";
-   				echo '<a href="hospt.php">Retornar ao Hospital.</a>';
-   				include(__DIR__ . "/templates/private_footer.php");
-   				exit;
-   			}
-   
-   			if (($player->mana + 500) > $player->maxmana) {
-   				$query = $db->execute("update `players` set `mana`=`maxmana` where `id`=?", [$player->id]);
-   				$palavra = "parte de";
-   			} else {
-   				$query = $db->execute("update `players` set `mana`=`mana`+500 where `id`=?", [$player->id]);
-   				$palavra = "toda";
-   			}
-   
-   			$query = $db->execute("delete from `items` where `id`=?", [$potion['id']]);
-   			$player = check_user($db); //Get new stats
-   			include(__DIR__ . "/templates/private_header.php");
-   			echo "<fieldset><legend><b>Hospital</b></legend>\n";
-   			echo "<i>Você usou sua poção e recuperou " . $palavra . " sua mana.<br/></i>\n";
-   			echo "</fieldset>\n";
-   			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
-   			include(__DIR__ . "/templates/private_footer.php");
-   			exit;
-   		}
- }
- else {
+			$query = $db->execute("delete from `items` where `id`=?", [$potion['id']]);
+			$player = check_user($db); //Get new stats
+			include(__DIR__ . "/templates/private_header.php");
+			echo "<fieldset><legend><b>Hospital</b></legend>\n";
+			echo "<i>Você usou sua poção e recuperou " . $palavra . " sua vida.<br/></i>\n";
+			echo "</fieldset>\n";
+			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
+			include(__DIR__ . "/templates/private_footer.php");
+			exit;
+		}
+
+		if ($potion['item_id'] == 148) {
+			if ($player->hp == $player->maxhp) {
+				include(__DIR__ . "/templates/private_header.php");
+				echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
+				echo "<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
+				echo '<div style="float:left;width:80px;"></div>';
+				echo '<div style="padding-left:25px;"><b>Bem vindo ao Hospital!</b><p>';
+				echo "<i>Você esta com a vida cheia! Você não precisa ser curado.</i><br/>\n";
+				echo "</p></div></fieldset>";
+
+				echo "<table style='border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
+				echo "<td width=\"50%\"><a href=\"hospt.php\"  id=\"link\" style='color:#fff;text-align:center;' class=\"normal\"><b>Voltar</b>.</a></td>";
+				echo '<td width="50%" align="right"></td>';
+				echo "</tr></table>";
+
+
+
+
+
+				include(__DIR__ . "/templates/private_footer.php");
+				exit;
+			}
+
+			$pocaoajuda = $player->hp + 10000;
+			if ($pocaoajuda < $player->maxhp) {
+				$query = $db->execute("update `players` set `hp`=? where `id`=?", [$player->hp + 10000, $player->id]);
+				$palavra = "parte de";
+			} else {
+				$query = $db->execute("update `players` set `hp`=? where `id`=?", [$player->maxhp, $player->id]);
+				$palavra = "toda";
+			}
+
+			$query = $db->execute("delete from `items` where `id`=?", [$potion['id']]);
+			$player = check_user($db); //Get new stats
+			include(__DIR__ . "/templates/private_header.php");
+			echo "<fieldset><legend><b>Hospital</b></legend>\n";
+			echo "<i>Você usou sua poção e recuperou " . $palavra . " sua vida.<br/></i>\n";
+			echo "</fieldset>\n";
+			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
+			include(__DIR__ . "/templates/private_footer.php");
+			exit;
+		}
+
+		if ($potion['item_id'] == 137) {
+			if ($player->energy == $player->maxenergy) {
+				include(__DIR__ . "/templates/private_header.php");
+				echo "<fieldset><legend><b>Hospital</b></legend>\n";
+				echo "<i>Você esta com a energia máxima! Você não precisa desta poção.</i><br/>\n";
+				echo "</fieldset>\n";
+				echo '<a href="hospt.php">Retornar ao Hospital.</a>';
+				include(__DIR__ . "/templates/private_footer.php");
+				exit;
+			}
+
+			if (($player->energy + $setting->energy_potion) > $player->maxenergy) {
+				$query = $db->execute("update `players` set `energy`=? where `id`=?", [$player->maxenergy, $player->id]);
+				$palavra = "parte de";
+			} else {
+				$query = $db->execute("update `players` set `energy`=? where `id`=?", [$player->energy + $setting->energy_potion, $player->id]);
+				$palavra = "toda";
+			}
+
+			$query = $db->execute("delete from `items` where `id`=?", [$potion['id']]);
+			$player = check_user($db); //Get new stats
+			include(__DIR__ . "/templates/private_header.php");
+			echo "<fieldset><legend><b>Hospital</b></legend>\n";
+			echo "<i>Você usou sua poção e recuperou " . $palavra . " sua energia.<br/></i>\n";
+			echo "</fieldset>\n";
+			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
+			include(__DIR__ . "/templates/private_footer.php");
+			exit;
+		}
+
+		if ($potion['item_id'] == 150) {
+			if ($player->mana == $player->maxmana) {
+				include(__DIR__ . "/templates/private_header.php");
+				echo "<fieldset><legend><b>Hospital</b></legend>\n";
+				echo "<i>Você esta com a mana ao máximo! Você não precisa desta poção.</i><br/>\n";
+				echo "</fieldset>\n";
+				echo '<a href="hospt.php">Retornar ao Hospital.</a>';
+				include(__DIR__ . "/templates/private_footer.php");
+				exit;
+			}
+
+			if (($player->mana + 500) > $player->maxmana) {
+				$query = $db->execute("update `players` set `mana`=`maxmana` where `id`=?", [$player->id]);
+				$palavra = "parte de";
+			} else {
+				$query = $db->execute("update `players` set `mana`=`mana`+500 where `id`=?", [$player->id]);
+				$palavra = "toda";
+			}
+
+			$query = $db->execute("delete from `items` where `id`=?", [$potion['id']]);
+			$player = check_user($db); //Get new stats
+			include(__DIR__ . "/templates/private_header.php");
+			echo "<fieldset><legend><b>Hospital</b></legend>\n";
+			echo "<i>Você usou sua poção e recuperou " . $palavra . " sua mana.<br/></i>\n";
+			echo "</fieldset>\n";
+			echo '<a href="hospt.php">Retornar ao Hospital.</a>';
+			include(__DIR__ . "/templates/private_footer.php");
+			exit;
+		}
+	} else {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "<i>Um erro desconhecido ocorreu. Contate o administrador.<br/></i>\n";

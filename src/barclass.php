@@ -17,35 +17,35 @@ declare(strict_types=1);
  *******************************/
 class barGen
 {
-	
+
 	public $bar_w;
 
- public $bar_h;
+	public $bar_h;
 
- public $fontSize;
+	public $fontSize;
 
- public $cr;
+	public $cr;
 
- public $cg;
+	public $cg;
 
- public $value;
+	public $value;
 
- public $fill_color;
+	public $fill_color;
 
- public $backColor;
+	public $backColor;
 
- public $max;
+	public $max;
 
- /**
-  * @var int
-  */
- public $dataPercent;
+	/**
+	 * @var int
+	 */
+	public $dataPercent;
 
- public $bar;
+	public $bar;
 
- public $barPercent;
+	public $barPercent;
 
- public function setWidth($value): void
+	public function setWidth($value): void
 	{
 		$this->bar_w = $value;
 	}
@@ -69,13 +69,13 @@ class barGen
 		$this->fill_color = imagecolorallocate($this->bar, $this->cr, $this->cg, $this->value);
 	}
 
-	
+
 	public function setBackColor(): void
 	{
-		if ($this->fontSize > 0){
-		$this->backColor = imagecolorallocate($this->bar, 171, 171, 179);
-		}else{
-		$this->backColor = imagecolorallocate($this->bar, 249, 223, 174);
+		if ($this->fontSize > 0) {
+			$this->backColor = imagecolorallocate($this->bar, 171, 171, 179);
+		} else {
+			$this->backColor = imagecolorallocate($this->bar, 249, 223, 174);
 		}
 	}
 
@@ -83,10 +83,10 @@ class barGen
 	{
 		$this->max = $max;
 		$this->value = $value;
-		
+
 		$this->dataPercent = intval($this->value / $this->max * 100);
 	}
-	
+
 	public function makeBar(): void
 	{
 		$this->bar = imagecreate($this->bar_w, $this->bar_h);
@@ -103,27 +103,26 @@ class barGen
 		$grey 	= imagecolorallocate($this->bar, 120, 120, 120);
 		imagecolorallocate($this->bar, 0, 0, 0);
 		$brown 	= imagecolorallocate($this->bar, 185, 137, 47);
-		
+
 		// Background
 		imagefill($this->bar, 0, 0, $this->backColor);
 		// Fill
 		$this->barPercent = $this->bar_w / 100 * $this->dataPercent;
 		imagefilledrectangle($this->bar, 0, 0, $this->barPercent, $this->bar_h, $this->fill_color);
 		// Border
-		if ($this->fontSize > 0){
-		imagerectangle($this->bar, 0, 0, $this->bar_w - 1, $this->bar_h - 1, $grey);
-		}else{
-		imagerectangle($this->bar, 0, 0, $this->bar_w - 1, $this->bar_h - 1, $brown);
+		if ($this->fontSize > 0) {
+			imagerectangle($this->bar, 0, 0, $this->bar_w - 1, $this->bar_h - 1, $grey);
+		} else {
+			imagerectangle($this->bar, 0, 0, $this->bar_w - 1, $this->bar_h - 1, $brown);
 		}
 
 		// Text
-		if ($this->fontSize > 0){
-		imagestring($this->bar, $this->fontSize, round(($this->bar_w/2)-((strlen($text)*imagefontwidth($this->fontSize))/2), 1), round(($this->bar_h/2)-(imagefontheight($this->fontSize)/2)), $text, $white);
+		if ($this->fontSize > 0) {
+			imagestring($this->bar, $this->fontSize, round(($this->bar_w / 2) - ((strlen($text) * imagefontwidth($this->fontSize)) / 2), 1), round(($this->bar_h / 2) - (imagefontheight($this->fontSize) / 2)), $text, $white);
 		}
-  
+
 		// Output
 		imagepng($this->bar);
 		imagedestroy($this->bar);
-
 	}
 }

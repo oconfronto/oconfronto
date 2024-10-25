@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -48,14 +49,14 @@ while ($war = $query->fetchrow()) {
 
 		$valortempo = $war['time'] - time();
 		if ($valortempo < 60) {
-      $auxiliar = "segundo(s)";
-  } elseif ($valortempo < 3600) {
-      $valortempo = ceil($valortempo / 60);
-      $auxiliar = "minuto(s)";
-  } elseif ($valortempo < 86400) {
-      $valortempo = ceil($valortempo / 3600);
-      $auxiliar = "hora(s)";
-  }
+			$auxiliar = "segundo(s)";
+		} elseif ($valortempo < 3600) {
+			$valortempo = ceil($valortempo / 60);
+			$auxiliar = "minuto(s)";
+		} elseif ($valortempo < 86400) {
+			$valortempo = ceil($valortempo / 3600);
+			$auxiliar = "hora(s)";
+		}
 
 		echo "<tr onclick=\"window.location.href='view_war.php?id=" . $war['id'] . "'\"><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\">";
 		echo "<center><font size=\"1px\"><b>O clã <a href=\"guild_profile.php?id=" . $war['guild_id'] . '">' . $guildname . "</a> declarou guerra contra o clã <a href=\"guild_profile.php?id=" . $war['enemy_id'] . '">' . $enyname . "</a>.</b></font></center>";
@@ -92,15 +93,15 @@ if ($query->recordcount() == 0) {
 		echo "<tr>";
 		echo '<td align=center><font size="1"><b>Reino</b><br/>';
 		if ($guild['reino'] == 1) {
-      echo "Cathal";
-  } elseif ($guild['reino'] == 2) {
-      echo "Eroda";
-  } elseif ($guild['reino'] == 3) {
-      echo "Turkic";
-  } else {
+			echo "Cathal";
+		} elseif ($guild['reino'] == 2) {
+			echo "Eroda";
+		} elseif ($guild['reino'] == 3) {
+			echo "Turkic";
+		} else {
 			echo "Nenhum";
 		}
-  
+
 		echo "</font></td>";
 		echo "</tr>";
 		echo "<tr>";
@@ -114,11 +115,11 @@ if ($query->recordcount() == 0) {
 		$checkquery = $db->execute("select count(*) inv_count from guild_invites where player_id =? and guild_id =?", [$player->id, $guild['id']]);
 		$check = $checkquery->fetchrow();
 		if ($check['inv_count'] > 0) {
-      echo '<font size="1"><a href="guild_join.php?id=' . $guild['id'] . '">Participar</a></font>';
-  } elseif ($player->guild == $guild['id'] && $player->username != $guild['leader'] && $player->username != $guild['vice']) {
-      echo '<font size="1"><a href="guild_leave.php">Abandonar</a></font>';
-  }
-  
+			echo '<font size="1"><a href="guild_join.php?id=' . $guild['id'] . '">Participar</a></font>';
+		} elseif ($player->guild == $guild['id'] && $player->username != $guild['leader'] && $player->username != $guild['vice']) {
+			echo '<font size="1"><a href="guild_leave.php">Abandonar</a></font>';
+		}
+
 		echo "</td>";
 		echo "</tr>";
 		echo "</table>";

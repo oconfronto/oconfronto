@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -272,13 +273,13 @@ while ($bag = $backpackquery->fetchrow()) {
 	if ($bag['needlvl'] > 1) {
 		$lvlbonus = $player->vip > time() ? 10 : 0;
 
-  if ($bag['needlvl'] > ($player->level + $lvlbonus)) {
+		if ($bag['needlvl'] > ($player->level + $lvlbonus)) {
 			$need .= "<br/><font color=red><b>Requer nível " . $bag['needlvl'] . ".</b></font>";
 		} else {
 			$need .= "<br/><b>Requer nível " . $bag['needlvl'] . ".</b>";
 		}
 	}
- 
+
 	if ($bag['needpromo'] == "t") {
 		if ($player->promoted != "f") {
 			$need .= "<br/><b>Voc superior.</b>";
@@ -286,7 +287,7 @@ while ($bag = $backpackquery->fetchrow()) {
 			$need .= "<br/><font color=red><b>Voc superior.</b></font>";
 		}
 	}
- 
+
 	if ($bag['needpromo'] == "p") {
 		if ($player->promoted == "p") {
 			$need .= "<br/><b>Voc suprema.</b>";
@@ -302,7 +303,7 @@ while ($bag = $backpackquery->fetchrow()) {
 	} else {
 		$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>" . $nametype . ": " . $newefec . "" . $need . "</font></td><td width=35%><font size=1px>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></table>";
 	}
- 
+
 	echo '<td class="' . $colorbg . " " . $fieldnumber . '">';
 	echo '<div id="' . $bag['type'] . '" class="drag ' . $bag['id'] . '" title="header=[' . $showitname . "] body=[" . $showitinfo . ']">';
 	echo '<img src="static/images/itens/' . $bag['img'] . '" border="0">';
@@ -439,22 +440,22 @@ if ($player->level < $setting->activate_level) {
 			if ($item['for'] > 0) {
 				$bonus2 = " +" . $item['for'] . "F";
 			}
-   
+
 			if ($item['vit'] > 0) {
 				$bonus3 = " +" . $item['vit'] . "V";
 			}
-   
+
 			if ($item['agi'] > 0) {
 				$bonus4 = " +" . $item['agi'] . "A";
 			}
-   
+
 			if ($item['res'] > 0) {
 				$bonus5 = " +" . $item['res'] . "R";
 			}
 
 			echo '<option value="' . $item['id'] . '">' . $item['name'] . " " . $bonus1 . "" . $bonus2 . "" . $bonus3 . "" . $bonus4 . "" . $bonus5 . "</option>";
 		}
-  
+
 		echo "</select>";
 	}
 

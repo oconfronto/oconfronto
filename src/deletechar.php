@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 ob_start(); // Inicia o buffer de saída
@@ -61,10 +62,10 @@ ob_end_flush(); // Envia o conteúdo do buffer e limpa
                 </select>
                 <?php
                 if ($erro2 == 1) {
-                        echo '<span id="erro"></span>';
-                    } elseif ($certo2 == 1) {
-                        echo '<span id="certo"></span>';
-                    }
+                    echo '<span id="erro"></span>';
+                } elseif ($certo2 == 1) {
+                    echo '<span id="certo"></span>';
+                }
                 ?>
             </td>
         </tr>

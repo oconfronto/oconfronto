@@ -1,8 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/../config.php");
-$email=$_POST['email_name'];
+$email = $_POST['email_name'];
 $query = $db->execute("Select `id` from `accounts` where `email`=?", [$email]);
 
 if ($query->recordcount() > 0) {
@@ -12,8 +13,6 @@ if ($query->recordcount() > 0) {
     echo "no";
 } elseif (strlen((string) $email) < 5) {
     echo "no";
-} else{
-echo "yes";
+} else {
+    echo "yes";
 }
-
-?>

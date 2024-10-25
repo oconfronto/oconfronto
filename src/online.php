@@ -1,124 +1,125 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Chat");
 $player = check_user($db);
 if ($_GET['act'] == 'showmsg') {
-    header('Content-type: text/html; charset=utf-8');
-    $check = $db->execute("select * from `pending` where `pending_id`=31 and `player_id`=?", [$player->id]);
-    if ($check->recordcount() == 0) {
-   		$countmsgs = $db->execute("select * from `user_chat` where `reino`=0 and `guild`=0 order by `time` asc");
-   		$getmsgs = $db->execute("select * from `user_chat` where `reino`=0 and `guild`=0  order by `time` asc limit 13");
-   	} else {
-   		$user = $check->fetchrow();
-   
-   		if ($user['pending_status'] == 'reino') {
-   			$countmsgs = $db->execute("select * from `user_chat` where `reino`=? order by `time` asc", [$player->reino]);
-   			$getmsgs = $db->execute("select * from `user_chat` where `reino`=? order by `time` asc limit 13", [$player->reino]);
-   		} else {
-   			$countmsgs = $db->execute("select * from `user_chat` where `guild`=? and `guild`!=0 order by `time` asc", [$player->guild]);
-   
-   			$orda = $countmsgs->recordcount() >= 13 ? $countmsgs->recordcount() - 13 : 0;
-   
-   			$getmsgs = $db->execute("select * from `user_chat` where `guild`=? and `guild`!=0 order by `time` asc limit ?, ?", [$player->guild, $orda, $countmsgs->recordcount()]);
-   		}
-   	}
+	header('Content-type: text/html; charset=utf-8');
+	$check = $db->execute("select * from `pending` where `pending_id`=31 and `player_id`=?", [$player->id]);
+	if ($check->recordcount() == 0) {
+		$countmsgs = $db->execute("select * from `user_chat` where `reino`=0 and `guild`=0 order by `time` asc");
+		$getmsgs = $db->execute("select * from `user_chat` where `reino`=0 and `guild`=0  order by `time` asc limit 13");
+	} else {
+		$user = $check->fetchrow();
 
-    if ($getmsgs->recordcount() == 0) {
-   		if (($player->guild == NULL || $player->guild == 0) && $user['pending_status'] == 'cla') {
-   			echo "<font size=\"1\"><center><b>Voc&ecirc; não possui um clã.</center></font>";
-   		} else {
-   			echo '<font size="1"><center><b>Nenhuma mensagem recente.</center></font>';
-   		}
-   	} else {
-   		$firstmsg = 0;
-   		while ($msg = $getmsgs->fetchrow()) {
-   
-   			$ignorado = $db->execute("select * from `ignored` where `uid`=? and `bid`=?", [$player->id, $msg['player_id']]);
-   			if ($ignorado->recordcount() == 0) {
-   				echo antiBreak('<font size="1px"><font color="grey">' . date('H:i', $msg['time']) . "</font> " . showName($msg['player_id'], $db) . ": " . $msg['msg'] . "</font><br/>", "50");
-   				if ($firstmsg == 0) {
-   					$firsttime = $msg['time'];
-   					$firstmsg = 1;
-   				}
-   			}
-   		}
-   
-   		if ($countmsgs->recordcount() > 13) {
-   			if ($check->recordcount() == 0) {
-   				$db->execute("delete from `user_chat` where `time`=?", [$firsttime]);
-   			} else {
-   				$user = $check->fetchrow();
-   
-   				if ($user['pending_status'] == 'reino') {
-   					$db->execute("delete from `user_chat` where `time`=? and `reino`=?", [$firsttime, $player->reino]);
-   				} elseif ($user['pending_status'] == 'reino') {
-   					$db->execute("delete from `user_chat` where `time`=? and `guild`=?", [$firsttime, $player->guild]);
-   				}
-   			}
-   		}
-   	}
+		if ($user['pending_status'] == 'reino') {
+			$countmsgs = $db->execute("select * from `user_chat` where `reino`=? order by `time` asc", [$player->reino]);
+			$getmsgs = $db->execute("select * from `user_chat` where `reino`=? order by `time` asc limit 13", [$player->reino]);
+		} else {
+			$countmsgs = $db->execute("select * from `user_chat` where `guild`=? and `guild`!=0 order by `time` asc", [$player->guild]);
 
-    exit;
+			$orda = $countmsgs->recordcount() >= 13 ? $countmsgs->recordcount() - 13 : 0;
+
+			$getmsgs = $db->execute("select * from `user_chat` where `guild`=? and `guild`!=0 order by `time` asc limit ?, ?", [$player->guild, $orda, $countmsgs->recordcount()]);
+		}
+	}
+
+	if ($getmsgs->recordcount() == 0) {
+		if (($player->guild == NULL || $player->guild == 0) && $user['pending_status'] == 'cla') {
+			echo "<font size=\"1\"><center><b>Voc&ecirc; não possui um clã.</center></font>";
+		} else {
+			echo '<font size="1"><center><b>Nenhuma mensagem recente.</center></font>';
+		}
+	} else {
+		$firstmsg = 0;
+		while ($msg = $getmsgs->fetchrow()) {
+
+			$ignorado = $db->execute("select * from `ignored` where `uid`=? and `bid`=?", [$player->id, $msg['player_id']]);
+			if ($ignorado->recordcount() == 0) {
+				echo antiBreak('<font size="1px"><font color="grey">' . date('H:i', $msg['time']) . "</font> " . showName($msg['player_id'], $db) . ": " . $msg['msg'] . "</font><br/>", "50");
+				if ($firstmsg == 0) {
+					$firsttime = $msg['time'];
+					$firstmsg = 1;
+				}
+			}
+		}
+
+		if ($countmsgs->recordcount() > 13) {
+			if ($check->recordcount() == 0) {
+				$db->execute("delete from `user_chat` where `time`=?", [$firsttime]);
+			} else {
+				$user = $check->fetchrow();
+
+				if ($user['pending_status'] == 'reino') {
+					$db->execute("delete from `user_chat` where `time`=? and `reino`=?", [$firsttime, $player->reino]);
+				} elseif ($user['pending_status'] == 'reino') {
+					$db->execute("delete from `user_chat` where `time`=? and `guild`=?", [$firsttime, $player->guild]);
+				}
+			}
+		}
+	}
+
+	exit;
 }
 
 if ($_POST['submit'] && ($_POST['status'] && $_POST['style'])) {
-    if ($_POST['status'] == 'onl') {
-  			$db->execute("delete from `pending` where `pending_id`=30 and `player_id`=?", [$player->id]);
-  		} elseif ($_POST['status'] == 'ocp') {
-  
-  			$check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", [$player->id]);
-  			if ($check->recordcount() == 0) {
-  				$insert['player_id'] = $player->id;
-  				$insert['pending_id'] = 30;
-  				$insert['pending_status'] = 'ocp';
-  				$insert['pending_time'] = time();
-  				$query = $db->autoexecute('pending', $insert, 'INSERT');
-  			} else {
-  				$db->execute("update `pending` set `pending_status`='ocp' where `pending_id`=30 and `player_id`=?", [$player->id]);
-  			}
-  		} elseif ($_POST['status'] == 'inv') {
-  
-  			$check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", [$player->id]);
-  			if ($check->recordcount() == 0) {
-  				$insert['player_id'] = $player->id;
-  				$insert['pending_id'] = 30;
-  				$insert['pending_status'] = 'inv';
-  				$insert['pending_time'] = time();
-  				$query = $db->autoexecute('pending', $insert, 'INSERT');
-  			} else {
-  				$db->execute("update `pending` set `pending_status`='inv' where `pending_id`=30 and `player_id`=?", [$player->id]);
-  			}
-  		}
+	if ($_POST['status'] == 'onl') {
+		$db->execute("delete from `pending` where `pending_id`=30 and `player_id`=?", [$player->id]);
+	} elseif ($_POST['status'] == 'ocp') {
 
-    if ($_POST['style'] == 'chat') {
-  			$db->execute("delete from `pending` where `pending_id`=31 and `player_id`=?", [$player->id]);
-  		} elseif ($_POST['style'] == 'reino') {
-  
-  			$check = $db->execute("select * from `pending` where `pending_id`=31 and `player_id`=?", [$player->id]);
-  			if ($check->recordcount() == 0) {
-  				$insert['player_id'] = $player->id;
-  				$insert['pending_id'] = 31;
-  				$insert['pending_status'] = 'reino';
-  				$insert['pending_time'] = time();
-  				$query = $db->autoexecute('pending', $insert, 'INSERT');
-  			} else {
-  				$db->execute("update `pending` set `pending_status`='reino' where `pending_id`=31 and `player_id`=?", [$player->id]);
-  			}
-  		} elseif ($_POST['style'] == 'cla') {
-  
-  			$check = $db->execute("select * from `pending` where `pending_id`=31 and `player_id`=?", [$player->id]);
-  			if ($check->recordcount() == 0) {
-  				$insert['player_id'] = $player->id;
-  				$insert['pending_id'] = 31;
-  				$insert['pending_status'] = 'cla';
-  				$insert['pending_time'] = time();
-  				$query = $db->autoexecute('pending', $insert, 'INSERT');
-  			} else {
-  				$db->execute("update `pending` set `pending_status`='cla' where `pending_id`=31 and `player_id`=?", [$player->id]);
-  			}
-  		}
+		$check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", [$player->id]);
+		if ($check->recordcount() == 0) {
+			$insert['player_id'] = $player->id;
+			$insert['pending_id'] = 30;
+			$insert['pending_status'] = 'ocp';
+			$insert['pending_time'] = time();
+			$query = $db->autoexecute('pending', $insert, 'INSERT');
+		} else {
+			$db->execute("update `pending` set `pending_status`='ocp' where `pending_id`=30 and `player_id`=?", [$player->id]);
+		}
+	} elseif ($_POST['status'] == 'inv') {
+
+		$check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", [$player->id]);
+		if ($check->recordcount() == 0) {
+			$insert['player_id'] = $player->id;
+			$insert['pending_id'] = 30;
+			$insert['pending_status'] = 'inv';
+			$insert['pending_time'] = time();
+			$query = $db->autoexecute('pending', $insert, 'INSERT');
+		} else {
+			$db->execute("update `pending` set `pending_status`='inv' where `pending_id`=30 and `player_id`=?", [$player->id]);
+		}
+	}
+
+	if ($_POST['style'] == 'chat') {
+		$db->execute("delete from `pending` where `pending_id`=31 and `player_id`=?", [$player->id]);
+	} elseif ($_POST['style'] == 'reino') {
+
+		$check = $db->execute("select * from `pending` where `pending_id`=31 and `player_id`=?", [$player->id]);
+		if ($check->recordcount() == 0) {
+			$insert['player_id'] = $player->id;
+			$insert['pending_id'] = 31;
+			$insert['pending_status'] = 'reino';
+			$insert['pending_time'] = time();
+			$query = $db->autoexecute('pending', $insert, 'INSERT');
+		} else {
+			$db->execute("update `pending` set `pending_status`='reino' where `pending_id`=31 and `player_id`=?", [$player->id]);
+		}
+	} elseif ($_POST['style'] == 'cla') {
+
+		$check = $db->execute("select * from `pending` where `pending_id`=31 and `player_id`=?", [$player->id]);
+		if ($check->recordcount() == 0) {
+			$insert['player_id'] = $player->id;
+			$insert['pending_id'] = 31;
+			$insert['pending_status'] = 'cla';
+			$insert['pending_time'] = time();
+			$query = $db->autoexecute('pending', $insert, 'INSERT');
+		} else {
+			$db->execute("update `pending` set `pending_status`='cla' where `pending_id`=31 and `player_id`=?", [$player->id]);
+		}
+	}
 }
 
 include(__DIR__ . "/templates/private_header.php");

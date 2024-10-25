@@ -1,7 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
-function displayItem($db, $player, $itemType): void {
+function displayItem($db, $player, $itemType): void
+{
     echo '<td><div class="bg_item1">';
 
     try {

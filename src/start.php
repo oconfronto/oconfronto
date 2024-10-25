@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -6,20 +7,20 @@ $player = check_user($db);
 
 $query = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`!=90 and `player_id`=?", [$player->id]);
 if ($query->recordcount() == 0) {
-	header("Location: home.php");
+    header("Location: home.php");
 } else {
-	$get = $query->fetchrow();
+    $get = $query->fetchrow();
 }
 
 if (($get['pending_status'] > 1 && $get['pending_status'] < 90) && ($_GET['act'] > 1 && $_GET['act'] <= 90)) {
     if ($_GET['act'] == 90 && !$_GET['comfirm']) {
-  			define("PAGENAME", "Tutorial");
-  			include(__DIR__ . "/templates/private_header.php");
-  			echo "<center>Você tem certeza que deseja pular o turorial? Ele levará menos de 5 minutos para ser concluído, irá mostrar as dicas básicas do jogo e ainda o ajudará a configurar seu personagem pela primeira vez.<br/><br/>";
-  			echo '<b><a href="start.php">Clique aqui e continue com o tutorial.</a></b><br/><font size="1px"><a href="start.php?act=90&comfirm=true">Sair do tutorial.</a></font></center>';
-  			include(__DIR__ . "/templates/private_footer.php");
-  			exit;
-  		}
+        define("PAGENAME", "Tutorial");
+        include(__DIR__ . "/templates/private_header.php");
+        echo "<center>Você tem certeza que deseja pular o turorial? Ele levará menos de 5 minutos para ser concluído, irá mostrar as dicas básicas do jogo e ainda o ajudará a configurar seu personagem pela primeira vez.<br/><br/>";
+        echo '<b><a href="start.php">Clique aqui e continue com o tutorial.</a></b><br/><font size="1px"><a href="start.php?act=90&comfirm=true">Sair do tutorial.</a></font></center>';
+        include(__DIR__ . "/templates/private_footer.php");
+        exit;
+    }
 
     $db->execute("update `pending` set `pending_status`=? where `pending_id`=2 and `player_id`=?", [$_GET['act'], $player->id]);
     header("Location: home.php");
@@ -108,14 +109,14 @@ if ($get['pending_status'] == 3) {
 if ($get['pending_status'] == 4) {
     $userAgent = ${$_SERVER}['HTTP_USER_AGENT'];
     function isMobile($userAgent): int|false
-   	{
-   		return preg_match('/Mobile|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/', (string) $userAgent);
-   	}
+    {
+        return preg_match('/Mobile|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/', (string) $userAgent);
+    }
 
     if (isMobile($userAgent)) {
-   		header("Location: inventory_mobile.php");
-   		exit;
-   	}
+        header("Location: inventory_mobile.php");
+        exit;
+    }
 
     header("Location: inventory.php");
     exit;

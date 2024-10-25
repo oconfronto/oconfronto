@@ -42,16 +42,18 @@
     <script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1892370805366558"
-        crossorigin="anonymous"
-    >
+        crossorigin="anonymous">
     </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5C9CTZE98D"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
 
-    gtag('config', 'G-5C9CTZE98D');
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-5C9CTZE98D');
     </script>
 </head>
 

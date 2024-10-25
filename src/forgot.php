@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -81,4 +82,3 @@ echo '</table></p><center><button type="submit" name="forgot" value="enviar emai
 echo "</fieldset>";
 include(__DIR__ . "/templates/footer.php");
 exit;
-?>

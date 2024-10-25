@@ -28,5 +28,3 @@ $smtp_port = getenv('SMTP_PORT');
 
 $domain = getenv('DOMAIN');
 $domain_url = getenv('DOMAIN_URL');
-
-?>

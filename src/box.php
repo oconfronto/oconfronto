@@ -189,7 +189,7 @@
 			//remove all the class add the messagebox classes and start fading
 			$("#msgbox10").removeClass().addClass('messagebox').fadeIn("slow");
 			var teste = $("#ddl_char");
-			var valorSelecionado = teste.val();			
+			var valorSelecionado = teste.val();
 
 			if ($(this).val() == valorSelecionado) {
 				$("#msgbox10").fadeTo(200, 0.1, function() //start fading the messagebox

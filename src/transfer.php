@@ -28,7 +28,7 @@ if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['passcode']) && (
         echo "<fieldset><legend><b>Banco</b></legend>";
         echo "Este usuário não existe!";
         echo "</fieldset>";
-        echo'<br/><a href="bank.php">Voltar</a>.</br>';
+        echo '<br/><a href="bank.php">Voltar</a>.</br>';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
@@ -38,7 +38,7 @@ if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['passcode']) && (
         echo "<fieldset><legend><b>Banco</b></legend>";
         echo "Este usuário pertence a outro servidor.";
         echo "</fieldset>";
-        echo'<br/><a href="bank.php">Voltar</a>.</br>';
+        echo '<br/><a href="bank.php">Voltar</a>.</br>';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
@@ -48,7 +48,7 @@ if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['passcode']) && (
         echo "<fieldset><legend><b>Banco</b></legend>";
         echo "Você não pode enviar esta quantia de ouro!";
         echo "</fieldset>";
-        echo'<br/><a href="bank.php">Voltar</a>.</br>';
+        echo '<br/><a href="bank.php">Voltar</a>.</br>';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
@@ -58,7 +58,7 @@ if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['passcode']) && (
         echo "<fieldset><legend><b>Banco</b></legend>";
         echo "Você não pode enviar esta quantia de ouro!";
         echo "</fieldset>";
-        echo'<br/><a href="bank.php">Voltar</a>.</br>';
+        echo '<br/><a href="bank.php">Voltar</a>.</br>';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
@@ -68,7 +68,7 @@ if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['passcode']) && (
         echo "<fieldset><legend><b>Banco</b></legend>";
         echo "Você não pode enviar esta quantia de ouro!";
         echo "</fieldset>";
-        echo'<br/><a href="bank.php">Voltar</a>.</br>';
+        echo '<br/><a href="bank.php">Voltar</a>.</br>';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
@@ -78,7 +78,7 @@ if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['passcode']) && (
         echo "<fieldset><legend><b>Banco</b></legend>";
         echo "Você não pode enviar ouro para você mesmo!";
         echo "</fieldset>";
-        echo'<br/><a href="bank.php">Voltar</a>.</br>';
+        echo '<br/><a href="bank.php">Voltar</a>.</br>';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
@@ -88,7 +88,7 @@ if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['passcode']) && (
         echo "<fieldset><legend><b>Banco</b></legend>";
         echo "Sua senha de transferência está incorreta.";
         echo "</fieldset>";
-	echo'<br/><a href="bank.php">Voltar</a>.</br>';
+        echo '<br/><a href="bank.php">Voltar</a>.</br>';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
@@ -113,7 +113,7 @@ if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['passcode']) && (
     echo "<fieldset><legend><b>Banco</b></legend>";
     echo sprintf('Você enviou <b>%s</b> de ouro para %s.', $amount, $username);
     echo "</fieldset>";
-    echo'<br/><a href="bank.php">Voltar</a>.</br>';
+    echo '<br/><a href="bank.php">Voltar</a>.</br>';
     include(__DIR__ . "/templates/private_footer.php");
     exit;
 }
@@ -122,6 +122,5 @@ include(__DIR__ . "/templates/private_header.php");
 echo "<fieldset><legend><b>Banco</b></legend>";
 echo "Você precisa preencher todos os campos.";
 echo "</fieldset>";
-echo'<br/><a href="bank.php">Voltar</a>.</br>';
+echo '<br/><a href="bank.php">Voltar</a>.</br>';
 include(__DIR__ . "/templates/private_footer.php");
-?>

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 $currentfile = $_SERVER["SCRIPT_NAME"];
@@ -50,20 +51,16 @@ if ($tutorial->recordcount() == 0) {
             header("Location: inventory.php");
             exit;
         }
-    }
-    elseif ($tut['pending_status'] == 5 && $currentfile !== 'home.php') {
+    } elseif ($tut['pending_status'] == 5 && $currentfile !== 'home.php') {
         header("Location: home.php");
         exit;
-    }
-    elseif ($tut['pending_status'] == 6 && $currentfile !== 'monster.php') {
+    } elseif ($tut['pending_status'] == 6 && $currentfile !== 'monster.php') {
         header("Location: monster.php");
         exit;
-    }
-    elseif ($tut['pending_status'] == 7 && $currentfile !== 'start.php') {
+    } elseif ($tut['pending_status'] == 7 && $currentfile !== 'start.php') {
         header("Location: start.php");
         exit;
-    }
-    elseif ($tut['pending_status'] == 8 && $currentfile !== 'start.php') {
+    } elseif ($tut['pending_status'] == 8 && $currentfile !== 'start.php') {
         header("Location: start.php");
         exit;
     }
@@ -246,20 +243,22 @@ if ($tutorial->recordcount() == 0) {
     <script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1892370805366558"
-        crossorigin="anonymous"
-    >
+        crossorigin="anonymous">
     </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5C9CTZE98D"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
 
-    gtag('config', 'G-5C9CTZE98D');
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-5C9CTZE98D');
     </script>
 </head>
 <div id="applixir_vanishing_div" hidden style="z-index: 1000">
-     <iframe id="applixir_parent" ></iframe>
+    <iframe id="applixir_parent"></iframe>
 </div>
 <?php
 if ($currentfile === 'inventory.php') {
@@ -320,7 +319,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                                 </div>
                             </div>
                         <?php }
-                         ?>
+                        ?>
                         <div class="avatar"><a href="avatar.php"><img src="static/<?php echo $player->avatar ?>"
                                     border="0px"></a></div>
 
@@ -405,7 +404,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                                     $bool = ($bool === "o") ? "oo" : "o";
                                 }
                             }
-                            
+
                             echo "</table>";
                             ?>
                         </div>

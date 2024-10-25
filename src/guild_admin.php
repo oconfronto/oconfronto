@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -223,7 +224,7 @@ echo "</table>";
                                                                 } else {
                                                                     echo $_POST['price'];
                                                                 }
-    
+
                                                                 ?>" size="10" /><br /><?= $msg1; ?></td>
                 </tr>
                 <tr>
@@ -234,7 +235,7 @@ echo "</table>";
                                                                         } else {
                                                                             echo $_POST['motd'];
                                                                         }
-                                                                
+
                                                                         ?>" /><br /><?= $msg3; ?></td>
                 </tr>
                 <tr>

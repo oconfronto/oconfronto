@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -21,7 +22,7 @@ include(__DIR__ . "/checkwork.php");
 header("Content-Type: text/html; charset=utf-8", true);
 
 if (!isset($_SESSION['battlelog']) || !is_array($_SESSION['battlelog'])) {
-    $_SESSION['battlelog'] = [];
+	$_SESSION['battlelog'] = [];
 }
 
 $morreu = 0;
@@ -81,12 +82,12 @@ switch ($_GET['act']) {
 								if (!$_GET['nolayout']) {
 									include(__DIR__ . "/templates/private_header.php");
 								}
-        
+
 								echo "Voc&ecirc; não possui tanta energia para descarregar neste monstro!</b></font> <a href=\"monster.php\">Voltar</a>.";
 								if (!$_GET['nolayout']) {
 									include(__DIR__ . "/templates/private_footer.php");
 								}
-        
+
 								exit;
 							}
 						} else {
@@ -115,8 +116,8 @@ switch ($_GET['act']) {
 						exit;
 					}
 
-     header("Location: monster.php?act=attack");
-     break;
+					header("Location: monster.php?act=attack");
+					break;
 				}
 			}
 		} else {
@@ -149,16 +150,16 @@ switch ($_GET['act']) {
 
 
 		if ($setting->eventoexp > time()) {
-      $expdomonstro = ceil($enemy->mtexp * 4);
-  } elseif ($player->level <= 20) {
-      $expdomonstro = ceil($enemy->mtexp * 4);
-  } elseif ($player->level < 35) {
-				$expdomonstro = ceil($enemy->mtexp * 2.5);
-			} elseif ($player->vip > time()) {
-      $expdomonstro = ceil($enemy->mtexp * 2.1);
-  } else {
-					$expdomonstro = ceil($enemy->mtexp * 2);
-				}
+			$expdomonstro = ceil($enemy->mtexp * 4);
+		} elseif ($player->level <= 20) {
+			$expdomonstro = ceil($enemy->mtexp * 4);
+		} elseif ($player->level < 35) {
+			$expdomonstro = ceil($enemy->mtexp * 2.5);
+		} elseif ($player->vip > time()) {
+			$expdomonstro = ceil($enemy->mtexp * 2.1);
+		} else {
+			$expdomonstro = ceil($enemy->mtexp * 2);
+		}
 
 		$expdomonstro *= $bixo->mul;
 
@@ -397,18 +398,18 @@ switch ($_GET['act']) {
 		}
 
 		if ($player->voc == 'archer') {
-      $varataque = 0.29;
-      $vardefesa = 0.14;
-      $vardivide = 0.14;
-  } elseif ($player->voc == 'mage') {
-      $varataque = 0.245;
-      $vardefesa = 0.14;
-      $vardivide = 0.13;
-  } elseif ($player->voc == 'knight') {
-      $varataque = 0.20;
-      $vardefesa = 0.16;
-      $vardivide = 0.14;
-  }
+			$varataque = 0.29;
+			$vardefesa = 0.14;
+			$vardivide = 0.14;
+		} elseif ($player->voc == 'mage') {
+			$varataque = 0.245;
+			$vardefesa = 0.14;
+			$vardivide = 0.13;
+		} elseif ($player->voc == 'knight') {
+			$varataque = 0.20;
+			$vardefesa = 0.16;
+			$vardivide = 0.14;
+		}
 
 		if ($player->promoted == 'f') {
 			$multipleatk = 1 + ($varataque * 1.6);
@@ -667,7 +668,7 @@ switch ($_GET['act']) {
 				$db->execute("update `bixos` set `vez`='p' where `player_id`=?", [$player->id]);
 			}
 		}
-  
+
 		if ($bixo->hp < 1 || $matou == 5) {
 			if ($bixo->type != 98 && $bixo->type != 99) {
 
@@ -703,7 +704,7 @@ switch ($_GET['act']) {
 				if ($setting->eventoouro > time()) {
 					$goldwin = round($goldwin * 4);
 				}
-    
+
 				$goldwin = round($goldwin * 2);
 				$goldwin *= $bixo->mul;
 
@@ -716,80 +717,80 @@ switch ($_GET['act']) {
 				}
 
 				if ($expfull == 1) {
-        $expgroup2 = $db->execute("select * from `groups` where `id`=?", [$goupid['id']]);
-        $expfull = $expgroup2->recordcount() > 1 ? 1 : 5;
-    }
+					$expgroup2 = $db->execute("select * from `groups` where `id`=?", [$goupid['id']]);
+					$expfull = $expgroup2->recordcount() > 1 ? 1 : 5;
+				}
 
 
 				if ($expfull == 1) {
-        $totalgrupoquery = $db->execute("select * from `groups` where `id`=?", [$goupid['id']]);
-        if ($totalgrupoquery->recordcount() > 0) {
-   						while ($gbbbonus = $totalgrupoquery->fetchrow()) {
-   							$grupototalbonus += $gbbbonus['kills'] * $bixo->mul;
-   						}
-   
-   						if ($grupototalbonus > 4999 && $grupototalbonus < 15000) {
-   							$cacagrupbbonus = 5;
-   						} elseif ($grupototalbonus > 14999 && $grupototalbonus < 30000) {
-   							$cacagrupbbonus = 10;
-   						} elseif ($grupototalbonus > 29999 && $grupototalbonus < 50000) {
-   							$cacagrupbbonus = 15;
-   						} elseif ($grupototalbonus > 49999) {
-   							$cacagrupbbonus = 20;
-   						} else {
-   							$cacagrupbbonus = 0;
-   						}
-   					}
+					$totalgrupoquery = $db->execute("select * from `groups` where `id`=?", [$goupid['id']]);
+					if ($totalgrupoquery->recordcount() > 0) {
+						while ($gbbbonus = $totalgrupoquery->fetchrow()) {
+							$grupototalbonus += $gbbbonus['kills'] * $bixo->mul;
+						}
 
-        if ($cacagrupbbonus > 0) {
-   						$newexppart1 = ceil($expdomonstro / 100);
-   						$expdomonstro = ceil($expdomonstro + ($newexppart1 * $cacagrupbbonus));
-   					}
-
-        $query = $db->execute("update `groups` set `exp`=`exp`+?, `kills`=`kills`+? where `player_id`=?", [$expdomonstro, $bixo->mul, $player->id]);
-        $expdomonstro = ceil($expdomonstro / $expgroup2->recordcount());
-        while ($pexp = $expgroup2->fetchrow()) {
-   						$pinfoquery = $db->execute("select * from `players` where `id`=?", [$pexp['player_id']]);
-   						$pinfo = $pinfoquery->fetchrow();
-   
-   						if ($expdomonstro + $pinfo['exp'] >= maxExp($pinfo['level'])) //Player gained a level!
-   						{
-   							$newexp = $expdomonstro + $pinfo['exp'] - maxExp($pinfo['level']);
-   
-   							$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [maxMana($pinfo['level'], $pinfo['extramana']), maxMana($pinfo['level'], $pinfo['extramana']), $pinfo['id']]);
-   							$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", [maxEnergy($pinfo['level'], $pinfo['vip']), $pinfo['id']]);
-   
-   							$svexp = "difficulty_" . $player->serv . "";
-   
-   							$db->execute("update `players` set `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=?, `maxhp`=?, `exp`=?, `magic_points`=`magic_points`+1, `groupmonsterkilled`=`groupmonsterkilled`+? where `id`=?", [maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), $newexp, $bixo->mul, $pinfo['id']]);
-   
-   							if ($pinfo['id'] != $player->id) {
-   								$logwinlvlmsg = "Voc&ecirc; avanãou um nível enquanto <a href=\"profile.php?id=" . $player->username . '">' . $player->username . "</a> matava monstros.";
-   								addlog($pinfo['id'], $logwinlvlmsg, $db);
-   							}
-   
-   							if ($pinfo['id'] == $player->id) {
-   								$newlevell = 5;
-   							}
-   						} else {
-   							//Update player
-   							$query = $db->execute("update `players` set `exp`=`exp`+?, `groupmonsterkilled`=`groupmonsterkilled`+? where `id`=?", [$expdomonstro, $bixo->mul, $pinfo['id']]);
-   						}
-   					}
-
-        $query = $db->execute("update `players` set `gold`=`gold`+?, `hp`=?, `mana`=?, `energy`=`energy`-?, `monsterkill`=`monsterkill`+1 where `id`=?", [$goldwin, $player->hp, $player->mana, (10 * $bixo->mul), $player->id]);
-    } elseif ($expdomonstro + $player->exp >= maxExp($player->level)) {
-        //Player gained a level!
-        //Update player, gained a level
-        $newlevell = 5;
-        $newexp = $expdomonstro + $player->exp - maxExp($player->level);
-        $db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [maxMana($player->level, $player->extramana), maxMana($player->level, $player->extramana), $player->id]);
-        $db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", [maxEnergy($player->level, $player->vip), $player->id]);
-        $db->execute("update `players` set `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=?, `maxhp`=?, `exp`=?, `magic_points`=`magic_points`+1, `energy`=`energy`-?, `gold`=?, `monsterkill`=`monsterkill`+1, `monsterkilled`=`monsterkilled`+? where `id`=?", [maxHp($db, $player->id, $player->level, $player->reino, $player->vip), maxHp($db, $player->id, $player->level, $player->reino, $player->vip), $newexp, (10 * $bixo->mul), $player->gold + $goldwin, $bixo->mul, $player->id]);
-    } else {
-						//Update player
-						$query = $db->execute("update `players` set `exp`=`exp`+?, `gold`=`gold`+?, `hp`=?, `mana`=?, `energy`=`energy`-?, `monsterkill`=`monsterkill`+1, `monsterkilled`=`monsterkilled`+? where `id`=?", [$expdomonstro, $goldwin, $player->hp, $player->mana, (10 * $bixo->mul), $bixo->mul, $player->id]);
+						if ($grupototalbonus > 4999 && $grupototalbonus < 15000) {
+							$cacagrupbbonus = 5;
+						} elseif ($grupototalbonus > 14999 && $grupototalbonus < 30000) {
+							$cacagrupbbonus = 10;
+						} elseif ($grupototalbonus > 29999 && $grupototalbonus < 50000) {
+							$cacagrupbbonus = 15;
+						} elseif ($grupototalbonus > 49999) {
+							$cacagrupbbonus = 20;
+						} else {
+							$cacagrupbbonus = 0;
+						}
 					}
+
+					if ($cacagrupbbonus > 0) {
+						$newexppart1 = ceil($expdomonstro / 100);
+						$expdomonstro = ceil($expdomonstro + ($newexppart1 * $cacagrupbbonus));
+					}
+
+					$query = $db->execute("update `groups` set `exp`=`exp`+?, `kills`=`kills`+? where `player_id`=?", [$expdomonstro, $bixo->mul, $player->id]);
+					$expdomonstro = ceil($expdomonstro / $expgroup2->recordcount());
+					while ($pexp = $expgroup2->fetchrow()) {
+						$pinfoquery = $db->execute("select * from `players` where `id`=?", [$pexp['player_id']]);
+						$pinfo = $pinfoquery->fetchrow();
+
+						if ($expdomonstro + $pinfo['exp'] >= maxExp($pinfo['level'])) //Player gained a level!
+						{
+							$newexp = $expdomonstro + $pinfo['exp'] - maxExp($pinfo['level']);
+
+							$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [maxMana($pinfo['level'], $pinfo['extramana']), maxMana($pinfo['level'], $pinfo['extramana']), $pinfo['id']]);
+							$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", [maxEnergy($pinfo['level'], $pinfo['vip']), $pinfo['id']]);
+
+							$svexp = "difficulty_" . $player->serv . "";
+
+							$db->execute("update `players` set `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=?, `maxhp`=?, `exp`=?, `magic_points`=`magic_points`+1, `groupmonsterkilled`=`groupmonsterkilled`+? where `id`=?", [maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), $newexp, $bixo->mul, $pinfo['id']]);
+
+							if ($pinfo['id'] != $player->id) {
+								$logwinlvlmsg = "Voc&ecirc; avanãou um nível enquanto <a href=\"profile.php?id=" . $player->username . '">' . $player->username . "</a> matava monstros.";
+								addlog($pinfo['id'], $logwinlvlmsg, $db);
+							}
+
+							if ($pinfo['id'] == $player->id) {
+								$newlevell = 5;
+							}
+						} else {
+							//Update player
+							$query = $db->execute("update `players` set `exp`=`exp`+?, `groupmonsterkilled`=`groupmonsterkilled`+? where `id`=?", [$expdomonstro, $bixo->mul, $pinfo['id']]);
+						}
+					}
+
+					$query = $db->execute("update `players` set `gold`=`gold`+?, `hp`=?, `mana`=?, `energy`=`energy`-?, `monsterkill`=`monsterkill`+1 where `id`=?", [$goldwin, $player->hp, $player->mana, (10 * $bixo->mul), $player->id]);
+				} elseif ($expdomonstro + $player->exp >= maxExp($player->level)) {
+					//Player gained a level!
+					//Update player, gained a level
+					$newlevell = 5;
+					$newexp = $expdomonstro + $player->exp - maxExp($player->level);
+					$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [maxMana($player->level, $player->extramana), maxMana($player->level, $player->extramana), $player->id]);
+					$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", [maxEnergy($player->level, $player->vip), $player->id]);
+					$db->execute("update `players` set `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=?, `maxhp`=?, `exp`=?, `magic_points`=`magic_points`+1, `energy`=`energy`-?, `gold`=?, `monsterkill`=`monsterkill`+1, `monsterkilled`=`monsterkilled`+? where `id`=?", [maxHp($db, $player->id, $player->level, $player->reino, $player->vip), maxHp($db, $player->id, $player->level, $player->reino, $player->vip), $newexp, (10 * $bixo->mul), $player->gold + $goldwin, $bixo->mul, $player->id]);
+				} else {
+					//Update player
+					$query = $db->execute("update `players` set `exp`=`exp`+?, `gold`=`gold`+?, `hp`=?, `mana`=?, `energy`=`energy`-?, `monsterkill`=`monsterkill`+1, `monsterkilled`=`monsterkilled`+? where `id`=?", [$expdomonstro, $goldwin, $player->hp, $player->mana, (10 * $bixo->mul), $bixo->mul, $player->id]);
+				}
 
 				if ($lootstatus == 5) {
 					$insert['player_id'] = $player->id;
@@ -863,38 +864,38 @@ switch ($_GET['act']) {
 			if ($newlevell == 5) {
 				$output .= showAlert("<u><b>Voc&ecirc; passou de nível!</b></u>", "green");
 			}
-   
+
 			if ($lootstatus == 5) {
 				$output .= showAlert($mensagem);
 			}
-   
+
 			if ($medalha == 10) {
 				$output .= showAlert($medalhamsg);
 			}
 
 			$db->execute("update `bixos` set `hp`=0, `type`=? where `player_id`=?", [99, $player->id]);
 		}
-  
-		if (($player->hp < 1 || $morreu == 5) && ($bixo->type != 98 && $bixo->type != 99)) {
-	$exploss1 = $player->level * 7 * ($bixo->mul / 2);
-	$exploss2 = (($player->level - $enemy->level) > 0) ? ($enemy->level - $player->level) * 4 : 0;
-	$exploss = $exploss1 + $exploss2;
-	$goldloss = max(1, intval(0.4 * $player->gold));
-	$goldloss = random_int(1, $goldloss);
-	$exploss3 = min($player->exp, $exploss);
-	$goldloss2 = min($player->gold, $goldloss);
-      $output .= showAlert("<b>Voc&ecirc; morreu!</b><br/>Voc&ecirc; perdeu " . number_format($exploss3) . " de experi&ecirc;ncia e " . number_format($goldloss2) . " de ouro.", "red");
-      //Update player (the loser)
-      $query = $db->execute("update `players` set `energy`=`energy`-?, `exp`=`exp`-?, `gold`=`gold`-?, `deaths`=`deaths`+1, `hp`=0, `mana`=0, `deadtime`=? where `id`=?", [(10 * $bixo->mul), $exploss3, $goldloss2, time() + $setting->dead_time, $player->id]);
-      //verifica dungeon
-      if ($monstroDeArena) {
-  					$output .= showAlert("Você foi morto por um monstro da arena e foi desclassificado.", "red");
-  					$db->execute("update `dungeon_status` set `fail`=1, `status`=? where `status`<90 and `fail`=0 and `player_id`=?", [(time() + 86400), $player->id]);
-  				}
 
-      $morreu = 5;
-      $db->execute("update `bixos` set `type`=? where `player_id`=?", [98, $player->id]);
-  }
+		if (($player->hp < 1 || $morreu == 5) && ($bixo->type != 98 && $bixo->type != 99)) {
+			$exploss1 = $player->level * 7 * ($bixo->mul / 2);
+			$exploss2 = (($player->level - $enemy->level) > 0) ? ($enemy->level - $player->level) * 4 : 0;
+			$exploss = $exploss1 + $exploss2;
+			$goldloss = max(1, intval(0.4 * $player->gold));
+			$goldloss = random_int(1, $goldloss);
+			$exploss3 = min($player->exp, $exploss);
+			$goldloss2 = min($player->gold, $goldloss);
+			$output .= showAlert("<b>Voc&ecirc; morreu!</b><br/>Voc&ecirc; perdeu " . number_format($exploss3) . " de experi&ecirc;ncia e " . number_format($goldloss2) . " de ouro.", "red");
+			//Update player (the loser)
+			$query = $db->execute("update `players` set `energy`=`energy`-?, `exp`=`exp`-?, `gold`=`gold`-?, `deaths`=`deaths`+1, `hp`=0, `mana`=0, `deadtime`=? where `id`=?", [(10 * $bixo->mul), $exploss3, $goldloss2, time() + $setting->dead_time, $player->id]);
+			//verifica dungeon
+			if ($monstroDeArena) {
+				$output .= showAlert("Você foi morto por um monstro da arena e foi desclassificado.", "red");
+				$db->execute("update `dungeon_status` set `fail`=1, `status`=? where `status`<90 and `fail`=0 and `player_id`=?", [(time() + 86400), $player->id]);
+			}
+
+			$morreu = 5;
+			$db->execute("update `bixos` set `type`=? where `player_id`=?", [98, $player->id]);
+		}
 
 		if ($fugiu == 5) {
 			$db->execute("delete from `bixos` where `player_id`=?", [$player->id]);
@@ -920,14 +921,14 @@ switch ($_GET['act']) {
 			$selct = $verificpotion->fetchrow();
 			$valortempo = $selct['time'] - time();
 			if ($valortempo < 60) {
-       $auxiliar = "segundo(s)";
-   } elseif ($valortempo < 3600) {
-       $valortempo = ceil($valortempo / 60);
-       $auxiliar = "minuto(s)";
-   } elseif ($valortempo < 86400) {
-       $valortempo = ceil($valortempo / 3600);
-       $auxiliar = "hora(s)";
-   }
+				$auxiliar = "segundo(s)";
+			} elseif ($valortempo < 3600) {
+				$valortempo = ceil($valortempo / 60);
+				$auxiliar = "minuto(s)";
+			} elseif ($valortempo < 86400) {
+				$valortempo = ceil($valortempo / 3600);
+				$auxiliar = "hora(s)";
+			}
 
 			$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id']]);
 			$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id']]);
@@ -1008,7 +1009,7 @@ switch ($_GET['act']) {
 		if ($output) {
 			$_SESSION['statuslog'] = $output;
 		}
-  
+
 		echo $_SESSION['statuslog'];
 
 		echo '<div id="logdebatalha" class="scroll" style="background-color:#FFFDE0; overflow: auto; height:220px; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
@@ -1020,7 +1021,7 @@ switch ($_GET['act']) {
 					if (count($log_parts) >= 2) {
 						$alignment = in_array($log_parts[0], ['1', '3', '5']) ? 'left' : 'right';
 						$color = ['1' => 'green', '2' => 'red', '3' => 'blue', '4' => 'purple'][$log_parts[0]] ?? 'black';
-						
+
 						echo sprintf('<div style="text-align: %s">', $alignment);
 						echo sprintf('<font color="%s">%s</font>', $color, $log_parts[1]);
 						echo "</div>";
@@ -1043,7 +1044,7 @@ switch ($_GET['act']) {
 			} elseif ($heal > 0 && $player->gold > 0) {
 				echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('heal.php', 'swap')\">Recuperar vida</a> <font size=\"1\">(" . number_format($cost2) . " de ouro)</font> | ";
 			}
-   
+
 			echo '<a href="monster.php">Voltar</a>';
 
 			echo '</td><td width="25%">';
@@ -1051,7 +1052,7 @@ switch ($_GET['act']) {
 			if ($modefastbattle->recordcount() > 0) {
 				echo "<center><font size=\"1px\"><b><a href=\"swap_type.php?alterar=true\">Desativar Luta Rápida</a></b></font></center>";
 			}
-   
+
 			echo "</tr></table>";
 			echo "</div>";
 		} elseif (($bixo->type == 98 || $bixo->type == 99) && $bixo->hp > 0 || $player->hp <= 0 || $morreu == 5) {
@@ -1094,7 +1095,7 @@ switch ($_GET['act']) {
 		if (!$_GET['nolayout']) {
 			include(__DIR__ . "/templates/private_footer.php");
 		}
-  
+
 		break;
 
 
@@ -1127,14 +1128,14 @@ switch ($_GET['act']) {
 			$selct = $verificpotion->fetchrow();
 			$valortempo = $selct['time'] - time();
 			if ($valortempo < 60) {
-       $auxiliar = "segundo(s)";
-   } elseif ($valortempo < 3600) {
-       $valortempo = ceil($valortempo / 60);
-       $auxiliar = "minuto(s)";
-   } elseif ($valortempo < 86400) {
-       $valortempo = ceil($valortempo / 3600);
-       $auxiliar = "hora(s)";
-   }
+				$auxiliar = "segundo(s)";
+			} elseif ($valortempo < 3600) {
+				$valortempo = ceil($valortempo / 60);
+				$auxiliar = "minuto(s)";
+			} elseif ($valortempo < 86400) {
+				$valortempo = ceil($valortempo / 3600);
+				$auxiliar = "hora(s)";
+			}
 
 			$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id']]);
 			$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id']]);
@@ -1164,8 +1165,8 @@ switch ($_GET['act']) {
 		} elseif ($player->level < 35) {
 			echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Bônus de experi&ecirc;ncia de 50% para usuários de nível inferior a 35.</div>";
 		} elseif ($player->vip > time()) {
-      echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Bônus de experi&ecirc;ncia de 10% para usuários VIP.</div>";
-  }
+			echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Bônus de experi&ecirc;ncia de 10% para usuários VIP.</div>";
+		}
 
 
 		$veriddoseugrupo = $db->execute("select `id` from `groups` where `player_id`=?", [$player->id]);
@@ -1214,7 +1215,7 @@ switch ($_GET['act']) {
 				echo "</tr>\n";
 				$bool = ($bool == 1) ? 2 : 1;
 			}
-   
+
 			echo "</table><br/><br/>\n";
 		}
 
@@ -1231,11 +1232,11 @@ switch ($_GET['act']) {
 			echo "</tr>\n";
 			$bool = ($bool == 1) ? 2 : 1;
 		}
-  
+
 		echo "</table>\n";
 		if (!$_GET['nolayout']) {
 			include(__DIR__ . "/templates/private_footer.php");
 		}
-  
+
 		break;
 }

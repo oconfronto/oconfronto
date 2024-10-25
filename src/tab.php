@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -22,11 +23,11 @@ include(__DIR__ . "/templates/private_header.php");
         asiuodhiasudhad
     </div>
     <div id="tab2" class="tab_content">
-      dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>
+        dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>dooorgas<br>
     </div>
 </div>
 
 
 <?php
-	include(__DIR__ . "/templates/private_footer.php");
+include(__DIR__ . "/templates/private_footer.php");
 ?>

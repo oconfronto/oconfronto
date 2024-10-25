@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -10,4 +11,3 @@ echo "</span>";
 echo '<p><center>Pagamento efetuado com sucesso!<br/><a href="characters.php">Clique aqui</a> para entrar em sua conta.</center></p>';
 include(__DIR__ . "/templates/footer.php");
 exit;
-?>

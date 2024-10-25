@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -12,57 +13,57 @@ include(__DIR__ . "/templates/private_header.php");
 
 $get = $db->execute(sprintf("select * from `players` where `username` = '%s' and subname > '0'", $player->username));
 if ($get->recordcount() > 0 && $_POST['subname'] == "alterar") {
-    $subtitle = $_POST['subtitle'];
-    $sub_color = $_POST['categoria_color'];
-    $numero = "10";
-    $total = strlen((string) $subtitle);
-    if ($total > $numero) {
-        echo showAlert("Ta maluco? Só são aceitos nicks com 10 caracteres ou menos.", "red");
-    } elseif (!empty($subtitle) && !empty($sub_color)) {
-        if ($sub_color == "red" || $sub_color == "blue" || $sub_color == "green" || $sub_color == "black") {
-    
-    					if ($_POST['clean'] == 'yes') {
-    						$sub_final = "1";
-    						echo showAlert("Subnick foi removido", "green");
-    					} else {
-    						$sub_final = "" . $subtitle . ", " . $sub_color . "";
-    						echo showAlert(sprintf('Nick alterado: %s [<font color="', $player->username) . $sub_color . '">' . $subtitle . "</font>]", "green");
-    					}
-         
-    					$trocachare = $db->execute("update `players` set `subname`=? where `username`=?", [$sub_final, $player->username]);
-    				} else {
-    					echo showAlert("Digite uma cor válida", "red");
-    				}
-    } else {
- 				echo showAlert("Digite um sub nick válido", "red");
- 			}
+	$subtitle = $_POST['subtitle'];
+	$sub_color = $_POST['categoria_color'];
+	$numero = "10";
+	$total = strlen((string) $subtitle);
+	if ($total > $numero) {
+		echo showAlert("Ta maluco? Só são aceitos nicks com 10 caracteres ou menos.", "red");
+	} elseif (!empty($subtitle) && !empty($sub_color)) {
+		if ($sub_color == "red" || $sub_color == "blue" || $sub_color == "green" || $sub_color == "black") {
+
+			if ($_POST['clean'] == 'yes') {
+				$sub_final = "1";
+				echo showAlert("Subnick foi removido", "green");
+			} else {
+				$sub_final = "" . $subtitle . ", " . $sub_color . "";
+				echo showAlert(sprintf('Nick alterado: %s [<font color="', $player->username) . $sub_color . '">' . $subtitle . "</font>]", "green");
+			}
+
+			$trocachare = $db->execute("update `players` set `subname`=? where `username`=?", [$sub_final, $player->username]);
+		} else {
+			echo showAlert("Digite uma cor válida", "red");
+		}
+	} else {
+		echo showAlert("Digite um sub nick válido", "red");
+	}
 }
 
 if ($_POST['upload']) {
 	if (!$_POST['avatar']) {
-     $errmsg .= "Por favor preencha todos os campos!";
-     $error = 1;
- } elseif ($_POST['avatar'] && (@GetImageSize($_POST['avatar']) === [] || @GetImageSize($_POST['avatar']) === false)) {
-     $errmsg .= "O endereço desta imagem não é válido!";
-     $error = 1;
- }
+		$errmsg .= "Por favor preencha todos os campos!";
+		$error = 1;
+	} elseif ($_POST['avatar'] && (@GetImageSize($_POST['avatar']) === [] || @GetImageSize($_POST['avatar']) === false)) {
+		$errmsg .= "O endereço desta imagem não é válido!";
+		$error = 1;
+	}
 
- if ($error == 0) {
-     $avat = $_POST['avatar'] ?: "anonimo.gif";
-     $query = $db->execute("update `players` set `avatar`=? where `id`=?", [$avat, $player->id]);
-     $msg .= "Você alterou seu avatar com sucesso!";
-     // Espera 1.5 segundos antes de atualizar a página
-     //  echo "<p><font color='green'>$msg</font></p>";
-     echo showAlert("<b>" . $msg . "</b>", "green");
-     echo '<meta http-equiv="refresh" content="1.3">';
-     exit;
- }
+	if ($error == 0) {
+		$avat = $_POST['avatar'] ?: "anonimo.gif";
+		$query = $db->execute("update `players` set `avatar`=? where `id`=?", [$avat, $player->id]);
+		$msg .= "Você alterou seu avatar com sucesso!";
+		// Espera 1.5 segundos antes de atualizar a página
+		//  echo "<p><font color='green'>$msg</font></p>";
+		echo showAlert("<b>" . $msg . "</b>", "green");
+		echo '<meta http-equiv="refresh" content="1.3">';
+		exit;
+	}
 
- // Espera 1.5 segundos antes de atualizar a página
- //  echo "<p><font color='green'>$msg</font></p>";
- echo showAlert("<b>" . $errmsg . "</b>", "red");
- echo '<meta http-equiv="refresh" content="1.3">';
- exit;
+	// Espera 1.5 segundos antes de atualizar a página
+	//  echo "<p><font color='green'>$msg</font></p>";
+	echo showAlert("<b>" . $errmsg . "</b>", "red");
+	echo '<meta http-equiv="refresh" content="1.3">';
+	exit;
 }
 
 
@@ -92,7 +93,7 @@ if ($procuramengperfil->recordcount() == 0) {
 		<td width="75%"><b>Enviar avatar:</b><br />
 			<form method="POST" action="avatar.php">
 				<input type="text" name="avatar" value="<?= $player->avatar ?>" size="45" />
-				<input type="submit" name="upload" value="Enviar" />				
+				<input type="submit" name="upload" value="Enviar" />
 				<!-- <input type="file" name="foto" size="30"><input type="submit" name="upload" value="Enviar"> -->
 				<!-- <p>
 					Envie uma imagem para ser utilizada como avatar.<br />

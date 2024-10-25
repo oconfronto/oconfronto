@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -19,7 +20,7 @@ if ($player->level < 15) {
 
 switch ($_GET['act']) {
 	case "sell": {
-			include(__DIR__ . "/templates/private_header.php");			
+			include(__DIR__ . "/templates/private_header.php");
 
 			$gsadasdiiii = $db->execute("select items.item_id, items.item_bonus, items.for, items.vit, items.agi, items.res, items.status, blueprint_items.name, blueprint_items.type from `items`, `blueprint_items` where items.id=? and items.player_id=? and items.item_id=blueprint_items.id", [$_GET['item'], $player->id]);
 			$goooosdsfds = $gsadasdiiii->fetchrow();
@@ -57,19 +58,19 @@ switch ($_GET['act']) {
 			if ($goooosdsfds['item_bonus'] > 0) {
 				$bonus1 = " +" . $goooosdsfds['item_bonus'] . "";
 			}
-   
+
 			if ($goooosdsfds['for'] > 0) {
 				$bonus2 = ' <font color="gray">+' . $goooosdsfds['for'] . "F</font>";
 			}
-   
+
 			if ($goooosdsfds['vit'] > 0) {
 				$bonus3 = ' <font color="green">+' . $goooosdsfds['vit'] . "V</font>";
 			}
-   
+
 			if ($goooosdsfds['agi'] > 0) {
 				$bonus4 = ' <font color="blue">+' . $goooosdsfds['agi'] . "A</font>";
 			}
-   
+
 			if ($goooosdsfds['res'] > 0) {
 				$bonus5 = ' <font color="red">+' . $goooosdsfds['res'] . "R</font>";
 			}
@@ -200,7 +201,7 @@ switch ($_GET['act']) {
 				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
-   
+
 			$gsassaaa = $db->execute("select blueprint_items.name, items.item_id from `blueprint_items`, `items` where items.id=? and blueprint_items.id=items.item_id", [$item]);
 			$gooooa = $gsassaaa->fetchrow();
 			include(__DIR__ . "/templates/private_header.php");
@@ -308,7 +309,7 @@ switch ($_GET['act']) {
 				echo "Agora seu item está disponivel no mercado! <a href=\"market.php\">Voltar</a>.";
 				include(__DIR__ . "/templates/private_footer.php");
 			}
-   
+
 			break;
 		}
 	default:
@@ -323,7 +324,7 @@ switch ($_GET['act']) {
 		if ($query->recordcount() == 0) {
 			echo "<br /><b>Você não tem itens para vender.</b>";
 		}
-  
+
 		$abaioepa = $db->execute("select `id` from `items` where `player_id`=?", [$player->id]);
 		if ($abaioepa->recordcount() == 0) {
 			echo "<br /><b>Você não tem itens para vender.</b>";
@@ -331,38 +332,38 @@ switch ($_GET['act']) {
 			exit;
 		}
 
-  echo "<fieldset><legend><b>Quais itens você gostaria de vender?</b></legend>";
-  echo "<table style='width:100%;border-collapse: collapse;'>";
-  echo "<thead>";
-  echo "<tr>";
-  echo "<th style='width:10%;text-align: center;'><b>imagem</b></th>";
-  echo "<th style='width:76%;text-align: center;'><b>Item</b></th>";
-  echo "<th style='width:20%;text-align: center;'><b>Ação</b></th>";
-  echo "</tr>";
-  echo "</thead>";
-  echo "<tbody>";
-  $gettheitemuniqid = $db->execute("select items.id, items.item_bonus, items.for, items.vit, items.agi, items.res, blueprint_items.name, blueprint_items.img from `items`, `blueprint_items` where `player_id`=? and mark!='t' and status != 'equipped'  and items.item_id=blueprint_items.id order by blueprint_items.name asc", [$player->id]);
-  $bool = 1;
-  while ($gettheitemuniqiditem = $gettheitemuniqid->fetchrow()) {
-				$bonus01 = $gettheitemuniqiditem['item_bonus'] > 0 ? " (+" . $gettheitemuniqiditem['item_bonus'] . ")" : "";
+		echo "<fieldset><legend><b>Quais itens você gostaria de vender?</b></legend>";
+		echo "<table style='width:100%;border-collapse: collapse;'>";
+		echo "<thead>";
+		echo "<tr>";
+		echo "<th style='width:10%;text-align: center;'><b>imagem</b></th>";
+		echo "<th style='width:76%;text-align: center;'><b>Item</b></th>";
+		echo "<th style='width:20%;text-align: center;'><b>Ação</b></th>";
+		echo "</tr>";
+		echo "</thead>";
+		echo "<tbody>";
+		$gettheitemuniqid = $db->execute("select items.id, items.item_bonus, items.for, items.vit, items.agi, items.res, blueprint_items.name, blueprint_items.img from `items`, `blueprint_items` where `player_id`=? and mark!='t' and status != 'equipped'  and items.item_id=blueprint_items.id order by blueprint_items.name asc", [$player->id]);
+		$bool = 1;
+		while ($gettheitemuniqiditem = $gettheitemuniqid->fetchrow()) {
+			$bonus01 = $gettheitemuniqiditem['item_bonus'] > 0 ? " (+" . $gettheitemuniqiditem['item_bonus'] . ")" : "";
 
-   $bonus02 = $gettheitemuniqiditem['for'] > 0 ? ' <font color="gray">+' . $gettheitemuniqiditem['for'] . "F</font>" : "";
+			$bonus02 = $gettheitemuniqiditem['for'] > 0 ? ' <font color="gray">+' . $gettheitemuniqiditem['for'] . "F</font>" : "";
 
-   $bonus03 = $gettheitemuniqiditem['vit'] > 0 ? ' <font color="green">+' . $gettheitemuniqiditem['vit'] . "V</font>" : "";
+			$bonus03 = $gettheitemuniqiditem['vit'] > 0 ? ' <font color="green">+' . $gettheitemuniqiditem['vit'] . "V</font>" : "";
 
-   $bonus04 = $gettheitemuniqiditem['agi'] > 0 ? ' <font color="blue">+' . $gettheitemuniqiditem['agi'] . "A</font>" : "";
+			$bonus04 = $gettheitemuniqiditem['agi'] > 0 ? ' <font color="blue">+' . $gettheitemuniqiditem['agi'] . "A</font>" : "";
 
-   $bonus05 = $gettheitemuniqiditem['res'] > 0 ? ' <font color="red">+' . $gettheitemuniqiditem['res'] . "R</font>" : "";
+			$bonus05 = $gettheitemuniqiditem['res'] > 0 ? ' <font color="red">+' . $gettheitemuniqiditem['res'] . "R</font>" : "";
 
-   echo '<tr class="row' . $bool . "\">
+			echo '<tr class="row' . $bool . "\">
 				<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><img src=\"static/images/itens/{$gettheitemuniqiditem['img']}\" alt=\"{$gettheitemuniqiditem['name']}\"></td>
 				<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $gettheitemuniqiditem['name'] . "" . $bonus01 . "" . $bonus02 . "" . $bonus03 . "" . $bonus04 . "" . $bonus05 . "</td>
 				<td style='text-align:center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><a href=\"market_sell.php?act=sell&item=" . $gettheitemuniqiditem['id'] . '">Vender</a></td></tr>';
 
-				$bool = ($bool==1)?2:1;
-			}
+			$bool = ($bool == 1) ? 2 : 1;
+		}
 
-  echo "</tbody></table></fieldset>";
+		echo "</tbody></table></fieldset>";
 		?>
 <?php
 		include(__DIR__ . "/templates/private_footer.php");

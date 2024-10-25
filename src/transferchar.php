@@ -16,7 +16,7 @@ if ($_GET['cancel']) {
         include(__DIR__ . "/templates/acc-footer.php");
         exit;
     }
-    
+
     include(__DIR__ . "/templates/acc-header.php");
     echo '<span id="aviso-a"></span>';
     echo "<br/><p><center>Nenhuma solicitação de transferência encontrada. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";

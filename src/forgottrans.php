@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
@@ -73,4 +74,3 @@ print "</table>";
 
 print "</fieldset><br/><input type='submit' name='submit' value='Enviar senha para o Email'></form>";
 include(__DIR__ . "/templates/private_footer.php");
-?>

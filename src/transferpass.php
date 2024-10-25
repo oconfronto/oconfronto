@@ -16,7 +16,7 @@ if (($_POST['pass']) && ($_POST['pass2'])) {
         echo "<fieldset><legend><b>Segurança</b></legend>";
         echo "Você já possui uma senha de transferência.";
         echo "</fieldset>";
-        echo'<br/><a href="home.php">Voltar</a>.</br>';
+        echo '<br/><a href="home.php">Voltar</a>.</br>';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
@@ -26,7 +26,7 @@ if (($_POST['pass']) && ($_POST['pass2'])) {
         echo "<fieldset><legend><b>Segurança</b></legend>";
         echo "Digite as duas senhas corretamente.";
         echo "</fieldset>";
-        echo'<br/><a href="home.php">Voltar</a>.</br>';
+        echo '<br/><a href="home.php">Voltar</a>.</br>';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
@@ -36,7 +36,7 @@ if (($_POST['pass']) && ($_POST['pass2'])) {
         echo "<fieldset><legend><b>Segurança</b></legend>";
         echo "Sua senha de transferência não pode ter mais de 30 caracteres.";
         echo "</fieldset>";
-        echo'<br/><a href="home.php">Voltar</a>.</br>';
+        echo '<br/><a href="home.php">Voltar</a>.</br>';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
@@ -46,7 +46,7 @@ if (($_POST['pass']) && ($_POST['pass2'])) {
         echo "<fieldset><legend><b>Segurança</b></legend>";
         echo "Sua senha de transferência não pode ter menos de 4 caracteres.";
         echo "</fieldset>";
-        echo'<br/><a href="home.php">Voltar</a>.</br>';
+        echo '<br/><a href="home.php">Voltar</a>.</br>';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
@@ -56,7 +56,7 @@ if (($_POST['pass']) && ($_POST['pass2'])) {
         echo "<fieldset><legend><b>Segurança</b></legend>";
         echo "Sua senha de transferência não pode ser igual a senha da sua conta.";
         echo "</fieldset>";
-	echo'<br/><a href="home.php">Voltar</a>.</br>';
+        echo '<br/><a href="home.php">Voltar</a>.</br>';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
     }
@@ -66,7 +66,7 @@ if (($_POST['pass']) && ($_POST['pass2'])) {
     echo "<fieldset><legend><b>Segurança</b></legend>";
     echo "Sua senha de transfêrencia foi criada com sucesso.";
     echo "</fieldset>";
-    echo'<br/><a href="home.php">Voltar</a>.</br>';
+    echo '<br/><a href="home.php">Voltar</a>.</br>';
     include(__DIR__ . "/templates/private_footer.php");
     exit;
 }
@@ -75,6 +75,5 @@ include(__DIR__ . "/templates/private_header.php");
 echo "<fieldset><legend><b>Segurança</b></legend>";
 echo "Você precisa preencher todos os campos.";
 echo "</fieldset>";
-echo'<br/><a href="home.php">Voltar</a>.</br>';
+echo '<br/><a href="home.php">Voltar</a>.</br>';
 include(__DIR__ . "/templates/private_footer.php");
-?>
