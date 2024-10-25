@@ -1,37 +1,37 @@
-div.jMyCarousel .prev{
-	background: url('../images/left.png') center center no-repeat;
-	width:47px;
-	height:61px;
-	border:0px;
+div.jMyCarousel .prev {
+  background: url("../images/left.png") center center no-repeat;
+  width: 47px;
+  height: 61px;
+  border: 0px;
 }
 
-div.jMyCarousel .next{
-	background: url('../images/right.png') center center no-repeat;
-	width:40px;
-	height:61px;
-	border:0px;
+div.jMyCarousel .next {
+  background: url("../images/right.png") center center no-repeat;
+  width: 40px;
+  height: 61px;
+  border: 0px;
 }
-
 
 /** Carousel 2 **/
-div.jMyCarousel{
-	margin:auto;
+div.jMyCarousel {
+  margin: auto;
 }
 
-div.jMyCarousel ul li{
-	margin:5px;
-	line-height:0px;
+div.jMyCarousel ul li {
+  margin: 5px;
+  line-height: 0px;
 }
 
-div.jMyCarousel ul li a{ /* in case of link */
-	display:block;
-	margin:0px;
-	padding:0px;
+div.jMyCarousel ul li a {
+  /* in case of link */
+  display: block;
+  margin: 0px;
+  padding: 0px;
 }
 
-div.jMyCarousel ul li a img{
-	display:block;
-	border:0px;
-	margin-bottom:0px;
-	padding-bottom:0px;
+div.jMyCarousel ul li a img {
+  display: block;
+  border: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
 }

@@ -1,10 +1,10 @@
-ul.menubar{
+ul.menubar {
   margin: 0px;
   padding: 0px;
   font-size: 100%;
 }
- 
-ul.menubar .submenu{
+
+ul.menubar .submenu {
   margin: 0px;
   padding: 0px;
   list-style: none;
@@ -12,44 +12,45 @@ ul.menubar .submenu{
   background: url("../images/menubg.png") repeat-x top;
   font: bold 12px Verdana, Helvetica, sans-serif;
   color: white;
-  float:left;
+  float: left;
 }
- 
-ul.menubar ul.menu{
+
+ul.menubar ul.menu {
   display: none;
   position: absolute;
   margin: 0px;
 }
- 
-ul.menubar a{
+
+ul.menubar a {
   padding: 5px;
-  display:block;
+  display: block;
   text-decoration: none;
   color: white;
   padding: 5px;
 }
 
-ul.menubar li a:hover{
-background-image: url("../images/glossyback2.jpg");
-color: white;
+ul.menubar li a:hover {
+  background-image: url("../images/glossyback2.jpg");
+  color: white;
 }
- 
-ul.menu, ul.menu ul{
+
+ul.menu,
+ul.menu ul {
   margin: 0;
   padding: 0;
   border-bottom: 1px solid #ccc;
   width: 20%; /* Width of Menu Items */
-  background-color: #FFFFFF; /* IE6 Bug */
-        z-index: 20;
+  background-color: #ffffff; /* IE6 Bug */
+  z-index: 20;
 }
- 
-ul.menu li{
+
+ul.menu li {
   position: relative;
   list-style: none;
   border: 0px;
 }
- 
-ul.menu li a{
+
+ul.menu li a {
   display: block;
   text-decoration: none;
   border: 1px solid #ccc;
@@ -57,32 +58,43 @@ ul.menu li a{
   color: #777;
   padding: 5px 10px 5px 5px;
 }
- 
-ul.menu li sup{
-  font-weight:bold;
-  font-size:7px;
+
+ul.menu li sup {
+  font-weight: bold;
+  font-size: 7px;
   color: red;
 }
 
-ul.menubar li a:hover{
-background-image: url("../images/glossyback2.jpg");
-color: white;
+ul.menubar li a:hover {
+  background-image: url("../images/glossyback2.jpg");
+  color: white;
 }
- 
+
 /* Fix IE. Hide from IE Mac \*/
-* html ul.menu li { float: left; height: 1%; }
-* html ul.menu li a { height: 1%; }
+* html ul.menu li {
+  float: left;
+  height: 1%;
+}
+* html ul.menu li a {
+  height: 1%;
+}
 /* End */
- 
-ul.menu ul{
+
+ul.menu ul {
   position: absolute;
   display: none;
   left: 149px; /* Set 1px less than menu width */
   top: 0px;
 }
- 
-ul.menu li.submenu ul { display: none; } /* Hide sub-menus initially */
- 
-ul.menu li.submenu { background: transparent url(arrow.gif) right center no-repeat; }
- 
-ul.menu li a:hover { color: #FFFFFF; }
+
+ul.menu li.submenu ul {
+  display: none;
+} /* Hide sub-menus initially */
+
+ul.menu li.submenu {
+  background: transparent url(arrow.gif) right center no-repeat;
+}
+
+ul.menu li a:hover {
+  color: #ffffff;
+}

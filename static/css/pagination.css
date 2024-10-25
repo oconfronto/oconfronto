@@ -6,35 +6,36 @@ Author URI: http://www.mis-algoritmos.com
 */
 /*CSS Badoo style pagination*/
 div.pagination {
-	color:#48b9ef;
-	padding:10px 0 10px 0;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 13px;
-	text-align:center;
+  color: #48b9ef;
+  padding: 10px 0 10px 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  text-align: center;
 }
 
 div.pagination a {
-	color:#000;
-	padding:2px 5px;
-	margin:0 2px;
-	text-decoration:none;
-	border:1px solid #B9892F;
-	background-color:#FFECCC;
+  color: #000;
+  padding: 2px 5px;
+  margin: 0 2px;
+  text-decoration: none;
+  border: 1px solid #b9892f;
+  background-color: #ffeccc;
 }
 
-div.pagination a:hover, div.pagination a:active {
-	border:1px solid #B9892F;
-	color:#000;
-	background-color:#FDFFB7;
+div.pagination a:hover,
+div.pagination a:active {
+  border: 1px solid #b9892f;
+  color: #000;
+  background-color: #fdffb7;
 }
 
 div.pagination span.current {
-	padding:2px 5px;
-	border:1px solid #B9892F;
-	color:#fff;
-	font-weight:bold;
-	background-color:#B9892F;
+  padding: 2px 5px;
+  border: 1px solid #b9892f;
+  color: #fff;
+  font-weight: bold;
+  background-color: #b9892f;
 }
 div.pagination span.disabled {
-	display:none;
+  display: none;
 }
