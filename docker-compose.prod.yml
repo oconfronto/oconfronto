@@ -44,6 +44,7 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./certs:/etc/nginx/certs:ro
       - ./vhost.d:/etc/nginx/vhost.d
+      - ./static:/app/static
       - ./logs:/var/log/nginx
     environment:
       ENABLE_IPV6: "true"
