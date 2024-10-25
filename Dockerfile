@@ -5,7 +5,7 @@ COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-scripts --no-autoloader
 
 # Stage 2: Application
-FROM bitnami/php-fpm:7.4.33
+FROM bitnami/php-fpm:8.3.13
 WORKDIR /app
 
 RUN echo "clear_env = no" >> /opt/bitnami/php/etc/php-fpm.conf

@@ -879,8 +879,8 @@ switch ($_GET['act']) {
 		echo "<legend><b>Procurar por alguém</b></legend>\n";
 		echo "<form method=\"get\" action=\"battle.php\">\n<input type=\"hidden\" name=\"act\" value=\"search\" />\n";
 		echo "<table width=\"100%\">\n";
-		echo "<tr>\n<td width=\"35%\">Nome:</td>\n<td width=\"65%\"><input type=\"text\" name=\"username\" size=\"16\" value=\"" . stripslashes($_GET['username']) . "\"/></td>\n</tr>\n";
-		echo "<tr>\n<td width=\"35%\">Nível:</td>\n<td width=\"65%\"><input type=\"text\" name=\"fromlevel\" size=\"4\" value=\"" . stripslashes($_GET['fromlevel']) . "\" /> á <input type=\"text\" name=\"tolevel\" size=\"4\" value=\"" . stripslashes($_GET['tolevel']) . "\" /></td>\n</tr>\n";
+		echo "<tr>\n<td width=\"35%\">Nome:</td>\n<td width=\"65%\"><input type=\"text\" name=\"username\" size=\"16\" value=\"" . stripslashes((string) $_GET['username']) . "\"/></td>\n</tr>\n";
+		echo "<tr>\n<td width=\"35%\">Nível:</td>\n<td width=\"65%\"><input type=\"text\" name=\"fromlevel\" size=\"4\" value=\"" . stripslashes((string) $_GET['fromlevel']) . "\" /> á <input type=\"text\" name=\"tolevel\" size=\"4\" value=\"" . stripslashes((string) $_GET['tolevel']) . "\" /></td>\n</tr>\n";
 
 		echo "<tr>\n<td width=\"35%\">Reino:</td>\n<td width=\"65%\"><select name=\"reino\">\n<option value=\"0\"";
 		echo ($_GET['reino'] == 0 || !$_GET['reino']) ? ' selected="selected"' : "";

@@ -7,8 +7,8 @@ $mana = $player->reino == '1' || $player->vip > time() ? $selectmana - 5 : $sele
 $log = (isset($duellog[0]) && is_string($duellog[0])) ? explode(", ", $duellog[0]) : [];
 
 if ($player->mana < $mana){
-    if (empty($log) || $log[0] != 6) {
-        $duellog = array("6, " . $player->username . "");
+    if ($log === [] || $log[0] != 6) {
+        $duellog = ["6, " . $player->username . ""];
     }
     
     $otroatak = 5;

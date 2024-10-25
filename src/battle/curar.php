@@ -6,14 +6,14 @@ $mana = $player->reino == '1' || $player->vip > time() ? $selectmana - 5 : $sele
 
 // Initialize $battlelog if it's not set
 if (!isset($_SESSION['battlelog']) || !is_array($_SESSION['battlelog'])) {
-    $_SESSION['battlelog'] = array();
+    $_SESSION['battlelog'] = [];
 }
 
 // Use an empty string as default if $_SESSION['battlelog'][0] is not set or is null
-$log = !empty($_SESSION['battlelog']) ? explode(", ", $_SESSION['battlelog'][0] ?? '') : array();
+$log = empty($_SESSION['battlelog']) ? [] : explode(", ", $_SESSION['battlelog'][0] ?? '');
 
 if ($player->mana < $mana){
-      	if (empty($log) || $log[1] !== "Você tentou lançar um feitiço mas está sem mana sufuciente.") {
+      	if ($log === [] || $log[1] !== "Você tentou lançar um feitiço mas está sem mana sufuciente.") {
 		array_unshift($_SESSION['battlelog'], "5, Você tentou lançar um feitiço mas está sem mana sufuciente.");
 	}
        

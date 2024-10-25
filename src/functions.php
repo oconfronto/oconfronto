@@ -6,10 +6,8 @@ include(__DIR__ . "/config.php");
 // CLASSES NOVAS PARA OC VERSÃO 2.0 //
 class OCv2
 {
-    private $db;
-
-    public function __construct($db) {
-        $this->db = $db;
+    public function __construct(private $db)
+    {
     }
 
     public function info_db($data, $data2, $data3, $data4)
@@ -40,7 +38,7 @@ class OCv2
         return $query->RecordCount();
     }
 
-    public function tirarCMoeda($valor)
+    public function tirarCMoeda($valor): array|string
     {
         $pontos = '.';
         $virgula = ',';
@@ -48,7 +46,7 @@ class OCv2
         return str_replace($virgula, "", $result);
     }
  
-    public function verificar($valor)
+    public function verificar($valor): array|string
     {
         $pontos = ',';
         $virgula = '0';
@@ -313,13 +311,13 @@ while ($set = $query->FetchRow()) {
 function textLimit($string, $length, $lineBreak = null, string $replacer = '...')
 {
     // Limitar o texto e adicionar reticências, se necessário
-    if (strlen($string) > $length) {
-        $string = (preg_match('/^(.*)\W.*$/', substr($string, 0, $length + 1), $matches) ? $matches[1] : substr($string, 0, $length)) . $replacer;
+    if (strlen((string) $string) > $length) {
+        $string = (preg_match('/^(.*)\W.*$/', substr((string) $string, 0, $length + 1), $matches) ? $matches[1] : substr((string) $string, 0, $length)) . $replacer;
     }
 
     // Adicionar quebras de linha a cada X caracteres, se o parâmetro $lineBreak for passado
     if ($lineBreak !== null && $lineBreak > 0) {
-        $string = wordwrap($string, $lineBreak, "<br>\n", true); // Garantir que as quebras sejam forçadas
+        $string = wordwrap((string) $string, $lineBreak, "<br>\n", true); // Garantir que as quebras sejam forçadas
     }
 
     return $string;
@@ -328,7 +326,7 @@ function textLimit($string, $length, $lineBreak = null, string $replacer = '...'
 
 function antiBreak($comment, $leght): void
 {
-    $array = explode(" ", $comment);
+    $array = explode(" ", (string) $comment);
 
     for ($i = 0, $array_num = count($array); $i < $array_num; ++$i) {
         $word_split = wordwrap($array[$i], $leght, " ", true);
@@ -361,7 +359,7 @@ function show_prog_bar($width, $percent, string $show, $type = 'green', string $
     $return .= '<div name="progress">';
     $return .= '<div style="background: url(\'static/images/bars//progress.gif\') no-repeat; height: 13px; width: 1px; display: block; float: left"><!-- --></div>';
     $return .= '<div style="background: url(\'static/images/bars//bg.gif\'); height: 13px; width: ' . $width . 'px; display: block; float: left">';
-    $return .= '<span style="background: url(\'static/images/bars/on_' . strtolower($type) . ".gif'); display: block; float: left; width: " . $result . 'px; height: 11px; margin: 1px 0; font-size: ' . $font_size . "; font-family: '" . $font . "'; line-height: 11px; font-weight: " . $font_weight . '; text-align: right; color: ' . $color . '; letter-spacing: 1px;">&nbsp;' . $show . '&nbsp;</span>';
+    $return .= '<span style="background: url(\'static/images/bars/on_' . strtolower((string) $type) . ".gif'); display: block; float: left; width: " . $result . 'px; height: 11px; margin: 1px 0; font-size: ' . $font_size . "; font-family: '" . $font . "'; line-height: 11px; font-weight: " . $font_weight . '; text-align: right; color: ' . $color . '; letter-spacing: 1px;">&nbsp;' . $show . '&nbsp;</span>';
 
     $return .= '</div>';
     $return .= '<div style="background: url(\'static/images/bars//progress.gif\') no-repeat; height: 13px; width: 1px; display: block; float: left"><!-- --></div>';
@@ -402,10 +400,10 @@ function showAlert(string $msg, $color = '#FFFDE0', string $align = 'center', $l
     return $return;
 }
 
-function parseInt($string)
+function parseInt($string): string|int
 {
     //	return intval($string); 
-    if (preg_match('/(\d+)/', $string, $array)) {
+    if (preg_match('/(\d+)/', (string) $string, $array)) {
         return $array[1];
     }
 
@@ -454,7 +452,7 @@ function showName($name, &$db, $status = 'on', $link = 'on'): string
 
             while ($while_name = $get->FetchRow()) {
                 $sub = $while_name['subname'];
-                $pieces = explode(", ", $sub);
+                $pieces = explode(", ", (string) $sub);
 
 
                 $subname_set = ' [<font color="' . $pieces[1] . '">' . $pieces[0] . "</font>]";
@@ -503,7 +501,7 @@ function showName($name, &$db, $status = 'on', $link = 'on'): string
 
 function filtro($data)
 {
-    $data = trim(htmlentities(strip_tags($data)));
+    $data = trim(htmlentities(strip_tags((string) $data)));
  
     // Remove the deprecated check
     $data = $db->real_escape_string($data);
