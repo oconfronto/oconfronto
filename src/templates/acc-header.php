@@ -63,7 +63,7 @@
         <div id="topo"></div>
 
         <?php
-        include(__DIR__ . "/notice_board.php");
+        include(__DIR__ . "/../notice_board.php");
         ?>
 
         <div id="box">

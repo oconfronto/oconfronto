@@ -52,7 +52,7 @@
 
 <body>
     <?php
-    if ($_GET['r']) {
+    if (isset($_GET['r'])) {
         $_SESSION['ref'] = $_GET['r'];
         $linkref = $_GET['r'];
     } else {
@@ -64,7 +64,7 @@
         <div id="topo"></div>
 
         <?php
-        include(__DIR__ . "/notice_board.php");
+        include(__DIR__ . "/../notice_board.php");
         ?>
 
         <div id="box">

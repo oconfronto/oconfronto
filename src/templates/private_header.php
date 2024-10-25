@@ -281,7 +281,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
 <div id="tudo" style="position: relative;">
     <img src="static/images/topo.jpg" style="position:absolute;width:100%;z-index: 0;">
     <div class="msg">
-        <div class="ic-msg"></div><?php include(__DIR__ . "/showmsg.php"); ?>
+        <div class="ic-msg"></div><?php include(__DIR__ . "/../showmsg.php"); ?>
     </div>
     <table class="lol">
         <tr>
@@ -508,4 +508,4 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
         }, 2500);
     </script>
 
-    <div id="usr"><?php include(__DIR__ . "/engine.php"); ?></div>
+    <div id="usr"><?php include(__DIR__ . "/../engine.php"); ?></div>

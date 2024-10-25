@@ -28,7 +28,7 @@ if (($get['pending_status'] > 1 && $get['pending_status'] < 90) && ($_GET['act']
 }
 
 if ($get['pending_status'] == 1 || $player->reino == 0) {
-    if ($_GET['reino'] == 1) {
+    if (isset($_GET['reino']) && $_GET['reino'] == 1) {
         $db->execute("update `players` set `reino`='1' where `id`=?", [$player->id]);
         $db->execute("update `pending` set `pending_status`=2 where `pending_id`=2 and `player_id`=?", [$player->id]);
         define("PAGENAME", "Reino Cathal");
@@ -39,7 +39,7 @@ if ($get['pending_status'] == 1 || $player->reino == 0) {
         exit;
     }
 
-    if ($_GET['reino'] == 2) {
+    if (isset($_GET['reino']) && $_GET['reino'] == 2) {
         $db->execute("update `players` set `reino`='2' where `id`=?", [$player->id]);
         $db->execute("update `pending` set `pending_status`=2 where `pending_id`=2 and `player_id`=?", [$player->id]);
         define("PAGENAME", "Reino Eroda");
@@ -50,7 +50,7 @@ if ($get['pending_status'] == 1 || $player->reino == 0) {
         exit;
     }
 
-    if ($_GET['reino'] == 3) {
+    if (isset($_GET['reino']) && $_GET['reino'] == 3) {
         $db->execute("update `players` set `reino`='3', `hp`=?, `maxhp`=? where `id`=?", [maxHp($db, $player->id, ($player->level - 1), 3, $player->vip), maxHp($db, $player->id, ($player->level - 1), 3, $player->vip), $player->id]);
         $db->execute("update `pending` set `pending_status`=2 where `pending_id`=2 and `player_id`=?", [$player->id]);
         define("PAGENAME", "Reino Turkic");

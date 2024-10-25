@@ -8,6 +8,7 @@ $acc = check_acc($db);
 
 include(__DIR__ . "/templates/acc-header.php");
 
+$aviso = 0;
 //verifica se pediu pra transferir personagem
 $playerstrans = $db->execute("select * from `pending` where `pending_id`=4 and `pending_other`=?", [$acc->id]);
 if ($playerstrans->recordcount() > 0) {

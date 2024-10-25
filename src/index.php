@@ -10,7 +10,7 @@ if (time() < 1345222800 && !$_GET['login'] && !$_POST['login']) {
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Principal");
 
-if ($_SESSION['Login'] != null) {
+if (isset($_SESSION['Login'])) {
     $rematual = $db->GetOne("select `remember` from `accounts` where `id`=?", [$_SESSION['Login']['account_id']]);
     if ($rematual == 't') {
         header("Location: characters.php");
@@ -21,8 +21,9 @@ if ($_SESSION['Login'] != null) {
 $error = 0;
 $showerror = 0;
 $showcerto = 0;
+$errormsg = ''; // Initialize $errormsg
 
-if ($_POST['login']) {
+if (isset($_POST['login'])) {
     $tentativas = $db->GetOne("select `tries` from `login_tries` where `ip`=?", [$ip]);
 
     if (!$_POST['username'] && !$_POST['password']) {
@@ -84,34 +85,28 @@ include(__DIR__ . "/templates/header.php");
 ?>
 
 <span id="aviso-a">
-    <?php echo $errormsg ?>
+    <?php echo htmlspecialchars($errormsg); ?>
 </span>
 <p>
 <form method="POST" action="index.php">
     <table width="90%" border="0px" align="center">
         <tr>
             <?php
-            if ($_SESSION['Login']['account_id'] > 0) {
-                $contaOn = $_SESSION['Login']['account'];
-                unset($_SESSION['Login']['key']);
-            } else {
-                $contaOn = "";
+            $contaOn = "";
+            if (isset($_SESSION['Login']) && isset($_SESSION['Login']['account_id']) && $_SESSION['Login']['account_id'] > 0) {
+                $contaOn = $_SESSION['Login']['account'] ?? "";
             }
             ?>
             <td width="28%"><b>Conta:</b></td>
-            <td width="72%"><input type="text" class="inp" name="username" value="<?php if ($_POST['username'] != null) {
-                                                                                        echo $_POST['username'];
-                                                                                    } else {
-                                                                                        echo $contaOn;
-                                                                                    } ?>" size="20">
+            <td width="72%"><input type="text" class="inp" name="username" value="<?php echo htmlspecialchars($_POST['username'] ?? $contaOn); ?>" size="20">
                 <?php
                 if ($showerror == 1 || $showerror == 3) {
                     echo '<span id="erro"></span>';
                 } elseif ($showcerto == 1 || $showcerto == 3) {
                     echo '<span id="certo"></span>';
                 }
-
-                ?></td>
+                ?>
+            </td>
         </tr>
         <tr>
             <td width="28%"><b>Senha:</b></td>
@@ -123,7 +118,8 @@ include(__DIR__ . "/templates/header.php");
                     echo '<span id="certo"></span>';
                 }
 
-                ?></td>
+                ?>
+            </td>
         </tr>
     </table>
     </p>

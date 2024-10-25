@@ -122,7 +122,7 @@ function check_user(&$db)
 
     $query = $db->execute("SELECT * FROM `accounts` WHERE `id`=? AND `conta`=?", [$_SESSION['Login']['account_id'], $_SESSION['Login']['account']]);
     $accarray = $query->FetchRow();
-    if ($query->RecordCount() != 1 || encodeSession($accarray['password']) != $_SESSION['Login']['key']) {
+    if ($query->RecordCount() != 1 || encodeSession($accarray['password']) != (isset($_SESSION['Login']['key']) ? $_SESSION['Login']['key'] : '')) {
         session_unset();
         session_destroy();
         header("Location: index.php");
@@ -367,6 +367,7 @@ function show_prog_bar($width, $percent, string $show, $type = 'green', string $
 
 function showAlert(string $msg, $color = '#FFFDE0', string $align = 'center', $link = NULL, $id = NULL): string
 {
+    $return = '';
 
     if ($color == 'red') {
         $color = "#EEA2A2";
@@ -412,6 +413,7 @@ function parseInt($string): string|int
 
 function showName($name, &$db, $status = 'on', $link = 'on'): string
 {
+    $return = ''; // Initialize $return variable
     $ninguem = 0;
     if ($name == NULL || is_numeric($name) && $name < 1) {
         $ninguem = 5;
