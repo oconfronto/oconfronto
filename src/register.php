@@ -17,7 +17,7 @@ if (isset($_GET['r'])) {
     $_SESSION['ref'] = htmlspecialchars((string) $_GET['r'], ENT_QUOTES, 'UTF-8');
 }
 
-$usaar = $_SESSION['ref'] != null && is_numeric($_SESSION['ref']) ? $_SESSION['ref'] : "1";
+$usaar = $_SESSION['ref'] ?? "1";
 
 
 $error = 0;
@@ -40,128 +40,105 @@ $msg3 = "";
 $msg4 = "";
 $msg5 = "";
 
-if ($_POST['register'] || $_GET['confirm']) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
+    // Process form submission
+    $conta2 = $_POST['conta2'] ?? '';
+    $user_pass2 = $_POST['user_pass2'] ?? '';
+    $conf_pass2 = $_POST['conf_pass2'] ?? '';
+    $email2 = $_POST['email2'] ?? '';
+    $conf_email2 = $_POST['conf_email2'] ?? '';
+
+    //Use these variables instead of directly accessing $_POST
     //Check if conta has already been used
-    $query = $db->execute("select `id` from `accounts` where `conta`=?", [$_POST['conta2']]);
+    $query = $db->execute("SELECT `id` FROM `accounts` WHERE `conta`=?", [$conta2]);
     //Check conta
-    if (!$_POST['conta2']) { //If conta isn't filled in...
-        $msg1 = "Voc&ecirc; precisa digitar o nome da conta desejada.<br />\n"; //Add to error message
-        $error = 1; //Set error check
+    if (empty($conta2)) { // Changed from !empty to empty
+        $msg1 = "Você precisa digitar o nome da conta desejada.<br />\n";
+        $error = 1;
         $erro1 = 1;
-    } elseif (strlen((string) $_POST['conta2']) < 3) { //If conta is too short...
-        $msg1 = "Sua conta não pode ter menos de 3 caracteres!<br />\n"; //Add to error message
-        $error = 1; //Set error check
+    } elseif (strlen($conta2) < 3) {
+        $msg1 = "Sua conta não pode ter menos de 3 caracteres!<br />\n";
+        $error = 1;
         $erro1 = 1;
-    } elseif (strlen((string) $_POST['conta2']) > 20) {
-        //If conta is too short...
+    } elseif (strlen($conta2) > 20) {
         $msg1 = "Sua conta deve ter 20 caracteres ou menos!<br />\n";
-        //Add to error message
         $error = 1;
-        //Set error check
         $erro1 = 1;
-    } elseif (preg_match("/^[-_a-zA-Z0-9]+$/", (string) $_POST['conta2']) === 0 || preg_match("/^[-_a-zA-Z0-9]+$/", (string) $_POST['conta2']) === false) {
-        //If conta contains illegal characters...
+    } elseif (!preg_match("/^[-_a-zA-Z0-9]+$/", $conta2)) {
         $msg1 = "Sua conta não pode conter <b>caracteres especiais</b>!<br />\n";
-        //Add to error message
         $error = 1;
-        //Set error check
         $erro1 = 1;
     } elseif ($query->recordcount() > 0) {
-        $msg1 = "Esta conta já está sendo usuada!<br />\n";
+        $msg1 = "Esta conta já está sendo usada!<br />\n";
         $error = 1;
-        //Set error check
         $erro1 = 1;
     }
 
     //Check password
-    if (!$_POST['user_pass2']) {
-        //If password isn't filled in...
-        $msg2 = "Voc&ecirc; precisa digitar uma senha!<br />\n";
-        //Add to error message
+    if (empty($user_pass2)) { // Changed from !empty to empty
+        $msg2 = "Você precisa digitar uma senha!<br />\n";
         $error = 1;
-        //Set error check
         $erro2 = 1;
-    } elseif (strlen((string) $_POST['user_pass2']) < 4) {
-        //If password is too short...
+    } elseif (strlen($user_pass2) < 4) {
         $msg2 = "Sua senha deve ser maior que 3 caracteres!<br />\n";
-        //Add to error message
         $error = 1;
-        //Set error check
         $erro2 = 1;
     }
 
-    if (!$_POST['conf_pass2']) {
-        $msg4 = "Voc&ecirc; precisa digitar a mesma senha usada no campo anterior!<br />\n";
-        //Add to error message
+    if (empty($conf_pass2)) { // Changed from !empty to empty
+        $msg4 = "Você precisa confirmar a senha!<br />\n";
         $error = 1;
-        //Set error check
         $erro4 = 1;
-    } elseif ($_POST['conf_pass2'] != $_POST['user_pass2']) {
+    } elseif ($conf_pass2 != $user_pass2) {
         $msg4 = "Sua senha de confirmação está diferente da senha digitada!<br />\n";
-        //Add to error message
         $error = 1;
-        //Set error check
         $erro4 = 1;
     }
 
     //Check email
-    if (!$_POST['email2']) {
-        //If email address isn't filled in...
-        $msg3 = "Voc&ecirc; precisa digitar um email!<br />\n";
-        //Add to error message
+    if (empty($email2)) { // Changed from !empty to empty
+        $msg3 = "Você precisa digitar um email!<br />\n";
         $error = 1;
-        //Set error check
         $erro3 = 1;
-    } elseif (strlen((string) $_POST['email2']) < 5) {
-        //If email is too short...
+    } elseif (strlen($email2) < 5) {
         $msg3 = "O seu endereço de email deve conter mais de 5 caracteres.<br />\n";
-        //Add to error message
         $error = 1;
-        //Set error check
         $erro3 = 1;
-    } elseif (preg_match("/^[-!#$%&\'*+\\.\/0-9=?A-Z^_`{|}~]+@([-0-9A-Z]+\.)+([0-9A-Z]){2,4}$/i", (string) $_POST['email2']) === 0 || preg_match("/^[-!#$%&\'*+\\.\/0-9=?A-Z^_`{|}~]+@([-0-9A-Z]+\.)+([0-9A-Z]){2,4}$/i", (string) $_POST['email2']) === false) {
+    } elseif (!filter_var($email2, FILTER_VALIDATE_EMAIL)) {
         $msg3 = "O formato do seu email é inválido!<br />\n";
-        //Add to error message
         $error = 1;
-        //Set error check
         $erro3 = 1;
     } else {
         //Check if email has already been used
-        $query = $db->execute("select `id` from `accounts` where `email`=?", [$_POST['email2']]);
-        $query2 = $db->execute("select * from `pending` where `pending_id`=1 and `pending_status`=?", [$_POST['email2']]);
+        $query = $db->execute("SELECT `id` FROM `accounts` WHERE `email`=?", [$email2]);
+        $query2 = $db->execute("SELECT * FROM `pending` WHERE `pending_id`=1 AND `pending_status`=?", [$email2]);
         if ($query->recordcount() > 0) {
             $msg3 = "Este email já está sendo usado por outra conta!<br />\n";
             $error = 1;
-            //Set error check
             $erro3 = 1;
         } elseif ($query2->recordcount() > 0) {
             $msg3 = "Este email já está em uso!<br />\n";
             $error = 1;
-            //Set error check
             $erro3 = 1;
         }
     }
 
-    if (!$_POST['conf_email2']) {
-        $msg5 = "Voc&ecirc; precisa digitar a mesmo email informado no campo anterior!<br />\n";
-        //Add to error message
+    if (empty($conf_email2)) { // Changed from !empty to empty
+        $msg5 = "Você precisa confirmar o email!<br />\n";
         $error = 1;
-        //Set error check
         $erro5 = 1;
-    } elseif ($_POST['conf_email2'] != $_POST['email2']) {
+    } elseif ($conf_email2 != $email2) {
         $msg5 = "Seu email de confirmação está diferente do email digitado!<br />\n";
-        //Add to error message
         $error = 1;
-        //Set error check
         $erro5 = 1;
     }
 
 
     if ($error == 0) {
 
-        $insert['conta'] = $_POST['conta2'];
-        $insert['password'] = encodePassword($_POST['user_pass2']);
-        $insert['email'] = $_POST['email2'];
+        $insert['conta'] = $conta2;
+        $insert['password'] = encodePassword($user_pass2);
+        $insert['email'] = $email2;
         $insert['registered'] = time();
         $insert['last_active'] = time();
         $insert['ip'] = $_SERVER['REMOTE_ADDR'];
@@ -188,7 +165,7 @@ if ($_POST['register'] || $_GET['confirm']) {
         if ($registra) {
             session_unset();
             session_start();
-            $_SESSION['Login'] = ["account_id" => $id, "account" => $_POST['conta2'], "key" => encodeSession(encodePassword($_POST['password2']))];
+            $_SESSION['Login'] = ["account_id" => $id, "account" => $conta2, "key" => encodeSession(encodePassword($user_pass2))];
 
 
             include(__DIR__ . "/templates/header.php");
@@ -343,7 +320,7 @@ if ($msg1 !== "") {
     echo $msg5;
 }
 
-if ($_POST['register']) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     if ($msg1 === "") {
         $certo1 = 1;
     }
@@ -374,7 +351,7 @@ echo "<input type='password' name='fakeusernameremembered' style='display:none'>
 echo '<p><table width="90%" border="0px" align="center">';
 echo "<tr>";
 echo '<td width="28%">';
-echo '<b>Conta:</b></td><td width="72%"><input type="text" id="conta" name="conta2" value="' . $_POST['conta2'] . '" class="inp" size="20"><span id="msgbox4">';
+echo '<b>Conta:</b></td><td width="72%"><input type="text" id="conta" name="conta2" value="' . htmlspecialchars($conta2 ?? '') . '" class="inp" size="20"><span id="msgbox4">';
 
 if ($erro1 == 1) {
     echo '<span id="erro"></span>';
@@ -384,7 +361,7 @@ if ($erro1 == 1) {
 
 echo "</span></td></tr>";
 echo '<tr><td width="28%">';
-echo "<b>Senha:</b></td><td width=\"72%\"><input autocomplete='new-password' id=\"user_pass\" type=\"password\" name=\"user_pass2\" value=\"" . $_POST['user_pass2'] . '" class="inp" size="20"><span id="msgbox7">';
+echo "<b>Senha:</b></td><td width=\"72%\"><input autocomplete='new-password' id=\"user_pass\" type=\"password\" name=\"user_pass2\" value=\"" . htmlspecialchars($user_pass2 ?? '') . '" class="inp" size="20"><span id="msgbox7">';
 
 if ($erro2 == 1) {
     echo '<span id="erro"></span>';
@@ -394,7 +371,7 @@ if ($erro2 == 1) {
 
 echo "</span></td></tr>";
 echo '<tr><td width="28%">';
-echo "<b>Confirmar Senha:</b></td><td width=\"72%\"><input autocomplete='new-password' id=\"conf_pass\" type=\"password\" name=\"conf_pass2\" value=\"" . $_POST['conf_pass2'] . '" class="inp" size="20"><span id="msgbox8">';
+echo "<b>Confirmar Senha:</b></td><td width=\"72%\"><input autocomplete='new-password' id=\"conf_pass\" type=\"password\" name=\"conf_pass2\" value=\"" . htmlspecialchars($conf_pass2 ?? '') . '" class="inp" size="20"><span id="msgbox8">';
 
 if ($erro4 == 1) {
     echo '<span id="erro"></span>';
@@ -405,7 +382,7 @@ if ($erro4 == 1) {
 
 echo "</td></tr>";
 echo '<tr><td width="28%">';
-echo '<b>Email:</b></td><td width="72%"><input type="text" id="emailbox" name="email2" class="inp" value="' . $_POST['email2'] . '" size="20"><span id="msgbox1">';
+echo '<b>Email:</b></td><td width="72%"><input type="text" id="emailbox" name="email2" class="inp" value="' . htmlspecialchars($email2 ?? '') . '" size="20"><span id="msgbox1">';
 
 if ($erro3 == 1) {
     echo '<span id="erro"></span>';
@@ -415,7 +392,7 @@ if ($erro3 == 1) {
 
 echo "</td></tr>";
 echo '<tr><td width="28%">';
-echo '<b>Confirmar Email:</b></td><td width="72%"><input type="text" id="emailboxconf" name="conf_email2" class="inp" value="' . $_POST['conf_email2'] . '" size="20"><span id="msgbox2">';
+echo '<b>Confirmar Email:</b></td><td width="72%"><input type="text" id="emailboxconf" name="conf_email2" class="inp" value="' . htmlspecialchars($conf_email2 ?? '') . '" size="20"><span id="msgbox2">';
 
 if ($erro5 == 1) {
     echo '<span id="erro"></span>';
@@ -433,3 +410,5 @@ echo "</center>";
 echo "</form>";
 include(__DIR__ . "/templates/footer.php");
 exit;
+
+
