@@ -21,6 +21,7 @@ function displayItem($db, $player, $itemType): void
             echo '&nbsp;';
         } else {
             while ($showeditexs = $showitenx->fetchrow()) {
+                // Convert integer values to strings before passing to htmlspecialchars
                 $showitfor2 = $showeditexs['for'] > 0 ? "+<font color=gray>" . htmlspecialchars((string) $showeditexs['for']) . " For</font><br/>" : "";
                 $showitvit2 = $showeditexs['vit'] > 0 ? "+<font color=green>" . htmlspecialchars((string) $showeditexs['vit']) . " Vit</font><br/>" : "";
                 $showitagi2 = $showeditexs['agi'] > 0 ? "+<font color=blue>" . htmlspecialchars((string) $showeditexs['agi']) . " Agi</font><br/>" : "";
@@ -39,7 +40,7 @@ function displayItem($db, $player, $itemType): void
 
                 $newefec = ($showeditexs['effectiveness']) + ($showeditexs['item_bonus'] * 2);
                 $showitname = htmlspecialchars($showeditexs['name'] . " + " . $showeditexs['item_bonus']);
-                $showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Effectiveness: " . htmlspecialchars($newefec) . "</font></td><td width=35%><font size=1px>" . $showitfor2 . $showitvit2 . $showitagi2 . $showitres2 . "</font></td></tr></table>";
+                $showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Effectiveness: " . htmlspecialchars((string) $newefec) . "</font></td><td width=35%><font size=1px>" . $showitfor2 . $showitvit2 . $showitagi2 . $showitres2 . "</font></td></tr></table>";
 
                 echo sprintf("<div class='%s'>", $itemClass);
                 echo sprintf('<div title="header=[%s] body=[%s]">', $showitname, $showitinfo);

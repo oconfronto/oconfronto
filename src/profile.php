@@ -82,7 +82,7 @@ echo "<tr><th>";
 
 echo '<table width="120px" height="120px" align="center"><tr><td>';
 echo '<div style="position: relative;">';
-echo '<img src="static/' . $profile['avatar'] . '" width="120px" height="120px" style="position: absolute; top: 1; left: 1;" alt="' . $profile['username'] . '" border="1">';
+echo '<img src="' . $profile['avatar'] . '" width="120px" height="120px" style="position: absolute; top: 1; left: 1;" alt="' . $profile['username'] . '" border="1">';
 $checkranknosite = $db->execute("select `time` from `user_online` where `player_id`=?", [$profile['id']]);
 if ($checkranknosite->recordcount() > 0) {
 	echo "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $profile['username']) . "')\"><img src=\"static/images/online2.png\" width=\"120px\" height=\"120px\" style=\"position: absolute; top: 1; left: 1;\" alt=\"" . $profile['username'] . '" border="1px"></a>';
