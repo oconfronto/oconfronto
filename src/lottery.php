@@ -151,10 +151,10 @@ if ($setting->$unc3 == "t") {
 	echo "<td><b>Tempo Restante:</b></td>";
 	$end = $setting->$unc5 - time();
 	$days = floor($end / 60 / 60 / 24);
-	$hours = $end / 60 / 60 % 24;
-	$minutes = $end / 60 % 60;
+	$hours = floor(($end / 60 / 60) % 24);  // Add floor() function
+	$minutes = floor(($end / 60) % 60);     // Add floor() function
 	$comecaem = sprintf('%s dia(s) %d hora(s) %d minuto(s)', $days, $hours, $minutes);
-	$nova_data = date("d/m/Y G:i",  $setting->$unc5);
+	$nova_data = date("d/m/Y G:i", (int)$setting->$unc5);  // Cast $setting->$unc5 to integer
 	echo "<td>" . $comecaem . ' <a href="lottery.php">Atualizar</a><br/><b>Dia:</b> ' . $nova_data . "</td>";
 	echo "</tr>";
 
@@ -266,3 +266,4 @@ echo "</fieldset>";
 echo "<br/><center><i>A loteria abrirá automaticamente todas as Terças-Feiras.</i></center>";
 include(__DIR__ . "/templates/private_footer.php");
 exit;
+
