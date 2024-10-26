@@ -589,37 +589,6 @@ CREATE TABLE IF NOT EXISTS `forum_answer` (
   KEY `Otimizacao2` (`question_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1270 ;
 
---
--- Dumping data for table `forum_answer`
---
-
-INSERT INTO `forum_answer` (`id`, `question_id`, `a_user_id`, `a_answer`, `a_datetime`) VALUES
-(1, 2, 52, 'Voc n‹o encontrou o usu‡rio Alucard! Ele deve estar trabalhando ou caando. Voltar.<br />\r\n<br />\r\ncaando. ahauauhauh', 1345224154),
-(2, 2, 1, 'Estamos com problemas de codificação nos acentos. Em breve serão concertados.', 1345224507),
-(3, 3, 1, ':NAAO:', 1345224536),
-(4, 3, 13, 'Cuidado Sr. ADM em alguns casos emoticons podem ser considerados flood levando a receber alerta de até 20%. Recomendo que o senhor não volte a cometer este erro.<br />\r\n<br />\r\n:trollface:', 1345224682),
-(5, 3, 11, 'O ADM levar alerta, esta é boa, rs.', 1345225940),
-(7, 4, 1, 'Ae evoluiu agora tem até clip hahah', 1345228453),
-(8, 4, 94, 'Hahahaha tem mesmo mais eu nao estou conseguindo por o video direto aki no forum ta bugado?', 1345229126),
-(9, 5, 13, 'Obrigado Vdzz pela sinceridade, já estamos ciente do bug e estamos corrigindo, eu fiquei na espera para ver qual player seria sincero bastante para reportar esse bug ao invés do restante só abusar.<br />\r\n<br />\r\nAgradeço novamente, logo corrigiremos.', 1345230546),
-(10, 2, 112, 'Ei ta todo mundo me matando e tal, PVP ta liberado muito cedo ', 1345231324),
-(11, 4, 2, 'EU E O DEH AUEHAEUAEHAUEHAEUAHEAUEHAUEHAUEHAEUAHEUAHEAUEHA. O OCEEE!!!!!!!<br />\r\nAEAUEHAUEAUHEAEA', 1345231325),
-(12, 4, 1, 'O youtube bugou mesmo ;x<br />\r\nvou arrumar depois', 1345231391),
-(13, 6, 1, 'A previsão é de estar online até segunda feira.', 1345231456),
-(15, 4, 94, 'EHAISOHESAIOHEOSAIHEIOSAHEOISAHIOESAHIOESA', 1345232571),
-(18, 4, 2, 'Ficou muito foda essa música. vamo fazer outra deh.', 1345234486),
-(19, 10, 126, 'kkkkkkkkk duvido que alguém lembre de mim', 1345236392),
-(20, 10, 169, 'Lyon?', 1345236624),
-(21, 10, 2, 'Cater meu amr?', 1345236687),
-(22, 3, 126, 'kkkkkkkkk tenso. quer ver se essa ''geração'' do OC vai ser dahora ou se vai ser meia boca', 1345236701),
-(23, 10, 6, 'Lyon sou eu , swordmaster e o cater ... ISMAEL CARA DE BUNDA , S2 S2 BY LYON AHWUHAUHAUHW', 1345238101),
-(434, 117, 6, 'Erro ja foi corrigido , para mais informações entre , www.ocrpg.com/changelog.php .', 1345848305),
-(435, 105, 6, 'Este Bug Já Foi Corrigido , Para mais informações Entre : www.ocrpg.com/changelog.php .', 1345848410),
-(436, 6, 6, 'A Loja Vip está Sendo Desenvolvida , Para Mais Informações Entre : www.ocrpg.com/changelog.php .', 1345848462),
-(437, 1, 1222, 'curti d+', 1345848701),
-(438, 46, 6, 'Para ver se este bug foi resolvido , entre em ; www.ocrpg.com/changelog.php , lá você saberá de atualizações , correções entre outras coisas .', 1345848743),
-(439, 62, 6, 'Aeee \\o/ rs , Música loca . curti (y)', 1345848940);
-
 -- --------------------------------------------------------
 
 --
@@ -662,34 +631,6 @@ CREATE TABLE IF NOT EXISTS `forum_question` (
   PRIMARY KEY (`id`),
   KEY `Otimizacao6` (`category`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=277 ;
-
---
--- Dumping data for table `forum_question`
---
-
-INSERT INTO `forum_question` (`id`, `topic`, `category`, `detail`, `user_id`, `postado`, `last_post`, `view`, `reply`, `up`, `down`, `fixo`, `closed`, `vota`, `serv`, `reino`) VALUES
-(1, 'O Confronto :: O Início', 'noticias', '[center][img]http://ocrpg.comimages//logo-dark.png[/img][/center]<br />\r\n<br />\r\nFoi dado aberta a nova temporada do Oconfronto, agora em sua mais nova versão, com design renovado, novas funções e muito mais rpg.<br />\r\n<br />\r\nLogo de cara já é possível perceber a grande reformulação que o game sofreu, novas imagens e cores.<br />\r\n<br />\r\nGame agora com novas funções e sistemas, e não para por ai, temos mais sistemas no papel para lançar com o tempo. Irei explicar um pouco mais sobre os sistemas presentes.<br />\r\n<br />\r\n[b][center][big]Batalhar Contra Jogadores[/big][/center][/b]<br />\r\n[small][center]Ta afim de uma grana extra?[/center][/small]<br />\r\nAgora o sistema de batalha contém com uma lista de procurados, players que mais "pklizam" no game sobem ao topo dessa lista, quem os matar ganhará uma grande recompensa em troca.<br />\r\n<br />\r\n[center][big][b]Duelo[/b][/big][/center]<br />\r\n[center][small]Lute em tempo real contra seu inimigo.[/small][/center]<br />\r\nNovo sistema de duelo tão prometido nas versões anteriores do [b]Oconfronto[/b]. Escolha atenciosamente seu inimigo, o desafie. Ele terá árdua missão: aceitar, ou não aceitar o desafio. Em tempo real você dê um lado escolhendo magias tanto de ataque ou defesa ele do outro atacando ou defendendo. Cada player tem um tempo de 30 segundos para decidir seu ataque. Escolha bem seu ataque, ele poderá definir o rumo da sua batalha.<br />\r\n<br />\r\n[center][big][b]Ganhar Ouro[/b][/big][/center]<br />\r\n[small][center]Convide Novos Amigos para OC e Ganhe Ouro e Itens ![/center][/small]<br />\r\nAgora contamos com um novo e belo sistema de recompensas ao convidar novos amigos. Ao algum amigo fizer registro através de seu [b]Link de Referência[/b] o sistema irá contabilizar em sua conta quantos convites foram enviados, teu amigo ao atingir level 40 o sistema dará uma recompensa a você. Poderá receber tanto uma pequena quantia de gold ou até mesmo um item super valioso com atributos únicos. Tudo depende... de quantos amigos você irá convidar.<br />\r\n<br />\r\nVisite a [url=http://ocrpg.com/earn.php]página[/url] e confira lista de itens que estão disponíveis como recompensa.<br />\r\n<br />\r\n[center][b][big]Arena[/big][/b][/center]<br />\r\n[small][b][center]Local destinado aos mais bravos guerreiros.[/center][/b][/small]<br />\r\nGosta de desafios? Arena é local certo para você! Lá você encontra uma lista de tarefas disponíveis. Cada tarefa tem o seu tempo para que seja realizada, e recompensa ao ser completada Cada tarefa completada você receberá "dungeon points" Que são  bem valiosos, quer descobrir para que são? Te desafio a conseguir alguns. Escolha sua tarefa e mate os monstros que estão aterrorizando o império. Mas vai uma dica... Cuidado, eles não estão para brincadeira.<br />\r\n<br />\r\n[big][center][b]Taverna[/b][/center][/big]<br />\r\n[small][center][b]O Imperador é bondoso.[/b][/center][/small]<br />\r\nTaverna, conhecido como local de descontração onde todos os guerreiros pegam suas bebidas sentam e se divertem... Mas também é local onde todo tipo de gente aparece dos mais sombrosos confins do império. Boatos dizem que até o imperador envio mensageiros a este local com intuito de entregar "tarefas" aos novos guerreiros, e claro, em troca recompensas. Cada level tem suas tarefas, que ao ser completadas são entregues fortuna ou equipamentos. Até dizem por ai que algumas tarefas rendem as tão sonhadas "Medalhas".<br />\r\n<br />\r\n<br />\r\nBem guerreiros, este são alguns novos sistemas, além desses temos outras reformulações em sistemas já existentes.<br />\r\nNão vou explicar todos detalhadamente, pois acredito que quase todos já são guerreiros experientes do império, cujo estavam aposentados mas agora teu imperador os requisitaram novamente. Embainha tua espada e escudo e vá a luta.<br />\r\n<br />\r\n<br />\r\nAvance teu level, melhore teus equipamentos, mantenha os amigos perto e o inimigos sempre mortos. <br />\r\n<br />\r\nEsta declarada abertura oficial do [b]OCONFRONTO[/b] Batalha Medieval.', 1, 1345219174, 1350392030, 724, 20, 0, 0, 'f', 'f', 'f', 1, 1),
-(2, 'Problemas com o Jogo', 'outros', 'Se você encontrou algum erro ou funcionamento indevido no jogo, por favor reporte aqui.<br />\r\nCaso o erro seja grave demais para divulgar publicamente, [url=bugs.php]clique aqui[/url] e mande uma mensagem para a administração.', 1, 1345221616, 1351180497, 913, 61, 0, 0, 'f', 'f', 'f', 1, 1),
-(3, 'Este Tópico Vai Eternizar.', 'off', 'Um dos primeiros tópico da nova era do Oconfronto, quem ai acha que devemos eternizar este tópico? <br />\r\n<br />\r\nComentem a vontade e digam o que acharam do novo Oconfronto!<br />\r\n<br />\r\n<br />\r\n<br />\r\n<br />\r\n<br />\r\n<br />\r\n<br />\r\n:megusta:', 13, 1345224037, 1345344115, 108, 10, 0, 0, 'f', 'f', 'f', 1, 3),
-(4, '[MUSIC] O Retorno - Deeh & Junior', 'off', 'Koe pessoal blz?? vim aki postar uma brincadeira q eu e meu amigo edilon junior preparamos para o novo OC!<br />\r\n<br />\r\n[url]http://www.youtube.com/watch?v=d-Ci47qwRsw&feature=youtu.be[/url]<br />\r\n<br />\r\nBOA SORTE A TODOS!!!!<br />\r\n<br />\r\n<br />\r\nOBS: essa musica é destinada ao antigo destiny não ao pela saco q criou com o nick dos outros agr....', 94, 1345227508, 1345304773, 131, 9, 0, 0, 'f', 'f', 'f', 1, 2),
-(5, 'Bug?', 'outros', 'Como não achei a seção para postar isto, irei reportar este bug aqui nesta seção. Quando você está batalhando e clica em "curar", o seu hp fica bem acima do que ele realmente é. No caso o meu na hora foi para 405, depois que batalhei com um gorila caiu para 307..<br />\r\nAcredito que isto seja um bug, não achei nenhum tópico a respeito.<br />\r\nAi está uma screen provando:<br />\r\n[img]http://i.imgur.com/P9gsL.png[/img]<br />\r\n<br />\r\nAposto que muitas pessoas já abusaram disto, rs.', 80, 1345230010, 1345230546, 68, 1, 0, 0, 'f', 't', 'f', 1, 3),
-(6, 'Loja VIP', 'outros', 'vai ser liberada quando...', 129, 1345230486, 1345848462, 70, 3, 0, 0, 'f', 't', 'f', 1, 1),
-(8, 'Energia', 'duvidas', 'Tem como aumentar a energia? E se tiver como ou quando?', 104, 1345233656, 1345238916, 43, 1, 0, 0, 'f', 't', 'f', 1, 1),
-(10, 'ISMAEL', 'off', 'ESTOU DE VOLTA A ATIVA NO OC. <br />\r\nPARA SEUS PESADELOS HAEUHAEUHUAEHUA ZOA', 169, 1345236118, 1350705846, 113, 10, 0, 0, 'f', 'f', 'f', 1, 3),
-(11, 'Mistério', 'off', 'Para quem está se perguntando quem sou, eis que vou me revelar aos queridos amigos.<br />\r\n<br />\r\nPrazer, TSHJ.<br />\r\n<br />\r\n<br />\r\nme amem menos.<br />\r\n<br />\r\n<br />\r\n:trollface:', 13, 1345238615, 1345346993, 87, 6, 0, 0, 'f', 'f', 'f', 1, 3),
-(12, 'Pontos Misticos', 'duvidas', 'Como é que ganha pontos misticos?', 104, 1345238662, 1345238823, 34, 1, 0, 0, 'f', 't', 'f', 1, 1),
-(129, 'Hawk''s Shop', 'trade', '[center][b][color=black][u][big][i]Hawk''s Shop[/i][/big][/u][/color][/b][/center]<br />\r\n<br />\r\n<br />\r\nItens a venda:<br />\r\n<br />\r\n<br />\r\n[center][b][color=blue]! NEW ![/color][/b][/center]<br />\r\n<br />\r\n<br />\r\n<br />\r\n[center]<br />\r\n[img]http://ocrpg.com/images/itens/senior_armor.gif[/img][/center]<br />\r\n[center][color=black]Armadura das sombras +0 - Level: 60 Def: 54[/s][/color][/center]<br />\r\n[center][color=black][b][s](Atenção: Esta armor o ferreiro não tem na loja)[/s][/b][/color][/center]<br />\r\n[center][color=black]C$:[/color] [color=red]60,000[/color][/center]<br />\r\n<br />\r\n<br />\r\n[center][img]http://ocrpg.com/images/itens/crslegs.gif[/img][/center]<br />\r\n[center][color=black][s]Calça negra +0[/s][/color] [color=red][s]+1res[/s][/color] [color=black][s]- Level: 72[/s][/color][/center]<br />\r\n[center][color=black]C$:[/color] [color=red]--[/color][/center]<br />\r\n[center][color=black]Comprado por:[/color] [url=/profile.php?id=Deiverr]Deiverr[/url][/center]<br />\r\n<br />\r\n<br />\r\n[center]<br />\r\n[img]http://ocrpg.com/images/itens/wand_of_voodoo.gif[/img][/center]<br />\r\n[center][color=black]Bastao do mal +0 - Level: 67[/color][/center]<br />\r\n[center][color=black]C$:[/color] [color=red]60,000[/color][/center]<br />\r\n<br />\r\n[center][img]http://ocrpg.com/images/itens/terra_amulet.gif[/img][/center]<br />\r\n[center][color=black]Amuleto da terra+0[/color] [color=gray]+1for[/color] [color=black]- Level: 49[/color][/center]<br />\r\n[center][color=black]C$:[/color] [color=red]30,000[/color][/center]<br />\r\n<br />\r\n[center][img]http://ocrpg.com/images/itens/imperialarm.gif[/img][/center]<br />\r\n[center][color=black][s]Armadura imperial +0[/s][/color] [color=gray][s]+1for[/s][/color] [color=blue][s]+3agi[/s][/color] [color=red][s]+3res[/s][/color] [color=black][s]- Level: 54[/s][/color][/center][center]<br />\r\n[color=black]C$:[/color] [color=red]--[/color][/center]<br />\r\n[center][color=black]Comprado por:[/color] [url=/profile.php?id=Deiverr]Deiverr[/url][/center]<br />\r\n<br />\r\n[center]<br />\r\n[img]http://ocrpg.com/images/itens/deathaxe.gif[/img][/center]<br />\r\n[center][color=black]Machado da morte +0 - Level: 62[/color][/center]<br />\r\n[center][color=black]C$:[/color] [color=red]50,000[/color][/center]<br />\r\n<br />\r\n[center][img]http://ocrpg.com/images/itens/goldenarmor.gif[/img][/center]<br />\r\n[center][color=black]Armadura de ouro +0[/color] [color=red]+4res[/color] [color=black]- Level: 40[/color][/center]<br />\r\n[center][color=black]C$:[/color] [color=red]13,000[/color][/center]<br />\r\n<br />\r\n[center]<br />\r\n[img]http://ocrpg.com/images/itens/darkshield.gif[/img][/center]<br />\r\n[center][color=black]Escudo Escuro +0 - Level 49[/color][/center]<br />\r\n[center][color=black]C$:[/color] [color=red]30,000[/color][/center]<br />\r\n<br />\r\n<br />\r\n[center]<br />\r\n[img]http://ocrpg.com/images/itens/senior_legs.gif[/img][/center]<br />\r\n[center][color=black][s]Calças sombrias +0[/s][/color] [color=green][s]+4vit[/s][/color] [color=red][s]+3res[/s][/color][color=black][s]- Level: 60 Def: 44[/s][/color][/center]<br />\r\n[center][color=black][b][s](Atenção: Esta calça o ferreiro não tem na loja)[/s][/b][/color][/center]<br />\r\n[center][color=black]C$:[/color] [color=red]--[/color][/center]<br />\r\n[center][color=black]Comprado por:[/color] [url=ocrpg.com/profile.php?id=Poso]Poso[/url][/center]<br />\r\n<br />\r\n[center]<br />\r\n[img]http://ocrpg.com/images/itens/darkring.gif[/img][/center]<br />\r\n[center][color=black]Anel escuro[/color] [color=gray]+10for[/color] [color=red]+15res[/color][/center]<br />\r\n[center][color=black]C$:[/color] [color=red]45,000[/color][/center]<br />\r\n<br />\r\n<br />\r\n<br />\r\n<br />\r\n[color=blue][b]Sessão 1:[/b][/color]<br />\r\n<br />\r\n[center][img]http://ocrpg.com/images/itens/noblearmor.gif[/img][/center]<br />\r\n[center][color=black][s]Armadura Nobre +9 - Level: 24[/s][/color][/center]<br />\r\n<br />\r\n[center][color=black]C$:[/color] [color=red]--[/color][/center]<br />\r\n[center][color=red]Comprado por:[/color] [url=http://ocrpg.com/profile.php?id=Poso]Poso[/url][/center]<br />\r\n<br />\r\n[center][img]http://ocrpg.com/images/itens/dwarvenhelmet.gif[/img][/center]<br />\r\n[center][color=black][s]Capacete dos anões +9 - Level: 32[/s]<br />\r\n[/color][/center]<br />\r\n[center][color=black]C$:[/color] [color=red]--[/color]<br />\r\n[color=red]Comprado por:[/color] [url=http://ocrpg.com/profile.php?id=Poso]Poso[/url][/center]<br />\r\n<br />\r\n[center][img]http://ocrpg.com/images/itens/steelshield.gif[/img][/center] <br />\r\n[center][color=black][s]Escudo de Aço +9 - Level: 35[/s][/color][/center]<br />\r\n[center][color=black]C$:[/color] [color=red]--[/color]<br />\r\n[color=red]Comprado por:[/color] [url=http://ocrpg.com/profile.php?id=Poso]Poso[/url][/center]<br />\r\n<br />\r\n<br />\r\n[center]<br />\r\n[img]http://ocrpg.com/images/itens/moonstaff.gif[/img][/center] <br />\r\n[center][color=black]Bastão da lua +9 - Level: 25[/color][/center]<br />\r\n[center]<br />\r\n[color=black]C$:[/color] [color=red]30,000[/color][/center]<br />\r\n<br />\r\n<br />\r\n<br />\r\n<br />\r\n[color=blue][b]Sessão 2:[/b][/color]<br />\r\n[center]<br />\r\n[img]http://ocrpg.com/images/itens/queens_sceptre.gif[/img][/center] <br />\r\n[center][color=black]Bastão Dos Anjos +0 - Level 60[/color][/center]<br />\r\n<br />\r\n[center][color=black]C$:[/color] [color=red]50,000[/color][/center]<br />\r\n<br />\r\n<br />\r\n<br />\r\n[center][img]http://ocrpg.com/images/itens/earthborn_titan_armor.gif[/img][/center] <br />\r\n[center][color=black][s]Armadura de dragão +0 - Level: 70[/s][/color]<br />\r\n[/center]<br />\r\n[center][color=black]C$:[/color] [color=red]--[/color][/center]<br />\r\n[center][color=red]Comprado por:[/color] [url=http://ocrpg.com/profile.php?id=Vectron]Vectron[/url][/center]<br />\r\n<br />\r\n<br />\r\n[center]<br />\r\n[img]http://ocrpg.com/images/itens/wand_of_voodoo.gif[/img][/center] <br />\r\n[center][color=black][s]Bastão do mal +0 - Level: 67[/s][/color][/center]<br />\r\n<br />\r\n[center][color=black]C$:[/color] [color=red]--[/color][/center]<br />\r\n<br />\r\n[center][color=red]Comprado por:[/color] [url=http://ocrpg.com/profile.php?id=Hufy]Hufy-chan[/url][/center]<br />\r\n<br />\r\n<br />\r\n<br />\r\n<br />\r\n[color=blue][b]Sessão 3:[/b][/color]<br />\r\n[center]<br />\r\n[img]http://ocrpg.com/images/itens/darkhelmet.gif[/img][/center] <br />\r\n[center][color=black][s]Capacete Negro +0 +3for - Level: 42[/s][/color][/center]<br />\r\n<br />\r\n[center][color=black]C$:[/color] [color=red]--[/color][/center]<br />\r\n[center][color=red]Comprado por:[/color] [url=ocrpg.com/profile.php?id=Poso]Poso[/url][/center]<br />\r\n<br />\r\n[center][b][i][color=BLUE]<br />\r\n!NEW![/color][/i][/b][/center]<br />\r\n[center][img]http://ocrpg.com/images/itens/enchantedstaff.gif[/img][/center]<br />\r\n[center][color=black]Basão Encantado +0[/color] [color=green]+3vit[/color][/center]<br />\r\n[center][color=black]C$:[/color] [color=red]22,000[/color][/center]<br />\r\n<br />\r\n[center][img]http://ocrpg.com/images/itens/enchantedstaff.gif[/img][/center] <br />\r\n[center][color=black]Bastão encantado +7 Level: 42[/color][/center]<br />\r\n<br />\r\n[center][color=black]C$:[/color] [color=red]90,000[/color][/center]<br />\r\n<br />\r\n<br />\r\n[center][img]http://ocrpg.com/images/itens/dwarvenarmor.gif[/img][/center] <br />\r\n[center][color=black]Armadura de Guerreiro +4 - Level: 48[/color][/center]<br />\r\n<br />\r\n[center][color=black]C$:[/color] [color=red]50,000[/color][/center]<br />\r\n[center]<br />\r\n[img]http://ocrpg.com/images/itens/dragonstaff.gif[/img][/center] <br />\r\n[center][color=black]Cajado do Dragão +4 - Level: 72 + Voc. Superior[/color][/center]<br />\r\n<br />\r\n[center][color=black]C$:[/color] [color=red]190,000[/color][/center]<br />\r\n<br />\r\n[center][img]http://ocrpg.com/images/itens/dragonshield.gif[/img][/center] <br />\r\n[center][color=black]Escudo do Dragão +8 - Level: 70 + Voc. Superior[/color][/center]<br />\r\n<br />\r\n[center][color=black]C$:[/color] [color=red]350,000<br />\r\n[/color][/center]<br />\r\n<br />\r\n<br />\r\n<br />\r\n<br />\r\n<br />\r\n', 2, 1345975673, 1347119997, 339, 18, 0, 0, 'f', 'f', 'f', 1, 3),
-(130, 'Avaliem', 'fan', '[center][img]http://ocrpg.com/imgs/89c50340e7d39362f302208bfb38c0fa.png[/img]<br />\r\n<br />\r\nDeem suas opiniões e críticas. Faz um tempão que não mecho com o Photoshop, mas enfim, avaliem de 0 á 10 e dê sua sugestão/crítica etc.[/center]', 126, 1345989560, 1350705689, 101, 8, 0, 0, 'f', 'f', 'f', 1, 1),
-(131, 'Vendo .', 'trade', 'Vendo Capacete Dos Anões + 8 , Quem Quiser Compra Me Chama Privado ou manda Mensagem . ', 6, 1346010077, 1346010077, 30, 0, 0, 0, 'f', 'f', 'f', 1, 1),
-(132, 'Vendo Porçoes:Mana,é 4 Porçoes de Vida Ea Mais Barata Do Mercado.', 'trade', 'Comprem Pessoal Ea Mais Barata Do Mercado.', 1342, 1346030232, 1346099696, 32, 2, 0, 0, 'f', 'f', 'f', 1, 3),
-(134, 'PVP E PVM', 'duvidas', 'Quero saber qts % coloco em pvp e qts % coloco em pvm<br />\r\n<br />\r\nkero saber me ajudem pf', 873, 1346037024, 1346542646, 81, 5, 0, 0, 'f', 'f', 'f', 1, 2),
-(135, 'Bug Barra de Exp descoberto', 'outros', 'Pelo que andei reparando, todos que reclamam do bug na barra de experiencia tem nomes grandes, até mesmo esse topico ali embaixo que ja foi fechado e não pude comenta-lo. Os que tem nome pequeno não acontece isso, pq?<br />\r\nOnde tem o link para seu propio perfil (seu nome), sim é ali mesmo que está o problema.<br />\r\nJa repararam quando a pessoa tem nome composto o segundo nome sempre vai para baixo justamente onde fica o nivel e a barra de exp? talvez não seja isso que faz sumir, o nome empurrando a barra para baixo ou algo do tipo?<br />\r\nReparem só nesse link mesmo do topico anterior um se chama Bruce Dickinson "Bugado" e outro se chama Near "Sem Bug".<br />\r\n[img]http://i.imgur.com/Uc3lf.png[/img]<br />\r\n[color=blue]http://i.imgur.com/Uc3lf.png[/color]', 1396, 1346038753, 1346086999, 45, 1, 0, 0, 'f', 'f', 'f', 1, 3),
-(136, 'oO', 'off', 'Você ganhou 16,666 de experiência e 4,732 de ouro.', 60, 1346040623, 1346095767, 23, 2, 0, 0, 'f', 'f', 'f', 1, 1),
-(141, 'Jogadores oque Voces Acham Sobre Carsh no OC??   Leiam Este Topico', 'sugestoes', 'Não Botem Carsh Porque Fica ruim Um Cara Level 7 Com a Arma Fodastica que ele compro com Carsh, Um Cara Level 50 Que Nao tem Condiçoes de Pagar o Carsh Ele vai ficar mo Lixao Com arma Podre??<br />\r\n<br />\r\n<br />\r\n<br />\r\nJogadores Voces Qerem Carsh no Oc??<br />\r\n<br />\r\nVotem Aqui em Baixo Sim ( ) ou Não ( )<br />\r\n<br />\r\nPara um Jogo Melhor Sem Carsh,Todos os Jogos tem Carsh e se o OC nao Tiver Duvido se Ele Não Sera Melhor do Que Agora.<br />\r\n', 1342, 1346077255, 1346206811, 107, 9, 1, 7, 'f', 't', 't', 1, 3),
-(145, 'Problema no sistema de equipamentos', 'sugestoes', 'Bom , mal entrei no game (jogando pelo ipad) e ja me dou com um problema tem q arrastar o item pra equipar poderia ser diferente , pois arrastar nao da no ipad pelo menos n nesse jogo, gostaria q tivesse um segundo geito de equipar como clickar no item e aparecer as opcoes la de equipar remover e etc.... Obrigado pela atençao , espero q melhorem isso ', 1466, 1346178599, 1346216285, 37, 5, 0, 0, 'f', 't', 'f', 1, 1),
-(147, 'Futebol', 'off', 'Gosta de futebol internacional ? ta rolando um grande clássico , REAL MADRID x BARCELONA<br />\r\n<br />\r\nhttp://aovivo.esporteinterativo.com.br/', 6, 1346273234, 1347485402, 31, 3, 0, 0, 'f', 'f', 'f', 1, 1),
-(148, 'Problema em vendas de itens no mercado', 'outros', 'Seguinte , hoje a tarde eu fui vender orbs , itens de quest no mercado , ai deu tudo certinho para colocar , mais não aparece no mercado , a opção , ITENS DE QUEST , para aparecer itens a serem vendidos , e então eu perdi 2 orbs , e tenho o Hufy como testemunha , preciso que o ADM , me devolva .', 873, 1346278468, 1346296092, 20, 1, 0, 0, 'f', 't', 'f', 1, 2),
-(149, 'Lyon Shop.', 'trade', 'Vendo , -Preços a Combinar , mande uma mp ou chame privado.<br />\r\n<br />\r\n                                Escudo Grifo + 7 .<br />\r\n              [img]http://ocrpg.com/images/itens/griffinshield.gif[/img]<br />\r\n<br />\r\n                                 Calças Místicas + 7 <br />\r\n              [img]http://ocrpg.com/images/itens/lightning_legs.gif[/img]<br />\r\n                                       <br />\r\n<br />\r\n', 6, 1346297080, 1346297080, 43, 0, 0, 0, 'f', 'f', 'f', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -794,10 +735,6 @@ CREATE TABLE IF NOT EXISTS `guild_aliance` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `guild_aliance`
---
-
 
 -- --------------------------------------------------------
 
@@ -812,10 +749,6 @@ CREATE TABLE IF NOT EXISTS `guild_enemy` (
   `time` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `guild_enemy`
---
 
 
 -- --------------------------------------------------------
@@ -846,10 +779,6 @@ CREATE TABLE IF NOT EXISTS `guild_paliance` (
   `time` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `guild_paliance`
---
 
 
 -- --------------------------------------------------------
@@ -972,10 +901,6 @@ CREATE TABLE IF NOT EXISTS `login_tries` (
   `time` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `login_tries`
---
-
 
 -- --------------------------------------------------------
 
@@ -991,10 +916,6 @@ CREATE TABLE IF NOT EXISTS `log_battle` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `log_battle`
---
-
 
 -- --------------------------------------------------------
 
@@ -1008,10 +929,6 @@ CREATE TABLE IF NOT EXISTS `log_errors` (
   `time` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `log_errors`
---
 
 
 -- --------------------------------------------------------
@@ -1028,16 +945,6 @@ CREATE TABLE IF NOT EXISTS `log_forum` (
   `time` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `log_forum`
---
-
-INSERT INTO `log_forum` (`id`, `post`, `msg`, `type`, `time`) VALUES
-(1, 0, 'O tópico Explicações foi deletado pelo moderador <b>Lord</b>', 0, 1351144523),
-(2, 0, 'O tópico Versão Mobile Esclarecimentos foi deletado pelo moderador <b>Lord</b>', 0, 1351144529),
-(3, 0, 'O tópico Mudanças Recentes foi deletado pelo moderador <b>Lord</b>', 0, 1351144537),
-(4, 0, 'O tópico Troll Master foi deletado pelo moderador <b>Lord</b>', 0, 1351144603);
 
 -- --------------------------------------------------------
 
@@ -1164,13 +1071,6 @@ CREATE TABLE IF NOT EXISTS `lotto` (
   PRIMARY KEY (`id`),
   KEY `Otimizacao1` (`player_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1643 ;
-
---
--- Dumping data for table `lotto`
---
-
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `magias`
@@ -1507,13 +1407,6 @@ CREATE TABLE IF NOT EXISTS `pwar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
--- Dumping data for table `pwar`
---
-
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `quests`
 --
 
@@ -1542,13 +1435,6 @@ CREATE TABLE IF NOT EXISTS `referal` (
   PRIMARY KEY (`id`),
   KEY `Otimizacao1` (`ip`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `referal`
---
-
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `ref_list_prem`
