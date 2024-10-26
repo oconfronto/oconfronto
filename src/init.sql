@@ -200,186 +200,217 @@ CREATE TABLE IF NOT EXISTS `blueprint_items` (
 --
 
 INSERT INTO `blueprint_items` (`id`, `name`, `description`, `type`, `effectiveness`, `price`, `img`, `voc`, `needlvl`, `needpromo`, `needring`, `canbuy`) VALUES
-(1, 'Capacete dos anões', 'Os anões são especialistas na criação de equipamentos de defesa.', 'helmet', 23, 11000, 'dwarvenhelmet.gif', 0, 32, 'f', 'f', 't'),
-(2, 'Armadura do guerreiro', 'A armadura mais utilizada pelos exércitos da região.', 'armor', 38, 23000, 'dwarvenarmor.gif', 0, 48, 'f', 'f', 't'),
-(3, 'Calças de bronze', 'Calças feitas de bronze.', 'legs', 13, 4960, 'brasslegs.gif', 0, 22, 'f', 'f', 't'),
-(4, 'Espada de T.Magor', 'Fabricada por Thoy Magor, um dos cavaleiros mais poderosos de todos os tempos!', 'weapon', 42, 26500, 'warlordsword.gif', 2, 44, 'f', 'f', 't'),
-(5, 'Armadura de ferro', 'Proporciona uma defesa razoável com baixo custo.', 'armor', 17, 2000, 'darkarmor.gif', 0, 12, 'f', 'f', 't'),
-(6, 'Escudo escuro', 'Escudo feito por um guerreiro maligno.', 'shield', 32, 37000, 'darkshield.gif', 0, 49, 'f', 'f', 't'),
-(7, 'Botas de couro', 'Simples botas de couro.', 'boots', 5, 200, 'leatherboots.gif', 0, 1, 'f', 'f', 't'),
-(8, 'Faca', 'Uma simples faca.', 'weapon', 7, 300, 'knife.gif', 2, 1, 'f', 'f', 't'),
-(9, 'Escudo de madeira', 'Feito de madeira, porém muito barato.', 'shield', 5, 100, 'woodenshield.gif', 0, 1, 'f', 'f', 't'),
-(10, 'Escudo redondo', 'Feito de um material desconhecido, mas não muito resistente.', 'shield', 9, 470, 'roundshield.gif', 0, 7, 'f', 'f', 't'),
-(11, 'Escudo de ferro', 'Uma chapa de ferro.', 'shield', 12, 1700, 'iroshield.gif', 0, 14, 'f', 'f', 't'),
-(13, 'Elmo do esqueleto', 'Feito de ossos dos guerreiros mais poderosos das gerações anteriores.', 'helmet', 52, 80000, 'skullhelmet.gif', 0, 82, 'f', 'f', 't'),
-(14, 'Escudo do dragão', 'Os poderes de dragão estão presentes neste escudo.', 'shield', 43, 86000, 'dragonshield.gif', 0, 70, 't', 'f', 't'),
-(15, 'Escudo viking', 'Os Vikings fazem escudos muito bons, o problema é que eles trabalham bebados.', 'shield', 16, 2700, 'vikingshield.gif', 0, 21, 'f', 'f', 't'),
-(18, 'Machado duplo', 'Lâmina dupla, estrago em dobro.', 'weapon', 22, 4895, 'doubleaxe.gif', 2, 18, 'f', 'f', 't'),
-(19, 'Armadura selvagem', 'Utilizada pelas tribos nativas.', 'armor', 12, 1000, 'leopard.gif', 0, 6, 'f', 'f', 't'),
-(20, 'Toca de couro', 'Simples vestimenta.', 'helmet', 8, 300, 'leatherhelmet.gif', 0, 1, 'f', 'f', 't'),
-(21, 'Calça de couro', 'Simples vestimenta.', 'legs', 4, 500, 'leatherlegs.gif', 0, 1, 'f', 'f', 't'),
-(22, 'Armadura de couro', 'Simples vestimenta.', 'armor', 7, 500, 'belted_cape.gif', 0, 1, 'f', 'f', 't'),
-(23, 'Espada longa', 'Espada com uma lâmina comprida, que pode fazer um belo estrago.', 'weapon', 19, 2000, 'longsword.gif', 2, 12, 'f', 'f', 't'),
-(25, 'Armadura nobre', 'Sem descrição.', 'armor', 23, 4850, 'noblearmor.gif', 0, 24, 'f', 'f', 't'),
-(26, 'Armadura de ouro', 'Possui uma grande defesa, porém muito cobiçada devido sua raridade.', 'armor', 33, 15600, 'goldenarmor.gif', 0, 40, 'f', 'f', 't'),
-(27, 'Martelo', 'Um martelo muito resistente, porém pesado.', 'weapon', 15, 595, 'battlehammer.gif', 2, 7, 'f', 'f', 't'),
-(28, 'Machado gigante', 'Um machado gigantesco, com um imenso poder de ataque.', 'weapon', 38, 19600, 'giantaxe.gif', 2, 38, 'f', 'f', 't'),
-(29, 'Machado dourado', 'Um machado feito de ouro.', 'weapon', 32, 13500, 'goldenaxe.gif', 2, 31, 'f', 'f', 't'),
-(30, 'Espada de cavaleiro', 'A espada usada pelos cavaleiros de Elryn.', 'weapon', 27, 10050, 'crimson_sword.gif', 2, 25, 'f', 'f', 't'),
-(31, 'Escudo real', 'Alguns anos atrás este tipo de escudo era usado pelas tropas do rei.', 'shield', 19, 5500, 'kiteshield.gif', 0, 28, 'f', 'f', 't'),
-(32, 'Escudo de aço', 'Um escudo feito de aço.', 'shield', 24, 12000, 'steelshield.gif', 0, 35, 'f', 'f', 't'),
-(33, 'Escudo da águia', 'Inspirado em uma águia, este escudo pode resistir a golpes muito fortes.', 'shield', 29, 22000, 'eagleshield.gif', 0, 42, 'f', 'f', 't'),
-(34, 'Calça de ferro', 'Possui uma boa defesa, porém é um equipamento muito pesado.', 'legs', 18, 10000, 'chainlegs.gif', 0, 32, 'f', 'f', 't'),
-(35, 'Calça selvagem', 'Usada por tribos antigas, bastante leve, porém não propõe muita defesa.', 'legs', 8, 2150, 'blue_legs.gif', 0, 11, 'f', 'f', 't'),
-(36, 'Calças místicas', 'Até hoje ninguém conseguiu descobrir de onde todo o poder destas calças vem.', 'legs', 30, 34000, 'lightning_legs.gif', 0, 52, 'f', 'f', 't'),
-(37, 'Capacete selvagem', 'Usado por tribos antigas, bastante leve, porém não propõe muita defesa.', 'helmet', 14, 1260, 'ragnir_helmet.gif', 0, 12, 'f', 'f', 't'),
-(161, 'Armadura divina', 'A armadura dos deuses.', 'armor', 85, 2000000, 'yalahari_armor.gif', 0, 320, 'f', 'f', 'f'),
-(39, 'Capacete de ferro', 'Possui uma boa defesa, porém é um equipamento muito pesado.', 'helmet', 19, 4950, 'krimhorn_helmet.gif', 0, 24, 'f', 'f', 't'),
-(40, 'Botas de crocodilo', 'Feitas com couro de crocodilo.', 'boots', 8, 800, 'crocodileboots.gif', 0, 12, 'f', 'f', 't'),
-(41, 'Botas de urso', 'Este tipo de bota proporciona uma ótima proteção à variações de temperatura.', 'boots', 13, 2000, 'fur_boots.gif', 0, 24, 'f', 'f', 't'),
-(42, 'Botas de latão', 'Feitas de um metal pouco resistente.', 'boots', 17, 5500, 'ironboots.gif', 0, 36, 'f', 'f', 't'),
-(43, 'Machado da morte', 'O machado da morte!', 'weapon', 57, 58600, 'deathaxe.gif', 2, 62, 'f', 'f', 't'),
-(44, 'Espada de ouro', 'Uma espada feita de ouro.', 'weapon', 45, 34650, 'goldensword.gif', 2, 50, 'f', 'f', 't'),
-(47, 'Botas de dragão', 'Botas feitas com escamas de dragão.', 'boots', 49, 87000, 'dragon_scale_boots.gif', 0, 80, 't', 'f', 't'),
-(51, 'Machado vampírico', 'O machado dos vampiros.', 'weapon', 64, 65650, 'vampireaxe.gif', 2, 68, 'f', 'f', 't'),
-(52, 'Machado templário', 'Este tipo de machado era usado pelos guerreiros que defendiam os antigos templos.', 'weapon', 53, 46850, 'templaraxe.gif', 2, 56, 'f', 'f', 't'),
-(53, 'Espada de batalha', 'Não queira saber quem fez esta espada.', 'weapon', 68, 78450, 'battlesword.gif', 2, 75, 'f', 'f', 't'),
-(57, 'Manto de sangue', 'Um estranho tipo de magia faz deste manto uma ótima defesa.', 'armor', 28, 7560, 'bloodrobe.gif', 0, 32, 'f', 'f', 't'),
-(58, 'Armadura de turquesa', 'Armadura feita com uma pedra preciosa muito resistente.', 'armor', 68, 97000, 'frozen_plate.gif', 0, 92, 'f', 'f', 't'),
-(59, 'Armadura do caos', 'A armadura do caos.', 'armor', 48, 42350, 'lavos_armor.gif', 0, 62, 'f', 'f', 't'),
-(61, 'Calças de aço', 'Uma liga metálica muito resistente.', 'legs', 24, 23000, 'legsdeplate.gif', 0, 40, 'f', 'f', 't'),
-(62, 'Calças de ouro', 'Calças feitas de ouro.', 'legs', 47, 89500, 'goldenlegs.gif', 0, 89, 'f', 'f', 't'),
-(64, 'Calça dos anões', 'Os anões são especialistas na criação de equipamentos de defesa.', 'legs', 37, 42500, 'Dwarven_Legs.gif', 0, 60, 'f', 'f', 't'),
-(65, 'Escudo de grifo', 'Feito da pele de um griffo.', 'shield', 36, 52000, 'griffinshield.gif', 0, 56, 'f', 'f', 't'),
-(66, 'Escudo do caos', 'O escudo do caos.', 'shield', 38, 74000, 'chaosshield.gif', 0, 63, 'f', 'f', 't'),
-(67, 'Armadura da escuridão', 'A caveira gravada nesta armadura faz as pessoas que a viram nunca mais esquecê-la.', 'armor', 60, 79500, 'darknessarmor.gif', 0, 84, 'f', 'f', 't'),
-(68, 'Elmo de dragão', 'Feito de escamas de dragão.', 'helmet', 34, 35000, 'dragonscalehelmet.gif', 0, 54, 'f', 'f', 't'),
-(69, 'Elmo do guerreiro', 'Equipamento com muita defesa, porém pesado.', 'helmet', 40, 48650, 'warriorhelmet.gif', 0, 62, 'f', 'f', 't'),
-(71, 'Botas míticas', 'Essas botas apresentam uma combinação de metais jamais antes vista.', 'boots', 54, 110000, 'draken_boots.gif', 0, 90, 'f', 'f', 't'),
-(73, 'Amuleto', 'Um simples amuleto. ', 'amulet', 3, 100, 'bronzeamulet.gif', 0, 1, 'f', 'f', 't'),
-(74, 'Amuleto de prata', 'Um amuleto feito de prata.', 'amulet', 6, 450, 'silvernecklace.gif', 0, 7, 'f', 'f', 't'),
-(75, 'Amuleto de ouro', 'Um amuleto feito de ouro.', 'amulet', 12, 2600, 'staramulet.gif', 0, 21, 'f', 'f', 't'),
-(76, 'Amuleto de proteção ', 'Proteção divina.', 'amulet', 15, 5000, 'protectionamulet.gif', 0, 28, 'f', 'f', 't'),
-(77, 'Colar da terra', 'Pedaço de terra mágica, possui poderes ocultos de cura.', 'amulet', 23, 35000, 'terra_amulet.gif', 0, 49, 'f', 'f', 't'),
-(78, 'Amuleto de rubi', 'Este amuleto possui um enorme rubi.', 'amulet', 35, 90000, 'lifeamulet.gif', 0, 79, 't', 'f', 't'),
-(79, 'Amuleto da vida', 'Este amuleto possui um enorme poder medicinal.', 'amulet', 39, 100000, 'amuletoflife.gif', 0, 90, 't', 't', 't'),
-(81, 'Shuriken', 'Uma estrela ninja.', 'weapon', 8, 300, 'throwingstar.gif', 1, 1, 'f', 'f', 't'),
-(82, 'Lança', 'Uma simples lança.', 'weapon', 15, 595, 'spear.gif', 1, 4, 'f', 'f', 't'),
-(83, 'Arco', 'Um simples arco.', 'weapon', 18, 2000, 'bow.gif', 1, 7, 'f', 'f', 't'),
-(84, 'Lança de aço', 'Uma lança feita de aço.', 'weapon', 20, 4895, 'steelspear.gif', 1, 14, 'f', 'f', 't'),
-(85, 'Arco dos elfos', 'Um arco usado pelos elfos. ', 'weapon', 24, 10050, 'yols_bow.gif', 1, 23, 'f', 'f', 't'),
-(86, 'Lança real', 'Lança usada pelos guardas do rei. ', 'weapon', 32, 19600, 'royal_spear.gif', 1, 31, 'f', 'f', 't'),
-(87, 'Arco de aço', 'Um arco revestido com aço.', 'weapon', 27, 13500, 'steelbow.gif', 1, 25, 'f', 'f', 't'),
-(88, 'Besta', 'Uma versão do arco mais rápida e precisa. ', 'weapon', 37, 26500, 'crossbow.gif', 1, 36, 'f', 'f', 't'),
-(89, 'Arco de gelo', 'Um arco feito de gelo.', 'weapon', 44, 34650, 'icebow.gif', 1, 47, 'f', 'f', 't'),
-(90, 'Besta modificada', 'Uma besta aperfeiçoada.', 'weapon', 49, 46850, 'ironworker.gif', 1, 55, 'f', 'f', 't'),
-(91, 'Besta de caçados', 'Uma besta usada pelos antigos caçadores de monstros.', 'weapon', 57, 58600, 'the_devileye.gif', 1, 64, 'f', 'f', 't'),
-(92, 'Bastão', 'Um simples bastão.', 'weapon', 7, 300, 'staff.gif', 3, 1, 'f', 'f', 't'),
-(93, 'Bastão lápis-lazúli', 'Bastão com um Lápis-lazúli na ponta. ', 'weapon', 16, 595, 'bluestaff.gif', 3, 9, 'f', 'f', 't'),
-(94, 'Bastão de cura', 'O bastão dos curandeiros.', 'weapon', 22, 2000, 'shamanstaff.gif', 3, 18, 'f', 'f', 't'),
-(95, 'Bastão da lua', 'O bastão da lua.', 'weapon', 27, 4895, 'moonstaff.gif', 3, 25, 'f', 'f', 't'),
-(96, 'Bastão do fogo', 'O bastão do fogo.', 'weapon', 33, 13500, 'firestaff.gif', 3, 32, 'f', 'f', 't'),
-(97, 'Bastão dos oceanos', 'O bastão dos oceanos.', 'weapon', 36, 19600, 'oceanstaff.gif', 3, 36, 'f', 'f', 't'),
-(98, 'Bastão encantado ', 'Um bastão encantado.', 'weapon', 40, 26500, 'enchantedstaff.gif', 3, 42, 'f', 'f', 't'),
-(99, 'Bastão do caos', 'O Bastão do caos.', 'weapon', 44, 34650, 'chaosstaff.gif', 3, 47, 'f', 'f', 't'),
-(100, 'Bastão dos anjos', 'O bastão dos anjos.', 'weapon', 56, 58600, 'queens_sceptre.gif', 3, 60, 'f', 'f', 't'),
-(101, 'Bastão do mal ', 'Um bastão com propriedades do mal.', 'weapon', 65, 65650, 'wand_of_voodoo.gif', 3, 67, 'f', 'f', 't'),
-(102, 'Bastão do trovão ', 'O bastão do trovão.', 'weapon', 50, 46850, 'blessed_sceptre.gif', 3, 56, 'f', 'f', 't'),
-(103, 'Armadura de dragão', 'Os poderes de dragão estão presentes nesta armadura.', 'armor', 54, 59150, 'earthborn_titan_armor.gif', 0, 72, 'f', 'f', 't'),
-(107, 'Orbe do vento', 'Item de quest.', 'addon', 0, 10500, 'windorb.gif', 0, 1, 'f', 'f', 'f'),
-(108, 'Orbe da terra', 'Item de quest.', 'addon', 0, 11200, 'earthorb.gif', 0, 1, 'f', 'f', 'f'),
-(109, 'Orbe do fogo', 'Item de quest.', 'addon', 0, 11900, 'fireorb.gif', 0, 1, 'f', 'f', 'f'),
-(110, 'Orbe da água', 'Item de quest.', 'addon', 0, 12600, 'waterorb.gif', 0, 1, 'f', 'f', 'f'),
-(111, 'Roda de titânio', 'Item de quest.', 'addon', 0, 21000, 'tataniumwell.gif', 0, 1, 'f', 'f', 'f'),
-(112, 'Cristal encantado', 'Item de quest.', 'addon', 0, 14000, 'jeweledcrystal.gif', 0, 1, 'f', 'f', 'f'),
-(113, 'Cajado da tempestade', 'Um cajado com poderes incríveis. ', 'weapon', 75, 97620, 'wand_of_starstorm.gif', 3, 90, 'f', 'f', 't'),
-(115, 'Lança encantada', 'Uma lança encantada.', 'weapon', 67, 65650, 'enchanted_spear.gif', 1, 72, 'f', 'f', 't'),
-(116, 'Caixa', 'Item de quest.', 'addon', 0, 21000, 'box.gif', 0, 1, 'f', 'f', 'f'),
-(117, 'Besta de ouro', 'Uma besta feita de ouro.', 'weapon', 87, 97620, 'royal_crossbow.gif', 1, 117, 't', 'f', 't'),
-(118, 'Primeira parte da espada', 'Item de quest.', 'addon', 0, 35000, 'cabo.gif', 0, 1, 'f', 'f', 'f'),
-(119, 'Segunda parte da espada', 'Item de quest.', 'addon', 0, 28000, 'gelo1.gif', 0, 1, 'f', 'f', 'f'),
-(120, 'Terceira parte da espada', 'Item de quest.', 'addon', 0, 28000, 'gelo2.gif', 0, 1, 'f', 'f', 'f'),
-(121, 'Lâmina de gelo', 'Esta espada especial pode ser usada por pessoas de qualquer vocação.', 'weapon', 110, 868000, 'iceblade.gif', 0, 145, 'f', 'f', 'f'),
-(123, 'Arco divino ', 'Um arco com propriedades divinas.', 'weapon', 80, 78450, 'divinebow.gif', 1, 90, 'f', 't', 't'),
-(124, 'Cajado do dragão', 'Feito das escamas de um dragão.', 'weapon', 70, 78450, 'dragonstaff.gif', 3, 72, 't', 'f', 't'),
-(125, 'Espada gigante', 'Espada de grande poder, porém pesada, usada pelos mais fortes guerreiros.', 'weapon', 76, 97620, 'giantsword.gif', 2, 90, 'f', 't', 't'),
-(126, 'Escudo mágico', 'Forças mágicas fazem com que este escudo resista a grandes ataques.', 'shield', 48, 105000, 'magicshield.gif', 0, 90, 't', 't', 't'),
-(127, 'Escudo antigo', 'Escudo usado por T.Magor', 'shield', 55, 583520, 'ancientshield.gif', 0, 145, 'f', 'f', 't'),
-(128, 'Caçadora de crânios', 'Esta espada pode ser usada por qualquer vocação.', 'weapon', 120, 1449280, 'skullhunter.gif', 0, 195, 'f', 'f', 't'),
-(129, 'Armadura imperial', 'Armadura usada pelos imperiais.', 'armor', 42, 34000, 'imperialarm.gif', 0, 54, 'f', 'f', 't'),
-(130, 'Capacete de herói ', 'Usado por verdadeiros heróis.', 'helmet', 58, 99000, 'herohelmet.gif', 0, 92, 'f', 'f', 't'),
-(131, 'Escudo do herói', 'Escudo usado por heróis.', 'shield', 60, 807520, 'heroshield.gif', 0, 170, 'f', 'f', 't'),
-(133, 'Armadura da morte', 'A armadura da morte.', 'armor', 79, 1780800, 'skullcracker_armor.gif', 0, 140, 't', 'f', 't'),
-(134, 'Cajado da morte', 'O cajado da morte.', 'weapon', 125, 2240000, 'underworld_rod.gif', 3, 200, 'f', 'f', 't'),
-(135, 'Botas de ouro', 'Grande agilidade, porém cobiçada, elevando muito seu preço.', 'boots', 62, 530000, 'goldenboots.gif', 0, 120, 't', 'f', 't'),
-(136, 'Poção de vida', 'Recupera até 5 mil de vida.', 'potion', 0, 100, 'healthpotion.gif', 0, 1, 'f', 'f', 'f'),
-(137, 'Poção de energia', 'Recupera até 50 de energia.', 'potion', 0, 2800, 'energypotion.gif', 0, 1, 'f', 'f', 'f'),
-(138, 'Escudo das trevas', 'Usado por guerreiros malignos.', 'shield', 70, 2128000, 'nightmareshield.gif', 0, 205, 'f', 'f', 't'),
-(139, 'Amuleto da morte', 'Usado pelo ceifador, lhe dando poderes imortalísticos.   ', 'amulet', 42, 510000, 'stoneskinamulet.gif', 0, 120, 't', 'f', 't'),
-(140, 'Escudo demoniaco', 'Escudo com propriedades demoníacas.', 'shield', 82, 4200000, 'infernalshield.gif', 0, 150, 'f', 'f', 'f'),
-(141, 'Pedra de Maturação', 'Esta pedra poderá transformar seu item optimizado em um item +13 ou +14, porém, a chance da pedra não funcionar é de 30%.', 'stone', 0, 5000000, 'maturestone.gif', 0, 1, 'f', 'f', 'f'),
-(143, 'Besta indestrutível', 'Uma besta tão dura, que é quase indestrutível. ', 'weapon', 130, 1680000, 'hardcorecrossbow.gif', 1, 190, 'f', 'f', 't'),
-(144, 'Pedra de Força #1', 'Adiciona +5 de força no seu item. Esta pedra pode ser usada apenas uma vez por item, e a chance dela quebrar durante o processo é de 30%.', 'stone', 0, 100000, 'forstone1.gif', 0, 1, 'f', 'f', 'f'),
-(145, 'Pedra de Vitalidade #1', 'Adiciona +5 de vitalidade no seu item. Esta pedra pode ser usada apenas uma vez por item, e a chance dela quebrar durante o processo é de 30%.', 'stone', 0, 80000, 'vitstone1.gif', 0, 1, 'f', 'f', 'f'),
-(146, 'Pedra de Agilidade #1', 'Adiciona +5 de agilidade no seu item. Esta pedra pode ser usada apenas uma vez por item, e a chance dela quebrar durante o processo é de 30%.', 'stone', 0, 80000, 'agistone1.gif', 0, 1, 'f', 'f', 'f'),
-(147, 'Pedra de Resistência #1', 'Adiciona +5 de resistência no seu item. Esta pedra pode ser usada apenas uma vez por item, e a chance dela quebrar durante o processo é de 30%.', 'stone', 0, 100000, 'resstone1.gif', 0, 1, 'f', 'f', 'f'),
-(148, 'Poção grande de vida', 'Recupera até 10 mil de vida.', 'potion', 0, 5600, 'bighealthpotion.gif', 0, 1, 'f', 'f', 'f'),
-(149, 'Calça demoniaca', 'As calças do demônio.', 'legs', 53, 780000, 'demonlegs.gif', 0, 160, 'f', 'f', 't'),
-(150, 'Poção de mana', 'Recupera até 500 de mana.', 'potion', 0, 2800, 'manapotion.gif', 0, 1, 'f', 'f', 'f'),
-(151, 'Espada de Friden', 'Espada usada por Friden, maior guerreiro de todos os tempos, esta espada possui poderes místicos tão fortes, que apenas um guerreiro muito poderoso pode controla-la.', 'weapon', 135, 3500000, 'fridensword.gif', 2, 280, 'p', 'f', 'f'),
-(152, 'Cajado do Drácula. ', 'Cajado usado pelo Drácula, com poderes tão surpreendentes que apenas um guerreiro muito poderoso pode manipula-la.', 'weapon', 135, 3500000, 'draculawand.gif', 3, 280, 'p', 'f', 'f'),
-(153, 'Arco de Baltazar', 'Arco usado por Baltazar, o melhor arqueiro, poderia atingir um alvo a quilômetros de distancia, para poder usa-lo você precisa ser muito preciso.', 'weapon', 140, 3710000, 'baltazarbow.gif', 1, 280, 'p', 'f', 'f'),
-(155, 'Presente', 'Ao abrir este presente você pode encontrar qualquer item ou quantidade de ouro.', 'addon', 0, 21000, 'presente.gif', 0, 50, 'f', 'f', 'f'),
-(156, 'Orbe de Oddin', 'Um orb raríssimo, com grandes poderes. Encontrar um destes orbs com um monstro é tão difícil quanto ganhar na loteria.', 'addon', 0, 140000, 'oddinorb.gif', 0, 1, 'f', 'f', 'f'),
-(157, 'Magic Golden Bar', 'Uma barra de ouro. Muitos acreditam que essas barras possuem poderes mágicos.', 'addon', 0, 210000, 'magicgoldenbar.gif', 0, 1, 'f', 'f', 'f'),
-(159, 'Caixa', 'Um pacote imperial, muito valioso.', 'addon', 0, 6300000, 'box.gif', 0, 1, 'f', 'f', 'f'),
-(173, 'Armadura demoníaca', 'Sem descrição.', 'armor', 82, 1650000, 'demonarmor.gif', 0, 170, 'f', 'f', 'f'),
-(162, 'Calça divina', 'A calça dos deuses.', 'legs', 56, 1680000, 'elitelegs.gif', 0, 320, 'f', 'f', 'f'),
-(163, 'Anel encantado', 'Aumenta todos seus status em 10 pontos.', 'ring', 0, 1000000, 'jewring.gif', 0, 80, 'f', 'f', 'f'),
-(164, 'Anel de força', 'Aumenta 10 pontos de status em força.', 'ring', 0, 15000, 'forring.gif', 0, 25, 'f', 'f', 'f'),
-(165, 'Anel de vitalidade', 'Aumenta 10 pontos de status em vitalidade.', 'ring', 0, 10000, 'vitring.gif', 0, 25, 'f', 'f', 'f'),
-(166, 'Anel de agilidade', 'Aumenta 10 pontos de status em agilidade.', 'ring', 0, 10000, 'agiring.gif', 0, 25, 'f', 'f', 'f'),
-(167, 'Anel de resistência ', 'Aumenta 10 pontos de status em resistência.', 'ring', 0, 15000, 'resring.gif', 0, 25, 'f', 'f', 'f'),
-(168, 'Anel encantado e otimizado', 'Aumenta todos seus status em 20 pontos.', 'ring', 0, 2000000, 'newjewring.gif', 0, 100, 'f', 'f', 'f'),
-(169, 'Anel escuro', 'Aumenta 10 pontos de status em força e 15 pontos em resistência.', 'ring', 0, 30000, 'darkring.gif', 0, 40, 'f', 'f', 'f'),
-(170, 'Anel de energia', 'Aumenta 15 pontos de status em vitalidade, 15 pontos em agilidade e 5 pontos em resistência. ', 'ring', 0, 30000, 'energyring.gif', 0, 40, 'f', 'f', 'f'),
-(171, 'Amuleto do trovão', 'Amuleto feito por Thor, o deus do trovão. ', 'amulet', 48, 1000000, 'shockwave_amulet.gif', 0, 125, 'f', 'f', 'f'),
-(172, 'Anel da morte', 'Aumenta sua força e agilidade em 40 pontos e sua vitalidade e resistência em 30 pontos.', 'ring', 0, 900000, 'deathring.gif', 0, 135, 'f', 'f', 'f'),
-(174, 'Capacete de demônio', 'Capacete com poderes demoníacos. ', 'helmet', 65, 800000, 'demonhelmet.gif', 0, 135, 'f', 'f', 'f'),
-(175, 'Escudo da fortaleza', 'Antigamente usado por guardas da fortaleza.', 'shield', 82, 3000000, 'towershield.gif', 0, 150, 'f', 'f', 'f'),
-(176, 'Anel da vida', 'Aumenta sua força e agilidade em 30 pontos e sua vitalidade e resistência em 40 pontos.', 'ring', 0, 750000, 'lifering.gif', 0, 140, 'f', 'f', 't'),
-(177, 'Cristal magico', 'Um cristal. Muitos acreditam que esses cristais possuem poderes mágicos.', 'addon', 0, 300000, 'magiccrystal.gif', 0, 1, 'f', 'f', 'f'),
-(178, 'Anel de cristal', 'Poderoso anel formado por 3 cristais de jóias.', 'ring', 0, 3000000, 'ringofthesky.gif', 0, 200, 'f', 'f', 'f'),
-(179, 'Garrafa de vinho', 'Aumenta 10% da sua força, porém diminui 5% da sua resistência.', 'potion', 30, 2000, 'bottle.gif', 0, 18, 'f', 'f', 'f'),
-(180, 'Garrafa de uísque', 'Aumenta 10% da sua resistência, porém diminui 5% da sua agilidade.', 'potion', 60, 5000, 'whisky.gif', 0, 18, 'f', 'f', 'f'),
-(181, 'Garrafa de cerveja', 'Aumenta 5% da sua agilidade.', 'potion', 15, 750, 'beer.gif', 0, 18, 'f', 'f', 'f'),
-(182, 'Copo d''água', 'Remove o efeito de qualquer bebida que você tenha tomado.', 'potion', 1, 10, 'water.png', 0, 1, 'f', 'f', 'f'),
-(183, 'Amuleto de dragão', 'Amuleto feito das escamas de um dragão.', 'amulet', 31, 80000, 'cruzaderamulet.gif', 0, 70, 'f', 'f', 't'),
-(184, 'Colar de pedra', 'Uma pedra mística com poderes curandeiros.', 'amulet', 21, 20000, 'brokenamulet.gif', 0, 42, 'f', 'f', 't'),
-(185, 'Amuleto de platina', 'Amuleto feito de platina, muito resistente \r\ne poderoso.', 'amulet', 10, 1500, 'platinumamulet.gif', 0, 14, 'f', 'f', 't'),
-(186, 'Colar de safira', 'Colar de ouro com uma safira mágica, encontrada nos lugares mais remotos do mundo.', 'amulet', 26, 50000, 'crystalnecklace.gif', 0, 56, 'f', 'f', 't'),
-(187, 'Colar do elfos', 'Usado pelos elfos curandeiros.', 'amulet', 28, 70000, 'sacred_tree_amulet.gif', 0, 63, 'f', 'f', 't'),
-(188, 'Colar de energia', 'Colar com um pouco de energia de uma estrela que caiu na terra.', 'amulet', 19, 10000, 'elvenamulet.gif', 0, 35, 'f', 'f', 't'),
-(189, 'Capacete negro', 'Esconde uma maldisão imprevisível.', 'helmet', 28, 23500, 'darkhelmet.gif', 0, 42, 'f', 'f', 't'),
-(190, 'Elmo real', 'O elmo utilizado pelos cavaleiros da realeza.', 'helmet', 47, 61350, 'royalhelmet.gif', 0, 75, 'f', 'f', 't'),
-(191, 'Calça dos carrascos', 'Calça utilizada pelos carrascos.', 'legs', 6, 890, 'studdedlegs.gif', 0, 6, 'f', 'f', 't'),
-(192, 'Calça negra', 'Dita por muitos como amaldiçoada.', 'legs', 43, 52600, 'crslegs.gif', 0, 72, 'f', 'f', 't'),
-(132, 'Botas encantadas', 'Estas botas possuem poderes mágicos, garantindo uma agilidade incrível.', 'boots', 68, 1600000, 'enboots.gif', 0, 145, 'f', 'f', 'f'),
-(158, 'Elmo Dourado', 'Feito com barras de ouro muito raras.', 'helmet', 70, 1000000, 'goldenhelmet.gif', 0, 140, 'f', 'f', 'f'),
-(196, 'Botas de cristal', 'Essas botas são feitas a partir de vários cristais preciosos.', 'boots', 41, 56000, 'crystal_boots.gif', 0, 60, 'f', 'f', 't'),
-(197, 'Botas do guerreiro', 'Botas feitas sob medida para os mais fortes guerreiros do reino.', 'boots', 46, 75000, 'guardian_boots.gif', 0, 72, 'f', 'f', 't'),
-(198, 'Botas de ferro', 'Possui uma boa agilidade, porém é um equipamento muito pesado.', 'boots', 25, 16000, 'stellboots.gif', 0, 48, 'f', 'f', 't'),
-(200, 'Botas de Aço', 'Uma liga metálica muito resistente.', 'boots', 32, 31000, 'acoboots.gif', 0, 55, 'f', 'f', 't'),
-(201, 'Botas de Elryn', 'As botas do guardião do império de Elryn.', 'boots', 35, 48000, 'botas_de_elryn.gif', 0, 39, 'f', 'f', 'f'),
-(202, 'Armadura das Sombras', 'Uma armadura muito rara e de altissimo valor.', 'armor', 54, 54000, 'senior_armor.gif', 0, 60, 'f', 'f', 'f'),
-(203, 'Elmo Sombrio', 'Uma elmo muito raro e de altissimo valor.', 'helmet', 45, 55000, 'senior_helmet.gif', 0, 60, 'f', 'f', 'f'),
-(204, 'Calças Sombrias', 'Um par de calças muito caro e de altissimo valor.', 'legs', 44, 51000, 'senior_legs.gif', 0, 60, 'f', 'f', 'f'),
-(205, 'Espada Sangrenta', 'Muito sangue já foi derramado por esta espada.', 'weapon', 65, 74000, 'espada_sangrenta.gif', 2, 60, 'f', 'f', 'f'),
-(206, 'Cajado das Sombras', 'O podr das trevas se concentra neste cajado.', 'weapon', 69, 71000, 'cajado_sombras.gif', 3, 60, 'f', 'f', 'f'),
-(207, 'Besta da Morte', 'Sem descrição.', 'weapon', 66, 63000, 'besta_da_morte.gif', 1, 60, 'f', 'f', 'f'),
-(208, 'Armadura Glacial', 'Sem descrição.', 'armor', 67, 92000, 'glacial_armor.gif', 0, 80, 'f', 'f', 'f'),
-(209, 'Elmo Congelado', 'Sem descrição.', 'helmet', 57, 90000, 'glacial_helmet.gif', 0, 80, 'f', 'f', 'f'),
+(1, 'Capacete dos anões', 'Os anões são especialistas na criação de equipamentos de defesa.', 'helmet', 23, 11000, 'dwarvenhelmet.gif', 0, 32, 'f', 'f', 't');
+(2, 'Armadura do guerreiro', 'A armadura mais utilizada pelos exércitos da região.', 'armor', 38, 23000, 'dwarvenarmor.gif', 0, 48, 'f', 'f', 't');
+(3, 'Calças de bronze', 'Calças feitas de bronze.', 'legs', 13, 4960, 'brasslegs.gif', 0, 22, 'f', 'f', 't');
+(4, 'Espada de T.Magor', 'Fabricada por Thoy Magor, um dos cavaleiros mais poderosos de todos os tempos!', 'weapon', 42, 26500, 'warlordsword.gif', 2, 44, 'f', 'f', 't');
+(5, 'Armadura de ferro', 'Proporciona uma defesa razoável com baixo custo.', 'armor', 17, 2000, 'darkarmor.gif', 0, 12, 'f', 'f', 't');
+(6, 'Escudo escuro', 'Escudo feito por um guerreiro maligno.', 'shield', 32, 37000, 'darkshield.gif', 0, 49, 'f', 'f', 't');
+(7, 'Botas de couro', 'Simples botas de couro.', 'boots', 5, 200, 'leatherboots.gif', 0, 1, 'f', 'f', 't');
+(8, 'Faca', 'Uma simples faca.', 'weapon', 7, 300, 'knife.gif', 2, 1, 'f', 'f', 't');
+(9, 'Escudo de madeira', 'Feito de madeira, porém muito barato.', 'shield', 5, 100, 'woodenshield.gif', 0, 1, 'f', 'f', 't');
+(10, 'Escudo redondo', 'Feito de um material desconhecido, mas não muito resistente.', 'shield', 9, 470, 'roundshield.gif', 0, 7, 'f', 'f', 't');
+(11, 'Escudo de ferro', 'Uma chapa de ferro.', 'shield', 12, 1700, 'iroshield.gif', 0, 14, 'f', 'f', 't');
+(13, 'Elmo do esqueleto', 'Feito de ossos dos guerreiros mais poderosos das gerações anteriores.', 'helmet', 52, 80000, 'skullhelmet.gif', 0, 82, 'f', 'f', 't');
+(14, 'Escudo do dragão', 'Os poderes de dragão estão presentes neste escudo.', 'shield', 43, 86000, 'dragonshield.gif', 0, 70, 't', 'f', 't');
+(15, 'Escudo viking', 'Os Vikings fazem escudos muito bons, o problema é que eles trabalham bebados.', 'shield', 16, 2700, 'vikingshield.gif', 0, 21, 'f', 'f', 't');
+(18, 'Machado duplo', 'Lâmina dupla, estrago em dobro.', 'weapon', 22, 4895, 'doubleaxe.gif', 2, 18, 'f', 'f', 't');
+(19, 'Armadura selvagem', 'Utilizada pelas tribos nativas.', 'armor', 12, 1000, 'leopard.gif', 0, 6, 'f', 'f', 't');
+(20, 'Toca de couro', 'Simples vestimenta.', 'helmet', 8, 300, 'leatherhelmet.gif', 0, 1, 'f', 'f', 't');
+(21, 'Calça de couro', 'Simples vestimenta.', 'legs', 4, 500, 'leatherlegs.gif', 0, 1, 'f', 'f', 't');
+(22, 'Armadura de couro', 'Simples vestimenta.', 'armor', 7, 500, 'belted_cape.gif', 0, 1, 'f', 'f', 't');
+(23, 'Espada longa', 'Espada com uma lâmina comprida, que pode fazer um belo estrago.', 'weapon', 19, 2000, 'longsword.gif', 2, 12, 'f', 'f', 't');
+(25, 'Armadura nobre', 'Sem descrição.', 'armor', 23, 4850, 'noblearmor.gif', 0, 24, 'f', 'f', 't');
+(26, 'Armadura de ouro', 'Possui uma grande defesa, porém muito cobiçada devido sua raridade.', 'armor', 33, 15600, 'goldenarmor.gif', 0, 40, 'f', 'f', 't');
+(27, 'Martelo', 'Um martelo muito resistente, porém pesado.', 'weapon', 15, 595, 'battlehammer.gif', 2, 7, 'f', 'f', 't');
+(28, 'Machado gigante', 'Um machado gigantesco, com um imenso poder de ataque.', 'weapon', 38, 19600, 'giantaxe.gif', 2, 38, 'f', 'f', 't');
+(29, 'Machado dourado', 'Um machado feito de ouro.', 'weapon', 32, 13500, 'goldenaxe.gif', 2, 31, 'f', 'f', 't');
+(30, 'Espada de cavaleiro', 'A espada usada pelos cavaleiros de Elryn.', 'weapon', 27, 10050, 'crimson_sword.gif', 2, 25, 'f', 'f', 't');
+(31, 'Escudo real', 'Alguns anos atrás este tipo de escudo era usado pelas tropas do rei.', 'shield', 19, 5500, 'kiteshield.gif', 0, 28, 'f', 'f', 't');
+(32, 'Escudo de aço', 'Um escudo feito de aço.', 'shield', 24, 12000, 'steelshield.gif', 0, 35, 'f', 'f', 't');
+(33, 'Escudo da águia', 'Inspirado em uma águia, este escudo pode resistir a golpes muito fortes.', 'shield', 29, 22000, 'eagleshield.gif', 0, 42, 'f', 'f', 't');
+(34, 'Calça de ferro', 'Possui uma boa defesa, porém é um equipamento muito pesado.', 'legs', 18, 10000, 'chainlegs.gif', 0, 32, 'f', 'f', 't');
+(35, 'Calça selvagem', 'Usada por tribos antigas, bastante leve, porém não propõe muita defesa.', 'legs', 8, 2150, 'blue_legs.gif', 0, 11, 'f', 'f', 't');
+(36, 'Calças místicas', 'Até hoje ninguém conseguiu descobrir de onde todo o poder destas calças vem.', 'legs', 30, 34000, 'lightning_legs.gif', 0, 52, 'f', 'f', 't');
+(37, 'Capacete selvagem', 'Usado por tribos antigas, bastante leve, porém não propõe muita defesa.', 'helmet', 14, 1260, 'ragnir_helmet.gif', 0, 12, 'f', 'f', 't');
+(161, 'Armadura divina', 'A armadura dos deuses.', 'armor', 85, 2000000, 'yalahari_armor.gif', 0, 320, 'f', 'f', 'f');
+(39, 'Capacete de ferro', 'Possui uma boa defesa, porém é um equipamento muito pesado.', 'helmet', 19, 4950, 'krimhorn_helmet.gif', 0, 24, 'f', 'f', 't');
+(40, 'Botas de crocodilo', 'Feitas com couro de crocodilo.', 'boots', 8, 800, 'crocodileboots.gif', 0, 12, 'f', 'f', 't');
+(41, 'Botas de urso', 'Este tipo de bota proporciona uma ótima proteção à variações de temperatura.', 'boots', 13, 2000, 'fur_boots.gif', 0, 24, 'f', 'f', 't');
+(42, 'Botas de latão', 'Feitas de um metal pouco resistente.', 'boots', 17, 5500, 'ironboots.gif', 0, 36, 'f', 'f', 't');
+(43, 'Machado da morte', 'O machado da morte!', 'weapon', 57, 58600, 'deathaxe.gif', 2, 62, 'f', 'f', 't');
+(44, 'Espada de ouro', 'Uma espada feita de ouro.', 'weapon', 45, 34650, 'goldensword.gif', 2, 50, 'f', 'f', 't');
+(47, 'Botas de dragão', 'Botas feitas com escamas de dragão.', 'boots', 49, 87000, 'dragon_scale_boots.gif', 0, 80, 't', 'f', 't');
+(51, 'Machado vampírico', 'O machado dos vampiros.', 'weapon', 64, 65650, 'vampireaxe.gif', 2, 68, 'f', 'f', 't');
+(52, 'Machado templário', 'Este tipo de machado era usado pelos guerreiros que defendiam os antigos templos.', 'weapon', 53, 46850, 'templaraxe.gif', 2, 56, 'f', 'f', 't');
+(53, 'Espada de batalha', 'Não queira saber quem fez esta espada.', 'weapon', 68, 78450, 'battlesword.gif', 2, 75, 'f', 'f', 't');
+(57, 'Manto de sangue', 'Um estranho tipo de magia faz deste manto uma ótima defesa.', 'armor', 28, 7560, 'bloodrobe.gif', 0, 32, 'f', 'f', 't');
+(58, 'Armadura de turquesa', 'Armadura feita com uma pedra preciosa muito resistente.', 'armor', 68, 97000, 'frozen_plate.gif', 0, 92, 'f', 'f', 't');
+(59, 'Armadura do caos', 'A armadura do caos.', 'armor', 48, 42350, 'lavos_armor.gif', 0, 62, 'f', 'f', 't');
+(61, 'Calças de aço', 'Uma liga metálica muito resistente.', 'legs', 24, 23000, 'legsdeplate.gif', 0, 40, 'f', 'f', 't');
+(62, 'Calças de ouro', 'Calças feitas de ouro.', 'legs', 47, 89500, 'goldenlegs.gif', 0, 89, 'f', 'f', 't');
+(64, 'Calça dos anões', 'Os anões são especialistas na criação de equipamentos de defesa.', 'legs', 37, 42500, 'Dwarven_Legs.gif', 0, 60, 'f', 'f', 't');
+(65, 'Escudo de grifo', 'Feito da pele de um griffo.', 'shield', 36, 52000, 'griffinshield.gif', 0, 56, 'f', 'f', 't');
+(66, 'Escudo do caos', 'O escudo do caos.', 'shield', 38, 74000, 'chaosshield.gif', 0, 63, 'f', 'f', 't');
+(67, 'Armadura da escuridão', 'A caveira gravada nesta armadura faz as pessoas que a viram nunca mais esquecê-la.', 'armor', 60, 79500, 'darknessarmor.gif', 0, 84, 'f', 'f', 't');
+(68, 'Elmo de dragão', 'Feito de escamas de dragão.', 'helmet', 34, 35000, 'dragonscalehelmet.gif', 0, 54, 'f', 'f', 't');
+(69, 'Elmo do guerreiro', 'Equipamento com muita defesa, porém pesado.', 'helmet', 40, 48650, 'warriorhelmet.gif', 0, 62, 'f', 'f', 't');
+(71, 'Botas míticas', 'Essas botas apresentam uma combinação de metais jamais antes vista.', 'boots', 54, 110000, 'draken_boots.gif', 0, 90, 'f', 'f', 't');
+(73, 'Amuleto', 'Um simples amuleto. ', 'amulet', 3, 100, 'bronzeamulet.gif', 0, 1, 'f', 'f', 't');
+(74, 'Amuleto de prata', 'Um amuleto feito de prata.', 'amulet', 6, 450, 'silvernecklace.gif', 0, 7, 'f', 'f', 't');
+(75, 'Amuleto de ouro', 'Um amuleto feito de ouro.', 'amulet', 12, 2600, 'staramulet.gif', 0, 21, 'f', 'f', 't');
+(76, 'Amuleto de proteção ', 'Proteção divina.', 'amulet', 15, 5000, 'protectionamulet.gif', 0, 28, 'f', 'f', 't');
+(77, 'Colar da terra', 'Pedaço de terra mágica, possui poderes ocultos de cura.', 'amulet', 23, 35000, 'terra_amulet.gif', 0, 49, 'f', 'f', 't');
+(78, 'Amuleto de rubi', 'Este amuleto possui um enorme rubi.', 'amulet', 35, 90000, 'lifeamulet.gif', 0, 79, 't', 'f', 't');
+(79, 'Amuleto da vida', 'Este amuleto possui um enorme poder medicinal.', 'amulet', 39, 100000, 'amuletoflife.gif', 0, 90, 't', 't', 't');
+(81, 'Shuriken', 'Uma estrela ninja.', 'weapon', 8, 300, 'throwingstar.gif', 1, 1, 'f', 'f', 't');
+(82, 'Lança', 'Uma simples lança.', 'weapon', 15, 595, 'spear.gif', 1, 4, 'f', 'f', 't');
+(83, 'Arco', 'Um simples arco.', 'weapon', 18, 2000, 'bow.gif', 1, 7, 'f', 'f', 't');
+(84, 'Lança de aço', 'Uma lança feita de aço.', 'weapon', 20, 4895, 'steelspear.gif', 1, 14, 'f', 'f', 't');
+(85, 'Arco dos elfos', 'Um arco usado pelos elfos. ', 'weapon', 24, 10050, 'yols_bow.gif', 1, 23, 'f', 'f', 't');
+(86, 'Lança real', 'Lança usada pelos guardas do rei. ', 'weapon', 32, 19600, 'royal_spear.gif', 1, 31, 'f', 'f', 't');
+(87, 'Arco de aço', 'Um arco revestido com aço.', 'weapon', 27, 13500, 'steelbow.gif', 1, 25, 'f', 'f', 't');
+(88, 'Besta', 'Uma versão do arco mais rápida e precisa. ', 'weapon', 37, 26500, 'crossbow.gif', 1, 36, 'f', 'f', 't');
+(89, 'Arco de gelo', 'Um arco feito de gelo.', 'weapon', 44, 34650, 'icebow.gif', 1, 47, 'f', 'f', 't');
+(90, 'Besta modificada', 'Uma besta aperfeiçoada.', 'weapon', 49, 46850, 'ironworker.gif', 1, 55, 'f', 'f', 't');
+(91, 'Besta de caçados', 'Uma besta usada pelos antigos caçadores de monstros.', 'weapon', 57, 58600, 'the_devileye.gif', 1, 64, 'f', 'f', 't');
+(92, 'Bastão', 'Um simples bastão.', 'weapon', 7, 300, 'staff.gif', 3, 1, 'f', 'f', 't');
+(93, 'Bastão lápis-lazúli', 'Bastão com um Lápis-lazúli na ponta. ', 'weapon', 16, 595, 'bluestaff.gif', 3, 9, 'f', 'f', 't');
+(94, 'Bastão de cura', 'O bastão dos curandeiros.', 'weapon', 22, 2000, 'shamanstaff.gif', 3, 18, 'f', 'f', 't');
+(95, 'Bastão da lua', 'O bastão da lua.', 'weapon', 27, 4895, 'moonstaff.gif', 3, 25, 'f', 'f', 't');
+(96, 'Bastão do fogo', 'O bastão do fogo.', 'weapon', 33, 13500, 'firestaff.gif', 3, 32, 'f', 'f', 't');
+(97, 'Bastão dos oceanos', 'O bastão dos oceanos.', 'weapon', 36, 19600, 'oceanstaff.gif', 3, 36, 'f', 'f', 't');
+(98, 'Bastão encantado ', 'Um bastão encantado.', 'weapon', 40, 26500, 'enchantedstaff.gif', 3, 42, 'f', 'f', 't');
+(99, 'Bastão do caos', 'O Bastão do caos.', 'weapon', 44, 34650, 'chaosstaff.gif', 3, 47, 'f', 'f', 't');
+(100, 'Bastão dos anjos', 'O bastão dos anjos.', 'weapon', 56, 58600, 'queens_sceptre.gif', 3, 60, 'f', 'f', 't');
+(101, 'Bastão do mal ', 'Um bastão com propriedades do mal.', 'weapon', 65, 65650, 'wand_of_voodoo.gif', 3, 67, 'f', 'f', 't');
+(102, 'Bastão do trovão ', 'O bastão do trovão.', 'weapon', 50, 46850, 'blessed_sceptre.gif', 3, 56, 'f', 'f', 't');
+(103, 'Armadura de dragão', 'Os poderes de dragão estão presentes nesta armadura.', 'armor', 54, 59150, 'earthborn_titan_armor.gif', 0, 72, 'f', 'f', 't');
+(107, 'Orbe do vento', 'Item de quest.', 'addon', 0, 10500, 'windorb.gif', 0, 1, 'f', 'f', 'f');
+(108, 'Orbe da terra', 'Item de quest.', 'addon', 0, 11200, 'earthorb.gif', 0, 1, 'f', 'f', 'f');
+(109, 'Orbe do fogo', 'Item de quest.', 'addon', 0, 11900, 'fireorb.gif', 0, 1, 'f', 'f', 'f');
+(110, 'Orbe da água', 'Item de quest.', 'addon', 0, 12600, 'waterorb.gif', 0, 1, 'f', 'f', 'f');
+(111, 'Roda de titânio', 'Item de quest.', 'addon', 0, 21000, 'tataniumwell.gif', 0, 1, 'f', 'f', 'f');
+(112, 'Cristal encantado', 'Item de quest.', 'addon', 0, 14000, 'jeweledcrystal.gif', 0, 1, 'f', 'f', 'f');
+(113, 'Cajado da tempestade', 'Um cajado com poderes incríveis. ', 'weapon', 75, 97620, 'wand_of_starstorm.gif', 3, 90, 'f', 'f', 't');
+(115, 'Lança encantada', 'Uma lança encantada.', 'weapon', 67, 65650, 'enchanted_spear.gif', 1, 72, 'f', 'f', 't');
+(116, 'Caixa', 'Item de quest.', 'addon', 0, 21000, 'box.gif', 0, 1, 'f', 'f', 'f');
+(117, 'Besta de ouro', 'Uma besta feita de ouro.', 'weapon', 87, 97620, 'royal_crossbow.gif', 1, 117, 't', 'f', 't');
+(118, 'Primeira parte da espada', 'Item de quest.', 'addon', 0, 35000, 'cabo.gif', 0, 1, 'f', 'f', 'f');
+(119, 'Segunda parte da espada', 'Item de quest.', 'addon', 0, 28000, 'gelo1.gif', 0, 1, 'f', 'f', 'f');
+(120, 'Terceira parte da espada', 'Item de quest.', 'addon', 0, 28000, 'gelo2.gif', 0, 1, 'f', 'f', 'f');
+(121, 'Lâmina de gelo', 'Uma Lembrança Antiga de uma Era de Ouro. (Chance de Obter 0,01%)', 'weapon', 265, 12000000, 'iceblade.gif', 0, 145, 'f', 'f', 'f');
+(123, 'Arco divino ', 'Um arco com propriedades divinas.', 'weapon', 80, 78450, 'divinebow.gif', 1, 90, 'f', 't', 't');
+(124, 'Cajado do dragão', 'Feito das escamas de um dragão.', 'weapon', 70, 78450, 'dragonstaff.gif', 3, 72, 't', 'f', 't');
+(125, 'Espada gigante', 'Espada de grande poder, porém pesada, usada pelos mais fortes guerreiros.', 'weapon', 76, 97620, 'giantsword.gif', 2, 90, 'f', 't', 't');
+(126, 'Escudo mágico', 'Forças mágicas fazem com que este escudo resista a grandes ataques.', 'shield', 48, 105000, 'magicshield.gif', 0, 90, 't', 't', 't');
+(127, 'Escudo antigo', 'Escudo usado por T.Magor', 'shield', 55, 583520, 'ancientshield.gif', 0, 145, 'f', 'f', 't');
+(128, 'Caçadora de crânios', 'Esta espada pode ser usada por qualquer vocação.', 'weapon', 120, 1449280, 'skullhunter.gif', 0, 195, 'f', 'f', 't');
+(129, 'Armadura imperial', 'Armadura usada pelos imperiais.', 'armor', 42, 34000, 'imperialarm.gif', 0, 54, 'f', 'f', 't');
+(130, 'Capacete de herói ', 'Usado por verdadeiros heróis.', 'helmet', 58, 99000, 'herohelmet.gif', 0, 92, 'f', 'f', 't');
+(131, 'Escudo do herói', 'Escudo usado por heróis.', 'shield', 60, 807520, 'heroshield.gif', 0, 170, 'f', 'f', 't');
+(133, 'Armadura da morte', 'A armadura da morte.', 'armor', 79, 1780800, 'skullcracker_armor.gif', 0, 140, 't', 'f', 't');
+(134, 'Cajado da morte', 'O cajado da morte.', 'weapon', 125, 2240000, 'underworld_rod.gif', 3, 200, 'f', 'f', 't');
+(135, 'Botas de ouro', 'Grande agilidade, porém cobiçada, elevando muito seu preço.', 'boots', 62, 530000, 'goldenboots.gif', 0, 120, 't', 'f', 't');
+(136, 'Poção de vida', 'Recupera até 5 mil de vida.', 'potion', 0, 100, 'healthpotion.gif', 0, 1, 'f', 'f', 'f');
+(137, 'Poção de energia', 'Recupera até 50 de energia.', 'potion', 0, 2800, 'energypotion.gif', 0, 1, 'f', 'f', 'f');
+(138, 'Escudo das trevas', 'Usado por guerreiros malignos.', 'shield', 70, 2128000, 'nightmareshield.gif', 0, 205, 'f', 'f', 't');
+(139, 'Amuleto da morte', 'Usado pelo ceifador, lhe dando poderes imortalísticos.   ', 'amulet', 42, 510000, 'stoneskinamulet.gif', 0, 120, 't', 'f', 't');
+(140, 'Escudo demoniaco', 'Escudo com propriedades demoníacas.', 'shield', 82, 4200000, 'infernalshield.gif', 0, 150, 'f', 'f', 'f');
+(141, 'Pedra de Maturação', 'Esta pedra poderá transformar seu item optimizado em um item +13 ou +14, porém, a chance da pedra não funcionar é de 30%.', 'stone', 0, 5000000, 'maturestone.gif', 0, 1, 'f', 'f', 'f');
+(143, 'Besta indestrutível', 'Uma besta tão dura, que é quase indestrutível. ', 'weapon', 130, 1680000, 'hardcorecrossbow.gif', 1, 190, 'f', 'f', 't');
+(144, 'Runa de Força #1', 'Adiciona +5 de força no seu item. Esta runa pode ser usada apenas uma vez por item, e a chance dela quebrar durante o processo é de 30%.', 'ring', 0, 100000, 'runadeforça.gif', 0, 1, 'f', 'f', 'f');
+(145, 'Pedra de Vitalidade #1', 'Adiciona +5 de vitalidade no seu item. Esta pedra pode ser usada apenas uma vez por item, e a chance dela quebrar durante o processo é de 30%.', 'ring', 0, 80000, 'runadevitalidade.gif', 0, 1, 'f', 'f', 'f');
+(146, 'Pedra de Agilidade #1', 'Adiciona +5 de agilidade no seu item. Esta pedra pode ser usada apenas uma vez por item, e a chance dela quebrar durante o processo é de 30%.', 'ring', 0, 80000, 'runadeagilidade.gif', 0, 1, 'f', 'f', 'f');
+(147, 'Pedra de Resistência #1', 'Adiciona +5 de resistência no seu item. Esta pedra pode ser usada apenas uma vez por item, e a chance dela quebrar durante o processo é de 30%.', 'ring', 0, 100000, 'runaderesistencia.gif', 0, 1, 'f', 'f', 'f');
+(148, 'Poção grande de vida', 'Recupera até 10 mil de vida.', 'potion', 0, 5600, 'bighealthpotion.gif', 0, 1, 'f', 'f', 'f');
+(149, 'Calça demoniaca', 'As calças do demônio.', 'legs', 53, 780000, 'demonlegs.gif', 0, 160, 'f', 'f', 't');
+(150, 'Poção de mana', 'Recupera até 500 de mana.', 'potion', 0, 2800, 'manapotion.gif', 0, 1, 'f', 'f', 'f');
+(151, 'Espada de Friden', 'Espada usada por Friden, maior guerreiro de todos os tempos, esta espada possui poderes místicos tão fortes, que apenas um guerreiro muito poderoso pode controla-la.', 'weapon', 149, 3500000, 'fridensword.gif', 2, 280, 'p', 'f', 'f');
+(152, 'Cajado do Drácula. ', 'Cajado usado pelo Drácula, com poderes tão surpreendentes que apenas um guerreiro muito poderoso pode manipula-la.', 'weapon', 149, 3500000, 'draculawand.gif', 3, 280, 'p', 'f', 'f');
+(153, 'Arco de Baltazar', 'Arco usado por Baltazar, o melhor arqueiro, poderia atingir um alvo a quilômetros de distancia, para poder usa-lo você precisa ser muito preciso.', 'weapon', 163, 3710000, 'baltazarbow.gif', 1, 280, 'p', 'f', 'f');
+(155, 'Presente', 'Ao abrir este presente você pode encontrar qualquer item ou quantidade de ouro.', 'addon', 0, 21000, 'presente.gif', 0, 50, 'f', 'f', 'f');
+(156, 'Orbe de Oddin', 'Um orb raríssimo, com grandes poderes. Encontrar um destes orbs com um monstro é tão difícil quanto ganhar na loteria.', 'addon', 0, 140000, 'oddinorb.gif', 0, 1, 'f', 'f', 'f');
+(157, 'Magic Golden Bar', 'Uma barra de ouro. Muitos acreditam que essas barras possuem poderes mágicos.', 'addon', 0, 210000, 'magicgoldenbar.gif', 0, 1, 'f', 'f', 'f');
+(159, 'Caixa', 'Um pacote imperial, muito valioso.', 'addon', 0, 6300000, 'box.gif', 0, 1, 'f', 'f', 'f');
+(173, 'Armadura demoníaca', 'Sem descrição.', 'armor', 82, 1650000, 'demonarmor.gif', 0, 170, 'f', 'f', 'f');
+(162, 'Calça divina', 'A calça dos deuses.', 'legs', 56, 1680000, 'elitelegs.gif', 0, 320, 'f', 'f', 'f');
+(163, 'Anel encantado', 'Aumenta todos seus status em 10 pontos.', 'ring', 0, 1000000, 'jewring.gif', 0, 80, 'f', 'f', 'f');
+(164, 'Anel de força', 'Aumenta 10 pontos de status em força.', 'ring', 0, 15000, 'forring.gif', 0, 25, 'f', 'f', 'f');
+(165, 'Anel de vitalidade', 'Aumenta 10 pontos de status em vitalidade.', 'ring', 0, 10000, 'vitring.gif', 0, 25, 'f', 'f', 'f');
+(166, 'Anel de agilidade', 'Aumenta 10 pontos de status em agilidade.', 'ring', 0, 10000, 'agiring.gif', 0, 25, 'f', 'f', 'f');
+(167, 'Anel de resistência ', 'Aumenta 10 pontos de status em resistência.', 'ring', 0, 15000, 'resring.gif', 0, 25, 'f', 'f', 'f');
+(168, 'Anel encantado e otimizado', 'Aumenta todos seus status em 20 pontos.', 'ring', 0, 2000000, 'newjewring.gif', 0, 100, 'f', 'f', 'f');
+(169, 'Anel escuro', 'Aumenta 10 pontos de status em força e 15 pontos em resistência.', 'ring', 0, 30000, 'darkring.gif', 0, 40, 'f', 'f', 'f');
+(170, 'Anel de energia', 'Aumenta 15 pontos de status em vitalidade, 15 pontos em agilidade e 5 pontos em resistência. ', 'ring', 0, 30000, 'energyring.gif', 0, 40, 'f', 'f', 'f');
+(171, 'Amuleto do trovão', 'Amuleto feito por Thor, o deus do trovão. ', 'amulet', 48, 1000000, 'shockwave_amulet.gif', 0, 125, 'f', 'f', 'f');
+(172, 'Anel da morte', 'Aumenta sua força e agilidade em 40 pontos e sua vitalidade e resistência em 30 pontos.', 'ring', 0, 900000, 'deathring.gif', 0, 135, 'f', 'f', 'f');
+(174, 'Capacete de demônio', 'Capacete com poderes demoníacos. ', 'helmet', 65, 800000, 'demonhelmet.gif', 0, 135, 'f', 'f', 'f');
+(175, 'Escudo da fortaleza', 'Antigamente usado por guardas da fortaleza.', 'shield', 82, 3000000, 'towershield.gif', 0, 150, 'f', 'f', 'f');
+(176, 'Anel da vida', 'Aumenta sua força e agilidade em 30 pontos e sua vitalidade e resistência em 40 pontos.', 'ring', 0, 750000, 'lifering.gif', 0, 140, 'f', 'f', 't');
+(177, 'Cristal magico', 'Um cristal. Muitos acreditam que esses cristais possuem poderes mágicos.', 'addon', 0, 300000, 'magiccrystal.gif', 0, 1, 'f', 'f', 'f');
+(178, 'Anel de cristal', 'Poderoso anel formado por 3 cristais de jóias.', 'ring', 0, 3000000, 'ringofthesky.gif', 0, 200, 'f', 'f', 'f');
+(179, 'Garrafa de vinho', 'Aumenta 10% da sua força, porém diminui 5% da sua resistência.', 'potion', 30, 2000, 'bottle.gif', 0, 18, 'f', 'f', 'f');
+(180, 'Garrafa de uísque', 'Aumenta 10% da sua resistência, porém diminui 5% da sua agilidade.', 'potion', 60, 5000, 'whisky.gif', 0, 18, 'f', 'f', 'f');
+(181, 'Garrafa de cerveja', 'Aumenta 5% da sua agilidade.', 'potion', 15, 750, 'beer.gif', 0, 18, 'f', 'f', 'f');
+(182, 'Copo de água', 'Remove o efeito de qualquer bebida que você tenha tomado.', 'potion', 1, 10, 'water.png', 0, 1, 'f', 'f', 'f');
+(183, 'Amuleto de dragão', 'Amuleto feito das escamas de um dragão.', 'amulet', 31, 80000, 'cruzaderamulet.gif', 0, 70, 'f', 'f', 't');
+(184, 'Colar de pedra', 'Uma pedra mística com poderes curandeiros.', 'amulet', 21, 20000, 'brokenamulet.gif', 0, 42, 'f', 'f', 't');
+(185, 'Amuleto de platina', 'Amuleto feito de platina, muito resistente \r\ne poderoso.', 'amulet', 10, 1500, 'platinumamulet.gif', 0, 14, 'f', 'f', 't');
+(186, 'Colar de safira', 'Colar de ouro com uma safira mágica, encontrada nos lugares mais remotos do mundo.', 'amulet', 26, 50000, 'crystalnecklace.gif', 0, 56, 'f', 'f', 't');
+(187, 'Colar do elfos', 'Usado pelos elfos curandeiros.', 'amulet', 28, 70000, 'sacred_tree_amulet.gif', 0, 63, 'f', 'f', 't');
+(188, 'Colar de energia', 'Colar com um pouco de energia de uma estrela que caiu na terra.', 'amulet', 19, 10000, 'elvenamulet.gif', 0, 35, 'f', 'f', 't');
+(189, 'Capacete negro', 'Esconde uma maldisão imprevisível.', 'helmet', 28, 23500, 'darkhelmet.gif', 0, 42, 'f', 'f', 't');
+(190, 'Elmo real', 'O elmo utilizado pelos cavaleiros da realeza.', 'helmet', 47, 61350, 'royalhelmet.gif', 0, 75, 'f', 'f', 't');
+(191, 'Calça dos carrascos', 'Calça utilizada pelos carrascos.', 'legs', 6, 890, 'studdedlegs.gif', 0, 6, 'f', 'f', 't');
+(192, 'Calça negra', 'Dita por muitos como amaldiçoada.', 'legs', 43, 52600, 'crslegs.gif', 0, 72, 'f', 'f', 't');
+(132, 'Botas encantadas', 'Estas botas possuem poderes mágicos, garantindo uma agilidade incrível.', 'boots', 68, 1600000, 'enboots.gif', 0, 145, 'f', 'f', 'f');
+(158, 'Elmo Dourado', 'Feito com barras de ouro muito raras.', 'helmet', 70, 1000000, 'goldenhelmet.gif', 0, 140, 'f', 'f', 'f');
+(196, 'Botas de cristal', 'Essas botas são feitas a partir de vários cristais preciosos.', 'boots', 41, 56000, 'crystal_boots.gif', 0, 60, 'f', 'f', 't');
+(197, 'Botas do guerreiro', 'Botas feitas sob medida para os mais fortes guerreiros do reino.', 'boots', 46, 75000, 'guardian_boots.gif', 0, 72, 'f', 'f', 't');
+(198, 'Botas de ferro', 'Possui uma boa agilidade, porém é um equipamento muito pesado.', 'boots', 25, 16000, 'stellboots.gif', 0, 48, 'f', 'f', 't');
+(200, 'Botas de Aço', 'Uma liga metálica muito resistente.', 'boots', 32, 31000, 'acoboots.gif', 0, 55, 'f', 'f', 't');
+(201, 'Botas de Elryn', 'As botas do guardião do império de Elryn.', 'boots', 35, 48000, 'botas_de_elryn.gif', 0, 39, 'f', 'f', 'f');
+(202, 'Armadura das Sombras', 'Uma armadura muito rara e de altissimo valor.', 'armor', 54, 54000, 'senior_armor.gif', 0, 60, 'f', 'f', 'f');
+(203, 'Elmo Sombrio', 'Uma elmo muito raro e de altissimo valor.', 'helmet', 45, 55000, 'senior_helmet.gif', 0, 60, 'f', 'f', 'f');
+(204, 'Calças Sombrias', 'Um par de calças muito caro e de altissimo valor.', 'legs', 44, 51000, 'senior_legs.gif', 0, 60, 'f', 'f', 'f');
+(205, 'Espada Sangrenta', 'Muito sangue já foi derramado por esta espada.', 'weapon', 65, 74000, 'espada_sangrenta.gif', 2, 60, 'f', 'f', 'f');
+(206, 'Cajado das Sombras', 'O podr das trevas se concentra neste cajado.', 'weapon', 69, 71000, 'cajado_sombras.gif', 3, 60, 'f', 'f', 'f');
+(207, 'Besta da Morte', 'Sem descrição.', 'weapon', 66, 63000, 'besta_da_morte.gif', 1, 60, 'f', 'f', 'f');
+(208, 'Armadura Glacial', 'Sem descrição.', 'armor', 67, 92000, 'glacial_armor.gif', 0, 80, 'f', 'f', 'f');
+(209, 'Elmo Congelado', 'Sem descrição.', 'helmet', 57, 90000, 'glacial_helmet.gif', 0, 80, 'f', 'f', 'f');
 (210, 'Calças Glaciais', 'Sem descrição.', 'legs', 46, 75000, 'glacial_legs.gif', 0, 80, 'f', 'f', 'f');
+(211, 'Poção Berserk', 'Uma Poção Drastica, Força 55% , Vitalidade -45%, Agilidade 20%, Resistencia -20%', 'potion', 5, 45000, 'Berserk_Potion.gif', 0, 99, 'f', 'f', 'f');
+(212, 'Amuleto do Lobisomem', 'Uma joia mística que carrega a essência selvagem e mágica dos lobisomens.', 'amulet', 58, 945900, 'Enchanted_Werewolf_Amulet.gif', 0, 240, 't', 'f', 't');
+(213, 'Exotic Amulet', 'Um artefato raro e misterioso, emanando uma aura única que intriga e encanta todos ao seu redor.', 'amulet', 75, 1350000, 'Exotic_Amulet.gif', 0, 310, 'p', 'f', 't');
+(214, 'Colar de Safira', 'Um elegante colar adornado com uma safira radiante, trazendo beleza e uma leve aura de serenidade.', 'amulet', 87, 1550000, 'Sapphire_Necklace.gif', 0, 425, 'p', 'f', 't');
+(215, 'Amuleto Teúrgico', 'Um talismã imbuído de magia divina, capaz de canalizar forças espirituais para proteger e fortalecer seu portador.', 'amulet', 99, 2750000, 'Enchanted_Theurgic_Amulet.gif', 0, 655, 'p', 'f', 't');
+(216, 'Colar de Rhodolith', 'Um colar adornado com uma rodolita cintilante, irradiando uma energia suave e revitalizante, símbolo de paixão e equilíbrio.', 'amulet', 117, 5100000, 'Rhodolith_Necklace.gif', 0, 825, 'p', 'f', 't');
+(217, 'Machado Ancestral Eldritch', 'Uma poderosa arma imbuída de energia arcana e antiga, capaz de desferir golpes que ecoam com o terror das forças cósmicas esquecidas.', 'weapon', 137, 1600000, 'Eldritch_Greataxe.gif', 2, 235, 't', 'f', 't');
+(218, 'Machado de Âmbar', 'Forjado com lâminas incrustadas em âmbar, este machado irradia uma energia quente e ancestral.', 'weapon', 151, 2100000, 'Amber_Axe.gif', 2, 310, 'p', 'f', 't');
+(219, 'Machado da Cobra', 'Ágil e mortal, este machado carrega a essência venenosa e traiçoeira das serpentes.', 'weapon', 163, 2750000, 'Cobra_Axe.gif', 2, 465, 'p', 'f', 't');
+(220, 'Asa de Corvo', 'Um artefato sombrio, leve como uma pluma, mas tão letal quanto o voo silencioso de um corvo à espreita.', 'weapon', 176, 3445000, 'Ravenwing.gif', 2, 675, 'p', 'f', 't');
+(221, 'Machadinha Sanguínea', 'Uma arma pequena, mas brutal, sedenta por sangue e imbuída com a fúria de batalhas passadas.', 'weapon', 194, 5600000, 'Sanguine_Hatchet.gif', 2, 860, 'p', 'f', 't');
+(222, 'Espada do Senhor da Guerra', 'Uma espada majestosa, forjada em ouro puro, simbolizando a glória e a força de um líder imbatível.', 'weapon', 230, 7300490, 'Golden_Warlord_Sword.gif', 0, 920, 't', 'f', 't');
+(223, 'Arco Eldritch Dourado', 'Um arco ornamentado com detalhes dourados, canalizando energias arcanas para flechas devastadoras.', 'weapon', 149, 1900000, 'Gilded_Eldritch_Bow.gif', 1, 235, 't', 'f', 't');
+(224, 'Grande Arco Sanguíneo', 'Um arco imponente que absorve a essência da batalha, disparando flechas com um toque de fúria.', 'weapon', 168, 2100000, 'Grand_Sanguine_Bow.gif', 1, 310, 't', 'f', 't');
+(225, 'Arco da Colmeia', 'Um arco intrincado, imitando a estrutura de uma colmeia, capaz de disparar múltiplas flechas em rápida sucessão.', 'weapon', 189, 2750000, 'Hive_Bow.gif', 1, 465, 't', 'f', 't');
+(226, 'Sangrador de Almas', 'Um arco amaldiçoado que drena a vida de suas vítimas com cada flecha disparada.\n\n', 'weapon', 210, 3445000, 'Soulbleeder.gif', 1, 675, 't', 'f', 't');
+(227, 'Arco da Destruição', 'Uma arma poderosa, capaz de causar estragos massivos com flechas que explodem ao impacto.', 'weapon', 220, 5600000, 'Bow_of_Destruction.gif', 1, 860, 't', 'f', 't');
+(228, 'Bastão de Âmbar', 'Um Bastão esculpido em âmbar antigo, irradiando uma energia quente e natural, perfeita para canalizar magias restauradoras e ofensivas.', 'weapon', 137, 2800000, 'Amber_Wand.gif', 3, 235, 't', 'f', 't');
+(229, 'Varinha Ornamentada', 'Varinha decorada que amplifica feitiços de cura e alivia ferimentos.', 'weapon', 151, 3450000, 'Ornate_Remedy_Wand.gif', 3, 310, 't', 'f', 't');
+(230, 'Cajado Sanguíneo', 'Um cajado imponente que vibra com poder sombrio, drenando o sangue dos inimigos e amplificando o potencial mágico de seu portador.', 'weapon', 163, 4200000, 'Grand_Sanguine_Coil.gif', 3, 465, 't', 'f', 't');
+(231, 'Varinha das Dimensões', 'Uma varinha enigmática capaz de atravessar os véus entre realidades, ampliando o poder arcano e manipulando forças de diferentes planos.', 'weapon', 176, 4700000, 'Wand_of_Dimensions.gif', 3, 675, 't', 'f', 't');
+(232, 'Varinha da Destruição', 'Imbuída com uma energia caótica e devastadora, esta varinha é capaz de liberar feitiços que destroem tudo em seu caminho.', 'weapon', 194, 5200000, 'Wand_of_Destruction.gif', 3, 860, 't', 'f', 't');
+(233, 'Cajado da Distorção de Almas', 'Um cajado misterioso que distorce a essência espiritual, capaz de drenar a vida de seus inimigos e amplificar os poderes mágicos do portador.', 'weapon', 245, 16300000, 'Soultainter.gif', 3, 999, 't', 'f', 'f');
+(234, 'Cortadora de Almas', 'Uma espada sombria capaz de rasgar a essência espiritual de seus inimigos, deixando apenas o vazio por onde passa.', 'weapon', 245, 16300000, 'Soulcutter.gif', 2, 999, 't', 'f', 'f');
+(235, 'Balestra Perfuradora de Almas', 'Uma balestra precisa e mortal, projetada para disparar virotes que não apenas perfuram a carne, mas também atravessam a essência espiritual das vítimas.', 'weapon', 255, 16300000, 'Soulpiercer.gif', 1, 999, 't', 'f', 'f');
+(236, 'Anel das Almas', 'Um anel místico que conecta seu portador ao reino espiritual, permitindo comunicação com almas perdidas e aumentando o poder mágico.', 'ring', 0, 10000000, 'Ring_of_Souls.gif', 0, 400, 't', 'f', 't');
+(237, 'Anel Quebrado do Fim', 'Um anel danificado, mas ainda imbuído de energia poderosa, simbolizando o ciclo de destruição e renascimento, capaz de desfazer feitiços e maldições.\n\n', 'ring', 0, 10000000, 'Broken_Ring_of_Ending.gif', 0, 600, 't', 'f', 't');
+(238, 'Anel de Selo do Vampiro', 'Um anel sombrio, adornado com uma gema vermelha, que concede ao portador habilidades de manipulação da sombra e a capacidade de drenar vitalidade de seus inimigos.', 'ring', 0, 10000000, 'Vampires_Signet_Ring.gif', 0, 700, 't', 'f', 't');
+(239, 'Anel do Chifre', 'Um anel rústico, esculpido a partir de chifres antigos, que confere ao portador força e resistência sobrenaturais em combate.', 'ring', 0, 10000000, 'Horn_Ring.gif', 0, 800, 't', 'f', 't');
+(240, 'Anel da Irritação', 'Um anel peculiar que emana energia mágica, capaz de criar proteções temporárias ao redor do portador, repelindo ataques mágicos e físicos.', 'ring', 0, 10000000, 'Enchanted_Blister_Ring.gif', 0, 900, 't', 'f', 't');
+(241, 'Manto das Almas', 'Armadura etérea que protege contra ataques espirituais e potencia habilidades mágicas.', 'armor', 96, 21000000, 'Soulmantle.gif', 0, 195, 't', 'f', 't');
 
 -- --------------------------------------------------------
 

@@ -95,9 +95,9 @@ if ($setting->$unc3 == "t") {
 			exit;
 		}
 
-		if ($_POST['amount'] > 99) {
+		if ($_POST['amount'] > 999) {
 			include(__DIR__ . "/templates/private_header.php");
-			echo "Você pode comprar até 99 tickes por vez! <a href=\"lottery.php\">Voltar</a>.";
+			echo "Você pode comprar até 999 tickes por vez! <a href=\"lottery.php\">Voltar</a>.";
 			include(__DIR__ . "/templates/private_footer.php");
 			$error = 1;
 			exit;
