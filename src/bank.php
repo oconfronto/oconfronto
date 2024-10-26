@@ -17,26 +17,34 @@ $lockedgold += $lockedgold + $count['prize'];
 } */
 
 if (isset($_POST['deposit'])) {
-    $deposita = floor((new OCv2($db))->tirarCMoeda($_POST['deposit']));
-    if ($deposita > $player->gold || $deposita < 1) {
-        $msg = showAlert("Voc&ecirc; não pode depositar esta quantia de ouro.", "red");
-    } elseif (!is_numeric($deposita)) {
+    $deposita = (new OCv2($db))->tirarCMoeda($_POST['deposit']);
+    if (!is_numeric($deposita)) {
         $msg = showAlert("Esta quantia de ouro não é válida!", "red");
     } else {
-        $query = $db->execute("update `players` set `bank`=?, `gold`=? where `id`=?", [$player->bank + $deposita, $player->gold - $deposita, $player->id]);
-        $msg = showAlert("Voc&ecirc; depositou " . $_POST['deposit'] . " moedas de ouro na sua conta.", "green");
-        $player = check_user($db); //Get new stats so new amount of gold is displayed on left menu
+        $deposita = floatval($deposita);
+        $deposita = floor($deposita);
+        if ($deposita > $player->gold || $deposita < 1) {
+            $msg = showAlert("Voc&ecirc; não pode depositar esta quantia de ouro.", "red");
+        } else {
+            $query = $db->execute("update `players` set `bank`=?, `gold`=? where `id`=?", [$player->bank + $deposita, $player->gold - $deposita, $player->id]);
+            $msg = showAlert("Voc&ecirc; depositou " . $_POST['deposit'] . " moedas de ouro na sua conta.", "green");
+            $player = check_user($db); //Get new stats so new amount of gold is displayed on left menu
+        }
     }
 } elseif (isset($_POST['withdraw'])) {
-    $saca = floor((new OCv2($db))->tirarCMoeda($_POST['withdraw']));
-    if ($saca > ($player->bank - $lockedgold) || $saca < 1) {
-        $msg = showAlert("Voc&ecirc; não tem esta quantia de dinheiro na sua conta do banco!", "red");
-    } elseif (!is_numeric($saca)) {
+    $saca = (new OCv2($db))->tirarCMoeda($_POST['withdraw']);
+    if (!is_numeric($saca)) {
         $msg = showAlert("Esta quantia de ouro não é válida!", "red");
     } else {
-        $query = $db->execute("update `players` set `bank`=?, `gold`=? where `id`=?", [$player->bank - $saca, $player->gold + $saca, $player->id]);
-        $msg = showAlert("Voc&ecirc; retirou " . $_POST['withdraw'] . " moedas de ouro de sua conta.", "green");
-        $player = check_user($db); //Get new stats so new amount of gold is displayed on left menu
+        $saca = floatval($saca);
+        $saca = floor($saca);
+        if ($saca > ($player->bank - $lockedgold) || $saca < 1) {
+            $msg = showAlert("Voc&ecirc; não tem esta quantia de dinheiro na sua conta do banco!", "red");
+        } else {
+            $query = $db->execute("update `players` set `bank`=?, `gold`=? where `id`=?", [$player->bank - $saca, $player->gold + $saca, $player->id]);
+            $msg = showAlert("Voc&ecirc; retirou " . $_POST['withdraw'] . " moedas de ouro de sua conta.", "green");
+            $player = check_user($db); //Get new stats so new amount of gold is displayed on left menu
+        }
     }
 }
 
