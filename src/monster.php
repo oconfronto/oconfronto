@@ -13,7 +13,7 @@ if ($verificaLuta->recordcount() > 0) {
 }
 
 $selectbixo = $db->execute("select * from `bixos` where `player_id`=? and `type`=98", [$player->id]);
-if ($selectbixo->recordcount() != 1 && !$_GET['noreturn']) {
+if ($selectbixo->recordcount() != 1 && !($_GET['noreturn'] ?? false)) {
 	include(__DIR__ . "/checkhp.php");
 }
 
@@ -67,7 +67,7 @@ switch ($_GET['act']) {
 					} else {
 
 						if ($_GET['times']) {
-							$vezes = floor($_GET['times']);
+							$vezes = floor(intval($_GET['times']));
 							if ($vezes > 1 && $player->energy >= ($vezes * 10)) {
 								$insert['player_id'] = $player->id;
 								$insert['id'] = ($_GET['id'] / $player->id);
@@ -79,12 +79,12 @@ switch ($_GET['act']) {
 							} else {
 								$db->execute("delete from `bixos` where `player_id`=?", [$player->id]);
 								unset($_SESSION['battlelog']);
-								if (!$_GET['nolayout']) {
+								if (!($_GET['nolayout'] ?? false)) {
 									include(__DIR__ . "/templates/private_header.php");
 								}
 
 								echo "Voc&ecirc; não possui tanta energia para descarregar neste monstro!</b></font> <a href=\"monster.php\">Voltar</a>.";
-								if (!$_GET['nolayout']) {
+								if (!($_GET['nolayout'] ?? false)) {
 									include(__DIR__ . "/templates/private_footer.php");
 								}
 
@@ -132,7 +132,7 @@ switch ($_GET['act']) {
 				exit;
 			}
 
-			if (($bixo->hp <= 0 || $bixo->type == 98) && !$_GET['noreturn']) {
+			if (($bixo->hp <= 0 || $bixo->type == 98) && !($_GET['noreturn'] ?? false)) {
 				unset($_SESSION['statuslog']);
 				unset($_SESSION['battlelog']);
 				$db->execute("delete from `bixos` where `player_id`=?", [$player->id]);
@@ -186,12 +186,12 @@ switch ($_GET['act']) {
 			if ($tolevelttyy < $enemy->level && $enemy->id != 49) {
 				$db->execute("delete from `bixos` where `player_id`=?", [$player->id]);
 				unset($_SESSION['battlelog']);
-				if (!$_GET['nolayout']) {
+				if (!($_GET['nolayout'] ?? false)) {
 					include(__DIR__ . "/templates/private_header.php");
 				}
 
 				echo "Voc&ecirc; não pode atacar este monstro!</b></font> <a href=\"monster.php\">Voltar</a>.";
-				if (!$_GET['nolayout']) {
+				if (!($_GET['nolayout'] ?? false)) {
 					include(__DIR__ . "/templates/private_footer.php");
 				}
 
@@ -204,12 +204,12 @@ switch ($_GET['act']) {
 				if ($enemy->id != 49) {
 					$db->execute("delete from `bixos` where `player_id`=?", [$player->id]);
 					unset($_SESSION['battlelog']);
-					if (!$_GET['nolayout']) {
+					if (!($_GET['nolayout'] ?? false)) {
 						include(__DIR__ . "/templates/private_header.php");
 					}
 
 					echo "Este monstro não existe! <a href=\"monster.php\">Voltar</a>.";
-					if (!$_GET['nolayout']) {
+					if (!($_GET['nolayout'] ?? false)) {
 						include(__DIR__ . "/templates/private_footer.php");
 					}
 
@@ -217,12 +217,12 @@ switch ($_GET['act']) {
 				} elseif ($enemy->id == 49 && $bixoexpec1->recordcount() < 1) {
 					$db->execute("delete from `bixos` where `player_id`=?", [$player->id]);
 					unset($_SESSION['battlelog']);
-					if (!$_GET['nolayout']) {
+					if (!($_GET['nolayout'] ?? false)) {
 						include(__DIR__ . "/templates/private_header.php");
 					}
 
 					echo "Este monstro não existe! <a href=\"monster.php\">Voltar</a>.";
-					if (!$_GET['nolayout']) {
+					if (!($_GET['nolayout'] ?? false)) {
 						include(__DIR__ . "/templates/private_footer.php");
 					}
 
@@ -236,12 +236,12 @@ switch ($_GET['act']) {
 				if ($gates < time()) {
 					$db->execute("delete from `bixos` where `player_id`=?", [$player->id]);
 					unset($_SESSION['battlelog']);
-					if (!$_GET['nolayout']) {
+					if (!($_GET['nolayout'] ?? false)) {
 						include(__DIR__ . "/templates/private_header.php");
 					}
 
 					echo "Os portões do reino estáo fechados! <a href=\"monster.php\">Voltar</a>.";
-					if (!$_GET['nolayout']) {
+					if (!($_GET['nolayout'] ?? false)) {
 						include(__DIR__ . "/templates/private_footer.php");
 					}
 
@@ -253,7 +253,7 @@ switch ($_GET['act']) {
 			if ($player->energy < 10) {
 				$query = $db->execute("delete from `bixos` where `player_id`=?", [$player->id]);
 				unset($_SESSION['battlelog']);
-				if (!$_GET['nolayout']) {
+				if (!($_GET['nolayout'] ?? false)) {
 					include(__DIR__ . "/templates/private_header.php");
 				}
 
@@ -316,7 +316,7 @@ switch ($_GET['act']) {
 
 				echo '<a href="monster.php">Voltar</a>';
 
-				if (!$_GET['nolayout']) {
+				if (!($_GET['nolayout'] ?? false)) {
 					include(__DIR__ . "/templates/private_footer.php");
 				}
 
@@ -347,7 +347,7 @@ switch ($_GET['act']) {
 			// 			}
 			// 	}
 
-			// 	if (!$_GET['nolayout']){ include("templates/private_header.php"); }
+			// 	if (!($_GET['nolayout'] ?? false)){ include("templates/private_header.php"); }
 			// 	echo "<fieldset>";
 			// 	echo "<legend><b>Antes de atacar, digite o código abaixo:</b></legend>";
 			// 	echo "<form action=\"\" method=\"post\"><center>";
@@ -356,7 +356,7 @@ switch ($_GET['act']) {
 			// 	echo "</fieldset>";
 			// 	echo "<input type=\"submit\" value=\"Atacar " . $enemy->prepo . " " . $enemy->username . "\" /> <a href=\"monster.php\">Voltar</a>.";
 			// 	echo "</form>";
-			// 	if (!$_GET['nolayout']){ include("templates/private_footer.php"); }
+			// 	if (!($_GET['nolayout'] ?? false)){ include("templates/private_footer.php"); }
 			// 	break;
 			// }
 		}
