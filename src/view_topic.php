@@ -247,7 +247,7 @@ if ($aux['total'] > 0) {
 
 		echo '<table width="100%" bgcolor="#f2e1ce">';
 		echo "<tr>";
-		echo '<td width="120px" bgcolor="#E1CBA4"><center><img src="static/' . $user['avatar'] . '" width="100px" height="100px" border="0"></center>';
+		echo '<td width="120px" bgcolor="#E1CBA4"><center><img src="' . $user['avatar'] . '" width="100px" height="100px" border="0"></center>';
 
 		if ($user['gm_rank'] == 2) {
 			echo '<center><img src="static/images/designer.png" width="100px" height="21px" border="0"></center>';
