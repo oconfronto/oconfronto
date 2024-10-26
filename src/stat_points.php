@@ -202,47 +202,51 @@ if ($_GET['add']) {
 		exit;
 	}
 
-	$total1 = ceil($_GET['for']);
-	$total2 = ceil($_GET['vit']);
-	$total3 = ceil($_GET['agi']);
-	$total4 = ceil($_GET['res']);
+	// Move this block before the individual stat checks
+	$total1 = intval($_GET['for']);
+	$total2 = intval($_GET['vit']);
+	$total3 = intval($_GET['agi']);
+	$total4 = intval($_GET['res']);
 
-	$total = ceil($total1 + $total2 + $total3 + $total4);
+	$total = $total1 + $total2 + $total3 + $total4;
 
 	if ($total > $player->stat_points) {
 		include(__DIR__ . "/templates/private_header.php");
-		echo "Voc&ecirc; não possui pontos de status suficientes! <a href=\"stat_points.php\">Voltar</a>.";
+		echo "Você não possui pontos de status suficientes! <a href=\"stat_points.php\">Voltar</a>.";
 		include(__DIR__ . "/templates/private_footer.php");
 		$error = 1;
 		exit;
 	}
 
 	if ($_GET['for'] > 0) {
-		$db->execute("update `players` set `stat_points`=?, `strength`=? where `id`=?", [$player->stat_points - ceil($_GET['for']), $player->strength + ceil($_GET['for']), $player->id]);
+		$db->execute("update `players` set `stat_points`=?, `strength`=? where `id`=?", [$player->stat_points - $total1, $player->strength + $total1, $player->id]);
 		$player = check_user($db); //Get new stats
-		$msg1 = "Voc&ecirc; aumentou " . $_GET['for'] . " ponto(s) de " . $antigaforca . "!";
+		$msg1 = "Você aumentou " . $total1 . " ponto(s) de " . $antigaforca . "!";
 	}
 
 	if ($_GET['vit'] > 0) {
-		$addinghp = ceil($_GET['vit'] * 20);
-		$addingmana = ceil($_GET['vit'] * 5);
-		$db->execute("update `players` set `stat_points`=?, `vitality`=?, `hp`=?, `maxhp`=?, `mana`=?, `maxmana`=?, `extramana`=? where `id`=?", [$player->stat_points - ceil($_GET['vit']), $player->vitality + ceil($_GET['vit']), $player->hp + $addinghp, $player->maxhp + $addinghp, $player->mana + $addingmana, $player->maxmana + $addingmana, $player->extramana + $addingmana, $player->id]);
+		$addinghp = $total2 * 20;
+		$addingmana = $total2 * 5;
+		$db->execute("update `players` set `stat_points`=?, `vitality`=?, `hp`=?, `maxhp`=?, `mana`=?, `maxmana`=?, `extramana`=? where `id`=?", [$player->stat_points - $total2, $player->vitality + $total2, $player->hp + $addinghp, $player->maxhp + $addinghp, $player->mana + $addingmana, $player->maxmana + $addingmana, $player->extramana + $addingmana, $player->id]);
 		$player = check_user($db); //Get new stats
-		$msg2 = "Voc&ecirc; aumentou " . $_GET['vit'] . " ponto(s) de vitalidade!";
+		$msg2 = "Você aumentou " . $total2 . " ponto(s) de vitalidade!";
 	}
 
 	if ($_GET['agi'] > 0) {
-		$db->execute("update `players` set `stat_points`=?, `agility`=? where `id`=?", [$player->stat_points - ceil($_GET['agi']), $player->agility + ceil($_GET['agi']), $player->id]);
+		$db->execute("update `players` set `stat_points`=?, `agility`=? where `id`=?", [$player->stat_points - $total3, $player->agility + $total3, $player->id]);
 		$player = check_user($db); //Get new stats
-		$msg3 = "Voc&ecirc; aumentou " . $_GET['agi'] . " ponto(s) de agilidade!";
+		$msg3 = "Você aumentou " . $total3 . " ponto(s) de agilidade!";
 	}
 
 	if ($_GET['res'] > 0) {
-		$db->execute("update `players` set `stat_points`=?, `resistance`=? where `id`=?", [$player->stat_points - ceil($_GET['res']), $player->resistance + ceil($_GET['res']), $player->id]);
+		$db->execute("update `players` set `stat_points`=?, `resistance`=? where `id`=?", [$player->stat_points - $total4, $player->resistance + $total4, $player->id]);
 		$player = check_user($db); //Get new stats
-		$msg4 = "Voc&ecirc; aumentou " . $_GET['res'] . " ponto(s) de resist&ecirc;ncia!";
+		$msg4 = "Você aumentou " . $total4 . " ponto(s) de resistência!";
 	}
 }
+
+// Initialize message variables
+$msg1 = $msg2 = $msg3 = $msg4 = '';
 
 if ($_GET['add'] == 'Home') {
 	header("Location: showskills.php?voltar=true");
