@@ -9,6 +9,9 @@ include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
 
+// Add this line near the top of the file, after $player is defined
+$voc = $player->voc;
+
 switch ($_GET['act']) {
 	case "buy":
 		if (!$_GET['id']) //No item ID
@@ -363,7 +366,13 @@ switch ($_GET['act']) {
 			$values[] = $_GET['type'];
 
 			$conditions[] = "`canbuy` = 't'";
-			$conditions[] = "(`voc` = ? OR `voc` = 0)";
+			
+			// Special condition for weapons
+			if ($_GET['type'] == 'weapon') {
+				$conditions[] = "(`voc` = ? OR `voc` = 0 OR `type` = 'weapon')";
+			} else {
+				$conditions[] = "(`voc` = ? OR `voc` = 0)";
+			}
 			$values[] = $voc;
 
 			$conditions[] = "`needlvl` < ?";
@@ -441,3 +450,5 @@ switch ($_GET['act']) {
 		include(__DIR__ . "/templates/private_footer.php");
 		break;
 }
+
+
