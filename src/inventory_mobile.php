@@ -81,7 +81,7 @@ function displayItemOptions(array $item, $action, $label): ?string
     return sprintf('<a href="inventory_mobile.php?%s=%s">%s</a>', $action, $item['id'], $label);
 }
 
-function displayItem(array $item, $type, $player, string $bool): string
+function displayItemMobile(array $item, $type, $player, int $bool): string
 {
     $options = []; // Use array() instead of []
     if ($type === 'equipped') {
@@ -250,7 +250,7 @@ function displayItems($playerId, $status, $title): void
         echo "</thead>";
         echo "<tbody>";
         while ($item = $items->fetchrow()) {
-            echo displayItem($item, $status, $player);
+            echo displayItemMobile($item, $status, $player, $bool);
             $bool = ($bool == 1) ? 2 : 1;
         }
 
