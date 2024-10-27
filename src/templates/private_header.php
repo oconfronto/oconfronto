@@ -320,7 +320,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                             </div>
                         <?php }
                         ?>
-                        <div class="avatar"><a href="avatar.php"><img src="static/<?php echo $player->avatar ?>"
+                        <div class="avatar"><a href="avatar.php"><img src="<?php echo $player->avatar ?>"
                                     border="0px"></a></div>
 
 

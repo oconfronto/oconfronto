@@ -39,7 +39,7 @@ if ($get->recordcount() > 0 && $_POST['subname'] == "alterar") {
 	}
 }
 
-if ($_POST['upload']) {
+if (isset($_POST['upload'])) {
 	if (!$_POST['avatar']) {
 		$errmsg .= "Por favor preencha todos os campos!";
 		$error = 1;
