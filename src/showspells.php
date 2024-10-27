@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-if ($_GET['voltar'] == true) {
+if (isset($_GET['voltar']) == true) {
 	include(__DIR__ . "/lib.php");
 	header("Content-Type: text/html; charset=utf-8", true);
 }

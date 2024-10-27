@@ -11,7 +11,7 @@ include(__DIR__ . "/templates/acc-header.php");
 $error = 0;
 $checkshowmail = $db->execute("select * from `other` where `value`=? and `player_id`=?", ["showmail", $acc->id]);
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
     if ((!$_POST['rlname'] | !$_POST['showmail'] | !$_POST['remember'] | !$_POST['sex']) !== 0) {
         $errmsg .= "Por favor preencha todos os campos!";
         $error = 1;

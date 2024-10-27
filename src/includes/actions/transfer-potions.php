@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-if ($_GET['transpotion'] && !$_POST['mandap']) {
+if (isset($_GET['transpotion']) && !$_POST['mandap']) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Enviar Poções</b></legend>\n";
 	echo '<form method="post" action="inventory.php?transpotion=true"><table><tr><td><b>Desejo enviar:</b></td><td><select name="potion"><option value="none" selected="selected">Selecione</option><option value="hp">Health Potions</option><option value="bhp">Big Health Potions</option><option value="mana">Mana Potions</option><option value="energy">Energy Potions</option></select></td></tr>';
@@ -14,7 +14,7 @@ if ($_GET['transpotion'] && !$_POST['mandap']) {
 	exit;
 }
 
-if ($_GET['transpotion'] && $_POST['mandap']) {
+if (isset($_GET['transpotion']) && $_POST['mandap']) {
 	if (!$_POST['potion']) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";

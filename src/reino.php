@@ -29,7 +29,7 @@ if (($reino['poll'] + 604800) < time() && $reino['imperador'] > 0) {
 
 include(__DIR__ . "/templates/private_header.php");
 
-if ($reino['imperador'] == 0 && $_POST['vote']) {
+if ($reino['imperador'] == 0 && isset($_POST['vote'])) {
 	$verifica = $db->execute("select * from `reino_votes` where `player_id`=?", [$player->id]);
 	if ($verifica->recordcount() == 0) {
 		$votes = $db->execute("select * from `reino_tovote` where `player_id`=?", [$_POST['vote']]);

@@ -14,7 +14,7 @@ $num_rows = $num_rows_query->recordcount();
 
 $zeroamigos = 0;
 $totalgkills = 0;
-if ($_GET['add']) {
+if (isset($_GET['add'])) {
 	$getfname = $db->GetOne("select `username` from `players` where `username`=?", [$_GET['add']]);
 	if ($getfname == $player->username) {
 		include(__DIR__ . "/templates/private_header.php");
@@ -69,7 +69,7 @@ if ($_GET['add']) {
 	exit;
 }
 
-if ($_GET['delete']) {
+if (isset($_GET['delete'])) {
 	$dsql = $db->execute("select * from `friends` where `uid`=? and `fname`=?", [$player->acc_id, $_GET['delete']]);
 	if ($dsql->recordcount() > 0) {
 		$deletaoamigo = $db->execute("delete from `friends` where `uid`=? and `fname`=?", [$player->acc_id, $_GET['delete']]);
@@ -85,7 +85,7 @@ if ($_GET['delete']) {
 	exit;
 }
 
-if ($_GET['deleteinvite']) {
+if (isset($_GET['deleteinvite'])) {
 	$dsql2 = $db->execute("select * from `group_invite` where `group_id`=? and `invited_id`=?", [$player->id, $_GET['deleteinvite']]);
 	if ($dsql2->recordcount() > 0) {
 		$deletaoconviti = $db->execute("DELETE FROM `group_invite` WHERE `group_id`=? AND `invited_id`=?", [$player->id, $_GET['deleteinvite']]);
@@ -101,7 +101,7 @@ if ($_GET['deleteinvite']) {
 	exit;
 }
 
-if ($_GET['deleteconvite']) {
+if (isset($_GET['deleteconvite'])) {
 	$dsql4 = $db->execute("select * from `group_invite` where `group_id`=? and `invited_id`=?", [$_GET['deleteconvite'], $player->id]);
 	if ($dsql4->recordcount() > 0) {
 		$deletaoconviti = $db->execute("DELETE FROM `group_invite` WHERE `group_id`=? AND `invited_id`=?", [$_GET['deleteconvite'], $player->id]);
@@ -117,7 +117,7 @@ if ($_GET['deleteconvite']) {
 	exit;
 }
 
-if ($_GET['deletedogrupo']) {
+if (isset($_GET['deletedogrupo'])) {
 	$dsql3 = $db->execute("select * from `groups` where `id`=? and `player_id`=?", [$player->id, $_GET['deletedogrupo']]);
 	if ($dsql3->recordcount() > 0) {
 
@@ -146,7 +146,7 @@ if ($_GET['deletedogrupo']) {
 
 ?>
 <?php
-if ($_GET['addgroup']) {
+if (isset($_GET['addgroup'])) {
 	$verificaantesdegrupo1 = $db->execute("select `id`, `username`, `level` from `players` where `username`=?", [$_GET['addgroup']]);
 	if ($verificaantesdegrupo1->recordcount() == 0) {
 		include(__DIR__ . "/templates/private_header.php");

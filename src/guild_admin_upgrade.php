@@ -28,7 +28,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
     echo '<a href="home.php">Principal</a><p />';
 } else {
 
-    if ($_GET['upgrade'] == "maxplayers") {
+    if (isset($_GET['upgrade']) == "maxplayers") {
         if ($guild['maxmembers'] > 29) {
             $errmsg .= "<center><b>Você não pode adicionar mais vagas para o clã.</b></center>";
             $error = 1;

@@ -9,7 +9,7 @@ include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkguild.php");
 
 $error = 0;
-$username = ($_POST['username']);
+$username = (isset($_POST['username']));
 
 $guildquery = $db->execute("select * from `guilds` where `id`=?", [$player->guild]);
 
@@ -34,7 +34,7 @@ if ($guild['msgs'] > 3) {
 	exit;
 }
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 	if (!$_POST['subject']) {
 		$errmsg .= "<font color=red>Você precisa adicionar um titulo para sua mensagem.</font>";
 		$error = 1;

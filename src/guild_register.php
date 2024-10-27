@@ -38,7 +38,7 @@ if ($player->gold < $goldcost) {
     exit;
 }
 
-if ($_POST['register']) {
+if (isset($_POST['register'])) {
 
     $msg1 = '<font color="red">';
     $msg2 = '<font color="red">';
@@ -162,7 +162,7 @@ include(__DIR__ . "/templates/private_header.php");
     <table width="100%">
         <tr>
             <td width="25%"><span class="style1"><b>Nome do clã</b>:</span></td>
-            <td><input name="name" type="text" value="<?= $_POST['name']; ?>" /></td>
+            <td><input name="name" type="text" value="<?= isset($_POST['name']); ?>" /></td>
         </tr>
         <tr>
             <td colspan="2"><span class="style1">Insira o nome desejado para o clã. <i>Ex: Dragon Killers</i><br />

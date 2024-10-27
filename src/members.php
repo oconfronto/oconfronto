@@ -8,25 +8,25 @@ $player = check_user($db);
 
 $limit = 10;
 
-$page = (intval($_GET['page']) == 0) ? 1 : intval($_GET['page']); //Start on page 1 or $_GET['page']
+$page = (intval(isset($_GET['page'])) == 0) ? 1 : intval(isset($_GET['page'])); //Start on page 1 or $_GET['page']
 
 $begin = ($limit * $page) - $limit; //Starting point for query
 
-if ($_GET['voctype'] == 'archer') {
+if (isset($_GET['voctype']) == 'archer') {
 	$searchvoc = "and `voc`='archer'";
-} elseif ($_GET['voctype'] == 'knight') {
+} elseif (isset($_GET['voctype']) == 'knight') {
 	$searchvoc = "and `voc`='knight'";
-} elseif ($_GET['voctype'] == 'mage') {
+} elseif (isset($_GET['voctype']) == 'mage') {
 	$searchvoc = "and `voc`='mage'";
 } else {
 	$searchvoc = "";
 }
 
-if ($_GET['reino'] == 1) {
+if (isset($_GET['reino']) == 1) {
 	$searchrei = "and `reino`='1'";
-} elseif ($_GET['reino'] == 2) {
+} elseif (isset($_GET['reino']) == 2) {
 	$searchrei = "and `reino`='2'";
-} elseif ($_GET['reino'] == 3) {
+} elseif (isset($_GET['reino']) == 3) {
 	$searchrei = "and `reino`='3'";
 } else {
 	$searchrei = "";
@@ -36,7 +36,7 @@ $total_players = $db->getone(sprintf("select count(ID) as `count` from `players`
 
 include(__DIR__ . "/templates/private_header.php");
 
-if ($_GET['error']) {
+if (isset($_GET['error'])) {
 	echo showAlert("Usuário não encontrado.", "red");
 }
 
@@ -58,15 +58,15 @@ if (($total_players % $limit) != 0) {
 echo "</select>";
 echo "</center></td>";
 
-if (!$_GET['orderby']) {
+if (!isset($_GET['orderby'])) {
 	$selecum = "selected";
-} elseif ($_GET['orderby'] == "level") {
+} elseif (isset($_GET['orderby']) == "level") {
 	$selecum = "selected";
-} elseif ($_GET['orderby'] == "gold") {
+} elseif (isset($_GET['orderby']) == "gold") {
 	$selecdois = "selected";
-} elseif ($_GET['orderby'] == "kills") {
+} elseif (isset($_GET['orderby']) == "kills") {
 	$selectres = "selected";
-} elseif ($_GET['orderby'] == "monsterkilled") {
+} elseif (isset($_GET['orderby']) == "monsterkilled") {
 	$selecquatro = "selected";
 } else {
 	$selecum = "selected";

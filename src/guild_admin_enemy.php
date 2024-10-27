@@ -26,7 +26,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
     echo "Você não pode acessar esta página.";
     echo '<br/><a href="home.php">Voltar</a>.';
 } else {
-    if ($_GET['cancel']) {
+    if (isset($_GET['cancel'])) {
         $gwar = $db->execute("select * from `pwar` where `id`=? and `status`='p' and `guild_id`=?", [$_GET['cancel'], $player->guild]);
         if ($gwar->recordcount() != 1) {
             echo "Pedido de guerra não encontrado.";
@@ -60,7 +60,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
         exit;
     }
 
-    if ($_GET['unenemy'] && $_GET['enemy_na']) {
+    if (isset($_GET['unenemy']) && $_GET['enemy_na']) {
         $acheckcla = $db->execute("select `id` from `guilds` where `id`=?", [$_GET['enemy_na']]);
         $ccheckjaaly = $db->execute("select `id` from `guild_enemy` where `guild_na`=? and `enemy_na`=?", [$guild['id'], $_GET['enemy_na']]);
         if ($acheckcla->recordcount() != 1) {

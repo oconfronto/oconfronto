@@ -15,7 +15,7 @@ while ($hours = $counthours->fetchrow()) {
 	$totaltime += $totaltime + $hours['hunttime'];
 }
 
-if ($_GET['act'] == "cancel") {
+if (isset($_GET['act']) == "cancel") {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset>";
 	echo "<legend><b>Caça</b></legend>";
@@ -27,7 +27,7 @@ if ($_GET['act'] == "cancel") {
 }
 
 
-if ($_GET['act'] == "remove") {
+if (isset($_GET['act']) == "remove") {
 	$query = $db->execute("update `hunt` set `status`='a' where `player_id`=? and `status`='t'", [$player->id]);
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset>";
@@ -42,9 +42,9 @@ if ($_GET['act'] == "remove") {
 include(__DIR__ . "/checkwork.php");
 
 
-if (($_POST['cacatime']) && ($_POST['cacastart'])) {
+if ((isset($_POST['cacatime'])) && (isset($_POST['cacastart']))) {
 
-	if (!is_numeric($_POST['cacatime']) || $_POST['cacatime'] > 12) {
+	if (!is_numeric(isset($_POST['cacatime'])) || isset($_POST['cacatime']) > 12) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset>";
 		echo "<legend><b>Caçar</b></legend>";

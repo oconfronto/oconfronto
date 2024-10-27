@@ -66,7 +66,7 @@ if (isset($_POST['price']) && ($_POST['submit'])) {
 //         $msg2 .= "Você trocou a imagem do seu clã.<p />";
 //     }
 // }
-if ($_POST['upload']) {
+if (isset($_POST['upload'])) {
     if (!$_POST['guild_admin']) {
         $errmsg .= "Por favor preencha todos os campos!";
         $error = 1;
@@ -219,7 +219,7 @@ echo "</table>";
                 <tr>
                     <td width="25%"><b>Preço para entrar</b>:</td>
                     <td><input type="text" name="price" value="<?php
-                                                                if (!$_POST['price']) {
+                                                                if (!isset($_POST['price'])) {
                                                                     echo $guild['price'];
                                                                 } else {
                                                                     echo $_POST['price'];
@@ -230,7 +230,7 @@ echo "</table>";
                 <tr>
                     <td width="25%"><b>Mensagem</b>:</td>
                     <td><input type="text" name="motd" size="40" value="<?php
-                                                                        if (!$_POST['motd']) {
+                                                                        if (!isset($_POST['motd'])) {
                                                                             echo $guild['motd'];
                                                                         } else {
                                                                             echo $_POST['motd'];
@@ -242,7 +242,7 @@ echo "</table>";
                     <td width="25%"><b>Descrição</b>:</td>
                     <td>
                         <?php
-                        $textoreferencia = $_POST['blurb'] ?: $guild['blurb'];
+                        $textoreferencia = isset($_POST['blurb']) ?: $guild['blurb'];
                         ?>
                         <script>
                             function contador(id_campo, id_alvo, qt_max) {

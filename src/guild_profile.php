@@ -28,7 +28,7 @@ if (!$_GET['id']) {
 	}
 }
 
-if ($player->guild == $guild['id'] && !$_GET['redirect']) {
+if ($player->guild == $guild['id'] && !isset($_GET['redirect'])) {
 	header("Location: guild_home.php");
 }
 

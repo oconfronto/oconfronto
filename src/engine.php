@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 session_start();
 
-if ($_GET['header']) {
+if (isset($_GET['header'])) {
 	header('Content-type: text/html; charset=utf-8');
 	include(__DIR__ . "/config.php");
 	include(__DIR__ . "/functions.php");

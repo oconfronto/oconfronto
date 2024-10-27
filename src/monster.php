@@ -31,7 +31,7 @@ $fugiu = 0;
 $fastturno = 0;
 $fastmagia = 0;
 
-switch ($_GET['act']) {
+switch (isset($_GET['act'])) {
 	case "attack":
 
 		$selectbixo = $db->execute("select * from `bixos` where `player_id`=?", [$player->id]);
@@ -1092,7 +1092,7 @@ switch ($_GET['act']) {
 		}
 
 		echo "</div>";
-		if (!$_GET['nolayout']) {
+		if (!isset($_GET['nolayout'])) {
 			include(__DIR__ . "/templates/private_footer.php");
 		}
 
@@ -1104,7 +1104,7 @@ switch ($_GET['act']) {
 		$tolevel = round($player->level * 1.8);
 		($sql = $db->execute(sprintf("select * from monsters where level>=1 and level<='%s' and evento!='n' and evento!='t' order by level asc", $tolevel))) || die($db->errormsg());
 
-		if (!$_GET['nolayout']) {
+		if (!isset($_GET['nolayout'])) {
 			include(__DIR__ . "/templates/private_header.php");
 		}
 
@@ -1118,7 +1118,7 @@ switch ($_GET['act']) {
 			}
 		}
 
-		if ($_GET['run'] == 'success') {
+		if (isset($_GET['run']) == 'success') {
 			echo showAlert("Voc&ecirc; fugiu de sua luta com sucesso!");
 		}
 
@@ -1234,7 +1234,7 @@ switch ($_GET['act']) {
 		}
 
 		echo "</table>\n";
-		if (!$_GET['nolayout']) {
+		if (!isset($_GET['nolayout'])) {
 			include(__DIR__ . "/templates/private_footer.php");
 		}
 

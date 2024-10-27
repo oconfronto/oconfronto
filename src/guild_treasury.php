@@ -19,7 +19,7 @@ if ($query->recordcount() == 0) {
 	$guild = $query->fetchrow();
 }
 
-if ($_POST['deposit']) {
+if (isset($_POST['deposit'])) {
 	if (!$_POST['amount']) {
 		$msg1 .= "Você precisa preencher todos os campos.";
 		$error1 = 1;
@@ -53,7 +53,7 @@ if ($_POST['deposit']) {
 
 		$msg1 .= "Você tranferiu <b>" . floor($_POST['amount']) . "</b> de ouro para seu clã.";
 	}
-} elseif ($_POST['transfer']) {
+} elseif (isset($_POST['transfer'])) {
 	$query = $db->execute("select * from `players` where `username`=?", [$_POST['username']]);
 
 	if ($query->recordcount() == 0) {

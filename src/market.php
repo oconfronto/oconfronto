@@ -9,7 +9,7 @@ include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
 
-switch ($_GET['act']) {
+switch (isset($_GET['act'])) {
 	case "remove":
 		if (!$_GET['item']) {
 			include(__DIR__ . "/templates/private_header.php");
@@ -57,67 +57,67 @@ switch ($_GET['act']) {
 		echo "<table width=\"100%\" class=\"brown\" style='border:1px solid #b6804e;height:28px;'><tr>";
 		echo "<th width=\"35%\"><b>Procurar por:</b> <select name=\"type\">\n";
 
-		if (!$_GET['type'] || $_GET['type'] == 'none') {
+		if (!isset($_GET['type']) || isset($_GET['type']) == 'none') {
 			echo "<option value=\"none\" selected=\"selected\">Selecione</option>\n";
 		} else {
 			echo "<option value=\"none\">Selecione</option>\n";
 		}
 
-		if ($_GET['type'] == 'amulet') {
+		if (isset($_GET['type']) == 'amulet') {
 			echo "<option value=\"amulet\" selected=\"selected\">Amuletos</option>\n";
 		} else {
 			echo "<option value=\"amulet\">Amuletos</option>\n";
 		}
 
-		if ($_GET['type'] == 'ring') {
+		if (isset($_GET['type']) == 'ring') {
 			echo "<option value=\"ring\" selected=\"selected\">Anéis</option>\n";
 		} else {
 			echo "<option value=\"ring\">Anéis</option>\n";
 		}
 
-		if ($_GET['type'] == 'weapon') {
+		if (isset($_GET['type']) == 'weapon') {
 			echo "<option value=\"weapon\" selected=\"selected\">Armas</option>\n";
 		} else {
 			echo "<option value=\"weapon\">Armas</option>\n";
 		}
 
-		if ($_GET['type'] == 'armor') {
+		if (isset($_GET['type']) == 'armor') {
 			echo "<option value=\"armor\" selected=\"selected\">Armaduras</option>\n";
 		} else {
 			echo "<option value=\"armor\">Armaduras</option>\n";
 		}
 
-		if ($_GET['type'] == 'boots') {
+		if (isset($_GET['type']) == 'boots') {
 			echo "<option value=\"boots\" selected=\"selected\">Botas</option>\n";
 		} else {
 			echo "<option value=\"boots\">Botas</option>\n";
 		}
 
-		if ($_GET['type'] == 'legs') {
+		if (isset($_GET['type']) == 'legs') {
 			echo "<option value=\"legs\" selected=\"selected\">Calças</option>\n";
 		} else {
 			echo "<option value=\"legs\">Calças</option>\n";
 		}
 
-		if ($_GET['type'] == 'helmet') {
+		if (isset($_GET['type']) == 'helmet') {
 			echo "<option value=\"helmet\" selected=\"selected\">Elmos</option>\n";
 		} else {
 			echo "<option value=\"helmet\">Elmos</option>\n";
 		}
 
-		if ($_GET['type'] == 'shield') {
+		if (isset($_GET['type']) == 'shield') {
 			echo "<option value=\"shield\" selected=\"selected\">Escudos</option>\n";
 		} else {
 			echo "<option value=\"shield\">Escudos</option>\n";
 		}
 
-		if ($_GET['type'] == 'potion') {
+		if (isset($_GET['type']) == 'potion') {
 			echo "<option value=\"potion\" selected=\"selected\">Poções</option>\n";
 		} else {
 			echo "<option value=\"potion\">Poções</option>\n";
 		}
 
-		if ($_GET['type'] == 'addon') {
+		if (isset($_GET['type']) == 'addon') {
 			echo "<option value=\"addon\" selected=\"selected\">Extras</option>\n";
 		} else {
 			echo "<option value=\"addon\">Extras</option>\n";
@@ -127,31 +127,31 @@ switch ($_GET['act']) {
 
 		echo "<th width=\"35%\">Ordenar por: <select name=\"orderby\">\n";
 
-		if (!$_GET['orderby'] || $_GET['orderby'] == 'none') {
+		if (!isset($_GET['orderby']) || isset($_GET['orderby']) == 'none') {
 			echo "<option value=\"none\" selected=\"selected\">Selecione</option>\n";
 		} else {
 			echo "<option value=\"none\">Selecione</option>\n";
 		}
 
-		if ($_GET['orderby'] == 'nome') {
+		if (isset($_GET['orderby']) == 'nome') {
 			echo "<option value=\"nome\" selected=\"selected\">Nome</option>\n";
 		} else {
 			echo "<option value=\"nome\">Nome</option>\n";
 		}
 
-		if ($_GET['orderby'] == 'preco') {
+		if (isset($_GET['orderby']) == 'preco') {
 			echo "<option value=\"preco\" selected=\"selected\">Preço</option>\n";
 		} else {
 			echo "<option value=\"preco\">Preço</option>\n";
 		}
 
-		if ($_GET['orderby'] == 'efetividade') {
+		if (isset($_GET['orderby']) == 'efetividade') {
 			echo "<option value=\"efetividade\" selected=\"selected\">Atributos</option>\n";
 		} else {
 			echo "<option value=\"efetividade\">Atributos</option>\n";
 		}
 
-		if ($_GET['orderby'] == 'vocacao') {
+		if (isset($_GET['orderby']) == 'vocacao') {
 			echo "<option value=\"vocacao\" selected=\"selected\">Vocação</option>\n";
 		} else {
 			echo "<option value=\"vocacao\">Vocação</option>\n";
@@ -166,7 +166,7 @@ switch ($_GET['act']) {
 		echo showAlert('<i>Deseja vender algum item? <a href="market_sell.php"><b>Clique aqui</b></a>.</i>', "white", "left");
 		echo "<br/>";
 
-		if ($_GET['type'] == 'armor' || $_GET['type'] == 'boots' || $_GET['type'] == 'helmet' || $_GET['type'] == 'legs' || $_GET['type'] == 'shield' && $player->voc != 'archer' || $_GET['type'] == 'weapon' || $_GET['type'] == 'amulet' || $_GET['type'] == 'potion' || $_GET['type'] == 'ring' || $_GET['type'] == 'addon') {
+		if (isset($_GET['type']) == 'armor' || isset($_GET['type']) == 'boots' || isset($_GET['type']) == 'helmet' || isset($_GET['type']) == 'legs' || isset($_GET['type']) == 'shield' && $player->voc != 'archer' || isset($_GET['type']) == 'weapon' || isset($_GET['type']) == 'amulet' || isset($_GET['type']) == 'potion' || isset($_GET['type']) == 'ring' || isset($_GET['type']) == 'addon') {
 
 			if ($_GET['orderby'] == 'nome') {
 				$orderby = "blueprint_items.name";
@@ -184,7 +184,7 @@ switch ($_GET['act']) {
 
 			$filtrobusca = "" . $orderby . " " . $sort . "";
 
-			$query = $db->execute("select market.market_id, market.price, market.seller, blueprint_items.name, blueprint_items.effectiveness, blueprint_items.needpromo, blueprint_items.needring, blueprint_items.voc, blueprint_items.img, items.item_bonus, items.for, items.vit, items.agi, items.res from `market`, `blueprint_items`, `items` where market.ite_id=blueprint_items.id and market.market_id=items.id and blueprint_items.type=? and market.serv=? order by " . $filtrobusca . "", [$_GET['type'], $player->serv, $orderby]);
+			$query = $db->execute("select market.market_id, market.price, market.seller, blueprint_items.name, blueprint_items.effectiveness, blueprint_items.needpromo, blueprint_items.needring, blueprint_items.voc, blueprint_items.img, items.item_bonus, items.for, items.vit, items.agi, items.res from `market`, `blueprint_items`, `items` where market.ite_id=blueprint_items.id and market.market_id=items.id and blueprint_items.type=? and market.serv=? order by " . $filtrobusca . "", [isset($_GET['type']), $player->serv, $orderby]);
 			if ($query->recordcount() == 0) {
 				echo "<p><i><center>Nenhum item encontrado! Tente procurar por outra coisa.</center></i></p>";
 			} else {

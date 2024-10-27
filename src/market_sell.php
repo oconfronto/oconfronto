@@ -18,7 +18,7 @@ if ($player->level < 15) {
 	exit;
 }
 
-switch ($_GET['act']) {
+switch (isset($_GET['act'])) {
 	case "sell": {
 			include(__DIR__ . "/templates/private_header.php");
 

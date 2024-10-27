@@ -16,7 +16,7 @@ include(__DIR__ . "/checkbattle.php");
 
 include(__DIR__ . "/checkwork.php");
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 
 	if ($player->level < 20) {
 		include(__DIR__ . "/templates/private_header.php");
@@ -169,7 +169,7 @@ if ($player->level < 36) {
 	$cost2 = floor($player->gold / 1.8);
 }
 
-if ($_GET['act']) {
+if (isset($_GET['act'])) {
 
 	if ($_GET['act'] == 'sell') {
 		if ($player->level < 20) {

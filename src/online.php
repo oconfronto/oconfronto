@@ -5,7 +5,7 @@ declare(strict_types=1);
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Chat");
 $player = check_user($db);
-if ($_GET['act'] == 'showmsg') {
+if (isset($_GET['act']) == 'showmsg') {
 	header('Content-type: text/html; charset=utf-8');
 	$check = $db->execute("select * from `pending` where `pending_id`=31 and `player_id`=?", [$player->id]);
 	if ($check->recordcount() == 0) {
@@ -64,7 +64,7 @@ if ($_GET['act'] == 'showmsg') {
 	exit;
 }
 
-if ($_POST['submit'] && ($_POST['status'] && $_POST['style'])) {
+if (isset($_POST['submit']) && ($_POST['status'] && $_POST['style'])) {
 	if ($_POST['status'] == 'onl') {
 		$db->execute("delete from `pending` where `pending_id`=30 and `player_id`=?", [$player->id]);
 	} elseif ($_POST['status'] == 'ocp') {

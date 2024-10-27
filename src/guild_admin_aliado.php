@@ -28,7 +28,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 	echo '<br/><a href="home.php">Voltar</a>.';
 } else {
 
-	if ($_GET['unaliance'] && $_GET['aled_na']) {
+	if (isset($_GET['unaliance']) && $_GET['aled_na']) {
 
 		$alynamme = $_GET['aled_na'];
 

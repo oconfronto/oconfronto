@@ -20,7 +20,7 @@ if ($checabattalha->recordcount() > 0) {
 
 include(__DIR__ . "/checkwork.php");
 
-if ($_GET['start']) {
+if (isset($_GET['start'])) {
     $verificaLuta = $db->execute("select `id` from `duels` where `status`!='w' and `status`!='z' and (`p_id`=? or `e_id`=?)", [$player->id, $player->id]);
     if ($verificaLuta->recordcount() > 0) {
         if ($_GET['nolayout']) {
@@ -58,7 +58,7 @@ if ($_GET['start']) {
     exit;
 }
 
-if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
+if (isset($_GET['luta']) || $verificaLuta->recordcount() > 0) {
     $verificaLuta = $db->execute("select * from `duels` where `status`!='w' and (`p_id`=? or `e_id`=?) order by `status` asc, `id` desc limit 1", [$player->id, $player->id]);
     if ($verificaLuta->recordcount() == 0) {
         if ($_GET['nolayout']) {
@@ -1009,13 +1009,13 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
 }
 
 include(__DIR__ . "/checkhp.php");
-if (!$_GET['nolayout']) {
+if (!isset($_GET['nolayout'])) {
     include(__DIR__ . "/templates/private_header.php");
 } else {
     header("Content-Type: text/html; charset=utf-8", true);
 }
 
-if ($_GET['remove']) {
+if (isset($_GET['remove'])) {
     $checkDuelRemove = $db->execute("select `id` from `duels` where `status`='w' and `id`=? and (`p_id`=? or `e_id`=?)", [$_GET['remove'], $player->id, $player->id]);
     if ($checkDuelRemove->recordcount() > 0) {
         $db->execute("delete from `duels` where `id`=? and (`p_id`=? or `e_id`=?)", [$_GET['remove'], $player->id, $player->id]);
@@ -1025,7 +1025,7 @@ if ($_GET['remove']) {
     }
 }
 
-if ($_POST['desafiar']) {
+if (isset($_POST['desafiar'])) {
     $checkEnemy = $db->execute("select `id` from `players` where `username`=?", [$_POST['username']]);
     if ($checkEnemy->recordcount() > 0) {
         $getEnemyId = $db->GetOne("select `id` from `players` where `username`=?", [$_POST['username']]);
@@ -1054,7 +1054,7 @@ if ($_POST['desafiar']) {
     }
 }
 
-if ($_GET['error'] == 'noresponse') {
+if (isset($_GET['error']) == 'noresponse') {
     echo showAlert("Seu oponente não aceitou o desafio no per&ecirc;odo determinado.", "red");
 }
 
@@ -1079,7 +1079,7 @@ echo "</tr>";
 echo "</table>";
 echo "</form>";
 
-if (!$_GET['nolayout']) {
+if (!isset($_GET['nolayout'])) {
     include(__DIR__ . "/templates/private_footer.php");
 }
 

@@ -68,7 +68,7 @@ while ($dungeonInfo = $dungeonVerificaPremiacoes->fetchrow()) {
     }
 }
 
-if ($_GET['id']) {
+if (isset($_GET['id'])) {
     $checkverid = $db->execute("select * from `dungeon` where `id`=?", [$_GET['id']]);
     if ($checkverid->recordcount() > 0) {
 

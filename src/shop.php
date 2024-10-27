@@ -12,7 +12,7 @@ include(__DIR__ . "/checkwork.php");
 // Add this line near the top of the file, after $player is defined
 $voc = $player->voc;
 
-switch ($_GET['act']) {
+switch (isset($_GET['act'])) {
 	case "buy":
 		if (!$_GET['id']) //No item ID
 		{
@@ -347,7 +347,7 @@ switch ($_GET['act']) {
 		echo "</tr></table>";
 		echo "</form>";
 
-		if ($_GET['type'] == 'armor' || $_GET['type'] == 'boots' || $_GET['type'] == 'helmet' || $_GET['type'] == 'legs' || $_GET['type'] == 'shield' && $player->voc != 'archer' || $_GET['type'] == 'weapon' || $_GET['type'] == 'amulet') {
+		if (isset($_GET['type']) == 'armor' || isset($_GET['type']) == 'boots' || isset($_GET['type']) == 'helmet' || isset($_GET['type']) == 'legs' || isset($_GET['type']) == 'shield' && $player->voc != 'archer' || isset($_GET['type']) == 'weapon' || isset($_GET['type']) == 'amulet') {
 			$query = "SELECT `id`, `name`, `description`, `type`, `price`, `effectiveness`, `img`, `needpromo`, `needlvl` FROM `blueprint_items` WHERE ";
 			$conditions = [];
 			$values = [];
@@ -441,7 +441,7 @@ switch ($_GET['act']) {
 			} elseif ($player->vip > time()) {
 				echo showAlert("<i>Você tem 10% de desconto nos items, pelo fato de ser um membro vip.</i>");
 			}
-		} elseif ($_GET['type'] == 'shield' && $player->voc == 'archer') {
+		} elseif (isset($_GET['type']) == 'shield' && $player->voc == 'archer') {
 			echo "<br/><p><i><center>Arqueiros não podem usar/comprar escudos.</center></i></p>";
 		} else {
 			echo "<br/><p><i><center>Selecione o tipo de item que você deseja procurar.</center></i></p>";

@@ -9,7 +9,7 @@ include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkguild.php");
 
 $error = 0;
-$username = ($_GET['username']);
+$username = (isset($_GET['username']));
 
 //Populates $guild variable
 $guildquery = $db->execute("select * from `guilds` where `id`=?", [$player->guild]);

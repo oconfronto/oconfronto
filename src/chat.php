@@ -165,7 +165,7 @@ function startChatSession(): void
 ?>
 	{
 	"username": "<?php echo str_replace(" ", "_", $player->username); ?>",
-	"level": "<?php echo $_SESSION['level']; ?>",
+	"level": "<?php echo isset($_SESSION['level']); ?>",
 	"items": [
 	<?php echo $items; ?>
 	]

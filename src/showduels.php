@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-if ($_GET['header']) {
+if (isset($_GET['header'])) {
     include(__DIR__ . "/lib.php");
     header("Content-Type: text/html; charset=utf-8", true);
     $player = check_user($db);

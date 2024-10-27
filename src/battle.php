@@ -11,7 +11,7 @@ include(__DIR__ . "/checkwork.php");
 $valor547 = $player->level / 1.25;
 $diflvl = ceil($valor547);
 
-switch ($_GET['act']) {
+switch (isset($_GET['act'])) {
 	case "attack":
 		if (!$_GET['username']) //No username entered
 		{
@@ -1034,7 +1034,7 @@ switch ($_GET['act']) {
 		echo "<tr><td></td><td><br /><input type=\"submit\" value=\"Procurar\" /></td></tr>\n";
 		echo "</table>\n";
 		echo "</form>\n</fieldset>\n";
-		if (!$_GET['reino'] || $_GET['reino'] == $player->reino) {
+		if (!isset($_GET['reino']) || isset($_GET['reino']) == $player->reino) {
 			if ($player->reino == 1) {
 				$reinno = "Cathal";
 			} elseif ($player->reino == 2) {

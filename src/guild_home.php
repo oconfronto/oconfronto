@@ -20,7 +20,7 @@ if ($query->recordcount() == 0) {
 	$guild = $query->fetchrow();
 }
 
-if ($_GET['act'] == 'showmsg') {
+if (isset($_GET['act']) == 'showmsg') {
 	header('Content-type: text/html; charset=utf-8');
 
 	$countmsgs = $db->execute("select * from `user_chat` where `guild`=? order by `time` asc", [$player->guild]);

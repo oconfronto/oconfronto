@@ -25,7 +25,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 	echo '<a href="home.php">Principal</a>.';
 } else {
 
-	if ($_GET['remove']) {
+	if (isset($_GET['remove'])) {
 		if ($guild['vice'] == NULL || $guild['vice'] == '') {
 			$msg .= "Seu clã não possui um vice lider.";
 		} else {

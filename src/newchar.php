@@ -21,7 +21,7 @@ $msg2 = "";
 $error = 0;
 $erro1 = 0;
 $erro2 = 0;
-if ($_POST['register']) {
+if (isset($_POST['register'])) {
 
 	$pat[0] = "/^\s+/";
 	$pat[1] = "/\s{2,}/";
@@ -148,7 +148,7 @@ if ($_POST['register']) {
 		echo $msg2;
 	}
 
-	if ($_POST['register']) {
+	if (isset($_POST['register'])) {
 		if ($msg1 === "") {
 			$certo1 = 1;
 		}

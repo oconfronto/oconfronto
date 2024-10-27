@@ -16,7 +16,7 @@ $player = check_user($db);
 
 $errormsg = '<font color="red">';
 $errors = 0;
-if ($_POST['sendmail']) {
+if (isset($_POST['sendmail'])) {
 	//Process mail info, show success message
 	$query = $db->execute("select `id`, `gm_rank` from `players` where `username`=?", [$_POST['to']]);
 	if ($query->recordcount() == 0) {
@@ -99,25 +99,25 @@ include(__DIR__ . "/templates/private_header.php");
 
 <?php
 echo "<p><center>";
-if ($_GET['act'] != "enviadas" && $_GET['act'] != "ignore" && $_GET['act'] != "compose") {
+if (isset($_GET['act']) != "enviadas" && isset($_GET['act']) != "ignore" && isset($_GET['act']) != "compose") {
 	echo '<a href="mail.php"><b>Caixa de entrada</b></a> | ';
 } else {
 	echo '<a href="mail.php">Caixa de entrada</a> | ';
 }
 
-if ($_GET['act'] == "enviadas") {
+if (isset($_GET['act']) == "enviadas") {
 	echo '<a href="mail.php?act=enviadas"><b>Mensagens enviadas</b></a> | ';
 } else {
 	echo '<a href="mail.php?act=enviadas">Mensagens enviadas</a> | ';
 }
 
-if ($_GET['act'] == "ignore") {
+if (isset($_GET['act']) == "ignore") {
 	echo "<a href=\"mail.php?act=ignore\"><b>Usuários ignorados</b></a> | ";
 } else {
 	echo "<a href=\"mail.php?act=ignore\">Usuários ignorados</a> | ";
 }
 
-if ($_GET['act'] == "compose") {
+if (isset($_GET['act']) == "compose") {
 	echo '<a href="mail.php?act=compose"><b>Escrever mensagem</b></a>';
 } else {
 	echo '<a href="mail.php?act=compose">Escrever mensagem</a>';
@@ -125,9 +125,9 @@ if ($_GET['act'] == "compose") {
 
 echo "</p></center>";
 
-switch ($_GET['act']) {
+switch (isset($_GET['act'])) {
 	case "ignore": //Reading a message
-		if ($_POST['add']) {
+		if (isset($_POST['add'])) {
 			$query = $db->execute("select `id`, `gm_rank` from `players` where `username`=?", [$_POST['add']]);
 			if ($query->recordcount() == 0) {
 				echo "Este ususuário não existe!<br/><a href=\"mail.php?act=ignore\">Voltar</a>.";
@@ -165,7 +165,7 @@ switch ($_GET['act']) {
 
 		//Reading a message
 
-		if ($_GET['delete']) {
+		if (isset($_GET['delete'])) {
 			$query = $db->execute("delete from `ignored` where `uid`=? and `bid`=?", [$player->id, $_GET['delete']]);
 			if ($query) {
 				echo "Agora " . showName($_GET['delete'], $db, 'off') . " não está mais sendo ignorado!<br><a href=\"mail.php?act=ignore\">Voltar</a>.";

@@ -36,7 +36,7 @@ if ($setting->$unc1 == "t") {
 		header("Location: tournament.php");
 	}
 
-	if ($_POST['join']) {
+	if (isset($_POST['join'])) {
 		$checasejaestainscrito = $db->execute("select `id` from `players` where `id`=? and `tour`='t' and `serv`=? and `tier`=?", [$player->id, $player->serv, $tier]);
 
 		if ($checasejaestainscrito->recordcount() > 0) {

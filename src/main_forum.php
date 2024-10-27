@@ -40,7 +40,7 @@ if ($cate == 'gangues') {
 	$categoria = $cate;
 }
 
-if ($_GET['success'] == 'true') {
+if (isset($_GET['success']) == 'true') {
 	echo showAlert("Tópico postado com sucesso!");
 }
 

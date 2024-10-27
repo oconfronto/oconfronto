@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-if ($_GET['gift']) {
+if (isset($_GET['gift'])) {
 	$numgifts = $db->execute("select `id` from `items` where `player_id`=? and `id`=? and `item_id`=? and `mark`='f'", [$player->id, $_GET['gift'], 155]);
 	if ($numgifts->recordcount() != 1) {
 		include(__DIR__ . "/templates/private_header.php");

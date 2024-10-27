@@ -76,7 +76,7 @@ if ($setting->$unc3 == "t") {
 		exit;
 	}
 
-	if ($_POST['buy']) {
+	if (isset($_POST['buy'])) {
 		$error = 0;
 
 		if (!is_numeric($_POST['amount'])) {

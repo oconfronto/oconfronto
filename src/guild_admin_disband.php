@@ -26,7 +26,7 @@ if ($player->username != $guild['leader']) {
     echo "<p />Você não pode acessar esta página.<br/><br/>";
     echo '<a href="home.php">Principal</a>';
     echo "</fieldset>";
-} elseif ($_GET['act'] == "go") {
+} elseif (isset($_GET['act']) == "go") {
     $query4 = $db->execute("select `id` from `players` where `guild`=?", [$guild['id']]);
     while ($member = $query4->fetchrow()) {
         $logmsg = "A gangue " . $guild['name'] . " foi deletada pelo lider do clã.";

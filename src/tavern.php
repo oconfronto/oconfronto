@@ -9,9 +9,9 @@ include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
 
-switch ($_GET['p']) {
+switch (isset($_GET['p'])) {
     case "quests":
-        if ($_GET['start']) {
+        if (isset($_GET['start'])) {
             $query = $db->execute("select * from `allquests` where `id`=?", [$_GET['start']]);
             if ($query->recordcount() != 1) {
                 header("Location: tavern.php?p=quests");

@@ -73,7 +73,7 @@ if ($player->level >= 180) {
 	$ganha = 20 * (1 + $bonnus);
 }
 
-if ($_GET['act'] == "cancel") {
+if (isset($_GET['act']) == "cancel") {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset>";
 	echo "<legend><b>Trabalho</b></legend>";
@@ -84,7 +84,7 @@ if ($_GET['act'] == "cancel") {
 	exit;
 }
 
-if ($_GET['act'] == "remove") {
+if (isset($_GET['act']) == "remove") {
 	$query = $db->execute("update `work` set `status`='a' where `player_id`=? and `status`='t'", [$player->id]);
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset>";
@@ -98,7 +98,7 @@ if ($_GET['act'] == "remove") {
 
 include(__DIR__ . "/checkwork.php");
 
-if (($_POST['time']) && ($_POST['submit'])) {
+if ((isset($_POST['time'])) && ($_POST['submit'])) {
 
 
 	if (!is_numeric($_POST['time']) || $_POST['time'] > 12) {

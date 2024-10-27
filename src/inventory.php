@@ -20,7 +20,7 @@ include(__DIR__ . "/includes/actions/transfer-items.php");
 
 include(__DIR__ . "/templates/private_header.php");
 
-if ($_GET['sellit']) {
+if (isset($_GET['sellit'])) {
 	$query = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.img, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", [$player->id, $_GET['sellit']]);
 
 	if ($query->recordcount() > 0) {
@@ -80,7 +80,7 @@ if ($_GET['sellit']) {
 	}
 }
 
-if ($_GET['mature']) {
+if (isset($_GET['mature'])) {
 	$querymature = $db->execute("select items.id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.img, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", [$player->id, $_GET['mature']]);
 
 	if ($querymature->recordcount() > 0) {
