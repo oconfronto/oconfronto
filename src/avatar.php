@@ -87,7 +87,8 @@ if ($procuramengperfil->recordcount() == 0) {
 <table width="100%">
 	<tr>
 		<td width="25%">
-			<center><img src="<?php echo $player->avatar ?>" width="120px" height="120px"
+			<center><img src="<?php $dire = ($player->avatar == "anonimo.gif") ? "static/" . $player->avatar : $player->avatar;
+								echo $dire ?>" width="120px" height="120px"
 					alt="<?php echo $player->username ?>" border="1px"></center>
 		</td>
 		<td width="75%"><b>Enviar avatar:</b><br />
@@ -121,7 +122,7 @@ if ($procuramengperfil->recordcount() == 0) {
 						<td>
 							<script>
 								edToolbar('detail');
-							</script><textarea name="detail" rows="12" id="detail"
+							</script><textarea style="width:90%" name="detail" rows="12" id="detail"
 								class="ed"><?= $mencomentario ?></textarea>
 						</td>
 					</tr>

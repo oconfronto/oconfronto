@@ -200,7 +200,8 @@ echo "</table>";
     <table width="100%">
         <thead>
             <tr>
-                <div style="text-align: center;"><img src="<?php echo $guild['img'] ?>" width="120px" height="120px"
+                <div style="text-align: center;"><img src="<?php $dire = ($guild['img'] == "default_guild.png") ? "static/" . $guild['img'] : $guild['img'];
+                                                            echo $dire ?>" width="120px" height="120px"
                         alt="<?php echo $guild['name'] ?>" border="1px"></div>
             </tr>
         </thead>
