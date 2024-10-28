@@ -311,6 +311,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                             $potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id']]);
                             $potimg = $db->GetOne("select `img` from `blueprint_items` where `id`=?", [$selct['item_id']]);
 
+
                         ?>
                             <div
                                 title="header=[<?php echo $potname; ?>] body=[<?php echo $potdesc; ?><br><font size=1><?php echo $valortempo; ?> <?php echo $auxiliar; ?> restante(s).</font>]">
@@ -320,7 +321,8 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                             </div>
                         <?php }
                         ?>
-                        <div class="avatar"><a href="avatar.php"><img src="static/<?php echo $player->avatar ?>"
+                        <div class="avatar"><a href="avatar.php"><img src="<?php $dire = ($player->avatar == "anonimo.gif") ? "static/" . $player->avatar : $player->avatar;
+                                                                            echo $dire ?>"
                                     border="0px"></a></div>
 
 

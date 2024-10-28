@@ -78,9 +78,10 @@ if ($query->recordcount() == 0) {
 	echo "<p><i><center>Nenhum clã registrado no momento.</center></i></p>";
 } else {
 	while ($guild = $query->fetchrow()) {
+		$dire = ($guild['img'] == "default_guild.png") ? "static/" : "";
 		echo '<table width="100%">';
 		echo "<tr>";
-		echo '<td width="135px" class="brown"><center><a href="guild_profile.php?id=' . $guild['id'] . '"><img src="static/' . $guild['img'] . '" alt="' . $guild['name'] . '"  width="128" height="128" border="0"></a></center></td>';
+		echo '<td width="135px" class="brown"><center><a href="guild_profile.php?id=' . $guild['id'] . '"><img src="' . $dire . $guild['img'] . '" alt="' . $guild['name'] . '"  width="128" height="128" border="0"></a></center></td>';
 		echo '<td class="salmon"><center><b><a href="guild_profile.php?id=' . $guild['id'] . '">' . $guild['name'] . "</a></b></center>";
 		$guilddes = stripslashes((string) $guild['blurb']);
 		$guilddes = $bbcode->parse($guilddes);
