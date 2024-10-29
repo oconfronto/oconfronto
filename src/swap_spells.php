@@ -46,7 +46,7 @@ if ($_GET['estender']) {
 } elseif ($_GET['act']) {
 
 	if (isset($_GET['spell']) && is_numeric($_GET['spell'])) {
-		$getid = ceil((float)$_GET['spell']);  // Garantindo que `spell` seja convertido para float antes de aplicar ceil
+		$getid = ceil((int)$_GET['spell']);  // Garantindo que `spell` seja convertido para float antes de aplicar ceil
 		$magic = $db->execute("select * from `blueprint_magias` where `id`=?", [$getid]);
 	} else {
 		// Tratamento caso `spell` seja inválido
