@@ -535,3 +535,9 @@ function send_mail($from_name, $mail_to, $subject, $body)
 
     return $mail->send();
 }
+
+
+function getAvatarPath($avatar)
+{
+    return ($avatar == "anonimo.gif") ? "static/" . $avatar : $avatar;
+}
