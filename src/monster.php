@@ -665,7 +665,8 @@ switch ($_GET['act']) {
 			if ($morreu != 5 && $matou != 5 && $otroatak != 5 && $bixo->vez == 'e') {
 				include(__DIR__ . "/battle/levahit.php");
 				include(__DIR__ . "/battle/menosturno.php");
-				$db->execute("update `bixos` set `vez`='p' where `player_id`=?", [$player->id]);
+				// $db->execute("update `bixos` set `vez`='p' where `player_id`=?", [$player->id]);
+				$db->execute("update `bixos` set `vez`='p', `type`= 0 where `player_id`=?", array($player->id)); //Ajustado query, trocando o type para "0", onde cancela o loop de batalha sem poder usar as skills apos ataque.
 			}
 		}
 
@@ -939,10 +940,11 @@ switch ($_GET['act']) {
 		$magiaatual2 = $magiaatual->fetchrow();
 
 		if ($player->hp > 0 && $bixo->hp > 0 && $matou != 5 && $morreu != 5 && $bixo->type != 98 && $bixo->type != 99) {
+			$dire = ($player->avatar == "anonimo.gif") ? "static/" : "";
 			echo '<table width="100%">';
 			echo "<tr>";
 			echo '<td width="8%">';
-			echo '<center><img src="static/' . $player->avatar . '" width="42px" height="42px" alt="' . $player->username . '" border="1px"></center>';
+			echo '<center><img src="' . $dire . $player->avatar . '" width="42px" height="42px" alt="' . $player->username . '" border="1px"></center>';
 			echo "</td>";
 
 			echo '<td width="26%">';
