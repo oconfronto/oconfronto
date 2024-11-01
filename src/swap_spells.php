@@ -45,8 +45,15 @@ if ($_GET['estender']) {
 	}
 } elseif ($_GET['act']) {
 
-	$getid = ceil($_GET['spell']);
-	$magic = $db->execute("select * from `blueprint_magias` where `id`=?", [$getid]);
+	if (isset($_GET['spell']) && is_numeric($_GET['spell'])) {
+		$getid = (int)$_GET['spell'];  // Convert directly to integer for spell ID
+		$magic = $db->execute("select * from `blueprint_magias` where `id`=?", [$getid]);
+	} else {
+		// Tratamento caso `spell` seja inválido
+		echo "Feitiço inválido.";
+		exit;
+	}
+	
 
 	if ($_GET['spell'] && $_GET['confirm'] != 'yes' && is_numeric($_GET['spell']) && $magic->recordcount() == 1) {
 
