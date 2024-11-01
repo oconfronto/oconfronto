@@ -184,7 +184,7 @@ switch ($_GET['act']) {
 
 			$filtrobusca = "" . $orderby . " " . $sort . "";
 
-			$query = $db->execute("select market.market_id, market.price, market.seller, blueprint_items.name, blueprint_items.effectiveness, blueprint_items.needpromo, blueprint_items.needring, blueprint_items.voc, blueprint_items.img, items.item_bonus, items.for, items.vit, items.agi, items.res from `market`, `blueprint_items`, `items` where market.ite_id=blueprint_items.id and market.market_id=items.id and blueprint_items.type=? and market.serv=? order by " . $filtrobusca . "", [$_GET['type'], $player->serv, $orderby]);
+			$query = $db->execute("select market.market_id, market.price, market.seller, blueprint_items.name, blueprint_items.effectiveness, blueprint_items.needpromo, blueprint_items.needring, blueprint_items.voc, blueprint_items.img, items.item_bonus, items.for, items.vit, items.agi, items.res from `market`, `blueprint_items`, `items` where market.ite_id=blueprint_items.id and market.market_id=items.id and blueprint_items.type=? and market.serv=? order by " . $filtrobusca . "", [$_GET['type'], $player->serv]);
 			if ($query->recordcount() == 0) {
 				echo "<p><i><center>Nenhum item encontrado! Tente procurar por outra coisa.</center></i></p>";
 			} else {
