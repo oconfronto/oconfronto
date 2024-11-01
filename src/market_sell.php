@@ -191,7 +191,7 @@ switch ($_GET['act']) {
 			}
 
 			$price = stripslashes($_POST['price']);
-			$price = ceil($price);
+			$price = ceil((float)$price);
 
 			$fee = ceil($price / 100);
 			$fee = ceil($fee * 5);
@@ -284,7 +284,7 @@ switch ($_GET['act']) {
 			}
 
 			$price = stripslashes($_POST['price']);
-			$price = ceil($price);
+			$price = ceil((float)$price);
 
 			$fee = ceil($price / 100);
 			$fee = ceil($fee * 5);
