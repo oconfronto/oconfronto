@@ -20,38 +20,39 @@ if ($query->recordcount() == 0) {
 }
 
 if ($_POST['deposit']) {
-	if (!$_POST['amount']) {
+	if (!isset($_POST['amount']) || $_POST['amount'] === '') {
 		$msg1 .= "Você precisa preencher todos os campos.";
 		$error1 = 1;
-	} elseif (floor($_POST['amount']) < 1) {
+	} elseif (!is_numeric($_POST['amount'])) {
 		$msg1 .= "Você não pode enviar esta quantia de ouro!";
 		$error1 = 1;
-	} elseif (!is_numeric(floor($_POST['amount']))) {
+	} elseif (floor((float)$_POST['amount']) < 1) {
 		$msg1 .= "Você não pode enviar esta quantia de ouro!";
 		$error1 = 1;
-	} elseif (floor($_POST['amount']) > $player->gold) {
+	} elseif (floor((float)$_POST['amount']) > $player->gold) {
 		$msg1 .= "Você não possui esta quantia de ouro!";
 		$error1 = 1;
 	} else {
-		$db->execute("update `guilds` set `gold`=`gold`+? where `id`=?", [floor($_POST['amount']), $player->guild]);
-		$db->execute("update `players` set `gold`=`gold`-? where `id`=?", [floor($_POST['amount']), $player->id]);
+		$amount = floor((float)$_POST['amount']);
+		$db->execute("update `guilds` set `gold`=`gold`+? where `id`=?", [$amount, $player->guild]);
+		$db->execute("update `players` set `gold`=`gold`-? where `id`=?", [$amount, $player->id]);
 
 		$insert['player_id'] = $player->id;
 		$insert['name1'] = $player->username;
 		$insert['name2'] = $guild['name'];
 		$insert['action'] = "doou";
-		$insert['value'] = floor($_POST['amount']);
+		$insert['value'] = $amount;
 		$insert['aditional'] = "gangue";
 		$insert['time'] = time();
 		$query = $db->autoexecute('log_gold', $insert, 'INSERT');
 
 		$lider = $db->GetOne("select `id` from `players` where `username`=?", [$guild['leader']]);
 		$vice = $db->GetOne("select `id` from `players` where `username`=?", [$guild['vice']]);
-		$logmsg = sprintf('<b>%s</b> transferiu <b>', $player->username) . floor($_POST['amount']) . " de gold</b> para o clã.";
+		$logmsg = sprintf('<b>%s</b> transferiu <b>', $player->username) . $amount . " de gold</b> para o clã.";
 		addlog($lider, $logmsg, $db);
 		addlog($vice, $logmsg, $db);
 
-		$msg1 .= "Você tranferiu <b>" . floor($_POST['amount']) . "</b> de ouro para seu clã.";
+		$msg1 .= "Você tranferiu <b>" . $amount . "</b> de ouro para seu clã.";
 	}
 } elseif ($_POST['transfer']) {
 	$query = $db->execute("select * from `players` where `username`=?", [$_POST['username']]);
@@ -62,33 +63,34 @@ if ($_POST['deposit']) {
 	} elseif (!$_POST['username'] || !$_POST['amount']) {
 		$msg2 .= "Você precisa preencher todos os campos.";
 		$error2 = 1;
-	} elseif (floor($_POST['amount']) < 1) {
+	} elseif (!is_numeric(floor((float)$_POST['amount']))) {
 		$msg2 .= "Você não pode enviar esta quantia de dinheiro!";
 		$error2 = 1;
-	} elseif (!is_numeric(floor($_POST['amount']))) {
+	} elseif (floor((float)$_POST['amount']) < 1) {
 		$msg2 .= "Você não pode enviar esta quantia de dinheiro!";
-		$error2 = 1;
-	} elseif (floor($_POST['amount']) > $guild['gold']) {
+		$error2 = 1;	
+	} elseif (floor((float)$_POST['amount']) > $guild['gold']) {
 		$msg2 .= "Seu clã não possui esta quantia de dinheiro!";
 		$error2 = 1;
 	} else {
 		$member = $query->fetchrow();
 
-		$db->execute("update `guilds` set `gold`=? where `id`=?", [$guild['gold'] - floor($_POST['amount']), $player->guild]);
-		$db->execute("update `players` set `gold`=? where `username`=?", [$member['gold'] + floor($_POST['amount']), $member['username']]);
-		$logmsg = "Você recebeu <b>" . floor($_POST['amount']) . "</b> de ouro do clã: <b>" . $guild['name'] . "</b>.";
+		$amount = floor((float)$_POST['amount']);
+		$db->execute("update `guilds` set `gold`=? where `id`=?", [$guild['gold'] - $amount, $player->guild]);
+		$db->execute("update `players` set `gold`=? where `username`=?", [$member['gold'] + $amount, $member['username']]);
+		$logmsg = "Você recebeu <b>" . $amount . "</b> de ouro do clã: <b>" . $guild['name'] . "</b>.";
 		addlog($member['id'], $logmsg, $db);
 
 		$insert['player_id'] = $member['id'];
 		$insert['name1'] = $player->username;
 		$insert['name2'] = $guild['name'];
 		$insert['action'] = "ganhou";
-		$insert['value'] = floor($_POST['amount']);
+		$insert['value'] = $amount;
 		$insert['aditional'] = "gangue";
 		$insert['time'] = time();
 		$query = $db->autoexecute('log_gold', $insert, 'INSERT');
 
-		$msg2 .= "Você tranferiu <b>" . floor($_POST['amount']) . "</b> de ouro para: <b>" . $_POST['username'] . "</b>.";
+		$msg2 .= "Você tranferiu <b>" . $amount . "</b> de ouro para: <b>" . $_POST['username'] . "</b>.";
 	}
 }
 
