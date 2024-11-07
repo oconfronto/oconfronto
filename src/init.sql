@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `blueprint_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE latin1_general_ci NOT NULL DEFAULT '',
   `description` text COLLATE latin1_general_ci NOT NULL,
-  `type` enum('armor','boots','helmet','legs','shield','weapon','amulet','addon','potion','stone','ring') COLLATE latin1_general_ci NOT NULL DEFAULT 'armor',
+  `type` enum('armor','boots','helmet','legs','shield','weapon','amulet','addon','potion','stone','ring','quiver') COLLATE latin1_general_ci NOT NULL DEFAULT 'armor',
   `effectiveness` int(11) NOT NULL DEFAULT '0',
   `price` int(11) NOT NULL DEFAULT '0',
   `img` varchar(255) COLLATE latin1_general_ci NOT NULL DEFAULT '',
