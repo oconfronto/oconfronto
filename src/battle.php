@@ -324,7 +324,9 @@ switch ($_GET['act']) {
 		$enemy->defbonus5 = ($query54->recordcount() == 1) ? $query54->fetchrow() : 0;
 		$query55 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='boots' and items.status='equipped'", [$enemy->id]);
 		$enemy->agibonus6 = ($query55->recordcount() == 1) ? $query55->fetchrow() : 0;
-
+		$query56 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='quiver' and items.status='equipped'", [$enemy->id]);
+		$enemy->agibonus7 = ($query56->recordcount() == 1) ? $query56->fetchrow() : 0;
+		
 		$enybonusfor = 0;
 		$enybonusagi = 0;
 		$enybonusres = 0;
@@ -360,6 +362,8 @@ switch ($_GET['act']) {
 		$player->defbonus5 = ($query54->recordcount() == 1) ? $query54->fetchrow() : 0;
 		$query55 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='boots' and items.status='equipped'", [$player->id]);
 		$player->agibonus6 = ($query55->recordcount() == 1) ? $query55->fetchrow() : 0;
+		$query56 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='quiver' and items.status='equipped'", [$player->id]);
+		$player->agibonus7 = ($query56->recordcount() == 1) ? $query56->fetchrow() : 0;
 
 		$pbonusfor = 0;
 		$pbonusagi = 0;
@@ -487,11 +491,11 @@ switch ($_GET['act']) {
 
 		//Calculate some variables that will be used
 		$forcadoplayer = ceil(($player->strength + $player->atkbonus['effectiveness'] + ($player->atkbonus['item_bonus'] * 2)  + $pbonusfor) * $multipleatk);
-		$agilidadedoplayer = ceil($player->agility + $player->agibonus6['effectiveness'] + ($player->agibonus6['item_bonus'] * 2) + $pbonusagi);
+		$agilidadedoplayer = ceil($player->agility + $player->agibonus6['effectiveness'] + $player->agibonus7['effectiveness'] + ($player->agibonus6['item_bonus'] * 2) + $pbonusagi);
 		$resistenciadoplayer = ceil(($player->resistance + ($player->defbonus1['effectiveness'] + $player->defbonus2['effectiveness'] + $player->defbonus3['effectiveness'] + $player->defbonus5['effectiveness']) + (($player->defbonus1['item_bonus'] * 2) + ($player->defbonus2['item_bonus'] * 2) + ($player->defbonus3['item_bonus'] * 2) + ($player->defbonus5['item_bonus'] * 2)) + $pbonusres) * $multipledef);
 
 		$forcadoenemy = ceil(($enemy->strength + $enemy->atkbonus['effectiveness'] + ($enemy->atkbonus['item_bonus'] * 2) + $enybonusfor) * $enymultipleatk);
-		$agilidadedoenemy = ceil($enemy->agility + $enemy->agibonus6['effectiveness'] + ($enemy->agibonus6['item_bonus'] * 2) + $enybonusagi);
+		$agilidadedoenemy = ceil($enemy->agility + $enemy->agibonus6['effectiveness'] + $player->agibonus7['effectiveness'] + ($enemy->agibonus6['item_bonus'] * 2) + $enybonusagi);
 		$resistenciadoenemy = ceil(($enemy->resistance + ($enemy->defbonus1['effectiveness'] + $enemy->defbonus2['effectiveness'] + $enemy->defbonus3['effectiveness'] + $enemy->defbonus5['effectiveness']) + (($enemy->defbonus1['item_bonus'] * 2) + ($enemy->defbonus2['item_bonus'] * 2) + ($enemy->defbonus3['item_bonus'] * 2) + ($enemy->defbonus5['item_bonus'] * 2)) + $enybonusres) * $enymultipledef);
 
 		$enemy->strdiff = (($forcadoenemy - $forcadoplayer) > 0) ? ($forcadoenemy - $forcadoplayer) : 0;

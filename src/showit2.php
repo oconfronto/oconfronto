@@ -250,9 +250,9 @@ if ($showitenx->recordcount() == 0) {
 }
 
 
-$showitenx = $db->execute("select items.id, items.item_id, items.item_bonus, items.for, items.vit, items.agi, items.res, items.status, blueprint_items.name, blueprint_items.effectiveness, blueprint_items.img, blueprint_items.type from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='shield' and items.status='equipped'", [$player->id]);
+$showitenx = $db->execute("SELECT items.id, items.item_id, items.item_bonus, items.for, items.vit, items.agi, items.res, items.status, blueprint_items.name, blueprint_items.effectiveness, blueprint_items.img, blueprint_items.type FROM `items`, `blueprint_items` WHERE blueprint_items.id = items.item_id AND items.player_id = ? AND (blueprint_items.type = 'shield' OR blueprint_items.type = 'quiver') AND items.status = 'equipped'", [$player->id]);
 if ($showitenx->recordcount() == 0) {
-	echo '<td class="mark shield itembg1"><img src="static/images/luva-dir.png" border="0"></td>';
+	echo '<td class="mark shield quiver itembg1"><img src="static/images/luva-dir.png" border="0"></td>';
 } else {
 	$showeditexs = $showitenx->fetchrow();
 
@@ -268,7 +268,7 @@ if ($showitenx->recordcount() == 0) {
 		$colorbg = "itembg1";
 	}
 
-	echo '<td class="mark shield ' . $colorbg . '">';
+	echo '<td class="mark shield quiver ' . $colorbg . '">';
 
 	if ($showeditexs['for'] == 0) {
 		$showitfor = "";
@@ -300,7 +300,12 @@ if ($showitenx->recordcount() == 0) {
 
 	$newefec = ($showeditexs['effectiveness']) + ($showeditexs['item_bonus'] * 2);
 	$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
-	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Defesa: " . $newefec . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
+	if ($showeditexs['type'] == 'shield') {
+		$attributeLabel = "Defesa";
+	} elseif ($showeditexs['type'] == 'quiver') {
+		$attributeLabel = "Agilidade";
+	}
+	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>" . $attributeLabel . ": " . $newefec . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 	echo '<div title="header=[' . $showitname . "] body=[" . $showitinfo . ']">';
 	echo '<div id="' . $showeditexs['type'] . '" class="drag ' . $showeditexs['id'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
 	echo "</div>";

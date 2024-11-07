@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-$types = ['amulet', 'armor', 'boots', 'helmet', 'legs', 'shield', 'weapon', 'ring'];
+$types = ['amulet', 'armor', 'boots', 'helmet', 'legs', 'shield', 'weapon', 'ring', 'quiver'];
 $attributes = ['for', 'vit', 'agi', 'res'];
 
 // Initialize arrays to store bonuses

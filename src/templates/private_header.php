@@ -179,6 +179,7 @@ if ($tutorial->recordcount() == 0) {
                 rd.mark.exception.weapon = 'weapon';
                 rd.mark.exception.armor = 'armor';
                 rd.mark.exception.shield = 'shield';
+                rd.mark.exception.quiver = 'quiver';
                 rd.mark.exception.ring = 'ring';
                 rd.mark.exception.legs = 'legs';
                 rd.mark.exception.boots = 'boots';

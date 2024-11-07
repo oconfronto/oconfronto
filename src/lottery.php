@@ -225,7 +225,7 @@ if ($setting->$unc3 == "t") {
 		echo "</td>";
 		echo "</tr>";
 		echo "</table>";
-		if ($itchecked['needlvl'] > 1) {
+		if ($itchecked['needlvl'] > 15) {
 			echo "<center><b><font color=\"red\">Você precisa ter nível " . $itchecked['needlvl'] . " ou mais para usar este item.</font></b></center>";
 		}
 
