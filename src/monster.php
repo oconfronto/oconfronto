@@ -376,7 +376,7 @@ switch ($_GET['act']) {
 		$query55 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='boots' and items.status='equipped'", [$player->id]);
 		$player->agibonus6 = ($query55->recordcount() == 1) ? $query55->fetchrow() : 0;
 		$query56 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='quiver' and items.status='equipped'", [$player->id]);
-		$player->agibonus7 = ($query56->recordcount() == 1) ? $query55->fetchrow() : 0;
+		$player->agibonus7 = ($query56->recordcount() == 1) ? $query56->fetchrow() : 0;
 
 		$pbonusfor = 0;
 		$pbonusagi = 0;

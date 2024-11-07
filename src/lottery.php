@@ -38,6 +38,23 @@ if ($setting->$unc3 == "t") {
 
 			$insert['player_id'] = $ipwpwpwpa['player_id'];
 			$insert['item_id'] = $setting->$unc2;
+			if ($setting->$unc2 < 2000000) {
+				    // Get winner's level
+				    $winner_level = $db->execute("SELECT level FROM players WHERE id = ?", [$ipwpwpwpa['player_id']])->fetchrow();
+				    // Get item level requirement
+				    $item_req = $db->execute("SELECT needlvl FROM blueprint_items WHERE id = ?", [$setting->$unc2])->fetchrow();
+				    
+				    // If winner's level is too low, convert prize to gold
+				    if ($winner_level['level'] < $item_req['needlvl']) {
+				        $query = $db->execute("UPDATE players SET bank = bank + 2000000 WHERE id = ?", [$ipwpwpwpa['player_id']]);
+				        $logmsg = "Você ganhou na loteria mas seu nível é muito baixo para o item. 2.000.000 de ouro foram depositados na sua conta bancária.";
+				        $premiorecebido = "2000000 de ouro (conversão de item)";
+				    } else {
+						 $itotuuejdb = $db->execute("select `name` from `blueprint_items` where id=?", [$setting->$unc2]);
+						 $ioeowkewttttee = $itotuuejdb->fetchrow();
+						 // ... existing item distribution code ...
+				    }
+				 }
 			$query = $db->autoexecute('items', $insert, 'INSERT');
 			if ($setting->$unc2 == 172) {
 				$ringid = $db->Insert_ID();
@@ -225,7 +242,7 @@ if ($setting->$unc3 == "t") {
 		echo "</td>";
 		echo "</tr>";
 		echo "</table>";
-		if ($itchecked['needlvl'] > 15) {
+		if ($itchecked['needlvl'] > 45) {
 			echo "<center><b><font color=\"red\">Você precisa ter nível " . $itchecked['needlvl'] . " ou mais para usar este item.</font></b></center>";
 		}
 

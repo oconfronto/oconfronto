@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+// At the top of the file
+$ATTRIBUTE_LABELS = [
+	    'shield' => _('Defense'),
+	    'quiver' => _('Agility')
+	];
+
 echo '<table id="table1" align="center">';
 echo "<tbody><tr>";
 
@@ -300,11 +306,7 @@ if ($showitenx->recordcount() == 0) {
 
 	$newefec = ($showeditexs['effectiveness']) + ($showeditexs['item_bonus'] * 2);
 	$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
-	if ($showeditexs['type'] == 'shield') {
-		$attributeLabel = "Defesa";
-	} elseif ($showeditexs['type'] == 'quiver') {
-		$attributeLabel = "Agilidade";
-	}
+	$attributeLabel = $ATTRIBUTE_LABELS[$showeditexs['type']] ?? $showeditexs['type'];
 	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>" . $attributeLabel . ": " . $newefec . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 	echo '<div title="header=[' . $showitname . "] body=[" . $showitinfo . ']">';
 	echo '<div id="' . $showeditexs['type'] . '" class="drag ' . $showeditexs['id'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
@@ -410,7 +412,8 @@ if ($showitenx->recordcount() == 0) {
 		$showitres2 = "+<font color=red>" . $showeditexs['res'] . " Res</font>";
 	}
 
-	$newefec = ($showeditexs['effectiveness']) + ($showeditexs['item_bonus'] * 2);
+	$bonusMultiplier = $showeditexs['type'] == 'quiver' ? 1.5 : 2;
+	$newefec = ($showeditexs['effectiveness']) + ($showeditexs['item_bonus'] * $bonusMultiplier);
 	$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Defesa: " . $newefec . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 	echo '<div title="header=[' . $showitname . "] body=[" . $showitinfo . ']">';

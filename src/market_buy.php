@@ -213,9 +213,10 @@ switch ($_GET['act']) {
 					echo "Vocações supremas";
 				} else {
 					echo "Todas";
-					if ($market['type'] == ['shield' , 'quiver']) {
-						echo ' <font size="1">(exceto arqueiros)</font>';
-						echo ' <font size="1">(exceto magos e guerreiros)</font>';
+					if ($market['type'] == 'shield') {
+						        echo ' <font size="1">(exceto arqueiros)</font>';
+						    } elseif ($market['type'] == 'quiver') {
+						        echo ' <font size="1">(exceto magos e guerreiros)</font>';
 					}
 				}
 

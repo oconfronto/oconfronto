@@ -50,23 +50,22 @@ switch ($_GET['act']) {
 			break;
 		}
 
-		if ($item['type'] == 'quiver' && $player->voc == 'knight') {
-			include(__DIR__ . "/templates/private_header.php");
-			echo "<b>Ferreiro:</b><br />\n";
-			echo "<i>Desculpe, mas guerreiros não podem usar Aljavas!</i><br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
-			include(__DIR__ . "/templates/private_footer.php");
-			break;
-		}
-
-		if ($item['type'] == 'quiver' && $player->voc == 'mage') {
-			include(__DIR__ . "/templates/private_header.php");
-			echo "<b>Ferreiro:</b><br />\n";
-			echo "<i>Desculpe, mmas magos não podem usar Aljavas</i><br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
-			include(__DIR__ . "/templates/private_footer.php");
-			break;
-		}
+		$itemRestrictions = [ //alteração recomenda pela IA.
+						'shield' => ['archer' => 'arqueiros não podem usar escudos'],
+						'quiver' => [
+							'knight' => 'guerreiros não podem usar Aljavas',
+							'mage' => 'magos não podem usar Aljavas'
+						]
+					];
+					
+					if (isset($itemRestrictions[$item['type']][$player->voc])) {
+						include(__DIR__ . "/templates/private_header.php");
+						echo "<b>Ferreiro:</b><br />\n";
+						echo "<i>Desculpe, mas " . $itemRestrictions[$item['type']][$player->voc] . "!</i><br /><br />\n";
+						echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+						include(__DIR__ . "/templates/private_footer.php");
+						break;
+					}
 
 		if ($item['voc'] == '1' && $player->voc != 'archer') {
 			include(__DIR__ . "/templates/private_header.php");
