@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
-// At the top of the file
+const BONUS_MULTIPLIERS = [
+	'quiver' => 1.5,
+	'default' => 2.0
+];
 $ATTRIBUTE_LABELS = [
 	    'shield' => _('Defense'),
 	    'quiver' => _('Agility')
@@ -412,8 +415,13 @@ if ($showitenx->recordcount() == 0) {
 		$showitres2 = "+<font color=red>" . $showeditexs['res'] . " Res</font>";
 	}
 
-	$bonusMultiplier = $showeditexs['type'] == 'quiver' ? 1.5 : 2;
-	$newefec = ($showeditexs['effectiveness']) + ($showeditexs['item_bonus'] * $bonusMultiplier);
+// At the top of the file with other constants
+	function calculateEffectiveness($type, $effectiveness, $itemBonus) {
+	    $multiplier = BONUS_MULTIPLIERS[$type] ?? BONUS_MULTIPLIERS['default'];
+	    return $effectiveness + ($itemBonus * $multiplier);
+	}
+	
+	$newefec = calculateEffectiveness($showeditexs['type'], $showeditexs['effectiveness'], $showeditexs['item_bonus']);
 	$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Defesa: " . $newefec . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 	echo '<div title="header=[' . $showitname . "] body=[" . $showitinfo . ']">';
