@@ -185,13 +185,6 @@ if ($player->stat_points > 0 && $msgtype == 1) {
 	if ($time > time() && $imperador == 0) {
 		echo "Participe das eleições para novo Imperador. <a href=\"reino.php\">Clique aqui</a>.";
 		$messaged = 1;
-	} elseif ($imperador > 0) {
-		$post = $db->execute("select `id` from `forum_question` where `category`='reino' and `postado`>? and `user_id`=? order by `postado` desc limit 1", [(time() - 172800), $imperador]);
-		if ($post->recordcount() > 0) {
-			$selecter = $post->fetchrow();
-			echo '<a href="view_topic.php?id=' . $selecter['id'] . "\">Clique aqui</a> e leia a última mensagem do imperador.";
-			$messaged = 1;
-		}
 	}
 } elseif ($msgtype == 5 && $gwar->recordcount() > 0 && $messaged === 0) {
 	$war = $gwar->fetchrow();
