@@ -39,6 +39,8 @@ switch ($_GET['act']) {
 		} else {
 			// Handle the case where there is no data for `$enemy1`
 			echo "Enemy data not found.";
+			include_once(__DIR__ . "/templates/private_footer.php");
+			break;
 		}
 
 
