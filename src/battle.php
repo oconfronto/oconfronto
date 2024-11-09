@@ -37,7 +37,7 @@ switch ($_GET['act']) {
 				$enemy->$key = $value;
 			}
 		} else {
-			// Trate o caso em que não há dados para `$enemy1`
+			// Handle the case where there is no data for `$enemy1`
 			echo "Enemy data not found.";
 		}
 
