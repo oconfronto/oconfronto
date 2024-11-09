@@ -149,16 +149,17 @@ switch ($_GET['act']) {
 		}
 
 
+		// Here, the XP gain rate after a kill is adjusted
 		if ($setting->eventoexp > time()) {
-			$expdomonstro = ceil($enemy->mtexp * 4);
+			$expdomonstro = ceil($enemy->mtexp * 8);
 		} elseif ($player->level <= 20) {
-			$expdomonstro = ceil($enemy->mtexp * 4);
+			$expdomonstro = ceil($enemy->mtexp * 5);
 		} elseif ($player->level < 35) {
-			$expdomonstro = ceil($enemy->mtexp * 2.5);
+			$expdomonstro = ceil($enemy->mtexp * 4.5);
 		} elseif ($player->vip > time()) {
-			$expdomonstro = ceil($enemy->mtexp * 2.1);
+			$expdomonstro = ceil($enemy->mtexp * 4.1);
 		} else {
-			$expdomonstro = ceil($enemy->mtexp * 2);
+			$expdomonstro = ceil($enemy->mtexp * 4);
 		}
 
 		$expdomonstro *= $bixo->mul;
@@ -707,7 +708,8 @@ switch ($_GET['act']) {
 					$goldwin = round($goldwin * 4);
 				}
 
-				$goldwin = round($goldwin * 2);
+				// Here, the gold gain rate after a kill is adjusted
+				$goldwin = round($goldwin * 4);
 				$goldwin *= $bixo->mul;
 
 				$expgroup1 = $db->execute("select `id` from `groups` where `player_id`=?", [$player->id]);
