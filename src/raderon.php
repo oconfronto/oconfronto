@@ -58,7 +58,12 @@ if ($player->hp == 0) {
 	exit;
 }
 
+// Check if $enemy is defined and is an object; if not, create a new stdClass instance
+if (!isset($enemy) || !is_object($enemy)) {
+    $enemy = new stdClass();
+}
 
+// Assign properties to the enemy
 $enemy->prepo = "o";
 $enemy->username = "Raderon";
 $enemy->image_path = "raderon.png";
