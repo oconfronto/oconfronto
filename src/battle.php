@@ -29,10 +29,20 @@ switch ($_GET['act']) {
 			break;
 		}
 
-		$enemy1 = $query->fetchrow(); //Get player info
-		foreach ($enemy1 as $key => $value) {
-			$enemy->$key = $value;
+		$enemy1 = $query->fetchrow();
+
+		if ($enemy1) {
+			$enemy = new stdClass();
+			foreach ($enemy1 as $key => $value) {
+				$enemy->$key = $value;
+			}
+		} else {
+			// Handle the case where there is no data for `$enemy1`
+			echo "Enemy data not found.";
+			include_once(__DIR__ . "/templates/private_footer.php");
+			break;
 		}
+
 
 		if ($enemy->serv != $player->serv) {
 			include(__DIR__ . "/templates/private_header.php");
