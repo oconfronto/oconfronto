@@ -138,7 +138,6 @@ $duassemana = ceil(time() - 1209600);
 $db->execute('DELETE FROM `log_gold` WHERE `time` < ' . $duassemana);
 $db->execute('DELETE FROM `log_item` WHERE `time` < ' . $duassemana);
 $db->execute('DELETE FROM `account_log` WHERE `time` < ' . $duassemana);
-$db->execute('DELETE FROM `log_forum` WHERE `time` < ' . $duassemana);
 
 $updategeralwork = $db->execute("SELECT * FROM `work` WHERE `status`='t' AND (`start`+(`worktime`*3600)) < ?", [time()]);
 

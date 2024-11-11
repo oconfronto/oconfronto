@@ -576,65 +576,6 @@ CREATE TABLE IF NOT EXISTS `dungeon_status` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `forum_answer`
---
-
-CREATE TABLE IF NOT EXISTS `forum_answer` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `question_id` int(4) NOT NULL DEFAULT '0',
-  `a_user_id` int(11) NOT NULL DEFAULT '0',
-  `a_answer` longtext NOT NULL,
-  `a_datetime` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `Otimizacao2` (`question_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1270 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `forum_description`
---
-
-CREATE TABLE IF NOT EXISTS `forum_description` (
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `forum_description`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `forum_question`
---
-
-CREATE TABLE IF NOT EXISTS `forum_question` (
-  `id` int(4) NOT NULL AUTO_INCREMENT,
-  `topic` varchar(255) NOT NULL DEFAULT '',
-  `category` enum('noticias','tutorial','sugestoes','duvidas','gangues','outros','trade','reino','fan','off') NOT NULL DEFAULT 'noticias',
-  `detail` longtext CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `postado` int(11) NOT NULL DEFAULT '0',
-  `last_post` int(11) NOT NULL DEFAULT '0',
-  `view` int(4) NOT NULL DEFAULT '0',
-  `reply` int(4) NOT NULL DEFAULT '0',
-  `up` int(11) NOT NULL DEFAULT '0',
-  `down` int(11) NOT NULL DEFAULT '0',
-  `fixo` enum('t','f') NOT NULL DEFAULT 'f',
-  `closed` enum('t','f') NOT NULL DEFAULT 'f',
-  `vota` enum('t','f') NOT NULL DEFAULT 't',
-  `serv` tinyint(2) NOT NULL DEFAULT '0',
-  `reino` tinyint(2) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `Otimizacao6` (`category`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=277 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `for_use`
 --
 
@@ -930,21 +871,6 @@ CREATE TABLE IF NOT EXISTS `log_errors` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-
--- --------------------------------------------------------
-
---
--- Table structure for table `log_forum`
---
-
-CREATE TABLE IF NOT EXISTS `log_forum` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `post` int(11) NOT NULL DEFAULT '0',
-  `msg` text NOT NULL,
-  `type` tinyint(1) NOT NULL DEFAULT '0',
-  `time` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 

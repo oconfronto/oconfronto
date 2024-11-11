@@ -280,10 +280,6 @@ if ($player->gm_rank < 50) {
 	echo '<a href="gm/edit_member.php?id=' . $profile['id'] . '">Editar</a> | <a href="gm/ban_member.php?act=ban&id=' . $profile['id'] . '">Banir</a>';
 }
 
-if ($player->gm_rank > 2 && $profile['username'] != 0 && $profile['username'] > 99) {
-	echo ' | <a href="forum_unban.php?player=' . $profile['id'] . "\">Desbanir do Fórum</a>";
-}
-
 echo "</center>";
 
 

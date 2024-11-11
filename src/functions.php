@@ -272,30 +272,6 @@ function gmlog($msg, &$db): void
     $db->Autoexecute('log_gm', $insert, 'INSERT');
 }
 
-//Insert a log message into the forum log
-function forumlog($msg, &$db, $type = 0, $post = 0): void
-{
-    if ($type == 1 && $post > 0) {
-        $insert['msg'] = $msg;
-        $insert['time'] = time();
-        $insert['type'] = $type;
-        $insert['post'] = $post;
-        $query = $db->Autoexecute('log_forum', $insert, 'INSERT');
-    } elseif ($type == 2 && $post > 0) {
-        $insert['msg'] = $msg;
-        $insert['time'] = time();
-        $insert['type'] = $type;
-        $insert['post'] = $post;
-        $query = $db->Autoexecute('log_forum', $insert, 'INSERT');
-    } else {
-        $insert['msg'] = $msg;
-        $insert['time'] = time();
-        $query = $db->Autoexecute('log_forum', $insert, 'INSERT');
-    }
-}
-
-
-
 //Get all settings variables
 $query = $db->execute("SELECT `name`, `value` FROM `settings`");
 if ($query === false) {
