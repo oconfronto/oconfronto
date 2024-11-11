@@ -709,7 +709,7 @@ switch ($_GET['act']) {
 				}
 
 				// Here, the gold gain rate after a kill is adjusted
-				$goldwin = round($goldwin * 4);
+				$goldwin = round($goldwin * 1.5);
 				$goldwin *= $bixo->mul;
 
 				$expgroup1 = $db->execute("select `id` from `groups` where `player_id`=?", [$player->id]);
