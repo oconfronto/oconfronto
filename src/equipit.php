@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+define('PAGENAME', 'Equipment');
+
 include(__DIR__ . "/lib.php");
 $player = check_user($db);
 
