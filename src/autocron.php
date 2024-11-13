@@ -22,7 +22,7 @@ if ($diff >= 60) {
 	if ($atualizacron) {
 		$timedif = ($diff / 60);
 		$addhp = (70 * $timedif);
-		$addenergy = (20 * $timedif);
+		$addenergy = (5 * $timedif);
 		$addmana = (70 * $timedif);
 		$sql = sprintf('update `players` set hp = IF((hp + %s)>maxhp, maxhp, (hp + %s)), mana = IF((mana + %s)>maxmana, maxmana, (mana + %s)) where hp > 0', $addhp, $addhp, $addmana, $addmana);
 		$sql2 = sprintf('update `players` set energy = IF((energy + %s)>maxenergy, maxenergy, (energy + %s))', $addenergy, $addenergy);
