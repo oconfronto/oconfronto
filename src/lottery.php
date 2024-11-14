@@ -103,7 +103,7 @@ if ($setting->$unc3 == "t") {
 	if ($_POST['buy']) {
 		$error = 0;
 
-		if ($player->level < 25) { //Added level required to purchase lottery tickets. 
+		if ($player->level < 25) { //Added level required to purchase lottery tickets.
 			include_once(__DIR__ . "/templates/private_header.php");
 			echo "Você precisa ter nível 25 ou superior para comprar tickets e jogar na loteria! <a href=\"lottery.php\">Voltar</a>.";
 			include_once(__DIR__ . "/templates/private_footer.php");
