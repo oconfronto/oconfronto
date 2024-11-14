@@ -38,6 +38,22 @@ if ($setting->$unc3 == "t") {
 
 			$insert['player_id'] = $ipwpwpwpa['player_id'];
 			$insert['item_id'] = $setting->$unc2;
+			if ($setting->$unc2 < 50000) {
+				    // Get winner's level
+				    $winner_level = $db->execute("SELECT level FROM players WHERE id = ?", [$ipwpwpwpa['player_id']])->fetchrow();
+				    // Get item level requirement
+				    $item_req = $db->execute("SELECT needlvl FROM blueprint_items WHERE id = ?", [$setting->$unc2])->fetchrow();
+				    
+				    // If winner's level is too low, convert prize to gold
+				    if ($winner_level['level'] < $item_req['needlvl']) {
+				        $query = $db->execute("UPDATE players SET bank = bank + 50000 WHERE id = ?", [$ipwpwpwpa['player_id']]);
+				        $logmsg = "Você ganhou na loteria mas seu nível é muito baixo para receber o premio. 50.000 de ouro foram depositados na sua conta bancária.";
+				        $premiorecebido = "50000 de ouro";
+				    } else {
+						 $itotuuejdb = $db->execute("select `name` from `blueprint_items` where id=?", [$setting->$unc2]);
+						 $ioeowkewttttee = $itotuuejdb->fetchrow();
+				    }
+				 }
 			$query = $db->autoexecute('items', $insert, 'INSERT');
 			if ($setting->$unc2 == 172) {
 				$ringid = $db->Insert_ID();
@@ -79,6 +95,14 @@ if ($setting->$unc3 == "t") {
 	if ($_POST['buy']) {
 		$error = 0;
 
+		if ($player->level < 25) { //Added level required to purchase lottery tickets. 
+			include(__DIR__ . "/templates/private_header.php");
+			echo "Você precisa ter nível 25 ou superior para comprar tickets e jogar na loteria! <a href=\"lottery.php\">Voltar</a>.";
+			include(__DIR__ . "/templates/private_footer.php");
+			$error = 1;
+			exit;
+		}
+
 		if (!is_numeric($_POST['amount'])) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "O valor " . $_POST['for'] . " não é válido! <a href=\"lottery.php\">Voltar</a>.";
@@ -95,7 +119,7 @@ if ($setting->$unc3 == "t") {
 			exit;
 		}
 
-		if ($_POST['amount'] > 999) {
+		if ($_POST['amount'] > 999) { //Added maximum purchase limit instead of 99 tickets at a time, to 999 tickets at a time.
 			include(__DIR__ . "/templates/private_header.php");
 			echo "Você pode comprar até 999 tickes por vez! <a href=\"lottery.php\">Voltar</a>.";
 			include(__DIR__ . "/templates/private_footer.php");
@@ -225,7 +249,7 @@ if ($setting->$unc3 == "t") {
 		echo "</td>";
 		echo "</tr>";
 		echo "</table>";
-		if ($itchecked['needlvl'] > 1) {
+		if ($itchecked['needlvl'] > 45) {
 			echo "<center><b><font color=\"red\">Você precisa ter nível " . $itchecked['needlvl'] . " ou mais para usar este item.</font></b></center>";
 		}
 
@@ -239,7 +263,7 @@ if ($setting->$unc3 == "t") {
 	echo "<br/><br/>";
 	echo "<fieldset><legend><b>Comprar Tickets</b></legend>\n";
 	echo '<form method="POST" action="lottery.php">';
-	echo '<b>Quantia:</b> <input type="text" name="amount" value="1" size="10" maxlength="2"/><input type="submit" name="buy" value="Comprar">';
+	echo '<b>Quantia:</b> <input type="text" name="amount" value="1" size="10" maxlength="3"/><input type="submit" name="buy" value="Comprar">';
 	echo "</form>";
 	echo "</fieldset>";
 
