@@ -8,6 +8,7 @@ $player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
+define('PRIZE_CONVERSION_GOLD', 50000); // Define a constant for prize conversion to gold if player's level is too low
 
 $unc1 = "last_winner_" . $player->serv . "";
 $unc2 = "win_id_" . $player->serv . "";
@@ -28,32 +29,39 @@ if ($setting->$unc3 == "t") {
 		$ipwpwpwpa = $wpaodsla->fetchrow();
 
 		if ($setting->$unc2 > 1000) {
+			// Deposit prize directly in the bank if prize is more than 1000 gold
 			$query = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", [$setting->$unc2, $ipwpwpwpa['player_id']]);
+			
+			// Log message to inform the player of their lottery winnings
 			$logmsg = "Você ganhou na loteria e <b>" . $setting->$unc2 . " de ouro</b> foram depositados na sua conta bancária.";
 			addlog($ipwpwpwpa['player_id'], $logmsg, $db);
+			
+			// Set the prize description for display
 			$premiorecebido = "" . $setting->$unc2 . " de ouro";
 		} else {
-			$itotuuejdb = $db->execute("select `name` from `blueprint_items` where id=?", [$setting->$unc2]);
-			$ioeowkewttttee = $itotuuejdb->fetchrow();
-
+			// Fetch player level and item level requirement in advance to optimize database queries
+			$winner_data = $db->execute("SELECT level FROM players WHERE id = ?", [$ipwpwpwpa['player_id']])->fetchrow();
+			$item_data = $db->execute("SELECT needlvl, name FROM blueprint_items WHERE id = ?", [$setting->$unc2])->fetchrow();
+		
+			// Store player ID and item ID in the insert array for potential prize assignment
 			$insert['player_id'] = $ipwpwpwpa['player_id'];
 			$insert['item_id'] = $setting->$unc2;
-			if ($setting->$unc2 < 50000) {
-				    // Get winner's level
-				    $winner_level = $db->execute("SELECT level FROM players WHERE id = ?", [$ipwpwpwpa['player_id']])->fetchrow();
-				    // Get item level requirement
-				    $item_req = $db->execute("SELECT needlvl FROM blueprint_items WHERE id = ?", [$setting->$unc2])->fetchrow();
-				    
-				    // If winner's level is too low, convert prize to gold
-				    if ($winner_level['level'] < $item_req['needlvl']) {
-				        $query = $db->execute("UPDATE players SET bank = bank + 50000 WHERE id = ?", [$ipwpwpwpa['player_id']]);
-				        $logmsg = "Você ganhou na loteria mas seu nível é muito baixo para receber o premio. 50.000 de ouro foram depositados na sua conta bancária.";
-				        $premiorecebido = "50000 de ouro";
-				    } else {
-						 $itotuuejdb = $db->execute("select `name` from `blueprint_items` where id=?", [$setting->$unc2]);
-						 $ioeowkewttttee = $itotuuejdb->fetchrow();
-				    }
-				 }
+		
+			// Check if prize is less than the gold conversion limit
+			if ($setting->$unc2 < PRIZE_CONVERSION_GOLD) {
+				// Check if the player's level is lower than the item level requirement
+				if ($winner_data['level'] < $item_data['needlvl']) {
+					// If player's level is too low, convert prize to gold and deposit in bank
+					$query = $db->execute("UPDATE players SET bank = bank + ? WHERE id = ?", [PRIZE_CONVERSION_GOLD, $ipwpwpwpa['player_id']]);
+					
+					// Log message indicating that the prize was converted to gold due to insufficient player level
+					$logmsg = "Você ganhou na loteria mas seu nível é muito baixo para receber o premio. 50.000 de ouro foram depositados na sua conta bancária.";
+					$premiorecebido = "50000 de ouro";
+				} else {
+					// If player's level meets item requirements, assign item name for display
+					$ioeowkewttttee['name'] = $item_data['name'];
+				}
+			}
 			$query = $db->autoexecute('items', $insert, 'INSERT');
 			if ($setting->$unc2 == 172) {
 				$ringid = $db->Insert_ID();
