@@ -279,7 +279,7 @@ if ($setting->$unc3 == "t") {
 	echo "<br/><br/>";
 	echo "<fieldset><legend><b>Comprar Tickets</b></legend>\n";
 	echo '<form method="POST" action="lottery.php">';
-	echo '<b>Quantia:</b> <input type="text" name="amount" value="1" size="10" maxlength="3"/><input type="submit" name="buy" value="Comprar">';
+	echo '<b>Quantia:</b> <input type="number" name="amount" value="1" size="10" maxlength="3" min="1" max="999" /><input type="submit" name="buy" value="Comprar">';
 	echo "</form>";
 	echo "</fieldset>";
 
