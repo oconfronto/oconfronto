@@ -47,12 +47,12 @@ if ($setting->$unc3 == "t") {
 			$insert['player_id'] = $ipwpwpwpa['player_id'];
 			$insert['item_id'] = $setting->$unc2;
 		
-			// Always perform level check for items
-			if ($setting->$unc2 != 172) { // Special case for ring preserved
+			// Check if prize is less than the gold conversion limit
+			if ($setting->$unc2 < PRIZE_CONVERSION_GOLD) {
 				// Check if the player's level is lower than the item level requirement
 				if ($winner_data['level'] < $item_data['needlvl']) {
 					// If player's level is too low, convert prize to gold and deposit in bank
-					$query = $db->execute("UPDATE players SET bank = bank + ? WHERE id = ?", [$conversion_amount, $ipwpwpwpa['player_id']]);
+					$query = $db->execute("UPDATE players SET bank = bank + ? WHERE id = ?", [PRIZE_CONVERSION_GOLD, $ipwpwpwpa['player_id']]);
 					
 					// Log message indicating that the prize was converted to gold due to insufficient player level
 					$logmsg = "Você ganhou na loteria mas seu nível é muito baixo para receber o premio. 50.000 de ouro foram depositados na sua conta bancária.";
