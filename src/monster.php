@@ -769,7 +769,7 @@ switch ($_GET['act']) {
 							$db->execute("update `players` set `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=?, `maxhp`=?, `exp`=?, `magic_points`=`magic_points`+1, `groupmonsterkilled`=`groupmonsterkilled`+? where `id`=?", [maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), $newexp, $bixo->mul, $pinfo['id']]);
 
 							if ($pinfo['id'] != $player->id) {
-								$logwinlvlmsg = "Você avanãou um nível enquanto <a href=\"profile.php?id=" . $player->username . '">' . $player->username . "</a> matava monstros.";
+								$logwinlvlmsg = "Você avançou um nível enquanto <a href=\"profile.php?id=" . $player->username . '">' . $player->username . "</a> matava monstros.";
 								addlog($pinfo['id'], $logwinlvlmsg, $db);
 							}
 
