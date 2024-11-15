@@ -854,11 +854,11 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         } elseif ($log[0] == 3) {
             if ($lado == 1) {
                 echo '<font color="blue">';
-                echo "Você lanãou o feitiço " . $log[2] . ".";
+                echo "Você lançou o feitiço " . $log[2] . ".";
                 echo "</font>";
             } else {
                 echo '<font color="purple">';
-                echo "" . $log[1] . " lanãou o feitiço " . $log[2] . ".";
+                echo "" . $log[1] . " lançou o feitiço " . $log[2] . ".";
                 echo "</font>";
             }
         } elseif ($log[0] == 6) {
