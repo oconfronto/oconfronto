@@ -13,12 +13,12 @@ include(__DIR__ . "/checktax.php");
 include(__DIR__ . "/templates/private_header.php");
 
 if ($player->stat_points > 0 && $player->level < 40) {
-	echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">Antes de batalhar, utilize seus <b>' . $player->stat_points . "</b> pontos de status disponíveis, assim você pode ficar mais forte! <a href=\"stat_points.php\">Clique aqui para utiliza-los!</a></div>";
+	echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">Antes de batalhar, utilize seus <b>' . $player->stat_points . "</b> pontos de status disponíveis, assim você pode ficar mais forte! <a href=\"stat_points.php\">Clique aqui para utilizá-los!</a></div>";
 }
 
 $query = $db->execute("select * from `items` where `player_id`=? and `status`='equipped'", [$player->id]);
 if ($query->recordcount() < 2 && $player->level > 4 && $player->level < 25) {
-	echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Já está na hora de você comprar seus própios itens. <a href=\"shop.php\">Clique aqui e visite o ferreiro</a>.</div>";
+	echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Já está na hora de você comprar seus próprios itens. <a href=\"shop.php\">Clique aqui e visite o ferreiro</a>.</div>";
 }
 
 

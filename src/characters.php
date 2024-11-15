@@ -100,9 +100,9 @@ if ($query04876->recordcount() > 0) {
     if ($change['pending_time'] < time()) {
         $trocaemail = $db->execute("update `accounts` set `email`=? where `id`=?", [$change['pending_status'], $acc->id]);
         $query = $db->execute("delete from `pending` where `pending_id`=1 and `player_id`=?", [$acc->id]);
-        echo '<span id="aviso-v">Seu email foi alterado para: <b>' . $change['pending_status'] . "</b>.</span>";
+        echo '<span id="aviso-v">Seu e-mail foi alterado para: <b>' . $change['pending_status'] . "</b>.</span>";
         $insert['player_id'] = $acc->id;
-        $insert['msg'] = "Seu email foi alterado para: <b>" . $change['pending_status'] . "</b>.";
+        $insert['msg'] = "Seu e-mail foi alterado para: <b>" . $change['pending_status'] . "</b>.";
         $insert['time'] = time();
         $query = $db->autoexecute('account_log', $insert, 'INSERT');
         $aviso = 1;
@@ -122,7 +122,7 @@ if ($query04876->recordcount() > 0) {
             $auxiliar2 = "dia(s)";
         }
 
-        echo "<span id=\"aviso-a\"><font size=\"1px\">Foi solicitada a mudança de seu email para: <b>" . $change['pending_status'] . "</b><br/>Seu email será alterado em " . $valortempo2 . " " . $auxiliar2 . ".<br/>Se não quiser mais mudar de email <a href=\"changemail.php?act=cancel\">clique aqui</a>.</font></span>";
+        echo "<span id=\"aviso-a\"><font size=\"1px\">Foi solicitada a mudança de seu e-mail para: <b>" . $change['pending_status'] . "</b><br/>Seu e-mail será alterado em " . $valortempo2 . " " . $auxiliar2 . ".<br/>Se não quiser mais mudar de e-mail <a href=\"changemail.php?act=cancel\">clique aqui</a>.</font></span>";
         $aviso = 1;
     }
 }
@@ -137,7 +137,7 @@ if ($acc->ref != "t" && $queryactivate->recordcount() > 0) {
         $query6 = $db->execute("update `promo` set `refs`=`refs`+1 where `player_id`=?", [$acc->ref]);
     }
 
-    //INSERINDO ITENS OU GOLD COM BASE QUE O EVENTO ESTEJA OU NÃO ATIVADO, CONFORME A LISTA PRÃ-DEFINIDA BANCO DE DADOS.
+    //INSERINDO ITENS OU GOLD COM BASE QUE O EVENTO ESTEJA OU NÃO ATIVADO, CONFORME A LISTA PRÉ-DEFINIDA BANCO DE DADOS.
     //PESQUISANDO SE PLAYER FOI REALMENTE CONVIDADO
     if ($queryactivate1 = $db->execute("select * from `players_ref` where `id_p_c`=? ", [$acc->id])) {;
 

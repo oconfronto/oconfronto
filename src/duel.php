@@ -104,7 +104,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
                 header("Content-Type: text/html; charset=utf-8", true);
             }
 
-            echo "Voc&ecirc; está morto! <a href=\"duel.php\"/>Voltar</a>.";
+            echo "Você está morto! <a href=\"duel.php\"/>Voltar</a>.";
             if (!$_GET['nolayout']) {
                 include(__DIR__ . "/templates/private_footer.php");
             }
@@ -119,7 +119,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
                 header("Content-Type: text/html; charset=utf-8", true);
             }
 
-            echo "Voc&ecirc; não tem energia suficiente! <a href=\"duel.php\"/>Voltar</a>.";
+            echo "Você não tem energia suficiente! <a href=\"duel.php\"/>Voltar</a>.";
             if (!$_GET['nolayout']) {
                 include(__DIR__ . "/templates/private_footer.php");
             }
@@ -181,7 +181,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
                 header("Content-Type: text/html; charset=utf-8", true);
             }
 
-            echo "Voc&ecirc; não encontrou o usuário " . $enemy->username . "! Ele deve estar trabalhando ou caçando. <a href=\"duel.php\">Voltar</a>.";
+            echo "Você não encontrou o usuário " . $enemy->username . "! Ele deve estar trabalhando ou caçando. <a href=\"duel.php\">Voltar</a>.";
             if (!$_GET['nolayout']) {
                 include(__DIR__ . "/templates/private_footer.php");
             }
@@ -628,7 +628,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
 
     if ($fugiu == 5) {
         $db->execute("update `duels` set `p_type`='99', `e_type`='99', `status`='z', `extra`=? where `id`=?", [$player->id, $luta['id']]);
-        $output .= showAlert("<b>Voc&ecirc; fugiu da luta com sucesso!</b>", "green");
+        $output .= showAlert("<b>Você fugiu da luta com sucesso!</b>", "green");
         array_unshift($duellog, "13, " . $player->username . ", " . $enemy->username . "");
     }
 
@@ -637,7 +637,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         $exploss2 = (($player->level - $enemy->level) > 0) ? ($enemy->level - $player->level) * 4 : 0;
         $exploss = $exploss1 + $exploss2;
 
-        $output .= showAlert("<b>Voc&ecirc; morreu!</b><br/>Voc&ecirc; perdeu " . $exploss . " pontos de experi&ecirc;ncia.", "red");
+        $output .= showAlert("<b>Você morreu!</b><br/>Você perdeu " . $exploss . " pontos de experiência.", "red");
         $db->execute("update `players` set `energy`=`energy`-?, `exp`=`exp`-?, `deaths`=`deaths`+1, `hp`=0, `mana`=0, `deadtime`=? where `id`=?", [10, $exploss, time() + $setting->dead_time, $player->id]);
         if ($player->id == $luta['p_id']) {
             $db->execute("update `duels` set `p_type`='99', `status`='z' where `id`=?", [$luta['id']]);
@@ -653,12 +653,12 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         $expwin3 = round(0.9 * $expwin2);
         $expwin = ceil(random_int(intval($expwin3), intval($expwin2)));
 
-        $output .= showAlert("<b>Voc&ecirc; matou " . $enemy->username . "!</b><br/>Voc&ecirc; ganhou " . $expwin . " pontos de experi&ecirc;ncia.", "green");
+        $output .= showAlert("<b>Você matou " . $enemy->username . "!</b><br/>Você ganhou " . $expwin . " pontos de experiência.", "green");
 
         if ($expwin + $player->exp >= maxExp($player->level)) //Player gained a level!
         {
             //Update player, gained a level
-            $depoput .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><u><b>Voc&ecirc; passou de nível!</b></u></div>";
+            $depoput .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><u><b>Você passou de nível!</b></u></div>";
             $newexp = $expwin + $player->exp - maxExp($player->level);
 
             $db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [maxMana($player->level, $player->extramana), maxMana($player->level, $player->extramana), $player->id]);
@@ -685,11 +685,11 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
 
     if ($luta['status'] == 'z' && $_SESSION['statusduellog'] == null) {
         if ($luta['venceu'] == $player->id) {
-            $output .= showAlert("<b>Voc&ecirc; venceu o duelo contra " . $enemy->username . "</b>", "green");
+            $output .= showAlert("<b>Você venceu o duelo contra " . $enemy->username . "</b>", "green");
         } elseif ($luta['venceu'] == $enemy->id) {
-            $output .= showAlert("<b>Voc&ecirc; foi derrotado no duelo contra " . $enemy->username . "</b>", "red");
+            $output .= showAlert("<b>Você foi derrotado no duelo contra " . $enemy->username . "</b>", "red");
         } elseif ($luta['extra'] == $player->id) {
-            $output .= showAlert("<b>Voc&ecirc; fugiu da luta com sucesso!</b>", "green");
+            $output .= showAlert("<b>Você fugiu da luta com sucesso!</b>", "green");
         } elseif ($luta['extra'] == $enemy->id) {
             $output .= showAlert("<b>" . $enemy->username . " fugiu durante a luta.</b>", "red");
         }
@@ -720,7 +720,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         echo '<table width="100%" align="center"><tr>';
         echo '<th width="50px"><center><img src="static/' . $player->avatar . '" width="42px" height="42px" alt="' . $player->username . '" border="1px"></center></th>';
         echo "<td>";
-        echo "<b>" . showName($player->id, $db, 'on', 'off') . '</b> <font size="1px">n&ecirc;vel ' . $player->level . "</font><br/>";
+        echo "<b>" . showName($player->id, $db, 'on', 'off') . '</b> <font size="1px">nível ' . $player->level . "</font><br/>";
 
         echo show_prog_bar(155, ceil(($player->hp / $player->maxhp) * 100), strval($player->hp), 'red', '#FFF');
         echo "<br />";
@@ -775,7 +775,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         echo "<td>";
 
         echo '<div style="float: right; text-align: right;">';
-        echo "<b>" . showName($enemy->id, $db, 'on', 'off') . '</b> <font size="1px">n&ecirc;vel ' . $enemy->level . "</font><br/>";
+        echo "<b>" . showName($enemy->id, $db, 'on', 'off') . '</b> <font size="1px">nível ' . $enemy->level . "</font><br/>";
         echo show_prog_bar(155, ceil(($enemy->hp / $enemy->maxhp) * 100), strval($enemy->hp), 'red', '#FFF');
         echo "<br />";
         echo show_prog_bar(155, ceil(($enemy->mana / $enemy->maxmana) * 100), strval($enemy->mana), 'blue', '#FFF');
@@ -834,27 +834,27 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         if ($log[0] == 1) {
             if ($lado == 1) {
                 echo '<font color="green">';
-                echo "Voc&ecirc; atacou " . $log[2] . " e tirou " . $log[3] . " de vida.";
+                echo "Você atacou " . $log[2] . " e tirou " . $log[3] . " de vida.";
                 echo "</font>";
             } else {
                 echo '<font color="red">';
-                echo "" . $log[1] . " te atacou e voc&ecirc; perdeu " . $log[3] . " de vida.";
+                echo "" . $log[1] . " te atacou e você perdeu " . $log[3] . " de vida.";
                 echo "</font>";
             }
         } elseif ($log[0] == 2) {
             if ($lado == 1) {
                 echo '<font color="blue">';
-                echo "Voc&ecirc; deu um " . $log[4] . " em " . $log[2] . " e tirou " . $log[3] . " de vida.";
+                echo "Você deu um " . $log[4] . " em " . $log[2] . " e tirou " . $log[3] . " de vida.";
                 echo "</font>";
             } else {
                 echo '<font color="purple">';
-                echo "" . $log[1] . " te deu um " . $log[4] . " e voc&ecirc; perdeu " . $log[3] . " de vida.";
+                echo "" . $log[1] . " te deu um " . $log[4] . " e você perdeu " . $log[3] . " de vida.";
                 echo "</font>";
             }
         } elseif ($log[0] == 3) {
             if ($lado == 1) {
                 echo '<font color="blue">';
-                echo "Voc&ecirc; lanãou o feitiço " . $log[2] . ".";
+                echo "Você lanãou o feitiço " . $log[2] . ".";
                 echo "</font>";
             } else {
                 echo '<font color="purple">';
@@ -864,23 +864,23 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         } elseif ($log[0] == 6) {
             if ($lado == 1) {
                 echo '<font color="black">';
-                echo "Voc&ecirc; tentou lançar um feitiço mas está sem mana sufuciente.";
+                echo "Você tentou lançar um feitiço mas está sem mana suficiente.";
                 echo "</font>";
             } else {
                 echo '<font color="black">';
-                echo "" . $log[1] . " tentou te lançar um feitiço mas está sem mana sufuciente.";
+                echo "" . $log[1] . " tentou te lançar um feitiço mas está sem mana suficiente.";
                 echo "</font>";
             }
         } elseif ($log[0] == 7) {
             if ($lado == 1) {
                 echo '<font color="black">';
-                echo "Voc&ecirc; não pode ativar um feitiço passivo enquanto outro está ativo.";
+                echo "Você não pode ativar um feitiço passivo enquanto outro está ativo.";
                 echo "</font>";
             }
         } elseif ($log[0] == 8) {
             if ($lado == 1) {
                 echo '<font color="black">';
-                echo "Voc&ecirc; tentou lançar um feitiço em  " . $log[2] . " mas errou!";
+                echo "Você tentou lançar um feitiço em  " . $log[2] . " mas errou!";
                 echo "</font>";
             } else {
                 echo '<font color="black">';
@@ -890,7 +890,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         } elseif ($log[0] == 10) {
             if ($lado == 1) {
                 echo '<font color="purple">';
-                echo "Voc&ecirc; tentou atacar " . $log[2] . " mas seu ataque voltou e voc&ecirc; perdeu " . $log[3] . " de vida.";
+                echo "Você tentou atacar " . $log[2] . " mas seu ataque voltou e você perdeu " . $log[3] . " de vida.";
                 echo "</font>";
             } else {
                 echo '<font color="blue">';
@@ -900,7 +900,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         } elseif ($log[0] == 11) {
             if ($lado == 1) {
                 echo '<font color="black">';
-                echo "Voc&ecirc; tentou fugir mas falhou.";
+                echo "Você tentou fugir mas falhou.";
                 echo "</font>";
             } else {
                 echo '<font color="black">';
@@ -910,7 +910,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         } elseif ($log[0] == 12) {
             if ($lado == 1) {
                 echo '<font color="black">';
-                echo "Voc&ecirc; fugiu da luta com sucesso!";
+                echo "Você fugiu da luta com sucesso!";
                 echo "</font>";
             } else {
                 echo '<font color="black">';
@@ -920,17 +920,17 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         } elseif ($log[0] == 13) {
             if ($lado == 1) {
                 echo '<font color="black">';
-                echo "Voc&ecirc; demorou demais para reagir e " . $log[2] . " te massacrou!";
+                echo "Você demorou demais para reagir e " . $log[2] . " te massacrou!";
                 echo "</font>";
             } else {
                 echo '<font color="black">';
-                echo "" . $log[1] . " demorou demais para reagir e voc&ecirc; venceu!";
+                echo "" . $log[1] . " demorou demais para reagir e você venceu!";
                 echo "</font>";
             }
         } elseif ($log[0] == 14) {
             if ($lado == 1) {
                 echo '<font color="black">';
-                echo "Voc&ecirc; demorou demais para responder e perdeu a vez!";
+                echo "Você demorou demais para responder e perdeu a vez!";
                 echo "</font>";
             } else {
                 echo '<font color="black">';
@@ -939,7 +939,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
             }
         } elseif ($lado == 1) {
             echo '<font color="black">';
-            echo "Voc&ecirc; tentou atacar " . $log[2] . " mas errou!";
+            echo "Você tentou atacar " . $log[2] . " mas errou!";
             echo "</font>";
         } else {
             echo '<font color="black">';
@@ -1036,7 +1036,7 @@ if ($_POST['desafiar']) {
     } elseif ($checkEnemy->recordcount() == 0) {
         echo showAlert("O jogador " . $_POST['username'] . " não existe.", "red");
     } elseif ($player->id == $getEnemyId) {
-        echo showAlert("Voc&ecirc; não pode desafiar voc&ecirc; mesmo.", "red");
+        echo showAlert("Você não pode desafiar você mesmo.", "red");
     } else {
         $checkDuel = $db->execute("select `id` from `duels` where `status`='w' and ((`p_id`=? and `e_id`=?) or (`p_id`=? and `e_id`=?))", [$player->id, $getEnemyId, $getEnemyId, $player->id]);
         if ($checkDuel->recordcount() == 0) {
@@ -1055,7 +1055,7 @@ if ($_POST['desafiar']) {
 }
 
 if ($_GET['error'] == 'noresponse') {
-    echo showAlert("Seu oponente não aceitou o desafio no per&ecirc;odo determinado.", "red");
+    echo showAlert("Seu oponente não aceitou o desafio no período determinado.", "red");
 }
 
 echo "<center><i>Duelos são a melhor maneira de se provar quem é o melhor guerreiro,<br/>eles podem lhe ajudar a ganhar grandes quantias de experiência, mas você não conseguirá ganhar ouro por aqui.</i></center><br/>";

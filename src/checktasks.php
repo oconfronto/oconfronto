@@ -61,8 +61,8 @@ if ($gettasks->recordcount() > 0) {
 			if ($task['win_type'] == 'gold') {
 				$db->execute("update `players` set `gold`=`gold`+? where `id`=?", [$task['win_value'], $player->id]);
 				include(__DIR__ . "/templates/private_header.php");
-				echo "Parabéns, voc&ecirc; completou a tarefa: <i>" . $tarefaconcluida . "</i><br/>";
-				echo "Voc&ecirc; ganhou " . $task['win_value'] . ' moedas de ouro por este motivo.<br/><a href="home.php">Voltar</a>.';
+				echo "Parabéns, você completou a tarefa: <i>" . $tarefaconcluida . "</i><br/>";
+				echo "Você ganhou " . $task['win_value'] . ' moedas de ouro por este motivo.<br/><a href="home.php">Voltar</a>.';
 				include(__DIR__ . "/templates/private_footer.php");
 				exit;
 			}
@@ -86,8 +86,8 @@ if ($gettasks->recordcount() > 0) {
 				$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [maxMana($player->level, $player->extramana), maxMana($player->level, $player->extramana), $player->id]);
 				$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", [maxEnergy($player->level, $player->vip), $player->id]);
 				include(__DIR__ . "/templates/private_header.php");
-				echo "Parabéns, voc&ecirc; completou a tarefa: <i>" . $tarefaconcluida . "</i><br/>";
-				echo "Voc&ecirc; ganhou " . $task['win_value'] . ' pontos de experi&ecirc;ncia por este motivo.<br/><a href="home.php">Voltar</a>.';
+				echo "Parabéns, você completou a tarefa: <i>" . $tarefaconcluida . "</i><br/>";
+				echo "Você ganhou " . $task['win_value'] . ' pontos de experiência por este motivo.<br/><a href="home.php">Voltar</a>.';
 				include(__DIR__ . "/templates/private_footer.php");
 				exit;
 			}
@@ -98,8 +98,8 @@ if ($gettasks->recordcount() > 0) {
 				$query = $db->autoexecute('items', $insert, 'INSERT');
 				$itname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$task['win_value']]);
 				include(__DIR__ . "/templates/private_header.php");
-				echo "Parabéns, voc&ecirc; completou a tarefa: <i>" . $tarefaconcluida . "</i><br/>";
-				echo "Voc&ecirc; ganhou um(a) " . $itname . ' por este motivo.<br/><a href="home.php">Voltar</a>.';
+				echo "Parabéns, você completou a tarefa: <i>" . $tarefaconcluida . "</i><br/>";
+				echo "Você ganhou um(a) " . $itname . ' por este motivo.<br/><a href="home.php">Voltar</a>.';
 				include(__DIR__ . "/templates/private_footer.php");
 				exit;
 			}

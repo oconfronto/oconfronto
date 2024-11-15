@@ -15,7 +15,7 @@ $cost = ceil($calculo);
 if ($player->level < 145) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Treinador</b></legend>\n";
-	echo "<i>Seu nivel é muito baixo!</i><br/>\n";
+	echo "<i>Seu nível é muito baixo!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");
@@ -27,7 +27,7 @@ if ($player->level > 155) {
 	$query = $db->execute("delete from `quests` where `player_id`=? and `quest_id`=9", [$player->id]);
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Treinador</b></legend>\n";
-	echo "<i>Seu nivel é muito alto!</i><br/>\n";
+	echo "<i>Seu nível é muito alto!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");

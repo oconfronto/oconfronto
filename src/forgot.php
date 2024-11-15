@@ -24,7 +24,7 @@ if (isset($_POST['forgot'])) {
         $showerror2 = 1;
         $error = 1;
     } elseif (!$_POST['emailf']) {
-        $errormsg = "O campo email é obrigatório.";
+        $errormsg = "O campo e-mail é obrigatório.";
         $showerror2 = 2;
         $error = 1;
     } elseif ($verForgot->recordcount() != 1) {
@@ -57,7 +57,7 @@ if (isset($_POST['forgot'])) {
             exit;
         }
 
-        echo "Erro ao enviar o email.";
+        echo "Erro ao enviar o e-mail.";
     }
 }
 

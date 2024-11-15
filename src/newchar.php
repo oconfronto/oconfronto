@@ -11,7 +11,7 @@ $querynumplayers = $db->execute("select `id` from `players` where `acc_id`=?", [
 
 if ($querynumplayers->recordcount() >= 12) {
 	echo '<span id="aviso-a"></span>';
-	echo "<br/><p><center>Voc&ecirc; já atingiu o número máximo de personagens por conta.<br/>Voc&ecirc; não pode mais criar usuários nesta conta. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
+	echo "<br/><p><center>Você já atingiu o número máximo de personagens por conta.<br/>Você não pode mais criar usuários nesta conta. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
 	include(__DIR__ . "/templates/acc-footer.php");
 	exit;
 }
@@ -35,7 +35,7 @@ if ($_POST['register']) {
 	$query = $db->execute("select `id` from `players` where `username`=?", [$nomedeusuari0]);
 	//Check username
 	if (!$_POST['username']) { //If username isn't filled in...
-		$msg1 .= "Voc&ecirc; precisa digitar um nome de usuário!<br />\n"; //Add to error message
+		$msg1 .= "Você precisa digitar um nome de usuário!<br />\n"; //Add to error message
 		$error = 1; //Set error check
 		$erro1 = 1;
 	} elseif (strlen($nomedeusuari0) < 3) { //If username is too short...
@@ -64,13 +64,13 @@ if ($_POST['register']) {
 	}
 
 	if ($_POST['voc'] == 'none') {
-		$msg2 .= "Voc&ecirc; precisa escolher uma vocação!";
+		$msg2 .= "Você precisa escolher uma vocação!";
 		$error = 1;
 		$erro2 = 1;
 	}
 
 	if ($_POST['voc'] != 'archer' && $_POST['voc'] != 'knight' && $_POST['voc'] != 'mage' && $_POST['voc'] != 'none') {
-		$msg2 .= "Voc&ecirc; precisa escolher uma vocação!";
+		$msg2 .= "Você precisa escolher uma vocação!";
 		$error = 1; //Set error check
 		$erro2 = 1;
 	}

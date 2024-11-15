@@ -10,7 +10,7 @@ include(__DIR__ . "/templates/private_header.php");
 echo "<fieldset>";
 echo "<legend><b>Está precisando de ouro?</b></legend>";
 echo "Que tal ganhar <b>" . $setting->earn . " moedas de ouro</b> por cada amigo que você convidar para o jogo?<br/><br/>";
-echo "Ã simples, basta o seu amigo se registrar no jogo através do seu <b>Link de Referência</b>, e assim que ele atingir o nível " . $setting->activate_level . ", " . $setting->earn . " moedas de ouro serão adicionados na sua conta.";
+echo "É simples, basta o seu amigo se registrar no jogo através do seu <b>Link de Referência</b>, e assim que ele atingir o nível " . $setting->activate_level . ", " . $setting->earn . " moedas de ouro serão adicionados na sua conta.";
 echo "<br/><br/>";
 
 
@@ -104,7 +104,7 @@ if ($setting->event_convidados = true) {
 		}
 	}
 
-	echo "Obs: O prazo para recebimento do item esta vigente apenas no prazo de validade do evento, sendo assim após o termino do evento se seu amigo convidado não atingiu o nível requerido você estará sujeito a receber um item diferente dos presentes nesta lista.";
+	echo "Obs: O prazo para recebimento do item está vigente apenas no prazo de validade do evento, sendo assim após o termino do evento se seu amigo convidado não atingiu o nível requerido você estará sujeito a receber um item diferente dos presentes nesta lista.";
 }
 
 echo "</fieldset>";

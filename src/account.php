@@ -32,7 +32,7 @@ if ($player->transpass != "f") {
             $errmsg2 .= "Sua senha de transferência atual está incorreta!";
             $error2 = 1;
         } elseif ($acc->password == encodePassword($_POST['trans'])) {
-            $errmsg2 .= "Sua senha de transferência não pode ser igual a senha de sua conta.";
+            $errmsg2 .= "Sua senha de transferência não pode ser igual à senha de sua conta.";
             $error2 = 1;
         } elseif ($acc->password != encodePassword($_POST['pass2'])) {
             $errmsg2 .= "A senha de sua conta está incorreta!";

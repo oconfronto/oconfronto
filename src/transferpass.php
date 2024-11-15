@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
-define("PAGENAME", "Tranferir Ouro");
+define("PAGENAME", "Transferir Ouro");
 $player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkwork.php");
@@ -54,7 +54,7 @@ if (($_POST['pass']) && ($_POST['pass2'])) {
     if (encodePassword($pass1) == $player->password) {
         include(__DIR__ . "/templates/private_header.php");
         echo "<fieldset><legend><b>Segurança</b></legend>";
-        echo "Sua senha de transferência não pode ser igual a senha da sua conta.";
+        echo "Sua senha de transferência não pode ser igual à senha da sua conta.";
         echo "</fieldset>";
         echo '<br/><a href="home.php">Voltar</a>.</br>';
         include(__DIR__ . "/templates/private_footer.php");
@@ -64,7 +64,7 @@ if (($_POST['pass']) && ($_POST['pass2'])) {
     $query = $db->execute("update `players` set `transpass`=? where `id`=?", [$pass1, $player->id]);
     include(__DIR__ . "/templates/private_header.php");
     echo "<fieldset><legend><b>Segurança</b></legend>";
-    echo "Sua senha de transfêrencia foi criada com sucesso.";
+    echo "Sua senha de transferência foi criada com sucesso.";
     echo "</fieldset>";
     echo '<br/><a href="home.php">Voltar</a>.</br>';
     include(__DIR__ . "/templates/private_footer.php");

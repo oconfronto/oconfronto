@@ -21,7 +21,7 @@ function generateAccountOptionLink($url, $text): string
 	<?php
 	$accountOptions = [
 		'accpass.php' => 'Alterar senha desta conta.',
-		'changemail.php' => 'Alterar email desta conta.',
+		'changemail.php' => 'Alterar e-mail desta conta.',
 		'editinfo.php' => 'Alterar configurações pessoais.',
 		'transferchar.php' => 'Transferir personagem para esta conta.'
 	];

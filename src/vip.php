@@ -7,6 +7,6 @@ define("PAGENAME", "Loja VIP");
 $acc = check_acc($db);
 $player = check_user($db);
 include(__DIR__ . "/templates/private_header.php");
-echo "<i><center>A loja Vip ainda está fechada.<br/>Tente novamente amanha.</center></i>\n";
+echo "<i><center>A loja VIP ainda está fechada.<br/>Tente novamente amanhã.</center></i>\n";
 include(__DIR__ . "/templates/private_footer.php");
 exit;

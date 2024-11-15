@@ -78,7 +78,7 @@ switch ($_GET['act']) {
 			$insert['name1'] = $player->username;
 			$insert['name2'] = $seleciona_market['seller'];
 			$insert['action'] = "comprou";
-			$insert['value'] = "um/uma <b>" . $seleciona_market['name'] . " +" . $seleciona_market['item_bonus'] . "</b>";
+			$insert['value'] = "um(a) <b>" . $seleciona_market['name'] . " +" . $seleciona_market['item_bonus'] . "</b>";
 			$insert['itemid'] = $market_id;
 			$insert['blue_id'] = $seleciona_market['id'];
 			$insert['aditional'] = " por " . $seleciona_market['price'] . " de ouro";
@@ -89,7 +89,7 @@ switch ($_GET['act']) {
 			$insert['name1'] = $seleciona_market['seller'];
 			$insert['name2'] = $player->username;
 			$insert['action'] = "vendeu";
-			$insert['value'] = "um/uma <b>" . $seleciona_market['name'] . " +" . $seleciona_market['item_bonus'] . "</b>";
+			$insert['value'] = "um(a) <b>" . $seleciona_market['name'] . " +" . $seleciona_market['item_bonus'] . "</b>";
 			$insert['itemid'] = $market_id;
 			$insert['blue_id'] = $seleciona_market['id'];
 			$insert['aditional'] = " por " . $seleciona_market['price'] . " de ouro";
@@ -232,9 +232,9 @@ switch ($_GET['act']) {
 				echo "</td></tr>\n";
 				if ($market['needlvl'] > 1) {
 					if ($player->level < $market['needlvl']) {
-						echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Você precisa ter nivel " . $market['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
+						echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Você precisa ter nível " . $market['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
 					} else {
-						echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter nivel " . $market['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
+						echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter nível " . $market['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
 					}
 				}
 

@@ -83,7 +83,7 @@ switch ($_GET['act']) {
 									include(__DIR__ . "/templates/private_header.php");
 								}
 
-								echo "Voc&ecirc; não possui tanta energia para descarregar neste monstro!</b></font> <a href=\"monster.php\">Voltar</a>.";
+								echo "Você não possui tanta energia para descarregar neste monstro!</b></font> <a href=\"monster.php\">Voltar</a>.";
 								if (!($_GET['nolayout'] ?? false)) {
 									include(__DIR__ . "/templates/private_footer.php");
 								}
@@ -191,7 +191,7 @@ switch ($_GET['act']) {
 					include(__DIR__ . "/templates/private_header.php");
 				}
 
-				echo "Voc&ecirc; não pode atacar este monstro!</b></font> <a href=\"monster.php\">Voltar</a>.";
+				echo "Você não pode atacar este monstro!</b></font> <a href=\"monster.php\">Voltar</a>.";
 				if (!($_GET['nolayout'] ?? false)) {
 					include(__DIR__ . "/templates/private_footer.php");
 				}
@@ -259,8 +259,8 @@ switch ($_GET['act']) {
 				}
 
 				echo "<fieldset>";
-				echo "<legend><b>Voc&ecirc; está sem energia</b></legend>\n";
-				echo "Voc&ecirc; está exausto. A cada minuto que se passa voc&ecirc; adquire <b>10 pontos de energia</b>.<br/><br/>";
+				echo "<legend><b>Você está sem energia</b></legend>\n";
+				echo "Você está exausto. A cada minuto que se passa você adquire <b>10 pontos de energia</b>.<br/><br/>";
 				echo '<div id="counter" align="center"></div><br/>';
 
 				$gettime = $db->GetOne("select `value` from `cron` where `name`='reset_last'");
@@ -588,7 +588,7 @@ switch ($_GET['act']) {
 
 						$misschance = intval(random_int(0, 100));
 						if ($misschance <= $player->miss) {
-							array_unshift($_SESSION['battlelog'], "5, Voc&ecirc; tentou atacar " . $enemy->prepo . " " . $enemy->username . " mas errou!");
+							array_unshift($_SESSION['battlelog'], "5, Você tentou atacar " . $enemy->prepo . " " . $enemy->username . " mas errou!");
 						} else {
 
 							$playerdamage = random_int(intval($player->mindmg), intval($player->maxdmg));
@@ -621,7 +621,7 @@ switch ($_GET['act']) {
 								include(__DIR__ . "/battle/fastbattle/defesaquinta.php");
 							} else {
 								$bixo->hp -= $playerdamage;
-								array_unshift($_SESSION['battlelog'], "1, Voc&ecirc; atacou " . $enemy->prepo . " " . $enemy->username . " e tirou " . $playerdamage . " de vida.");
+								array_unshift($_SESSION['battlelog'], "1, Você atacou " . $enemy->prepo . " " . $enemy->username . " e tirou " . $playerdamage . " de vida.");
 							}
 						}
 
@@ -644,7 +644,7 @@ switch ($_GET['act']) {
 								array_unshift($_SESSION['battlelog'], "2, " . ucfirst($enemy->prepo) . " " . $enemy->username . " tentou te atacar mas seu ataque voltou e ele perdeu " . $damage . " de vida.");
 							} else {
 								$player->hp -= $damage;
-								array_unshift($_SESSION['battlelog'], "2, " . ucfirst($enemy->prepo) . " " . $enemy->username . " te atacou e voc&ecirc; perdeu " . $damage . " de vida.");
+								array_unshift($_SESSION['battlelog'], "2, " . ucfirst($enemy->prepo) . " " . $enemy->username . " te atacou e você perdeu " . $damage . " de vida.");
 							}
 
 							if ($player->hp <= 0) {
@@ -769,7 +769,7 @@ switch ($_GET['act']) {
 							$db->execute("update `players` set `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=?, `maxhp`=?, `exp`=?, `magic_points`=`magic_points`+1, `groupmonsterkilled`=`groupmonsterkilled`+? where `id`=?", [maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), $newexp, $bixo->mul, $pinfo['id']]);
 
 							if ($pinfo['id'] != $player->id) {
-								$logwinlvlmsg = "Voc&ecirc; avanãou um nível enquanto <a href=\"profile.php?id=" . $player->username . '">' . $player->username . "</a> matava monstros.";
+								$logwinlvlmsg = "Você avanãou um nível enquanto <a href=\"profile.php?id=" . $player->username . '">' . $player->username . "</a> matava monstros.";
 								addlog($pinfo['id'], $logwinlvlmsg, $db);
 							}
 
@@ -838,7 +838,7 @@ switch ($_GET['act']) {
 					$medalha10 = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=?", [$player->id, 'Lendário']);
 					if ($medalha10->recordcount() < 1) {
 						$medalha = 10;
-						$medalhamsg = "Voc&ecirc; matou Zeus e uma medalha foi adicionada ao seu perfil por este motivo.";
+						$medalhamsg = "Você matou Zeus e uma medalha foi adicionada ao seu perfil por este motivo.";
 						$insert['player_id'] = $player->id;
 						$insert['medalha'] = "Lendário";
 						$insert['motivo'] = "Matou o poderoso Zeus.";
@@ -853,9 +853,9 @@ switch ($_GET['act']) {
 
 				$matou = 5;
 				if ($bixo->mul > 1) {
-					$output .= showAlert("<b>Voc&ecirc; matou " . $bixo->mul . "x o montro " . $enemy->username . "!</b><br/>Voc&ecirc; ganhou " . number_format($expdomonstro) . " de experi&ecirc;ncia e " . number_format($goldwin) . " de ouro.", "green");
+					$output .= showAlert("<b>Você matou " . $bixo->mul . "x o monstro " . $enemy->username . "!</b><br/>Você ganhou " . number_format($expdomonstro) . " de experiência e " . number_format($goldwin) . " de ouro.", "green");
 				} else {
-					$output .= showAlert("<b>Voc&ecirc; matou " . $enemy->prepo . " " . $enemy->username . "!</b><br/>Voc&ecirc; ganhou " . number_format($expdomonstro) . " de experi&ecirc;ncia e " . number_format($goldwin) . " de ouro.", "green");
+					$output .= showAlert("<b>Você matou " . $enemy->prepo . " " . $enemy->username . "!</b><br/>Você ganhou " . number_format($expdomonstro) . " de experiência e " . number_format($goldwin) . " de ouro.", "green");
 				}
 
 				//verifica dungeon
@@ -866,7 +866,7 @@ switch ($_GET['act']) {
 			}
 
 			if ($newlevell == 5) {
-				$output .= showAlert("<u><b>Voc&ecirc; passou de nível!</b></u>", "green");
+				$output .= showAlert("<u><b>Você passou de nível!</b></u>", "green");
 			}
 
 			if ($lootstatus == 5) {
@@ -888,7 +888,7 @@ switch ($_GET['act']) {
 			$goldloss = random_int(1, $goldloss);
 			$exploss3 = min($player->exp, $exploss);
 			$goldloss2 = min($player->gold, $goldloss);
-			$output .= showAlert("<b>Voc&ecirc; morreu!</b><br/>Voc&ecirc; perdeu " . number_format($exploss3) . " de experi&ecirc;ncia e " . number_format($goldloss2) . " de ouro.", "red");
+			$output .= showAlert("<b>Você morreu!</b><br/>Você perdeu " . number_format($exploss3) . " de experiência e " . number_format($goldloss2) . " de ouro.", "red");
 			//Update player (the loser)
 			$query = $db->execute("update `players` set `energy`=`energy`-?, `exp`=`exp`-?, `gold`=`gold`-?, `deaths`=`deaths`+1, `hp`=0, `mana`=0, `deadtime`=? where `id`=?", [(10 * $bixo->mul), $exploss3, $goldloss2, time() + $setting->dead_time, $player->id]);
 			//verifica dungeon
@@ -1119,12 +1119,12 @@ switch ($_GET['act']) {
 			if ($player->exp > 0) {
 				echo showAlert("ótimo, <a href=\"start.php?act=7\">clique aqui</a> para continuar seu tutorial.", "green");
 			} else {
-				echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">Existem 3 maneiras de se conseguir experi&ecirc;ncia: Lutando contra outros <u>jogadores</u>, contra <u>monstros</u> ou <u>caçando</u>.<br/><font size=\"1px\">O <u>mais recomendado</u> para voc&ecirc;, novato, é a luta contra monstros.</font><br/><br/>Escolha um monstro de nível inferior e divirta-se!</td><th><font size=\"1px\"><a href=\"start.php?act=7\">Próximo</a></font></th></tr></table>", "white", "left");
+				echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">Existem 3 maneiras de se conseguir experiência: Lutando contra outros <u>jogadores</u>, contra <u>monstros</u> ou <u>caçando</u>.<br/><font size=\"1px\">O <u>mais recomendado</u> para você, novato, é a luta contra monstros.</font><br/><br/>Escolha um monstro de nível inferior e divirta-se!</td><th><font size=\"1px\"><a href=\"start.php?act=7\">Próximo</a></font></th></tr></table>", "white", "left");
 			}
 		}
 
 		if ($_GET['run'] == 'success') {
-			echo showAlert("Voc&ecirc; fugiu de sua luta com sucesso!");
+			echo showAlert("Você fugiu de sua luta com sucesso!");
 		}
 
 
@@ -1162,15 +1162,15 @@ switch ($_GET['act']) {
 			$hours = $end / 60 / 60 % 24;
 			$minutes = $end / 60 % 60;
 			$acaba = sprintf('%s dia(s) %d hora(s) %d minuto(s)', $days, $hours, $minutes);
-			echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px"><b>Evento Surpresa!</b> Experi&ecirc;ncia em dobro.<br>Tempo restante: ' . $acaba . "</div>";
+			echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px"><b>Evento Surpresa!</b> Experiência em dobro.<br>Tempo restante: ' . $acaba . "</div>";
 		}
 
 		if ($player->level <= 20) {
-			echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Bônus de experi&ecirc;ncia em dobro para usuários de nível 20 ou menos.</div>";
+			echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Bônus de experiência em dobro para usuários de nível 20 ou menos.</div>";
 		} elseif ($player->level < 35) {
-			echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Bônus de experi&ecirc;ncia de 50% para usuários de nível inferior a 35.</div>";
+			echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Bônus de experiência de 50% para usuários de nível inferior a 35.</div>";
 		} elseif ($player->vip > time()) {
-			echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Bônus de experi&ecirc;ncia de 10% para usuários VIP.</div>";
+			echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Bônus de experiência de 10% para usuários VIP.</div>";
 		}
 
 
@@ -1186,13 +1186,13 @@ switch ($_GET['act']) {
 				}
 
 				if ($grupototalbonus > 4999 && $grupototalbonus < 15000) {
-					echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>Bônus de Experi&ecirc;ncia:</b> 5%<br/>Mais de 5000 monstros mortos pelo grupo de caça.</center></div>";
+					echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>Bônus de Experiência:</b> 5%<br/>Mais de 5000 monstros mortos pelo grupo de caça.</center></div>";
 				} elseif ($grupototalbonus > 14999 && $grupototalbonus < 30000) {
-					echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>Bônus de Experi&ecirc;ncia:</b> 10%<br/>Mais de 15000 monstros mortos pelo grupo de caça.</center></div>";
+					echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>Bônus de Experiência:</b> 10%<br/>Mais de 15000 monstros mortos pelo grupo de caça.</center></div>";
 				} elseif ($grupototalbonus > 29999 && $grupototalbonus < 50000) {
-					echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>Bônus de Experi&ecirc;ncia:</b> 15%<br/>Mais de 30000 monstros mortos pelo grupo de caça.</center></div>";
+					echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>Bônus de Experiência:</b> 15%<br/>Mais de 30000 monstros mortos pelo grupo de caça.</center></div>";
 				} elseif ($grupototalbonus > 49999) {
-					echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>Bônus de Experi&ecirc;ncia:</b> 20%<br/>Mais de 50000 monstros mortos pelo grupo de caça.</center></div>";
+					echo "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><center><b>Bônus de Experiência:</b> 20%<br/>Mais de 50000 monstros mortos pelo grupo de caça.</center></div>";
 				}
 			}
 		}
@@ -1206,7 +1206,7 @@ switch ($_GET['act']) {
 			$minutes = $end / 60 % 60;
 			$acaba = sprintf('%d hora(s) %d minuto(s)', $hours, $minutes);
 
-			echo showAlert("<b>Portões do reino abertos!</b> Voc&ecirc; pode lutar contra monstros especiais.<br>Tempo restante: " . $acaba . ".", "white", "left");
+			echo showAlert("<b>Portões do reino abertos!</b> Você pode lutar contra monstros especiais.<br>Tempo restante: " . $acaba . ".", "white", "left");
 			$bosses = $db->execute("select * from `monsters` where `evento`='t' order by `level` asc");
 
 			echo "<table width=\"100%\">\n";
@@ -1225,7 +1225,7 @@ switch ($_GET['act']) {
 		}
 
 
-		echo showAlert("<i>Voc&ecirc; pode enfrentar monstros do nivel 1 á " . $tolevel . ".</i>");
+		echo showAlert("<i>Você pode enfrentar monstros do nível 1 á " . $tolevel . ".</i>");
 		echo "<table width=\"100%\">\n";
 		echo "<tr><th width=\"50%\">Nome</th><th width=\"20%\">Nível</th><th width=\"30%\">Batalha</a></th></tr>\n";
 		$bool = 1;
