@@ -127,9 +127,7 @@ if ($procuramengperfil->recordcount() == 0) {
 						</td>
 					</tr>
 					<tr>
-						<td><input type="submit" name="submit" value="Enviar" />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"
-								onclick="javascript:window.open('example.html', '_blank','top=100, left=100, height=400, width=400, status=no, menubar=no, resizable=no, scrollbars=yes, toolbar=no, location=no, directories=no');">Dicas
-								de formatação</a></td>
+						<td><input type="submit" name="submit" value="Enviar" />&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					</tr>
 				</table>
 			</td>
