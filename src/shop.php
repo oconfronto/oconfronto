@@ -371,7 +371,17 @@ switch ($_GET['act']) {
 			$conditions[] = "`canbuy` = 't'";
 		
 			// Class condition
-			$voc = ($player->voc == 'archer') ? 1 : (($player->voc == 'knight') ? 2 : 3);
+			switch ($player->voc) {
+    		case 'archer':
+        	$voc = 1;
+        	break;
+    		case 'knight':
+        	$voc = 2;
+        	break;
+    		default:
+        	$voc = 3;
+        	break;
+			}
 			$conditions[] = "(`voc` = ? OR `voc` = 0)"; // Items that can be used by vocation or by any class
 			$values[] = $voc;
 		
