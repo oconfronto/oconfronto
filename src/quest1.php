@@ -337,7 +337,7 @@ if ($quest['quest_status'] == 1) {
 if ($quest['quest_status'] == 2) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-	echo "<i>Você já me entegou um <b>jeweled crystal</b>, preciso de mais dois. Você pode obtê-los matando Dragões de Pedra ou comprando no mercado.</i><br/>\n";
+	echo "<i>Você já me entregou um <b>jeweled crystal</b>, preciso de mais dois. Você pode obtê-los matando Dragões de Pedra ou comprando no mercado.</i><br/>\n";
 	echo "<i>Quando conseguir o segundo jeweled crystal volte aqui.</i><br/>\n";
 	echo "<a href=\"quest1.php?act=continue2\">Já possuo o jeweled crystal</a> | <a href=\"home.php\">Voltar</a>.";
 	echo "</fieldset>";
@@ -348,7 +348,7 @@ if ($quest['quest_status'] == 2) {
 if ($quest['quest_status'] == 3) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-	echo "<i>Você já me entegou dois <b>jeweled crystals</b>, preciso de mais um. Você pode obtelo matando Dragões de Pedra ou comprando no mercado.</i><br/>\n";
+	echo "<i>Você já me entregou dois <b>jeweled crystals</b>, preciso de mais um. Você pode obtelo matando Dragões de Pedra ou comprando no mercado.</i><br/>\n";
 	echo "<i>Quando conseguir o terceiro jeweled crystal volte aqui.</i><br/>\n";
 	echo "<a href=\"quest1.php?act=continue3\">Já possuo o jeweled crystal</a> | <a href=\"home.php\">Voltar</a>.";
 	echo "</fieldset>";
@@ -359,7 +359,7 @@ if ($quest['quest_status'] == 3) {
 if ($quest['quest_status'] == 4) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-	echo "<i>Agora que possuo todos os cristais necessários só preciso de uma peça para montar o anel, uma titanium wheel. A única maneira de obtela é matando Raderon, um poderoso guerreiro.</i><br/><br/>\n";
+	echo "<i>Agora que possuo todos os cristais necessários só preciso de uma peça para montar o anel, uma titanium wheel. A única maneira de obtê-la é matando Raderon, um poderoso guerreiro.</i><br/><br/>\n";
 	echo '<a href="quest1.php?act=raderon">Quero lutar contra Raderon</a> | <a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");
