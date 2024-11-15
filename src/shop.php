@@ -354,18 +354,21 @@ switch ($_GET['act']) {
 		
 			// Price conditions
 			if (!empty($_GET['fromprice'])) {
+				$fromprice = intval($_GET['fromprice']);
 				$conditions[] = "`price` >= ?";
-				$values[] = intval($_GET['fromprice']);
+				$values[] = $fromprice;
 			}
 		
 			if (!empty($_GET['toprice'])) {
+				$toprice = intval($_GET['toprice']);
 				$conditions[] = "`price` <= ?";
-				$values[] = intval($_GET['toprice']);
+				$values[] = $toprice;
 			}
 		
 			// Type condition
+			$type = htmlspecialchars($_GET['type']);
 			$conditions[] = "`type` = ?";
-			$values[] = $_GET['type'];
+			$values[] = $type;
 		
 			// Purchase condition
 			$conditions[] = "`canbuy` = 't'";
@@ -381,7 +384,7 @@ switch ($_GET['act']) {
     		default:
         	$voc = 3;
         	break;
-			}
+	}
 			$conditions[] = "(`voc` = ? OR `voc` = 0)"; // Items that can be used by vocation or by any class
 			$values[] = $voc;
 		
