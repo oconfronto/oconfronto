@@ -27,7 +27,7 @@ if ($missao['quest_status'] == 1) {
 			$b = '<a href="home.php">Principal</a>';
 		}
 	} else {
-		$a = "<i>Gostaria de começar seu treinamento por " . $quest['cost'] . " de ouro?<br>Se eu te treinar, você poderá adiquirir até três níveis!</i>";
+		$a = "<i>Gostaria de começar seu treinamento por " . $quest['cost'] . " de ouro?<br>Se eu te treinar, você poderá adquirir até três níveis!</i>";
 		$b = '<a href="tavern.php?p=quests&start=' . $quest['id'] . '&pay=true">Pagar</a>';
 	}
 } elseif ($missao['quest_status'] == 3) {
