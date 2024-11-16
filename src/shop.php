@@ -8,6 +8,10 @@ $player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
+const MAX_LEVEL_DIFFERENCE = 10;
+//const VOC_ID_ARCHER = 1;
+//const VOC_ID_KNIGHT = 2;
+//const VOC_ID_MAGE = 3;
 
 // Add this line near the top of the file, after $player is defined
 $voc = $player->voc;
@@ -368,7 +372,8 @@ switch ($_GET['act']) {
 		echo "</tr></table>";
 		echo "</form>";
 
-		if ($_GET['type'] == 'armor' || $_GET['type'] == 'boots' || $_GET['type'] == 'helmet' || $_GET['type'] == 'legs' || $_GET['type'] == 'shield' || $_GET['type'] == 'weapon' || $_GET['type'] == 'amulet'|| $_GET['type'] == 'quiver') {
+		$allowed_types = ['armor', 'boots', 'helmet', 'legs', 'shield', 'weapon', 'amulet', 'quiver'];
+		 if (in_array($_GET['type'], $allowed_types)) {
 			$query = "SELECT `id`, `name`, `description`, `type`, `price`, `effectiveness`, `img`, `needpromo`, `needlvl` FROM `blueprint_items` WHERE ";
 			$conditions = [];
 			$values = [];
@@ -376,6 +381,9 @@ switch ($_GET['act']) {
 			// Price conditions
 			if (!empty($_GET['fromprice'])) {
 				$fromprice = intval($_GET['fromprice']);
+		       if ($fromprice < 0) {
+		           $fromprice = 0;
+		       }
 				$conditions[] = "`price` >= ?";
 				$values[] = $fromprice;
 			}
@@ -388,6 +396,10 @@ switch ($_GET['act']) {
 		
 			// Type condition
 			$type = htmlspecialchars($_GET['type']);
+			if (!in_array($type, $allowed_types)) {
+				  // Handle invalid type, e.g., set a default or display an error
+				  $type = 'none';
+				}
 			$conditions[] = "`type` = ?";
 			$values[] = $type;
 		
@@ -481,11 +493,8 @@ switch ($_GET['act']) {
 				echo showAlert("<i>Você tem 10% de desconto nos items, pelo fato de ser um membro vip.</i>");
 			}
 		} elseif ($_GET['type'] == 'shield' && $player->voc == 'archer') {
-			echo "<br/><p><i><center>Arqueiros não podem usar/comprar escudos.</center></i></p>";
 		} elseif ($_GET['type'] == 'quiver' && $player->voc == 'knight') {
-			echo "<br/><p><i><center>Guerreiros não podem usar/comprar Aljavas.</center></i></p>";
 		} elseif ($_GET['type'] == 'quiver' && $player->voc == 'mage') {
-			echo "<br/><p><i><center>Magos não podem usar/comprar Aljavas.</center></i></p>";
 		} else {
 			echo "<br/><p><i><center>Selecione o tipo de item que você deseja procurar.</center></i></p>";
 		}

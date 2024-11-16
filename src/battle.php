@@ -29,10 +29,15 @@ switch ($_GET['act']) {
 			break;
 		}
 
+		$enemy = new stdClass();
 		$enemy1 = $query->fetchrow(); //Get player info
-		foreach ($enemy1 as $key => $value) {
-			$enemy->$key = $value;
-		}
+		if ($enemy1) {
+	    foreach ($enemy1 as $key => $value) {
+	        $enemy->$key = $value;
+	    }
+	} else {
+	    throw new RuntimeException("Failed to fetch enemy data");
+}
 
 		if ($enemy->serv != $player->serv) {
 			include(__DIR__ . "/templates/private_header.php");
