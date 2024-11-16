@@ -50,6 +50,23 @@ switch ($_GET['act']) {
 			break;
 		}
 
+		$itemRestrictions = [ //reafct restrictions
+						'shield' => ['archer' => 'arqueiros não podem usar escudos'],
+						'quiver' => [
+							'knight' => 'guerreiros não podem usar Aljavas',
+							'mage' => 'magos não podem usar Aljavas'
+						]
+					];
+					
+					if (isset($itemRestrictions[$item['type']][$player->voc])) {
+						include(__DIR__ . "/templates/private_header.php");
+						echo "<b>Ferreiro:</b><br />\n";
+						echo "<i>Desculpe, mas " . $itemRestrictions[$item['type']][$player->voc] . "!</i><br /><br />\n";
+						echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+						include(__DIR__ . "/templates/private_footer.php");
+						break;
+					}
+
 		if ($item['voc'] == '1' && $player->voc != 'archer') {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
@@ -328,8 +345,12 @@ switch ($_GET['act']) {
 			'boots' => 'Botas',
 			'legs' => 'Calças',
 			'helmet' => 'Elmos',
-			'shield' => 'Escudos'
+			// Add conditional to exclude archer shields
+			'shield' => ($player->voc !== 'archer') ? 'Escudos' : null,
+			// Add conditional to exclude quivers from specific classes
+			'quiver' => (!in_array($player->voc, ['knight', 'mage'])) ? 'Aljavas' : null,
 		];
+			$options = array_filter($options);
 
 		foreach ($options as $value => $label) {
 			$selected = ($type == $value) ? ' selected="selected"' : '';
@@ -347,40 +368,56 @@ switch ($_GET['act']) {
 		echo "</tr></table>";
 		echo "</form>";
 
-		if ($_GET['type'] == 'armor' || $_GET['type'] == 'boots' || $_GET['type'] == 'helmet' || $_GET['type'] == 'legs' || $_GET['type'] == 'shield' && $player->voc != 'archer' || $_GET['type'] == 'weapon' || $_GET['type'] == 'amulet') {
+		if ($_GET['type'] == 'armor' || $_GET['type'] == 'boots' || $_GET['type'] == 'helmet' || $_GET['type'] == 'legs' || $_GET['type'] == 'shield' || $_GET['type'] == 'weapon' || $_GET['type'] == 'amulet'|| $_GET['type'] == 'quiver') {
 			$query = "SELECT `id`, `name`, `description`, `type`, `price`, `effectiveness`, `img`, `needpromo`, `needlvl` FROM `blueprint_items` WHERE ";
 			$conditions = [];
 			$values = [];
-
+		
+			// Price conditions
 			if (!empty($_GET['fromprice'])) {
+				$fromprice = intval($_GET['fromprice']);
 				$conditions[] = "`price` >= ?";
-				$values[] = intval($_GET['fromprice']);
+				$values[] = $fromprice;
 			}
-
+		
 			if (!empty($_GET['toprice'])) {
+				$toprice = intval($_GET['toprice']);
 				$conditions[] = "`price` <= ?";
-				$values[] = intval($_GET['toprice']);
+				$values[] = $toprice;
 			}
-
+		
+			// Type condition
+			$type = htmlspecialchars($_GET['type']);
 			$conditions[] = "`type` = ?";
-			$values[] = $_GET['type'];
-
+			$values[] = $type;
+		
+			// Purchase condition
 			$conditions[] = "`canbuy` = 't'";
-			
-			// Special condition for weapons
-			if ($_GET['type'] == 'weapon') {
-				$conditions[] = "(`voc` = ? OR `voc` = 0 OR `type` = 'weapon')";
-			} else {
-				$conditions[] = "(`voc` = ? OR `voc` = 0)";
-			}
+		
+			// Class condition
+			switch ($player->voc) {
+    		case 'archer':
+        	$voc = 1;
+        	break;
+    		case 'knight':
+        	$voc = 2;
+        	break;
+    		default:
+        	$voc = 3;
+        	break;
+	}
+			$conditions[] = "(`voc` = ? OR `voc` = 0)"; // Items that can be used by vocation or by any class
 			$values[] = $voc;
-
+		
+			// Level condition
 			$conditions[] = "`needlvl` < ?";
 			$values[] = $player->level + 10;
-
+		
+			// Build the final query
 			$query .= implode(" AND ", $conditions);
 			$query .= " ORDER BY `needlvl` ASC";
-
+		
+			// Now execute the query with all parameters
 			$result = $db->execute($query, $values);
 
 			echo showAlert("<i>Você pode comprar items de nível " . ($player->level + 10) . " ou menos.</i>");
@@ -400,8 +437,10 @@ switch ($_GET['act']) {
 					$type = "Ataque";
 				} elseif ($item['type'] == 'boots') {
 					$type = "Agilidade";
+				} elseif ($item['type'] == 'quiver') {
+					$type = "Agilidade";
 				} else {
-					$type = "Defesa";
+					$type = "Defesa"; //For any new item
 				}
 
 				echo "<b>" . $type . ":</b> " . $item['effectiveness'] . "\n";
@@ -443,6 +482,10 @@ switch ($_GET['act']) {
 			}
 		} elseif ($_GET['type'] == 'shield' && $player->voc == 'archer') {
 			echo "<br/><p><i><center>Arqueiros não podem usar/comprar escudos.</center></i></p>";
+		} elseif ($_GET['type'] == 'quiver' && $player->voc == 'knight') {
+			echo "<br/><p><i><center>Guerreiros não podem usar/comprar Aljavas.</center></i></p>";
+		} elseif ($_GET['type'] == 'quiver' && $player->voc == 'mage') {
+			echo "<br/><p><i><center>Magos não podem usar/comprar Aljavas.</center></i></p>";
 		} else {
 			echo "<br/><p><i><center>Selecione o tipo de item que você deseja procurar.</center></i></p>";
 		}
@@ -450,5 +493,3 @@ switch ($_GET['act']) {
 		include(__DIR__ . "/templates/private_footer.php");
 		break;
 }
-
-

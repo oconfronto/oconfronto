@@ -111,6 +111,12 @@ switch ($_GET['act']) {
 			echo "<option value=\"shield\">Escudos</option>\n";
 		}
 
+		if ($_GET['type'] == 'quiver') {
+			echo "<option value=\"quiver\" selected=\"selected\">Aljavas</option>\n";
+		} else {
+			echo "<option value=\"quiver\">Aljavas</option>\n";
+		}
+
 		if ($_GET['type'] == 'potion') {
 			echo "<option value=\"potion\" selected=\"selected\">Poções</option>\n";
 		} else {
@@ -166,7 +172,7 @@ switch ($_GET['act']) {
 		echo showAlert('<i>Deseja vender algum item? <a href="market_sell.php"><b>Clique aqui</b></a>.</i>', "white", "left");
 		echo "<br/>";
 
-		if ($_GET['type'] == 'armor' || $_GET['type'] == 'boots' || $_GET['type'] == 'helmet' || $_GET['type'] == 'legs' || $_GET['type'] == 'shield' && $player->voc != 'archer' || $_GET['type'] == 'weapon' || $_GET['type'] == 'amulet' || $_GET['type'] == 'potion' || $_GET['type'] == 'ring' || $_GET['type'] == 'addon') {
+		if ($_GET['type'] == 'armor' || $_GET['type'] == 'boots' || $_GET['type'] == 'helmet' || $_GET['type'] == 'legs' || $_GET['type'] == 'shield' && $player->voc != 'archer' || $_GET['type'] == 'weapon' || $_GET['type'] == 'amulet' || $_GET['type'] == 'quiver' && $player->voc != 'knight' && $player->voc != 'mage' || $_GET['type'] == 'potion' || $_GET['type'] == 'ring' || $_GET['type'] == 'addon') {
 
 			if ($_GET['orderby'] == 'nome') {
 				$orderby = "blueprint_items.name";

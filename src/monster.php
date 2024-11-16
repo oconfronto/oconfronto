@@ -149,17 +149,16 @@ switch ($_GET['act']) {
 		}
 
 
-		// Here, the XP gain rate after a kill is adjusted
 		if ($setting->eventoexp > time()) {
-			$expdomonstro = ceil($enemy->mtexp * 8);
-		} elseif ($player->level <= 20) {
-			$expdomonstro = ceil($enemy->mtexp * 5);
-		} elseif ($player->level < 35) {
-			$expdomonstro = ceil($enemy->mtexp * 4.5);
-		} elseif ($player->vip > time()) {
-			$expdomonstro = ceil($enemy->mtexp * 4.1);
-		} else {
 			$expdomonstro = ceil($enemy->mtexp * 4);
+		} elseif ($player->level <= 20) {
+			$expdomonstro = ceil($enemy->mtexp * 4);
+		} elseif ($player->level < 35) {
+			$expdomonstro = ceil($enemy->mtexp * 2.5);
+		} elseif ($player->vip > time()) {
+			$expdomonstro = ceil($enemy->mtexp * 2.1);
+		} else {
+			$expdomonstro = ceil($enemy->mtexp * 2);
 		}
 
 		$expdomonstro *= $bixo->mul;
@@ -376,6 +375,8 @@ switch ($_GET['act']) {
 		$player->defbonus5 = ($query54->recordcount() == 1) ? $query54->fetchrow() : 0;
 		$query55 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='boots' and items.status='equipped'", [$player->id]);
 		$player->agibonus6 = ($query55->recordcount() == 1) ? $query55->fetchrow() : 0;
+		$query56 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='quiver' and items.status='equipped'", [$player->id]);
+		$player->agibonus7 = ($query56->recordcount() == 1) ? $query56->fetchrow() : 0;
 
 		$pbonusfor = 0;
 		$pbonusagi = 0;
@@ -453,7 +454,7 @@ switch ($_GET['act']) {
 
 		//Calculate some variables that will be used
 		$forcadoplayer = ceil((($player->strength + ($player->atkbonus['effectiveness'] ?? 0) + (($player->atkbonus['item_bonus'] ?? 0) * 2) + $pbonusfor) * $multipleatk) * 1.5);
-		$agilidadedoplayer = ceil($player->agility + ($player->agibonus6['effectiveness'] ?? 0) + (($player->agibonus6['item_bonus'] ?? 0) * 2) + $pbonusagi);
+		$agilidadedoplayer = ceil($player->agility + ($player->agibonus6['effectiveness'] ?? 0) + ($player->agibonus7['effectiveness'] ?? 0) + (($player->agibonus6['item_bonus'] ?? 0) * 2) + $pbonusagi);
 		$resistenciadoplayer = ceil((($player->resistance + (($player->defbonus1['effectiveness'] ?? 0) + ($player->defbonus2['effectiveness'] ?? 0) + ($player->defbonus3['effectiveness'] ?? 0) + ($player->defbonus5['effectiveness'] ?? 0)) + ((($player->defbonus1['item_bonus'] ?? 0) * 2) + (($player->defbonus2['item_bonus'] ?? 0) * 2) + (($player->defbonus3['item_bonus'] ?? 0) * 2) + (($player->defbonus5['item_bonus'] ?? 0) * 2)) + $pbonusres) * $multipledef) / 0.85);
 
 		$forcadomonstro = ($enemy->strength * 1.68);
@@ -708,8 +709,7 @@ switch ($_GET['act']) {
 					$goldwin = round($goldwin * 4);
 				}
 
-				// Here, the gold gain rate after a kill is adjusted
-				$goldwin = round($goldwin * 1.5);
+				$goldwin = round($goldwin * 2);
 				$goldwin *= $bixo->mul;
 
 				$expgroup1 = $db->execute("select `id` from `groups` where `player_id`=?", [$player->id]);

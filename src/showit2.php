@@ -2,6 +2,19 @@
 
 declare(strict_types=1);
 
+// BONUS_MULTIPLIERS: Defines the multipliers for specific items or attributes
+// The "quiver" item has a multiplier of 1.5, and the default multiplier for other items is 2.0
+const BONUS_MULTIPLIERS = [
+	'quiver' => 1.5, // Multiplier for quiver item
+	'default' => 2.0 // Default multiplier for other items
+];
+// ATTRIBUTE_LABELS: Maps the attributes to their respective labels
+// "shield" is labeled as "Defense" and "quiver" is labeled as "Agility"
+$ATTRIBUTE_LABELS = [ 
+	    'shield' => _('Defesa'), // Label for shield attribute (Defense)
+	    'quiver' => _('Agilidade') // Label for quiver attribute (Agility)
+	];
+
 echo '<table id="table1" align="center">';
 echo "<tbody><tr>";
 
@@ -250,9 +263,13 @@ if ($showitenx->recordcount() == 0) {
 }
 
 
-$showitenx = $db->execute("select items.id, items.item_id, items.item_bonus, items.for, items.vit, items.agi, items.res, items.status, blueprint_items.name, blueprint_items.effectiveness, blueprint_items.img, blueprint_items.type from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='shield' and items.status='equipped'", [$player->id]);
+// Objective: This code is designed to display an item (either a shield or a quiver) in the player's inventory
+// with a background color based on the item's bonus. If no shield or quiver is equipped, a default image is shown.
+
+// Execute 	a query to fetch the items of the player that are either a shield or a quiver and are equipped
+$showitenx = $db->execute("SELECT items.id, items.item_id, items.item_bonus, items.for, items.vit, items.agi, items.res, items.status, blueprint_items.name, blueprint_items.effectiveness, blueprint_items.img, blueprint_items.type FROM `items`, `blueprint_items` WHERE blueprint_items.id = items.item_id AND items.player_id = ? AND (blueprint_items.type = 'shield' OR blueprint_items.type = 'quiver') AND items.status = 'equipped'", [$player->id]);
 if ($showitenx->recordcount() == 0) {
-	echo '<td class="mark shield itembg1"><img src="static/images/luva-dir.png" border="0"></td>';
+	echo '<td class="mark shield quiver itembg1"><img src="static/images/luva-dir.png" border="0"></td>';
 } else {
 	$showeditexs = $showitenx->fetchrow();
 
@@ -268,7 +285,8 @@ if ($showitenx->recordcount() == 0) {
 		$colorbg = "itembg1";
 	}
 
-	echo '<td class="mark shield ' . $colorbg . '">';
+	// If no items are equipped, display a default image for the item slot (e.g., a glove icon)
+	echo '<td class="mark shield quiver ' . $colorbg . '">';
 
 	if ($showeditexs['for'] == 0) {
 		$showitfor = "";
@@ -298,9 +316,14 @@ if ($showitenx->recordcount() == 0) {
 		$showitres2 = "+<font color=red>" . $showeditexs['res'] . " Res</font>";
 	}
 
+	// Objective: This code calculates the effectiveness of an item based on its bonus, 
+	// generates an item name with its bonus, retrieves the appropriate attribute label 
+	// (e.g., "Agility" for a quiver or "Defense" for a shield), and displays the item 
+	// with the calculated effectiveness and other attributes (e.g., vit, agi, res).
 	$newefec = ($showeditexs['effectiveness']) + ($showeditexs['item_bonus'] * 2);
 	$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
-	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Defesa: " . $newefec . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
+	$attributeLabel = $ATTRIBUTE_LABELS[$showeditexs['type']] ?? $showeditexs['type'];
+	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>" . $attributeLabel . ": " . $newefec . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 	echo '<div title="header=[' . $showitname . "] body=[" . $showitinfo . ']">';
 	echo '<div id="' . $showeditexs['type'] . '" class="drag ' . $showeditexs['id'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
 	echo "</div>";
@@ -405,7 +428,17 @@ if ($showitenx->recordcount() == 0) {
 		$showitres2 = "+<font color=red>" . $showeditexs['res'] . " Res</font>";
 	}
 
-	$newefec = ($showeditexs['effectiveness']) + ($showeditexs['item_bonus'] * 2);
+	// Objective: This code defines a function `calculateEffectiveness` to compute the effectiveness 
+	// of an item based on its type, effectiveness, and bonus. The function uses a multiplier 
+	// specific to the item type (e.g., shield, quiver) to adjust the total effectiveness.
+
+	// Define the function to calculate effectiveness based on item type, base effectiveness, and item bonus
+	function calculateEffectiveness($type, $effectiveness, $itemBonus) {
+	    $multiplier = BONUS_MULTIPLIERS[$type] ?? BONUS_MULTIPLIERS['default'];
+	    return $effectiveness + ($itemBonus * $multiplier);
+	}
+	
+	$newefec = calculateEffectiveness($showeditexs['type'], $showeditexs['effectiveness'], $showeditexs['item_bonus']);
 	$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Defesa: " . $newefec . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 	echo '<div title="header=[' . $showitname . "] body=[" . $showitinfo . ']">';

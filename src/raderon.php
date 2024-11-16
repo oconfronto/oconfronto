@@ -58,12 +58,7 @@ if ($player->hp == 0) {
 	exit;
 }
 
-// Check if $enemy is defined and is an object; if not, create a new stdClass instance
-if (!isset($enemy) || !is_object($enemy)) {
-    $enemy = new stdClass();
-}
 
-// Assign properties to the enemy
 $enemy->prepo = "o";
 $enemy->username = "Raderon";
 $enemy->image_path = "raderon.png";
@@ -87,6 +82,8 @@ $query54 = $db->query("select blueprint_items.effectiveness, blueprint_items.nam
 $player->defbonus5 = ($query54->recordcount() == 1) ? $query54->fetchrow() : 0;
 $query55 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='boots' and items.status='equipped'", [$player->id]);
 $player->agibonus6 = ($query55->recordcount() == 1) ? $query55->fetchrow() : 0;
+$query56 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='quiver' and items.status='equipped'", [$player->id]);
+$player->agibonus7 = ($query56->recordcount() == 1) ? $query56->fetchrow() : 0;
 
 
 $pbonusfor = 0;
@@ -173,7 +170,12 @@ if ($player->promoted == 'f') {
 
 //Calculate some variables that will be used
 $forcadoplayer = ceil(($player->strength + $player->atkbonus['effectiveness'] + ($player->atkbonus['item_bonus'] * 2) + $pbonusfor) * $multipleatk);
-$agilidadedoplayer = ceil($player->agility + $player->agibonus6['effectiveness'] + ($player->agibonus6['item_bonus'] * 2) + $pbonusagi);
+$agilidadedoplayer = ceil($player->agility + 
+    $player->agibonus6['effectiveness'] + 
+    ($player->agibonus6['item_bonus'] * 2) + 
+    $player->agibonus7['effectiveness'] + 
+    ($player->agibonus7['item_bonus'] * 2) + 
+    $pbonusagi);;
 $resistenciadoplayer = ceil((($player->resistance + ($player->defbonus1['effectiveness'] + $player->defbonus2['effectiveness'] + $player->defbonus3['effectiveness'] + $player->defbonus5['effectiveness']) + (($player->defbonus1['item_bonus'] * 2) + ($player->defbonus2['item_bonus'] * 2) + ($player->defbonus3['item_bonus'] * 2) + ($player->defbonus5['item_bonus'] * 2)) + $pbonusres) * $multipledef) / 1.35);
 $forcadomonstro = ($enemy->strength * 1.3);
 $agilidadedomonstro = $enemy->agility;

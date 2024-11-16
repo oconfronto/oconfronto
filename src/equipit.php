@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-define('PAGENAME', 'Equipment');
-
 include(__DIR__ . "/lib.php");
 $player = check_user($db);
 
@@ -74,6 +72,12 @@ if ($_GET['itid']) {
             $agi = 30;
             $res = 40;
             $update = 5;
+        } elseif ($item['item_id'] == 297) {
+            $for = 65;
+            $vit = 65;
+            $agi = 65;
+            $res = 65;
+            $update = 5;
         } elseif ($item['item_id'] == 178) {
             $for = 40;
             $vit = 40;
@@ -128,6 +132,18 @@ if ($_GET['itid']) {
                 if ($ddckitexs['type'] == 'shield' && $player->voc == 'archer') {
                     include(__DIR__ . "/templates/private_header.php");
                     echo "Arqueiros não podem usar escudos. <a href=\"inventory.php\">Voltar</a>.";
+                    include(__DIR__ . "/templates/private_footer.php");
+                    exit;
+                }
+                if ($ddckitexs['type'] == 'quiver' && $player->voc == 'knight') {
+                    include(__DIR__ . "/templates/private_header.php");
+                    echo "Guerreiros não podem usar Aljavas. <a href=\"inventory.php\">Voltar</a>.";
+                    include(__DIR__ . "/templates/private_footer.php");
+                    exit;
+                }
+                if ($ddckitexs['type'] == 'quiver' && $player->voc == 'mage') {
+                    include(__DIR__ . "/templates/private_header.php");
+                    echo "Magos não podem usar Alvaja. <a href=\"inventory.php\">Voltar</a>.";
                     include(__DIR__ . "/templates/private_footer.php");
                     exit;
                 }
