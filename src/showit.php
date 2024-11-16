@@ -8,7 +8,7 @@ function displayItem($db, $player, $itemTypes): void
         if (is_array($itemTypes)) {
             if ($player->vocation === 'Archer' && in_array('shield', $itemTypes)) {
                 $itemTypes = array_diff($itemTypes, ['shield']);
-            } elseif (in_array('Archer', ['Warrior', 'Mage']) && in_array('quiver', $itemTypes)) {
+            } elseif (in_array($player->vocation, ['Warrior', 'Mage']) && in_array('quiver', $itemTypes)) {
                 $itemTypes = array_diff($itemTypes, ['quiver']);
             }
            // Skip display if no valid items after filtering

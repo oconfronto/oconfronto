@@ -429,7 +429,7 @@ switch ($_GET['act']) {
 			// Now execute the query with all parameters
 			$result = $db->execute($query, $values);
 
-			echo showAlert("<i>Você pode comprar items de nível " . ($player->level + 10) . " ou menos.</i>");
+			echo showAlert("<i>Você pode comprar items de nível " . ($player->level + MAX_LEVEL_DIFFERENCE) . " ou menos.</i>");
 
 			while ($item = $result->fetchrow()) {
 				echo "<fieldset>\n";
