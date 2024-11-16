@@ -428,8 +428,8 @@ if ($showitenx->recordcount() == 0) {
 		$showitres2 = "+<font color=red>" . $showeditexs['res'] . " Res</font>";
 	}
 
-	// Objective: This code defines a function `calculateEffectiveness` to compute the effectiveness 
-	// of an item based on its type, effectiveness, and bonus. The function uses a multiplier 
+	// Objective: This code defines a function `calculateEffectiveness` to compute the effectiveness
+	// of an item based on its type, effectiveness, and bonus. The function uses a multiplier
 	// specific to the item type (e.g., shield, quiver) to adjust the total effectiveness.
 
 	// Define the function to calculate effectiveness based on item type, base effectiveness, and item bonus

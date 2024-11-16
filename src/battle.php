@@ -35,10 +35,12 @@ switch ($_GET['act']) {
 	    foreach ($enemy1 as $key => $value) {
 	        $enemy->$key = $value;
 	    }
-	} else {
-	    throw new RuntimeException("Failed to fetch enemy data");
-}
-
+		function fetchData($data) {
+			if (!$data) {
+				throw new UnexpectedValueException("Failed to fetch enemy data"); // Exceção mais específica
+			}
+		}		
+	}
 		if ($enemy->serv != $player->serv) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "Este usuário não pertence ao mesmo servidor que você! <a href=\"battle.php\"/>Voltar</a>.";

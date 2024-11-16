@@ -62,7 +62,7 @@ function displayItem($db, $player, $itemTypes): void
                 $showitname = htmlspecialchars($showeditexs['name'] . " + " . $showeditexs['item_bonus']);
 
                 // Item information
-                $description = htmlspecialchars($showeditexs['description'] ?? '');
+                htmlspecialchars($showeditexs['description'] ?? '');
                 $showitinfo = $showeditexs['type'] === 'ring'
                 ? "<table width=100%><tr><td><font size=1px>" . htmlspecialchars($showeditexs['description']) . "</font></td><td width=35%><font size=1px>" . $showitfor2 . $showitvit2 . $showitagi2 . $showitres2 . "</font></td></tr></table>"
                 : "<table width=100%><tr><td width=65%><font size=1px>$attributeLabel: " . htmlspecialchars((string) $newefec) . "</font></td><td width=35%><font size=1px>" . $showitfor2 . $showitvit2 . $showitagi2 . $showitres2 . "</font></td></tr></table>";

@@ -135,8 +135,9 @@ if ($_GET['itid']) {
                     include(__DIR__ . "/templates/private_footer.php");
                     exit;
                 }
+                
                 if ($ddckitexs['type'] == 'quiver' && $player->voc == 'knight') {
-                    include_once __DIR__ . "/templates/private_header.php"; 
+                    include_once __DIR__ . "/templates/private_header.php";
                     echo "Guerreiros não podem usar Aljavas. <a href=\"inventory.php\">Voltar</a>.";
                     include_once __DIR__ . "/templates/private_footer.php";
                     exit;
@@ -147,6 +148,7 @@ if ($_GET['itid']) {
                     include_once __DIR__ . "/templates/private_footer.php";
                     exit;
                 }
+                
                 $lvlbonus = $player->vip > time() ? 10 : 0;
                 if ($ddckitexs['needlvl'] > ($player->level + $lvlbonus)) {
                     include(__DIR__ . "/templates/private_header.php");
