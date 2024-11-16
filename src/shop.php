@@ -420,7 +420,7 @@ switch ($_GET['act']) {
 		
 			// Level condition
 			$conditions[] = "`needlvl` < ?";
-			$values[] = $player->level + 10;
+			$values[] = $player->level + MAX_LEVEL_DIFFERENCE;
 		
 			// Build the final query
 			$query .= implode(" AND ", $conditions);
@@ -489,14 +489,6 @@ switch ($_GET['act']) {
 			} elseif ($player->vip > time()) {
 				echo showAlert("<i>Você tem 10% de desconto nos items, pelo fato de ser um membro vip.</i>");
 			}
-		} elseif ($_GET['type'] == 'quiver' && $player->voc == 'knight') {
-			echo "Guerreiros não podem usar Aljavas. <a href=\"inventory.php\">Voltar</a>.";
-			include_once __DIR__ . "/templates/private_footer.php";
-			exit;
-		} elseif ($_GET['type'] == 'quiver' && $player->voc == 'mage') {
-			echo "Magos não podem usar Aljavas. <a href=\"inventory.php\">Voltar</a>.";
-			include_once __DIR__ . "/templates/private_footer.php";
-			exit;
 		} else {
 			echo "<br/><p><i><center>Selecione o tipo de item que você deseja procurar.</center></i></p>";
 		}

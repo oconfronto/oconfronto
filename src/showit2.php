@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+	// Define the function to calculate effectiveness based on item type, base effectiveness, and item bonus
+	function calculateEffectiveness(string $type, float $effectiveness, float $itemBonus): float {
+		$multiplier = BONUS_MULTIPLIERS[$type] ?? BONUS_MULTIPLIERS['default'];
+		return $effectiveness + ($itemBonus * $multiplier);
+	}
+
 // BONUS_MULTIPLIERS: Defines the multipliers for specific items or attributes
 // The "quiver" item has a multiplier of 1.5, and the default multiplier for other items is 2.0
 const BONUS_MULTIPLIERS = [
@@ -432,12 +438,6 @@ if ($showitenx->recordcount() == 0) {
 	// of an item based on its type, effectiveness, and bonus. The function uses a multiplier
 	// specific to the item type (e.g., shield, quiver) to adjust the total effectiveness.
 
-	// Define the function to calculate effectiveness based on item type, base effectiveness, and item bonus
-	function calculateEffectiveness($type, $effectiveness, $itemBonus) {
-	    $multiplier = BONUS_MULTIPLIERS[$type] ?? BONUS_MULTIPLIERS['default'];
-	    return $effectiveness + ($itemBonus * $multiplier);
-	}
-	
 	$newefec = calculateEffectiveness($showeditexs['type'], $showeditexs['effectiveness'], $showeditexs['item_bonus']);
 	$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Defesa: " . $newefec . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
