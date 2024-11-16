@@ -170,12 +170,12 @@ if ($player->promoted == 'f') {
 
 //Calculate some variables that will be used
 $forcadoplayer = ceil(($player->strength + $player->atkbonus['effectiveness'] + ($player->atkbonus['item_bonus'] * 2) + $pbonusfor) * $multipleatk);
-$agilidadedoplayer = ceil($player->agility + 
-    $player->agibonus6['effectiveness'] + 
-    ($player->agibonus6['item_bonus'] * 2) + 
-    $player->agibonus7['effectiveness'] + 
-    ($player->agibonus7['item_bonus'] * 2) + 
-    $pbonusagi);;
+$agilidadedoplayer = ceil($player->agility +
+    $player->agibonus6['effectiveness'] +
+    ($player->agibonus6['item_bonus'] * 2) +
+    $player->agibonus7['effectiveness'] +
+    ($player->agibonus7['item_bonus'] * 2) +
+    $pbonusagi);
 $resistenciadoplayer = ceil((($player->resistance + ($player->defbonus1['effectiveness'] + $player->defbonus2['effectiveness'] + $player->defbonus3['effectiveness'] + $player->defbonus5['effectiveness']) + (($player->defbonus1['item_bonus'] * 2) + ($player->defbonus2['item_bonus'] * 2) + ($player->defbonus3['item_bonus'] * 2) + ($player->defbonus5['item_bonus'] * 2)) + $pbonusres) * $multipledef) / 1.35);
 $forcadomonstro = ($enemy->strength * 1.3);
 $agilidadedomonstro = $enemy->agility;

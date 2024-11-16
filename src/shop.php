@@ -59,11 +59,11 @@ switch ($_GET['act']) {
 					];
 					
 					if (isset($itemRestrictions[$item['type']][$player->voc])) {
-						include(__DIR__ . "/templates/private_header.php");
+						include_once __DIR__ . "/templates/private_header.php";
 						echo "<b>Ferreiro:</b><br />\n";
 						echo "<i>Desculpe, mas " . $itemRestrictions[$item['type']][$player->voc] . "!</i><br /><br />\n";
 						echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
-						include(__DIR__ . "/templates/private_footer.php");
+						include_once __DIR__ . "/templates/private_footer.php";
 						break;
 					}
 

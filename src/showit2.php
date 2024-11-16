@@ -10,7 +10,7 @@ const BONUS_MULTIPLIERS = [
 ];
 // ATTRIBUTE_LABELS: Maps the attributes to their respective labels
 // "shield" is labeled as "Defense" and "quiver" is labeled as "Agility"
-$ATTRIBUTE_LABELS = [ 
+$ATTRIBUTE_LABELS = [
 	    'shield' => _('Defesa'), // Label for shield attribute (Defense)
 	    'quiver' => _('Agilidade') // Label for quiver attribute (Agility)
 	];
@@ -316,9 +316,9 @@ if ($showitenx->recordcount() == 0) {
 		$showitres2 = "+<font color=red>" . $showeditexs['res'] . " Res</font>";
 	}
 
-	// Objective: This code calculates the effectiveness of an item based on its bonus, 
-	// generates an item name with its bonus, retrieves the appropriate attribute label 
-	// (e.g., "Agility" for a quiver or "Defense" for a shield), and displays the item 
+	// Objective: This code calculates the effectiveness of an item based on its bonus,
+	// generates an item name with its bonus, retrieves the appropriate attribute label
+	// (e.g., "Agility" for a quiver or "Defense" for a shield), and displays the item
 	// with the calculated effectiveness and other attributes (e.g., vit, agi, res).
 	$newefec = ($showeditexs['effectiveness']) + ($showeditexs['item_bonus'] * 2);
 	$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
