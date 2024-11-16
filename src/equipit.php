@@ -73,10 +73,10 @@ if ($_GET['itid']) {
             $res = 40;
             $update = 5;
         } elseif ($item['item_id'] == 297) {
-            $for = 65;
-            $vit = 65;
-            $agi = 65;
-            $res = 65;
+            $for = 45;
+            $vit = 45;
+            $agi = 45;
+            $res = 45;
             $update = 5;
         } elseif ($item['item_id'] == 178) {
             $for = 40;

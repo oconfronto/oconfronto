@@ -6,7 +6,7 @@ function displayItem($db, $player, $itemTypes): void
 {
     echo '<td><div class="bg_item1">';
 
-    // Permite que $itemTypes seja um array ou uma string única
+    // Allows $itemTypes to be an array or a single string
     $typeQuery = is_array($itemTypes) ? 'IN (' . implode(',', array_fill(0, count($itemTypes), '?')) . ')' : '= ?';
     $params = is_array($itemTypes) ? array_merge([$player->id], $itemTypes) : [$player->id, $itemTypes];
 
@@ -25,13 +25,13 @@ function displayItem($db, $player, $itemTypes): void
             echo '&nbsp;';
         } else {
             while ($showeditexs = $showitenx->fetchrow()) {
-                // Gerencia os atributos
+                // Manages attributes
                 $showitfor2 = $showeditexs['for'] > 0 ? "+<font color=gray>" . htmlspecialchars((string) $showeditexs['for']) . " For</font><br/>" : "";
                 $showitvit2 = $showeditexs['vit'] > 0 ? "+<font color=green>" . htmlspecialchars((string) $showeditexs['vit']) . " Vit</font><br/>" : "";
                 $showitagi2 = $showeditexs['agi'] > 0 ? "+<font color=blue>" . htmlspecialchars((string) $showeditexs['agi']) . " Agi</font><br/>" : "";
                 $showitres2 = $showeditexs['res'] > 0 ? "+<font color=red>" . htmlspecialchars((string) $showeditexs['res']) . " Res</font>" : "";
 
-                // Define a cor de fundo com base no bônus
+                // Sets background color based on bonus
                 $itemClass = 'bg_item1';
                 if ($showeditexs['item_bonus'] > 9) {
                     $itemClass = 'bg_item5';
@@ -43,30 +43,30 @@ function displayItem($db, $player, $itemTypes): void
                     $itemClass = 'bg_item2';
                 }
 
-                // Escolhe a descrição correta com base no tipo de item
-               // Definir o atributo com base no tipo de item
+                // Choose the correct description based on the item type
+                // Set the attribute based on the item type
                
     switch ($showeditexs['type']) {
     case 'shield':
     case 'armor':
     case 'legs':
-        $attributeLabel = 'Defesa';  // Para escudo, armadura e calças
+        $attributeLabel = 'Defesa';  // For shield, armor and pants
         break;
     case 'quiver':
     case 'boots':
-        $attributeLabel = 'Agilidade';  // Para aljava e botas
+        $attributeLabel = 'Agilidade';  // For quiver and boots
         break;
     case 'amulet':
-        $attributeLabel = 'Vitalidade';  // Para o colar
+        $attributeLabel = 'Vitalidade';  // For the necklace
         break;
     case 'weapon':
-        $attributeLabel = 'Ataque';  // Para a arma
+        $attributeLabel = 'Ataque';  // For the weapon
         break;
     case 'helmet':
-        $attributeLabel = 'Defesa';  // Para o elmo
+        $attributeLabel = 'Defesa';  // for the helmet
         break;
     default:
-        $attributeLabel = 'Atributo desconhecido';  // Caso o tipo de item não seja reconhecido (Exemplo adicionar possiveis runas)
+        $attributeLabel = 'Atributo desconhecido';  // If the item type is not recognized (Example: adding possible runes)
         break;
 }
                 $newefec = ($showeditexs['effectiveness']) + ($showeditexs['item_bonus'] * 2);
