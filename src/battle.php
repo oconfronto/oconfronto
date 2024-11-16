@@ -37,9 +37,9 @@ switch ($_GET['act']) {
 	    }
 		function fetchData($data) {
 			if (!$data) {
-				throw new UnexpectedValueException("Failed to fetch enemy data"); // Exceção mais específica
+				throw new UnexpectedValueException("Failed to fetch enemy data"); // More specific exception
 			}
-		}		
+		}
 	}
 		if ($enemy->serv != $player->serv) {
 			include(__DIR__ . "/templates/private_header.php");
