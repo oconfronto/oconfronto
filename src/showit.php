@@ -4,6 +4,23 @@ declare(strict_types=1);
 
 function displayItem($db, $player, $itemTypes): void
 {
+        // Validate item types against player's vocation
+        if (is_array($itemTypes)) {
+            if ($player->vocation === 'Archer' && in_array('shield', $itemTypes)) {
+                $itemTypes = array_diff($itemTypes, ['shield']);
+            } elseif (in_array('Archer', ['Warrior', 'Mage']) && in_array('quiver', $itemTypes)) {
+                $itemTypes = array_diff($itemTypes, ['quiver']);
+            }
+           // Skip display if no valid items after filtering
+            if (empty($itemTypes)) {
+                return;
+            }
+        } elseif (
+            ($itemTypes === 'shield' && $player->vocation === 'Archer') ||
+            ($itemTypes === 'quiver' && in_array($player->vocation, ['Warrior', 'Mage']))
+        ) {
+            return;
+        }   
     echo '<td><div class="bg_item1">';
 
     // Allows $itemTypes to be an array or a single string
