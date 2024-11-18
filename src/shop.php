@@ -347,40 +347,56 @@ switch ($_GET['act']) {
 		echo "</tr></table>";
 		echo "</form>";
 
-		if ($_GET['type'] == 'armor' || $_GET['type'] == 'boots' || $_GET['type'] == 'helmet' || $_GET['type'] == 'legs' || $_GET['type'] == 'shield' && $player->voc != 'archer' || $_GET['type'] == 'weapon' || $_GET['type'] == 'amulet') {
+		if ($_GET['type'] == 'armor' || $_GET['type'] == 'boots' || $_GET['type'] == 'helmet' || $_GET['type'] == 'legs' || $_GET['type'] == 'shield' || $_GET['type'] == 'weapon' || $_GET['type'] == 'amulet') {
 			$query = "SELECT `id`, `name`, `description`, `type`, `price`, `effectiveness`, `img`, `needpromo`, `needlvl` FROM `blueprint_items` WHERE ";
 			$conditions = [];
 			$values = [];
-
+		
+			// Price conditions
 			if (!empty($_GET['fromprice'])) {
+				$fromprice = intval($_GET['fromprice']);
 				$conditions[] = "`price` >= ?";
-				$values[] = intval($_GET['fromprice']);
+				$values[] = $fromprice;
 			}
-
+		
 			if (!empty($_GET['toprice'])) {
+				$toprice = intval($_GET['toprice']);
 				$conditions[] = "`price` <= ?";
-				$values[] = intval($_GET['toprice']);
+				$values[] = $toprice;
 			}
-
+		
+			// Type condition
+			$type = htmlspecialchars($_GET['type']);
 			$conditions[] = "`type` = ?";
-			$values[] = $_GET['type'];
-
+			$values[] = $type;
+		
+			// Purchase condition
 			$conditions[] = "`canbuy` = 't'";
-			
-			// Special condition for weapons
-			if ($_GET['type'] == 'weapon') {
-				$conditions[] = "(`voc` = ? OR `voc` = 0 OR `type` = 'weapon')";
-			} else {
-				$conditions[] = "(`voc` = ? OR `voc` = 0)";
-			}
+		
+			// Class condition
+			switch ($player->voc) {
+    		case 'archer':
+        	$voc = 1;
+        	break;
+    		case 'knight':
+        	$voc = 2;
+        	break;
+    		default:
+        	$voc = 3;
+        	break;
+	}
+			$conditions[] = "(`voc` = ? OR `voc` = 0)"; // Items that can be used by vocation or by any class
 			$values[] = $voc;
-
+		
+			// Level condition
 			$conditions[] = "`needlvl` < ?";
 			$values[] = $player->level + 10;
-
+		
+			// Build the final query
 			$query .= implode(" AND ", $conditions);
 			$query .= " ORDER BY `needlvl` ASC";
-
+		
+			// Now execute the query with all parameters
 			$result = $db->execute($query, $values);
 
 			echo showAlert("<i>Você pode comprar itens de nível " . ($player->level + 10) . " ou menos.</i>");
