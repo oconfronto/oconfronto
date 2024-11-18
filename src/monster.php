@@ -6,6 +6,12 @@ include(__DIR__ . "/lib.php");
 define("PAGENAME", "Batalhar");
 $player = check_user($db);
 
+// Temporary variables created to facilitate adjustments in this current file.
+// These values ($rate_xp and $rate_gold) are placeholders and will be replaced 
+// in the future by a dedicated function to handle these adjustments more coherently.
+$rate_xp = 21;
+$rate_gold = 10;
+
 $verificaLuta = $db->execute("select `id` from `duels` where `status`='s' and (`p_id`=? or `e_id`=?)", [$player->id, $player->id]);
 if ($verificaLuta->recordcount() > 0) {
 	header("Location: duel.php?luta=true");
@@ -151,15 +157,15 @@ switch ($_GET['act']) {
 
 		// Here, the XP gain rate after a kill is adjusted
 		if ($setting->eventoexp > time()) {
-			$expdomonstro = ceil($enemy->mtexp * 8);
+			$expdomonstro = ceil($enemy->mtexp * ($rate_xp * 2));
 		} elseif ($player->level <= 20) {
-			$expdomonstro = ceil($enemy->mtexp * 5);
+			$expdomonstro = ceil($enemy->mtexp * ($rate_xp + 1));
 		} elseif ($player->level < 35) {
-			$expdomonstro = ceil($enemy->mtexp * 4.5);
+			$expdomonstro = ceil($enemy->mtexp * ($rate_xp + 0.5));
 		} elseif ($player->vip > time()) {
-			$expdomonstro = ceil($enemy->mtexp * 4.1);
+			$expdomonstro = ceil($enemy->mtexp * ($rate_xp + 0.1));
 		} else {
-			$expdomonstro = ceil($enemy->mtexp * 4);
+			$expdomonstro = ceil($enemy->mtexp * $rate_xp);
 		}
 
 		$expdomonstro *= $bixo->mul;
@@ -709,7 +715,7 @@ switch ($_GET['act']) {
 				}
 
 				// Here, the gold gain rate after a kill is adjusted
-				$goldwin = round($goldwin * 1.5);
+				$goldwin = round($goldwin * $rate_gold);
 				$goldwin *= $bixo->mul;
 
 				$expgroup1 = $db->execute("select `id` from `groups` where `player_id`=?", [$player->id]);
