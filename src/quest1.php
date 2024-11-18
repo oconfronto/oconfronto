@@ -24,7 +24,7 @@ if ($player->promoted == 'f') {
 if ($player->level < 100) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-	echo "<i>Seu nivel é muito baixo!</i><br/>\n";
+	echo "<i>Seu nível é muito baixo!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");
@@ -45,7 +45,7 @@ switch ($_GET['act']) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
 		echo "<i>Você já ouviu falar no jeweled ring? Ele é capas de aumentar seu ataque, sua defesa e sua resistência.</i><br>\n";
-		echo "<i>Eu posso te ajudar a conseguir este precioso anel, irei te dizer tudo que é nescesário se você me pagar uma pequena quantia de <b>120000 moedas de ouro</b>.</i><br>\n";
+		echo "<i>Eu posso te ajudar a conseguir este precioso anel, irei te dizer tudo que é necessário se você me pagar uma pequena quantia de <b>120000 moedas de ouro</b>.</i><br>\n";
 		echo '<a href="quest1.php?act=pay">Eu pago!</a> | <a href="home.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
@@ -301,7 +301,7 @@ switch ($_GET['act']) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
 		echo "<i>Pronto, ai está seu Jeweled Ring.</i><br>\n";
-		echo "(Acesse seu inventário para equipa-lo.)<br>\n";
+		echo "(Acesse seu inventário para equipá-lo.)<br>\n";
 		echo '<a href="home.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
@@ -326,7 +326,7 @@ if ($verificacao->recordcount() == 0) {
 if ($quest['quest_status'] == 1) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-	echo "<i>Para criar o anel, são nescesários três <b>Jeweled Crystals</b>. Você pode obtelos matando Dragões de Pedra ou comprando no mercado.</i><br/>\n";
+	echo "<i>Para criar o anel, são necessários três <b>Jeweled Crystals</b>. Você pode obtê-los matando Dragões de Pedra ou comprando no mercado.</i><br/>\n";
 	echo "<i>Quando conseguir o primeiro jeweled crystal volte aqui.</i><br/>\n";
 	echo "<a href=\"quest1.php?act=continue1\">Já possuo o jeweled crystal</a> | <a href=\"home.php\">Voltar</a>.";
 	echo "</fieldset>";
@@ -337,7 +337,7 @@ if ($quest['quest_status'] == 1) {
 if ($quest['quest_status'] == 2) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-	echo "<i>Você já me entegou um <b>jeweled crystal</b>, preciso de mais dois. Você pode obtelos matando Dragões de Pedra ou comprando no mercado.</i><br/>\n";
+	echo "<i>Você já me entregou um <b>jeweled crystal</b>, preciso de mais dois. Você pode obtê-los matando Dragões de Pedra ou comprando no mercado.</i><br/>\n";
 	echo "<i>Quando conseguir o segundo jeweled crystal volte aqui.</i><br/>\n";
 	echo "<a href=\"quest1.php?act=continue2\">Já possuo o jeweled crystal</a> | <a href=\"home.php\">Voltar</a>.";
 	echo "</fieldset>";
@@ -348,7 +348,7 @@ if ($quest['quest_status'] == 2) {
 if ($quest['quest_status'] == 3) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-	echo "<i>Você já me entegou dois <b>jeweled crystals</b>, preciso de mais um. Você pode obtelo matando Dragões de Pedra ou comprando no mercado.</i><br/>\n";
+	echo "<i>Você já me entregou dois <b>jeweled crystals</b>, preciso de mais um. Você pode obtelo matando Dragões de Pedra ou comprando no mercado.</i><br/>\n";
 	echo "<i>Quando conseguir o terceiro jeweled crystal volte aqui.</i><br/>\n";
 	echo "<a href=\"quest1.php?act=continue3\">Já possuo o jeweled crystal</a> | <a href=\"home.php\">Voltar</a>.";
 	echo "</fieldset>";
@@ -359,7 +359,7 @@ if ($quest['quest_status'] == 3) {
 if ($quest['quest_status'] == 4) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
-	echo "<i>Agora que possuo todos os cristais nescesários só preciso de uma peça para montar o anel, uma titanium wheel. A única maneira de obtela é matando Raderon, um poderoso guerreiro.</i><br/><br/>\n";
+	echo "<i>Agora que possuo todos os cristais necessários só preciso de uma peça para montar o anel, uma titanium wheel. A única maneira de obtê-la é matando Raderon, um poderoso guerreiro.</i><br/><br/>\n";
 	echo '<a href="quest1.php?act=raderon">Quero lutar contra Raderon</a> | <a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");

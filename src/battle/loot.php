@@ -66,7 +66,7 @@ if ($enemy->loot > 1) {
 				$lootbonus4m = "";
 			}
 
-			$mensagem = "<u><b>Você encontrou um/uma " . $loot_item2['name'] . "" . $lootbonus1m . "" . $lootbonus2m . "" . $lootbonus3m . "" . $lootbonus4m . " com " . $enemy->prepo . " " . $enemy->username . "</b></u>";
+			$mensagem = "<u><b>Você encontrou um(a) " . $loot_item2['name'] . "" . $lootbonus1m . "" . $lootbonus2m . "" . $lootbonus3m . "" . $lootbonus4m . " com " . $enemy->prepo . " " . $enemy->username . "</b></u>";
 			$lootstatus = 5;
 			$loot_id = $loot_item2['id'];
 		}

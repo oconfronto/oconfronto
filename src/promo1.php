@@ -12,7 +12,7 @@ include(__DIR__ . "/checkwork.php");
 if ($player->level < 240) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
-	echo "<i>Seu nivel é muito baixo!</i><br/>\n";
+	echo "<i>Seu nível é muito baixo!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");
@@ -533,7 +533,7 @@ if ($player->voc == "knight") {
 		if ($_GET['next'] == 1) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
-			echo "<i>O arco de Baltazar foi banhado pelo sangue de demônios, é a arma perfeita.<br/>Porém, os demônios estão sempre próximos a Baltazar, você terá de enfrenta-los em sua jornada.</i><br/>\n";
+			echo "<i>O arco de Baltazar foi banhado pelo sangue de demônios, é a arma perfeita.<br/>Porém, os demônios estão sempre próximos a Baltazar, você terá de enfrentá-los em sua jornada.</i><br/>\n";
 			echo "<a href=\"promo1.php?next=2\">Desejo começar minha jornada</a> | <a href=\"promo1.php?next=3\">Não estou preparado</a>.";
 			echo "</fieldset>";
 			include(__DIR__ . "/templates/private_footer.php");

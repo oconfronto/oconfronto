@@ -9,7 +9,7 @@ $player = check_user($db);
 
 if ($player->gm_rank < 75) {
 	include(__DIR__ . "/templates/private_header.php");
-	echo "VOcê não tem autoridade para acessar esta página.";
+	echo "Você não tem autoridade para acessar esta página.";
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
@@ -43,7 +43,7 @@ if (!$_GET['from']) {
 
 		$queryver = $db->execute("select * from `items` where `id`=? and `player_id`!=?", [$log['itemid'], $to]);
 		if ($queryver->recordcount() == 0) {
-			echo "" . $log['value'] . " para " . $log['name2'] . " já devolvidada ou não encontrada.<br/>";
+			echo "" . $log['value'] . " para " . $log['name2'] . " já devolvida ou não encontrada.<br/>";
 		} else {
 
 			$valortempo = time() -  $log['time'];

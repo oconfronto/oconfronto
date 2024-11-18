@@ -17,7 +17,7 @@ include(__DIR__ . "/templates/private_header.php");
 
 
 if ($player->gm_rank < 2) {
-	echo "Você não tem permisão para acessar esta página!";
+	echo "Você não tem permissão para acessar esta página!";
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }

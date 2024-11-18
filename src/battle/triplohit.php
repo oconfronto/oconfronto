@@ -29,8 +29,8 @@ if ($magiaatual2['magia'] == 1) {
 }
 
 if ($player->mana < $mana) {
-	if ($log[1] !== "Você tentou lançar um feitiço mas está sem mana sufuciente.") {
-		array_unshift($_SESSION['battlelog'], "5, Você tentou lançar um feitiço mas está sem mana sufuciente.");
+	if ($log[1] !== "Você tentou lançar um feitiço mas está sem mana suficiente.") {
+		array_unshift($_SESSION['battlelog'], "5, Você tentou lançar um feitiço mas está sem mana suficiente.");
 	}
 
 	$otroatak = 5;

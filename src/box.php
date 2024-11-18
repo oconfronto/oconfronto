@@ -163,12 +163,6 @@
 
 
 <Script Language=JavaScript>
-	// var nText = new Array()
-	// nText[0] = "<font size=\"1\">Escolha sua voca��o.</font>";
-	// nText[1] = "<font size=\"1\">Os Cavaleiros possuem uma grande defesa mas um baixo ataque.</font>";
-	// nText[2] = "<font size=\"1\">Os Magos s�o nivelados em ataque e defesa.</font>";
-	// nText[3] = "<font size=\"1\">Os Arqueiros possuem um bom ataque mas uma defesa fraca.</font>"
-
 	function deleteMsg(name) {
 		if (name.value == "none") {
 			document.getElementById('tr_confirm').style = "display:none";
@@ -177,7 +171,6 @@
 			document.getElementById('tr_confirm').style = "";
 			document.getElementById('txtDelete').innerHTML = `Digite <b style=\"color:red\">'${name.value}'</b> para confirmar a exclusão!`;
 		}
-
 	}
 </Script>
 

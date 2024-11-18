@@ -72,7 +72,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 				$insert['time'] = time();
 				$query = $db->autoexecute('log_gold', $insert, 'INSERT');
 
-				$msg .= sprintf('Você tranferiu <b>%s</b> de ouro para: <b>%s</b>.<p />', $amount, $username);
+				$msg .= sprintf('Você transferiu <b>%s</b> de ouro para: <b>%s</b>.<p />', $amount, $username);
 			}
 		}
 	}
@@ -80,7 +80,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 ?>
 
 	<fieldset>
-		<legend><b><?= $guild['name'] ?> :: Tranferir Ouro</b></legend>
+		<legend><b><?= $guild['name'] ?> :: Transferir Ouro</b></legend>
 		<form method="POST" action="guild_admin_treasury.php">
 			<table>
 				<tr>

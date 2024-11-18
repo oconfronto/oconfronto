@@ -10,7 +10,7 @@ include(__DIR__ . "/checkbattle.php");
 if ($player->level < 300) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
-	echo "<i>Seu nivel é muito baixo!</i><br/>\n";
+	echo "<i>Seu nível é muito baixo!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");
@@ -125,7 +125,7 @@ if ($quest1['quest_status'] > 100) {
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [2, $player->id, 15]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você demorou demais para atingir o nível nescesário. Você falhou no desafio.</i><br><br>";
+		echo "<i>Você demorou demais para atingir o nível necessário. Você falhou no desafio.</i><br><br>";
 		echo '<a href="quest7.php">Continuar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
@@ -136,7 +136,7 @@ if ($quest1['quest_status'] > 100) {
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [80, $player->id, 15]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Parabéns, você atingiu o nível nescesário a tempo.</i><br><br>";
+		echo "<i>Parabéns, você atingiu o nível necessário a tempo.</i><br><br>";
 		echo '<a href="quest7.php">Falar com Alexander</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");

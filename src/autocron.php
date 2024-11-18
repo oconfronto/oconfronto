@@ -144,7 +144,7 @@ $updategeralwork = $db->execute("SELECT * FROM `work` WHERE `status`='t' AND (`s
 while ($newwork = $updategeralwork->fetchrow()) {
 	$db->execute("update `work` set `status`='f' where `id`=?", [$newwork['id']]);
 	$db->execute("update `players` set `gold`=`gold`+?, `energy`=`energy`/? where `id`=?", [($newwork['gold'] * $newwork['worktime']), $newwork['worktime'], $newwork['player_id']]);
-	$worklog = "Seu trabalho como " . $newwork['worktype'] . " terminou! Voc&ecirc; recebeu <b>" . ($newwork['gold'] * $newwork['worktime']) . " moedas de ouro</b>.";
+	$worklog = "Seu trabalho como " . $newwork['worktype'] . " terminou! Você recebeu <b>" . ($newwork['gold'] * $newwork['worktime']) . " moedas de ouro</b>.";
 	addlog($newwork['player_id'], $worklog, $db);
 }
 
@@ -158,7 +158,7 @@ while ($newhunt = $updategeralhunt->fetchrow()) {
 	//Seleciona o nível do player.
 	$autoplevel = $db->GetOne("select `level` from `players` where `id`=?", [$newhunt['player_id']]);
 
-	//Seleciona a experi&ecirc;ncia atual do player
+	//Seleciona a experiência atual do player
 	$autopexp = $db->GetOne("select `exp` from `players` where `id`=?", [$newhunt['player_id']]);
 
 	//QUANTIDADE DE EXP QUE DEVE SER ADICIONADA AO PLAYER
@@ -208,7 +208,7 @@ while ($newhunt = $updategeralhunt->fetchrow()) {
 
 	$db->execute("update `players` set `gold`=`gold`+?, `energy`=`energy`/?, `hp`=`hp`/? where `id`=?", [$autohuntgold, ceil(($newhunt['hunttime'] + 1) * 1.2), ceil(($newhunt['hunttime'] + 2) / 2.5), $newhunt['player_id']]);
 
-	$huntlog = "Sua caça(" . $automname . ") terminou! Voc&ecirc; recebeu <b>" . ceil((($autommtexp) * 20) * $newhunt['hunttime']) . " pontos de experi&ecirc;ncia</b> e <b>" . $autohuntgold . " moedas de ouro</b>.";
+	$huntlog = "Sua caça(" . $automname . ") terminou! Você recebeu <b>" . ceil((($autommtexp) * 20) * $newhunt['hunttime']) . " pontos de experiência</b> e <b>" . $autohuntgold . " moedas de ouro</b>.";
 	addlog($newhunt['player_id'], $huntlog, $db);
 }
 

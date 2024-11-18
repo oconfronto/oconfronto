@@ -18,7 +18,7 @@ if ($get->recordcount() > 0 && $_POST['subname'] == "alterar") {
 	$numero = "10";
 	$total = strlen((string) $subtitle);
 	if ($total > $numero) {
-		echo showAlert("Ta maluco? Só são aceitos nicks com 10 caracteres ou menos.", "red");
+		echo showAlert("Tá maluco? Só são aceitos nicks com 10 caracteres ou menos.", "red");
 	} elseif (!empty($subtitle) && !empty($sub_color)) {
 		if ($sub_color == "red" || $sub_color == "blue" || $sub_color == "green" || $sub_color == "black") {
 

@@ -70,7 +70,7 @@ if ($setting->$unc3 == "t") {
 				$db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", [40, 30, 40, 30, $ringid]);
 			}
 
-			$logmsg = "Você ganhou na loteria e recebeu um/uma <b>" . $ioeowkewttttee['name'] . "</b>.";
+			$logmsg = "Você ganhou na loteria e recebeu um(a) <b>" . $ioeowkewttttee['name'] . "</b>.";
 			addlog($ipwpwpwpa['player_id'], $logmsg, $db);
 			$premiorecebido = $ioeowkewttttee['name'];
 		}

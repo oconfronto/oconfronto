@@ -26,14 +26,14 @@ switch ($_GET['p']) {
                 $a = "Você já concluiu esta missão!";
                 $b = '<center><a href="tavern.php?p=quests">Voltar</a></center>';
             } elseif ($quest['lvl'] > $player->level || $quest['to_lvl'] < $player->level && $quest['to_lvl'] > 0) {
-                $a = "Você não possui o nível nescesário para esta missão!";
+                $a = "Você não possui o nível necessário para esta missão!";
                 $b = '<center><a href="tavern.php?p=quests">Voltar</a></center>';
             } elseif ($qStatus > 0) {
                 $query = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, $quest['id']]);
                 $missao = $query->fetchrow();
                 if ($_GET['pay']) {
                     if ($player->gold - $quest['cost'] < 0) {
-                        $a = "Voc&ecirc; não possui esta quantia de ouro!";
+                        $a = "Você não possui esta quantia de ouro!";
                         $b = '<a href="tavern.php?p=quests&start=' . $quest['id'] . '">Voltar</a>';
                     } else {
                         $db->execute("update `players` set `gold`=`gold`-? where `id`=?", [$quest['cost'], $player->id]);
@@ -157,10 +157,10 @@ switch ($_GET['p']) {
 
         echo "</p></center>";
 
-        echo "<center><i>As tarefas são ativadas automaticamente, basta fazer seu objetivos após atiginir o nível mínimo nescesário.</i></center><br />\n";
+        echo "<center><i>As tarefas são ativadas automaticamente, basta fazer seu objetivos após atiginir o nível mínimo necessário.</i></center><br />\n";
 
         echo '<table width="100%">';
-        echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Lista de Tarefas</b><img src=\"static/images/help.gif\" title=\"header=[Tarefas] body=[<font size='1px'>Tarefas são maneiras divertidas de se beneficiar no jogo. Apenas siga alguma das tarefas abaixo e seja recompensado com ouro, itens ou até mesmo ponto de experi&ecirc;ncia!</font>]\"></center></td></tr>";
+        echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Lista de Tarefas</b><img src=\"static/images/help.gif\" title=\"header=[Tarefas] body=[<font size='1px'>Tarefas são maneiras divertidas de se beneficiar no jogo. Apenas siga alguma das tarefas abaixo e seja recompensado com ouro, itens ou até mesmo ponto de experiência!</font>]\"></center></td></tr>";
         $gettasks = $db->execute("select * from `tasks` order by `needlvl` asc");
         if ($gettasks->recordcount() < 1) {
             echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa disponível.</font></center></td></tr>";
@@ -188,7 +188,7 @@ switch ($_GET['p']) {
                     if ($task['win_type'] == 'gold') {
                         $win = "<b>Recompensa:</b> " . $task['win_value'] . " moedas de ouro.<br/>";
                     } elseif ($task['win_type'] == 'exp') {
-                        $win = "<b>Recompensa:</b> " . $task['win_value'] . " pontos de experi&ecirc;ncia.<br/>";
+                        $win = "<b>Recompensa:</b> " . $task['win_value'] . " pontos de experiência.<br/>";
                     } elseif ($task['win_type'] == 'item') {
                         $itname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$task['win_value']]);
                         $win = "<b>Recompensa:</b> " . $itname . ".<br/>";
@@ -311,7 +311,7 @@ switch ($_GET['p']) {
         if ($player->reino == '1') {
             echo showAlert("<i>Você tem 10% de desconto nas bebidas, pelo fato de ser um membro do reino Cathal.</i>");
         } elseif ($player->vip > time()) {
-            echo showAlert("<i>Você tem 10% de desconto nas bebidas, pelo fato de ser um membro vip.</i>");
+            echo showAlert("<i>Você tem 10% de desconto nas bebidas, pelo fato de ser um membro VIP.</i>");
         }
 
         while ($item = $lista->fetchrow()) {

@@ -227,7 +227,7 @@ if ($_GET['act']) {
 			echo "<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
 			echo '<div style="float:left;width:80px;"></div>';
 			echo '<div style="padding-left:25px;"><b>Bem vindo ao Hospital!</b><p>';
-			echo "<i>Você esta com a vida cheia! Você não precisa ser curado.</i><br/>\n";
+			echo "<i>Você está com a vida cheia! Você não precisa ser curado.</i><br/>\n";
 			echo "</p></div></fieldset>";
 
 			echo "<table style='border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
@@ -316,7 +316,7 @@ if ($_GET['act']) {
 				echo "<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
 				echo '<div style="float:left;width:80px;"></div>';
 				echo '<div style="padding-left:25px;"><b>Bem vindo ao Hospital!</b><p>';
-				echo "<i>Você esta com a vida cheia! Você não precisa ser curado.</i><br/>\n";
+				echo "<i>Você está com a vida cheia! Você não precisa ser curado.</i><br/>\n";
 				echo "</p></div></fieldset>";
 
 				echo "<table style='border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
@@ -354,7 +354,7 @@ if ($_GET['act']) {
 				echo "<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Hospital</b></fieldset>";
 				echo '<div style="float:left;width:80px;"></div>';
 				echo '<div style="padding-left:25px;"><b>Bem vindo ao Hospital!</b><p>';
-				echo "<i>Você esta com a vida cheia! Você não precisa ser curado.</i><br/>\n";
+				echo "<i>Você está com a vida cheia! Você não precisa ser curado.</i><br/>\n";
 				echo "</p></div></fieldset>";
 
 				echo "<table style='border:1px solid #b9892f;margin-left:2px;width:99.4%;' border=\"0\"><tr>";
@@ -394,7 +394,7 @@ if ($_GET['act']) {
 			if ($player->energy == $player->maxenergy) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "<fieldset><legend><b>Hospital</b></legend>\n";
-				echo "<i>Você esta com a energia máxima! Você não precisa desta poção.</i><br/>\n";
+				echo "<i>Você está com a energia máxima! Você não precisa desta poção.</i><br/>\n";
 				echo "</fieldset>\n";
 				echo '<a href="hospt.php">Retornar ao Hospital.</a>';
 				include(__DIR__ . "/templates/private_footer.php");
@@ -424,7 +424,7 @@ if ($_GET['act']) {
 			if ($player->mana == $player->maxmana) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "<fieldset><legend><b>Hospital</b></legend>\n";
-				echo "<i>Você esta com a mana ao máximo! Você não precisa desta poção.</i><br/>\n";
+				echo "<i>Você está com a mana ao máximo! Você não precisa desta poção.</i><br/>\n";
 				echo "</fieldset>\n";
 				echo '<a href="hospt.php">Retornar ao Hospital.</a>';
 				include(__DIR__ . "/templates/private_footer.php");
@@ -471,7 +471,7 @@ echo '<div style="float:left;width:80px;"></div>';
 echo '<div style="padding-left:25px;"><b>Bem vindo ao Hospital!</b><p>';
 
 if ($player->gold < $cost && $player->gold != 0) {
-	echo "<i>Você não possui dinheiro suficiente para recuperar toda sua vida.<br/>Podemos ajuda-lo recuperando <b>" . number_format($cost2) . "</b> pontos de vida por <b>" . number_format($player->gold) . "</b> moedas de ouro.</i><br />";
+	echo "<i>Você não possui dinheiro suficiente para recuperar toda sua vida.<br/>Podemos ajudá-lo recuperando <b>" . number_format($cost2) . "</b> pontos de vida por <b>" . number_format($player->gold) . "</b> moedas de ouro.</i><br />";
 } elseif ($player->hp == $player->maxhp) {
 	echo "<i>Sua vida está completa, Você não necessita de tratamento no momento.<br />";
 } elseif ($player->hp <= 0) {

@@ -38,7 +38,7 @@ $newpasswordcoded = encodePassword($newpassword);
 $query = $db->execute("update `accounts` set `password`=?, `validkey`=? where `email`=? and `validkey`=?", [$newpasswordcoded, $newstring, $email, $string]);
 $memberto = $real->fetchrow();
 $insert['player_id'] = $memberto['id'];
-$insert['msg'] = "Você recuperou a senha de sua conta pelo seu email.";
+$insert['msg'] = "Você recuperou a senha de sua conta pelo seu e-mail.";
 $insert['time'] = time();
 $query = $db->autoexecute('account_log', $insert, 'INSERT');
 $subject = "Sua nova senha - O Confronto";
@@ -57,7 +57,7 @@ $message .= "<p style=\"font-family:'Helvetica Neue', Arial, Helvetica, sans-ser
 $message .= "Se você esquecer sua senha novamente lembre-se que poderá solicitar uma nova senha <a href=\"" . $domain_url . "/forgot.php" . "\" target=\"_blank\">clicando aqui</a>.</p>\n";
 $message .= "<p style=\"font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;font-size:13px;line-height:18px;border-bottom:1px solid rgb(238, 238, 238);padding-bottom:10px\"></p>\n";
 $message .= "<p style=\"font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;margin-top:5px;font-size:10px;color:#888888;text-align:center;\">\n";
-$message .= "Copyright Â© 2008-2024 OC Productions<br/>\n";
+$message .= "Copyright © 2008-2024 OC Productions<br/>\n";
 $message .= "Todos os direitos reservados.\n";
 $message .= "</p>\n";
 $message .= "</div>\n";

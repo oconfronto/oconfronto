@@ -9,8 +9,8 @@ $log = explode(", ", (string) $_SESSION['battlelog'][0]);
 $magiaatual = $db->GetOne("select `magia` from `bixos` where `player_id`=?", [$player->id]);
 
 if ($player->mana < $mana) {
-	if ($log[1] !== "Você tentou lançar um feitiço mas está sem mana sufuciente.") {
-		array_unshift($_SESSION['battlelog'], "5, Você tentou lançar um feitiço mas está sem mana sufuciente.");
+	if ($log[1] !== "Você tentou lançar um feitiço mas está sem mana suficiente.") {
+		array_unshift($_SESSION['battlelog'], "5, Você tentou lançar um feitiço mas está sem mana suficiente.");
 	}
 
 	$otroatak = 5;

@@ -28,7 +28,7 @@ if ($_GET['act'] == 'showmsg') {
 
 	if ($getmsgs->recordcount() == 0) {
 		if (($player->guild == NULL || $player->guild == 0) && $user['pending_status'] == 'cla') {
-			echo "<font size=\"1\"><center><b>Voc&ecirc; não possui um clã.</center></font>";
+			echo "<font size=\"1\"><center><b>Você não possui um clã.</center></font>";
 		} else {
 			echo '<font size="1"><center><b>Nenhuma mensagem recente.</center></font>';
 		}

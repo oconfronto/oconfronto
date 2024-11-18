@@ -13,7 +13,7 @@ if ($numgoldbars->recordcount() > 2) {
 
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Atenção</b></legend>\n";
-	echo "As três barras de ouro que você possuia em seu inventário parecem ter se misturado, e formado um novo elmo.<br />";
+	echo "As três barras de ouro que você possuía em seu inventário parecem ter se misturado e formado um novo elmo.<br />";
 	echo '<a href="inventory.php">Voltar</a>.';
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");

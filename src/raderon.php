@@ -359,7 +359,7 @@ if ($player->hp <= 0) {
 	if ($expdomonstro + $player->exp >= maxExp($player->level)) //Player gained a level!
 	{
 		//Update player, gained a level
-		$output .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><u><b>Você passou de nivel!</b></u></div>";
+		$output .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><u><b>Você passou de nível!</b></u></div>";
 		$newexp = $expdomonstro + $player->exp - maxExp($player->level);
 
 		$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [maxMana($player->level, $player->extramana), maxMana($player->level, $player->extramana), $player->id]);

@@ -54,7 +54,7 @@ if ($profile['ban'] > time()) {
 
 if ($profile['gm_rank'] > 9) {
 	echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
-	echo "<center><b>O usuário " . $profile['username'] . " Ã um dos administradores do jogo.</b></center>";
+	echo "<center><b>O usuário " . $profile['username'] . " é um dos administradores do jogo.</b></center>";
 	echo "</div>";
 } elseif ($profile['gm_rank'] > 2) {
 	echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
@@ -117,7 +117,7 @@ if ($profile['gm_rank'] < 10) {
 		++$i;
 	}
 
-	echo "Âº";
+	echo "º";
 	echo "</td></tr>";
 }
 
@@ -173,7 +173,7 @@ if ($profile['guild'] == NULL || $profile['guild'] == '') {
 
 echo "</td></tr>";
 
-echo "<tr><td><b>Vip:</b></td>";
+echo "<tr><td><b>VIP:</b></td>";
 echo "<td>";
 if ($profile['vip'] > time()) {
 	echo "Sim";

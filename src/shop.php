@@ -383,7 +383,7 @@ switch ($_GET['act']) {
 
 			$result = $db->execute($query, $values);
 
-			echo showAlert("<i>Você pode comprar items de nível " . ($player->level + 10) . " ou menos.</i>");
+			echo showAlert("<i>Você pode comprar itens de nível " . ($player->level + 10) . " ou menos.</i>");
 
 			while ($item = $result->fetchrow()) {
 				echo "<fieldset>\n";
@@ -418,9 +418,9 @@ switch ($_GET['act']) {
 
 				if ($item['needlvl'] > 1) {
 					if ($player->level < $item['needlvl']) {
-						echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Você precisa ter nivel " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
+						echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Você precisa ter nível " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
 					} else {
-						echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter nivel " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
+						echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter nível " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
 					}
 				}
 
@@ -439,7 +439,7 @@ switch ($_GET['act']) {
 			if ($player->reino == '1') {
 				echo showAlert("<i>Você tem 10% de desconto nos items, pelo fato de ser um membro do reino Cathal.</i>");
 			} elseif ($player->vip > time()) {
-				echo showAlert("<i>Você tem 10% de desconto nos items, pelo fato de ser um membro vip.</i>");
+				echo showAlert("<i>Você tem 10% de desconto nos items, pelo fato de ser um membro VIP.</i>");
 			}
 		} elseif ($_GET['type'] == 'shield' && $player->voc == 'archer') {
 			echo "<br/><p><i><center>Arqueiros não podem usar/comprar escudos.</center></i></p>";

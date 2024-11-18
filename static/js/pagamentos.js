@@ -1,5 +1,5 @@
 var nText = new Array();
-nText[0] = "<b>Escolha uma profiss�o.</b><br><br><br>";
+nText[0] = "<b>Escolha uma profissão.</b><br><br><br>";
 nText[1] =
   "<b>Pagamento por hora:</b> 375<br><b>Energia por hora:</b> 5<br/><b>Nivel de trabalho:</b> 1";
 nText[2] =
