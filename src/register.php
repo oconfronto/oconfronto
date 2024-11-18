@@ -2,11 +2,6 @@
 
 declare(strict_types=1);
 
-if (time() < 1345222800) {
-    header("Location: beta.php?error=true");
-    exit;
-}
-
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Criar Conta");
 
