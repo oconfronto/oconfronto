@@ -131,6 +131,8 @@ if ($query04876->recordcount() > 0) {
 //d'a ouro pro cara q te convidou
 $queryactivate = $db->execute("select `id` from `players` where `acc_id`=? and `level`>=?", [$acc->id, $setting->activate_level]);
 if ($acc->ref != "t" && $queryactivate->recordcount() > 0) {
+    $qt_ref = 0;
+
     $query7 = $db->execute("update `players_ref` set `session_id`=? where `id_p_c`=?", [1, $acc->id]);
 
     if ($setting->promo == 't') {
