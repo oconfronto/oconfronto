@@ -12,7 +12,7 @@ if (isset($_GET['r'])) {
     $_SESSION['ref'] = htmlspecialchars((string) $_GET['r'], ENT_QUOTES, 'UTF-8');
 }
 
-$usaar = $_SESSION['ref'] ?? "1";
+$usaar = $_SESSION['ref'] ?? "";
 
 
 $error = 0;
