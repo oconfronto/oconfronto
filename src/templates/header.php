@@ -56,7 +56,7 @@
         $_SESSION['ref'] = $_GET['r'];
         $linkref = $_GET['r'];
     } else {
-        $linkref = 1;
+        $linkref = "";
     }
     ?>
     <div id="tudo">
