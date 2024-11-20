@@ -29,18 +29,30 @@ switch ($_GET['act']) {
 			break;
 		}
 
-		$enemy = new stdClass();
-		$enemy1 = $query->fetchrow(); //Get player info
-		if ($enemy1) {
-	    foreach ($enemy1 as $key => $value) {
-	        $enemy->$key = $value;
-	    }
-		function fetchData($data) {
-			if (!$data) {
-				throw new UnexpectedValueException("Failed to fetch enemy data"); // More specific exception
-			}
+		$enemy = new stdClass(); // Initialize $enemy as an empty object
+
+		try {
+		$enemy1 = $query->fetchrow(); // Attempt to fetch enemy data
+		fetchData($enemy1); // Validate the data
+		foreach ($enemy1 as $key => $value) {
+		$enemy->$key = $value; // Populate $enemy with fetched data
 		}
-	}
+		} catch (UnexpectedValueException $e) {
+		error_log($e->getMessage()); // Log the error for debugging
+		// Optionally, initialize $enemy with default values
+		$enemy->id = null;
+		$enemy->name = "Unknown Enemy";
+		$enemy->hp = 0;
+		$enemy->attack = 0;
+		}
+
+// Function to validate the fetched data, can be defined inside or outside the block
+function fetchData($data) {
+    if (!$data) {
+        throw new UnexpectedValueException("Failed to fetch enemy data"); // Throw an exception if data is invalid
+    }
+}
+
 		if ($enemy->serv != $player->serv) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "Este usuário não pertence ao mesmo servidor que você! <a href=\"battle.php\"/>Voltar</a>.";
