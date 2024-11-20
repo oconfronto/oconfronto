@@ -154,7 +154,7 @@ switch ($_GET['act']) {
 			$enemy->$key = $value;
 		}
 
-
+				// Here, the XP gain rate after a kill is adjusted
 		if ($setting->eventoexp > time()) {
 			$expdomonstro = ceil($enemy->mtexp * ($rate_xp * 2));
 		} elseif ($player->level <= 20) {
