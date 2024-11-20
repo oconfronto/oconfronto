@@ -17,7 +17,7 @@ if ($showDuel->recordcount() > 0) {
         if ($duel['p_id'] == $player->id) {
             $getUsername = $db->GetOne("select `username` from `players` where `id`=?", [$duel['e_id']]);
             $getLevel = $db->GetOne("select `level` from `players` where `id`=?", [$duel['e_id']]);
-            echo "<td class=\"off\" style=\"width: 75%; vertical-align: middle;\">Você desafiou <a href=\"profile.php?id=" . $getUsername . '">' . $getUsername . '</a><font size="1px">(n&ecirc;vel ' . $getLevel . ")</font> para um duelo.</td>";
+            echo "<td class=\"off\" style=\"width: 75%; vertical-align: middle;\">Você desafiou <a href=\"profile.php?id=" . $getUsername . '">' . $getUsername . '</a><font size="1px">(nível ' . $getLevel . ")</font> para um duelo.</td>";
 
             $duelCheckOnline = $db->execute("select `id` from `user_online` where `player_id`=?", [$duel['e_id']]);
             if ($duelCheckOnline->recordcount() > 0) {
@@ -30,7 +30,7 @@ if ($showDuel->recordcount() > 0) {
         } else {
             $getUsername = $db->GetOne("select `username` from `players` where `id`=?", [$duel['p_id']]);
             $getLevel = $db->GetOne("select `level` from `players` where `id`=?", [$duel['p_id']]);
-            echo '<td class="off" style="vertical-align: middle;"><a href="profile.php?id=' . $getUsername . '">' . $getUsername . '</a><font size="1px">(n&ecirc;vel ' . $getLevel . ")</font> te desafiou para um duelo.</td>";
+            echo '<td class="off" style="vertical-align: middle;"><a href="profile.php?id=' . $getUsername . '">' . $getUsername . '</a><font size="1px">(nível ' . $getLevel . ")</font> te desafiou para um duelo.</td>";
 
             $duelCheckOnline = $db->execute("select `id` from `user_online` where `player_id`=?", [$duel['p_id']]);
             if ($duelCheckOnline->recordcount() > 0) {

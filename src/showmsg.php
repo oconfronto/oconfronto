@@ -9,7 +9,7 @@ $gwar = $db->execute("select * from `pwar` where `time`>? and (`status`='t' or `
 $otherwar = $db->execute("select * from `pwar` where `time`>? and (`status`='t' or `status`='g' or `status`='e') order by rand() limit 1", [time() - 43200]);
 
 if ($player->stat_points > 0 && $msgtype == 1) {
-	echo "Voc&ecirc; tem " . $player->stat_points . " pontos de status disponíveis! <a href=\"stat_points.php\">Clique aqui para utiliza-los</a>!";
+	echo "Você tem " . $player->stat_points . " pontos de status disponíveis! <a href=\"stat_points.php\">Clique aqui para utilizá-los</a>!";
 	$messaged = 1;
 } elseif ($msgtype == 2 && $messaged === 0) {
 	$lembrete = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=? and `quest_status`<90", [$player->id, 1]);
@@ -121,7 +121,7 @@ if ($player->stat_points > 0 && $msgtype == 1) {
 		}
 
 		if ($setting->eventoexp > time() && $sorteia == 4) {
-			echo "Evento surpresa! Monstros com experi&ecirc;ncia em dobro!.";
+			echo "Evento surpresa! Monstros com experiência em dobro!.";
 			$messaged = 1;
 		}
 

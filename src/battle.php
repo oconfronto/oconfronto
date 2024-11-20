@@ -64,7 +64,7 @@ switch ($_GET['act']) {
 
 		if ($player->level <= 20) {
 			include(__DIR__ . "/templates/private_header.php");
-			echo "Só é permitido PVP para players de level 20+ <a href=\"battle.php\"/>Voltar</a>.";
+			echo "Só é permitido PVP para players de nível 20+ <a href=\"battle.php\"/>Voltar</a>.";
 			include(__DIR__ . "/templates/private_footer.php");
 			break;
 		}
@@ -127,14 +127,14 @@ switch ($_GET['act']) {
 		if ($recentlyattacked->recordcount() > 0) {
 			if ($enemy->tour == 'f') {
 				include(__DIR__ . "/templates/private_header.php");
-				echo "Você já atacou este usuário nos últimos 20 minutos.<br/>Aguarde alguns minutos para poder ataca-lo novamente. <a href=\"battle.php\">Voltar</a>.";
+				echo "Você já atacou este usuário nos últimos 20 minutos.<br/>Aguarde alguns minutos para poder atacá-lo novamente. <a href=\"battle.php\">Voltar</a>.";
 				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
 
 			if ($enemy->tour == 't' && ($setting->$enytourstatus != 'y' || ($setting->$enytourstatus == 'y' && $mytier != $enytier || $setting->$enytourstatus == 'y' && $enemy->killed > 0))) {
 				include(__DIR__ . "/templates/private_header.php");
-				echo "Você já atacou este usuário nos últimos 20 minutos.<br/>Aguarde alguns minutos para poder ataca-lo novamente. <a href=\"battle.php\">Voltar</a>.";
+				echo "Você já atacou este usuário nos últimos 20 minutos.<br/>Aguarde alguns minutos para poder atacá-lo novamente. <a href=\"battle.php\">Voltar</a>.";
 				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
@@ -182,7 +182,7 @@ switch ($_GET['act']) {
 
 		if ($setting->$enytourstatus == 'y' && $enemy->tour == 't' && $player->tour == 'f') {
 			include(__DIR__ . "/templates/private_header.php");
-			echo "O usuário " . $enemy->username . " está participando de um torneio agora.<br/>Você não está no torneio portanto não pode mata-lo.";
+			echo "O usuário " . $enemy->username . " está participando de um torneio agora.<br/>Você não está no torneio portanto não pode matá-lo.";
 			include(__DIR__ . "/templates/private_footer.php");
 			break;
 		}
@@ -190,9 +190,9 @@ switch ($_GET['act']) {
 		if ($setting->$enytourstatus == 'y' && $enemy->tour == 't' && ($player->tour == 't' && $player->killed > 0 || $mytier != $enytier)) {
 			include(__DIR__ . "/templates/private_header.php");
 			if ($mytier != $enytier) {
-				echo "O usuário " . $enemy->username . " está participando de outra categoria do torneio.<br/>Você não está na mesma categoria portanto não pode mata-lo.";
+				echo "O usuário " . $enemy->username . " está participando de outra categoria do torneio.<br/>Você não está na mesma categoria portanto não pode matá-lo.";
 			} else {
-				echo "Você não pode matar " . $enemy->username . " pois ele está participando de um torneio agora.<br/>Você foi desclasificado do torneio portanto não pode mata-lo.<br>";
+				echo "Você não pode matar " . $enemy->username . " pois ele está participando de um torneio agora.<br/>Você foi desclasificado do torneio portanto não pode matá-lo.<br>";
 			}
 
 			include(__DIR__ . "/templates/private_footer.php");
@@ -278,7 +278,7 @@ switch ($_GET['act']) {
 		//Player In Same Guild
 		if ($enemy->guild == $player->guild && $player->guild != NULL && !$_GET['comfirm']) {
 			include(__DIR__ . "/templates/private_header.php");
-			echo "Este usuário é membro do mesmo clã que você.<br/>Tem certeza que deseja ataca-lo?<br/><br/><a href=\"battle.php?act=attack&username=" . $enemy->username . '&comfirm=true">Atacar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="battle.php">Voltar</a>';
+			echo "Este usuário é membro do mesmo clã que você.<br/>Tem certeza que deseja atacá-lo?<br/><br/><a href=\"battle.php?act=attack&username=" . $enemy->username . '&comfirm=true">Atacar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="battle.php">Voltar</a>';
 			include(__DIR__ . "/templates/private_footer.php");
 			break;
 		}
@@ -288,7 +288,7 @@ switch ($_GET['act']) {
 			$ganguesaliadas = $db->execute("select `id` from `guild_aliance` where `guild_na`=? and `aled_na`=?", [$player->guild, $enemy->guild]);
 			if ($ganguesaliadas->recordcount() > 0) {
 				include(__DIR__ . "/templates/private_header.php");
-				echo "Este usuário é membro do clã " . $enemy->guild . ", um clã aliado do seu clã.<br/>Tem certeza que deseja ataca-lo?<br/><br/><a href=\"battle.php?act=attack&username=" . $enemy->username . '&comfirm=true">Atacar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="battle.php">Voltar</a>';
+				echo "Este usuário é membro do clã " . $enemy->guild . ", um clã aliado do seu clã.<br/>Tem certeza que deseja atacá-lo?<br/><br/><a href=\"battle.php?act=attack&username=" . $enemy->username . '&comfirm=true">Atacar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="battle.php">Voltar</a>';
 				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
@@ -298,7 +298,7 @@ switch ($_GET['act']) {
 		$checkfriendname = $db->execute("select * from `friends` where `fname`=? and `uid`=?", [$enemy->username, $player->id]);
 		if ($checkfriendname->recordcount() > 0 && !$_GET['comfirm']) {
 			include(__DIR__ . "/templates/private_header.php");
-			echo "Este usuário é seu amigo.<br/>Tem certeza que deseja ataca-lo?<br/><br/><a href=\"battle.php?act=attack&username=" . $enemy->username . '&comfirm=true">Atacar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="battle.php">Voltar</a>';
+			echo "Este usuário é seu amigo.<br/>Tem certeza que deseja atacá-lo?<br/><br/><a href=\"battle.php?act=attack&username=" . $enemy->username . '&comfirm=true">Atacar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="battle.php">Voltar</a>';
 			include(__DIR__ . "/templates/private_footer.php");
 			break;
 		}
@@ -313,7 +313,7 @@ switch ($_GET['act']) {
 
 		if ($enemy->gm_rank > 9) {
 			include(__DIR__ . "/templates/private_header.php");
-			echo "Este usuário é um administrador, você não pode ataca-lo! <a href=\"battle.php\">Voltar</a>.";
+			echo "Este usuário é um administrador, você não pode atacá-lo! <a href=\"battle.php\">Voltar</a>.";
 			include(__DIR__ . "/templates/private_footer.php");
 			break;
 		}
@@ -1011,7 +1011,7 @@ switch ($_GET['act']) {
 		}
 
 		if ($player->stat_points > 0 && $player->level < 15) {
-			echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">Antes de batalhar, utilize seus <b>' . $player->stat_points . "</b> pontos de status disponíveis, assim você fica mais forte! <a href=\"stat_points.php\">Clique aqui para utiliza-los!</a></div>";
+			echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">Antes de batalhar, utilize seus <b>' . $player->stat_points . "</b> pontos de status disponíveis, assim você fica mais forte! <a href=\"stat_points.php\">Clique aqui para utilizá-los!</a></div>";
 		}
 
 		$query = $db->execute("select * from `items` where `player_id`=? and `status`='equipped'", [$player->id]);

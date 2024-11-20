@@ -101,7 +101,7 @@ function edToolbar(obj) {
 
 function doImage(obj) {
   textarea = document.getElementById(obj);
-  var url = prompt("Digite o endere�o da imagem:", "http://");
+  var url = prompt("Digite o endereço da imagem:", "http://");
   var scrollTop = textarea.scrollTop;
   var scrollLeft = textarea.scrollLeft;
 
@@ -162,7 +162,7 @@ function doYou(obj) {
 
 function doURL(obj) {
   textarea = document.getElementById(obj);
-  var url = prompt("Digite o endere�o:", "http://");
+  var url = prompt("Digite o endereço:", "http://");
   var scrollTop = textarea.scrollTop;
   var scrollLeft = textarea.scrollLeft;
 
@@ -203,7 +203,7 @@ function doURL(obj) {
 
 function doColor(obj) {
   textarea = document.getElementById(obj);
-  var cor = prompt("Escreva uma cor: (em ingl�s)", "black");
+  var cor = prompt("Escreva uma cor: (em inglês)", "black");
   var scrollTop = textarea.scrollTop;
   var scrollLeft = textarea.scrollLeft;
 

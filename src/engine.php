@@ -36,7 +36,7 @@ if ($_SESSION['Login']['player_id'] > 0) {
 
 	$mailcount = $db->execute("select `id` from `mail` where `to`=? and `status`='unread'", [$player->id]);
 	if ($mailcount->recordcount() > 0) {
-		echo showAlert("Voc&ecirc; tem " . $mailcount->recordcount() . ' <a href="mail.php">mensagem(s)</a> n&atilde;o lida(s)!');
+		echo showAlert("Você tem " . $mailcount->recordcount() . ' <a href="mail.php">mensagem(s)</a> não lida(s)!');
 	}
 
 	$queryloginfriend = $db->execute("select `fname` from `friends` where `uid`=?", [$player->acc_id]);
@@ -93,5 +93,5 @@ if ($_SESSION['Login']['player_id'] > 0) {
 	echo "$('#nv_futuro').html('<b>Nível:</b>" . ($player->level + 1) . "');";
 	echo "</script>";
 } else {
-	echo showAlert("Conex&atilde;o perdida com o servidor.", "red");
+	echo showAlert("Conexão perdida com o servidor.", "red");
 }

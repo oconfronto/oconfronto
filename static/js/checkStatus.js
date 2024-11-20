@@ -2,7 +2,7 @@ testee = function (stat_points) {
   if (stat_points <= 0) {
     $("input[id^='buttonAdd']").attr("disabled", true);
     $("#pontos")
-      .html("Voc&ecirc; não possui mais pontos de status dispon&iacute;veis.")
+      .html("Você não possui mais pontos de status disponíveis.")
       .css("background-color", "#FFFDE0");
   }
 
@@ -46,17 +46,17 @@ testee = function (stat_points) {
       if (stat_points - usados >= 0) {
         $("#pontos")
           .html(
-            "Voc&ecirc; tem " +
+            "Você tem " +
               (stat_points - usados) +
-              " ponto de status dispon&iacute;veis."
+              " ponto de status disponíveis."
           )
           .css("background-color", "#45E61D");
         if (stat_points - usados == 0) {
           $("#pontos")
             .html(
-              "Voc&ecirc; tem " +
+              "Você tem " +
                 (stat_points - usados) +
-                " ponto de status dispon&iacute;veis."
+                " ponto de status disponíveis."
             )
             .css("background-color", "#FFFDE0");
           $("input[id^='buttonAdd']").attr("disabled", true);
@@ -71,7 +71,7 @@ testee = function (stat_points) {
               usados +
               " de " +
               stat_points +
-              " pontos dispon&iacute;veis."
+              " pontos disponíveis."
           )
           .css("background-color", "#EEA2A2");
       }

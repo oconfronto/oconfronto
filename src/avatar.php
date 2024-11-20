@@ -18,7 +18,7 @@ if ($get->recordcount() > 0 && $_POST['subname'] == "alterar") {
 	$numero = "10";
 	$total = strlen((string) $subtitle);
 	if ($total > $numero) {
-		echo showAlert("Ta maluco? Só são aceitos nicks com 10 caracteres ou menos.", "red");
+		echo showAlert("Tá maluco? Só são aceitos nicks com 10 caracteres ou menos.", "red");
 	} elseif (!empty($subtitle) && !empty($sub_color)) {
 		if ($sub_color == "red" || $sub_color == "blue" || $sub_color == "green" || $sub_color == "black") {
 
@@ -127,9 +127,7 @@ if ($procuramengperfil->recordcount() == 0) {
 						</td>
 					</tr>
 					<tr>
-						<td><input type="submit" name="submit" value="Enviar" />&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"
-								onclick="javascript:window.open('example.html', '_blank','top=100, left=100, height=400, width=400, status=no, menubar=no, resizable=no, scrollbars=yes, toolbar=no, location=no, directories=no');">Dicas
-								de formatação</a></td>
+						<td><input type="submit" name="submit" value="Enviar" />&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					</tr>
 				</table>
 			</td>

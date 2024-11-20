@@ -52,7 +52,7 @@ if ($_POST['deposit']) {
 		addlog($lider, $logmsg, $db);
 		addlog($vice, $logmsg, $db);
 
-		$msg1 .= "Você tranferiu <b>" . $amount . "</b> de ouro para seu clã.";
+		$msg1 .= "Você transferiu <b>" . $amount . "</b> de ouro para seu clã.";
 	}
 } elseif ($_POST['transfer']) {
 	$query = $db->execute("select * from `players` where `username`=?", [$_POST['username']]);
@@ -90,7 +90,7 @@ if ($_POST['deposit']) {
 		$insert['time'] = time();
 		$query = $db->autoexecute('log_gold', $insert, 'INSERT');
 
-		$msg2 .= "Você tranferiu <b>" . $amount . "</b> de ouro para: <b>" . $_POST['username'] . "</b>.";
+		$msg2 .= "Você transferiu <b>" . $amount . "</b> de ouro para: <b>" . $_POST['username'] . "</b>.";
 	}
 }
 
@@ -113,7 +113,7 @@ echo "<br/><br/>";
 
 if ($player->username == $guild['leader'] || $player->username == $guild['vice']) {
 	echo "<fieldset>";
-	echo "<legend><b>" . $guild['name'] . " :: Tranferir Ouro</b></legend>";
+	echo "<legend><b>" . $guild['name'] . " :: Transferir Ouro</b></legend>";
 	echo '<form method="POST" action="guild_treasury.php">';
 	echo "<table>";
 	echo "<tr>";

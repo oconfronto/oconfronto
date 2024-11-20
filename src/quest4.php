@@ -12,7 +12,7 @@ include(__DIR__ . "/checkbattle.php");
 if ($player->level < 130) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Gadudj</b></legend>\n";
-	echo "<i>Seu nivel é muito baixo!</i><br/>\n";
+	echo "<i>Seu nível é muito baixo!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");
@@ -23,7 +23,7 @@ $verificaring = $db->execute("select * from `items` where `player_id`=? and `ite
 if ($verificaring->recordcount() == 0) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
-	echo "<i>Você não possui o jeweled ring nescesário para fazer esta missão.</i>";
+	echo "<i>Você não possui o jeweled ring necessário para fazer esta missão.</i>";
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
@@ -44,7 +44,7 @@ switch ($_GET['act']) {
 	case "help":
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Gadudj</b></legend>\n";
-		echo "<i>Bom, vejo que você está usando um jeweled ring. Ele é um anel muito poderoso mas eu posso deixa-lo ainda melhor.<br>Se você me pagar uma quantia de 250000, modificarei seu anel e ele poderá aumentar até 15% sua agilidade e força. O que acha?</i><br><br>\n";
+		echo "<i>Bom, vejo que você está usando um jeweled ring. Ele é um anel muito poderoso mas eu posso deixá-lo ainda melhor.<br>Se você me pagar uma quantia de 250000, modificarei seu anel e ele poderá aumentar até 15% sua agilidade e força. O que acha?</i><br><br>\n";
 		echo '<a href="quest4.php?act=acept">Aceito</a> | <a href="quest4.php?act=decline">Recuso</a> | <a href="home.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
@@ -73,7 +73,7 @@ switch ($_GET['act']) {
 		if ($verificaring->recordcount() == 0) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
-			echo "<i>Você não possui o jeweled ring nescesário para fazer esta missão.</i>";
+			echo "<i>Você não possui o jeweled ring necessário para fazer esta missão.</i>";
 			echo "</fieldset>";
 			include(__DIR__ . "/templates/private_footer.php");
 			exit;
@@ -98,7 +98,7 @@ switch ($_GET['act']) {
 			$query = $db->autoexecute('quests', $insert, 'INSERT');
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Gadudj</b></legend>\n";
-			echo "<i>Obrigado. Irei optimizar seu anel.  Me encontre aqui em 10h.<br/>Lembre-se que você está sem o seu anél agora, então não tire os seus itens que precisam do jeweled ring.</i><br><br>\n";
+			echo "<i>Obrigado. Irei optimizar seu anel.  Me encontre aqui em 10h.<br/>Lembre-se que você está sem o seu anel agora, então não tire os seus itens que precisam do jeweled ring.</i><br><br>\n";
 			echo '<a href="home.php">Voltar</a>.';
 			echo "</fieldset>";
 			include(__DIR__ . "/templates/private_footer.php");
@@ -116,7 +116,7 @@ switch ($_GET['act']) {
 	case "search":
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Depois de algum tempo procurando você avistou Gadudj.<br/>Você tem certeza que deseja atacalo? ele possui nivel 112!</i><br><br>\n";
+		echo "<i>Depois de algum tempo procurando você avistou Gadudj.<br/>Você tem certeza que deseja atacalo? ele possui nível 112!</i><br><br>\n";
 		echo '<a href="gadudj.php">Atacar Gadudj</a> | <a href="quest4.php?act=assassin">Contratar assassino</a> | <a href="home.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
@@ -205,7 +205,7 @@ if ($verificacao1->recordcount() == 0) {
 	if ($verificaring->recordcount() == 0) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Você não possui o jeweled ring nescesário para fazer esta missão.</i>";
+		echo "<i>Você não possui o jeweled ring necessário para fazer esta missão.</i>";
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
@@ -225,7 +225,7 @@ if ($quest1['quest_status'] > 100) {
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [2, $player->id, 7]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Missão</b></legend>\n";
-		echo "<i>Parece que Gadudj fugiu com seu jeweled ring! Você terá que procurar e mata-lo para recuperar seu anel.</i><br><br>";
+		echo "<i>Parece que Gadudj fugiu com seu jeweled ring! Você terá que procurar e matá-lo para recuperar seu anel.</i><br><br>";
 		echo '<a href="quest4.php?act=search">Procurar por Gadudj</a> | <a href="home.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
@@ -247,7 +247,7 @@ if ($quest1['quest_status'] > 100) {
 if ($quest1['quest_status'] == 2) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
-	echo "<i>Parece que Gadudj fugiu com seu jeweled ring! Você terá que procurar e mata-lo para recuperar seu anel.</i><br><br>";
+	echo "<i>Parece que Gadudj fugiu com seu jeweled ring! Você terá que procurar e matá-lo para recuperar seu anel.</i><br><br>";
 	echo '<a href="quest4.php?act=search">Procurar por Gadudj</a> | <a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");

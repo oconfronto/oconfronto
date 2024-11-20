@@ -17,13 +17,13 @@ if (isset($_POST['submit'])) {
     $getaccount = $db->execute("select `id` from `accounts` where `id`=? and `email`=?", [$player->acc_id, $_POST['email']]);
 
     if ($_POST['email'] != $_POST['email1']) {
-        print "Os emails digitados são diferentes. <a href='forgottrans.php'>Voltar</a>.";
+        print "Os e-mails digitados são diferentes. <a href='forgottrans.php'>Voltar</a>.";
         include(__DIR__ . "/templates/footer.php");
         exit;
     }
 
     if ($_POST['email'] != $acc->email) {
-        print "O email digitado não confere com o email de sua conta. <a href='forgottrans.php'>Voltar</a>.";
+        print "O e-mail digitado não confere com o e-mail de sua conta. <a href='forgottrans.php'>Voltar</a>.";
         include(__DIR__ . "/templates/footer.php");
         exit;
     }
@@ -41,14 +41,14 @@ if (isset($_POST['submit'])) {
         exit;
     }
 
-    $subject = "Você solicitou sua senha de transferência por email";
+    $subject = "Você solicitou sua senha de transferência por e-mail";
     $body = "
-            <h2>Vocï¿½ solicitou sua senha de transfêrencia.<br><br>
-            <font color=blue>Sua senha de transferência ï¿½: " . $player->transpass . "</font></h2>
+            <h2>Você solicitou sua senha de transferência.<br><br>
+            <font color=blue>Sua senha de transferência é: " . $player->transpass . "</font></h2>
             <br><br><br>
         ";
     $insert['player_id'] = $player->id;
-    $insert['msg'] = "Você solicitou sua senha de transferência por email.";
+    $insert['msg'] = "Você solicitou sua senha de transferência por e-mail.";
     $insert['time'] = time();
     $query = $db->autoexecute('account_log', $insert, 'INSERT');
     $sent_mail = send_mail("O Confronto RPG", $acc->email, $assunto, $mail->Body);

@@ -30,9 +30,9 @@
     <Script Language=JavaScript>
         var nText = new Array()
         nText[0] = "<div>Escolha sua vocação.</div>";
-        nText[1] = "<div>Os Cavaleiros possuem uma grande defesa mas um baixo ataque.</div>";
-        nText[2] = "<div>Os Magos são nivelados em ataque e defesa.</div>";
-        nText[3] = "<div>Os Arqueiros possuem um bom ataque mas uma defesa fraca.</div>"
+        nText[1] = "<div>Os Cavaleiros possuem uma grande defesa, mas um baixo ataque.</div>";
+        nText[2] = "<div>Os Magos têm um ataque e defesa equilibrados.</div>";
+        nText[3] = "<div>Os Arqueiros possuem um bom ataque, mas uma defesa fraca.</div>"
 
         function swapText(isList) {
             txtIndex = isList.selectedIndex;

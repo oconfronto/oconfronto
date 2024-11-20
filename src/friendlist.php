@@ -18,14 +18,14 @@ if ($_GET['add']) {
 	$getfname = $db->GetOne("select `username` from `players` where `username`=?", [$_GET['add']]);
 	if ($getfname == $player->username) {
 		include(__DIR__ . "/templates/private_header.php");
-		echo "Voc&ecirc; não pode adicionar voc&ecirc; mesmo!<br><a href=\"friendlist.php\">Voltar á lista de amigos</a> | <a href=\"members.php\">Voltar á lista de membros</a>";
+		echo "Você não pode adicionar você mesmo!<br><a href=\"friendlist.php\">Voltar á lista de amigos</a> | <a href=\"members.php\">Voltar á lista de membros</a>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
 
 	if ($num_rows + 1 > $maxfriends) {
 		include(__DIR__ . "/templates/private_header.php");
-		echo "Voc&ecirc; atingiu o numero máximo de amigos!<br><a href=\"friendlist.php\">Voltar á lista de amigos</a> | <a href=\"members.php\">Voltar á lista de membros</a>";
+		echo "Você atingiu o numero máximo de amigos!<br><a href=\"friendlist.php\">Voltar á lista de amigos</a> | <a href=\"members.php\">Voltar á lista de membros</a>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
@@ -33,7 +33,7 @@ if ($_GET['add']) {
 	$quereya = $db->execute("select * from `friends` where `fname`=? and `uid`=?", [$_GET['add'], $player->acc_id]);
 	if ($quereya->recordcount() > 0) {
 		include(__DIR__ . "/templates/private_header.php");
-		echo "Voc&ecirc; já tem este usuário na sua lista de amigos!<br><a href=\"friendlist.php\">Voltar á lista de amigos</a> | <a href=\"members.php\">Voltar á lista de membros</a>";
+		echo "Você já tem este usuário na sua lista de amigos!<br><a href=\"friendlist.php\">Voltar á lista de amigos</a> | <a href=\"members.php\">Voltar á lista de membros</a>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
@@ -123,7 +123,7 @@ if ($_GET['deletedogrupo']) {
 
 		if ($player->id == $_GET['deletedogrupo']) {
 			include(__DIR__ . "/templates/private_header.php");
-			echo "Voc&ecirc; não pode se expulsar do seu própio grupo.<br><a href=\"friendlist.php\">Voltar</a>.";
+			echo "Você não pode se expulsar do seu própio grupo.<br><a href=\"friendlist.php\">Voltar</a>.";
 			include(__DIR__ . "/templates/private_footer.php");
 			exit;
 		}
@@ -165,21 +165,21 @@ if ($_GET['addgroup']) {
 
 	if ($groupfriend['level'] < 30) {
 		include(__DIR__ . "/templates/private_header.php");
-		echo "O usuário que voc&ecirc; deseja convidar possui nível inferior é 30.<br /><a href=\"friendlist.php\">Voltar</a>.";
+		echo "O usuário que você deseja convidar possui nível inferior é 30.<br /><a href=\"friendlist.php\">Voltar</a>.";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
 
 	if ($groupfriend['level'] > ($player->level + 30)) {
 		include(__DIR__ . "/templates/private_header.php");
-		echo "A diferença de nível entre voc&ecirc; e seu amigo é maior que 30 níveis.<br /><a href=\"friendlist.php\">Voltar</a>.";
+		echo "A diferença de nível entre você e seu amigo é maior que 30 níveis.<br /><a href=\"friendlist.php\">Voltar</a>.";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
 
 	if ($groupfriend['level'] < ($player->level - 30)) {
 		include(__DIR__ . "/templates/private_header.php");
-		echo "A diferença de nível entre voc&ecirc; e seu amigo é maior que 30 níveis.<br /><a href=\"friendlist.php\">Voltar</a>.";
+		echo "A diferença de nível entre você e seu amigo é maior que 30 níveis.<br /><a href=\"friendlist.php\">Voltar</a>.";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
@@ -211,7 +211,7 @@ if ($_GET['addgroup']) {
 	$checksevctemgrupo = $db->execute("select * from `groups` WHERE `player_id`=? and `id`!=?", [$player->id, $player->id]);
 	if ($checksevctemgrupo->recordcount() > 0) {
 		include(__DIR__ . "/templates/private_header.php");
-		echo "Voc&ecirc; já está em um grupo de caça. Para criar um novo grupo primeiro saia de seu grupo atual.<br /><a href=\"friendlist.php\">Voltar</a>.";
+		echo "Você já está em um grupo de caça. Para criar um novo grupo primeiro saia de seu grupo atual.<br /><a href=\"friendlist.php\">Voltar</a>.";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
@@ -308,7 +308,7 @@ include(__DIR__ . "/templates/private_header.php");
 </fieldset>
 <?php
 if ($zeroamigos != 5) {
-	echo '<font size="1"><b>Voc&ecirc; tem ' . $num_rows . " amigo(s)</b></font>";
+	echo '<font size="1"><b>Você tem ' . $num_rows . " amigo(s)</b></font>";
 }
 
 echo "<br/><br/>\n";
@@ -316,7 +316,7 @@ echo "<fieldset>\n";
 echo "<legend><b>Grupo de Caça</b></legend>\n";
 $procuraseugrupo = $db->execute("select * from `groups` WHERE `player_id`=?", [$player->id]);
 if ($procuraseugrupo->recordcount() == 0) {
-	echo "<br/><center><b><font size=\"1\">Voc&ecirc; não possui um grupo de caça.</font></b></center><br/>";
+	echo "<br/><center><b><font size=\"1\">Você não possui um grupo de caça.</font></b></center><br/>";
 	if ($player->level < 30) {
 		echo "<center><b><font size=\"1\">Apenas usuários de nível 30 ou mais podem criar grupos de caça.</font></b></center><br/>";
 	}
@@ -342,7 +342,7 @@ if ($procuraseugrupo->recordcount() == 0) {
 		$porcentoexperiencia = floor(100 / $listamembersgrupo->recordcount());
 		echo "<td>" . $porcentoexperiencia . "%</td>";
 
-		echo '<td><font size="1">Gerou ' . $grupoaceito['exp'] . " de experi&ecirc;ncia.</font></td>";
+		echo '<td><font size="1">Gerou ' . $grupoaceito['exp'] . " de experiência.</font></td>";
 		$totalgkills += $grupoaceito['kills'];
 
 		if ($player->id == $grupoaceito['id']) {

@@ -369,8 +369,10 @@ switch ($_GET['act']) {
 		echo "</tr></table>";
 		echo "</form>";
 
+
 		$allowed_types = ['armor', 'boots', 'helmet', 'legs', 'shield', 'weapon', 'amulet', 'quiver'];
 		 if (in_array($_GET['type'], $allowed_types)) {
+
 			$query = "SELECT `id`, `name`, `description`, `type`, `price`, `effectiveness`, `img`, `needpromo`, `needlvl` FROM `blueprint_items` WHERE ";
 			$conditions = [];
 			$values = [];
@@ -378,9 +380,11 @@ switch ($_GET['act']) {
 			// Price conditions
 			if (!empty($_GET['fromprice'])) {
 				$fromprice = intval($_GET['fromprice']);
+
 		       if ($fromprice < 0) {
 		           $fromprice = 0;
 		       }
+
 				$conditions[] = "`price` >= ?";
 				$values[] = $fromprice;
 			}
@@ -393,10 +397,12 @@ switch ($_GET['act']) {
 		
 			// Type condition
 			$type = htmlspecialchars($_GET['type']);
+
 			if (!in_array($type, $allowed_types)) {
 				  // Handle invalid type, e.g., set a default or display an error
 				  $type = 'none';
 				}
+
 			$conditions[] = "`type` = ?";
 			$values[] = $type;
 		
@@ -420,7 +426,9 @@ switch ($_GET['act']) {
 		
 			// Level condition
 			$conditions[] = "`needlvl` < ?";
+
 			$values[] = $player->level + MAX_LEVEL_DIFFERENCE;
+
 		
 			// Build the final query
 			$query .= implode(" AND ", $conditions);
@@ -429,7 +437,9 @@ switch ($_GET['act']) {
 			// Now execute the query with all parameters
 			$result = $db->execute($query, $values);
 
+
 			echo showAlert("<i>Você pode comprar items de nível " . ($player->level + MAX_LEVEL_DIFFERENCE) . " ou menos.</i>");
+
 
 			while ($item = $result->fetchrow()) {
 				echo "<fieldset>\n";
@@ -466,9 +476,9 @@ switch ($_GET['act']) {
 
 				if ($item['needlvl'] > 1) {
 					if ($player->level < $item['needlvl']) {
-						echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Você precisa ter nivel " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
+						echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Você precisa ter nível " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
 					} else {
-						echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter nivel " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
+						echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter nível " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
 					}
 				}
 
@@ -487,7 +497,7 @@ switch ($_GET['act']) {
 			if ($player->reino == '1') {
 				echo showAlert("<i>Você tem 10% de desconto nos items, pelo fato de ser um membro do reino Cathal.</i>");
 			} elseif ($player->vip > time()) {
-				echo showAlert("<i>Você tem 10% de desconto nos items, pelo fato de ser um membro vip.</i>");
+				echo showAlert("<i>Você tem 10% de desconto nos items, pelo fato de ser um membro VIP.</i>");
 			}
 		} else {
 			echo "<br/><p><i><center>Selecione o tipo de item que você deseja procurar.</center></i></p>";

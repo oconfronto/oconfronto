@@ -42,7 +42,7 @@ if (isset($_POST['price']) && ($_POST['submit'])) {
     } elseif ($_POST['price'] == $guild['price']) {
         $error = 1;
     } elseif ($_POST['price'] > 999999) {
-        $msg1 .= "<font color=\"red\">O preço maximo é de 999999!</font><p />";
+        $msg1 .= "<font color=\"red\">O preço máximo é de 999999!</font><p />";
         $error = 1;
     } elseif (!is_numeric($_POST['price'])) {
         $msg1 .= "<font color=\"red\">Este valor não é valido.</font><p />";

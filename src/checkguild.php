@@ -9,7 +9,7 @@ if ($query->recordcount() > 0) {
 
 		$query4 = $db->execute("select `id` from `players` where `guild`=?", [$guild['id']]);
 		while ($member = $query4->fetchrow()) {
-			$logmsg = "A gangue " . $guild['name'] . " foi deletada, pois seus administradores deixaram de paga-la.";
+			$logmsg = "A gangue " . $guild['name'] . " foi deletada, pois seus administradores deixaram de pagá-la.";
 			addlog($member['id'], $logmsg, $db);
 		}
 

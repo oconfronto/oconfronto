@@ -31,7 +31,7 @@ $tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pend
 if ($tutorial->recordcount() > 0) {
     $tutorial = $db->execute("select * from `magias` where `magia_id`=? and `player_id`=?", [4, $player->id]);
     if ($tutorial->recordcount() == 0) {
-        echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">A cada nível que voc&ecirc; passa, voc&ecirc; ganha 1 <u>ponto místico</u>.<br/><font size=\"1px\">Com os pontos místicos voc&ecirc; pode treinar <u>novos feitiços</u>.</font><br/><br/>Agora, treine o feitiço <b>Cura</b> para continuar.</td><th><font size=\"1px\"><a href=\"start.php?act=6\">Próximo</a></font></th></tr></table>", "white", "left");
+        echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">A cada nível que você passa, você ganha 1 <u>ponto místico</u>.<br/><font size=\"1px\">Com os pontos místicos você pode treinar <u>novos feitiços</u>.</font><br/><br/>Agora, treine o feitiço <b>Cura</b> para continuar.</td><th><font size=\"1px\"><a href=\"start.php?act=6\">Próximo</a></font></th></tr></table>", "white", "left");
     } else {
         echo showAlert("ótimo, <a href=\"start.php?act=6\">clique aqui</a> para continuar seu tutorial.", "green");
     }
@@ -168,7 +168,7 @@ echo "</table>";
 echo "</td>";
 echo '<td width="40%">';
 echo '<table width="100%">';
-echo "<tr><td class=\"brown\" width=\"100%\" colspan=\"2\"><center><b>Pontos de Status</b><img src=\"static/images/help.gif\" title=\"header=[Pontos de Status] body=[<font size='1px'>São utilizados para aumentar sua agilidade, vitalidade, etc. A cada nível que voc&ecirc; passar voc&ecirc; ganha 3 pontos de status. Quando isso ocorrer não se esqueça de utiliza-los!</font>]\"></center></td></tr>";
+echo "<tr><td class=\"brown\" width=\"100%\" colspan=\"2\"><center><b>Pontos de Status</b><img src=\"static/images/help.gif\" title=\"header=[Pontos de Status] body=[<font size='1px'>São utilizados para aumentar sua agilidade, vitalidade, etc. A cada nível que você passar você ganha 3 pontos de status. Quando isso ocorrer não se esqueça de utilizá-los!</font>]\"></center></td></tr>";
 echo '<tr><td class="salmon" height="80px" colspan="2"><div id="skills">';
 include(__DIR__ . "/showskills.php");
 echo "</div></td></tr>";
@@ -206,7 +206,7 @@ if ($magiascount->recordcount() < 11) {
     }
 
     echo "</center>";
-    echo "<center><font size=\"1px\">Estenda 2 pontos da sua mana<br/>máxima por 1 ponto místico.<br/><br/><b>Voc&ecirc; " . $player->magic_points . " tem ponto(s) místico(s).</b></font></center>";
+    echo "<center><font size=\"1px\">Estenda 2 pontos da sua mana<br/>máxima por 1 ponto místico.<br/><br/><b>Você " . $player->magic_points . " tem ponto(s) místico(s).</b></font></center>";
 }
 
 echo "</div></td>";
@@ -225,7 +225,7 @@ echo "<br/>";
 echo '<table width="100%">';
 echo '<tr><td width="50%">';
 echo '<table width="100%">';
-echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Tarefas e Missões</b><img src=\"static/images/help.gif\" title=\"header=[Tarefas] body=[<font size='1px'>Tarefas são maneiras divertidas de se beneficiar no jogo. Apenas siga alguma das tarefas abaixo e seja recompensado com ouro, itens ou até mesmo ponto de experi&ecirc;ncia!</font>]\"></center></td></tr>";
+echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Tarefas e Missões</b><img src=\"static/images/help.gif\" title=\"header=[Tarefas] body=[<font size='1px'>Tarefas são maneiras divertidas de se beneficiar no jogo. Apenas siga alguma das tarefas abaixo e seja recompensado com ouro, itens ou até mesmo ponto de experiência!</font>]\"></center></td></tr>";
 $gettasks = $db->execute("select * from `tasks` where `needlvl`<=? order by `needlvl` asc", [$player->level]);
 if ($gettasks->recordcount() < 1) {
     echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa disponível.</font></center></td></tr>";
@@ -276,7 +276,7 @@ if ($gettasks->recordcount() < 1) {
             if ($task['win_type'] == 'gold') {
                 $win = "<b>Recompensa:</b> " . $task['win_value'] . " moedas de ouro.<br/>";
             } elseif ($task['win_type'] == 'exp') {
-                $win = "<b>Recompensa:</b> " . $task['win_value'] . " pontos de experi&ecirc;ncia.<br/>";
+                $win = "<b>Recompensa:</b> " . $task['win_value'] . " pontos de experiência.<br/>";
             } elseif ($task['win_type'] == 'item') {
                 $itname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$task['win_value']]);
                 $win = "<b>Recompensa:</b> " . $itname . ".<br/>";
@@ -297,7 +297,7 @@ echo '<center><font size="1"><a href="tavern.php?p=tasks">Exibir todas as tarefa
 echo "</td>";
 echo '<td width="50%">';
 echo '<table width="100%">';
-echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Amigos</b><img src=\"static/images/help.gif\" title=\"header=[Amigos] body=[<font size='1px'>Seus amigos são importantes no jogo. Além de poder caçar com eles voc&ecirc; sempre ficará informado do que seu amigo está fazendo no jogo, portanto, vá logo para o chat ou o fórum do jogo e comece novas amizades!</font>]\"></center></td></tr>";
+echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Amigos</b><img src=\"static/images/help.gif\" title=\"header=[Amigos] body=[<font size='1px'>Seus amigos são importantes no jogo. Além de poder caçar com eles você sempre ficará informado do que seu amigo está fazendo no jogo, portanto, vá logo para o chat ou o fórum do jogo e comece novas amizades!</font>]\"></center></td></tr>";
 
 $countfriends = $db->execute("select * from `friends` where `uid`=?", [$player->acc_id]);
 if ($countfriends->recordcount() == 0) {

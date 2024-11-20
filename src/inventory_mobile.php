@@ -26,7 +26,7 @@ if ($tutorial->recordcount() > 0) {
     if ($tutorial->recordcount() == 0) {
         global $tuto;
         $tuto = true;
-        echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">Itens ajudam na sua força e resist&ecirc;ncia.<br/><font size=\"1px\">Voc&ecirc; pode obter itens <u>lutando contra monstros</u> ou <u>comprando-os no ferreiro</u>.</font><br/><br/>Para equipar seu item, clique em <b style='color:green'>EQUIPAR</b> na arma abaixo.</td><th><font size=\"1px\"><a href=\"start.php?act=5\">Próximo</a></font></th></tr></table>", "white", "left");
+        echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">Itens ajudam na sua força e resistência.<br/><font size=\"1px\">Você pode obter itens <u>lutando contra monstros</u> ou <u>comprando-os no ferreiro</u>.</font><br/><br/>Para equipar seu item, clique em <b style='color:green'>EQUIPAR</b> na arma abaixo.</td><th><font size=\"1px\"><a href=\"start.php?act=5\">Próximo</a></font></th></tr></table>", "white", "left");
     } else {
         global $tuto;
         $tuto = false;
