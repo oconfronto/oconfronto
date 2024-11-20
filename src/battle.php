@@ -31,27 +31,31 @@ switch ($_GET['act']) {
 
 		$enemy = new stdClass(); // Initialize $enemy as an empty object
 
-		try {
-		$enemy1 = $query->fetchrow(); // Attempt to fetch enemy data
-		fetchData($enemy1); // Validate the data
-		foreach ($enemy1 as $key => $value) {
-		$enemy->$key = $value; // Populate $enemy with fetched data
-		}
-		} catch (UnexpectedValueException $e) {
-		error_log($e->getMessage()); // Log the error for debugging
-		// Optionally, initialize $enemy with default values
-		$enemy->id = null;
-		$enemy->name = "Unknown Enemy";
-		$enemy->hp = 0;
-		$enemy->attack = 0;
-		}
+		 try {
+	$enemy1 = $query->fetchrow(); // Attempt to fetch enemy data
+	   fetchData($enemy1); // Validate the data
+	   foreach ($enemy1 as $key => $value) {
+	     $enemy->$key = $value; // Populate $enemy with fetched data
+	   }
+	 } catch (UnexpectedValueException $e) {
+	error_log($e->getMessage()); // Log the error for debugging
+	error_log(sprintf('Context: player=%s, enemy=%s', $player->id, $_GET['username']));
+	include(__DIR__ . "/templates/private_header.php");
+	echo "Unable to load enemy data. Please try again later.";
+	include(__DIR__ . "/templates/private_footer.php");
+	break;
+ }
 
-// Function to validate the fetched data, can be defined inside or outside the block
-function fetchData($data) {
-    if (!$data) {
-        throw new UnexpectedValueException("Failed to fetch enemy data"); // Throw an exception if data is invalid
+ // Function to validate the fetched data, can be defined inside or outside the block
+ function fetchData($data) {
+     if (!$data) {
+         throw new UnexpectedValueException("Failed to fetch enemy data");
+     }
+    // Add more specific validation
+    if (!isset($data['id']) || !isset($data['username']) || !isset($data['level'])) {
+        throw new UnexpectedValueException("Invalid enemy data structure");
     }
-}
+ }
 
 		if ($enemy->serv != $player->serv) {
 			include(__DIR__ . "/templates/private_header.php");
