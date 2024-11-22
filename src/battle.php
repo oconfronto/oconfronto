@@ -39,7 +39,7 @@ switch ($_GET['act']) {
 	   }
 	 } catch (UnexpectedValueException $e) {
 	error_log($e->getMessage()); // Log the error for debugging
-	error_log(sprintf('Context: player=%s, enemy=%s', $player->id, $_GET['username']));
+	error_log(sprintf('Context: player=%d, enemy=%s', $player->id, htmlspecialchars($_GET['username'], ENT_QUOTES)));
 	include(__DIR__ . "/templates/private_header.php");
 	echo "Unable to load enemy data. Please try again later.";
 	include(__DIR__ . "/templates/private_footer.php");
