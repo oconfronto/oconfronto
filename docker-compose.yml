@@ -36,7 +36,7 @@ services:
     depends_on:
       - app
     ports:
-      - "5000:80"
+      - "80:80"
     networks:
       - app-tier
     volumes:

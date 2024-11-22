@@ -4,3 +4,4 @@ rector-standalone/vendor
 html/
 certs/
 logs/
+src/init.sql
