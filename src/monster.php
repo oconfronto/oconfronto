@@ -459,7 +459,14 @@ switch ($_GET['act']) {
 
 		//Calculate some variables that will be used
 		$forcadoplayer = ceil((($player->strength + ($player->atkbonus['effectiveness'] ?? 0) + (($player->atkbonus['item_bonus'] ?? 0) * 2) + $pbonusfor) * $multipleatk) * 1.5);
-		$agilidadedoplayer = ceil($player->agility + ($player->agibonus6['effectiveness'] ?? 0) + ($player->agibonus7['effectiveness'] ?? 0) + (($player->agibonus6['item_bonus'] ?? 0) * 2) + $pbonusagi);
+		$agilidadedoplayer = ceil(
+			$player->agility +
+			($player->agibonus6['effectiveness'] ?? 0) +
+			($player->agibonus7['effectiveness'] ?? 0) +
+			(($player->agibonus6['item_bonus'] ?? 0) * 2) +
+			(($player->agibonus7['item_bonus'] ?? 0) * 2) +
+			$pbonusagi
+		);		
 		$resistenciadoplayer = ceil((($player->resistance + (($player->defbonus1['effectiveness'] ?? 0) + ($player->defbonus2['effectiveness'] ?? 0) + ($player->defbonus3['effectiveness'] ?? 0) + ($player->defbonus5['effectiveness'] ?? 0)) + ((($player->defbonus1['item_bonus'] ?? 0) * 2) + (($player->defbonus2['item_bonus'] ?? 0) * 2) + (($player->defbonus3['item_bonus'] ?? 0) * 2) + (($player->defbonus5['item_bonus'] ?? 0) * 2)) + $pbonusres) * $multipledef) / 0.85);
 
 		$forcadomonstro = ($enemy->strength * 1.68);
