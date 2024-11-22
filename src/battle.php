@@ -29,18 +29,34 @@ switch ($_GET['act']) {
 			break;
 		}
 
-		$enemy = new stdClass();
-		$enemy1 = $query->fetchrow(); //Get player info
-		if ($enemy1) {
-	    foreach ($enemy1 as $key => $value) {
-	        $enemy->$key = $value;
-	    }
-		function fetchData($data) {
-			if (!$data) {
-				throw new UnexpectedValueException("Failed to fetch enemy data"); // More specific exception
-			}
-		}
-	}
+		$enemy = new stdClass(); // Initialize $enemy as an empty object
+
+		 try {
+	$enemy1 = $query->fetchrow(); // Attempt to fetch enemy data
+	   fetchData($enemy1); // Validate the data
+	   foreach ($enemy1 as $key => $value) {
+	     $enemy->$key = $value; // Populate $enemy with fetched data
+	   }
+	 } catch (UnexpectedValueException $e) {
+	error_log($e->getMessage()); // Log the error for debugging
+	error_log(sprintf('Context: player=%s, enemy=%s', $player->id, $_GET['username']));
+	include(__DIR__ . "/templates/private_header.php");
+	echo "Unable to load enemy data. Please try again later.";
+	include(__DIR__ . "/templates/private_footer.php");
+	break;
+ }
+
+ // Function to validate the fetched data, can be defined inside or outside the block
+ function fetchData($data) {
+     if (!$data) {
+         throw new UnexpectedValueException("Failed to fetch enemy data");
+     }
+    // Add more specific validation
+    if (!isset($data['id']) || !isset($data['username']) || !isset($data['level'])) {
+        throw new UnexpectedValueException("Invalid enemy data structure");
+    }
+ }
+
 		if ($enemy->serv != $player->serv) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "Este usuário não pertence ao mesmo servidor que você! <a href=\"battle.php\"/>Voltar</a>.";
@@ -498,7 +514,14 @@ switch ($_GET['act']) {
 
 		//Calculate some variables that will be used
 		$forcadoplayer = ceil(($player->strength + $player->atkbonus['effectiveness'] + ($player->atkbonus['item_bonus'] * 2)  + $pbonusfor) * $multipleatk);
-		$agilidadedoplayer = ceil($player->agility + $player->agibonus6['effectiveness'] + $player->agibonus7['effectiveness'] + ($player->agibonus6['item_bonus'] * 2) + $pbonusagi);
+		$agilidadedoplayer = ceil(
+			$player->agility +
+			$player->agibonus6['effectiveness'] +
+			$player->agibonus7['effectiveness'] +
+			($player->agibonus6['item_bonus'] * 2) +
+			($player->agibonus7['item_bonus'] * 2) +
+			$pbonusagi
+		);		
 		$resistenciadoplayer = ceil(($player->resistance + ($player->defbonus1['effectiveness'] + $player->defbonus2['effectiveness'] + $player->defbonus3['effectiveness'] + $player->defbonus5['effectiveness']) + (($player->defbonus1['item_bonus'] * 2) + ($player->defbonus2['item_bonus'] * 2) + ($player->defbonus3['item_bonus'] * 2) + ($player->defbonus5['item_bonus'] * 2)) + $pbonusres) * $multipledef);
 
 		$forcadoenemy = ceil(($enemy->strength + $enemy->atkbonus['effectiveness'] + ($enemy->atkbonus['item_bonus'] * 2) + $enybonusfor) * $enymultipleatk);
