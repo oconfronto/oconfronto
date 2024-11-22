@@ -43,7 +43,7 @@ if ($_GET['gift']) {
 
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Presente</b></legend>\n";
-		echo "Você abriu seu presente e encontrou um/uma " . $giftitem['name'] . ".<br />";
+		echo "Você abriu seu presente e encontrou um(a) " . $giftitem['name'] . ".<br />";
 		echo '<a href="inventory.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");

@@ -2,11 +2,6 @@
 
 declare(strict_types=1);
 
-if (time() < 1345222800) {
-    header("Location: beta.php?error=true");
-    exit;
-}
-
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Criar Conta");
 
@@ -17,7 +12,7 @@ if (isset($_GET['r'])) {
     $_SESSION['ref'] = htmlspecialchars((string) $_GET['r'], ENT_QUOTES, 'UTF-8');
 }
 
-$usaar = $_SESSION['ref'] ?? "1";
+$usaar = $_SESSION['ref'] ?? "";
 
 
 $error = 0;
@@ -101,11 +96,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
         $error = 1;
         $erro3 = 1;
     } elseif (strlen($email2) < 5) {
-        $msg3 = "O seu endereço de email deve conter mais de 5 caracteres.<br />\n";
+        $msg3 = "O seu endereço de e-mail deve conter mais de 5 caracteres.<br />\n";
         $error = 1;
         $erro3 = 1;
     } elseif (!filter_var($email2, FILTER_VALIDATE_EMAIL)) {
-        $msg3 = "O formato do seu email é inválido!<br />\n";
+        $msg3 = "O formato do seu e-mail é inválido!<br />\n";
         $error = 1;
         $erro3 = 1;
     } else {
@@ -113,11 +108,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
         $query = $db->execute("SELECT `id` FROM `accounts` WHERE `email`=?", [$email2]);
         $query2 = $db->execute("SELECT * FROM `pending` WHERE `pending_id`=1 AND `pending_status`=?", [$email2]);
         if ($query->recordcount() > 0) {
-            $msg3 = "Este email já está sendo usado por outra conta!<br />\n";
+            $msg3 = "Este e-mail já está sendo usado por outra conta!<br />\n";
             $error = 1;
             $erro3 = 1;
         } elseif ($query2->recordcount() > 0) {
-            $msg3 = "Este email já está em uso!<br />\n";
+            $msg3 = "Este e-mail já está em uso!<br />\n";
             $error = 1;
             $erro3 = 1;
         }
@@ -128,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
         $error = 1;
         $erro5 = 1;
     } elseif ($conf_email2 != $email2) {
-        $msg5 = "Seu email de confirmação está diferente do email digitado!<br />\n";
+        $msg5 = "Seu e-mail de confirmação está diferente do e-mail digitado!<br />\n";
         $error = 1;
         $erro5 = 1;
     }
@@ -170,8 +165,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
 
             include(__DIR__ . "/templates/header.php");
             echo '<span id="aviso-v"></span>';
-            echo "<br/><center><p><b>Voc&ecirc; foi cadastrado com sucesso!<br />";
-            echo 'Agora voc&ecirc; pode entrar no jogo. <a href="index.php">Clique aqui.</a></b></p></center><br/>';
+            echo "<br/><center><p><b>Você foi cadastrado com sucesso!<br />";
+            echo 'Agora você pode entrar no jogo. <a href="index.php">Clique aqui.</a></b></p></center><br/>';
             include(__DIR__ . "/templates/footer.php");
             exit;
         }
@@ -185,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
 
         // if ($_POST['register2']) {
         //     if (!$_POST['password3']) { //If password isn't filled in...
-        //         $msg4 = "Voc&ecirc; precisa digitar uma senha!<br />\n"; //Add to error message
+        //         $msg4 = "Você precisa digitar uma senha!<br />\n"; //Add to error message
         //         $error = 2; //Set error check
         //         $erro4 = 1;
         //     } else if (($_POST['password2']) != ($_POST['password3'])) { //If password is too short...
@@ -195,11 +190,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
         //     }
 
         //     if (!$_POST['email3']) { //If email address isn't filled in...
-        //         $msg5 = "Voc&ecirc; precisa digitar um email!<br />\n"; //Add to error message
+        //         $msg5 = "Você precisa digitar um email!<br />\n"; //Add to error message
         //         $error = 2; //Set error check
         //         $erro5 = 1;
         //     } else if (($_POST['email2']) != ($_POST['email3'])) { //If email address isn't filled in...
-        //         $msg5 = "Os emails digitados não comferem!<br />\n"; //Add to error message
+        //         $msg5 = "Os e-mails digitados não comferem!<br />\n"; //Add to error message
         //         $error = 2; //Set error check
         //         $erro5 = 1;
         //     }
@@ -239,8 +234,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
 
         //             include("templates/header.php");
         //             echo "<span id=\"aviso-v\"></span>";
-        //             echo "<br/><center><p><b>Voc&ecirc; foi cadastrado com sucesso!<br />";
-        //             echo "Agora voc&ecirc; pode entrar no jogo. <a href=\"index.php\">Clique aqui.</a></b></p></center><br/>";
+        //             echo "<br/><center><p><b>Você foi cadastrado com sucesso!<br />";
+        //             echo "Agora você pode entrar no jogo. <a href=\"index.php\">Clique aqui.</a></b></p></center><br/>";
         //             include("templates/footer.php");
         //             exit;
         //         }

@@ -306,7 +306,7 @@ switch ($_GET['act']) {
 				$query03 = $db->execute("update `items` set `mark`='t', `status`='unequipped' where `id`=?", [$item]);
 
 				include(__DIR__ . "/templates/private_header.php");
-				echo "Agora seu item está disponivel no mercado! <a href=\"market.php\">Voltar</a>.";
+				echo "Agora seu item está disponível no mercado! <a href=\"market.php\">Voltar</a>.";
 				include(__DIR__ . "/templates/private_footer.php");
 			}
 

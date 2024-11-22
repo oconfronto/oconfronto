@@ -14,8 +14,8 @@ if (!isset($_SESSION['battlelog']) || !is_array($_SESSION['battlelog'])) {
 $log = empty($_SESSION['battlelog']) ? [] : explode(", ", $_SESSION['battlelog'][0] ?? '');
 
 if ($player->mana < $mana) {
-	if ($log === [] || $log[1] !== "Você tentou lançar um feitiço mas está sem mana sufuciente.") {
-		array_unshift($_SESSION['battlelog'], "5, Você tentou lançar um feitiço mas está sem mana sufuciente.");
+	if ($log === [] || $log[1] !== "Você tentou lançar um feitiço mas está sem mana suficiente.") {
+		array_unshift($_SESSION['battlelog'], "5, Você tentou lançar um feitiço mas está sem mana suficiente.");
 	}
 
 	$otroatak = 5;

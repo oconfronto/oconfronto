@@ -11,7 +11,7 @@ $player->mana -= $mana;
 
 if (($player->hp + $curar) > $player->maxhp) {
 	$player->hp = $player->maxhp;
-	array_unshift($_SESSION['battlelog'], "3, Você fez um feitiço e recuperou toda sua vida.");
+	array_unshift($_SESSION['battlelog'], "3, Você fez um feitiço e recuperou toda a sua vida.");
 } else {
 	$player->hp += $curar;
 	array_unshift($_SESSION['battlelog'], "3, Você fez um feitiço e recuperou " . $curar . " pontos de vida.");

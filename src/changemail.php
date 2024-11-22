@@ -11,11 +11,10 @@ include(__DIR__ . "/templates/acc-header.php");
 if ($_GET['act'] == "cancel") {
     $query = $db->execute("delete from `pending` where `pending_id`=1 and `player_id`=?", [$acc->id]);
     echo '<span id="aviso-a"></span>';
-    echo "<br/><p><center>A solicitação para mudança de email foi removida. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
+    echo "<br/><p><center>A solicitação para mudança de e-mail foi removida. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
     include(__DIR__ . "/templates/acc-footer.php");
     exit;
 }
-
 
 if ($_POST['submit']) {
     if (!$_POST['senhadaconta']) {
@@ -28,32 +27,32 @@ if ($_POST['submit']) {
         $errmsg .= "Você precisa preencher todos os campos.";
         $error = 1;
     } elseif (encodePassword($_POST['senhadaconta']) != $acc->password) {
-        $errmsg .= "Seu senha antiga está incorreta.";
+        $errmsg .= "Sua senha antiga está incorreta.";
         $error = 1;
     } elseif ($_POST['emaill'] != $_POST['emaill2']) {
-        $errmsg .= "Você não digitou os dois emails corretamente!";
+        $errmsg .= "Você não digitou os dois e-mails corretamente!";
         $error = 1;
     } elseif (strlen((string) $_POST['emaill']) < 3) {
-        $errmsg .= "O seu endereço de email deve conter mais de 5 caracteres.";
+        $errmsg .= "O seu endereço de e-mail deve conter mais de 5 caracteres.";
         $error = 1;
     } elseif (strlen((string) $_POST['emaill']) > 200) {
-        $errmsg .= "O seu endereço de email deve conter menos de 200 caracteres.";
+        $errmsg .= "O seu endereço de e-mail deve conter menos de 200 caracteres.";
         $error = 1;
     } elseif (preg_match("/^[-!#$%&\'*+\\.\/0-9=?A-Z^_`{|}~]+@([-0-9A-Z]+\.)+([0-9A-Z]){2,4}$/i", (string) $_POST['emaill']) === 0 || preg_match("/^[-!#$%&\'*+\\.\/0-9=?A-Z^_`{|}~]+@([-0-9A-Z]+\.)+([0-9A-Z]){2,4}$/i", (string) $_POST['emaill']) === false) {
-        $errmsg .= "O formato do seu email é inválido!";
+        $errmsg .= "O formato do seu e-mail é inválido!";
         $error = 1;
     } else {
         $query = $db->execute("select `id` from `accounts` where `email`=?", [$_POST['emaill']]);
         $query2 = $db->execute("select * from `pending` where `pending_id`=1 and `player_id`=?", [$acc->id]);
         $query3 = $db->execute("select * from `pending` where `pending_id`=1 and `pending_status`=?", [$_POST['emaill']]);
         if ($query->recordcount() > 0) {
-            $errmsg .= "Este email já está em uso.";
+            $errmsg .= "Este e-mail já está em uso.";
             $error = 1;
         } elseif ($query2->recordcount() > 0) {
-            $errmsg .= "Você já enviou uma solicitação de mudança de email.";
+            $errmsg .= "Você já enviou uma solicitação de mudança de e-mail.";
             $error = 1;
         } elseif ($query3->recordcount() > 0) {
-            $errmsg .= "Este email já está em uso.";
+            $errmsg .= "Este e-mail já está em uso.";
             $error = 1;
         }
     }
@@ -66,7 +65,7 @@ if ($_POST['submit']) {
         $query = $db->autoexecute('pending', $insert, 'INSERT');
 
         echo '<span id="aviso-a"></span>';
-        echo "<br/><p><center>Seu email ser alterado para: " . $_POST['emaill'] . ".<br/>Aguarde 14 dias para que a mudana seja efetuada. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
+        echo "<br/><p><center>Seu e-mail será alterado para: " . $_POST['emaill'] . ".<br/>Aguarde 14 dias para que a mudança seja efetuada. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
         include(__DIR__ . "/templates/acc-footer.php");
         exit;
     }

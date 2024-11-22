@@ -53,7 +53,7 @@ if ($setting->$unc1 == "t") {
 		if ($player->level < $setting->$unc2) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Torneio</b></legend>\n";
-			echo "Seu nível é muito baixo. (Nível minimo: " . $setting->$unc2 . ")";
+			echo "Seu nível é muito baixo. (Nível mínimo: " . $setting->$unc2 . ")";
 			echo "</fieldset>";
 			echo "<br/>";
 			echo '<a href="tournament.php">Voltar</a>.';
@@ -104,7 +104,7 @@ if ($setting->$unc1 == "t") {
 	echo "<td>" . $setting->$unc6 . "</td>";
 	echo "</tr>";
 	echo "<tr>";
-	echo "<td><b>NÂº de participantes:</b></td>";
+	echo "<td><b>Nº de participantes:</b></td>";
 	echo "<td>" . $setting->$unc4 . "</td>";
 	echo "</tr>";
 	echo "<tr>";
@@ -250,7 +250,7 @@ if ($setting->$unc1 == "y") {
 			} elseif ($member['hp'] < 1 && $member['killed'] == 0) {
 				echo '<td><b>Status:</b> <font color="red">Eliminado</font><td>';
 			} else {
-				echo "<td><b>Opções:</b> <a href=\"mail.php?act=compose&amp;to=" . $member['username'] . '">Mensagem</a> | <a href="battle.php?act=attack&amp;username=' . $member['username'] . '">Lutar</a><td>';
+				echo "<td><b>Opções:</b> <a href=\"mail.php?act=compose&amp;to=" . $member['username'] . '">Mensagem</a> | <a href="battle.php?act=attack&amp;username=' . $member['username'] . '">Lutar</a><td>";
 			}
 
 			echo "</tr>";
@@ -297,7 +297,7 @@ if ($setting->$endinffo1 == "y" || $setting->$endinffo1 == "t") {
 } else {
 	echo "<table>";
 	echo "<tr>";
-	echo "<td><b>último vencedor:</b></td>";
+	echo "<td><b>Último vencedor:</b></td>";
 	if ($setting->$lastinfo1 == 'Ninguém' || $setting->$lastinfo1 == NULL) {
 		echo "<td>Ninguém. <b>Torneio cancelado.</b></td>";
 	} else {
@@ -324,7 +324,7 @@ if ($setting->$endinffo2 == "y" || $setting->$endinffo2 == "t") {
 } else {
 	echo "<table>";
 	echo "<tr>";
-	echo "<td><b>último vencedor:</b></td>";
+	echo "<td><b>Último vencedor:</b></td>";
 	if ($setting->$lastinfo2 == 'Ninguém' || $setting->$lastinfo2 == NULL) {
 		echo "<td>Ninguém. <b>Torneio cancelado.</b></td>";
 	} else {
@@ -351,7 +351,7 @@ if ($setting->$endinffo3 == "y" || $setting->$endinffo3 == "t") {
 } else {
 	echo "<table>";
 	echo "<tr>";
-	echo "<td><b>último vencedor:</b></td>";
+	echo "<td><b>Último vencedor:</b></td>";
 	if ($setting->$lastinfo3 == 'Ninguém' || $setting->$lastinfo3 == NULL) {
 		echo "<td>Ninguém. <b>Torneio cancelado.</b></td>";
 	} else {
@@ -378,7 +378,7 @@ if ($setting->$endinffo4 == "y" || $setting->$endinffo4 == "t") {
 } else {
 	echo "<table>";
 	echo "<tr>";
-	echo "<td><b>último vencedor:</b></td>";
+	echo "<td><b>Último vencedor:</b></td>";
 	if ($setting->$lastinfo4 == 'Ninguém' || $setting->$lastinfo4 == NULL) {
 		echo "<td>Ninguém. <b>Torneio cancelado.</b></td>";
 	} else {
@@ -405,7 +405,7 @@ if ($setting->$endinffo5 == "y" || $setting->$endinffo5 == "t") {
 } else {
 	echo "<table>";
 	echo "<tr>";
-	echo "<td><b>último vencedor:</b></td>";
+	echo "<td><b>Último vencedor:</b></td>";
 	if ($setting->$lastinfo5 == 'Ninguém' || $setting->$lastinfo5 == NULL) {
 		echo "<td>Ninguém. <b>Torneio cancelado.</b></td>";
 	} else {
@@ -426,6 +426,6 @@ if ($setting->$endinffo5 == "y" || $setting->$endinffo5 == "t") {
 }
 
 echo "</fieldset>";
-echo "<br/><center><i>As inscrições para o torneio abrirão automaticamente todas as Sextas-Feiras.</i></center>";
+echo "<br/><center><i>As inscrições para o torneio abrirão automaticamente todas as sextas-feiras.</i></center>";
 include(__DIR__ . "/templates/private_footer.php");
 exit;

@@ -10,7 +10,7 @@ include(__DIR__ . "/checkbattle.php");
 if ($player->level < 300) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
-	echo "<i>Seu nivel é muito baixo!</i><br/>\n";
+	echo "<i>Seu nível é muito baixo!</i><br/>\n";
 	echo '<a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");
@@ -136,7 +136,7 @@ if ($verificacao1->recordcount() == 0) {
 if ($quest1['quest_status'] == 1) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
-	echo "<i>Você chegou ao monte das almas, e ouve sons de uma criatura poderoza. Podem ser os gritos de Zanoth. Está pronto para enfrenta-lo?</i><br/><br>\n";
+	echo "<i>Você chegou ao monte das almas, e ouve sons de uma criatura poderoza. Podem ser os gritos de Zanoth. Está pronto para enfrentá-lo?</i><br/><br>\n";
 	echo "<a href=\"quest9.php?act=ready\">Sim</a> / <a href=\"quest9.php?act=noready\">Não</a>";
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");
@@ -146,7 +146,7 @@ if ($quest1['quest_status'] == 1) {
 if ($quest1['quest_status'] == 2) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
-	echo "<i>Você está escondido no monte das almas, e continua ouvindo sons que parecem vir de Zanoth. Está pronto para enfrenta-lo?</i><br/><br>\n";
+	echo "<i>Você está escondido no monte das almas, e continua ouvindo sons que parecem vir de Zanoth. Está pronto para enfrentá-lo?</i><br/><br>\n";
 	echo "<a href=\"quest9.php?act=ready\">Sim</a> / <a href=\"quest9.php?act=noready\">Não</a>";
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");
@@ -156,7 +156,7 @@ if ($quest1['quest_status'] == 2) {
 if ($quest1['quest_status'] == 3) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
-	echo "<i>Você ainda não matou Zanoth. Deseja enfrenta-lo?</i><br/><br>\n";
+	echo "<i>Você ainda não matou Zanoth. Deseja enfrentá-lo?</i><br/><br>\n";
 	echo "<a href=\"quest9.php?act=ready\">Sim</a> / <a href=\"quest9.php?act=noready\">Não</a>";
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");

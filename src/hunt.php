@@ -19,7 +19,7 @@ if ($_GET['act'] == "cancel") {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset>";
 	echo "<legend><b>Caça</b></legend>";
-	echo "Tem certeza que deseja parar de caçar agora? Se abandona-la, não ganhará nada. ";
+	echo "Tem certeza que deseja parar de caçar agora? Se abandoná-la, não ganhará nada. ";
 	echo "<a href=\"hunt.php?act=remove\">Desejo abandonar a caça</a>.";
 	echo '</fieldset><br/><a href="home.php">Principal</a>.';
 	include(__DIR__ . "/templates/private_footer.php");
@@ -140,7 +140,7 @@ include(__DIR__ . "/templates/private_header.php");
 if ($player->reino == '2') {
 	echo showAlert("<i>Você pode caçar por uma hora a mais, pelo fato de ser um membro do reino Eroda.</i>");
 } elseif ($player->vip > time()) {
-	echo showAlert("<i>Você pode caçar por uma hora a mais, pelo fato de ser um membro vip.</i>");
+	echo showAlert("<i>Você pode caçar por uma hora a mais, pelo fato de ser um membro VIP.</i>");
 }
 
 
@@ -192,33 +192,33 @@ echo "</select>";
 
 if ($player->level < 40) {
 	if ($player->reino == '2' || $player->vip > time()) {
-		echo " <font size=\"1\">Apartir do nível 40 você poderá caçar por 2h e 30 min.</font>";
+		echo " <font size=\"1\">A partir do nível 40 você poderá caçar por 2h e 30 min.</font>";
 	} else {
-		echo " <font size=\"1\">Apartir do nível 40 você poderá caçar por 2h.</font>";
+		echo " <font size=\"1\">A partir do nível 40 você poderá caçar por 2h.</font>";
 	}
 } elseif ($player->level < 60) {
 	if ($player->reino == '2' || $player->vip > time()) {
-		echo " <font size=\"1\">Apartir do nível 60 você poderá caçar por 3h.</font>";
+		echo " <font size=\"1\">A partir do nível 60 você poderá caçar por 3h.</font>";
 	} else {
-		echo " <font size=\"1\">Apartir do nível 60 você poderá caçar por 2h e 30 min.</font>";
+		echo " <font size=\"1\">A partir do nível 60 você poderá caçar por 2h e 30 min.</font>";
 	}
 } elseif ($player->level < 80) {
 	if ($player->reino == '2' || $player->vip > time()) {
-		echo " <font size=\"1\">Apartir do nível 80 você poderá caçar por 3h e 30 min.</font>";
+		echo " <font size=\"1\">A partir do nível 80 você poderá caçar por 3h e 30 min.</font>";
 	} else {
-		echo " <font size=\"1\">Apartir do nível 80 você poderá caçar por 3h.</font>";
+		echo " <font size=\"1\">A partir do nível 80 você poderá caçar por 3h.</font>";
 	}
 } elseif ($player->level < 120) {
 	if ($player->reino == '2' || $player->vip > time()) {
-		echo " <font size=\"1\">Apartir do nível 120 você poderá caçar por 4h.</font>";
+		echo " <font size=\"1\">A partir do nível 120 você poderá caçar por 4h.</font>";
 	} else {
-		echo " <font size=\"1\">Apartir do nível 120 você poderá caçar por 3h e 30 min.</font>";
+		echo " <font size=\"1\">A partir do nível 120 você poderá caçar por 3h e 30 min.</font>";
 	}
 } elseif ($player->level < 140) {
 	if ($player->reino == '2' || $player->vip > time()) {
-		echo " <font size=\"1\">Apartir do nível 140 você poderá caçar por 4h e 30 min.</font>";
+		echo " <font size=\"1\">A partir do nível 140 você poderá caçar por 4h e 30 min.</font>";
 	} else {
-		echo " <font size=\"1\">Apartir do nível 140 você poderá caçar por 4h.</font>";
+		echo " <font size=\"1\">A partir do nível 140 você poderá caçar por 4h.</font>";
 	}
 }
 

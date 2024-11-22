@@ -2,11 +2,6 @@
 
 declare(strict_types=1);
 
-if (time() < 1345222800 && !$_GET['login'] && !$_POST['login']) {
-    header("Location: beta.php");
-    exit;
-}
-
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Principal");
 

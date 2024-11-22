@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Loteria");
+define('PRIVATE_HEADER', __DIR__ . "/templates/private_header.php");
+define('PRIVATE_FOOTER', __DIR__ . "/templates/private_footer.php");
 $player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
+define('PRIZE_CONVERSION_GOLD', 50000); // Define a constant for prize conversion to gold if player's level is too low
 
 $unc1 = "last_winner_" . $player->serv . "";
 $unc2 = "win_id_" . $player->serv . "";
@@ -28,23 +31,46 @@ if ($setting->$unc3 == "t") {
 		$ipwpwpwpa = $wpaodsla->fetchrow();
 
 		if ($setting->$unc2 > 1000) {
+			// Deposit prize directly in the bank if prize is more than 1000 gold
 			$query = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", [$setting->$unc2, $ipwpwpwpa['player_id']]);
+			
+			// Log message to inform the player of their lottery winnings
 			$logmsg = "Você ganhou na loteria e <b>" . $setting->$unc2 . " de ouro</b> foram depositados na sua conta bancária.";
 			addlog($ipwpwpwpa['player_id'], $logmsg, $db);
+			
+			// Set the prize description for display
 			$premiorecebido = "" . $setting->$unc2 . " de ouro";
 		} else {
-			$itotuuejdb = $db->execute("select `name` from `blueprint_items` where id=?", [$setting->$unc2]);
-			$ioeowkewttttee = $itotuuejdb->fetchrow();
-
+			// Fetch player level and item level requirement in advance to optimize database queries
+			$winner_data = $db->execute("SELECT level FROM players WHERE id = ?", [$ipwpwpwpa['player_id']])->fetchrow();
+			$item_data = $db->execute("SELECT needlvl, name FROM blueprint_items WHERE id = ?", [$setting->$unc2])->fetchrow();
+		
+			// Store player ID and item ID in the insert array for potential prize assignment
 			$insert['player_id'] = $ipwpwpwpa['player_id'];
 			$insert['item_id'] = $setting->$unc2;
+		
+			// Check if prize is less than the gold conversion limit
+			if ($setting->$unc2 < PRIZE_CONVERSION_GOLD) {
+				// Check if the player's level is lower than the item level requirement
+				if ($winner_data['level'] < $item_data['needlvl']) {
+					// If player's level is too low, convert prize to gold and deposit in bank
+					$query = $db->execute("UPDATE players SET bank = bank + ? WHERE id = ?", [PRIZE_CONVERSION_GOLD, $ipwpwpwpa['player_id']]);
+					
+					// Log message indicating that the prize was converted to gold due to insufficient player level
+					$logmsg = "Você ganhou na loteria mas seu nível é muito baixo para receber o premio. 50.000 de ouro foram depositados na sua conta bancária.";
+					$premiorecebido = "50000 de ouro";
+				} else {
+					// If player's level meets item requirements, assign item name for display
+					$ioeowkewttttee['name'] = $item_data['name'];
+				}
+			}
 			$query = $db->autoexecute('items', $insert, 'INSERT');
 			if ($setting->$unc2 == 172) {
 				$ringid = $db->Insert_ID();
 				$db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", [40, 30, 40, 30, $ringid]);
 			}
 
-			$logmsg = "Você ganhou na loteria e recebeu um/uma <b>" . $ioeowkewttttee['name'] . "</b>.";
+			$logmsg = "Você ganhou na loteria e recebeu um(a) <b>" . $ioeowkewttttee['name'] . "</b>.";
 			addlog($ipwpwpwpa['player_id'], $logmsg, $db);
 			$premiorecebido = $ioeowkewttttee['name'];
 		}
@@ -79,26 +105,38 @@ if ($setting->$unc3 == "t") {
 	if ($_POST['buy']) {
 		$error = 0;
 
+		if ($player->level < 25) {
+			include_once PRIVATE_HEADER;
+			echo "Você precisa ter nível 25 ou superior para comprar tickets e jogar na loteria! <a href=\"lottery.php\">Voltar</a>.";
+			
+			include_once PRIVATE_FOOTER;
+			$error = 1;
+			exit;
+		}
+
 		if (!is_numeric($_POST['amount'])) {
-			include(__DIR__ . "/templates/private_header.php");
+			include_once PRIVATE_HEADER;
 			echo "O valor " . $_POST['for'] . " não é válido! <a href=\"lottery.php\">Voltar</a>.";
-			include(__DIR__ . "/templates/private_footer.php");
+			
+			include_once PRIVATE_FOOTER;
 			$error = 1;
 			exit;
 		}
 
 		if ($_POST['amount'] < 1) {
-			include(__DIR__ . "/templates/private_header.php");
+			include_once PRIVATE_HEADER;
 			echo "Você precisa digitar quantias maiores que 0! <a href=\"lottery.php\">Voltar</a>.";
-			include(__DIR__ . "/templates/private_footer.php");
+			
+			include_once PRIVATE_FOOTER;
 			$error = 1;
 			exit;
 		}
 
-		if ($_POST['amount'] > 999) {
-			include(__DIR__ . "/templates/private_header.php");
+		if ($_POST['amount'] > 999) { //Added maximum purchase limit instead of 99 tickets at a time, to 999 tickets at a time.
+			include_once PRIVATE_HEADER;
 			echo "Você pode comprar até 999 tickes por vez! <a href=\"lottery.php\">Voltar</a>.";
-			include(__DIR__ . "/templates/private_footer.php");
+			
+			include_once PRIVATE_FOOTER;
 			$error = 1;
 			exit;
 		}
@@ -106,9 +144,10 @@ if ($setting->$unc3 == "t") {
 		$total = ceil($_POST['amount'] * $setting->$unc4);
 
 		if ($total > $player->gold) {
-			include(__DIR__ . "/templates/private_header.php");
+			include_once PRIVATE_HEADER;
 			echo "Você não possui ouro sufficiente! <a href=\"lottery.php\">Voltar</a>.";
-			include(__DIR__ . "/templates/private_footer.php");
+			
+			include_once PRIVATE_FOOTER;
 			$error = 1;
 			exit;
 		}
@@ -122,13 +161,14 @@ if ($setting->$unc3 == "t") {
 		}
 
 		$result = $db->execute($sql);
-		include(__DIR__ . "/templates/private_header.php");
+		include_once PRIVATE_HEADER;
 		echo "Você comprou " . $_POST['amount'] . " ticket(s) por " . $total . ' de ouro. <a href="lottery.php">Voltar</a>.';
-		include(__DIR__ . "/templates/private_footer.php");
+		
+		include_once PRIVATE_FOOTER;
 		exit;
 	}
 
-	include(__DIR__ . "/templates/private_header.php");
+	include_once PRIVATE_HEADER;
 
 	if ($setting->$unc2 < 1000) {
 		$itcheckedcheckondb = $db->execute("select name, description, type, effectiveness, img, voc, needpromo, needring, needlvl from `blueprint_items` where id=?", [$setting->$unc2]);
@@ -225,7 +265,7 @@ if ($setting->$unc3 == "t") {
 		echo "</td>";
 		echo "</tr>";
 		echo "</table>";
-		if ($itchecked['needlvl'] > 1) {
+		if ($itchecked['needlvl'] > 45) {
 			echo "<center><b><font color=\"red\">Você precisa ter nível " . $itchecked['needlvl'] . " ou mais para usar este item.</font></b></center>";
 		}
 
@@ -239,18 +279,18 @@ if ($setting->$unc3 == "t") {
 	echo "<br/><br/>";
 	echo "<fieldset><legend><b>Comprar Tickets</b></legend>\n";
 	echo '<form method="POST" action="lottery.php">';
-	echo '<b>Quantia:</b> <input type="text" name="amount" value="1" size="10" maxlength="2"/><input type="submit" name="buy" value="Comprar">';
+	echo '<b>Quantia:</b> <input type="number" name="amount" value="1" size="10" maxlength="3" min="1" max="999" /><input type="submit" name="buy" value="Comprar">';
 	echo "</form>";
 	echo "</fieldset>";
 
 	$getlottocount = $db->execute("select `id` from `lotto` where `player_id`=?", [$player->id]);
 	echo " <b>Cada ticket custa:</b> " . $setting->$unc4 . " de ouro | <b>Você já comprou:</b> " . $getlottocount->recordcount() . " tickets.";
 
-	include(__DIR__ . "/templates/private_footer.php");
+	include_once PRIVATE_FOOTER;
 	exit;
 }
 
-include(__DIR__ . "/templates/private_header.php");
+include_once PRIVATE_HEADER;
 echo "<fieldset><legend><b>A loteria está fechada</b></legend>\n";
 echo "<table>";
 echo "<tr>";
@@ -264,6 +304,5 @@ echo "</tr>";
 echo "</table>";
 echo "</fieldset>";
 echo "<br/><center><i>A loteria abrirá automaticamente todas as Terças-Feiras.</i></center>";
-include(__DIR__ . "/templates/private_footer.php");
+include_once PRIVATE_FOOTER;
 exit;
-

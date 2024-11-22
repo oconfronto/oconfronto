@@ -2,15 +2,8 @@
 
 declare(strict_types=1);
 
-/*************************************/
-/*           ezRPG script            */
-/*         Written by Khashul        */
-/*  http://code.google.com/p/ezrpg   */
-/*    http://www.bbgamezone.com/     */
-/*************************************/
-
 include(__DIR__ . "/lib.php");
-define("PAGENAME", "Tranferir Ouro");
+define("PAGENAME", "Transferir Ouro");
 $player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");

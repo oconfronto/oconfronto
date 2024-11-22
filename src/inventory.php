@@ -41,19 +41,19 @@ if ($_GET['sellit']) {
 	} elseif ($sell['item_id'] == 111 || $sell['item_id'] == 116 || $sell['item_id'] == 163 || $sell['item_id'] == 168) {
 		echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
-		echo "<td width=\"100%\" align=\"center\">Voc&ecirc; não pode vender este item!</td>";
+		echo "<td width=\"100%\" align=\"center\">Você não pode vender este item!</td>";
 		echo "</tr></table>";
 		echo "</div>";
 	} elseif ($sell['type'] == 'stone') {
 		echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
-		echo "<td width=\"100%\" align=\"center\">Voc&ecirc; não pode vender pedras.</td>";
+		echo "<td width=\"100%\" align=\"center\">Você não pode vender pedras.</td>";
 		echo "</tr></table>";
 		echo "</div>";
 	} elseif ($sell['status'] == 'equipped') {
 		echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
-		echo "<td width=\"100%\" align=\"center\">Voc&ecirc; não pode vender um item que está em uso.</td>";
+		echo "<td width=\"100%\" align=\"center\">Você não pode vender um item que está em uso.</td>";
 		echo "</tr></table>";
 		echo "</div>";
 	} elseif ($_GET['sellit'] > 0 && $_GET['comfirm'] != true) {
@@ -74,7 +74,7 @@ if ($_GET['sellit']) {
 
 		echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
-		echo '<td width="100%" align="center">Voc&ecirc; vendeu seu(a) ' . $sell['name'] . " + " . $sell['item_bonus'] . " por " . $valordavenda . " moedas de ouro.</td>";
+		echo '<td width="100%" align="center">Você vendeu seu(a) ' . $sell['name'] . " + " . $sell['item_bonus'] . " por " . $valordavenda . " moedas de ouro.</td>";
 		echo "</tr></table>";
 		echo "</div>";
 	}
@@ -114,19 +114,19 @@ if ($_GET['mature']) {
 	} elseif ($mature['mark'] == 't') {
 		echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
-		echo "<td width=\"100%\" align=\"center\">Voc&ecirc; não pode maturar itens a venda no mercado.</td>";
+		echo "<td width=\"100%\" align=\"center\">Você não pode maturar itens a venda no mercado.</td>";
 		echo "</tr></table>";
 		echo "</div>";
 	} elseif ($mature['type'] == 'addon' || $mature['type'] == 'potion' || $mature['type'] == 'stone' || $mature['type'] == 'ring') {
 		echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
-		echo "<td width=\"100%\" align=\"center\">Voc&ecirc; não pode maturar este tipo de item.</td>";
+		echo "<td width=\"100%\" align=\"center\">Você não pode maturar este tipo de item.</td>";
 		echo "</tr></table>";
 		echo "</div>";
 	} elseif ($mature['price'] < 1000) {
 		echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
-		echo "<td width=\"100%\" align=\"center\">Voc&ecirc; não pode maturar este item.";
+		echo "<td width=\"100%\" align=\"center\">Você não pode maturar este item.";
 		echo "<br/>Itens com preços mais baixos que mil moedas de ouro não podem ser maturados.";
 		echo "</td></tr></table>";
 		echo "</div>";
@@ -143,7 +143,7 @@ if ($_GET['mature']) {
 		if ($precol > $player->gold) {
 			echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 			echo '<table width="100%" align="center"><tr>';
-			echo "<td width=\"100%\" align=\"center\">Voc&ecirc; não pode pagar pela maturação. (" . $precol . " moedas de ouro)</td>";
+			echo "<td width=\"100%\" align=\"center\">Você não pode pagar pela maturação. (" . $precol . " moedas de ouro)</td>";
 			echo "</tr></table>";
 			echo "</div>";
 		} else {
@@ -162,7 +162,7 @@ if ($_GET['mature']) {
 
 			echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 			echo '<table width="100%" align="center"><tr>';
-			echo '<td width="100%" align="center">Voc&ecirc; maturou seu(a) ' . $mature['name'] . " por " . $precol . " moedas de ouro.<br />Os atributos de seu item subiram em 2 pontos.</td>";
+			echo '<td width="100%" align="center">Você maturou seu(a) ' . $mature['name'] . " por " . $precol . " moedas de ouro.<br />Os atributos de seu item subiram em 2 pontos.</td>";
 			echo "</tr></table>";
 			echo "</div>";
 		}
@@ -173,7 +173,7 @@ $tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pend
 if ($tutorial->recordcount() > 0) {
 	$tutorial = $db->execute("select * from `items` where `player_id`=? and `status`='equipped'", [$player->id]);
 	if ($tutorial->recordcount() == 0) {
-		echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">Itens ajudam na sua força e resist&ecirc;ncia.<br/><font size=\"1px\">Voc&ecirc; pode obter itens <u>lutando contra monstros</u> ou <u>comprando-os no ferreiro</u>.</font><br/><br/>Para equipar seu item, arraste sua arma para sua mão esquerda.</td><th><font size=\"1px\"><a href=\"start.php?act=5\">Próximo</a></font></th></tr></table>", "white", "left");
+		echo showAlert("<table width=\"100%\"><tr><td width=\"90%\">Itens ajudam na sua força e resistência.<br/><font size=\"1px\">Você pode obter itens <u>lutando contra monstros</u> ou <u>comprando-os no ferreiro</u>.</font><br/><br/>Para equipar seu item, arraste sua arma para sua mão esquerda.</td><th><font size=\"1px\"><a href=\"start.php?act=5\">Próximo</a></font></th></tr></table>", "white", "left");
 	} else {
 		echo showAlert("ótimo, <a href=\"start.php?act=5\">clique aqui</a> para continuar seu tutorial.", "green");
 	}
@@ -410,15 +410,15 @@ echo "<fieldset style='margin-bottom:5px;border:0px;text-align:center;'><b>Envia
 $verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `quest_status`=90 and `player_id`=?", [$player->id]);
 
 if ($player->level < $setting->activate_level) {
-	echo "<center><p><font size=\"1\">Para poder transferir itens sua conta precisa estar ativa.<br/>Ela será ativada automaticamente quando voc&ecirc; alcançar o nível " . $setting->activate_level . ".</font></p></center>";
+	echo "<center><p><font size=\"1\">Para poder transferir itens sua conta precisa estar ativa.<br/>Ela será ativada automaticamente quando você alcançar o nível " . $setting->activate_level . ".</font></p></center>";
 } elseif ($verifikeuser->recordcount() == 0) {
-	echo "<center><font size=\"1\">Voc&ecirc; precisa chegar ao nivel 40 e completar uma missão para utilizar esta função.</font></center>";
+	echo "<center><font size=\"1\">Você precisa chegar ao nível 40 e completar uma missão para utilizar esta função.</font></center>";
 	if ($player->level > 39) {
 		echo "<center><font size=\"1\"><a href=\"quest2.php\"><b>Clique aqui para fazer a missão.</b></a></font></center>";
 	}
 } elseif ($player->transpass == 'f') {
 	echo '<form method="POST" action="transferpass.php">';
-	echo "<center><i>Escolha uma senha de transfer&ecirc;ncia para enviar ouro e itens</i><p><font size=\"1px\"><b>Senha:</b></font> <input type=\"password\" name=\"pass\" size=\"15\"/> <font size=\"1px\"><b>Confirme:</b></font> <input type=\"password\" name=\"pass2\" size=\"15\"/> <input type=\"submit\" name=\"submit\" value=\"Definir Senha\"></p><br/><font size=\"1px\">Lembre-se desta senha, ela sempre será usada para fazer transfer&ecirc;ncias bancárias.</font></center>";
+	echo "<center><i>Escolha uma senha de transferência para enviar ouro e itens</i><p><font size=\"1px\"><b>Senha:</b></font> <input type=\"password\" name=\"pass\" size=\"15\"/> <font size=\"1px\"><b>Confirme:</b></font> <input type=\"password\" name=\"pass2\" size=\"15\"/> <input type=\"submit\" name=\"submit\" value=\"Definir Senha\"></p><br/><font size=\"1px\">Lembre-se desta senha, ela sempre será usada para fazer transferências bancárias.</font></center>";
 	echo "</form>";
 } else {
 
@@ -429,7 +429,7 @@ if ($player->level < $setting->activate_level) {
 
 	$queoppa = $db->execute("select items.id, items.item_bonus, items.item_id, items.mark, items.for, items.vit, items.agi, items.res, blueprint_items.name from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type!='stone' and blueprint_items.type!='potion' and items.mark='f' order by blueprint_items.type, blueprint_items.name asc", [$player->id]);
 	if ($queoppa->recordcount() == 0) {
-		echo "<b>Voc&ecirc; não possui itens.</b>";
+		echo "<b>Você não possui itens.</b>";
 	} else {
 		echo '<select name="itselected">';
 		while ($item = $queoppa->fetchrow()) {
@@ -462,17 +462,17 @@ if ($player->level < $setting->activate_level) {
 	}
 
 	echo "</td></tr>";
-	echo "<tr><td width=\"40%\">Senha de transfer&ecirc;ncia:</td><td><input autocomplete='off' type=\"password\" name=\"passcode\" size=\"20\"/></td></tr>";
+	echo "<tr><td width=\"40%\">Senha de transferência:</td><td><input autocomplete='off' type=\"password\" name=\"passcode\" size=\"20\"/></td></tr>";
 	echo '<tr><td colspan="2" align="center"><input type="submit" name="transferitems" value="Enviar"></td></tr>';
 	echo "</table></form>";
-	echo '<font size="1"><a href="forgottrans.php">Esqueceu sua senha de transfer&ecirc;ncia?</a></font>';
+	echo '<font size="1"><a href="forgottrans.php">Esqueceu sua senha de transferência?</a></font>';
 
 	$morelogs = 1;
 }
 
 echo "</fieldset>";
 if ($morelogs == 1) {
-	echo "<center><font size=\"1\"><a href=\"#\" onclick=\"javascript:window.open('logitem.php', '_blank','top=100, left=100, height=350, width=450, status=no, menubar=no, resizable=no, scrollbars=yes, toolbar=no, location=no, directories=no');\">Transfer&ecirc;ncias realizadas nos últimos 14 dias.</a></font></center>";
+	echo "<center><font size=\"1\"><a href=\"#\" onclick=\"javascript:window.open('logitem.php', '_blank','top=100, left=100, height=350, width=450, status=no, menubar=no, resizable=no, scrollbars=yes, toolbar=no, location=no, directories=no');\">Transferências realizadas nos últimos 14 dias.</a></font></center>";
 }
 
 

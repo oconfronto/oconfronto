@@ -33,7 +33,7 @@ if ($get['pending_status'] == 1 || $player->reino == 0) {
         $db->execute("update `pending` set `pending_status`=2 where `pending_id`=2 and `player_id`=?", [$player->id]);
         define("PAGENAME", "Reino Cathal");
         include(__DIR__ . "/templates/private_header.php");
-        echo "<center>Bem vindo ao reino de Cathal, voc&ecirc; fez uma sábia escolha ao unir-se a nós.<br/><br/>";
+        echo "<center>Bem vindo ao reino de Cathal, você fez uma sábia escolha ao unir-se a nós.<br/><br/>";
         echo '<b><a href="start.php">Clique aqui e continue com o tutorial.</a></b><br/><font size="1px"><a href="start.php?act=90">Pular tutorial.</a></font></center>';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
@@ -44,7 +44,7 @@ if ($get['pending_status'] == 1 || $player->reino == 0) {
         $db->execute("update `pending` set `pending_status`=2 where `pending_id`=2 and `player_id`=?", [$player->id]);
         define("PAGENAME", "Reino Eroda");
         include(__DIR__ . "/templates/private_header.php");
-        echo "<center>Bem vindo ao reino de Eroda, voc&ecirc; fez uma sábia escolha ao unir-se a nós.<br/><br/>";
+        echo "<center>Bem vindo ao reino de Eroda, você fez uma sábia escolha ao unir-se a nós.<br/><br/>";
         echo '<b><a href="start.php">Clique aqui e continue com o tutorial.</a></b><br/><font size="1px"><a href="start.php?act=90">Pular tutorial.</a></font></center>';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
@@ -55,7 +55,7 @@ if ($get['pending_status'] == 1 || $player->reino == 0) {
         $db->execute("update `pending` set `pending_status`=2 where `pending_id`=2 and `player_id`=?", [$player->id]);
         define("PAGENAME", "Reino Turkic");
         include(__DIR__ . "/templates/private_header.php");
-        echo "<center>Bem vindo ao reino de Turkic, voc&ecirc; fez uma sábia escolha ao unir-se a nós.<br/><br/>";
+        echo "<center>Bem vindo ao reino de Turkic, você fez uma sábia escolha ao unir-se a nós.<br/><br/>";
         echo '<b><a href="start.php">Clique aqui e continue com o tutorial.</a></b><br/><font size="1px"><a href="start.php?act=90">Pular tutorial.</a></font></center>';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
@@ -67,7 +67,7 @@ if ($get['pending_status'] == 1 || $player->reino == 0) {
     echo "<font size=\"1px\">Cada reino possui características diferentes. Escolha o seu reino com sabedoria, pois ele não poderá ser alterado.</font><br/>";
     echo "<ul>";
     echo "<li><b>Reino Cathal:</b> Itens e bebidas são 10% mais baratos; Magias requerem 5 pontos de mana a menos.</li>";
-    echo "<li><b>Reino Eroda:</b> Permite voc&ecirc; caçar e trabalhar por 1 hora extra.</li>";
+    echo "<li><b>Reino Eroda:</b> Permite você caçar e trabalhar por 1 hora extra.</li>";
     echo "<li><b>Reino Turkic:</b> Bônus de vida de aproximadamente 8% aos seus membros.</li>";
     echo "</ul>";
     echo '<br/><table width="100%"><tr>';
@@ -95,7 +95,7 @@ if ($get['pending_status'] == 2) {
     define("PAGENAME", "Tutorial");
     include(__DIR__ . "/templates/private_header.php");
     echo "Sempre existiu <u>muita rivalidade</u> entre os 3 reinos, mas como se isso não fosse suficiente, os mais diversos tipos de monstros rodeiam as florestas deste mundo.<br/><br/>";
-    echo "Ao caçar por <u>monstros</u> ou <u>matar personagens</u> de outros reinos voc&ecirc; ganha <u>pontos de experi&ecirc;ncia</u> e fica mais forte. Voc&ecirc; também poderá matar personagens do seu próprio reino, mas voc&ecirc; não quer uma queda na sua popularidade, quer?<br/><br/>";
+    echo "Ao caçar por <u>monstros</u> ou <u>matar personagens</u> de outros reinos você ganha <u>pontos de experiência</u> e fica mais forte. Você também poderá matar personagens do seu próprio reino, mas você não quer uma queda na sua popularidade, quer?<br/><br/>";
     echo '<center><b><a href="start.php?act=3">Clique aqui e continue com o tutorial.</a></b><br/><font size="1px"><a href="start.php?act=90">Pular tutorial.</a></font></center>';
     include(__DIR__ . "/templates/private_footer.php");
     exit;
@@ -135,10 +135,10 @@ if ($get['pending_status'] == 6) {
 if ($get['pending_status'] == 7) {
     define("PAGENAME", "Tutorial");
     include(__DIR__ . "/templates/private_header.php");
-    echo "Voc&ecirc; já aprendeu a lutar, mas aqui também será nescesário conquistar os demais guerreiros. Amigos e aliados lhe trarão benefícios durante sua jornada, por isso não deixe de visitar o <u>chat</u> e o <u>fórum</u>.<br/><br/>";
-    echo "<font size=\"1px\">Com seus amigos voc&ecirc; poderá:</font><br/>";
+    echo "Você já aprendeu a lutar, mas aqui também será necessário conquistar os demais guerreiros. Amigos e aliados lhe trarão benefícios durante sua jornada, por isso não deixe de visitar o <u>chat</u> e o <u>fórum</u>.<br/><br/>";
+    echo "<font size=\"1px\">Com seus amigos você poderá:</font><br/>";
     echo "<ul>";
-    echo "<li>Criar <b>grupos de caça</b>, ganhando bônus de experi&ecirc;ncia.</li>";
+    echo "<li>Criar <b>grupos de caça</b>, ganhando bônus de experiência.</li>";
     echo "<li>Participar de <b>clãs</b> e ser temido na batalha contra jogadores.</li>";
     echo "<li><b>Trocar</b> itens raros com maior facilidade.</li>";
     echo "</ul>";
@@ -153,14 +153,14 @@ if ($get['pending_status'] == 8) {
     $reino = $db->GetOne("select `nome` from `reinos` where `id`=?", [$player->reino]);
     $imperador = $db->GetOne("select `imperador` from `reinos` where `id`=?", [$player->reino]);
     $taxa = $db->GetOne("select `tax` from `reinos` where `id`=?", [$player->reino]);
-    echo "Voc&ecirc; faz parte do reino <b>" . $reino . "</b>, cujo imperador é " . showName($imperador, $db, 'off') . ". A cada 2 semanas uma <u>eleição para imperador</u> é realizada, onde os usuários que possuem a maior média de horas online por dia podem se candidatar.<br/>";
-    echo "Os <u>impostos que voc&ecirc; paga</u> diariamente (" . $taxa . "% do ouro que voc&ecirc; possui) vai para os cofres do reino. O imperador poderá investir este dinheiro em:<br/>";
+    echo "Você faz parte do reino <b>" . $reino . "</b>, cujo imperador é " . showName($imperador, $db, 'off') . ". A cada 2 semanas uma <u>eleição para imperador</u> é realizada, onde os usuários que possuem a maior média de horas online por dia podem se candidatar.<br/>";
+    echo "Os <u>impostos que você paga</u> diariamente (" . $taxa . "% do ouro que você possui) vai para os cofres do reino. O imperador poderá investir este dinheiro em:<br/>";
     echo "<ul>";
     echo "<li>Aumento de salários.</li>";
     echo "<li>Realizar eventos.</li>";
     echo "<li>Distribuição de poções entre jogadores do reino.</li>";
     echo "</ul>";
-    echo "Este é o básico de tudo que voc&ecirc; deve saber, o resto a vida irá lhe ensinar.<br/>";
+    echo "Este é o básico de tudo que você deve saber, o resto a vida irá lhe ensinar.<br/>";
     echo "Caso possua alguma dúvida, não exite em perguntar aos veteranos no <u>fórum</u>.<br/><br/>";
     echo '<center><b><a href="start.php?act=90&comfirm=true">Finalizar tutorial.</a></b></center>';
     include(__DIR__ . "/templates/private_footer.php");

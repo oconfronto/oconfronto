@@ -77,7 +77,7 @@ if ($_GET['act'] == "cancel") {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset>";
 	echo "<legend><b>Trabalho</b></legend>";
-	echo "Tem certeza que deseja abandonar seu trabalho? Se abandona-lo, não ganhará nada. ";
+	echo "Tem certeza que deseja abandonar seu trabalho? Se abandoná-lo, não ganhará nada. ";
 	echo '<a href="work.php?act=remove">Desejo abandonar o trabalho</a>.';
 	echo '</fieldset><br/><a href="home.php">Principal</a>.';
 	include(__DIR__ . "/templates/private_footer.php");
@@ -178,7 +178,7 @@ if ($player->level < 40) {
 } elseif ($player->reino == '2') {
 	echo showAlert("<i>Você pode trabalhar por uma hora a mais, pelo fato de ser um membro do reino Eroda.</i>");
 } elseif ($player->vip > time()) {
-	echo showAlert("<i>Você pode trabalhar por uma hora a mais, pelo fato de ser um membro vip.</i>");
+	echo showAlert("<i>Você pode trabalhar por uma hora a mais, pelo fato de ser um membro VIP.</i>");
 }
 
 $query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);
@@ -254,27 +254,27 @@ echo "</select>";
 
 if ($player->level < 80) {
 	if ($player->reino == '2' || $player->vip > time()) {
-		echo " <font size=\"1\">Apartir do nível 80 você poderá trabalhar por 9h.</font>";
+		echo " <font size=\"1\">A partir do nível 80 você poderá trabalhar por 9h.</font>";
 	} else {
-		echo " <font size=\"1\">Apartir do nível 80 você poderá trabalhar por 8h.</font>";
+		echo " <font size=\"1\">A partir do nível 80 você poderá trabalhar por 8h.</font>";
 	}
 } elseif ($player->level < 100) {
 	if ($player->reino == '2' || $player->vip > time()) {
-		echo " <font size=\"1\">Apartir do nível 100 você poderá trabalhar por 10h.</font>";
+		echo " <font size=\"1\">A partir do nível 100 você poderá trabalhar por 10h.</font>";
 	} else {
-		echo " <font size=\"1\">Apartir do nível 100 você poderá trabalhar por 9h.</font>";
+		echo " <font size=\"1\">A partir do nível 100 você poderá trabalhar por 9h.</font>";
 	}
 } elseif ($player->level < 120) {
 	if ($player->reino == '2' || $player->vip > time()) {
-		echo " <font size=\"1\">Apartir do nível 120 você poderá trabalhar por 11h.</font>";
+		echo " <font size=\"1\">A partir do nível 120 você poderá trabalhar por 11h.</font>";
 	} else {
-		echo " <font size=\"1\">Apartir do nível 120 você poderá trabalhar por 10h.</font>";
+		echo " <font size=\"1\">A partir do nível 120 você poderá trabalhar por 10h.</font>";
 	}
 } elseif ($player->level < 140) {
 	if ($player->reino == '2' || $player->vip > time()) {
-		echo " <font size=\"1\">Apartir do nível 140 você poderá trabalhar por 12h.</font>";
+		echo " <font size=\"1\">A partir do nível 140 você poderá trabalhar por 12h.</font>";
 	} else {
-		echo " <font size=\"1\">Apartir do nível 140 você poderá trabalhar por 11h.</font>";
+		echo " <font size=\"1\">A partir do nível 140 você poderá trabalhar por 11h.</font>";
 	}
 }
 
@@ -289,7 +289,7 @@ echo "</td></tr></table></form>";
 echo "<br />";
 
 echo '<table width="100%">';
-echo "<tr><td align=\"center\" bgcolor=\"#E1CBA4\"><b>últimos Trabalhos</b></td></tr>";
+echo "<tr><td align=\"center\" bgcolor=\"#E1CBA4\"><b>Últimos Trabalhos</b></td></tr>";
 $query1 = $db->execute("select * from `work` where `player_id`=? and `status`!='t' order by `start` desc limit 10", [$player->id]);
 if ($query1->recordcount() > 0) {
 	while ($log1 = $query1->fetchrow()) {

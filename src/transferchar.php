@@ -109,7 +109,7 @@ if ($_POST['submit']) {
         $error = 1;
         $lock = 1;
     } elseif ($_POST['transferpass'] != $char['transpass'] && $char['transpass'] != 'f') {
-        $errmsg .= "A senha de tranferência não confere com o personagem.";
+        $errmsg .= "A senha de transferência não confere com o personagem.";
         $error = 1;
         $lock = 1;
     } elseif ($tentativas > 9) {
@@ -140,7 +140,7 @@ if ($_POST['submit']) {
 
         include(__DIR__ . "/templates/acc-header.php");
         echo '<span id="aviso-a"></span>';
-        echo "<br/><p><center>Você solicitou a tranferência de " . $char['username'] . " para sua conta.<br/>Você terá que aguardar 14 dias para ver " . $char['username'] . ' em sua conta. <a href="characters.php">Voltar</a>.</center></p><br/>';
+        echo "<br/><p><center>Você solicitou a transferência de " . $char['username'] . " para sua conta.<br/>Você terá que aguardar 14 dias para ver " . $char['username'] . ' em sua conta. <a href="characters.php">Voltar</a>.</center></p><br/>';
         include(__DIR__ . "/templates/acc-footer.php");
         exit;
     }
@@ -170,7 +170,7 @@ echo "</span>";
         </tr>
         <?php
         if ($char['transpass'] != 'f') {
-            echo "<tr><td width=\"27%\"><b>Senha de Tranferência</b>:</td><td><input type=\"password\" name=\"transferpass\" class=\"inp\" value=\"" . $_POST['transferpass'] . '" size="20"/></td></tr>';
+            echo "<tr><td width=\"27%\"><b>Senha de Transferência</b>:</td><td><input type=\"password\" name=\"transferpass\" class=\"inp\" value=\"" . $_POST['transferpass'] . '" size="20"/></td></tr>';
         }
         ?>
     </table>

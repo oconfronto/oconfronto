@@ -7,7 +7,7 @@ if ($_POST['transferitems']) {
 	if ($verifikeuser->recordcount() == 0) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Enviar Itens</b></legend>";
-		echo "Você precisa chegar ao nivel 40 e completar uma missão para utilizar esta função.";
+		echo "Você precisa chegar ao nível 40 e completar uma missão para utilizar esta função.";
 		if ($player->level > 39) {
 			echo "<br><center><a href=\"quest2.php\"><b>Clique aqui para fazer a missão.</b></a></center>";
 		}
@@ -65,7 +65,7 @@ if ($_POST['transferitems']) {
 		$error = 1;
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
-		echo "Você não pode enviar um iten para você mesmo!<br />";
+		echo "Você não pode enviar um item para você mesmo!<br />";
 		echo '<a href="inventory.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
@@ -155,7 +155,7 @@ if ($_POST['transferitems']) {
 		$insert['name1'] = $player->username;
 		$insert['name2'] = $destination['username'];
 		$insert['action'] = "enviou";
-		$insert['value'] = "um/uma <b>" . $item5['name'] . " +" . $item5['item_bonus'] . "</b>";
+		$insert['value'] = "um(a) <b>" . $item5['name'] . " +" . $item5['item_bonus'] . "</b>";
 		$insert['itemid'] = $_POST['itselected'];
 		$insert['blue_id'] = $item5['id'];
 		$insert['time'] = time();
@@ -165,7 +165,7 @@ if ($_POST['transferitems']) {
 		$insert['name1'] = $destination['username'];
 		$insert['name2'] = $player->username;
 		$insert['action'] = "recebeu";
-		$insert['value'] = "um/uma <b>" . $item5['name'] . " +" . $item5['item_bonus'] . "</b>";
+		$insert['value'] = "um(a) <b>" . $item5['name'] . " +" . $item5['item_bonus'] . "</b>";
 		$insert['itemid'] = $_POST['itselected'];
 		$insert['blue_id'] = $item5['id'];
 		$insert['time'] = time();
