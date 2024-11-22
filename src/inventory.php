@@ -258,6 +258,8 @@ while ($bag = $backpackquery->fetchrow()) {
 		$nametype = "Ataque";
 	} elseif ($bag['type'] == 'boots') {
 		$nametype = "Agilidade";
+	} elseif ($bag['type'] == 'quiver') {
+		$nametype = "Agilidade";
 	} else {
 		$nametype = "Defesa";
 	}
