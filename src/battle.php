@@ -521,7 +521,7 @@ switch ($_GET['act']) {
 			($player->agibonus6['item_bonus'] * 2) +
 			($player->agibonus7['item_bonus'] * 2) +
 			$pbonusagi
-		);		
+		);
 		$resistenciadoplayer = ceil(($player->resistance + ($player->defbonus1['effectiveness'] + $player->defbonus2['effectiveness'] + $player->defbonus3['effectiveness'] + $player->defbonus5['effectiveness']) + (($player->defbonus1['item_bonus'] * 2) + ($player->defbonus2['item_bonus'] * 2) + ($player->defbonus3['item_bonus'] * 2) + ($player->defbonus5['item_bonus'] * 2)) + $pbonusres) * $multipledef);
 
 		$forcadoenemy = ceil(($enemy->strength + $enemy->atkbonus['effectiveness'] + ($enemy->atkbonus['item_bonus'] * 2) + $enybonusfor) * $enymultipleatk);
