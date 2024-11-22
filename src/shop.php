@@ -369,30 +369,27 @@ switch ($_GET['act']) {
 		echo "</tr></table>";
 		echo "</form>";
 
+
 		$allowed_types = ['armor', 'boots', 'helmet', 'legs', 'shield', 'weapon', 'amulet', 'quiver'];
 		 if (in_array($_GET['type'], $allowed_types)) {
-		if ($_GET['type'] == 'armor' || $_GET['type'] == 'boots' || $_GET['type'] == 'helmet' || $_GET['type'] == 'legs' || $_GET['type'] == 'shield' || $_GET['type'] == 'weapon' || $_GET['type'] == 'amulet') {
+
 			$query = "SELECT `id`, `name`, `description`, `type`, `price`, `effectiveness`, `img`, `needpromo`, `needlvl` FROM `blueprint_items` WHERE ";
 			$conditions = [];
 			$values = [];
 		
 			// Price conditions
-		
-			// Price conditions
 			if (!empty($_GET['fromprice'])) {
 				$fromprice = intval($_GET['fromprice']);
+
 		       if ($fromprice < 0) {
 		           $fromprice = 0;
 		       }
-				$fromprice = intval($_GET['fromprice']);
+
 				$conditions[] = "`price` >= ?";
-				$values[] = $fromprice;
 				$values[] = $fromprice;
 			}
 		
-		
 			if (!empty($_GET['toprice'])) {
-				$toprice = intval($_GET['toprice']);
 				$toprice = intval($_GET['toprice']);
 				$conditions[] = "`price` <= ?";
 				$values[] = $toprice;
@@ -400,19 +397,13 @@ switch ($_GET['act']) {
 		
 			// Type condition
 			$type = htmlspecialchars($_GET['type']);
+
 			if (!in_array($type, $allowed_types)) {
 				  // Handle invalid type, e.g., set a default or display an error
 				  $type = 'none';
 				}
-				$values[] = $toprice;
-			}
-		
-			// Type condition
-			$type = htmlspecialchars($_GET['type']);
+
 			$conditions[] = "`type` = ?";
-			$values[] = $type;
-		
-			// Purchase condition
 			$values[] = $type;
 		
 			// Purchase condition
@@ -431,42 +422,24 @@ switch ($_GET['act']) {
         	break;
 	}
 			$conditions[] = "(`voc` = ? OR `voc` = 0)"; // Items that can be used by vocation or by any class
-		
-			// Class condition
-			switch ($player->voc) {
-    		case 'archer':
-        	$voc = 1;
-        	break;
-    		case 'knight':
-        	$voc = 2;
-        	break;
-    		default:
-        	$voc = 3;
-        	break;
-	}
-			$conditions[] = "(`voc` = ? OR `voc` = 0)"; // Items that can be used by vocation or by any class
 			$values[] = $voc;
 		
 			// Level condition
-		
-			// Level condition
 			$conditions[] = "`needlvl` < ?";
+
 			$values[] = $player->level + MAX_LEVEL_DIFFERENCE;
-		
-			// Build the final query
-			$values[] = $player->level + 10;
+
 		
 			// Build the final query
 			$query .= implode(" AND ", $conditions);
 			$query .= " ORDER BY `needlvl` ASC";
 		
 			// Now execute the query with all parameters
-		
-			// Now execute the query with all parameters
 			$result = $db->execute($query, $values);
 
+
 			echo showAlert("<i>Você pode comprar items de nível " . ($player->level + MAX_LEVEL_DIFFERENCE) . " ou menos.</i>");
-			echo showAlert("<i>Você pode comprar itens de nível " . ($player->level + 10) . " ou menos.</i>");
+
 
 			while ($item = $result->fetchrow()) {
 				echo "<fieldset>\n";
