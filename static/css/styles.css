@@ -23,6 +23,9 @@
   margin: 0px;
   padding: 0px 25px;
   text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .cssmenu li a:hover {
   background: url("../images/menu/menuhover3.png") no-repeat;
@@ -69,7 +72,7 @@
   font-style: normal;
   margin: 0px;
   padding: 0px 10px 0px 15px;
-  text-align: left;
+  text-align: left;  
 }
 .cssmenu li ul a:hover,
 .cssmenu li ul li:hover a {
