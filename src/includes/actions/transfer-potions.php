@@ -9,7 +9,7 @@ function showError($message) {
 	global $header, $footer;
 	include_once $header;
 	echo "<fieldset><legend><b>Erro</b></legend>\n";
-	echo $message . "<br />";
+	echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . "<br />";
 	echo '<a href="inventory.php">Voltar</a>.';
 	echo "</fieldset>";
 	include_once $footer;
