@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-
+define('PAGENAME', 'Equipment');
 include(__DIR__ . "/lib.php");
 $player = check_user($db);
 
@@ -10,7 +10,7 @@ if ($_GET['itid']) {
     if ($query->recordcount() == 1) {
         $item = $query->fetchrow();
 
-        //arruma anis sem atributos
+        //fix rings without attributes
         $update = 0;
         if ($item['item_id'] == 163) {
             $for = 10;
@@ -92,7 +92,7 @@ if ($_GET['itid']) {
             $item = $query->fetchrow();
         }
 
-        // fim arrumao anis   
+        // end of tidying up rings   
 
         switch ($item['status']) {
             case "unequipped": //User wants to equip item
@@ -193,7 +193,7 @@ if ($_GET['itid']) {
                     $query = $db->execute("select items.item_id, items.item_bonus, items.vit, blueprint_items.type, blueprint_items.effectiveness from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.id=?", [$unequip]);
                     $item = $query->fetchrow();
 
-                    //pega valor dos adicionais
+                    //get the value of the additional
                     if ($item['type'] == 'amulet') {
                         $extrahp = (($item['effectiveness'] + ($item['item_bonus'] * 2) + $item['vit']) * 20);
                         $extramana = (($item['effectiveness'] + ($item['item_bonus'] * 2) + $item['vit']) * 5);
@@ -218,7 +218,7 @@ if ($_GET['itid']) {
                 $query = $db->execute("select items.item_id, items.item_bonus, items.vit, blueprint_items.type, blueprint_items.effectiveness from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.id=?", [$_GET['itid']]);
                 $item = $query->fetchrow();
 
-                //pega valor dos adicionais
+                //get the value of the additional
                 if ($item['type'] == 'amulet') {
                     $extrahp = (($item['effectiveness'] + ($item['item_bonus'] * 2) + $item['vit']) * 20);
                     $extramana = (($item['effectiveness'] + ($item['item_bonus'] * 2) + $item['vit']) * 5);
@@ -237,7 +237,7 @@ if ($_GET['itid']) {
                 $query = $db->execute("select items.item_id, items.item_bonus, items.vit, blueprint_items.type, blueprint_items.effectiveness from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.id=?", [$_GET['itid']]);
                 $item = $query->fetchrow();
 
-                //pega valor dos adicionais
+                //get the value of the additional
                 if ($item['type'] == 'amulet') {
                     $extrahp = (($item['effectiveness'] + ($item['item_bonus'] * 2) + $item['vit']) * 20);
                     $extramana = (($item['effectiveness'] + ($item['item_bonus'] * 2) + $item['vit']) * 5);

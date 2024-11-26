@@ -10,7 +10,6 @@ $error = 0;
 
 include(__DIR__ . "/templates/private_header.php");
 
-
 $get = $db->execute(sprintf("select * from `players` where `username` = '%s' and subname > '0'", $player->username));
 if ($get->recordcount() > 0 && $_POST['subname'] == "alterar") {
 	$subtitle = $_POST['subtitle'];
@@ -21,7 +20,6 @@ if ($get->recordcount() > 0 && $_POST['subname'] == "alterar") {
 		echo showAlert("Tá maluco? Só são aceitos nicks com 10 caracteres ou menos.", "red");
 	} elseif (!empty($subtitle) && !empty($sub_color)) {
 		if ($sub_color == "red" || $sub_color == "blue" || $sub_color == "green" || $sub_color == "black") {
-
 			if ($_POST['clean'] == 'yes') {
 				$sub_final = "1";
 				echo showAlert("Subnick foi removido", "green");
@@ -39,34 +37,31 @@ if ($get->recordcount() > 0 && $_POST['subname'] == "alterar") {
 	}
 }
 
-if ($_POST['upload']) {
-	if (!$_POST['avatar']) {
-		$errmsg .= "Por favor preencha todos os campos!";
-		$error = 1;
-	} elseif ($_POST['avatar'] && (@GetImageSize($_POST['avatar']) === [] || @GetImageSize($_POST['avatar']) === false)) {
-		$errmsg .= "O endereço desta imagem não é válido!";
-		$error = 1;
-	}
+if (isset($_POST['upload'])) { // Checks if the 'upload' index is set
+    if (!$_POST['avatar']) {
+        $errmsg .= "Por favor preencha todos os campos!";
+        $error = 1;
+    } elseif ($_POST['avatar'] && (@GetImageSize($_POST['avatar']) === [] || @GetImageSize($_POST['avatar']) === false)) {
+        $errmsg .= "O endereço desta imagem não é válido!";
+        $error = 1;
+    }
 
-	if ($error == 0) {
-		$avat = $_POST['avatar'] ?: "anonimo.gif";
-		$query = $db->execute("update `players` set `avatar`=? where `id`=?", [$avat, $player->id]);
-		$msg .= "Você alterou seu avatar com sucesso!";
+    if ($error == 0) {
+        $avat = $_POST['avatar'] ?: "anonimo.gif";
+        $query = $db->execute("update `players` set `avatar`=? where `id`=?", [$avat, $player->id]);
+        $msg .= "Você alterou seu avatar com sucesso!";
 		// Espera 1.5 segundos antes de atualizar a página
 		//  echo "<p><font color='green'>$msg</font></p>";
-		echo showAlert("<b>" . $msg . "</b>", "green");
-		echo '<meta http-equiv="refresh" content="1.3">';
-		exit;
-	}
-
+        echo showAlert("<b>" . $msg . "</b>", "green");
+        echo '<meta http-equiv="refresh" content="1.3">';
+        exit;
+    }
 	// Espera 1.5 segundos antes de atualizar a página
 	//  echo "<p><font color='green'>$msg</font></p>";
-	echo showAlert("<b>" . $errmsg . "</b>", "red");
-	echo '<meta http-equiv="refresh" content="1.3">';
-	exit;
+    echo showAlert("<b>" . $errmsg . "</b>", "red");
+    echo '<meta http-equiv="refresh" content="1.3">';
+    exit;
 }
-
-
 // if ($_GET['success'] == 'true') {
 // 	echo showAlert("Avatar atualizado com sucesso!", "green");
 // } elseif ($_GET['msg']) {
@@ -82,8 +77,35 @@ if ($procuramengperfil->recordcount() == 0) {
 	$mencomentario = str_replace($quebras, "", $comentdocara['perfil']);
 }
 
+// Process the comment submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['detail'])) {
+	if (!$_POST['detail']) {
+		echo "<fieldset><legend><b>Erro</b></legend>Você precisa preencher todos os campos!<BR>";
+		echo "<a href='home.php'>Voltar</a></fieldset>";
+		include(__DIR__ . "/templates/private_footer.php");
+		exit;
+	}
+
+	$topic = $_POST['detail'];
+	$topic2 = strip_tags((string) $topic);
+	$texto = nl2br($topic2);
+
+	if ($procuramengperfil->recordcount() == 0) {
+		$insert['player_id'] = $player->id;
+		$insert['perfil'] = $texto;
+		$upddadet = $db->autoexecute('profile', $insert, 'INSERT');
+
+		echo "<fieldset><legend><b>Sucesso</b></legend>Perfil atualizado com sucesso!<BR>";
+		echo '<a href="profile.php?id=' . $player->username . ' ">Visualizar perfil</a></fieldset>';
+	} else {
+		$db->execute("update `profile` set `perfil`=? where `player_id`=?", [$texto, $player->id]);
+		echo "<fieldset><legend><b>Sucesso</b></legend>Perfil atualizado com sucesso!<BR>";
+		echo '<a href="profile.php?id=' . $player->username . '">Visualizar perfil</a></fieldset>';
+	}
+}
 
 ?>
+
 <table width="100%">
 	<tr>
 		<td width="25%">
@@ -105,14 +127,13 @@ if ($procuramengperfil->recordcount() == 0) {
 			</form>
 		</td>
 	</tr>
-
 </table>
 
 <br />
 
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#f2e1ce">
 	<tr>
-		<form id="form1" name="form1" method="post" action="add_comment.php">
+		<form id="form1" name="form1" method="post" action="">
 			<td>
 				<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#f2e1ce">
 					<tr>
@@ -135,6 +156,4 @@ if ($procuramengperfil->recordcount() == 0) {
 	</tr>
 </table>
 
-
-<?php include(__DIR__ . "/templates/private_footer.php");
-?>
+<?php include(__DIR__ . "/templates/private_footer.php"); ?>

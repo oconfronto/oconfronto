@@ -231,11 +231,12 @@ if ($gettasks->recordcount() < 1) {
     echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa disponível.</font></center></td></tr>";
 } else {
     $query = $db->execute("select * from `allquests`");
+    $q = ''; //$q = '';: The $q variable was initialized to an empty string before being used to concatenate information within the loop that processes the quests.
     while ($quest = $query->fetchrow()) {
         $q .= '<table width="100%" border="0px"><tr>';
         $q .= '<td width="70%"><b>' . $quest['name'] . "</b><br/><i>" . $quest['desc'] . "</i><br/><br/></td>";
 
-        //verifica se a missão está disponível ou se foi completa
+        //checks if the mission is available or if it has been completed
         $qStatus = $db->GetOne("select `quest_status` from `quests` where `player_id`=? and `quest_id`=?", [$player->id, $quest['id']]);
         if ($qStatus != 90 && $quest['lvl'] <= $player->level) {
             $mostra = true;

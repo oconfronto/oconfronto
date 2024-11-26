@@ -1,7 +1,7 @@
 <script src="static/js/jquery.js" type="text/javascript" language="javascript"></script>
 
 <script language="javascript">
-	//Novo character
+	//New character
 	$(document).ready(function() {
 		$("#username").blur(function() {
 			//remove all the class add the messagebox classes and start fading
@@ -31,7 +31,7 @@
 	});
 </script>
 <script language="javascript">
-	//Validando Email
+	//Validating Email
 	$(document).ready(function() {
 		$("#emailbox").blur(function() {
 			//remove all the class add the messagebox classes and start fading
@@ -62,7 +62,7 @@
 </script>
 
 <script language="javascript">
-	//Validando confirmacao de Email
+	//Validating Email Confirmation
 	$(document).ready(function() {
 		$("#emailboxconf").blur(function() {
 			//remove all the class add the messagebox classes and start fading
@@ -115,7 +115,7 @@
 </script>
 
 <script language="javascript">
-	//Validando senha
+	//Validating password
 	$(document).ready(function() {
 		$("#user_pass").blur(function() {
 			//remove all the class add the messagebox classes and start fading
@@ -138,7 +138,7 @@
 </script>
 
 <script language="javascript">
-	//Validando confirmacao de senha
+	//Validating password confirmation
 	$(document).ready(function() {
 		$("#conf_pass").blur(function() {
 			//remove all the class add the messagebox classes and start fading
@@ -176,7 +176,7 @@
 
 
 <script language="javascript">
-	//Validando confirmacao de senha
+	//Validating password confirmation
 	$(document).ready(function() {
 		$("#conf_delete").blur(function() {
 			//remove all the class add the messagebox classes and start fading
@@ -203,7 +203,7 @@
 
 
 <style type="text/css">
-	.messagebox {}
+	 /* .messagebox {}  // Disabling empty rule */
 
 	.messageboxok {
 		display: block;

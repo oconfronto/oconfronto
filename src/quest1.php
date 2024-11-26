@@ -31,7 +31,8 @@ if ($player->level < 100) {
 	exit;
 }
 
-switch ($_GET['act']) {
+if (isset($_GET['act'])) 
+    switch ($_GET['act']) {
 	case "warrior":
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";

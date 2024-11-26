@@ -162,16 +162,15 @@ function startChatSession(): void
 	header('Content-type: application/json');
 	include(__DIR__ . "/lib.php");
 	$player = check_user($db);
-?>
+	?>
 	{
-	"username": "<?php echo str_replace(" ", "_", $player->username); ?>",
-	"level": "<?php echo $_SESSION['level']; ?>",
-	"items": [
-	<?php echo $items; ?>
-	]
+		"username": "<?php echo str_replace(" ", "_", $player->username); ?>",
+		"level": "<?php echo isset($_SESSION['level']) ? $_SESSION['level'] : '0'; ?>",  <!-- Checking if 'level' exists -->
+		"items": [
+		<?php echo $items; ?>
+		]
 	}
-
-<?php
+	<?php
 
 
 	exit(0);

@@ -116,9 +116,16 @@ class barGen
 			imagerectangle($this->bar, 0, 0, $this->bar_w - 1, $this->bar_h - 1, $brown);
 		}
 
-		// Text
+		// Ensure the coordinates are integers to comply with the imagestring() function requirements.
 		if ($this->fontSize > 0) {
-			imagestring($this->bar, $this->fontSize, round(($this->bar_w / 2) - ((strlen($text) * imagefontwidth($this->fontSize)) / 2), 1), round(($this->bar_h / 2) - (imagefontheight($this->fontSize) / 2)), $text, $white);
+			imagestring(
+				$this->bar,
+				$this->fontSize,
+				intval(round(($this->bar_w / 2) - ((strlen($text) * imagefontwidth($this->fontSize)) / 2))),
+				intval(round(($this->bar_h / 2) - (imagefontheight($this->fontSize) / 2))),
+				$text,
+				$white
+			);
 		}
 
 		// Output
