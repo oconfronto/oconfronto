@@ -97,9 +97,11 @@ if ($player->stat_points > 0 && $msgtype == 1) {
 		$tier = 5;
 	}
 
-	$torneiovarificapelotier = "tournament_" . $tier . "_" . $player->serv . "";
-	$lottoavisoheader = "lottery_" . $player->serv . "";
+	// Tournament system disabled
+    // $tier = isset($tier) ? $tier : 'default_tier';
+	// $torneiovarificapelotier = "tournament_" . $tier . "_" . $player->serv;
 
+	/*
 	if ($setting->$torneiovarificapelotier == "y") {
 		echo "O <a href=\"tournament.php\">Torneio</a> começou!";
 		$messaged = 1;
@@ -109,21 +111,38 @@ if ($player->stat_points > 0 && $msgtype == 1) {
 			echo 'Inscreva-se no torneio! <a href="tournament.php">Clique aqui</a>.';
 			$messaged = 1;
 		}
+			*/
+		{
+
+
+
+			$lottoavisoheader = "lottery_" . $player->serv;
+		$sorteia = 0; // Initialize with default value
+
+		if ($lottoavisoheader == "lottery_" . $player->serv) {
+    	$sorteia = 2; // Set as required
+		} elseif ($lottoavisoheader == "eventoouro_" . $player->serv) {
+    	$sorteia = 3;
+		} elseif ($lottoavisoheader == "eventoexp_" . $player->serv) {
+    	$sorteia = 4;
+		}
 
 		if ($setting->$lottoavisoheader == 't' && $sorteia == 2) {
-			echo 'Aposte na loteria! <a href="lottery.php">Clique aqui</a>.';
-			$messaged = 1;
+   		 	echo 'Aposte na loteria! <a href="lottery.php">Clique aqui</a>.';
+    		$messaged = 1;
 		}
 
 		if ($setting->eventoouro > time() && $sorteia == 3) {
-			echo "Evento surpresa! Monstros com ouro em dobro!.";
-			$messaged = 1;
+    		echo "Evento surpresa! Monstros com ouro em dobro!.";
+    		$messaged = 1;
 		}
 
 		if ($setting->eventoexp > time() && $sorteia == 4) {
-			echo "Evento surpresa! Monstros com experiência em dobro!.";
-			$messaged = 1;
+    	echo "Evento surpresa! Monstros com experiência em dobro!.";
+    	$messaged = 1;
 		}
+
+			
 
 
 		$query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);

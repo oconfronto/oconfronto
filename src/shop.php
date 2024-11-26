@@ -13,7 +13,8 @@ const MAX_LEVEL_DIFFERENCE = 10;
 // Add this line near the top of the file, after $player is defined
 $voc = $player->voc;
 
-switch ($_GET['act']) {
+$act = isset($_GET['act']) ? $_GET['act'] : ''; // Definir um valor padrão
+switch ($act) {
 	case "buy":
 		if (!$_GET['id']) //No item ID
 		{
@@ -371,7 +372,8 @@ switch ($_GET['act']) {
 
 
 		$allowed_types = ['armor', 'boots', 'helmet', 'legs', 'shield', 'weapon', 'amulet', 'quiver'];
-		 if (in_array($_GET['type'], $allowed_types)) {
+		$type = isset($_GET['type']) ? $_GET['type'] : ''; // Set a default value
+		if (in_array($type, $allowed_types)) {
 
 			$query = "SELECT `id`, `name`, `description`, `type`, `price`, `effectiveness`, `img`, `needpromo`, `needlvl` FROM `blueprint_items` WHERE ";
 			$conditions = [];

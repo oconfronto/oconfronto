@@ -2,25 +2,29 @@
 
 declare(strict_types=1);
 
-function displayItem($db, $player, $itemTypes): void
+if (!function_exists('displayItem')) {
+    function displayItem($db, $player, $itemTypes): void {
 {
-        // Validate item types against player's vocation
-        if (is_array($itemTypes)) {
-            if ($player->vocation === 'Archer' && in_array('shield', $itemTypes)) {
-                $itemTypes = array_diff($itemTypes, ['shield']);
-            } elseif (in_array($player->vocation, ['Warrior', 'Mage']) && in_array('quiver', $itemTypes)) {
-                $itemTypes = array_diff($itemTypes, ['quiver']);
-            }
-           // Skip display if no valid items after filtering
-            if (empty($itemTypes)) {
-                return;
-            }
-        } elseif (
-            ($itemTypes === 'shield' && $player->vocation === 'Archer') ||
-            ($itemTypes === 'quiver' && in_array($player->vocation, ['Warrior', 'Mage']))
-        ) {
+    // Check if the 'vocation' property exists before using it
+    if (isset($player->vocation)) { // Checks if the 'vocation' property exists
+        if ($player->vocation == 1 && in_array('shield', $itemTypes)) { // 1 for Archers
+            $itemTypes = array_diff($itemTypes, ['shield']);
+        } elseif (in_array($player->vocation, [2, 3]) && in_array('quiver', $itemTypes)) { // 2 for Warriors, 3 for Mages
+            $itemTypes = array_diff($itemTypes, ['quiver']);
+        }
+        // Skip display if no valid items after filtering
+        if (empty($itemTypes)) {
             return;
-        }   
+        }
+    } elseif (
+        isset($player->vocation) && $player->vocation != 0 && ( // Checks if property exists and is valid
+            ($itemTypes === 'shield' && $player->vocation == 1) || // Archers cannot use shields
+            ($itemTypes === 'quiver' && in_array($player->vocation, [2, 3])) // Warriors/Mages cannot use quivers
+        )
+    ) {
+        return;
+    }
+    
     echo '<td><div class="bg_item1">';
 
     // Allows $itemTypes to be an array or a single string
@@ -28,6 +32,7 @@ function displayItem($db, $player, $itemTypes): void
     $params = is_array($itemTypes) ? array_merge([$player->id], $itemTypes) : [$player->id, $itemTypes];
 
     try {
+        // Query to search for player items
         $query = "SELECT items.id, items.item_id, items.item_bonus, items.for, items.vit, items.agi, items.res, items.status, 
                          blueprint_items.name, blueprint_items.description, blueprint_items.effectiveness, blueprint_items.img, blueprint_items.type
                   FROM `items`, `blueprint_items` 
@@ -97,6 +102,8 @@ function displayItem($db, $player, $itemTypes): void
     }
 
     echo '</div></td>';
+}
+    }
 }
 
 ?>

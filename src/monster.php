@@ -171,7 +171,7 @@ switch ($_GET['act']) {
 		$expdomonstro *= $bixo->mul;
 
 
-		//verifica se o monstro é de arena
+		//checks if the monster is from the arena
 		$monstroDeArena = false;
 		$checkdDungeon = $db->getone("select `dungeon_id` from `dungeon_status` where `status`<90 and `fail`=0 and `player_id`=?", [$player->id]);
 		if ($checkdDungeon != null && $checkdDungeon != 0) {
@@ -188,7 +188,7 @@ switch ($_GET['act']) {
 
 
 		if ($bixo->type != 98 && $bixo->type != 99 && !$monstroDeArena) {
-			//checa os niveis
+			//check the levels
 			$tolevelttyy = round($player->level * 1.8);
 			if ($tolevelttyy < $enemy->level && $enemy->id != 49) {
 				$db->execute("delete from `bixos` where `player_id`=?", [$player->id]);
@@ -382,6 +382,8 @@ switch ($_GET['act']) {
 		$player->defbonus5 = ($query54->recordcount() == 1) ? $query54->fetchrow() : 0;
 		$query55 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='boots' and items.status='equipped'", [$player->id]);
 		$player->agibonus6 = ($query55->recordcount() == 1) ? $query55->fetchrow() : 0;
+		$query56 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='quiver' and items.status='equipped'", [$player->id]);
+		$player->agibonus7 = ($query55->recordcount() == 1) ? $query56->fetchrow() : 0;
 
 		$pbonusfor = 0;
 		$pbonusagi = 0;
@@ -458,16 +460,40 @@ switch ($_GET['act']) {
 
 
 		//Calculate some variables that will be used
-		$forcadoplayer = ceil((($player->strength + ($player->atkbonus['effectiveness'] ?? 0) + (($player->atkbonus['item_bonus'] ?? 0) * 2) + $pbonusfor) * $multipleatk) * 1.5);
+		$forcadoplayer = ceil(
+			(
+				$player->strength +
+				($player->atkbonus['effectiveness'] ?? 0) +
+				(($player->atkbonus['item_bonus'] ?? 0) * 2) +
+				($pbonusfor ?? 0) // Fallback for $pbonusfor
+			) * ($multipleatk ?? 1) * 1.5 // Fallback for $multipleatk and multiplier
+		);
+		
 		$agilidadedoplayer = ceil(
-			$player->agility + 
-			($player->agibonus6 ? $player->agibonus6['effectiveness'] : 0) +
-			($player->agibonus7 ? $player->agibonus7['effectiveness'] : 0) +
-			($player->agibonus6 ? ($player->agibonus6['item_bonus'] * 2) : 0) +
-			($player->agibonus7 ? ($player->agibonus7['item_bonus'] * 2) : 0) +
-			($pbonusagi ?? 0)
-		);	
-		$resistenciadoplayer = ceil((($player->resistance + (($player->defbonus1['effectiveness'] ?? 0) + ($player->defbonus2['effectiveness'] ?? 0) + ($player->defbonus3['effectiveness'] ?? 0) + ($player->defbonus5['effectiveness'] ?? 0)) + ((($player->defbonus1['item_bonus'] ?? 0) * 2) + (($player->defbonus2['item_bonus'] ?? 0) * 2) + (($player->defbonus3['item_bonus'] ?? 0) * 2) + (($player->defbonus5['item_bonus'] ?? 0) * 2)) + $pbonusres) * $multipledef) / 0.85);
+			$player->agility +
+			($player->agibonus6['effectiveness'] ?? 0) +
+			($player->agibonus7['effectiveness'] ?? 0) +
+			(($player->agibonus6['item_bonus'] ?? 0) * 2) +
+			(($player->agibonus7['item_bonus'] ?? 0) * 2) +
+			($pbonusagi ?? 0) // Fallback for $pbonusagi
+		);
+		
+		$resistenciadoplayer = ceil(
+			(
+				$player->resistance +
+				($player->defbonus1['effectiveness'] ?? 0) +
+				($player->defbonus2['effectiveness'] ?? 0) +
+				($player->defbonus3['effectiveness'] ?? 0) +
+				($player->defbonus5['effectiveness'] ?? 0) +
+				(
+					(($player->defbonus1['item_bonus'] ?? 0) * 2) +
+					(($player->defbonus2['item_bonus'] ?? 0) * 2) +
+					(($player->defbonus3['item_bonus'] ?? 0) * 2) +
+					(($player->defbonus5['item_bonus'] ?? 0) * 2)
+				) +
+				($pbonusres ?? 0) // Fallback for $pbonusres
+			) * ($multipledef ?? 1) // Fallback for $multipledef
+		) / 0.85;
 
 		$forcadomonstro = ($enemy->strength * 1.68);
 		$agilidadedomonstro = ($enemy->agility / 1.15);
@@ -871,7 +897,7 @@ switch ($_GET['act']) {
 					$output .= showAlert("<b>Você matou " . $enemy->prepo . " " . $enemy->username . "!</b><br/>Você ganhou " . number_format($expdomonstro) . " de experiência e " . number_format($goldwin) . " de ouro.", "green");
 				}
 
-				//verifica dungeon
+				//check dungeon
 				if ($monstroDeArena) {
 					$output .= showAlert("Você matou um monstro da arena, <a href=\"dungeon.php\">clique aqui</a> e veja seu próximo oponente.", "green");
 					$db->execute("update `dungeon_status` set `status`=`status`+1 where `status`<90 and `fail`=0 and `player_id`=?", [$player->id]);
@@ -904,7 +930,7 @@ switch ($_GET['act']) {
 			$output .= showAlert("<b>Você morreu!</b><br/>Você perdeu " . number_format($exploss3) . " de experiência e " . number_format($goldloss2) . " de ouro.", "red");
 			//Update player (the loser)
 			$query = $db->execute("update `players` set `energy`=`energy`-?, `exp`=`exp`-?, `gold`=`gold`-?, `deaths`=`deaths`+1, `hp`=0, `mana`=0, `deadtime`=? where `id`=?", [(10 * $bixo->mul), $exploss3, $goldloss2, time() + $setting->dead_time, $player->id]);
-			//verifica dungeon
+			//check dungeon
 			if ($monstroDeArena) {
 				$output .= showAlert("Você foi morto por um monstro da arena e foi desclassificado.", "red");
 				$db->execute("update `dungeon_status` set `fail`=1, `status`=? where `status`<90 and `fail`=0 and `player_id`=?", [(time() + 86400), $player->id]);

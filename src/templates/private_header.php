@@ -7,10 +7,13 @@ $parts = explode('/', (string) $currentfile);
 $currentfile = $parts[count($parts) - 1];
 
 $userAgent = $_SERVER['HTTP_USER_AGENT'];
-function isMobile($userAgent): int|false
-{
-    return preg_match('/Mobile|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/', (string) $userAgent);
+if (!function_exists('isMobile')) {
+    function isMobile($userAgent): int|false
+    {
+        return preg_match('/Mobile|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/', (string) $userAgent);
+    }
 }
+
 
 $tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=90 and `player_id`=?", [$player->id]);
 if ($tutorial->recordcount() == 0) {
@@ -152,26 +155,26 @@ if ($tutorial->recordcount() == 0) {
     <script type="text/javascript" src="static/js/drag.js"></script>
     <!-- initialize drag and drop -->
     <?php
-    // Exemplo de inclusão condicional do script no cabeçalho
+    //Example of conditional inclusion of script in header
 
-    // Verifica se a página atual é 'inventory.php'
+    // Checks if the current page is 'inventory.php'
     if ($currentfile === 'inventory.php') {
     ?>
         <script type="text/javascript">
             // onload event
             window.onload = function() {
-                // Verifica se é um dispositivo móvel
+                // Check if it is a mobile device
                 var isMobile = /Mobi|Android/i.test(navigator.userAgent);
                 if (isMobile) {
-                    // Redireciona para uma página diferente para dispositivos móveis
+                    // Redirects to a different page for mobile devices
                     var btnMobile = document.getElementById('btn_mobile');
                     if (btnMobile) {
                         btnMobile.style.display = 'flex';
                     }
                 }
 
-                rd = REDIPS.drag; // referência à classe REDIPS.drag
-                // inicialização
+                rd = REDIPS.drag; // reference to the REDIPS.drag class
+                // boot
                 rd.init();
 
                 rd.mark.exception.amulet = 'amulet';
@@ -184,12 +187,12 @@ if ($tutorial->recordcount() == 0) {
                 rd.mark.exception.boots = 'boots';
                 rd.mark.exception.quiver = 'quiver'; //ADD Quiver
 
-                // esta função (manipulador de eventos) é chamada após o elemento ser solto
+                // this function (event handler) is called after the element is dropped
                 REDIPS.drag.myhandler_dropped = function() {
-                    var obj_old = REDIPS.drag.obj_old; // referência ao objeto original
-                    var target_cell = REDIPS.drag.target_cell; // referência à célula de destino			
+                    var obj_old = REDIPS.drag.obj_old; // reference to the original object
+                    var target_cell = REDIPS.drag.target_cell; // reference to the target cell
 
-                    // se o elemento DIV foi colocado em uma célula permitida
+                    // if the DIV element was placed in an allowed cell
                     if (rd.target_cell.className.indexOf(rd.mark.exception[rd.obj.id]) !== -1) {
                         if (REDIPS.drag.target_cell !== REDIPS.drag.source_cell) {
                             var itclassname = rd.obj_old.className;

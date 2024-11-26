@@ -24,7 +24,7 @@ if ($player->voc == 'archer') {
 	$futuravocacao = "Mago";
 }
 
-//caso possua promote.
+//if you have promote.
 if ($player->promoted == 't') {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Treinador</b></legend>\n";
@@ -35,7 +35,7 @@ if ($player->promoted == 't') {
 	exit;
 }
 
-//caso seja menor que o level minio 80 para promote.
+//if it is less than the minimum level 80 to promote.
 if ($player->level < 80) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Treinador</b></legend>\n";
@@ -46,16 +46,19 @@ if ($player->level < 80) {
 	exit;
 }
 
-//aqui possui as ações.
+//here are the shares.
+if (!isset($_GET['act'])) {
+    $_GET['act'] = ''; // Sets a default value if 'act' is not defined.
+}
 switch ($_GET['act']) {
-	case "pay":
-		include(__DIR__ . "/templates/private_header.php");
-		echo "<fieldset><legend><b>Treinador</b></legend>\n";
-		echo "<i>Você está disposto a me pagar 80000 de ouro para começar as missões?</i><br>\n";
-		echo '<a href="promote.php?act=confirmpay">Sim eu estou</a> | <a href="home.php">Deixar para depois</a>.';
-		echo "</fieldset>";
-		include(__DIR__ . "/templates/private_footer.php");
-		break;
+    case "pay":
+        include(__DIR__ . "/templates/private_header.php");
+        echo "<fieldset><legend><b>Treinador</b></legend>\n";
+        echo "<i>Você está disposto a me pagar 80000 de ouro para começar as missões?</i><br>\n";
+        echo '<a href="promote.php?act=confirmpay">Sim eu estou</a> | <a href="home.php">Deixar para depois</a>.';
+        echo "</fieldset>";
+        include(__DIR__ . "/templates/private_footer.php");
+        break;
 
 	case "confirmpay":
 		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 1]);
@@ -280,13 +283,22 @@ switch ($_GET['act']) {
 		include(__DIR__ . "/templates/private_footer.php");
 
 		break;
+
+		default:
+        include(__DIR__ . "/templates/private_header.php");
+        echo "<fieldset><legend><b>Erro</b></legend>\n";
+        echo "<i>Ação inválida!</i><br/><br/>\n";
+        echo '<a href="home.php">Voltar</a>.';
+        echo "</fieldset>";
+        include(__DIR__ . "/templates/private_footer.php");
+        break;
 }
 ?>
 
 
 <?php
 
-//dialogo e processos da quest.
+//dialogue and quest processes.
 $verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 1]);
 $quest = $verificacao->fetchrow();
 

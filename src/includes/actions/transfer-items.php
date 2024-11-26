@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-if ($_POST['transferitems']) {
+if (isset($_POST['transferitems'])) {
 	$verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `quest_status`=90 and `player_id`=?", [$player->id]);
 	if ($verifikeuser->recordcount() == 0) {
 		include(__DIR__ . "/templates/private_header.php");

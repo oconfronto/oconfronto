@@ -59,60 +59,69 @@ if ($diff >= $cron['interest_time']) {
 }
 
 $diff = isset($cron['tuesday_next']) ? ($now - $cron['tuesday_next']) : 0;
-if ($diff >= 0 && $setting->lottery_1 == 'f') {
-	$next = strtotime("next Tuesday");
-	$db->execute("update `cron` set `value`=? where `name`=?", [$next, "tuesday_next"]);
+// Checks if $setting is defined and not null before accessing its properties
+if (isset($setting) && isset($setting->lottery_1) && $diff >= 0 && $setting->lottery_1 == 'f') {
+    $next = strtotime("next Tuesday");
+    $db->execute("update `cron` set `value`=? where `name`?", [$next, "tuesday_next"]);
 
-	$day = random_int(2, 3);
-	$hour = ["10:00:00", "12:00:00", "14:00:00", "16:00:00", "18:00:00", "20:00:00"];
-	$hour = $hour[random_int(0, (count($hour) - 1))];
-	$lottotime = strtotime("+" . $day . " day " . $hour . "");
+    $day = random_int(2, 3);
+    $hour = ["10:00:00", "12:00:00", "14:00:00", "16:00:00", "18:00:00", "20:00:00"];
+    $hour = $hour[random_int(0, (count($hour) - 1))];
+    $lottotime = strtotime("+" . $day . " day " . $hour . "");
 
-	$win = ["140-2500", "132-2500", "5000000-500", "173-2000", "175-2500", "172-2000", "174-1500"];
-	$win = $win[random_int(0, (count($win) - 1))];
-	$win = explode("-", $win);
+    $win = ["140-2500", "132-2500", "5000000-500", "173-2000", "175-2500", "172-2000", "174-1500"];
+    $win = $win[random_int(0, (count($win) - 1))];
+    $win = explode("-", $win);
 
-	while ($setting->win_id_1 == $win[0]) {
-		$win = ["140-2500", "132-2500", "5000000-500", "173-2000", "175-2500", "172-2000", "174-1500"];
-		$win = $win[random_int(0, (count($win) - 1))];
-		$win = explode("-", $win);
-	}
+    //Prevents an infinite loop
+    while (isset($setting->win_id_1) && $setting->win_id_1 == $win[0]) {
+        $win = ["140-2500", "132-2500", "5000000-500", "173-2000", "175-2500", "172-2000", "174-1500"];
+        $win = $win[random_int(0, (count($win) - 1))];
+        $win = explode("-", $win);
+    }
 
-	$db->execute("update `settings` set `value`=? where `name`=?", [$lottotime, "end_lotto_1"]);
-	$db->execute("update `settings` set `value`=? where `name`=?", [$win[0], "win_id_1"]);
-	$db->execute("update `settings` set `value`=? where `name`=?", [$win[1], "lottery_price_1"]);
-	$db->execute("update `settings` set `value`=? where `name`=?", ["t", "lottery_1"]);
+    // Updates values ​​in the database
+    $db->execute("update `settings` set `value`=? where `name`?", [$lottotime, "end_lotto_1"]);
+    $db->execute("update `settings` set `value`=? where `name`?", [$win[0], "win_id_1"]);
+    $db->execute("update `settings` set `value`=? where `name`?", [$win[1], "lottery_price_1"]);
+    $db->execute("update `settings` set `value`=? where `name`?", ["t", "lottery_1"]);
 }
+
 
 $diff = isset($cron['friday_next']) ? ($now - $cron['friday_next']) : 0;
 if ($diff >= 0) {
-	$next = strtotime("next Friday");
-	$db->execute("update `cron` set `value`=? where `name`=?", [$next, "friday_next"]);
+    $next = strtotime("next Friday");
+    $db->execute("update `cron` set `value`=? where `name`=?", [$next, "friday_next"]);
 
-	$day = random_int(1, 2);
-	$hour = ["14:00:00", "16:00:00", "18:00:00", "20:00:00"];
-	$hour = $hour[random_int(0, (count($hour) - 1))];
-	$tourtime = strtotime("+" . $day . " day " . $hour . "");
+    $day = random_int(1, 2);
+    $hour = ["14:00:00", "16:00:00", "18:00:00", "20:00:00"];
+    $hour = $hour[random_int(0, (count($hour) - 1))];
+    $tourtime = strtotime("+" . $day . " day " . $hour . "");
 
-	while ($setting->end_tour_1_1 == $tourtime) {
-		$day = random_int(1, 2);
-		$hour = ["14:00:00", "16:00:00", "18:00:00", "20:00:00"];
-		$hour = $hour[random_int(0, (count($hour) - 1))];
-		$tourtime = strtotime("+" . $day . " day " . $hour . "");
-	}
+    //Check if the $setting variable is defined and its properties exist
+    while (isset($setting) && isset($setting->end_tour_1_1) && $setting->end_tour_1_1 == $tourtime) {
+        $day = random_int(1, 2);
+        $hour = ["14:00:00", "16:00:00", "18:00:00", "20:00:00"];
+        $hour = $hour[random_int(0, (count($hour) - 1))];
+        $tourtime = strtotime("+" . $day . " day " . $hour . "");
+    }
 
-	$db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_1_1"]);
-	$db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_2_1"]);
-	$db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_3_1"]);
-	$db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_4_1"]);
-	$db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_5_1"]);
+    //Protects database updates with additional checks
+    if (isset($setting)) {
+        $db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_1_1"]);
+        $db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_2_1"]);
+        $db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_3_1"]);
+        $db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_4_1"]);
+        $db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_5_1"]);
 
-	$db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_1_2"]);
-	$db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_2_2"]);
-	$db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_3_2"]);
-	$db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_4_2"]);
-	$db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_5_2"]);
+        $db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_1_2"]);
+        $db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_2_2"]);
+        $db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_3_2"]);
+        $db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_4_2"]);
+        $db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_5_2"]);
+    }
 }
+
 
 $diff = isset($cron['oneweek_last']) ? ($now - $cron['oneweek_last']) : 0;
 if (isset($cron['oneweek_time']) && $diff >= $cron['oneweek_time']) {
@@ -155,22 +164,22 @@ while ($newhunt = $updategeralhunt->fetchrow()) {
 	$automlevel = $db->GetOne("select `level` from `monsters` where `id`=?", [$newhunt['hunttype']]);
 	$automname = $db->GetOne("select `username` from `monsters` where `id`=?", [$newhunt['hunttype']]);
 
-	//Seleciona o nível do player.
+	//Selects the player level.
 	$autoplevel = $db->GetOne("select `level` from `players` where `id`=?", [$newhunt['player_id']]);
 
-	//Seleciona a experiência atual do player
+	//Select the current player experience
 	$autopexp = $db->GetOne("select `exp` from `players` where `id`=?", [$newhunt['player_id']]);
 
-	//QUANTIDADE DE EXP QUE DEVE SER ADICIONADA AO PLAYER
+	//AMOUNT OF EXP THAT SHOULD BE ADDED TO THE PLAYER
 	$autommtexp = $db->GetOne("select `mtexp` from `monsters` where `id`=?", [$newhunt['hunttype']]);
 	$expdomonstro = ceil((($autommtexp) * 20) * $newhunt['hunttime']);
 
 	while ($expdomonstro + $autopexp >= maxExp($autoplevel)) {
 
-		//Atualiza player...
+		//Update player...
 		$query = $db->execute("update `players` set `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=`maxhp`+30, `maxhp`=`maxhp`+30, `exp`=0, `magic_points`=`magic_points`+1, `monsterkilled`=`monsterkilled`+20 where `id`=?", [$newhunt['player_id']]);
 
-		//atualiza variaveis
+		//update variables
 		$usedexp = maxExp($autoplevel) - $autopexp;
 		$autopexp = 0;
 

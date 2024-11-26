@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-if ($_GET['header']) {
-	header('Content-type: text/html; charset=utf-8');
-	include(__DIR__ . "/config.php");
-	include(__DIR__ . "/functions.php");
+
+if (isset($_GET['header'])) {  // Check if the 'header' key exists
+    header('Content-type: text/html; charset=utf-8');
+    include(__DIR__ . "/config.php");
+    include(__DIR__ . "/functions.php");
 }
 
 $ipp = $_SERVER['REMOTE_ADDR'];
@@ -73,9 +76,9 @@ if ($_SESSION['Login']['player_id'] > 0) {
 
 	$db->execute("update `players` set `last_active`=? where `id`=?", [time(), $player->id]);
 
-	// Calcula o progresso da experiência
+	// Calculate experience progress
 	$progressExp = ($player->exp * 100) / maxExp($player->level);
-	// Garante que o progresso esteja entre 0 e 100
+	// Ensures progress is between 0 and 100
 	$progressExp = is_numeric($progressExp) && $progressExp > 0 && $progressExp <= 100 ? round($progressExp) : 0;
 
 

@@ -10,7 +10,7 @@ $player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
-define('PRIZE_CONVERSION_GOLD', 50000); // Define a constant for prize conversion to gold if player's level is too low
+define('PRIZE_CONVERSION_GOLD', 420000); // Define a constant for prize conversion to gold if player's level is too low
 
 $unc1 = "last_winner_" . $player->serv . "";
 $unc2 = "win_id_" . $player->serv . "";
@@ -58,7 +58,7 @@ if ($setting->$unc3 == "t") {
 					
 					// Log message indicating that the prize was converted to gold due to insufficient player level
 					$logmsg = "Você ganhou na loteria mas seu nível é muito baixo para receber o premio. 50.000 de ouro foram depositados na sua conta bancária.";
-					$premiorecebido = "50000 de ouro";
+					$premiorecebido = "420000 de ouro";
 				} else {
 					// If player's level meets item requirements, assign item name for display
 					$ioeowkewttttee['name'] = $item_data['name'];
@@ -102,12 +102,12 @@ if ($setting->$unc3 == "t") {
 		exit;
 	}
 
-	if ($_POST['buy']) {
+	if (isset($_POST['buy']) && $_POST['buy']) { // Buy lottery ticket
 		$error = 0;
 
-		if ($player->level < 25) {
+		if ($player->level < 45) {
 			include_once PRIVATE_HEADER;
-			echo "Você precisa ter nível 25 ou superior para comprar tickets e jogar na loteria! <a href=\"lottery.php\">Voltar</a>.";
+			echo "Você precisa ter nível 45 ou superior para comprar tickets e jogar na loteria! <a href=\"lottery.php\">Voltar</a>.";
 			
 			include_once PRIVATE_FOOTER;
 			$error = 1;
@@ -191,8 +191,8 @@ if ($setting->$unc3 == "t") {
 	echo "<td><b>Tempo Restante:</b></td>";
 	$end = $setting->$unc5 - time();
 	$days = floor($end / 60 / 60 / 24);
-	$hours = floor(($end / 60 / 60) % 24);  // Add floor() function
-	$minutes = floor(($end / 60) % 60);     // Add floor() function
+	$hours = intval($end / 60 / 60) % 24; // Applying intval to integer division
+	$minutes = intval($end / 60) % 60;  // Applying intval to integer division
 	$comecaem = sprintf('%s dia(s) %d hora(s) %d minuto(s)', $days, $hours, $minutes);
 	$nova_data = date("d/m/Y G:i", (int)$setting->$unc5);  // Cast $setting->$unc5 to integer
 	echo "<td>" . $comecaem . ' <a href="lottery.php">Atualizar</a><br/><b>Dia:</b> ' . $nova_data . "</td>";
@@ -217,10 +217,10 @@ if ($setting->$unc3 == "t") {
 
 	if ($premiotype == 2) {
 		echo "<b>" . $premio . "</b>.";
-	} elseif ($premiotype === 1) {
+	} elseif ($premiotype === 1) { 
 		echo "<br/>";
 		echo "<fieldset><legend><b>" . $itchecked['name'] . " + 0</b></legend>\n";
-		if ($itchecked['optimized'] == 10) {
+		if (($itchecked['optimized'] ?? 0) == 10) { // Check if optimized is set to 10
 			echo "<table width=\"100%\" bgcolor=\"#CEBBEE\">\n";
 		} else {
 			echo "<table width=\"100%\">\n";

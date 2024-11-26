@@ -29,7 +29,7 @@ if (($reino['poll'] + 604800) < time() && $reino['imperador'] > 0) {
 
 include(__DIR__ . "/templates/private_header.php");
 
-if ($reino['imperador'] == 0 && $_POST['vote']) {
+if ($reino['imperador'] == 0 && isset($_POST['vote']) && $_POST['vote']) {
 	$verifica = $db->execute("select * from `reino_votes` where `player_id`=?", [$player->id]);
 	if ($verifica->recordcount() == 0) {
 		$votes = $db->execute("select * from `reino_tovote` where `player_id`=?", [$_POST['vote']]);
@@ -68,9 +68,11 @@ echo "<tr><td><b>Imperador:</b></td><td>" . showName($reino['imperador'], $db, '
 echo "<tr><td><b>Ouro nos cofres:</b></td><td>" . $reino['ouro'] . " moedas de ouro</td></tr>";
 echo "<tr><td><b>Pontuação:</b></td><td>";
 
+$totalpoints = 0;  // Initialize the variable before the loop
 while ($points = $query->fetchrow()) {
-	$totalpoints = $totalpoints + ($points['kills'] * 20) + ($points['level'] * 50) - ($points['akills'] * 15);
+    $totalpoints = $totalpoints + ($points['kills'] * 20) + ($points['level'] * 50) - ($points['akills'] * 15);
 }
+
 
 echo "" . ceil($totalpoints / ($query->recordcount() * 1.5)) . " pontos";
 echo "</td></tr>";
@@ -122,6 +124,9 @@ if ($reino['imperador'] != 0) {
 	if ($reino['imperador'] == 0 && time() > $reino['poll']) {
 		$total = $db->execute("select `vote_id` from `reino_votes` where `reino_id`=? group by `vote_id` order by count(*) desc limit 1", [$reino['id']]);
 		$total = $total->fetchrow();
+
+		$checkPlayer = $db->execute("select `id` from `players` where `id`=? and `reino`=?", [$total['vote_id'], $reino['id']]);
+		if ($checkPlayer->recordcount() > 0) //check player's realm
 
 		$db->execute("update `reinos` set `imperador`=? where `id`=?", [$total['vote_id'], $reino['id']]);
 		$db->execute("delete from `reino_votes` where `reino_id`=?", [$reino['id']]);
