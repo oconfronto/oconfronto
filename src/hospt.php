@@ -16,7 +16,7 @@ include(__DIR__ . "/checkbattle.php");
 
 include(__DIR__ . "/checkwork.php");
 
-if ($_POST['submit']) {
+if (isset($_POST['submit']) && $_POST['submit']) { //add isset
 
 	if ($player->level < 20) {
 		include(__DIR__ . "/templates/private_header.php");
@@ -28,7 +28,7 @@ if ($_POST['submit']) {
 		exit;
 	}
 
-	if (!is_numeric($_POST['sellhp'])) {
+	if (!is_numeric($_POST['sellhp'])) { 
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
 		echo "<i>O valor que você inseriu não é valido.<br/></i>";
@@ -81,49 +81,51 @@ if ($_POST['submit']) {
 	$query4 = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=150 and `mark`='f' order by rand()", [$player->id]);
 	$numerodepocoes4 = $query4->recordcount();
 
-	$pocoesdevida = floor($_POST['sellhp']);
-	if ($pocoesdevida > $numerodepocoes) {
-		include(__DIR__ . "/templates/private_header.php");
-		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-		echo "<i>Você não possui " . $pocoesdevida . " poções de vida.<br/></i>";
-		echo "</fieldset>\n";
-		echo '<a href="inventory.php">Voltar ao inventário.</a>';
-		include(__DIR__ . "/templates/private_footer.php");
-		exit;
-	}
+	//I changed the code using floatval(). This should solve the type error issue in the floor() function.
+	$pocoesdevida = floor(floatval($_POST['sellhp']));  // Conversion to number
+if ($pocoesdevida > $numerodepocoes) {
+    include(__DIR__ . "/templates/private_header.php");
+    echo "<fieldset><legend><b>Vender poções</b></legend>\n";
+    echo "<i>Você não possui " . $pocoesdevida . " poções de vida.<br/></i>";
+    echo "</fieldset>\n";
+    echo '<a href="inventory.php">Voltar ao inventário.</a>';
+    include(__DIR__ . "/templates/private_footer.php");
+    exit;
+}
 
-	$bigpocoesdevida = floor($_POST['sellbhp']);
-	if ($bigpocoesdevida > $numerodepocoes3) {
-		include(__DIR__ . "/templates/private_header.php");
-		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-		echo "<i>Você não possui " . $bigpocoesdevida . " poções grandes de vida.<br/></i>";
-		echo "</fieldset>\n";
-		echo '<a href="inventory.php">Voltar ao inventário.</a>';
-		include(__DIR__ . "/templates/private_footer.php");
-		exit;
-	}
+$bigpocoesdevida = floor(floatval($_POST['sellbhp']));  // Conversion to number
+if ($bigpocoesdevida > $numerodepocoes3) {
+    include(__DIR__ . "/templates/private_header.php");
+    echo "<fieldset><legend><b>Vender poções</b></legend>\n";
+    echo "<i>Você não possui " . $bigpocoesdevida . " poções grandes de vida.<br/></i>";
+    echo "</fieldset>\n";
+    echo '<a href="inventory.php">Voltar ao inventário.</a>';
+    include(__DIR__ . "/templates/private_footer.php");
+    exit;
+}
 
-	$pocoesdeenergia = floor($_POST['sellep']);
-	if ($pocoesdeenergia > $numerodepocoes2) {
-		include(__DIR__ . "/templates/private_header.php");
-		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-		echo "<i>Você não possui " . $pocoesdeenergia . " poções de energia.<br/></i>";
-		echo "</fieldset>\n";
-		echo '<a href="inventory.php">Voltar ao inventário.</a>';
-		include(__DIR__ . "/templates/private_footer.php");
-		exit;
-	}
+$pocoesdeenergia = floor(floatval($_POST['sellep']));  // Conversion to number
+if ($pocoesdeenergia > $numerodepocoes2) {
+    include(__DIR__ . "/templates/private_header.php");
+    echo "<fieldset><legend><b>Vender poções</b></legend>\n";
+    echo "<i>Você não possui " . $pocoesdeenergia . " poções de energia.<br/></i>";
+    echo "</fieldset>\n";
+    echo '<a href="inventory.php">Voltar ao inventário.</a>';
+    include(__DIR__ . "/templates/private_footer.php");
+    exit;
+}
 
-	$pocoesdemana = floor($_POST['sellmp']);
-	if ($pocoesdemana > $numerodepocoes4) {
-		include(__DIR__ . "/templates/private_header.php");
-		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-		echo "<i>Você não possui " . $pocoesdeenergia . " poções de mana.<br/></i>";
-		echo "</fieldset>\n";
-		echo '<a href="inventory.php">Voltar ao inventário.</a>';
-		include(__DIR__ . "/templates/private_footer.php");
-		exit;
-	}
+$pocoesdemana = floor(floatval($_POST['sellmp']));  // Conversion to number
+if ($pocoesdemana > $numerodepocoes4) {
+    include(__DIR__ . "/templates/private_header.php");
+    echo "<fieldset><legend><b>Vender poções</b></legend>\n";
+    echo "<i>Você não possui " . $pocoesdemana . " poções de mana.<br/></i>";
+    echo "</fieldset>\n";
+    echo '<a href="inventory.php">Voltar ao inventário.</a>';
+    include(__DIR__ . "/templates/private_footer.php");
+    exit;
+}
+
 
 	$ganha = ($pocoesdevida * 1250);
 	$ganha2 = ($bigpocoesdevida * 2000);
@@ -169,18 +171,17 @@ if ($player->level < 36) {
 	$cost2 = floor($player->gold / 1.8);
 }
 
-if ($_GET['act']) {
-
-	if ($_GET['act'] == 'sell') {
-		if ($player->level < 20) {
-			include(__DIR__ . "/templates/private_header.php");
-			echo "<fieldset><legend><b>Vender poções</b></legend>\n";
-			echo "<i>Você só pode vender poções a partir do nível 20.<br/></i>";
-			echo "</fieldset>\n";
-			echo '<a href="inventory.php">Voltar ao inventário.</a>';
-			include(__DIR__ . "/templates/private_footer.php");
-			exit;
-		}
+if (isset($_GET['act']) && $_GET['act']) { // add isset
+    if ($_GET['act'] == 'sell') {
+        if ($player->level < 20) {
+            include(__DIR__ . "/templates/private_header.php");
+            echo "<fieldset><legend><b>Vender poções</b></legend>\n";
+            echo "<i>Você só pode vender poções a partir do nível 20.<br/></i>";
+            echo "</fieldset>\n";
+            echo '<a href="inventory.php">Voltar ao inventário.</a>';
+            include(__DIR__ . "/templates/private_footer.php");
+            exit;
+        }
 
 		$query = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=136 and `mark`='f'", [$player->id]);
 		$numerodepocoes = $query->recordcount();

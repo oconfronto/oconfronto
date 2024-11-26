@@ -59,7 +59,13 @@ if ($player->hp == 0) {
 }
 
 
-$enemy->prepo = "o";
+// Check if the $enemy object was instantiated correctly
+if (!isset($enemy)) {
+    $enemy = new stdClass(); // Initialize the object if it wasn't instantiated
+}
+
+// Now you can set the enemy's values
+$enemy->prepo = "o";  // Set the article based on the enemy's gender (masculine here)
 $enemy->username = "Raderon";
 $enemy->image_path = "raderon.png";
 $enemy->level = 140;
@@ -68,6 +74,14 @@ $enemy->vitality = 220;
 $enemy->agility = 290;
 $enemy->hp = 4500;
 $enemy->mtexp = 5000;
+
+// Adding logic to set the article based on the enemy's gender
+if (property_exists($enemy, 'gender') && $enemy->gender === 'male') {
+    $enemy->prepo = "o"; // Masculine article for the enemy
+} else {
+    $enemy->prepo = "a"; // Feminine article if the enemy is not male
+}
+
 
 //Get player's bonuses from equipment
 $query = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='weapon' and items.status='equipped'", [$player->id]);
@@ -169,14 +183,37 @@ if ($player->promoted == 'f') {
 }
 
 //Calculate some variables that will be used
-$forcadoplayer = ceil(($player->strength + $player->atkbonus['effectiveness'] + ($player->atkbonus['item_bonus'] * 2) + $pbonusfor) * $multipleatk);
-$agilidadedoplayer = ceil($player->agility +
-    $player->agibonus6['effectiveness'] +
-    ($player->agibonus6['item_bonus'] * 2) +
-    $player->agibonus7['effectiveness'] +
-    ($player->agibonus7['item_bonus'] * 2) +
-    $pbonusagi);
-$resistenciadoplayer = ceil((($player->resistance + ($player->defbonus1['effectiveness'] + $player->defbonus2['effectiveness'] + $player->defbonus3['effectiveness'] + $player->defbonus5['effectiveness']) + (($player->defbonus1['item_bonus'] * 2) + ($player->defbonus2['item_bonus'] * 2) + ($player->defbonus3['item_bonus'] * 2) + ($player->defbonus5['item_bonus'] * 2)) + $pbonusres) * $multipledef) / 1.35);
+$forcadoplayer = ceil(
+    (
+        $player->strength +
+        (isset($player->atkbonus['effectiveness']) ? $player->atkbonus['effectiveness'] : 0) +
+        (isset($player->atkbonus['item_bonus']) ? ($player->atkbonus['item_bonus'] * 2) : 0) +
+        ($pbonusfor ?? 0) // Fallback to $pbonusfor
+    ) * ($multipleatk ?? 1) // Fallback to $multipleatk
+);
+$agilidadedoplayer = ceil(
+    $player->agility +
+    (isset($player->agibonus6['effectiveness']) ? $player->agibonus6['effectiveness'] : 0) +
+    (isset($player->agibonus7['effectiveness']) ? $player->agibonus7['effectiveness'] : 0) +
+    (isset($player->agibonus6['item_bonus']) ? ($player->agibonus6['item_bonus'] * 2) : 0) +
+    (isset($player->agibonus7['item_bonus']) ? ($player->agibonus7['item_bonus'] * 2) : 0) +
+    ($pbonusagi ?? 0) // Ensures $pbonusagi has a default value if not set
+);
+$resistenciadoplayer = ceil(
+    (
+        $player->resistance +
+        (isset($player->defbonus1['effectiveness']) ? $player->defbonus1['effectiveness'] : 0) +
+        (isset($player->defbonus2['effectiveness']) ? $player->defbonus2['effectiveness'] : 0) +
+        (isset($player->defbonus3['effectiveness']) ? $player->defbonus3['effectiveness'] : 0) +
+        (isset($player->defbonus5['effectiveness']) ? $player->defbonus5['effectiveness'] : 0) +
+        ((isset($player->defbonus1['item_bonus']) ? $player->defbonus1['item_bonus'] * 2 : 0) +
+        (isset($player->defbonus2['item_bonus']) ? $player->defbonus2['item_bonus'] * 2 : 0) +
+        (isset($player->defbonus3['item_bonus']) ? $player->defbonus3['item_bonus'] * 2 : 0) +
+        (isset($player->defbonus5['item_bonus']) ? $player->defbonus5['item_bonus'] * 2 : 0)) +
+        ($pbonusres ?? 0)
+    ) * ($multipledef ?? 1) // Adding a fallback for $multipledef 
+) / 1.35;
+
 $forcadomonstro = ($enemy->strength * 1.3);
 $agilidadedomonstro = $enemy->agility;
 $resistenciadomonstro = ($enemy->vitality * 1.1);
@@ -248,7 +285,7 @@ while ($enemy->hp > 0 && $player->hp > 0 && $battlerounds > 0) {
 			$output .= $attacking->username . " tentou atacar " . $defending->username . " mas errou!<br />";
 		} else {
 			$magicchance = intval(random_int(1, 4));
-			if ($magicchance == 2 && $attacking->magiclevel > 0) {
+			if ($magicchance == 2 && isset($defending->magiclevel) && $defending->magiclevel > 0) {
 				$damage2 = random_int(intval($attacking->maxdmg * 1.20), intval(($attacking->maxdmg * 1.25) + ($attacking->magiclevel * 1.5))); //Calculate random damage				
 				$defending->hp -= $damage2;
 				$output .= ($player->username == $defending->username) ? '<font color="red">' : '<font color="green">';
@@ -287,7 +324,7 @@ while ($enemy->hp > 0 && $player->hp > 0 && $battlerounds > 0) {
 			$output .= $defending->username . " tentou atacar " . $attacking->username . " mas errou!<br />";
 		} else {
 			$magicchance = intval(random_int(1, 4));
-			if ($magicchance == 2 && $defending->magiclevel > 0) {
+			if ($magicchance == 2 && isset($defending->magiclevel) && $defending->magiclevel > 0) {
 				$damage2 = random_int(intval($defending->maxdmg * 1.20), intval(($defending->maxdmg * 1.25) + ($defending->magiclevel * 1.5))); //Calculate random damage
 				$attacking->hp -= $damage2;
 				$output .= ($player->username == $defending->username) ? '<font color="green">' : '<font color="red">';
@@ -352,25 +389,77 @@ if ($player->hp <= 0) {
 	}
 
 	$output .= "<br/><div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>Você matou " . $enemy->prepo . " " . $enemy->username . "!</u></b></div>";
-	$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Você ganhou <b>" . $expdomonstro . "</b> de EXP e <b>" . $goldwin . "</b> de ouro.</div>";
-	$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Você encontrou uma titanium wheel com o Raderon.</div>";
-	$insert['player_id'] = $player->id;
-	$insert['item_id'] = 111;
-	$addlootitemwin = $db->autoexecute('items', $insert, 'INSERT');
-	$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [5, $player->id, 2]);
-	if ($expdomonstro + $player->exp >= maxExp($player->level)) //Player gained a level!
-	{
-		//Update player, gained a level
-		$output .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><u><b>Você passou de nível!</b></u></div>";
-		$newexp = $expdomonstro + $player->exp - maxExp($player->level);
+// Add initial checks to avoid undefined variable errors
+if (!isset($expdomonstro)) {
+    $expdomonstro = 75000; // Default value to avoid warnings
+}
+if (!isset($goldwin)) {
+    $goldwin = 0; // Default value for gold
+}
 
-		$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [maxMana($player->level, $player->extramana), maxMana($player->level, $player->extramana), $player->id]);
-		$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", [maxEnergy($player->level, $player->vip), $player->id]);
-		$db->execute("update `players` set `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=?, `maxhp`=?, `exp`=?, `magic_points`=`magic_points`+1, `energy`=`energy`-10, `gold`=?, `monsterkill`=`monsterkill`+1, `monsterkilled`=`monsterkilled`+1 where `id`=?", [maxHp($db, $player->id, $player->level, $player->reino, $player->vip), maxHp($db, $player->id, $player->level, $player->reino, $player->vip), $newexp, $player->gold + $goldwin, $player->id]);
-	} else {
-		//Update player
-		$query = $db->execute("update `players` set `exp`=?, `gold`=?, `hp`=?, `energy`=?, `monsterkill`=?, `monsterkilled`=? where `id`=?", [$player->exp + $expdomonstro, $player->gold + $goldwin, $player->hp, $player->energy - 10, $player->monsterkill + 1, $player->monsterkilled + 1, $player->id]);
-	}
+
+$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Você ganhou <b>" . $expdomonstro . "</b> de EXP e <b>" . $goldwin . "</b> de ouro.</div>";
+$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Você encontrou uma titanium wheel com o Raderon.</div>";
+
+
+$insert['player_id'] = $player->id;
+$insert['item_id'] = 111;
+$db->autoexecute('items', $insert, 'INSERT');
+
+// Update quest status
+$query = $db->execute("UPDATE `quests` SET `quest_status`=? WHERE `player_id`=? AND `quest_id`=?", [5, $player->id, 2]);
+
+// Check if the player has leveled up
+if (($expdomonstro + $player->exp) >= maxExp($player->level)) {
+    // Update messages and experience
+    $output .= "<div style=\"background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><u><b>Você passou de nível!</b></u></div>";
+
+    // Calculate the remaining new experience
+    $newexp = ($expdomonstro + $player->exp) - maxExp($player->level);
+
+    // Upgrade player attributes when leveling up
+    $db->execute("UPDATE `players` SET 
+        `mana`=?, 
+        `maxmana`=?, 
+        `maxenergy`=GREATEST(`maxenergy`, ?), 
+        `stat_points`=`stat_points`+3, 
+        `level`=`level`+1, 
+        `hp`=?, 
+        `maxhp`=?, 
+        `exp`=?, 
+        `magic_points`=`magic_points`+1, 
+        `energy`=`energy`-10, 
+        `gold`=`gold`+?, 
+        `monsterkill`=`monsterkill`+1, 
+        `monsterkilled`=`monsterkilled`+1 
+        WHERE `id`=?", [
+            maxMana($player->level, $player->extramana),
+            maxMana($player->level, $player->extramana),
+            maxEnergy($player->level, $player->vip),
+            maxHp($db, $player->id, $player->level, $player->reino, $player->vip),
+            maxHp($db, $player->id, $player->level, $player->reino, $player->vip),
+            $newexp,
+            $goldwin,
+            $player->id
+        ]
+    );
+} else {
+    // Upgrade player attributes without leveling up
+    $db->execute("UPDATE `players` SET 
+        `exp`=`exp`+?, 
+        `gold`=`gold`+?, 
+        `hp`=?, 
+        `energy`=`energy`-10, 
+        `monsterkill`=`monsterkill`+1, 
+        `monsterkilled`=`monsterkilled`+1 
+        WHERE `id`=?", [
+            $expdomonstro,
+            $goldwin,
+            $player->hp,
+            $player->id
+        ]
+    );
+}
 
 	$heal = $player->maxhp - $player->hp;
 	if ($heal > 0) {

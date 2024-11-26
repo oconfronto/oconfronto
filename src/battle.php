@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 include(__DIR__ . "/lib.php");
+if (!function_exists('fetchData')) {
+    error_log("A função fetchData() não está definida corretamente.");
+}
 define("PAGENAME", "Batalhar");
 $player = check_user($db);
 include(__DIR__ . "/checkbattle.php");
@@ -47,17 +50,6 @@ switch ($_GET['act']) {
 	echo "Unable to load enemy data. Please try again later.";
 	include(__DIR__ . "/templates/private_footer.php");
 	break;
- }
-
- // Function to validate the fetched data, can be defined inside or outside the block
- function fetchData($data) {
-     if (!$data) {
-         throw new UnexpectedValueException("Failed to fetch enemy data");
-     }
-    // Add more specific validation
-    if (!isset($data['id']) || !isset($data['username']) || !isset($data['level'])) {
-        throw new UnexpectedValueException("Invalid enemy data structure");
-    }
  }
 
 		if ($enemy->serv != $player->serv) {
@@ -123,7 +115,7 @@ switch ($_GET['act']) {
 		$enytourstatus = "tournament_" . $enytier . "_" . $player->serv . "";
 
 
-		//Checa se o usuario jah foi morto demais
+		//Check if the user has been killed too much
 		if ($enemy->died >= 3) {
 			if ($enemy->tour == 'f') {
 				include(__DIR__ . "/templates/private_header.php");
@@ -141,7 +133,7 @@ switch ($_GET['act']) {
 		}
 
 
-		//Checa se o usuario jah foi morto recentemente
+		//Check if the user has been killed recently
 		$recentlyattacked = $db->execute("select * from `attacked` where `time`>? and `player_id`=? and `attacker_id`=?", [time() - 1200, $enemy->id, $player->id]);
 		if ($recentlyattacked->recordcount() > 0) {
 			if ($enemy->tour == 'f') {
@@ -159,7 +151,7 @@ switch ($_GET['act']) {
 			}
 		}
 
-		//Checa se o usuario tah banido
+		//Check if the user is banned
 		if ($enemy->ban > time()) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "Este usuário está banido! <a href=\"battle.php\"/>Voltar</a>.";
@@ -179,7 +171,7 @@ switch ($_GET['act']) {
 
 		$checarevenge = $db->execute("select * from `revenge` where `player_id`=? and `enemy_id`=?", [$player->id, $enemy->id]);
 
-		//checa os niveis
+		//check the levels
 		if ($player->level > $enemy->level * 1.25 && $enemy->tour == 't' && ($enemy->killed > 0 || $mytier != $enytier) && $checarevenge->recordcount() < 1) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "A diferença de nível entre os dois usuários é muito grande!<br>";
@@ -189,7 +181,7 @@ switch ($_GET['act']) {
 		}
 
 
-		//checa os niveis
+		//check the levels
 		if ($player->level > $enemy->level * 1.25 && $enemy->tour == 'f' && $checarevenge->recordcount() < 1) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "A diferença de nível entre os dois usuários é muito grande!<br>";
@@ -285,7 +277,7 @@ switch ($_GET['act']) {
 		}
 
 
-		//Checa se vc jah foi morto demais
+		//Check if you have been killed too much
 		if ($player->died >= 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "Você morreu 3x hoje e ficou imune de ataques dos outros jogadores.<br/>";
@@ -516,20 +508,73 @@ switch ($_GET['act']) {
 		}
 
 		//Calculate some variables that will be used
-		$forcadoplayer = ceil(($player->strength + $player->atkbonus['effectiveness'] + ($player->atkbonus['item_bonus'] * 2)  + $pbonusfor) * $multipleatk);
+		$forcadoplayer = ceil(
+			(
+				$player->strength +
+				(isset($player->atkbonus['effectiveness']) ? $player->atkbonus['effectiveness'] : 0) +
+				(isset($player->atkbonus['item_bonus']) ? ($player->atkbonus['item_bonus'] * 2) : 0) +
+				($pbonusfor ?? 0) // Fallback to $pbonusfor
+			) * ($multipleatk ?? 1) // Fallback to $multipleatk
+		);
+		
 		$agilidadedoplayer = ceil(
 			$player->agility +
-			$player->agibonus6['effectiveness'] +
-			$player->agibonus7['effectiveness'] +
-			($player->agibonus6['item_bonus'] * 2) +
-			($player->agibonus7['item_bonus'] * 2) +
-			$pbonusagi
+			(isset($player->agibonus6['effectiveness']) ? $player->agibonus6['effectiveness'] : 0) +
+			(isset($player->agibonus7['effectiveness']) ? $player->agibonus7['effectiveness'] : 0) +
+			(isset($player->agibonus6['item_bonus']) ? ($player->agibonus6['item_bonus'] * 2) : 0) +
+			(isset($player->agibonus7['item_bonus']) ? ($player->agibonus7['item_bonus'] * 2) : 0) +
+			($pbonusagi ?? 0) // Ensures $pbonusagi has a default value if not set
 		);
-		$resistenciadoplayer = ceil(($player->resistance + ($player->defbonus1['effectiveness'] + $player->defbonus2['effectiveness'] + $player->defbonus3['effectiveness'] + $player->defbonus5['effectiveness']) + (($player->defbonus1['item_bonus'] * 2) + ($player->defbonus2['item_bonus'] * 2) + ($player->defbonus3['item_bonus'] * 2) + ($player->defbonus5['item_bonus'] * 2)) + $pbonusres) * $multipledef);
+		
+		$resistenciadoplayer = ceil(
+			(
+				$player->resistance +
+				(isset($player->defbonus1['effectiveness']) ? $player->defbonus1['effectiveness'] : 0) +
+				(isset($player->defbonus2['effectiveness']) ? $player->defbonus2['effectiveness'] : 0) +
+				(isset($player->defbonus3['effectiveness']) ? $player->defbonus3['effectiveness'] : 0) +
+				(isset($player->defbonus5['effectiveness']) ? $player->defbonus5['effectiveness'] : 0) +
+				((isset($player->defbonus1['item_bonus']) ? $player->defbonus1['item_bonus'] * 2 : 0) +
+				(isset($player->defbonus2['item_bonus']) ? $player->defbonus2['item_bonus'] * 2 : 0) +
+				(isset($player->defbonus3['item_bonus']) ? $player->defbonus3['item_bonus'] * 2 : 0) +
+				(isset($player->defbonus5['item_bonus']) ? $player->defbonus5['item_bonus'] * 2 : 0)) +
+				($pbonusres ?? 0)
+			) * ($multipledef ?? 1) // Adding a fallback for $multipledef 
+		);
+		
 
-		$forcadoenemy = ceil(($enemy->strength + $enemy->atkbonus['effectiveness'] + ($enemy->atkbonus['item_bonus'] * 2) + $enybonusfor) * $enymultipleatk);
-		$agilidadedoenemy = ceil($enemy->agility + $enemy->agibonus6['effectiveness'] + $enemy->agibonus7['effectiveness'] + ($enemy->agibonus6['item_bonus'] * 2) + $enybonusagi);
-		$resistenciadoenemy = ceil(($enemy->resistance + ($enemy->defbonus1['effectiveness'] + $enemy->defbonus2['effectiveness'] + $enemy->defbonus3['effectiveness'] + $enemy->defbonus5['effectiveness']) + (($enemy->defbonus1['item_bonus'] * 2) + ($enemy->defbonus2['item_bonus'] * 2) + ($enemy->defbonus3['item_bonus'] * 2) + ($enemy->defbonus5['item_bonus'] * 2)) + $enybonusres) * $enymultipledef);
+		$forcadoenemy = ceil(
+			(
+				$enemy->strength +
+				(isset($enemy->atkbonus['effectiveness']) ? $enemy->atkbonus['effectiveness'] : 0) +
+				(isset($enemy->atkbonus['item_bonus']) ? ($enemy->atkbonus['item_bonus'] * 2) : 0) +
+				($enybonusfor ?? 0) // Fallback to $enybonusfor
+			) * ($enymultipleatk ?? 1) // Fallback to $enymultipleatk
+		);
+		
+		$agilidadedoenemy = ceil(
+			$enemy->agility +
+			(isset($enemy->agibonus6['effectiveness']) ? $enemy->agibonus6['effectiveness'] : 0) +
+			(isset($enemy->agibonus7['effectiveness']) ? $enemy->agibonus7['effectiveness'] : 0) +
+			(isset($enemy->agibonus6['item_bonus']) ? ($enemy->agibonus6['item_bonus'] * 2) : 0) +
+			(isset($enemy->agibonus7['item_bonus']) ? ($enemy->agibonus7['item_bonus'] * 2) : 0) +
+			($enybonusagi ?? 0) // Ensures $enybonusagi has a default value if not set
+		);
+		
+		$resistenciadoenemy = ceil(
+			(
+				$enemy->resistance +
+				(isset($enemy->defbonus1['effectiveness']) ? $enemy->defbonus1['effectiveness'] : 0) +
+				(isset($enemy->defbonus2['effectiveness']) ? $enemy->defbonus2['effectiveness'] : 0) +
+				(isset($enemy->defbonus3['effectiveness']) ? $enemy->defbonus3['effectiveness'] : 0) +
+				(isset($enemy->defbonus5['effectiveness']) ? $enemy->defbonus5['effectiveness'] : 0) +
+				((isset($enemy->defbonus1['item_bonus']) ? $enemy->defbonus1['item_bonus'] * 2 : 0) +
+				(isset($enemy->defbonus2['item_bonus']) ? $enemy->defbonus2['item_bonus'] * 2 : 0) +
+				(isset($enemy->defbonus3['item_bonus']) ? $enemy->defbonus3['item_bonus'] * 2 : 0) +
+				(isset($enemy->defbonus5['item_bonus']) ? $enemy->defbonus5['item_bonus'] * 2 : 0)) +
+				($enybonusres ?? 0)
+			) * ($enymultipledef ?? 1) // Adding a fallback for $enymultipledef 
+		);
+	
 
 		$enemy->strdiff = (($forcadoenemy - $forcadoplayer) > 0) ? ($forcadoenemy - $forcadoplayer) : 0;
 		$enemy->resdiff = (($resistenciadoenemy - ($resistenciadoplayer * 1.5)) > 0) ? ($resistenciadoenemy - $resistenciadoplayer) : 0;

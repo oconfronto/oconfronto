@@ -1,6 +1,8 @@
 <?php
 
 declare(strict_types=1);
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
 
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Batalhar");
@@ -11,88 +13,97 @@ include(__DIR__ . "/checkwork.php");
 $iid = "";
 $iname = "";
 
+// Get quest information
 $verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 12]);
 $quest = $verificacao->fetchrow();
 
+// If the quest is not found, redirect
 if ($verificacao->recordcount() == 0) {
-	header("Location: home.php");
+    header("Location: home.php");
+    exit;
 }
 
-if ($quest['quest_status'] != 2 && $quest['quest_status'] != 4 && $quest['quest_status'] != 6) {
-	header("Location: home.php");
+// Check if the variable $quest exists and has the index 'quest_status'
+if (!isset($quest['quest_status']) || !in_array($quest['quest_status'], [2, 4, 6])) {
+    header("Location: home.php");
+    exit;
 }
 
+if (!isset($enemy)) {
+    $enemy = new stdClass(); // This creates an empty object
+}
+
+// Start quest logic based on status
 if ($quest['quest_status'] == 2) {
-	$questnivel = 1;
-	if ($player->voc == 'knight') {
-		$enemy->username = "Alexia";
-	} elseif ($player->voc == 'archer') {
-		$enemy->username = "Demônio";
-	} elseif ($player->voc == 'mage') {
-		$enemy->username = "Detros";
-	}
+    $questnivel = 1;
+    if ($player->voc == 'knight') {
+        $enemy->username = "Alexia";
+    } elseif ($player->voc == 'archer') {
+        $enemy->username = "Demônio";
+    } elseif ($player->voc == 'mage') {
+        $enemy->username = "Detros";
+    }
 
-	$enemy->level = 250;
-	$enemy->strength = 575;
-	$enemy->vitality = 405;
-	$enemy->agility = 530;
-	$enemy->hp = 5000;
-	$enemy->mtexp = 10000;
+    $enemy->level = 250;
+    $enemy->strength = 575;
+    $enemy->vitality = 405;
+    $enemy->agility = 530;
+    $enemy->hp = 5000;
+    $enemy->mtexp = 10000;
 } elseif ($quest['quest_status'] == 4) {
-	$questnivel = 2;
-	if ($player->voc == 'knight') {
-		$enemy->username = "Ramthysts";
-	} elseif ($player->voc == 'archer') {
-		$enemy->username = "Demônio";
-	} elseif ($player->voc == 'mage') {
-		$enemy->username = "Azura";
-	}
+    $questnivel = 2;
+    if ($player->voc == 'knight') {
+        $enemy->username = "Ramthysts";
+    } elseif ($player->voc == 'archer') {
+        $enemy->username = "Demônio";
+    } elseif ($player->voc == 'mage') {
+        $enemy->username = "Azura";
+    }
 
-	$enemy->level = 265;
-	$enemy->strength = 590;
-	$enemy->vitality = 420;
-	$enemy->agility = 540;
-	$enemy->hp = 5500;
-	$enemy->mtexp = 12000;
+    $enemy->level = 265;
+    $enemy->strength = 590;
+    $enemy->vitality = 420;
+    $enemy->agility = 540;
+    $enemy->hp = 5500;
+    $enemy->mtexp = 12000;
 } elseif ($quest['quest_status'] == 6) {
-	$questnivel = 3;
-	if ($player->voc == 'knight') {
-		$enemy->username = "Friden";
-		$iid = "151";
-		$iname = "a Friden Sword";
-	} elseif ($player->voc == 'archer') {
-		$enemy->username = "Baltazar";
-		$iid = "153";
-		$iname = "o Baltazar's Bow";
-	} elseif ($player->voc == 'mage') {
-		$enemy->username = "Draconos";
-		$iid = "152";
-		$iname = "a Wand of Dracula";
-	}
+    $questnivel = 3;
+    if ($player->voc == 'knight') {
+        $enemy->username = "Friden";
+        $iid = "151";
+        $iname = "a Friden Sword";
+    } elseif ($player->voc == 'archer') {
+        $enemy->username = "Baltazar";
+        $iid = "153";
+        $iname = "o Baltazar's Bow";
+    } elseif ($player->voc == 'mage') {
+        $enemy->username = "Draconos";
+        $iid = "152";
+        $iname = "a Wand of Dracula";
+    }
 
-	$enemy->level = 285;
-	$enemy->strength = 615;
-	$enemy->vitality = 450;
-	$enemy->agility = 565;
-	$enemy->hp = 6500;
-	$enemy->mtexp = 15000;
+    $enemy->level = 285;
+    $enemy->strength = 615;
+    $enemy->vitality = 450;
+    $enemy->agility = 565;
+    $enemy->hp = 6500;
+    $enemy->mtexp = 15000;
 }
 
-
-//Player cannot attack anymore
+// Check if the player has enough energy
 if ($player->energy < 10) {
-	include(__DIR__ . "/templates/private_header.php");
-	echo "Você está sem energia! Você deve descançar um pouco. <a href=\"monster.php\">Voltar</a>.";
-	include(__DIR__ . "/templates/private_footer.php");
-	exit;
+    include(__DIR__ . "/templates/private_header.php");
+    echo "Você está sem energia! Você deve descançar um pouco. <a href=\"monster.php\">Voltar</a>.";
+    include(__DIR__ . "/templates/private_footer.php");
+    exit;
 }
 
-//Player is dead
+// Check if the player is dead
 if ($player->hp == 0) {
-	include(__DIR__ . "/templates/private_header.php");
-	echo "Você está morto! Por favor visite o hospital ou espere 30 minutos! <a href=\"monster.php\">Voltar</a>.";
-	include(__DIR__ . "/templates/private_footer.php");
-	exit;
+    include(__DIR__ . "/templates/private_header.php");
+    echo "Você está morto! Por favor visite o hospital ou espere 30 minutos! <a href=\"monster.php\">Voltar</a>.";
+    include(__DIR__ . "/templates/private_footer.php");
+    exit;
 }
 
 //Get player's bonuses from equipment
@@ -108,6 +119,8 @@ $query54 = $db->query("select blueprint_items.effectiveness, blueprint_items.nam
 $player->defbonus5 = ($query54->recordcount() == 1) ? $query54->fetchrow() : 0;
 $query55 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='boots' and items.status='equipped'", [$player->id]);
 $player->agibonus6 = ($query55->recordcount() == 1) ? $query55->fetchrow() : 0;
+$query56 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='quiver' and items.status='equipped'", [$player->id]);
+$player->agibonus7 = ($query56->recordcount() == 1) ? $query56->fetchrow() : 0;
 
 
 $pbonusfor = 0;
@@ -192,9 +205,38 @@ if ($player->promoted == 'f') {
 }
 
 //Calculate some variables that will be used
-$forcadoplayer = ceil(($player->strength + $player->atkbonus['effectiveness'] + ($player->atkbonus['item_bonus'] * 2) + $pbonusfor) * $multipleatk);
-$agilidadedoplayer = ceil($player->agility + $player->agibonus6['effectiveness'] + ($player->agibonus6['item_bonus'] * 2) + $pbonusagi);
-$resistenciadoplayer = ceil((($player->resistance + ($player->defbonus1['effectiveness'] + $player->defbonus2['effectiveness'] + $player->defbonus3['effectiveness'] + $player->defbonus5['effectiveness']) + (($player->defbonus1['item_bonus'] * 2) + ($player->defbonus2['item_bonus'] * 2) + ($player->defbonus3['item_bonus'] * 2) + ($player->defbonus5['item_bonus'] * 2)) + $pbonusres) * $multipledef) / 1.35);
+$forcadoplayer = ceil(
+    (
+        $player->strength +
+        (isset($player->atkbonus['effectiveness']) ? $player->atkbonus['effectiveness'] : 0) +
+        (isset($player->atkbonus['item_bonus']) ? ($player->atkbonus['item_bonus'] * 2) : 0) +
+        ($pbonusfor ?? 0) // Fallback for $pbonusfor
+    ) * ($multipleatk ?? 1) // Fallback for $multipleatk
+);
+$agilidadedoplayer = ceil(
+    $player->agility + 
+    (isset($player->agibonus6['effectiveness']) ? $player->agibonus6['effectiveness'] : 0) + 
+    (isset($player->agibonus7['effectiveness']) ? $player->agibonus7['effectiveness'] : 0) + 
+    (isset($player->agibonus6['item_bonus']) ? ($player->agibonus6['item_bonus'] * 2) : 0) + 
+    (isset($player->agibonus7['item_bonus']) ? ($player->agibonus7['item_bonus'] * 2) : 0) + 
+    ($pbonusagi ?? 0) // Ensures $pbonusagi has a fallback value
+);
+$resistenciadoplayer = ceil(
+    (
+        $player->resistance +
+        (isset($player->defbonus1['effectiveness']) ? $player->defbonus1['effectiveness'] : 0) +
+        (isset($player->defbonus2['effectiveness']) ? $player->defbonus2['effectiveness'] : 0) +
+        (isset($player->defbonus3['effectiveness']) ? $player->defbonus3['effectiveness'] : 0) +
+        (isset($player->defbonus5['effectiveness']) ? $player->defbonus5['effectiveness'] : 0) +
+        (
+            (isset($player->defbonus1['item_bonus']) ? $player->defbonus1['item_bonus'] * 2 : 0) +
+            (isset($player->defbonus2['item_bonus']) ? $player->defbonus2['item_bonus'] * 2 : 0) +
+            (isset($player->defbonus3['item_bonus']) ? $player->defbonus3['item_bonus'] * 2 : 0) +
+            (isset($player->defbonus5['item_bonus']) ? $player->defbonus5['item_bonus'] * 2 : 0)
+        ) +
+        ($pbonusres ?? 0) // Fallback for $pbonusres
+    ) * ($multipledef ?? 1) // Fallback for $multipledef
+) / 1.35; // Ensure division by 1.35
 $forcadomonstro = $player->voc != 'archer' ? $enemy->strength * 1.3 : $enemy->strength * 1.18;
 
 $agilidadedomonstro = ($enemy->agility / 1.35);

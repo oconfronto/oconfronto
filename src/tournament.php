@@ -10,6 +10,21 @@ include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
 
 
+// Variable to control the status of the tournaments
+$tournamentCancelled = true; // Set to true if the tournaments are cancelled
+
+// Display cancellation message for the tournament
+if ($tournamentCancelled) {
+    include(__DIR__ . "/templates/private_header.php");
+    echo "<div style='color: red; font-weight: bold; text-align: center;'>";
+    echo "<h2>Os Torneios estão cancelados.</h2>";
+    echo "<p>Por favor, verifique mais tarde para atualizações.</p>";
+    echo "</div>";
+    include(__DIR__ . "/templates/private_footer.php");
+    exit; // Ends the script if the tournaments are cancelled
+}
+
+?>
 if ($player->level < 100) {
 	$tier = 1;
 } elseif ($player->level > 99 && $player->level < 200) {
@@ -31,12 +46,13 @@ $unc6 = "tour_win_" . $tier . "_" . $player->serv . "";
 $unc7 = "end_tour_" . $tier . "_" . $player->serv . "";
 $unc8 = "last_tour_" . $tier . "_" . $player->serv . "";
 if ($setting->$unc1 == "t") {
-	if (time() > $setting->$unc7) {
-		$query = $db->execute(sprintf("update `settings` set `value`='y' where `name`='%s'", $unc1));
-		header("Location: tournament.php");
-	}
+    if (time() > $setting->$unc7) {
+        $query = $db->execute(sprintf("update `settings` set `value`='y' where `name`='%s'", $unc1));
+        header("Location: tournament.php");
+        exit; // Adicione exit após header
+    }
 
-	if ($_POST['join']) {
+	if (isset($_POST['join'])) {
 		$checasejaestainscrito = $db->execute("select `id` from `players` where `id`=? and `tour`='t' and `serv`=? and `tier`=?", [$player->id, $player->serv, $tier]);
 
 		if ($checasejaestainscrito->recordcount() > 0) {
@@ -227,8 +243,8 @@ if ($setting->$unc1 == "y") {
 	echo "<br/>";
 	echo "<fieldset><legend><b>Participantes</b></legend>\n";
 	echo "<table>";
-	$sdfsdfoiewfwe = $db->execute("select `id`, `username`, `level`, `killed`, `ban`, `hp` from `players` where `tour`='t' and `serv`=? and `tier`=? order by `level` desc", [$player->serv, $tier]);
-	while ($member = $sdfsdfoiewfwe->fetchrow()) {
+	$playersInTournament = $db->execute("select `id`, `username`, `level`, `killed`, `ban`, `hp` from `players` where `tour`='t' and `serv`=? and `tier`=? order by `level` desc", [$player->serv, $tier]);
+	while ($member = $playersInTournament->fetchrow()) {
 		if ($member['ban'] > time()) {
 			$logmsg = "Você foi desclassificado do torneio pois estava banido.";
 			addlog($member['id'], $logmsg, $db);
@@ -243,14 +259,14 @@ if ($setting->$unc1 == "y") {
 			$query = $db->execute("update `players` set `tour`='f' where `id`=?", [$member['id']]);
 		} else {
 			echo "<tr>";
-			echo "<td><b>Usuário:</b> " . $member['username'] . "<td>";
-			echo "<td><b>Nível:</b> " . $member['level'] . "<td>";
+			echo "<td><b>Usuário:</b> " . $member['username'] . "</td>";
+			echo "<td><b>Nível:</b> " . $member['level'] . "</td>";
 			if ($member['killed'] > 0) {
-				echo '<td><b>Status:</b> <font color="red">Eliminado</font><td>';
+				echo '<td><b>Status:</b> <font color="red">Eliminado</font></td>';
 			} elseif ($member['hp'] < 1 && $member['killed'] == 0) {
-				echo '<td><b>Status:</b> <font color="red">Eliminado</font><td>';
+				echo '<td><b>Status:</b> <font color="red">Eliminado</font></td>';
 			} else {
-				echo "<td><b>Opções:</b> <a href=\"mail.php?act=compose&amp;to=" . $member['username'] . '">Mensagem</a> | <a href="battle.php?act=attack&amp;username=' . $member['username'] . '">Lutar</a><td>";
+				echo "<td><b>Opções:</b> <a href=\"mail.php?act=compose&amp;to=" . $member['username'] . '">Mensagem</a> | <a href="battle.php?act=attack&amp;username=' . $member['username'] . '">Lutar</a></td>";
 			}
 
 			echo "</tr>";
@@ -259,23 +275,27 @@ if ($setting->$unc1 == "y") {
 
 	echo "</table>";
 	echo "</fieldset>";
-	$checwerwasaao = $db->execute("select `username` from `players` where `tour`='t' and `id`=? and `serv`=? and `tier`=?", [$player->id, $player->serv, $tier]);
-	if ($checwerwasaao->recordcount() < 1) {
-		$tourstatus = "Você não se inscreveu.";
-	} elseif ($player->killed > 0) {
-		$tourstatus = "Você foi eliminado.";
-	} else {
-		$tourstatus = "Você está participando.";
-	}
 
-	echo "<b>Seu status no torneio:</b> " . $tourstatus . "";
-	echo "<br/><br/>";
-	echo '<a href="tournament.php">Voltar</a>.';
-	include(__DIR__ . "/templates/private_footer.php");
-	exit;
+$checwerwasaao = $db->execute("SELECT `username` FROM `players` WHERE `tour` = ? AND `id` = ? AND `serv` = ? AND `tier` = ?", ['t', $player->id, $player->serv, $tier]);
+
+if ($checwerwasaao->recordcount() < 1) {
+    $tourstatus = "Você não se inscreveu.";
+} elseif ($player->killed > 0) {
+    $tourstatus = "Você foi eliminado.";
+} else {
+    $tourstatus = "Você está participando.";
 }
 
+echo "<b>Seu status no torneio:</b> " . $tourstatus . "";
+echo "<br/><br/>";
+echo '<a href="tournament.php">Voltar</a>.';
+
+include(__DIR__ . "/templates/private_footer.php");
+exit;
+
+
 include(__DIR__ . "/templates/private_header.php");
+$lastInfo = [
 $lastinfo1 = "last_tour_1_" . $player->serv . "";
 $lastinfo2 = "last_tour_2_" . $player->serv . "";
 $lastinfo3 = "last_tour_3_" . $player->serv . "";

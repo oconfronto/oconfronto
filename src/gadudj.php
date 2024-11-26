@@ -49,7 +49,13 @@ if ($player->hp == 0) {
 }
 
 
-$enemy->prepo = "o";
+// Check if the $enemy object is null, and if so, initialize it
+if ($enemy === null) {
+    $enemy = new stdClass(); // Initialize the $enemy object if it's null
+}
+
+// Now you can safely assign values to the properties of $enemy
+$enemy->prepo = "o";  // Set the article for the enemy (masculine here)
 $enemy->username = "Gadudj";
 $enemy->image_path = "gadudj.gif";
 $enemy->level = 112;
@@ -58,6 +64,14 @@ $enemy->vitality = 168;
 $enemy->agility = 210;
 $enemy->hp = 2800;
 $enemy->mtexp = 4000;
+
+// Adding logic to set the article based on the enemy's gender
+if ($enemy->gender === 'male') {
+    $enemy->prepo = "o"; // Masculine article for the enemy
+} else {
+    $enemy->prepo = "a"; // Feminine article if the enemy is not male
+}
+
 
 //Get player's bonuses from equipment
 $query = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='weapon' and items.status='equipped'", [$player->id]);
@@ -72,6 +86,8 @@ $query54 = $db->query("select blueprint_items.effectiveness, blueprint_items.nam
 $player->defbonus5 = ($query54->recordcount() == 1) ? $query54->fetchrow() : 0;
 $query55 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='boots' and items.status='equipped'", [$player->id]);
 $player->agibonus6 = ($query55->recordcount() == 1) ? $query55->fetchrow() : 0;
+$query56 = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='quiver' and items.status='equipped'", [$player->id]);
+$player->agibonus7 = ($query56->recordcount() == 1) ? $query56->fetchrow() : 0;
 
 
 $pbonusfor = 0;
@@ -159,9 +175,39 @@ if ($player->promoted == 'f') {
 
 
 //Calculate some variables that will be used
-$forcadoplayer = ceil(($player->strength + $player->atkbonus['effectiveness'] + ($player->atkbonus['item_bonus'] * 2) + $pbonusfor) * $multipleatk);
-$agilidadedoplayer = ceil($player->agility + $player->agibonus6['effectiveness'] + ($player->agibonus6['item_bonus'] * 2) + $pbonusagi);
-$resistenciadoplayer = ceil((($player->resistance + ($player->defbonus1['effectiveness'] + $player->defbonus2['effectiveness'] + $player->defbonus3['effectiveness'] + $player->defbonus5['effectiveness']) + (($player->defbonus1['item_bonus'] * 2) + ($player->defbonus2['item_bonus'] * 2) + ($player->defbonus3['item_bonus'] * 2) + ($player->defbonus5['item_bonus'] * 2)) + $pbonusres) * $multipledef) / 1.35);
+$forcadoplayer = ceil(
+    (
+        $player->strength +
+        (isset($player->atkbonus['effectiveness']) ? $player->atkbonus['effectiveness'] : 0) +
+        (isset($player->atkbonus['item_bonus']) ? ($player->atkbonus['item_bonus'] * 2) : 0) +
+        ($pbonusfor ?? 0) // Fallback to $pbonusfor
+    ) * ($multipleatk ?? 1) // Fallback to $multipleatk
+);
+
+$agilidadedoplayer = ceil(
+    $player->agility +
+    (isset($player->agibonus6['effectiveness']) ? $player->agibonus6['effectiveness'] : 0) +
+    (isset($player->agibonus7['effectiveness']) ? $player->agibonus7['effectiveness'] : 0) +
+    (isset($player->agibonus6['item_bonus']) ? ($player->agibonus6['item_bonus'] * 2) : 0) +
+    (isset($player->agibonus7['item_bonus']) ? ($player->agibonus7['item_bonus'] * 2) : 0) +
+    ($pbonusagi ?? 0) // Ensures $pbonusagi has a default value if not set
+);
+
+$resistenciadoplayer = ceil(
+    (
+        $player->resistance +
+        (isset($player->defbonus1['effectiveness']) ? $player->defbonus1['effectiveness'] : 0) +
+        (isset($player->defbonus2['effectiveness']) ? $player->defbonus2['effectiveness'] : 0) +
+        (isset($player->defbonus3['effectiveness']) ? $player->defbonus3['effectiveness'] : 0) +
+        (isset($player->defbonus5['effectiveness']) ? $player->defbonus5['effectiveness'] : 0) +
+        ((isset($player->defbonus1['item_bonus']) ? $player->defbonus1['item_bonus'] * 2 : 0) +
+        (isset($player->defbonus2['item_bonus']) ? $player->defbonus2['item_bonus'] * 2 : 0) +
+        (isset($player->defbonus3['item_bonus']) ? $player->defbonus3['item_bonus'] * 2 : 0) +
+        (isset($player->defbonus5['item_bonus']) ? $player->defbonus5['item_bonus'] * 2 : 0)) +
+        ($pbonusres ?? 0)
+    ) * ($multipledef ?? 1) // Adding a fallback for $multipledef 
+) / 1.35;
+
 
 $forcadomonstro = ($enemy->strength * 1.3);
 $agilidadedomonstro = $enemy->agility;
