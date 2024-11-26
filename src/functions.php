@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 include(__DIR__ . "/config.php");
+include_once(__DIR__ . "/lib.php");
 
 // CLASSES NOVAS PARA OC VERSÃO 2.0 //
 class OCv2
@@ -56,41 +57,44 @@ class OCv2
 
 // FIM DO MEU CODE LINDO //
 
-function encodePassword(string $password): string
-{
+if (!function_exists('encodePassword')) { //add function_exists check
+    function encodePassword(string $password): string
+    {
+        $salt = getenv('PASSWORD_SALT');
+        $hash = sha1($password . $salt);
 
-    $salt = getenv('PASSWORD_SALT');
-    $hash = sha1($password . $salt);
+        for ($i = 0; $i < 1000; ++$i) {
+            $hash = sha1($hash);
+        }
 
-    for ($i = 0; $i < 1000; ++$i) {
-        $hash = sha1($hash);
+        return $hash;
     }
-
-    return $hash;
 }
 
-function encodeSession(string $account_id): string
-{
+if (!function_exists('encodeSession')) { 
+    function encodeSession(string $account_id): string {
+        $pepper = '$n203hc29*&%&Hd';
+        $hash = sha1($account_id . $pepper . $_SERVER["DOMAIN"]);
 
-    $pepper = '$n203hc29*&%&Hd';
-    $hash = sha1($account_id . $pepper . $_SERVER["DOMAIN"]);
+        for ($i = 0; $i < 1000; ++$i) {
+            $hash = sha1($hash);
+        }
 
-    for ($i = 0; $i < 1000; ++$i) {
-        $hash = sha1($hash);
+        return $hash;
     }
-
-    return $hash;
 }
 
 
-function check_acc(&$db): \stdClass
-{
+if (!function_exists('check_acc')){
+    function check_acc(&$db): \stdClass
+    {
     if (!isset($_SESSION['Login'])) {
         session_unset();
         session_destroy();
         header("Location: index.php");
         exit;
     }
+    
 
     $query = $db->execute("SELECT * FROM `accounts` WHERE `id`=? AND `conta`=?", [$_SESSION['Login']['account_id'], $_SESSION['Login']['account']]);
     $accarray = $query->FetchRow();
@@ -100,6 +104,7 @@ function check_acc(&$db): \stdClass
         header("Location: index.php");
         exit;
     }
+    
 
     $acc = new stdClass();
     foreach ($accarray as $key => $value) {
@@ -107,6 +112,7 @@ function check_acc(&$db): \stdClass
     }
 
     return $acc;
+}
 }
 
 
@@ -285,14 +291,14 @@ while ($set = $query->FetchRow()) {
 
 function textLimit($string, $length, $lineBreak = null, string $replacer = '...')
 {
-    // Limitar o texto e adicionar reticências, se necessário
+    // Limit text and add ellipsis if necessary
     if (strlen((string) $string) > $length) {
         $string = (preg_match('/^(.*)\W.*$/', substr((string) $string, 0, $length + 1), $matches) ? $matches[1] : substr((string) $string, 0, $length)) . $replacer;
     }
 
-    // Adicionar quebras de linha a cada X caracteres, se o parâmetro $lineBreak for passado
+    // Add line breaks every X characters if $lineBreak parameter is passed
     if ($lineBreak !== null && $lineBreak > 0) {
-        $string = wordwrap((string) $string, $lineBreak, "<br>\n", true); // Garantir que as quebras sejam forçadas
+        $string = wordwrap((string) $string, $lineBreak, "<br>\n", true); // Ensure breaks are forced
     }
 
     return $string;
@@ -476,14 +482,20 @@ function showName($name, &$db, $status = 'on', $link = 'on'): string
     return $return;
 }
 
-function filtro($data)
+// Added '$db' parameter to 'filtro' function to access database connection for real_escape_string.
+function filtro($data, $db)
 {
     $data = trim(htmlentities(strip_tags((string) $data)));
-
     // Remove the deprecated check
     $data = $db->real_escape_string($data);
     return str_replace("([^0-9])", "", $data) . "";
 }
+
+    //load all dependencies
+    require __DIR__ . '/../vendor/autoload.php';
+
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
 
 function send_mail($from_name, $mail_to, $subject, $body)
 {
