@@ -193,7 +193,11 @@ if ($getitems->recordcount() == 0) {
                 } elseif (($info['status'] + 1) < $itcount) {
                     echo '<font color="gray">' . $itcount . "º " . $item['username'] . ' <font size="1px">(Nível: ' . $item['level'] . ")</font></font><br/ >";
                 } else {
-                    echo "" . $itcount . "º <a href=\"monster.php?act=attack&id=" . (((int)($item['id'] ?? null)) * $player->id) . '">' . $item['username'] . '</a> <font size="1px">(Nível: ' . $item['level'] . ")</font><br/ >";
+                    if ($player->energy < 10) {
+                        echo "" . $itcount . "º " . $item['username'] . ' <font size="1px">(Nível: ' . $item['level'] . ") - Sem energia suficiente</font><br/ >";
+                    } else {
+                        echo "" . $itcount . "º <a href=\"monster.php?act=attack&id=" . (((int)($item['id'] ?? null)) * $player->id) . '">' . $item['username'] . '</a> <font size="1px">(Nível: ' . $item['level'] . ")</font><br/ >";
+                    }
                 }
             } else {
                 echo "" . $itcount . "º " . $item['username'] . ' <font size="1px">(Nível: ' . $item['level'] . ")</font><br/ >";
