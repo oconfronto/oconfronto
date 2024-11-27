@@ -28,18 +28,24 @@ if ($_GET['estender'] ?? null) {
 		exit;
 	}
 } elseif ($_GET['use'] ?? null) {
-	$getid = ceil($_GET['spell']);
-	$magic = $db->execute("select * from `magias` where `id`=? and `player_id`=?", [$getid, $player->id]);
+	// Validate and convert spell ID to integer
+	$spellId = filter_var($_GET['spell'] ?? '', FILTER_VALIDATE_INT);
+	if ($spellId === false) {
+		echo "ID do feitiço inválido";
+		exit;
+	}
+	
+	$magic = $db->execute("select * from `magias` where `id`=? and `player_id`=?", [$spellId, $player->id]);
 
-	if (is_numeric($_GET['spell']) && $magic->recordcount() == 1) {
+	if ($magic->recordcount() == 1) {
 		$magia = $magic->fetchrow();
 		if (($magia['used'] ?? null) == 'f') {
-			$db->execute("update `magias` set `used`='t' where `id`=? and `player_id`=?", [$getid, $player->id]);
+			$db->execute("update `magias` set `used`='t' where `id`=? and `player_id`=?", [$spellId, $player->id]);
 			header("Location: showspells.php?voltar=true");
 			exit;
 		}
 
-		$db->execute("update `magias` set `used`='f' where `id`=? and `player_id`=?", [$getid, $player->id]);
+		$db->execute("update `magias` set `used`='f' where `id`=? and `player_id`=?", [$spellId, $player->id]);
 		header("Location: showspells.php?voltar=true");
 		exit;
 	}
