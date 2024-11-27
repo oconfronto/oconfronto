@@ -122,6 +122,10 @@ function displayItemMobile(array $item, $type, $player, int $bool): string
         $type = "Defesa";
     }
 
+    if ($item['type'] == 'quiver') {
+        $type = "Agilidade";
+    }
+
     $atributo = "";
     if ($item['type'] != 'ring') {
         $atributo =  $type . (': ' . $item['effectiveness']);

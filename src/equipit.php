@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-define('PAGENAME', 'Equipment');
-
 include(__DIR__ . "/lib.php");
 $player = check_user($db);
 
@@ -74,6 +72,12 @@ if ($_GET['itid']) {
             $agi = 30;
             $res = 40;
             $update = 5;
+        } elseif ($item['item_id'] == 297) {
+            $for = 45;
+            $vit = 45;
+            $agi = 45;
+            $res = 45;
+            $update = 5;
         } elseif ($item['item_id'] == 178) {
             $for = 40;
             $vit = 40;
@@ -131,9 +135,21 @@ if ($_GET['itid']) {
                     include(__DIR__ . "/templates/private_footer.php");
                     exit;
                 }
-
+                
+                if ($ddckitexs['type'] == 'quiver' && $player->voc == 'knight') {
+                    include_once __DIR__ . "/templates/private_header.php";
+                    echo "Guerreiros não podem usar Aljavas. <a href=\"inventory.php\">Voltar</a>.";
+                    include_once __DIR__ . "/templates/private_footer.php";
+                    exit;
+                }
+                if ($ddckitexs['type'] == 'quiver' && $player->voc == 'mage') {
+                    include_once __DIR__ . "/templates/private_header.php";
+                    echo "Magos não podem usar Aljavas. <a href=\"inventory.php\">Voltar</a>.";
+                    include_once __DIR__ . "/templates/private_footer.php";
+                    exit;
+                }
+                
                 $lvlbonus = $player->vip > time() ? 10 : 0;
-
                 if ($ddckitexs['needlvl'] > ($player->level + $lvlbonus)) {
                     include(__DIR__ . "/templates/private_header.php");
                     echo "Você não tem nível suficiente para usar este item. <a href=\"inventory.php\">Voltar</a>.";

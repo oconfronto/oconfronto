@@ -182,6 +182,7 @@ if ($tutorial->recordcount() == 0) {
                 rd.mark.exception.ring = 'ring';
                 rd.mark.exception.legs = 'legs';
                 rd.mark.exception.boots = 'boots';
+                rd.mark.exception.quiver = 'quiver'; //ADD Quiver
 
                 // esta função (manipulador de eventos) é chamada após o elemento ser solto
                 REDIPS.drag.myhandler_dropped = function() {
