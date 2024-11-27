@@ -19,21 +19,21 @@ if ($query->recordcount() == 0) {
 	$guild = $query->fetchrow();
 }
 
-if ($_POST['deposit']) {
-	if (!isset($_POST['amount']) || $_POST['amount'] === '') {
+if ($_POST['deposit'] ?? null) {
+	if (!($_POST['amount'] ?? null) || ($_POST['amount'] ?? null) === '') {
 		$msg1 .= "Você precisa preencher todos os campos.";
 		$error1 = 1;
 	} elseif (!is_numeric($_POST['amount'])) {
 		$msg1 .= "Você não pode enviar esta quantia de ouro!";
 		$error1 = 1;
-	} elseif (floor((float)$_POST['amount']) < 1) {
+	} elseif (floor((float)($_POST['amount'] ?? null)) < 1) {
 		$msg1 .= "Você não pode enviar esta quantia de ouro!";
 		$error1 = 1;
-	} elseif (floor((float)$_POST['amount']) > $player->gold) {
+	} elseif (floor((float)($_POST['amount'] ?? null)) > $player->gold) {
 		$msg1 .= "Você não possui esta quantia de ouro!";
 		$error1 = 1;
 	} else {
-		$amount = floor((float)$_POST['amount']);
+		$amount = floor((float)($_POST['amount'] ?? null));
 		$db->execute("update `guilds` set `gold`=`gold`+? where `id`=?", [$amount, $player->guild]);
 		$db->execute("update `players` set `gold`=`gold`-? where `id`=?", [$amount, $player->id]);
 
@@ -46,38 +46,38 @@ if ($_POST['deposit']) {
 		$insert['time'] = time();
 		$query = $db->autoexecute('log_gold', $insert, 'INSERT');
 
-		$lider = $db->GetOne("select `id` from `players` where `username`=?", [$guild['leader']]);
-		$vice = $db->GetOne("select `id` from `players` where `username`=?", [$guild['vice']]);
+		$lider = $db->GetOne("select `id` from `players` where `username`=?", [$guild['leader'] ?? null]);
+		$vice = $db->GetOne("select `id` from `players` where `username`=?", [$guild['vice'] ?? null]);
 		$logmsg = sprintf('<b>%s</b> transferiu <b>', $player->username) . $amount . " de gold</b> para o clã.";
 		addlog($lider, $logmsg, $db);
 		addlog($vice, $logmsg, $db);
 
 		$msg1 .= "Você transferiu <b>" . $amount . "</b> de ouro para seu clã.";
 	}
-} elseif ($_POST['transfer']) {
-	$query = $db->execute("select * from `players` where `username`=?", [$_POST['username']]);
+} elseif ($_POST['transfer'] ?? null) {
+	$query = $db->execute("select * from `players` where `username`=?", [$_POST['username'] ?? null]);
 
 	if ($query->recordcount() == 0) {
 		$msg2 .= "Este usuário não existe!";
 		$error2 = 1;
-	} elseif (!$_POST['username'] || !$_POST['amount']) {
+	} elseif (!($_POST['username'] ?? null) || !($_POST['amount'] ?? null)) {
 		$msg2 .= "Você precisa preencher todos os campos.";
 		$error2 = 1;
-	} elseif (!is_numeric(floor((float)$_POST['amount']))) {
+	} elseif (!is_numeric(floor((float)($_POST['amount'] ?? null)))) {
 		$msg2 .= "Você não pode enviar esta quantia de dinheiro!";
 		$error2 = 1;
-	} elseif (floor((float)$_POST['amount']) < 1) {
+	} elseif (floor((float)($_POST['amount'] ?? null)) < 1) {
 		$msg2 .= "Você não pode enviar esta quantia de dinheiro!";
 		$error2 = 1;	
-	} elseif (floor((float)$_POST['amount']) > $guild['gold']) {
+	} elseif (floor((float)($_POST['amount'] ?? null)) > ($guild['gold'] ?? null)) {
 		$msg2 .= "Seu clã não possui esta quantia de dinheiro!";
 		$error2 = 1;
 	} else {
 		$member = $query->fetchrow();
 
-		$amount = floor((float)$_POST['amount']);
+		$amount = floor((float)($_POST['amount'] ?? null));
 		$db->execute("update `guilds` set `gold`=? where `id`=?", [$guild['gold'] - $amount, $player->guild]);
-		$db->execute("update `players` set `gold`=? where `username`=?", [$member['gold'] + $amount, $member['username']]);
+		$db->execute("update `players` set `gold`=? where `username`=?", [$member['gold'] + $amount, $member['username'] ?? null]);
 		$logmsg = "Você recebeu <b>" . $amount . "</b> de ouro do clã: <b>" . $guild['name'] . "</b>.";
 		addlog($member['id'], $logmsg, $db);
 
@@ -111,7 +111,7 @@ echo "</form>";
 echo "</fieldset>";
 echo "<br/><br/>";
 
-if ($player->username == $guild['leader'] || $player->username == $guild['vice']) {
+if ($player->username == ($guild['leader'] ?? null) || $player->username == ($guild['vice'] ?? null)) {
 	echo "<fieldset>";
 	echo "<legend><b>" . $guild['name'] . " :: Transferir Ouro</b></legend>";
 	echo '<form method="POST" action="guild_treasury.php">';

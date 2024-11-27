@@ -9,18 +9,18 @@ $verificaLuta = $db->execute("select * from `duels` where `status`!='w' and (`p_
 $luta = $verificaLuta->fetchrow();
 
 
-if ($player->id == $luta['p_id']) {
-    if ($_GET['type'] != 96 && $_GET['type'] < 98 && $_GET['type'] > 0) {
-        $db->execute("update `duels` set `p_type`=? where `id`=?", [$_GET['type'], $luta['id']]);
-    } elseif ($_GET['type'] == 96) {
-        $db->execute("update `duels` set `p_type`=? where `id`=?", [$_GET['type'], $luta['id']]);
+if ($player->id == ($luta['p_id'] ?? null)) {
+    if (($_GET['type'] ?? null) != 96 && ($_GET['type'] ?? null) < 98 && ($_GET['type'] ?? null) > 0) {
+        $db->execute("update `duels` set `p_type`=? where `id`=?", [$_GET['type'] ?? null, $luta['id'] ?? null]);
+    } elseif (($_GET['type'] ?? null) == 96) {
+        $db->execute("update `duels` set `p_type`=? where `id`=?", [$_GET['type'] ?? null, $luta['id'] ?? null]);
         header("Location: duel.php?luta=true");
         exit;
     }
-} elseif ($_GET['type'] != 96 && $_GET['type'] < 98 && $_GET['type'] > 0) {
-    $db->execute("update `duels` set `e_type`=? where `id`=?", [$_GET['type'], $luta['id']]);
-} elseif ($_GET['type'] == 96) {
-    $db->execute("update `duels` set `e_type`=? where `id`=?", [$_GET['type'], $luta['id']]);
+} elseif (($_GET['type'] ?? null) != 96 && ($_GET['type'] ?? null) < 98 && ($_GET['type'] ?? null) > 0) {
+    $db->execute("update `duels` set `e_type`=? where `id`=?", [$_GET['type'] ?? null, $luta['id'] ?? null]);
+} elseif (($_GET['type'] ?? null) == 96) {
+    $db->execute("update `duels` set `e_type`=? where `id`=?", [$_GET['type'] ?? null, $luta['id'] ?? null]);
     header("Location: duel.php?luta=true");
     exit;
 }

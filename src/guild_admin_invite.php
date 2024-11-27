@@ -23,13 +23,13 @@ if ($guildquery->recordcount() == 0) {
 include(__DIR__ . "/templates/private_header.php");
 
 //Guild Leader Admin check
-if ($player->username != $guild['leader'] && $player->username != $guild['vice']) {
+if ($player->username != ($guild['leader'] ?? null) && $player->username != ($guild['vice'] ?? null)) {
     echo "Você não pode acessar esta página. <a href=\"home.php\">Voltar</a>.";
-} elseif ($guild['members'] >= ($guild['maxmembers'])) {
+} elseif (($guild['members'] ?? null) >= ($guild['maxmembers'] ?? null)) {
     echo "Seu clã já está grande demais! (max. " . $guild['maxmembers'] . ' membros).<br/><a href="guild_admin.php">Voltar</a>.';
 } else {
     //If username is set
-    if (isset($_GET['username']) && ($_GET['submit'])) {
+    if (($_GET['username'] ?? null) && ($_GET['submit'] ?? null)) {
         //Checks if player exists
         $query = $db->execute(sprintf("select `id`, `guild`, `serv`, `reino` from `players` where `username`='%s'", $username));
         $member = $query->fetchrow();
@@ -37,13 +37,13 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
         if ($query->recordcount() == 0) {
             $errmsg .= "<center><b>Este usuário não existe!</b></center>";
             $error = 1;
-        } elseif ($member['serv'] != $guild['serv']) {
+        } elseif (($member['serv'] ?? null) != ($guild['serv'] ?? null)) {
             $errmsg .= "<center><b>Este usuário pertence a outro servidor.</b></center>";
             $error = 1;
-        } elseif ($member['reino'] != $guild['reino']) {
+        } elseif (($member['reino'] ?? null) != ($guild['reino'] ?? null)) {
             $errmsg .= "<center><b>Este usuário pertence a outro reino.</b></center>";
             $error = 1;
-        } elseif ($member['guild'] != NULL) {
+        } elseif (($member['guild'] ?? null) != NULL) {
             $errmsg .= "<center><b>Você não pode convidar um usuário que está em outro clã!</b></center>";
             $error = 1;
         } else {    //Insert user invite into guild_invites table
@@ -64,7 +64,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 ?>
 
     <fieldset>
-        <legend><b><?= $guild['name'] ?> :: Convidar usuários</b></legend>
+        <legend><b><?= $guild['name'] ?? null ?> :: Convidar usuários</b></legend>
         <form method="GET" action="guild_admin_invite.php">
             <b>Usuário:</b> <input type="text" name="username" size="20" /> <input type="submit" name="submit" value="Convidar">
         </form>

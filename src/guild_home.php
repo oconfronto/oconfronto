@@ -20,7 +20,7 @@ if ($query->recordcount() == 0) {
 	$guild = $query->fetchrow();
 }
 
-if ($_GET['act'] == 'showmsg') {
+if (($_GET['act'] ?? null) == 'showmsg') {
 	header('Content-type: text/html; charset=utf-8');
 
 	$countmsgs = $db->execute("select * from `user_chat` where `guild`=? order by `time` asc", [$player->guild]);
@@ -81,7 +81,7 @@ echo "<td><table width=\"100%\" class=\"brown\" id=\"nvbarra\" style='height:25p
 echo "<tr>";
 echo '<td width="25%"><b>Lider:</b> <a href="profile.php?id=' . $guild['leader'] . '">' . $guild['leader'] . "</a></td>";
 echo '<td width="30%"><b>Vice-Lider:</b> ';
-if ($guild['vice'] != NULL) {
+if (($guild['vice'] ?? null) != NULL) {
 	echo '<a href="profile.php?id=' . $guild['vice'] . '">' . $guild['vice'] . "</a>";
 } else {
 	echo "Ninguém";
@@ -97,7 +97,7 @@ echo "<tr>";
 echo "<td><table width=\"100%\" class=\"brown\" style='background:#ffe8aa;'>";
 echo "<tr>";
 echo '<td class="salmon">';
-$descrikon = stripslashes((string) $guild['blurb']);
+$descrikon = stripslashes((string) ($guild['blurb'] ?? null));
 $descrikon = $bbcode->parse($descrikon);
 echo textLimit($descrikon, 5000, 125);
 echo "</td>";
@@ -108,12 +108,12 @@ echo "<tr><td class=\"brown\" id=\"nvbarra\" style='height:25px;'>";
 echo "<font size=\"1px\"><b>Membros do clã online:</b> ";
 $checkonne = $db->execute("select `player_id` from `user_online`");
 while ($online = $checkonne->fetchrow()) {
-	$getname = $db->execute("select `username` from `players` where `id`=? and `guild`=? order by `username` asc", [$online['player_id'], $guild['id']]);
+	$getname = $db->execute("select `username` from `players` where `id`=? and `guild`=? order by `username` asc", [$online['player_id'] ?? null, $guild['id'] ?? null]);
 	while ($member = $getname->fetchrow()) {
 		echo '<a href="profile.php?id=' . $member['username'] . '">';
-		echo ($member['username'] == $player->username) ? "<b>" : "";
-		echo $member['username'];
-		echo ($member['username'] == $player->username) ? "</b>" : "";
+		echo (($member['username'] ?? null) == $player->username) ? "<b>" : "";
+		echo $member['username'] ?? null;
+		echo (($member['username'] ?? null) == $player->username) ? "</b>" : "";
 		echo "</a> | ";
 
 		$guildonline += 1;
@@ -129,7 +129,7 @@ echo "</table>";
 
 echo "<br/>";
 
-if ($guild['motd'] != NULL) {
+if (($guild['motd'] ?? null) != NULL) {
 	echo '<table width="100%" class="brown">';
 	echo "<tr>";
 	echo '<td width="100%"><b><i><center>' . $guild['motd'] . "</center></i></b></td>";
@@ -166,7 +166,7 @@ echo "</table>";
 
 echo "<br/>";
 echo "<form><center><table width='300'><tr>";
-if ($player->username == $guild['leader'] || $player->username == $guild['vice']) {
+if ($player->username == ($guild['leader'] ?? null) || $player->username == ($guild['vice'] ?? null)) {
 	echo "<td><input id=\"link\" class=\"neg\" type=\"button\" VALUE=\"Administração\" ONCLICK=\"window.location.href='guild_admin.php'\"></td>&nbsp;";
 }
 

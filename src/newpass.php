@@ -25,7 +25,7 @@ if ($real->recordcount() == 0) {
 	exit;
 }
 
-if (!$_GET['email'] || !$_GET['string'] || !$_GET['email'] & !$_GET['string']) {
+if (!($_GET['email'] ?? null) || !($_GET['string'] ?? null) || !($_GET['email'] ?? null) & !($_GET['string'] ?? null)) {
 	include(__DIR__ . "/templates/header.php");
 	echo "Endereço inválido ou antigo. <a href=\"index.php\">Voltar</a>.";
 	include(__DIR__ . "/templates/footer.php");

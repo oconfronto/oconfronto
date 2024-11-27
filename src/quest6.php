@@ -28,7 +28,7 @@ if ($verificacao2->recordcount() > 0) {
 	$quest2 = $verificacao2->fetchrow();
 }
 
-switch ($_GET['act']) {
+switch ($_GET['act'] ?? null) {
 
 	case "castle":
 		include(__DIR__ . "/templates/private_header.php");
@@ -97,7 +97,7 @@ switch ($_GET['act']) {
 		break;
 
 	case "entregar":
-		if ($quest1['quest_status'] != 2) {
+		if (($quest1['quest_status'] ?? null) != 2) {
 			header("Location: home.php");
 		} else {
 			$vesetemobox = $db->execute("select * from `items` where `item_id`=159 and `player_id`=?", [$player->id]);
@@ -129,7 +129,7 @@ switch ($_GET['act']) {
 		break;
 
 	case "backalex":
-		if ($quest1['quest_status'] == 90 && $quest2['quest_status'] == 1) {
+		if (($quest1['quest_status'] ?? null) == 90 && ($quest2['quest_status'] ?? null) == 1) {
 
 			$upxxdateeaz = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [time() + 36000, $player->id, 14]);
 
@@ -148,7 +148,7 @@ switch ($_GET['act']) {
 
 
 	case "finish":
-		if ($quest1['quest_status'] == 90 && $quest2['quest_status'] == 80) {
+		if (($quest1['quest_status'] ?? null) == 90 && ($quest2['quest_status'] ?? null) == 80) {
 
 			$setnoventa = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [90, $player->id, 14]);
 
@@ -197,7 +197,7 @@ if ($verificacao1->recordcount() == 0) {
 }
 
 
-if ($quest1['quest_status'] == 1) {
+if (($quest1['quest_status'] ?? null) == 1) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
 	echo "<i>Agora que eu já lhe entreguei o pacote, vá ao império de Rashar.</i><br><br>";
@@ -207,8 +207,8 @@ if ($quest1['quest_status'] == 1) {
 	exit;
 }
 
-if ($quest1['quest_status'] > 100) {
-	if ($quest1['quest_status'] < time()) {
+if (($quest1['quest_status'] ?? null) > 100) {
+	if (($quest1['quest_status'] ?? null) < time()) {
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [2, $player->id, 13]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Missão</b></legend>\n";
@@ -231,7 +231,7 @@ if ($quest1['quest_status'] > 100) {
 	exit;
 }
 
-if ($quest1['quest_status'] == 2) {
+if (($quest1['quest_status'] ?? null) == 2) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Rashar</b></legend>\n";
 	echo "<i>Olá " . $player->username . ", oque lhe traz aqui?</i><br><br>";
@@ -241,7 +241,7 @@ if ($quest1['quest_status'] == 2) {
 	exit;
 }
 
-if ($quest1['quest_status'] == 90 && $quest2['quest_status'] == 1) {
+if (($quest1['quest_status'] ?? null) == 90 && ($quest2['quest_status'] ?? null) == 1) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
 	echo "<i>Você já entregou o pacote à Rashar, agora volte e fale com alexander.</i><br><br>";
@@ -251,8 +251,8 @@ if ($quest1['quest_status'] == 90 && $quest2['quest_status'] == 1) {
 	exit;
 }
 
-if ($quest2['quest_status'] > 100) {
-	if ($quest2['quest_status'] < time()) {
+if (($quest2['quest_status'] ?? null) > 100) {
+	if (($quest2['quest_status'] ?? null) < time()) {
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [80, $player->id, 14]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Missão</b></legend>\n";
@@ -276,7 +276,7 @@ if ($quest2['quest_status'] > 100) {
 }
 
 
-if ($quest2['quest_status'] == 80) {
+if (($quest2['quest_status'] ?? null) == 80) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
 	echo "<i>Olá " . $player->username . ", recebi uma mensagem de Rashar, ele recebeu o pacote.</i><br />";
@@ -287,7 +287,7 @@ if ($quest2['quest_status'] == 80) {
 	exit;
 }
 
-if ($quest2['quest_status'] == 89) {
+if (($quest2['quest_status'] ?? null) == 89) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
 	echo "<i>Você abandonou esta missão.</i><br><br>";
@@ -297,7 +297,7 @@ if ($quest2['quest_status'] == 89) {
 	exit;
 }
 
-if ($quest2['quest_status'] == 90) {
+if (($quest2['quest_status'] ?? null) == 90) {
 	header("Location: quest7.php");
 }
 

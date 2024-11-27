@@ -12,16 +12,16 @@ include(__DIR__ . "/checkwork.php");
 // Add this line near the top of the file, after $player is defined
 $voc = $player->voc;
 
-switch ($_GET['act']) {
+switch ($_GET['act'] ?? null) {
 	case "buy":
-		if (!$_GET['id']) //No item ID
+		if (!($_GET['id'] ?? null)) //No item ID
 		{
 			header("Location: shop.php");
 			break;
 		}
 
 		//Select the item from the database
-		$query = $db->execute("select `id`, `name`, `price`, `type`, `voc`, `canbuy` from `blueprint_items` where `id`=?", [$_GET['id']]);
+		$query = $db->execute("select `id`, `name`, `price`, `type`, `voc`, `canbuy` from `blueprint_items` where `id`=?", [$_GET['id'] ?? null]);
 
 		//Invalid item (it doesn't exist)
 		if ($query->recordcount() == 0) {
@@ -30,7 +30,7 @@ switch ($_GET['act']) {
 		}
 
 		$item = $query->fetchrow();
-		$itemprice = $player->reino == '1' || $player->vip > time() ? ceil($item['price'] * 0.9) : $item['price'];
+		$itemprice = $player->reino == '1' || $player->vip > time() ? ceil($item['price'] * 0.9) : $item['price'] ?? null;
 
 		if ($itemprice > $player->gold) {
 			include(__DIR__ . "/templates/private_header.php");
@@ -41,7 +41,7 @@ switch ($_GET['act']) {
 			break;
 		}
 
-		if ($item['type'] == 'shield' && $player->voc == 'archer') {
+		if (($item['type'] ?? null) == 'shield' && $player->voc == 'archer') {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
 			echo "<i>Desculpe, mas arqueiros não podem usar escudos!</i><br /><br />\n";
@@ -50,7 +50,7 @@ switch ($_GET['act']) {
 			break;
 		}
 
-		if ($item['voc'] == '1' && $player->voc != 'archer') {
+		if (($item['voc'] ?? null) == '1' && $player->voc != 'archer') {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
 			echo "<i>Desculpe, mas você não pode comprar esse tipo de item!</i><br /><br />\n";
@@ -60,7 +60,7 @@ switch ($_GET['act']) {
 		}
 
 
-		if ($item['voc'] == '2' && $player->voc != 'knight') {
+		if (($item['voc'] ?? null) == '2' && $player->voc != 'knight') {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
 			echo "<i>Desculpe, mas você não pode comprar esse tipo de item!</i><br /><br />\n";
@@ -70,7 +70,7 @@ switch ($_GET['act']) {
 		}
 
 
-		if ($item['voc'] == '3' && $player->voc != 'mage') {
+		if (($item['voc'] ?? null) == '3' && $player->voc != 'mage') {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
 			echo "<i>Desculpe, mas você não pode comprar esse tipo de item!</i><br /><br />\n";
@@ -79,7 +79,7 @@ switch ($_GET['act']) {
 			break;
 		}
 
-		if ($item['type'] == 'addon') {
+		if (($item['type'] ?? null) == 'addon') {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
 			echo "<i>Desculpe, mas eu não vendo este tipo de item!</i><br /><br />\n";
@@ -88,7 +88,7 @@ switch ($_GET['act']) {
 			break;
 		}
 
-		if ($item['canbuy'] == 'f') {
+		if (($item['canbuy'] ?? null) == 'f') {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
 			echo "<i>Desculpe, mas eu não vendo este tipo de item!</i><br /><br />\n";
@@ -98,7 +98,7 @@ switch ($_GET['act']) {
 		}
 
 
-		if ($item['canbuy'] == 's') {
+		if (($item['canbuy'] ?? null) == 's') {
 
 			$checaquest = $db->execute("select `id` from `quests` where `player_id`=? and `quest_status`=90 and `quest_id`=11", [$player->id]);
 			if ($checaquest->recordcount() == 0) {
@@ -116,7 +116,7 @@ switch ($_GET['act']) {
 		$insert['item_id'] = $item['id'];
 		$query = $db->autoexecute('items', $insert, 'INSERT');
 
-		if ($item['id'] == 176) {
+		if (($item['id'] ?? null) == 176) {
 			$ringid = $db->Insert_ID();
 			$db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", [30, 40, 30, 40, $ringid]);
 		}
@@ -130,9 +130,9 @@ switch ($_GET['act']) {
 		break;
 
 	case "sell":
-		if ($_POST['comfirm'] && ($_POST['actione']) == 'vendeer') {
+		if (($_POST['comfirm'] ?? null) && ($_POST['actione'] ?? null) == 'vendeer') {
 			include(__DIR__ . "/templates/private_header.php");
-			if (!$_POST['id']) {
+			if (!($_POST['id'] ?? null)) {
 				echo "Você precisa selecionar algum item para vender.<br/><a href=\"inventory.php\">Voltar</a>.";
 				include(__DIR__ . "/templates/private_footer.php");
 				break;
@@ -142,29 +142,29 @@ switch ($_GET['act']) {
 			$totalsell = 0;
 			echo "<form method=\"POST\" action=\"shop.php?act=sell\">\n";
 			echo "<b>Deseja vender:</b><br/>";
-			foreach ($_POST['id'] as $msg) {
+			foreach ($_POST['id'] ?? null as $msg) {
 				$multipleitem = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", [$player->id, $msg]);
 				if ($multipleitem->recordcount() == 0) {
 					echo "Este item não te pertence.<br />";
 				} else {
 					$multisell = $multipleitem->fetchrow();
-					if ($multisell['status'] == 'equipped') {
+					if (($multisell['status'] ?? null) == 'equipped') {
 						echo "Você não pode vender um item que está em uso.<br />";
-					} elseif ($multisell['type'] == 'stone') {
+					} elseif (($multisell['type'] ?? null) == 'stone') {
 						echo "Você não pode vender pedras.<br />";
-					} elseif ($multisell['item_id'] == 111 || $multisell['item_id'] == 116) {
+					} elseif (($multisell['item_id'] ?? null) == 111 || ($multisell['item_id'] ?? null) == 116) {
 						echo "Você não pode vender este item, caso contrário não poderá terminar sua missão.<br />";
 					} else {
-						if ($multisell['item_bonus'] > 10) {
+						if (($multisell['item_bonus'] ?? null) > 10) {
 							$precodavenda = floor(($multisell['price'] / 2) + (($multisell['item_bonus'] * $multisell['price']) / 5) + 3000000);
 						} else {
 							$precodavenda = floor(($multisell['price'] / 2) + (($multisell['item_bonus'] * $multisell['price']) / 5));
 						}
 
-						$multisellfor = $multisell['for'] == 0 ? "" : ' +<font color="gray">' . $multisell['for'] . "F</font>";
-						$multisellvit = $multisell['vit'] == 0 ? "" : ' +<font color="green">' . $multisell['vit'] . "V</font>";
-						$multisellagi = $multisell['agi'] == 0 ? "" : ' +<font color="blue">' . $multisell['agi'] . "A</font>";
-						$multisellres = $multisell['res'] == 0 ? "" : ' +<font color="red">' . $multisell['res'] . "R</font>";
+						$multisellfor = ($multisell['for'] ?? null) == 0 ? "" : ' +<font color="gray">' . $multisell['for'] . "F</font>";
+						$multisellvit = ($multisell['vit'] ?? null) == 0 ? "" : ' +<font color="green">' . $multisell['vit'] . "V</font>";
+						$multisellagi = ($multisell['agi'] ?? null) == 0 ? "" : ' +<font color="blue">' . $multisell['agi'] . "A</font>";
+						$multisellres = ($multisell['res'] ?? null) == 0 ? "" : ' +<font color="red">' . $multisell['res'] . "R</font>";
 
 						echo "<b>1x</b> " . $multisell['name'] . " +" . $multisell['item_bonus'] . "" . $multisellfor . "" . $multisellvit . "" . $multisellagi . "" . $multisellres . " por " . $precodavenda . " de ouro.<br/>";
 						echo '<input type="hidden" name="id[]" value="' . $multisell['id'] . "\" />\n";
@@ -181,29 +181,29 @@ switch ($_GET['act']) {
 
 			include(__DIR__ . "/templates/private_footer.php");
 			break;
-		} elseif ($_POST['comfirm'] && ($_POST['actione']) != 'vendeer') {
+		} elseif (($_POST['comfirm'] ?? null) && ($_POST['actione'] ?? null) != 'vendeer') {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "Selecione uma ação.<br/><a href=\"inventory.php\">Voltar</a>.";
 			include(__DIR__ . "/templates/private_footer.php");
 			break;
-		} elseif ($_POST['multiconfirm']) {
+		} elseif ($_POST['multiconfirm'] ?? null) {
 			include(__DIR__ . "/templates/private_header.php");
 			$totalprico2 = 0;
-			foreach ($_POST['id'] as $msg) {
+			foreach ($_POST['id'] ?? null as $msg) {
 				$multipleitem = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", [$player->id, $msg]);
 				if ($multipleitem->recordcount() == 0) {
 					echo "Este item não te pertence.<br />";
 				} else {
 					$multisell = $multipleitem->fetchrow();
 
-					if ($multisell['status'] == 'equipped') {
+					if (($multisell['status'] ?? null) == 'equipped') {
 						echo "Você não pode vender um item que está em uso.<br />";
-					} elseif ($multisell['type'] == 'stone') {
+					} elseif (($multisell['type'] ?? null) == 'stone') {
 						echo "Você não pode vender pedras.<br />";
-					} elseif ($multisell['item_id'] == 111 || $multisell['item_id'] == 116) {
+					} elseif (($multisell['item_id'] ?? null) == 111 || ($multisell['item_id'] ?? null) == 116) {
 						echo "Você não pode vender este item, caso contrário não poderá terminar sua missão.<br />";
 					} else {
-						if ($multisell['item_bonus'] > 10) {
+						if (($multisell['item_bonus'] ?? null) > 10) {
 							$precodavenda = floor(($multisell['price'] / 2) + (($multisell['item_bonus'] * $multisell['price']) / 5) + 3000000);
 						} else {
 							$precodavenda = floor(($multisell['price'] / 2) + (($multisell['item_bonus'] * $multisell['price']) / 5));
@@ -211,15 +211,15 @@ switch ($_GET['act']) {
 
 						$totalprico2 += $precodavenda;
 
-						if ($multisell['mark'] == 't') {
+						if (($multisell['mark'] ?? null) == 't') {
 							$query = $db->execute("delete from `market` where `market_id`=?", [$msg]);
 						}
 
 						$query = $db->execute("delete from `items` where `id`=?", [$msg]);
-						$multisellfor = $multisell['for'] == 0 ? "" : ' +<font color="gray">' . $multisell['for'] . "F</font>";
-						$multisellvit = $multisell['vit'] == 0 ? "" : ' +<font color="green">' . $multisell['vit'] . "V</font>";
-						$multisellagi = $multisell['agi'] == 0 ? "" : ' +<font color="blue">' . $multisell['agi'] . "A</font>";
-						$multisellres = $multisell['res'] == 0 ? "" : ' +<font color="red">' . $multisell['res'] . "R</font>";
+						$multisellfor = ($multisell['for'] ?? null) == 0 ? "" : ' +<font color="gray">' . $multisell['for'] . "F</font>";
+						$multisellvit = ($multisell['vit'] ?? null) == 0 ? "" : ' +<font color="green">' . $multisell['vit'] . "V</font>";
+						$multisellagi = ($multisell['agi'] ?? null) == 0 ? "" : ' +<font color="blue">' . $multisell['agi'] . "A</font>";
+						$multisellres = ($multisell['res'] ?? null) == 0 ? "" : ' +<font color="red">' . $multisell['res'] . "R</font>";
 
 						echo "Você vendeu seu/sua <b>" . $multisell['name'] . " +" . $multisell['item_bonus'] . "</b>" . $multisellfor . "" . $multisellvit . "" . $multisellagi . "" . $multisellres . " por <b>" . $precodavenda . "</b> de ouro.<br/>";
 					}
@@ -232,14 +232,14 @@ switch ($_GET['act']) {
 			break;
 		} else {
 
-			if (!$_GET['id']) //No item ID
+			if (!($_GET['id'] ?? null)) //No item ID
 			{
 				header("Location: shop.php");
 				break;
 			}
 
 			//Select the item from the database
-			$query = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", [$player->id, $_GET['id']]);
+			$query = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", [$player->id, $_GET['id'] ?? null]);
 
 			//Either item doesn't exist, or item doesn't belong to user
 			if ($query->recordcount() == 0) {
@@ -251,13 +251,13 @@ switch ($_GET['act']) {
 			}
 
 			$sell = $query->fetchrow(); //Get item info
-			if ($sell['item_bonus'] > 10) {
+			if (($sell['item_bonus'] ?? null) > 10) {
 				$valordavenda = floor(($sell['price'] / 2) + (($sell['item_bonus'] * $sell['price']) / 5) + 3000000);
 			} else {
 				$valordavenda = floor(($sell['price'] / 2) + (($sell['item_bonus'] * $sell['price']) / 5));
 			}
 
-			if ($sell['item_id'] == 111 || $sell['item_id'] == 116) {
+			if (($sell['item_id'] ?? null) == 111 || ($sell['item_id'] ?? null) == 116) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Você não pode vender este item, caso contrário não poderá terminar sua missão.<br />\n";
 				echo '<a href="inventory.php">Voltar</a>.';
@@ -265,7 +265,7 @@ switch ($_GET['act']) {
 				break;
 			}
 
-			if ($sell['type'] == 'stone') {
+			if (($sell['type'] ?? null) == 'stone') {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Você não pode vender pedras.<br />\n";
 				echo '<a href="inventory.php">Voltar</a>.';
@@ -273,7 +273,7 @@ switch ($_GET['act']) {
 				break;
 			}
 
-			if ($sell['status'] == 'equipped') {
+			if (($sell['status'] ?? null) == 'equipped') {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Você não pode vender um item que está em uso.<br />\n";
 				echo '<a href="inventory.php">Voltar</a>.';
@@ -282,7 +282,7 @@ switch ($_GET['act']) {
 			}
 
 			//Check to make sure clicking Sell wasn't an accident
-			if (!$_POST['sure']) {
+			if (!($_POST['sure'] ?? null)) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Você tem certeza que quer vender o/a <b>" . $sell['name'] . "</b> por <b>" . $valordavenda . "</b> de ouro?<br /><br />\n";
 				echo '<form method="post" action="shop.php?act=sell&id=' . $sell['id'] . "\">\n";
@@ -293,11 +293,11 @@ switch ($_GET['act']) {
 			}
 
 			//Delete item from database, add gold to player's account
-			if ($sell['mark'] == 't') {
-				$query = $db->execute("delete from `market` where `market_id`=?", [$sell['id']]);
+			if (($sell['mark'] ?? null) == 't') {
+				$query = $db->execute("delete from `market` where `market_id`=?", [$sell['id'] ?? null]);
 			}
 
-			$query = $db->execute("delete from `items` where `id`=?", [$sell['id']]);
+			$query = $db->execute("delete from `items` where `id`=?", [$sell['id'] ?? null]);
 			$query = $db->execute("update `players` set `gold`=? where `id`=?", [$player->gold + $valordavenda, $player->id]);
 
 			$player = check_user($db); //Get updated user info
@@ -338,8 +338,8 @@ switch ($_GET['act']) {
 
 		echo "</select></th>";
 
-		$fromprice = isset($_GET['fromprice']) ? htmlspecialchars((string) $_GET['fromprice']) : '';
-		$toprice = isset($_GET['toprice']) ? htmlspecialchars((string) $_GET['toprice']) : '';
+		$fromprice = $_GET['fromprice'] ?? null ? htmlspecialchars((string) ($_GET['fromprice'] ?? null)) : '';
+		$toprice = $_GET['toprice'] ?? null ? htmlspecialchars((string) ($_GET['toprice'] ?? null)) : '';
 
 		echo sprintf('<th width="35%%">Preço de: <input type="text" name="fromprice" size="4" value="%s" /> á  <input type="text" name="toprice" size="5" value="%s" /></th>', $fromprice, $toprice);
 
@@ -347,7 +347,7 @@ switch ($_GET['act']) {
 		echo "</tr></table>";
 		echo "</form>";
 
-		if ($_GET['type'] == 'armor' || $_GET['type'] == 'boots' || $_GET['type'] == 'helmet' || $_GET['type'] == 'legs' || $_GET['type'] == 'shield' || $_GET['type'] == 'weapon' || $_GET['type'] == 'amulet') {
+		if (($_GET['type'] ?? null) == 'armor' || ($_GET['type'] ?? null) == 'boots' || ($_GET['type'] ?? null) == 'helmet' || ($_GET['type'] ?? null) == 'legs' || ($_GET['type'] ?? null) == 'shield' || ($_GET['type'] ?? null) == 'weapon' || ($_GET['type'] ?? null) == 'amulet') {
 			$query = "SELECT `id`, `name`, `description`, `type`, `price`, `effectiveness`, `img`, `needpromo`, `needlvl` FROM `blueprint_items` WHERE ";
 			$conditions = [];
 			$values = [];
@@ -410,11 +410,11 @@ switch ($_GET['act']) {
 				echo '</td><td width="75%">';
 				echo $item['description'] . "\n<br />";
 
-				if ($item['type'] == 'amulet') {
+				if (($item['type'] ?? null) == 'amulet') {
 					$type = "Vitalidade";
-				} elseif ($item['type'] == 'weapon') {
+				} elseif (($item['type'] ?? null) == 'weapon') {
 					$type = "Ataque";
-				} elseif ($item['type'] == 'boots') {
+				} elseif (($item['type'] ?? null) == 'boots') {
 					$type = "Agilidade";
 				} else {
 					$type = "Defesa";
@@ -432,15 +432,15 @@ switch ($_GET['act']) {
 				echo '<a href="shop.php?act=buy&id=' . $item['id'] . '">Comprar</a><br />';
 				echo "</td></tr>\n";
 
-				if ($item['needlvl'] > 1) {
-					if ($player->level < $item['needlvl']) {
+				if (($item['needlvl'] ?? null) > 1) {
+					if ($player->level < ($item['needlvl'] ?? null)) {
 						echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Você precisa ter nível " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
 					} else {
 						echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter nível " . $item['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
 					}
 				}
 
-				if ($item['needpromo'] == "t") {
+				if (($item['needpromo'] ?? null) == "t") {
 					if ($player->promoted != "f") {
 						echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter uma vocação superior para usar este item.</b></center></td></tr>\n";
 					} else {
@@ -457,7 +457,7 @@ switch ($_GET['act']) {
 			} elseif ($player->vip > time()) {
 				echo showAlert("<i>Você tem 10% de desconto nos items, pelo fato de ser um membro VIP.</i>");
 			}
-		} elseif ($_GET['type'] == 'shield' && $player->voc == 'archer') {
+		} elseif (($_GET['type'] ?? null) == 'shield' && $player->voc == 'archer') {
 			echo "<br/><p><i><center>Arqueiros não podem usar/comprar escudos.</center></i></p>";
 		} else {
 			echo "<br/><p><i><center>Selecione o tipo de item que você deseja procurar.</center></i></p>";

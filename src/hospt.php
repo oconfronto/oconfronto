@@ -16,7 +16,7 @@ include(__DIR__ . "/checkbattle.php");
 
 include(__DIR__ . "/checkwork.php");
 
-if ($_POST['submit']) {
+if ($_POST['submit'] ?? null) {
 
 	if ($player->level < 20) {
 		include(__DIR__ . "/templates/private_header.php");
@@ -169,9 +169,9 @@ if ($player->level < 36) {
 	$cost2 = floor($player->gold / 1.8);
 }
 
-if ($_GET['act']) {
+if ($_GET['act'] ?? null) {
 
-	if ($_GET['act'] == 'sell') {
+	if (($_GET['act'] ?? null) == 'sell') {
 		if ($player->level < 20) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Vender poções</b></legend>\n";
@@ -220,7 +220,7 @@ if ($_GET['act']) {
 		exit;
 	}
 
-	if ($_GET['act'] == 'heal') {
+	if (($_GET['act'] ?? null) == 'heal') {
 		if ($player->hp == $player->maxhp) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
@@ -266,8 +266,8 @@ if ($_GET['act']) {
 	}
 
 
-	if ($_GET['act'] == 'potion') {
-		if (!$_GET['pid']) {
+	if (($_GET['act'] ?? null) == 'potion') {
+		if (!($_GET['pid'] ?? null)) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Erro</b></legend>\n";
 			echo "<i>Um erro desconhecido ocorreu. Contate o administrador.<br/></i>\n";
@@ -277,7 +277,7 @@ if ($_GET['act']) {
 			exit;
 		}
 
-		$query = $db->execute("select * from `items` where `id`=? and `player_id`=?", [$_GET['pid'], $player->id]);
+		$query = $db->execute("select * from `items` where `id`=? and `player_id`=?", [$_GET['pid'] ?? null, $player->id]);
 		if ($query->recordcount() == 0) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -289,7 +289,7 @@ if ($_GET['act']) {
 		}
 
 		$potion = $query->fetchrow();
-		if ($potion['mark'] == 't') {
+		if (($potion['mark'] ?? null) == 't') {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Erro</b></legend>\n";
 			echo "<i>Você não pode usar um item que está a venda no mercado.<br/></i>\n";
@@ -299,7 +299,7 @@ if ($_GET['act']) {
 			exit;
 		}
 
-		if ($potion['item_id'] != 136 && $potion['item_id'] != 137 && $potion['item_id'] != 148 && $potion['item_id'] != 150) {
+		if (($potion['item_id'] ?? null) != 136 && ($potion['item_id'] ?? null) != 137 && ($potion['item_id'] ?? null) != 148 && ($potion['item_id'] ?? null) != 150) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Erro</b></legend>\n";
 			echo "<i>Este item não é uma poção.<br/></i>\n";
@@ -309,7 +309,7 @@ if ($_GET['act']) {
 			exit;
 		}
 
-		if ($potion['item_id'] == 136) {
+		if (($potion['item_id'] ?? null) == 136) {
 			if ($player->hp == $player->maxhp) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
@@ -336,7 +336,7 @@ if ($_GET['act']) {
 				$palavra = "toda";
 			}
 
-			$query = $db->execute("delete from `items` where `id`=?", [$potion['id']]);
+			$query = $db->execute("delete from `items` where `id`=?", [$potion['id'] ?? null]);
 			$player = check_user($db); //Get new stats
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Hospital</b></legend>\n";
@@ -347,7 +347,7 @@ if ($_GET['act']) {
 			exit;
 		}
 
-		if ($potion['item_id'] == 148) {
+		if (($potion['item_id'] ?? null) == 148) {
 			if ($player->hp == $player->maxhp) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "<fieldset style='padding:0px;border:1px solid #b9892f;'>";
@@ -379,7 +379,7 @@ if ($_GET['act']) {
 				$palavra = "toda";
 			}
 
-			$query = $db->execute("delete from `items` where `id`=?", [$potion['id']]);
+			$query = $db->execute("delete from `items` where `id`=?", [$potion['id'] ?? null]);
 			$player = check_user($db); //Get new stats
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Hospital</b></legend>\n";
@@ -390,7 +390,7 @@ if ($_GET['act']) {
 			exit;
 		}
 
-		if ($potion['item_id'] == 137) {
+		if (($potion['item_id'] ?? null) == 137) {
 			if ($player->energy == $player->maxenergy) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "<fieldset><legend><b>Hospital</b></legend>\n";
@@ -409,7 +409,7 @@ if ($_GET['act']) {
 				$palavra = "toda";
 			}
 
-			$query = $db->execute("delete from `items` where `id`=?", [$potion['id']]);
+			$query = $db->execute("delete from `items` where `id`=?", [$potion['id'] ?? null]);
 			$player = check_user($db); //Get new stats
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Hospital</b></legend>\n";
@@ -420,7 +420,7 @@ if ($_GET['act']) {
 			exit;
 		}
 
-		if ($potion['item_id'] == 150) {
+		if (($potion['item_id'] ?? null) == 150) {
 			if ($player->mana == $player->maxmana) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "<fieldset><legend><b>Hospital</b></legend>\n";
@@ -439,7 +439,7 @@ if ($_GET['act']) {
 				$palavra = "toda";
 			}
 
-			$query = $db->execute("delete from `items` where `id`=?", [$potion['id']]);
+			$query = $db->execute("delete from `items` where `id`=?", [$potion['id'] ?? null]);
 			$player = check_user($db); //Get new stats
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Hospital</b></legend>\n";

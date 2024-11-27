@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-if ($player->id == $luta['p_id']) {
+if ($player->id == ($luta['p_id'] ?? null)) {
     $magia = $luta['p_magia'];
     $emagia = $luta['e_magia'];
 } else {

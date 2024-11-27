@@ -36,19 +36,19 @@ if ($tutorial->recordcount() > 0) {
 
 function displayItemOptions(array $item, $action, $label): ?string
 {
-    if ($item['item_bonus'] == 0) {
+    if (($item['item_bonus'] ?? null) == 0) {
         $precol = ceil($item['price'] / 3.5);
-    } elseif ($item['item_bonus'] == 1) {
+    } elseif (($item['item_bonus'] ?? null) == 1) {
         $precol = ceil(($item['price'] / 3.5) * 1.3);
-    } elseif ($item['item_bonus'] == 2) {
+    } elseif (($item['item_bonus'] ?? null) == 2) {
         $precol = ceil(($item['price'] / 3.5) * 1.7);
-    } elseif ($item['item_bonus'] == 3) {
+    } elseif (($item['item_bonus'] ?? null) == 3) {
         $precol = ceil(($item['price'] / 3.5) * 2);
     } else {
         $precol = ceil(($item['price'] / 3.5) * ($item['item_bonus'] / 1.85));
     }
 
-    if ($item['item_bonus'] > 10) {
+    if (($item['item_bonus'] ?? null) > 10) {
         $valordavenda = floor(($item['price'] / 2) + (($item['item_bonus'] * $item['price']) / 5) + 3000000);
     } else {
         $valordavenda = floor(($item['price'] / 2) + (($item['item_bonus'] * $item['price']) / 5));
@@ -94,39 +94,39 @@ function displayItemMobile(array $item, $type, $player, int $bool): string
     $options[] = displayItemOptions($item, 'mature', 'Maturar');
 
     $type = "";
-    if ($item['type'] == 'amulet') {
+    if (($item['type'] ?? null) == 'amulet') {
         $type = "Vitalidade";
     }
 
-    if ($item['type'] == 'weapon') {
+    if (($item['type'] ?? null) == 'weapon') {
         $type = "Ataque";
     }
 
-    if ($item['type'] == 'armor') {
+    if (($item['type'] ?? null) == 'armor') {
         $type = "Defesa";
     }
 
-    if ($item['type'] == 'boots') {
+    if (($item['type'] ?? null) == 'boots') {
         $type = "Agilidade";
     }
 
-    if ($item['type'] == 'legs') {
+    if (($item['type'] ?? null) == 'legs') {
         $type = "Defesa";
     }
 
-    if ($item['type'] == 'helmet') {
+    if (($item['type'] ?? null) == 'helmet') {
         $type = "Defesa";
     }
 
-    if ($item['type'] == 'shield') {
+    if (($item['type'] ?? null) == 'shield') {
         $type = "Defesa";
     }
 
     $atributo = "";
-    if ($item['type'] != 'ring') {
+    if (($item['type'] ?? null) != 'ring') {
         $atributo =  $type . (': ' . $item['effectiveness']);
     } else {
-        switch ($item['item_id']) {
+        switch ($item['item_id'] ?? null) {
             case 163:
                 $item['for'] = 10;
                 $item['vit'] = 10;
@@ -185,28 +185,28 @@ function displayItemMobile(array $item, $type, $player, int $bool): string
     $bonus4 = "";
     $bonus5 = "";
 
-    if ($item['item_bonus'] > 0) {
+    if (($item['item_bonus'] ?? null) > 0) {
         $bonus1 = " (+" . $item['item_bonus'] . ")";
     }
 
-    if ($item['for'] > 0) {
+    if (($item['for'] ?? null) > 0) {
         $bonus2 = ' <font color="gray">+' . $item['for'] . "F</font>";
     }
 
-    if ($item['vit'] > 0) {
+    if (($item['vit'] ?? null) > 0) {
         $bonus3 = ' <font color="green">+' . $item['vit'] . "V</font>";
     }
 
-    if ($item['agi'] > 0) {
+    if (($item['agi'] ?? null) > 0) {
         $bonus4 = ' <font color="blue">+' . $item['agi'] . "A</font>";
     }
 
-    if ($item['res'] > 0) {
+    if (($item['res'] ?? null) > 0) {
         $bonus5 = ' <font color="red">+' . $item['res'] . "R</font>";
     }
 
     return '<tr class="row' . $bool . "\">
-                <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><img src=\"static/images/itens/{$item['img']}\" alt=\"{$item['name']}\"></td>
+                <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><img src=\"static/images/itens/{$item['img'] ?? null}\" alt=\"{$item['name'] ?? null}\"></td>
                 <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $atributo . "</td>
                 <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $item['name'] . " " . $bonus1 . "" . $bonus2 . "" . $bonus3 . "" . $bonus4 . "" . $bonus5 . "</td>
                 <td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $options[0] . "</td>
@@ -260,7 +260,7 @@ function displayItems($playerId, $status, $title): void
     }
 }
 
-if (isset($_GET['sell'])) {
+if ($_GET['sell'] ?? null) {
     // lógica de venda de itens
     $itemId = $_GET['sell'];
     // lógica de venda de itens
@@ -268,7 +268,7 @@ if (isset($_GET['sell'])) {
     exit; // Importante para parar a execução do script após o redirecionamento
 }
 
-if (isset($_GET['mature'])) {
+if ($_GET['mature'] ?? null) {
     // lógica de maturação de itens
     $itemId = $_GET['mature'];
     // lógica de maturação de itens
@@ -276,7 +276,7 @@ if (isset($_GET['mature'])) {
     exit;
 }
 
-if (isset($_GET['equip'])) {
+if ($_GET['equip'] ?? null) {
     // lógica de equipar itens    
     $itemId = $_GET['equip'];
     // lógica de equipar itens
@@ -284,7 +284,7 @@ if (isset($_GET['equip'])) {
     exit;
 }
 
-if (isset($_GET['unequip'])) {
+if ($_GET['unequip'] ?? null) {
     // lógica de desequipar itens
     $itemId = $_GET['unequip'];
     // lógica de desequipar itens

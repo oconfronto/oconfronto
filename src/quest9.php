@@ -35,7 +35,7 @@ if ($verificacao3->recordcount() < 1) {
 	exit;
 }
 
-switch ($_GET['act']) {
+switch ($_GET['act'] ?? null) {
 
 	case "question":
 		include(__DIR__ . "/templates/private_header.php");
@@ -81,7 +81,7 @@ switch ($_GET['act']) {
 		break;
 
 	case "noready":
-		if ($quest1['quest_status'] == 1 || $quest1['quest_status'] == 2) {
+		if (($quest1['quest_status'] ?? null) == 1 || ($quest1['quest_status'] ?? null) == 2) {
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [2, $player->id, 18]);
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
@@ -96,7 +96,7 @@ switch ($_GET['act']) {
 		break;
 
 	case "ready":
-		if ($quest1['quest_status'] == 1 || $quest1['quest_status'] == 2 || $quest1['quest_status'] == 3) {
+		if (($quest1['quest_status'] ?? null) == 1 || ($quest1['quest_status'] ?? null) == 2 || ($quest1['quest_status'] ?? null) == 3) {
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [3, $player->id, 18]);
 
 			header("Location: monster.php?act=attack&id=" . (49 * $player->id) . "");
@@ -133,7 +133,7 @@ if ($verificacao1->recordcount() == 0) {
 	exit;
 }
 
-if ($quest1['quest_status'] == 1) {
+if (($quest1['quest_status'] ?? null) == 1) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
 	echo "<i>Você chegou ao monte das almas, e ouve sons de uma criatura poderoza. Podem ser os gritos de Zanoth. Está pronto para enfrentá-lo?</i><br/><br>\n";
@@ -143,7 +143,7 @@ if ($quest1['quest_status'] == 1) {
 	exit;
 }
 
-if ($quest1['quest_status'] == 2) {
+if (($quest1['quest_status'] ?? null) == 2) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
 	echo "<i>Você está escondido no monte das almas, e continua ouvindo sons que parecem vir de Zanoth. Está pronto para enfrentá-lo?</i><br/><br>\n";
@@ -153,7 +153,7 @@ if ($quest1['quest_status'] == 2) {
 	exit;
 }
 
-if ($quest1['quest_status'] == 3) {
+if (($quest1['quest_status'] ?? null) == 3) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
 	echo "<i>Você ainda não matou Zanoth. Deseja enfrentá-lo?</i><br/><br>\n";
@@ -163,7 +163,7 @@ if ($quest1['quest_status'] == 3) {
 	exit;
 }
 
-if ($quest1['quest_status'] == 80) {
+if (($quest1['quest_status'] ?? null) == 80) {
 	$vesetemoeye = $db->execute("select * from `items` where `item_id`=160 and `player_id`=?", [$player->id]);
 	if ($vesetemoeye->recordcount() == 0) {
 		include(__DIR__ . "/templates/private_header.php");
@@ -200,7 +200,7 @@ if ($quest1['quest_status'] == 80) {
 	}
 }
 
-if ($quest1['quest_status'] == 90) {
+if (($quest1['quest_status'] ?? null) == 90) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
 	echo "<i>Você já terminou esta missão.</i><br><br>";

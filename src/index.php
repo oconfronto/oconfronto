@@ -5,8 +5,8 @@ declare(strict_types=1);
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Principal");
 
-if (isset($_SESSION['Login'])) {
-    $rematual = $db->GetOne("select `remember` from `accounts` where `id`=?", [$_SESSION['Login']['account_id']]);
+if ($_SESSION['Login'] ?? null) {
+    $rematual = $db->GetOne("select `remember` from `accounts` where `id`=?", [($_SESSION['Login'] ?? null)['account_id'] ?? null]);
     if ($rematual == 't') {
         header("Location: characters.php");
         exit;
@@ -18,18 +18,18 @@ $showerror = 0;
 $showcerto = 0;
 $errormsg = ''; // Initialize $errormsg
 
-if (isset($_POST['login'])) {
+if ($_POST['login'] ?? null) {
     $tentativas = $db->GetOne("select `tries` from `login_tries` where `ip`=?", [$ip]);
 
-    if (!$_POST['username'] && !$_POST['password']) {
+    if (!($_POST['username'] ?? null) && !($_POST['password'] ?? null)) {
         $errormsg = "Preencha todos os campos.";
         $showerror = 3;
         $error = 1;
-    } elseif (!$_POST['username']) {
+    } elseif (!($_POST['username'] ?? null)) {
         $errormsg = "Por favor digite sua conta.";
         $showerror = 1;
         $error = 1;
-    } elseif (!$_POST['password']) {
+    } elseif (!($_POST['password'] ?? null)) {
         $errormsg = "Por favor digite sua senha.";
         $showerror = 2;
         $error = 1;
@@ -38,18 +38,18 @@ if (isset($_POST['login'])) {
         $showerror = 3;
         $error = 1;
     } elseif ($error === 0) {
-        $query = $db->execute("select * from `accounts` where `conta`=? and `password`=?", [$_POST['username'], encodePassword($_POST['password'])]);
+        $query = $db->execute("select * from `accounts` where `conta`=? and `password`=?", [$_POST['username'] ?? null, encodePassword($_POST['password'])]);
         if ($query->recordcount() == 1) {
             $account = $query->fetchrow();
-            $db->execute("update `accounts` set `ip`=? where `id`=?", [$ip, $account['id']]);
+            $db->execute("update `accounts` set `ip`=? where `id`=?", [$ip, $account['id'] ?? null]);
 
-            $_SESSION['Login'] = ["account_id" => $account['id'], "account" => $account['conta'], "key" => encodeSession($account['password'])];
+            $_SESSION['Login'] = ["account_id" => $account['id'] ?? null, "account" => $account['conta'] ?? null, "key" => encodeSession($account['password'])];
             header("Location: characters.php");
             exit;
         }
 
         $restantes = ceil(10 - $tentativas);
-        $verificaConta = $db->execute("select `id` from `accounts` where `conta`=?", [$_POST['username']]);
+        $verificaConta = $db->execute("select `id` from `accounts` where `conta`=?", [$_POST['username'] ?? null]);
         if ($verificaConta->recordcount() == 0) {
             $errormsg = "Conta incorreta! (" . $restantes . " tentativas restantes).";
             $showerror = 1;
@@ -88,7 +88,7 @@ include(__DIR__ . "/templates/header.php");
         <tr>
             <?php
             $contaOn = "";
-            if (isset($_SESSION['Login']) && isset($_SESSION['Login']['account_id']) && $_SESSION['Login']['account_id'] > 0) {
+            if (($_SESSION['Login'] ?? null) && ($_SESSION['Login']['account_id'] ?? null) && (($_SESSION['Login'] ?? null)['account_id'] ?? null) > 0) {
                 $contaOn = $_SESSION['Login']['account'] ?? "";
             }
             ?>

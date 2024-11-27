@@ -20,7 +20,7 @@ if ($check->recordcount() == 0) {
     echo '<script type="text/javascript" src="static/js/chat.js"></script>';
 } else {
     $stattus = $check->fetchrow();
-    if ($stattus['pending_status'] != 'inv') {
+    if (($stattus['pending_status'] ?? null) != 'inv') {
         echo '<script type="text/javascript" src="static/js/chat.js"></script>';
     }
 }

@@ -7,12 +7,12 @@ define("PAGENAME", "Perfil");
 $player = check_user($db);
 
 //Check for user ID
-if (!$_GET['id']) {
+if (!($_GET['id'] ?? null)) {
 	header("Location: members.php");
 	exit;
 }
 
-$buscaprofile = $db->execute("select * from `players` where `reino`!='0' and `username`=?", [$_GET['id']]);
+$buscaprofile = $db->execute("select * from `players` where `reino`!='0' and `username`=?", [$_GET['id'] ?? null]);
 if ($buscaprofile->recordcount() == 0) {
 	header("Location: members.php?error=true");
 	exit;
@@ -23,7 +23,7 @@ $profile = $buscaprofile->fetchrow();
 include(__DIR__ . "/bbcode.php");
 include(__DIR__ . "/templates/private_header.php");
 
-if ($profile['ban'] > time()) {
+if (($profile['ban'] ?? null) > time()) {
 	echo "<fieldset>";
 	echo "<legend><b>" . $profile['username'] . "</b></legend>";
 	echo "O usuário " . $profile['username'] . " foi banido.<br/>";
@@ -39,12 +39,12 @@ if ($profile['ban'] > time()) {
 	echo "<br/><br/>";
 	echo "<fieldset>";
 	echo "<legend><b>Comentários da administração</b></legend>";
-	$admincomments = $db->execute("select `msg` from `bans` where `player_id`=?", [$profile['id']]);
+	$admincomments = $db->execute("select `msg` from `bans` where `player_id`=?", [$profile['id'] ?? null]);
 	if ($admincomments->recordcount() == 0) {
 		echo "Sem comentários da administração.";
 	} else {
 		$mensagemdoamn = $admincomments->fetchrow();
-		echo $mensagemdoamn['msg'];
+		echo $mensagemdoamn['msg'] ?? null;
 	}
 
 	echo "</fieldset>";
@@ -52,15 +52,15 @@ if ($profile['ban'] > time()) {
 	exit;
 }
 
-if ($profile['gm_rank'] > 9) {
+if (($profile['gm_rank'] ?? null) > 9) {
 	echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 	echo "<center><b>O usuário " . $profile['username'] . " é um dos administradores do jogo.</b></center>";
 	echo "</div>";
-} elseif ($profile['gm_rank'] > 2) {
+} elseif (($profile['gm_rank'] ?? null) > 2) {
 	echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 	echo "<center><b>Este usuário é um moderador do jogo.</b></center>";
 	echo "</div>";
-} elseif ($profile['serv'] != $player->serv) {
+} elseif (($profile['serv'] ?? null) != $player->serv) {
 	echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 	echo "<center><b>Este usuário pertence a outro servidor.</b></center>";
 	echo "</div>";
@@ -83,7 +83,7 @@ echo "<tr><th>";
 echo '<table width="120px" height="120px" align="center"><tr><td>';
 echo '<div style="position: relative;">';
 echo '<img src="' . $profile['avatar'] . '" width="120px" height="120px" style="position: absolute; top: 1; left: 1;" alt="' . $profile['username'] . '" border="1">';
-$checkranknosite = $db->execute("select `time` from `user_online` where `player_id`=?", [$profile['id']]);
+$checkranknosite = $db->execute("select `time` from `user_online` where `player_id`=?", [$profile['id'] ?? null]);
 if ($checkranknosite->recordcount() > 0) {
 	echo "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $profile['username']) . "')\"><img src=\"static/images/online2.png\" width=\"120px\" height=\"120px\" style=\"position: absolute; top: 1; left: 1;\" alt=\"" . $profile['username'] . '" border="1px"></a>';
 }
@@ -103,14 +103,14 @@ echo "<td><b>Nível:</b></td>";
 echo "<td>" . $profile['level'] . "</td>";
 echo "</tr>";
 
-if ($profile['gm_rank'] < 10) {
+if (($profile['gm_rank'] ?? null) < 10) {
 	echo "<tr><td><b>Ranking:</b></td>";
 	echo "<td>";
 	$sql = "select id from players where gm_rank<10 and serv=" . $profile['serv'] . " order by level desc, exp desc";
 	$dados = $db->execute($sql);
 	$i = 1;
 	while ($linha = $dados->fetchrow()) {
-		if ($linha['id'] == $profile['id']) {
+		if (($linha['id'] ?? null) == ($profile['id'] ?? null)) {
 			echo '' . $i;
 		}
 
@@ -124,23 +124,23 @@ if ($profile['gm_rank'] < 10) {
 echo "<tr><td><b>Vocação:</b></td>";
 echo "<td>";
 
-if ($profile['voc'] == 'archer' && $profile['promoted'] == 'f') {
+if (($profile['voc'] ?? null) == 'archer' && ($profile['promoted'] ?? null) == 'f') {
 	echo "Caçador";
-} elseif ($profile['voc'] == 'knight' && $profile['promoted'] == 'f') {
+} elseif (($profile['voc'] ?? null) == 'knight' && ($profile['promoted'] ?? null) == 'f') {
 	echo "Espadachim";
-} elseif ($profile['voc'] == 'mage' && $profile['promoted'] == 'f') {
+} elseif (($profile['voc'] ?? null) == 'mage' && ($profile['promoted'] ?? null) == 'f') {
 	echo "Bruxo";
-} elseif ($profile['voc'] == 'archer' && ($profile['promoted'] == 't' || $profile['promoted'] == 's' || $profile['promoted'] == 'r')) {
+} elseif (($profile['voc'] ?? null) == 'archer' && (($profile['promoted'] ?? null) == 't' || ($profile['promoted'] ?? null) == 's' || ($profile['promoted'] ?? null) == 'r')) {
 	echo "Arqueiro";
-} elseif ($profile['voc'] == 'knight' && ($profile['promoted'] == 't' || $profile['promoted'] == 's' || $profile['promoted'] == 'r')) {
+} elseif (($profile['voc'] ?? null) == 'knight' && (($profile['promoted'] ?? null) == 't' || ($profile['promoted'] ?? null) == 's' || ($profile['promoted'] ?? null) == 'r')) {
 	echo "Guerreiro";
-} elseif ($profile['voc'] == 'mage' && ($profile['promoted'] == 't' || $profile['promoted'] == 's' || $profile['promoted'] == 'r')) {
+} elseif (($profile['voc'] ?? null) == 'mage' && (($profile['promoted'] ?? null) == 't' || ($profile['promoted'] ?? null) == 's' || ($profile['promoted'] ?? null) == 'r')) {
 	echo "Mago";
-} elseif ($profile['voc'] == 'archer' && $profile['promoted'] == 'p') {
+} elseif (($profile['voc'] ?? null) == 'archer' && ($profile['promoted'] ?? null) == 'p') {
 	echo "Arqueiro Royal";
-} elseif ($profile['voc'] == 'knight' && $profile['promoted'] == 'p') {
+} elseif (($profile['voc'] ?? null) == 'knight' && ($profile['promoted'] ?? null) == 'p') {
 	echo "Cavaleiro";
-} elseif ($profile['voc'] == 'mage' && $profile['promoted'] == 'p') {
+} elseif (($profile['voc'] ?? null) == 'mage' && ($profile['promoted'] ?? null) == 'p') {
 	echo "Arquimago";
 }
 
@@ -149,11 +149,11 @@ echo "</td></tr>";
 echo "<tr><td><b>Reino:</b></td>";
 echo "<td>";
 
-if ($profile['reino'] == 1) {
+if (($profile['reino'] ?? null) == 1) {
 	echo "Cathal";
-} elseif ($profile['reino'] == 2) {
+} elseif (($profile['reino'] ?? null) == 2) {
 	echo "Eroda";
-} elseif ($profile['reino'] == 3) {
+} elseif (($profile['reino'] ?? null) == 3) {
 	echo "Turkic";
 } else {
 	echo "Nenhum";
@@ -164,10 +164,10 @@ echo "</td></tr>";
 echo "<tr><td><b>Clã:</b></td>";
 echo "<td>";
 
-if ($profile['guild'] == NULL || $profile['guild'] == '') {
+if (($profile['guild'] ?? null) == NULL || ($profile['guild'] ?? null) == '') {
 	echo "[Nenhum]";
 } else {
-	$profilenomecla = $db->GetOne("select `name` from `guilds` where `id`=?", [$profile['guild']]);
+	$profilenomecla = $db->GetOne("select `name` from `guilds` where `id`=?", [$profile['guild'] ?? null]);
 	echo '<b>[</b><a href="guild_profile.php?id=' . $profile['guild'] . '">' . $profilenomecla . "</a><b>]</b>";
 }
 
@@ -175,7 +175,7 @@ echo "</td></tr>";
 
 echo "<tr><td><b>VIP:</b></td>";
 echo "<td>";
-if ($profile['vip'] > time()) {
+if (($profile['vip'] ?? null) > time()) {
 	echo "Sim";
 } else {
 	echo "Não";
@@ -186,7 +186,7 @@ echo "</tr>";
 
 echo "<tr><td><b>Status:</b></td>";
 echo '<td><font color="';
-if ($profile['hp'] == 0) {
+if (($profile['hp'] ?? null) == 0) {
 	echo 'red">Morto';
 } else {
 	echo 'green">Vivo';
@@ -248,17 +248,17 @@ echo "</tr>";
 echo "<tr>";
 echo "<td><b>Tempo Online:</b></td>";
 
-if ($profile['uptime'] < 60) {
+if (($profile['uptime'] ?? null) < 60) {
 	$uptime = ceil($profile['uptime']);
 	$tempo = "" . $uptime . " segundo(s)";
-} elseif ($profile['uptime'] < 3600) {
+} elseif (($profile['uptime'] ?? null) < 3600) {
 	$uptime = ceil($profile['uptime'] / 60);
 	$tempo = "" . $uptime . " minuto(s)";
-} elseif ($profile['uptime'] < 86400) {
+} elseif (($profile['uptime'] ?? null) < 86400) {
 	$uptime = floor($profile['uptime'] / 3600);
 	$extra = ceil(($profile['uptime'] - ($uptime * 3600)) / 60);
 	$tempo = "" . $uptime . " hora(s) e " . $extra . " minuto(s)";
-} elseif ($profile['uptime'] > 86400) {
+} elseif (($profile['uptime'] ?? null) > 86400) {
 	$uptime = floor($profile['uptime'] / 86400);
 	$extra = ceil(($profile['uptime'] - ($uptime * 86400)) / 3600);
 	$tempo = "" . $uptime . " dia(s) e " . $extra . " hora(s)";
@@ -273,7 +273,7 @@ echo "<br /><br />";
 
 echo "<center>";
 if ($player->gm_rank < 50) {
-	if ($profile['id'] != $player->id) {
+	if (($profile['id'] ?? null) != $player->id) {
 		echo '<a href="battle.php?act=attack&username=' . $profile['username'] . '">Lutar contra ' . $profile['username'] . '</a> | <a href="friendlist.php?add=' . $profile['username'] . '">+ Amigo</a>';
 	}
 } else {
@@ -288,18 +288,18 @@ echo '<div id="tab2" class="tab_content">';
 ?>
 <table width="95%">
 	<?php
-	$procuramengperfil = $db->execute("select `perfil` from `profile` where `player_id`=?", [$profile['id']]);
+	$procuramengperfil = $db->execute("select `perfil` from `profile` where `player_id`=?", [$profile['id'] ?? null]);
 	if ($procuramengperfil->recordcount() == 0) {
 		$mencomentario = "Sem comentários.";
 	} else {
 		$comentdocara = $procuramengperfil->fetchrow();
-		$mencomentario = stripslashes((string) $comentdocara['perfil']);
+		$mencomentario = stripslashes((string) ($comentdocara['perfil'] ?? null));
 	}
 	?>
 	<tr>
 		<td width="15%"><b>Nome real:</b></td>
 		<td><?php
-			$nname = $db->GetOne("select `name` from `accounts` where `id`=?", [$profile['acc_id']]);
+			$nname = $db->GetOne("select `name` from `accounts` where `id`=?", [$profile['acc_id'] ?? null]);
 
 			if ($nname != NULL) {
 				echo $nname;
@@ -312,7 +312,7 @@ echo '<div id="tab2" class="tab_content">';
 	<tr>
 		<td width="15%"><b>Sexo:</b></td>
 		<td><?php
-			$sex = $db->GetOne("select `sex` from `accounts` where `id`=?", [$profile['acc_id']]);
+			$sex = $db->GetOne("select `sex` from `accounts` where `id`=?", [$profile['acc_id'] ?? null]);
 
 			if ($sex == 'm') {
 				echo "Masculino";
@@ -328,9 +328,9 @@ echo '<div id="tab2" class="tab_content">';
 		<td width="15%"><b>Email:</b></td>
 		<td><?php
 
-			$checkshowmmaiele = $db->execute("select * from `other` where `value`=? and `player_id`=?", ["showmail", $profile['acc_id']]);
+			$checkshowmmaiele = $db->execute("select * from `other` where `value`=? and `player_id`=?", ["showmail", $profile['acc_id'] ?? null]);
 			if ($checkshowmmaiele->recordcount() > 0) {
-				$profilemail = $db->GetOne("select `email` from `accounts` where `id`=?", [$profile['acc_id']]);
+				$profilemail = $db->GetOne("select `email` from `accounts` where `id`=?", [$profile['acc_id'] ?? null]);
 				echo $profilemail;
 			} else {
 				echo "Email Oculto";
@@ -348,13 +348,13 @@ echo '<div id="tab2" class="tab_content">';
 echo "</div>";
 echo '<div id="tab3" class="tab_content">';
 
-$medalha = $db->execute("select * from `medalhas` where `player_id`=? order by `medalha` asc, `type` desc", [$profile['id']]);
+$medalha = $db->execute("select * from `medalhas` where `player_id`=? order by `medalha` asc, `type` desc", [$profile['id'] ?? null]);
 if ($medalha->recordcount() == 0) {
 	echo "<br/><center><b>" . $profile['username'] . " não tem medalhas.</b></center><br/>";
 } else {
-	$bronze = $db->execute("select * from `medalhas` where `player_id`=? and `type`='1'", [$profile['id']]);
-	$prata = $db->execute("select * from `medalhas` where `player_id`=? and `type`='2'", [$profile['id']]);
-	$ouro = $db->execute("select * from `medalhas` where `player_id`=? and `type`='3'", [$profile['id']]);
+	$bronze = $db->execute("select * from `medalhas` where `player_id`=? and `type`='1'", [$profile['id'] ?? null]);
+	$prata = $db->execute("select * from `medalhas` where `player_id`=? and `type`='2'", [$profile['id'] ?? null]);
+	$ouro = $db->execute("select * from `medalhas` where `player_id`=? and `type`='3'", [$profile['id'] ?? null]);
 
 	echo '<p><table width="100%"><tr>';
 	echo '<th width="33%" align="right"><img src="static/images/itens/prata.png"> X ' . $prata->recordcount() . "</th>";
@@ -366,9 +366,9 @@ if ($medalha->recordcount() == 0) {
 
 	while ($meda = $medalha->fetchrow()) {
 		echo "<tr><td>";
-		if ($meda['type'] == '1') {
+		if (($meda['type'] ?? null) == '1') {
 			echo '<img src="static/images/itens/bronze.png">';
-		} elseif ($meda['type'] == '2') {
+		} elseif (($meda['type'] ?? null) == '2') {
 			echo '<img src="static/images/itens/prata.png">';
 		} else {
 			echo '<img src="static/images/itens/medalha.gif">';
@@ -383,7 +383,7 @@ if ($medalha->recordcount() == 0) {
 echo "</div>";
 echo '<div id="tab4" class="tab_content">';
 
-$querwwq = $db->execute("select `fname` from `friends` where `uid`=? order by `fname` desc", [$profile['id']]);
+$querwwq = $db->execute("select `fname` from `friends` where `uid`=? order by `fname` desc", [$profile['id'] ?? null]);
 if ($querwwq->recordcount() == 0) {
 	echo "<br/><center><b>" . $profile['username'] . " não tem amigos.</b></center><br/>";
 } else {

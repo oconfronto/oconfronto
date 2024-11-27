@@ -10,18 +10,18 @@ $msg = null;
 $query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);
 $reino = $query->fetchrow();
 
-if ($reino['imperador'] == $player->id) {
-	if ($_POST['submit'] && ($_POST['time'] == 15 || $_POST['time'] == 30 || $_POST['time'] == 60)) {
+if (($reino['imperador'] ?? null) == $player->id) {
+	if (($_POST['submit'] ?? null) && (($_POST['time'] ?? null) == 15 || ($_POST['time'] ?? null) == 30 || ($_POST['time'] ?? null) == 60)) {
 		$count = $db->execute("select `id` from `players` where `reino`=?", [$player->reino]);
-		if ($_POST['time'] == 15) {
+		if (($_POST['time'] ?? null) == 15) {
 			$preco = ceil(100 * $count->recordcount());
-		} elseif ($_POST['time'] == 30) {
+		} elseif (($_POST['time'] ?? null) == 30) {
 			$preco = ceil(145 * $count->recordcount());
-		} elseif ($_POST['time'] == 60) {
+		} elseif (($_POST['time'] ?? null) == 60) {
 			$preco = ceil(175 * $count->recordcount());
 		}
 
-		if ($preco > $reino['ouro']) {
+		if ($preco > ($reino['ouro'] ?? null)) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "Seu reino não possui ouro suficiente para esta mudança. <a href=\"reino.php\">Voltar</a>.";
 			include(__DIR__ . "/templates/private_footer.php");
@@ -80,7 +80,7 @@ if ($reino['imperador'] == $player->id) {
 	echo "<font size=\"1px\">Ao abrir os portões <b>novos monstros</b> ficarão disponíveis para combate.<br/>Estes monstros carregam <b>mais ouro e experiência</b> que o usual.</font>";
 
 	echo "<p>";
-	if ($reino['gates'] > time()) {
+	if (($reino['gates'] ?? null) > time()) {
 		echo "<b>Os portões do reino estão abertos!</b>";
 	} elseif (($reino['gates'] + 255600) < time()) {
 		echo '<form method="POST" action="reino_gates.php">';

@@ -36,23 +36,23 @@ if ($setting->event_convidados = true) {
 		$query3 = $db->execute(sprintf('select * from `blueprint_items` where `id` = %s ', $type_id));
 		while ($row2 = $query3->fetchrow()) {
 
-			if ($row2['type'] == "shield") {
+			if (($row2['type'] ?? null) == "shield") {
 				$itemtd = "Defesa";
 			}
 
-			if ($row2['type'] == "helmet") {
+			if (($row2['type'] ?? null) == "helmet") {
 				$itemtd = "Defesa";
 			}
 
-			if ($row2['type'] == "legs") {
+			if (($row2['type'] ?? null) == "legs") {
 				$itemtd = "Defesa";
 			}
 
-			if ($row2['type'] == "boots") {
+			if (($row2['type'] ?? null) == "boots") {
 				$itemtd = "Defesa";
 			}
 
-			if ($row2['type'] == "weapon") {
+			if (($row2['type'] ?? null) == "weapon") {
 				$itemtd = "Ataque";
 			}
 
@@ -61,13 +61,13 @@ if ($setting->event_convidados = true) {
 			<p>
 			<table id="table" align="left">
 				<?php
-				if ($row['bonus'] > 2 && $row['bonus'] < 6) {
+				if (($row['bonus'] ?? null) > 2 && ($row['bonus'] ?? null) < 6) {
 					$colorbg = "itembg2";
-				} elseif ($row['bonus'] > 5 && $row['bonus'] < 9) {
+				} elseif (($row['bonus'] ?? null) > 5 && ($row['bonus'] ?? null) < 9) {
 					$colorbg = "itembg3";
-				} elseif ($row['bonus'] == 9) {
+				} elseif (($row['bonus'] ?? null) == 9) {
 					$colorbg = "itembg4";
-				} elseif ($row['bonus'] > 9) {
+				} elseif (($row['bonus'] ?? null) > 9) {
 					$colorbg = "itembg5";
 				} else {
 					$colorbg = "itembg1";
@@ -78,7 +78,7 @@ if ($setting->event_convidados = true) {
 													echo '' . $row['bonus'] . ''; ?>] body=[<table width=100%>
 	
 	<td width=65%><font size=1px><?php echo '' . $itemtd . ': ' . $row2['effectiveness'] . ''; ?>
-	<br/><b>Convidados: <?php echo $row['qt']; ?></b><br/><b>Gold Bônus: <?php echo $row['gold']; ?></b>
+	<br/><b>Convidados: <?php echo $row['qt'] ?? null; ?></b><br/><b>Gold Bônus: <?php echo $row['gold'] ?? null; ?></b>
 	</font></td>
 
 	<td width=35%><font size=1px>+<font color=gray><?php echo random_int(1, 5); ?> for</font></font>
@@ -92,7 +92,7 @@ if ($setting->event_convidados = true) {
 		
 	</td>
 	</table>]">
-						<img src="static/images/itens/<?php echo $row2['img']; ?>" border="0">
+						<img src="static/images/itens/<?php echo $row2['img'] ?? null; ?>" border="0">
 					</div>
 					<p>
 

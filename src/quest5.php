@@ -35,7 +35,7 @@ if ($player->level > 155) {
 }
 
 
-switch ($_GET['act']) {
+switch ($_GET['act'] ?? null) {
 
 	case "who":
 		include(__DIR__ . "/templates/private_header.php");
@@ -145,7 +145,7 @@ if ($verificacao1->recordcount() == 0 && $verificac2->recordcount() == 0) {
 }
 
 
-if ($quest1['quest_status'] == 1) {
+if (($quest1['quest_status'] ?? null) == 1) {
 	$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=8", [$player->monsterkilled + $player->groupmonsterkilled + 200, $player->id]);
 	$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=9", [$player->kills + 30, $player->id]);
 	include(__DIR__ . "/templates/private_header.php");
@@ -156,7 +156,7 @@ if ($quest1['quest_status'] == 1) {
 	include(__DIR__ . "/templates/private_footer.php");
 }
 
-if ($quest1['quest_status'] > 170) {
+if (($quest1['quest_status'] ?? null) > 170) {
 
 	$remaining = ($quest1['quest_status'] - $player->monsterkilled - $player->groupmonsterkilled);
 	$remaining2 = ($quest2['quest_status'] - $player->kills);
@@ -190,7 +190,7 @@ if ($quest1['quest_status'] > 170) {
 	exit;
 }
 
-if ($quest2['quest_status'] == 2) {
+if (($quest2['quest_status'] ?? null) == 2) {
 
 	$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [maxMana(($player->level + 2), $player->extramana), maxMana(($player->level + 2), $player->extramana), $player->id]);
 	$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", [maxEnergy(($player->level + 2), $player->vip), $player->id]);
@@ -207,7 +207,7 @@ if ($quest2['quest_status'] == 2) {
 	exit;
 }
 
-if ($quest2['quest_status'] == 90) {
+if (($quest2['quest_status'] ?? null) == 90) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Erro</b></legend>\n";
 	echo "<i>Você já fez esta missão.</i><br><br>";

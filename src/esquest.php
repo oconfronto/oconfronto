@@ -9,9 +9,9 @@ $player = check_user($db);
 $quest = $db->execute("select * from `bixos` where `player_id`=? and `quest`='t'", [$player->id]);
 $quest = $quest->fetchrow();
 
-switch ($_GET['act']) {
+switch ($_GET['act'] ?? null) {
 	case "accept":
-		if ($quest['hp'] == 1) {
+		if (($quest['hp'] ?? null) == 1) {
 			$db->execute("delete from `bixos` where `player_id`=?", [$player->id]);
 			$db->execute("update `players` set `lutando`=0 where `id`=?", [$player->id]);
 
@@ -34,7 +34,7 @@ switch ($_GET['act']) {
 				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
-		} elseif ($quest['hp'] == 2) {
+		} elseif (($quest['hp'] ?? null) == 2) {
 			$db->execute("delete from `bixos` where `player_id`=?", [$player->id]);
 			$db->execute("update `players` set `lutando`=0 where `id`=?", [$player->id]);
 
@@ -74,7 +74,7 @@ switch ($_GET['act']) {
 		break;
 }
 
-if ($quest['hp'] == 1) {
+if (($quest['hp'] ?? null) == 1) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
 	echo "<i>Enquanto você caçava vê um jovem guerreiro sendo atacado por lobos. O que você deseja fazer?</i><br/><br>\n";
@@ -86,7 +86,7 @@ if ($quest['hp'] == 1) {
 ?>
 <?php
 
-if ($quest['hp'] == 2) {
+if (($quest['hp'] ?? null) == 2) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
 	echo "<i>Ao caminho de sua caça você encontra um homem a beira da morte. Ele está lhe oferecendo 7500 moedas de ouro por uma simples poção de vida. O que você deseja fazer?</i><br/><br>\n";

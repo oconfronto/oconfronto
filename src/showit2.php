@@ -11,13 +11,13 @@ if ($showitenx->recordcount() == 0) {
 } else {
 	$showeditexs = $showitenx->fetchrow();
 
-	if ($showeditexs['item_bonus'] > 2 && $showeditexs['item_bonus'] < 6) {
+	if (($showeditexs['item_bonus'] ?? null) > 2 && ($showeditexs['item_bonus'] ?? null) < 6) {
 		$colorbg = "itembg2";
-	} elseif ($showeditexs['item_bonus'] > 5 && $showeditexs['item_bonus'] < 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) > 5 && ($showeditexs['item_bonus'] ?? null) < 9) {
 		$colorbg = "itembg3";
-	} elseif ($showeditexs['item_bonus'] == 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) == 9) {
 		$colorbg = "itembg4";
-	} elseif ($showeditexs['item_bonus'] > 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) > 9) {
 		$colorbg = "itembg5";
 	} else {
 		$colorbg = "itembg1";
@@ -25,28 +25,28 @@ if ($showitenx->recordcount() == 0) {
 
 	echo '<td class="mark amulet ' . $colorbg . '">';
 
-	if ($showeditexs['for'] == 0) {
+	if (($showeditexs['for'] ?? null) == 0) {
 		$showitfor = "";
 		$showitfor2 = "";
 	} else {
 		$showitfor2 = "+<font color=gray>" . $showeditexs['for'] . " For</font><br/>";
 	}
 
-	if ($showeditexs['vit'] == 0) {
+	if (($showeditexs['vit'] ?? null) == 0) {
 		$showitvit = "";
 		$showitvit2 = "";
 	} else {
 		$showitvit2 = "+<font color=green>" . $showeditexs['vit'] . " Vit</font><br/>";
 	}
 
-	if ($showeditexs['agi'] == 0) {
+	if (($showeditexs['agi'] ?? null) == 0) {
 		$showitagi = "";
 		$showitagi2 = "";
 	} else {
 		$showitagi2 = "+<font color=blue>" . $showeditexs['agi'] . " Agi</font><br/>";
 	}
 
-	if ($showeditexs['res'] == 0) {
+	if (($showeditexs['res'] ?? null) == 0) {
 		$showitres = "";
 		$showitres2 = "";
 	} else {
@@ -70,13 +70,13 @@ if ($showitenx->recordcount() == 0) {
 } else {
 	$showeditexs = $showitenx->fetchrow();
 
-	if ($showeditexs['item_bonus'] > 2 && $showeditexs['item_bonus'] < 6) {
+	if (($showeditexs['item_bonus'] ?? null) > 2 && ($showeditexs['item_bonus'] ?? null) < 6) {
 		$colorbg = "itembg2";
-	} elseif ($showeditexs['item_bonus'] > 5 && $showeditexs['item_bonus'] < 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) > 5 && ($showeditexs['item_bonus'] ?? null) < 9) {
 		$colorbg = "itembg3";
-	} elseif ($showeditexs['item_bonus'] == 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) == 9) {
 		$colorbg = "itembg4";
-	} elseif ($showeditexs['item_bonus'] > 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) > 9) {
 		$colorbg = "itembg5";
 	} else {
 		$colorbg = "itembg1";
@@ -84,28 +84,28 @@ if ($showitenx->recordcount() == 0) {
 
 	echo '<td class="mark helmet ' . $colorbg . '">';
 
-	if ($showeditexs['for'] == 0) {
+	if (($showeditexs['for'] ?? null) == 0) {
 		$showitfor = "";
 		$showitfor2 = "";
 	} else {
 		$showitfor2 = "+<font color=gray>" . $showeditexs['for'] . " For</font><br/>";
 	}
 
-	if ($showeditexs['vit'] == 0) {
+	if (($showeditexs['vit'] ?? null) == 0) {
 		$showitvit = "";
 		$showitvit2 = "";
 	} else {
 		$showitvit2 = "+<font color=green>" . $showeditexs['vit'] . " Vit</font><br/>";
 	}
 
-	if ($showeditexs['agi'] == 0) {
+	if (($showeditexs['agi'] ?? null) == 0) {
 		$showitagi = "";
 		$showitagi2 = "";
 	} else {
 		$showitagi2 = "+<font color=blue>" . $showeditexs['agi'] . " Agi</font><br/>";
 	}
 
-	if ($showeditexs['res'] == 0) {
+	if (($showeditexs['res'] ?? null) == 0) {
 		$showitres = "";
 		$showitres2 = "";
 	} else {
@@ -138,13 +138,13 @@ if ($showitenx->recordcount() == 0) {
 } else {
 	$showeditexs = $showitenx->fetchrow();
 
-	if ($showeditexs['item_bonus'] > 2 && $showeditexs['item_bonus'] < 6) {
+	if (($showeditexs['item_bonus'] ?? null) > 2 && ($showeditexs['item_bonus'] ?? null) < 6) {
 		$colorbg = "itembg2";
-	} elseif ($showeditexs['item_bonus'] > 5 && $showeditexs['item_bonus'] < 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) > 5 && ($showeditexs['item_bonus'] ?? null) < 9) {
 		$colorbg = "itembg3";
-	} elseif ($showeditexs['item_bonus'] == 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) == 9) {
 		$colorbg = "itembg4";
-	} elseif ($showeditexs['item_bonus'] > 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) > 9) {
 		$colorbg = "itembg5";
 	} else {
 		$colorbg = "itembg1";
@@ -152,28 +152,28 @@ if ($showitenx->recordcount() == 0) {
 
 	echo '<td class="mark weapon ' . $colorbg . '">';
 
-	if ($showeditexs['for'] == 0) {
+	if (($showeditexs['for'] ?? null) == 0) {
 		$showitfor = "";
 		$showitfor2 = "";
 	} else {
 		$showitfor2 = "+<font color=gray>" . $showeditexs['for'] . " For</font><br/>";
 	}
 
-	if ($showeditexs['vit'] == 0) {
+	if (($showeditexs['vit'] ?? null) == 0) {
 		$showitvit = "";
 		$showitvit2 = "";
 	} else {
 		$showitvit2 = "+<font color=green>" . $showeditexs['vit'] . " Vit</font><br/>";
 	}
 
-	if ($showeditexs['agi'] == 0) {
+	if (($showeditexs['agi'] ?? null) == 0) {
 		$showitagi = "";
 		$showitagi2 = "";
 	} else {
 		$showitagi2 = "+<font color=blue>" . $showeditexs['agi'] . " Agi</font><br/>";
 	}
 
-	if ($showeditexs['res'] == 0) {
+	if (($showeditexs['res'] ?? null) == 0) {
 		$showitres = "";
 		$showitres2 = "";
 	} else {
@@ -197,13 +197,13 @@ if ($showitenx->recordcount() == 0) {
 } else {
 	$showeditexs = $showitenx->fetchrow();
 
-	if ($showeditexs['item_bonus'] > 2 && $showeditexs['item_bonus'] < 6) {
+	if (($showeditexs['item_bonus'] ?? null) > 2 && ($showeditexs['item_bonus'] ?? null) < 6) {
 		$colorbg = "itembg2";
-	} elseif ($showeditexs['item_bonus'] > 5 && $showeditexs['item_bonus'] < 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) > 5 && ($showeditexs['item_bonus'] ?? null) < 9) {
 		$colorbg = "itembg3";
-	} elseif ($showeditexs['item_bonus'] == 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) == 9) {
 		$colorbg = "itembg4";
-	} elseif ($showeditexs['item_bonus'] > 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) > 9) {
 		$colorbg = "itembg5";
 	} else {
 		$colorbg = "itembg1";
@@ -211,28 +211,28 @@ if ($showitenx->recordcount() == 0) {
 
 	echo '<td class="mark armor ' . $colorbg . '">';
 
-	if ($showeditexs['for'] == 0) {
+	if (($showeditexs['for'] ?? null) == 0) {
 		$showitfor = "";
 		$showitfor2 = "";
 	} else {
 		$showitfor2 = "+<font color=gray>" . $showeditexs['for'] . " For</font><br/>";
 	}
 
-	if ($showeditexs['vit'] == 0) {
+	if (($showeditexs['vit'] ?? null) == 0) {
 		$showitvit = "";
 		$showitvit2 = "";
 	} else {
 		$showitvit2 = "+<font color=green>" . $showeditexs['vit'] . " Vit</font><br/>";
 	}
 
-	if ($showeditexs['agi'] == 0) {
+	if (($showeditexs['agi'] ?? null) == 0) {
 		$showitagi = "";
 		$showitagi2 = "";
 	} else {
 		$showitagi2 = "+<font color=blue>" . $showeditexs['agi'] . " Agi</font><br/>";
 	}
 
-	if ($showeditexs['res'] == 0) {
+	if (($showeditexs['res'] ?? null) == 0) {
 		$showitres = "";
 		$showitres2 = "";
 	} else {
@@ -256,13 +256,13 @@ if ($showitenx->recordcount() == 0) {
 } else {
 	$showeditexs = $showitenx->fetchrow();
 
-	if ($showeditexs['item_bonus'] > 2 && $showeditexs['item_bonus'] < 6) {
+	if (($showeditexs['item_bonus'] ?? null) > 2 && ($showeditexs['item_bonus'] ?? null) < 6) {
 		$colorbg = "itembg2";
-	} elseif ($showeditexs['item_bonus'] > 5 && $showeditexs['item_bonus'] < 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) > 5 && ($showeditexs['item_bonus'] ?? null) < 9) {
 		$colorbg = "itembg3";
-	} elseif ($showeditexs['item_bonus'] == 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) == 9) {
 		$colorbg = "itembg4";
-	} elseif ($showeditexs['item_bonus'] > 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) > 9) {
 		$colorbg = "itembg5";
 	} else {
 		$colorbg = "itembg1";
@@ -270,28 +270,28 @@ if ($showitenx->recordcount() == 0) {
 
 	echo '<td class="mark shield ' . $colorbg . '">';
 
-	if ($showeditexs['for'] == 0) {
+	if (($showeditexs['for'] ?? null) == 0) {
 		$showitfor = "";
 		$showitfor2 = "";
 	} else {
 		$showitfor2 = "+<font color=gray>" . $showeditexs['for'] . " For</font><br/>";
 	}
 
-	if ($showeditexs['vit'] == 0) {
+	if (($showeditexs['vit'] ?? null) == 0) {
 		$showitvit = "";
 		$showitvit2 = "";
 	} else {
 		$showitvit2 = "+<font color=green>" . $showeditexs['vit'] . " Vit</font><br/>";
 	}
 
-	if ($showeditexs['agi'] == 0) {
+	if (($showeditexs['agi'] ?? null) == 0) {
 		$showitagi = "";
 		$showitagi2 = "";
 	} else {
 		$showitagi2 = "+<font color=blue>" . $showeditexs['agi'] . " Agi</font><br/>";
 	}
 
-	if ($showeditexs['res'] == 0) {
+	if (($showeditexs['res'] ?? null) == 0) {
 		$showitres = "";
 		$showitres2 = "";
 	} else {
@@ -320,28 +320,28 @@ if ($showitenx->recordcount() == 0) {
 
 	echo '<td class="mark ring itembg1">';
 
-	if ($showeditexs['for'] == 0) {
+	if (($showeditexs['for'] ?? null) == 0) {
 		$showitfor = "";
 		$showitfor2 = "";
 	} else {
 		$showitfor2 = "+<font color=gray>" . $showeditexs['for'] . " For</font><br/>";
 	}
 
-	if ($showeditexs['vit'] == 0) {
+	if (($showeditexs['vit'] ?? null) == 0) {
 		$showitvit = "";
 		$showitvit2 = "";
 	} else {
 		$showitvit2 = "+<font color=green>" . $showeditexs['vit'] . " Vit</font><br/>";
 	}
 
-	if ($showeditexs['agi'] == 0) {
+	if (($showeditexs['agi'] ?? null) == 0) {
 		$showitagi = "";
 		$showitagi2 = "";
 	} else {
 		$showitagi2 = "+<font color=blue>" . $showeditexs['agi'] . " Agi</font><br/>";
 	}
 
-	if ($showeditexs['res'] == 0) {
+	if (($showeditexs['res'] ?? null) == 0) {
 		$showitres = "";
 		$showitres2 = "";
 	} else {
@@ -363,13 +363,13 @@ if ($showitenx->recordcount() == 0) {
 } else {
 	$showeditexs = $showitenx->fetchrow();
 
-	if ($showeditexs['item_bonus'] > 2 && $showeditexs['item_bonus'] < 6) {
+	if (($showeditexs['item_bonus'] ?? null) > 2 && ($showeditexs['item_bonus'] ?? null) < 6) {
 		$colorbg = "itembg2";
-	} elseif ($showeditexs['item_bonus'] > 5 && $showeditexs['item_bonus'] < 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) > 5 && ($showeditexs['item_bonus'] ?? null) < 9) {
 		$colorbg = "itembg3";
-	} elseif ($showeditexs['item_bonus'] == 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) == 9) {
 		$colorbg = "itembg4";
-	} elseif ($showeditexs['item_bonus'] > 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) > 9) {
 		$colorbg = "itembg5";
 	} else {
 		$colorbg = "itembg1";
@@ -377,28 +377,28 @@ if ($showitenx->recordcount() == 0) {
 
 	echo '<td class="mark legs ' . $colorbg . '">';
 
-	if ($showeditexs['for'] == 0) {
+	if (($showeditexs['for'] ?? null) == 0) {
 		$showitfor = "";
 		$showitfor2 = "";
 	} else {
 		$showitfor2 = "+<font color=gray>" . $showeditexs['for'] . " For</font><br/>";
 	}
 
-	if ($showeditexs['vit'] == 0) {
+	if (($showeditexs['vit'] ?? null) == 0) {
 		$showitvit = "";
 		$showitvit2 = "";
 	} else {
 		$showitvit2 = "+<font color=green>" . $showeditexs['vit'] . " Vit</font><br/>";
 	}
 
-	if ($showeditexs['agi'] == 0) {
+	if (($showeditexs['agi'] ?? null) == 0) {
 		$showitagi = "";
 		$showitagi2 = "";
 	} else {
 		$showitagi2 = "+<font color=blue>" . $showeditexs['agi'] . " Agi</font><br/>";
 	}
 
-	if ($showeditexs['res'] == 0) {
+	if (($showeditexs['res'] ?? null) == 0) {
 		$showitres = "";
 		$showitres2 = "";
 	} else {
@@ -422,13 +422,13 @@ if ($showitenx->recordcount() == 0) {
 } else {
 	$showeditexs = $showitenx->fetchrow();
 
-	if ($showeditexs['item_bonus'] > 2 && $showeditexs['item_bonus'] < 6) {
+	if (($showeditexs['item_bonus'] ?? null) > 2 && ($showeditexs['item_bonus'] ?? null) < 6) {
 		$colorbg = "itembg2";
-	} elseif ($showeditexs['item_bonus'] > 5 && $showeditexs['item_bonus'] < 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) > 5 && ($showeditexs['item_bonus'] ?? null) < 9) {
 		$colorbg = "itembg3";
-	} elseif ($showeditexs['item_bonus'] == 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) == 9) {
 		$colorbg = "itembg4";
-	} elseif ($showeditexs['item_bonus'] > 9) {
+	} elseif (($showeditexs['item_bonus'] ?? null) > 9) {
 		$colorbg = "itembg5";
 	} else {
 		$colorbg = "itembg1";
@@ -436,28 +436,28 @@ if ($showitenx->recordcount() == 0) {
 
 	echo '<td class="mark boots ' . $colorbg . '">';
 
-	if ($showeditexs['for'] == 0) {
+	if (($showeditexs['for'] ?? null) == 0) {
 		$showitfor = "";
 		$showitfor2 = "";
 	} else {
 		$showitfor2 = "+<font color=gray>" . $showeditexs['for'] . " For</font><br/>";
 	}
 
-	if ($showeditexs['vit'] == 0) {
+	if (($showeditexs['vit'] ?? null) == 0) {
 		$showitvit = "";
 		$showitvit2 = "";
 	} else {
 		$showitvit2 = "+<font color=green>" . $showeditexs['vit'] . " Vit</font><br/>";
 	}
 
-	if ($showeditexs['agi'] == 0) {
+	if (($showeditexs['agi'] ?? null) == 0) {
 		$showitagi = "";
 		$showitagi2 = "";
 	} else {
 		$showitagi2 = "+<font color=blue>" . $showeditexs['agi'] . " Agi</font><br/>";
 	}
 
-	if ($showeditexs['res'] == 0) {
+	if (($showeditexs['res'] ?? null) == 0) {
 		$showitres = "";
 		$showitres2 = "";
 	} else {

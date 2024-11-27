@@ -15,7 +15,7 @@ if ($guildquery->recordcount() == 0) {
 	$guild = $guildquery->fetchrow();
 }
 
-$enyguildquery = $db->execute("select * from `guilds` where `id`=?", [$_GET['id']]);
+$enyguildquery = $db->execute("select * from `guilds` where `id`=?", [$_GET['id'] ?? null]);
 if ($enyguildquery->recordcount() == 0) {
 	header("Location: guild_admin_enemy.php");
 } else {
@@ -24,43 +24,43 @@ if ($enyguildquery->recordcount() == 0) {
 
 include(__DIR__ . "/templates/private_header.php");
 
-if ($player->username != $guild['leader'] && $player->username != $guild['vice']) {
+if ($player->username != ($guild['leader'] ?? null) && $player->username != ($guild['vice'] ?? null)) {
 	echo "<p />Você não pode acessar esta página.<p />";
 	echo '<a href="home.php">Principal</a><p />';
 } else {
 
-	$checkwarquery = $db->execute("select * from `pwar` where ((`guild_id`=?) or (`enemy_id`=?)) and `status`='p'", [$guild['id'], $guild['id']]);
+	$checkwarquery = $db->execute("select * from `pwar` where ((`guild_id`=?) or (`enemy_id`=?)) and `status`='p'", [$guild['id'] ?? null, $guild['id'] ?? null]);
 	if ($checkwarquery->recordcount() > 0) {
 		echo "JÁ existe um chamado de guerra contra o clã " . $enyguild['name'] . ".";
 		echo '<br/><a href="guild_admin_enemy.php">Voltar</a>.';
-	} elseif ($guild['members'] < 3) {
+	} elseif (($guild['members'] ?? null) < 3) {
 		echo "Seu clã não possui membros suficientes para iniciar uma guerra. (min. 3 membros)";
 		echo '<br/><a href="guild_admin_enemy.php">Voltar</a>.';
-	} elseif ($enyguild['members'] < 3) {
+	} elseif (($enyguild['members'] ?? null) < 3) {
 		echo "O clã " . $enyguild['name'] . " não possui membros suficientes para iniciar uma guerra. (min. 3 membros)";
 		echo '<br/><a href="guild_admin_enemy.php">Voltar</a>.';
-	} elseif ($_POST['submit']) {
-		if (!$_POST['wnumber'] || !$_POST['gold']) {
+	} elseif ($_POST['submit'] ?? null) {
+		if (!($_POST['wnumber'] ?? null) || !($_POST['gold'] ?? null)) {
 			echo "Por favor preencha todos os campos.";
 			echo '<br/><a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
-		} elseif (!is_numeric($_POST['gold']) || $_POST['gold'] < 1) {
+		} elseif (!is_numeric($_POST['gold']) || ($_POST['gold'] ?? null) < 1) {
 			echo "Insira uma quantia de ouro válida.";
 			echo '<br/><a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
-		} elseif ($_POST['gold'] > $guild['gold']) {
+		} elseif (($_POST['gold'] ?? null) > ($guild['gold'] ?? null)) {
 			echo "Seu clã não possui tanto ouro para apostar.";
 			echo '<br/><a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
-		} elseif ($_POST['gold'] < 10000) {
+		} elseif (($_POST['gold'] ?? null) < 10000) {
 			echo "A aposta mínima é de 10000 moedas de ouro.";
 			echo '<br/><a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
-		} elseif ($_POST['wnumber'] > $guild['members']) {
+		} elseif (($_POST['wnumber'] ?? null) > ($guild['members'] ?? null)) {
 			echo "Seu clã não possui membros suficientes para uma guerra deste tamanho.";
 			echo '<br/><a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
-		} elseif ($_POST['wnumber'] > $enyguild['members']) {
+		} elseif (($_POST['wnumber'] ?? null) > ($enyguild['members'] ?? null)) {
 			echo "O clã " . $enyguild['name'] . " não possui membros suficientes para iniciar uma guerra deste tamanho.";
 			echo '<br/><a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
-		} elseif (!$_POST['startwar']) {
+		} elseif (!($_POST['startwar'] ?? null)) {
 			echo "<center>Selecione os " . $_POST['wnumber'] . " membros do seu clã que irão lutar na guerra.</center><center><font size=\"1px\">(eles não precisam estar online no momento da guerra para lutarem)</font></center>";
-			$guildmembers = $db->execute("select * from `players` where `guild`=? order by `level` desc", [$guild['id']]);
+			$guildmembers = $db->execute("select * from `players` where `guild`=? order by `level` desc", [$guild['id'] ?? null]);
 			echo '<form method="post" action="guild_admin_war.php?id=' . $_GET['id'] . "\">\n";
 			echo '<input type="hidden" name="wnumber" value="' . $_POST['wnumber'] . '">';
 			echo '<input type="hidden" name="gold" value="' . $_POST['gold'] . '">';
@@ -81,23 +81,23 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 				echo '<td width="10%">' . $member['level'] . "</td>";
 				echo '<td width="30%">';
 
-				if ($member['voc'] == 'archer' && $member['promoted'] == 'f') {
+				if (($member['voc'] ?? null) == 'archer' && ($member['promoted'] ?? null) == 'f') {
 					echo "Caçador";
-				} elseif ($member['voc'] == 'knight' && $member['promoted'] == 'f') {
+				} elseif (($member['voc'] ?? null) == 'knight' && ($member['promoted'] ?? null) == 'f') {
 					echo "Espadachim";
-				} elseif ($member['voc'] == 'mage' && $member['promoted'] == 'f') {
+				} elseif (($member['voc'] ?? null) == 'mage' && ($member['promoted'] ?? null) == 'f') {
 					echo "Bruxo";
-				} elseif ($member['voc'] == 'archer' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
+				} elseif (($member['voc'] ?? null) == 'archer' && (($member['promoted'] ?? null) == 't' || ($member['promoted'] ?? null) == 's' || ($member['promoted'] ?? null) == 'r')) {
 					echo "Arqueiro";
-				} elseif ($member['voc'] == 'knight' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
+				} elseif (($member['voc'] ?? null) == 'knight' && (($member['promoted'] ?? null) == 't' || ($member['promoted'] ?? null) == 's' || ($member['promoted'] ?? null) == 'r')) {
 					echo "Guerreiro";
-				} elseif ($member['voc'] == 'mage' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
+				} elseif (($member['voc'] ?? null) == 'mage' && (($member['promoted'] ?? null) == 't' || ($member['promoted'] ?? null) == 's' || ($member['promoted'] ?? null) == 'r')) {
 					echo "Mago";
-				} elseif ($member['voc'] == 'archer' && $member['promoted'] == 'p') {
+				} elseif (($member['voc'] ?? null) == 'archer' && ($member['promoted'] ?? null) == 'p') {
 					echo "Arqueiro Royal";
-				} elseif ($member['voc'] == 'knight' && $member['promoted'] == 'p') {
+				} elseif (($member['voc'] ?? null) == 'knight' && ($member['promoted'] ?? null) == 'p') {
 					echo "Cavaleiro";
-				} elseif ($member['voc'] == 'mage' && $member['promoted'] == 'p') {
+				} elseif (($member['voc'] ?? null) == 'mage' && ($member['promoted'] ?? null) == 'p') {
 					echo "Arquimago";
 				}
 
@@ -108,45 +108,45 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 			echo "</table>";
 			echo '<br/><input type="submit" name="startwar" value="Proclamar Guerra"> <a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
 		} else {
-			if (!$_POST['id']) {
+			if (!($_POST['id'] ?? null)) {
 
 				echo "Selecione os membros do clã que devem participar da guerra.";
 				echo '<br/><a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
 			}
 
 			$totalselected = 0;
-			foreach ($_POST['id'] as $memb) {
+			foreach ($_POST['id'] ?? null as $memb) {
 				$totalselected += 1;
 			}
 
-			if (!$_POST['wnumber'] || !$_POST['gold']) {
+			if (!($_POST['wnumber'] ?? null) || !($_POST['gold'] ?? null)) {
 				echo "Por favor preencha todos os campos.";
 				echo '<br/><a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
-			} elseif (!is_numeric($_POST['gold']) || $_POST['gold'] < 1) {
+			} elseif (!is_numeric($_POST['gold']) || ($_POST['gold'] ?? null) < 1) {
 				echo "Insira uma quantia de ouro válida.";
 				echo '<br/><a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
-			} elseif ($_POST['gold'] > $guild['gold']) {
+			} elseif (($_POST['gold'] ?? null) > ($guild['gold'] ?? null)) {
 				echo "Seu clã não possui tanto ouro para apostar.";
 				echo '<br/><a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
-			} elseif ($_POST['gold'] < 10000) {
+			} elseif (($_POST['gold'] ?? null) < 10000) {
 				echo "A aposta mínima é de 10000 moedas de ouro.";
 				echo '<br/><a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
-			} elseif ($_POST['wnumber'] > $guild['members']) {
+			} elseif (($_POST['wnumber'] ?? null) > ($guild['members'] ?? null)) {
 				echo "Seu clã não possui membros suficientes para uma guerra deste tamanho.";
 				echo '<br/><a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
-			} elseif ($_POST['wnumber'] > $enyguild['members']) {
+			} elseif (($_POST['wnumber'] ?? null) > ($enyguild['members'] ?? null)) {
 				echo "O clã " . $enyguild['name'] . " não possui membros suficientes para iniciar uma guerra deste tamanho.";
 				echo '<br/><a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
-			} elseif ($_POST['wnumber'] != $totalselected) {
+			} elseif (($_POST['wnumber'] ?? null) != $totalselected) {
 				echo "Você precisa selecionar " . $_POST['wnumber'] . " membros do clã para a guerra.";
 				echo '<br/><a href="guild_admin_war.php?id=' . $_GET['id'] . '">Voltar</a>.';
 			} else {
-				$db->execute("update `guilds` set `gold`=`gold`-?, `blocked`=`blocked`+? where `id`=?", [$_POST['gold'], $_POST['gold'], $guild['id']]);
+				$db->execute("update `guilds` set `gold`=`gold`-?, `blocked`=`blocked`+? where `id`=?", [$_POST['gold'] ?? null, $_POST['gold'] ?? null, $guild['id'] ?? null]);
 
 				$insert['guild_id'] = $guild['id'];
 				$insert['enemy_id'] = $enyguild['id'];
 				$insert['bet'] = $_POST['gold'];
-				foreach ($_POST['id'] as $memb) {
+				foreach ($_POST['id'] ?? null as $memb) {
 					$insertnumber += 1;
 					if ($insertnumber < $totalselected) {
 						$addmemb .= $memb . ', ';
@@ -161,11 +161,11 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 				$insert['players_guild'] = $addmemb;
 				$db->autoexecute('pwar', $insert, 'INSERT');
 
-				$lider = $db->GetOne("select `id` from `players` where `username`=?", [$enyguild['leader']]);
+				$lider = $db->GetOne("select `id` from `players` where `username`=?", [$enyguild['leader'] ?? null]);
 				$logmsg = "O clã <b>" . $guild['name'] . "</b> está enviando um pedido de guerra estilo <b>" . $_POST['wnumber'] . "x" . $_POST['wnumber'] . "</b>.<br/>O valor da aposta é de <b>" . $_POST['gold'] . ' moedas de ouro</b>. <a href="guild_war_request.php?id=' . $db->Insert_ID() . '">Clique aqui</a> para aceitar o convite.';
 				addlog($lider, $logmsg, $db);
-				if ($enyguild['vice'] != NULL) {
-					$vice = $db->GetOne("select `id` from `players` where `username`=?", [$enyguild['vice']]);
+				if (($enyguild['vice'] ?? null) != NULL) {
+					$vice = $db->GetOne("select `id` from `players` where `username`=?", [$enyguild['vice'] ?? null]);
 					addlog($vice, $logmsg, $db);
 				}
 
@@ -180,23 +180,23 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 		echo '<form method="POST" action="guild_admin_war.php?id=' . $_GET['id'] . '">';
 		echo "<b>Tamanho da batalha:</b> ";
 		echo "<select name=\"wnumber\"><option value=''>Selecione</option>";
-		if ($guild['members'] >= 3 && $enyguild['members'] >= 3) {
+		if (($guild['members'] ?? null) >= 3 && ($enyguild['members'] ?? null) >= 3) {
 			echo '<option value="3">3x3</option>';
 		}
 
-		if ($guild['members'] >= 5 && $enyguild['members'] >= 5) {
+		if (($guild['members'] ?? null) >= 5 && ($enyguild['members'] ?? null) >= 5) {
 			echo '<option value="5">5x5</option>';
 		}
 
-		if ($guild['members'] >= 7 && $enyguild['members'] >= 7) {
+		if (($guild['members'] ?? null) >= 7 && ($enyguild['members'] ?? null) >= 7) {
 			echo '<option value="7">7x7</option>';
 		}
 
-		if ($guild['members'] >= 10 && $enyguild['members'] >= 10) {
+		if (($guild['members'] ?? null) >= 10 && ($enyguild['members'] ?? null) >= 10) {
 			echo '<option value="10">10x10</option>';
 		}
 
-		if ($guild['members'] >= 15 && $enyguild['members'] >= 15) {
+		if (($guild['members'] ?? null) >= 15 && ($enyguild['members'] ?? null) >= 15) {
 			echo '<option value="15">15x15</option>';
 		}
 

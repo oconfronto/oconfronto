@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 $player = check_user($db);
 
-if ($_GET['voltar'] == true) {
+if (($_GET['voltar'] ?? null) == true) {
     include(__DIR__ . "/lib.php");
     header("Content-Type: text/html; charset=utf-8", true);
 }

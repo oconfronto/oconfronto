@@ -20,27 +20,27 @@ if ($query->recordcount() == 0) {
 include(__DIR__ . "/templates/private_header.php");
 
 //Guild Leader Admin check
-if ($player->username != $guild['leader']) {
+if ($player->username != ($guild['leader'] ?? null)) {
     echo "<fieldset>";
     echo "<legend><b>Acesso Negado</b></legend>";
     echo "<p />Você não pode acessar esta página.<br/><br/>";
     echo '<a href="home.php">Principal</a>';
     echo "</fieldset>";
-} elseif ($_GET['act'] == "go") {
-    $query4 = $db->execute("select `id` from `players` where `guild`=?", [$guild['id']]);
+} elseif (($_GET['act'] ?? null) == "go") {
+    $query4 = $db->execute("select `id` from `players` where `guild`=?", [$guild['id'] ?? null]);
     while ($member = $query4->fetchrow()) {
         $logmsg = "A gangue " . $guild['name'] . " foi deletada pelo lider do clã.";
         addlog($member['id'], $logmsg, $db);
     }
 
-    $db->execute("update `players` set `bank`=`bank`+? where `username`=?", [$guild['gold'], $guild['leader']]);
+    $db->execute("update `players` set `bank`=`bank`+? where `username`=?", [$guild['gold'] ?? null, $guild['leader'] ?? null]);
     $db->execute("delete from `guilds` where `id`=?", [$player->guild]);
     $db->execute("delete from `guild_invites` where `guild_id`=?", [$player->guild]);
     $db->execute("delete from `guild_chat` where `guild_id`=?", [$player->guild]);
     $db->execute("delete from `guild_enemy` where (`guild_na`=? or `enemy_na`=?)", [$player->guild, $player->guild]);
     $db->execute("delete from `guild_aliance` where (`guild_na`=? or `aled_na`=?)", [$player->guild, $player->guild]);
     $db->execute("delete from `guild_paliance` where (`guild_na`=? or `aled_na`=?)", [$player->guild, $player->guild]);
-    $db->execute("update `players` set `guild`=? where `guild`=?", [NULL, $guild['id']]);
+    $db->execute("update `players` set `guild`=? where `guild`=?", [NULL, $guild['id'] ?? null]);
     echo "<fieldset>";
     echo "<legend><b>" . $guild['name'] . " :: Desfazer Clã</b></legend>";
     echo "Seu clã foi excluido com sucesso!<br/><br/>";

@@ -9,7 +9,7 @@ $player = check_user($db);
 $checabattalha = $db->execute("select `hp` from `bixos` where `player_id`=? and `type`!=98 and `type`!=99", [$player->id]);
 $verificaLuta = $db->execute("select `id` from `duels` where `status`='s' and (`p_id`=? or `e_id`=?)", [$player->id, $player->id]);
 if ($checabattalha->recordcount() > 0) {
-    if ($_GET['nolayout']) {
+    if ($_GET['nolayout'] ?? null) {
         header("Location: monster.php?act=attack&nolayout=true");
     } else {
         header("Location: monster.php?act=attack");
@@ -20,10 +20,10 @@ if ($checabattalha->recordcount() > 0) {
 
 include(__DIR__ . "/checkwork.php");
 
-if ($_GET['start']) {
+if ($_GET['start'] ?? null) {
     $verificaLuta = $db->execute("select `id` from `duels` where `status`!='w' and `status`!='z' and (`p_id`=? or `e_id`=?)", [$player->id, $player->id]);
     if ($verificaLuta->recordcount() > 0) {
-        if ($_GET['nolayout']) {
+        if ($_GET['nolayout'] ?? null) {
             header("Location: duel.php?luta=true&new=true&nolayout=true");
         } else {
             header("Location: duel.php?luta=true&new=true");
@@ -32,10 +32,10 @@ if ($_GET['start']) {
         exit;
     }
 
-    $checkDuelStart = $db->execute("select `id` from `duels` where `status`='w' and `id`=? and (`p_id`=? or `e_id`=?)", [$_GET['start'], $player->id, $player->id]);
+    $checkDuelStart = $db->execute("select `id` from `duels` where `status`='w' and `id`=? and (`p_id`=? or `e_id`=?)", [$_GET['start'] ?? null, $player->id, $player->id]);
     if ($checkDuelStart->recordcount() > 0) {
-        $db->execute("update `duels` set `status`='t' where `id`=?", [$_GET['start']]);
-        if ($_GET['nolayout']) {
+        $db->execute("update `duels` set `status`='t' where `id`=?", [$_GET['start'] ?? null]);
+        if ($_GET['nolayout'] ?? null) {
             header("Location: duel.php?luta=true&new=true&nolayout=true");
         } else {
             header("Location: duel.php?luta=true&new=true");
@@ -44,24 +44,24 @@ if ($_GET['start']) {
         exit;
     }
 
-    if (!$_GET['nolayout']) {
+    if (!($_GET['nolayout'] ?? null)) {
         include(__DIR__ . "/templates/private_header.php");
     } else {
         header("Content-Type: text/html; charset=utf-8", true);
     }
 
     echo "Desafio não encontrado.<br/><a href=\"duel.php\">Voltar</a>.";
-    if (!$_GET['nolayout']) {
+    if (!($_GET['nolayout'] ?? null)) {
         include(__DIR__ . "/templates/private_footer.php");
     }
 
     exit;
 }
 
-if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
+if (($_GET['luta'] ?? null) || $verificaLuta->recordcount() > 0) {
     $verificaLuta = $db->execute("select * from `duels` where `status`!='w' and (`p_id`=? or `e_id`=?) order by `status` asc, `id` desc limit 1", [$player->id, $player->id]);
     if ($verificaLuta->recordcount() == 0) {
-        if ($_GET['nolayout']) {
+        if ($_GET['nolayout'] ?? null) {
             header("Location: duel.php?nolayout=true");
         } else {
             header("Location: duel.php");
@@ -72,9 +72,9 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
 
     $luta = $verificaLuta->fetchrow();
 
-    if ($luta['status'] == 'z' && $_GET['new']) {
-        $db->execute("delete from `duels` where `id`=?", [$luta['id']]);
-        if ($_GET['nolayout']) {
+    if (($luta['status'] ?? null) == 'z' && ($_GET['new'] ?? null)) {
+        $db->execute("delete from `duels` where `id`=?", [$luta['id'] ?? null]);
+        if ($_GET['nolayout'] ?? null) {
             header("Location: duel.php?luta=true&new=true&nolayout=true");
         } else {
             header("Location: duel.php?luta=true&new=true");
@@ -83,10 +83,10 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         exit;
     }
 
-    if ($luta['p_id'] == $player->id) {
-        $getEnemy = $db->execute("select * from `players` where `id`=?", [$luta['e_id']]);
+    if (($luta['p_id'] ?? null) == $player->id) {
+        $getEnemy = $db->execute("select * from `players` where `id`=?", [$luta['e_id'] ?? null]);
     } else {
-        $getEnemy = $db->execute("select * from `players` where `id`=?", [$luta['p_id']]);
+        $getEnemy = $db->execute("select * from `players` where `id`=?", [$luta['p_id'] ?? null]);
     }
 
     $enemy1 = $getEnemy->fetchrow();
@@ -94,18 +94,18 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         $enemy->$key = $value;
     }
 
-    $type = $player->id == $luta['p_id'] ? $luta['p_type'] : $luta['e_type'];
+    $type = $player->id == ($luta['p_id'] ?? null) ? $luta['p_type'] ?? null : $luta['e_type'] ?? null;
 
-    if ($luta['status'] != 'z' && $luta['status'] != 's') {
+    if (($luta['status'] ?? null) != 'z' && ($luta['status'] ?? null) != 's') {
         if ($player->hp <= 0 && $type != 99) {
-            if (!$_GET['nolayout']) {
+            if (!($_GET['nolayout'] ?? null)) {
                 include(__DIR__ . "/templates/private_header.php");
             } else {
                 header("Content-Type: text/html; charset=utf-8", true);
             }
 
             echo "Você está morto! <a href=\"duel.php\"/>Voltar</a>.";
-            if (!$_GET['nolayout']) {
+            if (!($_GET['nolayout'] ?? null)) {
                 include(__DIR__ . "/templates/private_footer.php");
             }
 
@@ -113,14 +113,14 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         }
 
         if ($player->energy < 10 && $type != 99) {
-            if (!$_GET['nolayout']) {
+            if (!($_GET['nolayout'] ?? null)) {
                 include(__DIR__ . "/templates/private_header.php");
             } else {
                 header("Content-Type: text/html; charset=utf-8", true);
             }
 
             echo "Você não tem energia suficiente! <a href=\"duel.php\"/>Voltar</a>.";
-            if (!$_GET['nolayout']) {
+            if (!($_GET['nolayout'] ?? null)) {
                 include(__DIR__ . "/templates/private_footer.php");
             }
 
@@ -128,14 +128,14 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         }
 
         if ($enemy->energy < 10 && $type != 99) {
-            if (!$_GET['nolayout']) {
+            if (!($_GET['nolayout'] ?? null)) {
                 include(__DIR__ . "/templates/private_header.php");
             } else {
                 header("Content-Type: text/html; charset=utf-8", true);
             }
 
             echo "Seu inimigo não tem energia suficiente! <a href=\"duel.php\"/>Voltar</a>.";
-            if (!$_GET['nolayout']) {
+            if (!($_GET['nolayout'] ?? null)) {
                 include(__DIR__ . "/templates/private_footer.php");
             }
 
@@ -143,14 +143,14 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         }
 
         if ($enemy->hp <= 0 && $type != 99) {
-            if (!$_GET['nolayout']) {
+            if (!($_GET['nolayout'] ?? null)) {
                 include(__DIR__ . "/templates/private_header.php");
             } else {
                 header("Content-Type: text/html; charset=utf-8", true);
             }
 
             echo "Este usuário está morto! <a href=\"duel.php\"/>Voltar</a>.";
-            if (!$_GET['nolayout']) {
+            if (!($_GET['nolayout'] ?? null)) {
                 include(__DIR__ . "/templates/private_footer.php");
             }
 
@@ -158,14 +158,14 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         }
 
         if ($enemy->ban > time() && $type != 99) {
-            if (!$_GET['nolayout']) {
+            if (!($_GET['nolayout'] ?? null)) {
                 include(__DIR__ . "/templates/private_header.php");
             } else {
                 header("Content-Type: text/html; charset=utf-8", true);
             }
 
             echo "Este usuário está banido! <a href=\"duel.php\"/>Voltar</a>.";
-            if (!$_GET['nolayout']) {
+            if (!($_GET['nolayout'] ?? null)) {
                 include(__DIR__ . "/templates/private_footer.php");
             }
 
@@ -175,14 +175,14 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         $checkenyrowk = $db->GetOne("select `status` from `work` where `player_id`=? order by `start` DESC", [$enemy->id]);
         $checkenyhunt = $db->GetOne("select `status` from `hunt` where `player_id`=? order by `start` DESC", [$enemy->id]);
         if ($type != 99 && (($checkenyrowk == "t" || $checkenyhunt == "t") && $enemy->tour == 'f')) {
-            if (!$_GET['nolayout']) {
+            if (!($_GET['nolayout'] ?? null)) {
                 include(__DIR__ . "/templates/private_header.php");
             } else {
                 header("Content-Type: text/html; charset=utf-8", true);
             }
 
             echo "Você não encontrou o usuário " . $enemy->username . "! Ele deve estar trabalhando ou caçando. <a href=\"duel.php\">Voltar</a>.";
-            if (!$_GET['nolayout']) {
+            if (!($_GET['nolayout'] ?? null)) {
                 include(__DIR__ . "/templates/private_footer.php");
             }
 
@@ -191,14 +191,14 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
 
         $duelCheckOnline = $db->execute("select `id` from `user_online` where `player_id`=?", [$enemy->id]);
         if ($duelCheckOnline->recordcount() == 0 && $type != 99) {
-            if (!$_GET['nolayout']) {
+            if (!($_GET['nolayout'] ?? null)) {
                 include(__DIR__ . "/templates/private_header.php");
             } else {
                 header("Content-Type: text/html; charset=utf-8", true);
             }
 
             echo "" . $enemy->username . " está offline e não pode duelar. <a href=\"duel.php\">Voltar</a>.";
-            if (!$_GET['nolayout']) {
+            if (!($_GET['nolayout'] ?? null)) {
                 include(__DIR__ . "/templates/private_footer.php");
             }
 
@@ -206,16 +206,16 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         }
     }
 
-    if ($luta['status'] == 't') {
-        $db->execute("update `duels` set `status`=?, `timeout`=? where `id`=?", [$enemy->id, time() + 45, $luta['id']]);
-        $verificaLuta = $db->execute("select * from `duels` where `id`=?", [$luta['id']]);
+    if (($luta['status'] ?? null) == 't') {
+        $db->execute("update `duels` set `status`=?, `timeout`=? where `id`=?", [$enemy->id, time() + 45, $luta['id'] ?? null]);
+        $verificaLuta = $db->execute("select * from `duels` where `id`=?", [$luta['id'] ?? null]);
         $luta = $verificaLuta->fetchrow();
     }
 
-    if (is_numeric($luta['status']) && $luta['status'] != $player->id) {
+    if (is_numeric($luta['status']) && ($luta['status'] ?? null) != $player->id) {
         unset($_SESSION['statusduellog']);
-        if ($luta['timeout'] > time()) {
-            if (!$_GET['nolayout']) {
+        if (($luta['timeout'] ?? null) > time()) {
+            if (!($_GET['nolayout'] ?? null)) {
                 include(__DIR__ . "/templates/private_header.php");
             } else {
                 header("Content-Type: text/html; charset=utf-8", true);
@@ -229,7 +229,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
             echo showAlert('<table width="100%"><tr><td width="50%" align="left">Aguardando oponente...</td><td width="50%" align="right">( ' . ($luta['timeout'] - time()) . " )</td></tr></table>");
             echo "<br/><center><i>Seu oponente deve estar online, e aceitar o desafio nos próximos 45 segundos.</i></center>";
             echo "</div>";
-            if (!$_GET['nolayout']) {
+            if (!($_GET['nolayout'] ?? null)) {
                 include(__DIR__ . "/templates/private_footer.php");
             }
 
@@ -244,8 +244,8 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
             exit;
         }
 
-        $db->execute("update `duels` set `status`='w', `timeout`='0' where `id`=?", [$luta['id']]);
-        if ($_GET['nolayout']) {
+        $db->execute("update `duels` set `status`='w', `timeout`='0' where `id`=?", [$luta['id'] ?? null]);
+        if ($_GET['nolayout'] ?? null) {
             header("Location: duel.php?error=noresponse&nolayout=true");
         } else {
             header("Location: duel.php?error=noresponse");
@@ -254,14 +254,14 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         exit;
     }
 
-    if ($luta['status'] != 's' && $luta['status'] != 'z') {
+    if (($luta['status'] ?? null) != 's' && ($luta['status'] ?? null) != 'z') {
         unset($_SESSION['statusduellog']);
-        $db->execute("update `duels` set `status`='s', `timeout`=? where `id`=?", [time() + 30, $luta['id']]);
-        $verificaLuta = $db->execute("select * from `duels` where `id`=?", [$luta['id']]);
+        $db->execute("update `duels` set `status`='s', `timeout`=? where `id`=?", [time() + 30, $luta['id'] ?? null]);
+        $verificaLuta = $db->execute("select * from `duels` where `id`=?", [$luta['id'] ?? null]);
         $luta = $verificaLuta->fetchrow();
     }
 
-    if ($luta['status'] == 's') {
+    if (($luta['status'] ?? null) == 's') {
         //Get enemy's bonuses from equipment
         $query = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='weapon' and items.status='equipped'", [$enemy->id]);
         $enemy->atkbonus = ($query->recordcount() == 1) ? $query->fetchrow() : 0;
@@ -289,7 +289,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         $everificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", [$enemy->id, time()]);
         if ($everificpotion->recordcount() > 0) {
             $selct = $everificpotion->fetchrow();
-            $getpotion = $db->execute("select * from `for_use` where `item_id`=?", [$selct['item_id']]);
+            $getpotion = $db->execute("select * from `for_use` where `item_id`=?", [$selct['item_id'] ?? null]);
             $potbonus = $getpotion->fetchrow();
             $enemy->strength = ceil($enemy->strength + (($enemy->strength / 100) * ($potbonus['for'])));
             $enemy->vitality = ceil($enemy->vitality + (($enemy->vitality / 100) * ($potbonus['vit'])));
@@ -324,7 +324,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         $pverificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", [$player->id, time()]);
         if ($pverificpotion->recordcount() > 0) {
             $selct = $pverificpotion->fetchrow();
-            $getpotion = $db->execute("select * from `for_use` where `item_id`=?", [$selct['item_id']]);
+            $getpotion = $db->execute("select * from `for_use` where `item_id`=?", [$selct['item_id'] ?? null]);
             $potbonus = $getpotion->fetchrow();
             $player->strength = ceil($player->strength + (($player->strength / 100) * ($potbonus['for'])));
             $player->vitality = ceil($player->vitality + (($player->vitality / 100) * ($potbonus['vit'])));
@@ -483,11 +483,11 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         $player->miss = max(5, $player->miss); //Minimum miss chance of 5%
     }
 
-    $duellog = $luta['log'] == null || $luta['log'] == "" ? [] : unserialize($luta['log']);
+    $duellog = ($luta['log'] ?? null) == null || ($luta['log'] ?? null) == "" ? [] : unserialize($luta['log']);
 
-    if ($player->hp > 0 && $enemy->hp > 0 && $luta['status'] != 'z') {
-        if ($player->id == $luta['p_id'] && $luta['vez'] == 'p' || $player->id != $luta['p_id'] && $luta['vez'] == 'e') {
-            $prox = $player->id == $luta['p_id'] ? "e" : "p";
+    if ($player->hp > 0 && $enemy->hp > 0 && ($luta['status'] ?? null) != 'z') {
+        if ($player->id == ($luta['p_id'] ?? null) && ($luta['vez'] ?? null) == 'p' || $player->id != ($luta['p_id'] ?? null) && ($luta['vez'] ?? null) == 'e') {
+            $prox = $player->id == ($luta['p_id'] ?? null) ? "e" : "p";
             if ($type == 0 && $type != 95) {
                 $otroatak = 5;
             } elseif ($type == 97) {
@@ -573,53 +573,53 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
                 }
             }
 
-            if (time() >= $luta['timeout']) {
-                if ($luta['extra'] != $player->id) {
+            if (time() >= ($luta['timeout'] ?? null)) {
+                if (($luta['extra'] ?? null) != $player->id) {
                     array_unshift($duellog, "14, " . $player->username . "");
-                    $db->execute("update `duels` set `extra`=? where `id`=?", [$player->id, $luta['id']]);
+                    $db->execute("update `duels` set `extra`=? where `id`=?", [$player->id, $luta['id'] ?? null]);
                     $otroatak = 3;
                 } else {
                     array_unshift($duellog, "13, " . $player->username . "");
-                    $db->execute("update `duels` set `extra`='0' where `id`=?", [$luta['id']]);
+                    $db->execute("update `duels` set `extra`='0' where `id`=?", [$luta['id'] ?? null]);
                     $db->execute("update `players` set `hp`='0', `deadtime`=? where `id`=?", [time() + $setting->dead_time, $player->id]);
                     $morreu = 5;
                 }
             }
 
             if ($otroatak != 5) {
-                if ($otroatak != 3 && $luta['extra'] == $player->id) {
-                    $db->execute("update `duels` set `extra`='0' where `id`=?", [$luta['id']]);
+                if ($otroatak != 3 && ($luta['extra'] ?? null) == $player->id) {
+                    $db->execute("update `duels` set `extra`='0' where `id`=?", [$luta['id'] ?? null]);
                 }
 
-                $db->execute("update `duels` set `p_type`='0', `e_type`='0', `vez`=?, `log`=?, `timeout`=? where `id`=?", [$prox, serialize($duellog), time() + 30, $luta['id']]);
-                if ($player->id == $luta['p_id']) {
-                    $db->execute("update `duels` set `p_turnos`=`p_turnos`-1 where `p_turnos`>0 and `id`=?", [$luta['id']]);
+                $db->execute("update `duels` set `p_type`='0', `e_type`='0', `vez`=?, `log`=?, `timeout`=? where `id`=?", [$prox, serialize($duellog), time() + 30, $luta['id'] ?? null]);
+                if ($player->id == ($luta['p_id'] ?? null)) {
+                    $db->execute("update `duels` set `p_turnos`=`p_turnos`-1 where `p_turnos`>0 and `id`=?", [$luta['id'] ?? null]);
                 } else {
-                    $db->execute("update `duels` set `e_turnos`=`e_turnos`-1 where `e_turnos`>0 and `id`=?", [$luta['id']]);
+                    $db->execute("update `duels` set `e_turnos`=`e_turnos`-1 where `e_turnos`>0 and `id`=?", [$luta['id'] ?? null]);
                 }
 
-                $db->execute("update `duels` set `p_magia`='0' where `p_turnos`='0' and `id`=?", [$luta['id']]);
-                $db->execute("update `duels` set `e_magia`='0' where `e_turnos`='0' and `id`=?", [$luta['id']]);
+                $db->execute("update `duels` set `p_magia`='0' where `p_turnos`='0' and `id`=?", [$luta['id'] ?? null]);
+                $db->execute("update `duels` set `e_magia`='0' where `e_turnos`='0' and `id`=?", [$luta['id'] ?? null]);
             }
-        } elseif (time() >= $luta['timeout']) {
-            if ($luta['extra'] != $enemy->id) {
+        } elseif (time() >= ($luta['timeout'] ?? null)) {
+            if (($luta['extra'] ?? null) != $enemy->id) {
                 array_unshift($duellog, "14, " . $enemy->username . "");
-                $db->execute("update `duels` set `extra`=? where `id`=?", [$enemy->id, $luta['id']]);
+                $db->execute("update `duels` set `extra`=? where `id`=?", [$enemy->id, $luta['id'] ?? null]);
 
-                $prox = $enemy->id == $luta['p_id'] ? "e" : "p";
+                $prox = $enemy->id == ($luta['p_id'] ?? null) ? "e" : "p";
 
-                $db->execute("update `duels` set `p_type`='0', `e_type`='0', `vez`=?, `log`=?, `timeout`=? where `id`=?", [$prox, serialize($duellog), time() + 30, $luta['id']]);
-                if ($player->id == $luta['p_id']) {
-                    $db->execute("update `duels` set `p_turnos`=`p_turnos`-1 where `p_turnos`>0 and `id`=?", [$luta['id']]);
+                $db->execute("update `duels` set `p_type`='0', `e_type`='0', `vez`=?, `log`=?, `timeout`=? where `id`=?", [$prox, serialize($duellog), time() + 30, $luta['id'] ?? null]);
+                if ($player->id == ($luta['p_id'] ?? null)) {
+                    $db->execute("update `duels` set `p_turnos`=`p_turnos`-1 where `p_turnos`>0 and `id`=?", [$luta['id'] ?? null]);
                 } else {
-                    $db->execute("update `duels` set `e_turnos`=`e_turnos`-1 where `e_turnos`>0 and `id`=?", [$luta['id']]);
+                    $db->execute("update `duels` set `e_turnos`=`e_turnos`-1 where `e_turnos`>0 and `id`=?", [$luta['id'] ?? null]);
                 }
 
-                $db->execute("update `duels` set `p_magia`='0' where `p_turnos`='0' and `id`=?", [$luta['id']]);
-                $db->execute("update `duels` set `e_magia`='0' where `e_turnos`='0' and `id`=?", [$luta['id']]);
+                $db->execute("update `duels` set `p_magia`='0' where `p_turnos`='0' and `id`=?", [$luta['id'] ?? null]);
+                $db->execute("update `duels` set `e_magia`='0' where `e_turnos`='0' and `id`=?", [$luta['id'] ?? null]);
             } else {
                 array_unshift($duellog, "13, " . $enemy->username . "");
-                $db->execute("update `duels` set `extra`='0' where `id`=?", [$luta['id']]);
+                $db->execute("update `duels` set `extra`='0' where `id`=?", [$luta['id'] ?? null]);
                 $db->execute("update `players` set `hp`='0', `deadtime`=? where `id`=?", [time() + $setting->dead_time, $enemy->id]);
                 $matou = 5;
             }
@@ -627,7 +627,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
     }
 
     if ($fugiu == 5) {
-        $db->execute("update `duels` set `p_type`='99', `e_type`='99', `status`='z', `extra`=? where `id`=?", [$player->id, $luta['id']]);
+        $db->execute("update `duels` set `p_type`='99', `e_type`='99', `status`='z', `extra`=? where `id`=?", [$player->id, $luta['id'] ?? null]);
         $output .= showAlert("<b>Você fugiu da luta com sucesso!</b>", "green");
         array_unshift($duellog, "13, " . $player->username . ", " . $enemy->username . "");
     }
@@ -639,10 +639,10 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
 
         $output .= showAlert("<b>Você morreu!</b><br/>Você perdeu " . $exploss . " pontos de experiência.", "red");
         $db->execute("update `players` set `energy`=`energy`-?, `exp`=`exp`-?, `deaths`=`deaths`+1, `hp`=0, `mana`=0, `deadtime`=? where `id`=?", [10, $exploss, time() + $setting->dead_time, $player->id]);
-        if ($player->id == $luta['p_id']) {
-            $db->execute("update `duels` set `p_type`='99', `status`='z' where `id`=?", [$luta['id']]);
+        if ($player->id == ($luta['p_id'] ?? null)) {
+            $db->execute("update `duels` set `p_type`='99', `status`='z' where `id`=?", [$luta['id'] ?? null]);
         } else {
-            $db->execute("update `duels` set `e_type`='99', `status`='z' where `id`=?", [$luta['id']]);
+            $db->execute("update `duels` set `e_type`='99', `status`='z' where `id`=?", [$luta['id'] ?? null]);
         }
     }
 
@@ -676,26 +676,26 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
             $db->execute("update `players` set `kills`=`kills`+1 where `id`=?", [$player->id]);
         }
 
-        if ($player->id == $luta['p_id']) {
-            $db->execute("update `duels` set `p_type`='99', `status`='z', `venceu`=? where `id`=?", [$player->id, $luta['id']]);
+        if ($player->id == ($luta['p_id'] ?? null)) {
+            $db->execute("update `duels` set `p_type`='99', `status`='z', `venceu`=? where `id`=?", [$player->id, $luta['id'] ?? null]);
         } else {
-            $db->execute("update `duels` set `e_type`='99', `status`='z', `venceu`=? where `id`=?", [$player->id, $luta['id']]);
+            $db->execute("update `duels` set `e_type`='99', `status`='z', `venceu`=? where `id`=?", [$player->id, $luta['id'] ?? null]);
         }
     }
 
-    if ($luta['status'] == 'z' && $_SESSION['statusduellog'] == null) {
-        if ($luta['venceu'] == $player->id) {
+    if (($luta['status'] ?? null) == 'z' && ($_SESSION['statusduellog'] ?? null) == null) {
+        if (($luta['venceu'] ?? null) == $player->id) {
             $output .= showAlert("<b>Você venceu o duelo contra " . $enemy->username . "</b>", "green");
-        } elseif ($luta['venceu'] == $enemy->id) {
+        } elseif (($luta['venceu'] ?? null) == $enemy->id) {
             $output .= showAlert("<b>Você foi derrotado no duelo contra " . $enemy->username . "</b>", "red");
-        } elseif ($luta['extra'] == $player->id) {
+        } elseif (($luta['extra'] ?? null) == $player->id) {
             $output .= showAlert("<b>Você fugiu da luta com sucesso!</b>", "green");
-        } elseif ($luta['extra'] == $enemy->id) {
+        } elseif (($luta['extra'] ?? null) == $enemy->id) {
             $output .= showAlert("<b>" . $enemy->username . " fugiu durante a luta.</b>", "red");
         }
     }
 
-    if (!$_GET['nolayout']) {
+    if (!($_GET['nolayout'] ?? null)) {
         include(__DIR__ . "/templates/private_header.php");
     } else {
         header("Content-Type: text/html; charset=utf-8", true);
@@ -710,10 +710,10 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         $_SESSION['statusduellog'] = $output;
     }
 
-    echo $_SESSION['statusduellog'];
+    echo $_SESSION['statusduellog'] ?? null;
 
     //enquanto a luta n acabou
-    if ($luta['status'] != 'z' && $player->hp > 0 && $enemy->hp > 0 && $matou != 5 && $morreu != 5 && $luta['p_type'] != '99' && $luta['e_type'] != '99') {
+    if (($luta['status'] ?? null) != 'z' && $player->hp > 0 && $enemy->hp > 0 && $matou != 5 && $morreu != 5 && ($luta['p_type'] ?? null) != '99' && ($luta['e_type'] ?? null) != '99') {
         echo '<table width="100%">';
         echo "<tr>";
         echo '<td width="39%" align="center">';
@@ -729,7 +729,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         echo "</td>";
         echo '</tr></table><font size="1px">';
 
-        if ($player->id == $luta['p_id']) {
+        if ($player->id == ($luta['p_id'] ?? null)) {
             $showMagia = $luta['p_magia'];
             $showTurnos = $luta['p_turnos'];
         } else {
@@ -763,7 +763,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         echo "</td>";
         echo '<td width="22%" align="center">';
         echo "<br/><b>VS</b><br/>";
-        if ($player->id == $luta['p_id'] && $luta['vez'] == 'p' || $player->id != $luta['p_id'] && $luta['vez'] == 'e') {
+        if ($player->id == ($luta['p_id'] ?? null) && ($luta['vez'] ?? null) == 'p' || $player->id != ($luta['p_id'] ?? null) && ($luta['vez'] ?? null) == 'e') {
             echo '<font size="1px">Sua vez. ( ' . ($luta['timeout'] - time()) . " )</font>";
         } else {
             echo '<font size="1px">Aguardando oponente. ( ' . ($luta['timeout'] - time()) . " )</font>";
@@ -784,7 +784,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         echo "</td>";
         echo '<th width="50px"><center><img src="static/' . $enemy->avatar . '" width="42px" height="42px" alt="' . $enemy->username . '" border="1px"></center></th>';
         echo '</tr></table><font size="1px">';
-        if ($enemy->id == $luta['p_id']) {
+        if ($enemy->id == ($luta['p_id'] ?? null)) {
             $showMagia = $luta['p_magia'];
             $showTurnos = $luta['p_turnos'];
         } else {
@@ -823,7 +823,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
     echo '<div id="logdebatalha" class="scroll" style="background-color:#FFFDE0; overflow: auto; height:220px; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
     foreach ($duellog as $log) {
         $log = explode(", ", (string) $log);
-        if ($log[1] == $player->username) {
+        if (($log[1] ?? null) == $player->username) {
             echo '<div style="text-align: left">';
             $lado = 1;
         } else {
@@ -831,7 +831,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
             $lado = 2;
         }
 
-        if ($log[0] == 1) {
+        if (($log[0] ?? null) == 1) {
             if ($lado == 1) {
                 echo '<font color="green">';
                 echo "Você atacou " . $log[2] . " e tirou " . $log[3] . " de vida.";
@@ -841,7 +841,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
                 echo "" . $log[1] . " te atacou e você perdeu " . $log[3] . " de vida.";
                 echo "</font>";
             }
-        } elseif ($log[0] == 2) {
+        } elseif (($log[0] ?? null) == 2) {
             if ($lado == 1) {
                 echo '<font color="blue">';
                 echo "Você deu um " . $log[4] . " em " . $log[2] . " e tirou " . $log[3] . " de vida.";
@@ -851,7 +851,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
                 echo "" . $log[1] . " te deu um " . $log[4] . " e você perdeu " . $log[3] . " de vida.";
                 echo "</font>";
             }
-        } elseif ($log[0] == 3) {
+        } elseif (($log[0] ?? null) == 3) {
             if ($lado == 1) {
                 echo '<font color="blue">';
                 echo "Você lançou o feitiço " . $log[2] . ".";
@@ -861,7 +861,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
                 echo "" . $log[1] . " lançou o feitiço " . $log[2] . ".";
                 echo "</font>";
             }
-        } elseif ($log[0] == 6) {
+        } elseif (($log[0] ?? null) == 6) {
             if ($lado == 1) {
                 echo '<font color="black">';
                 echo "Você tentou lançar um feitiço mas está sem mana suficiente.";
@@ -871,13 +871,13 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
                 echo "" . $log[1] . " tentou te lançar um feitiço mas está sem mana suficiente.";
                 echo "</font>";
             }
-        } elseif ($log[0] == 7) {
+        } elseif (($log[0] ?? null) == 7) {
             if ($lado == 1) {
                 echo '<font color="black">';
                 echo "Você não pode ativar um feitiço passivo enquanto outro está ativo.";
                 echo "</font>";
             }
-        } elseif ($log[0] == 8) {
+        } elseif (($log[0] ?? null) == 8) {
             if ($lado == 1) {
                 echo '<font color="black">';
                 echo "Você tentou lançar um feitiço em  " . $log[2] . " mas errou!";
@@ -887,7 +887,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
                 echo "" . $log[1] . " tentou te lançar um feitiço mas errou!";
                 echo "</font>";
             }
-        } elseif ($log[0] == 10) {
+        } elseif (($log[0] ?? null) == 10) {
             if ($lado == 1) {
                 echo '<font color="purple">';
                 echo "Você tentou atacar " . $log[2] . " mas seu ataque voltou e você perdeu " . $log[3] . " de vida.";
@@ -897,7 +897,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
                 echo "" . $log[1] . " tentou te atacar mas seu ataque voltou e ele perdeu " . $log[3] . " de vida.";
                 echo "</font>";
             }
-        } elseif ($log[0] == 11) {
+        } elseif (($log[0] ?? null) == 11) {
             if ($lado == 1) {
                 echo '<font color="black">';
                 echo "Você tentou fugir mas falhou.";
@@ -907,7 +907,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
                 echo "" . $log[1] . " tentou fugir mas falhou.";
                 echo "</font>";
             }
-        } elseif ($log[0] == 12) {
+        } elseif (($log[0] ?? null) == 12) {
             if ($lado == 1) {
                 echo '<font color="black">';
                 echo "Você fugiu da luta com sucesso!";
@@ -917,7 +917,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
                 echo "" . $log[1] . " fugiu durante a luta.";
                 echo "</font>";
             }
-        } elseif ($log[0] == 13) {
+        } elseif (($log[0] ?? null) == 13) {
             if ($lado == 1) {
                 echo '<font color="black">';
                 echo "Você demorou demais para reagir e " . $log[2] . " te massacrou!";
@@ -927,7 +927,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
                 echo "" . $log[1] . " demorou demais para reagir e você venceu!";
                 echo "</font>";
             }
-        } elseif ($log[0] == 14) {
+        } elseif (($log[0] ?? null) == 14) {
             if ($lado == 1) {
                 echo '<font color="black">';
                 echo "Você demorou demais para responder e perdeu a vez!";
@@ -952,14 +952,14 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
 
     echo "</div>";
 
-    if ($player->hp < 1 || $enemy->hp < 1 || $matou == 5 || $morreu == 5 || $luta['p_type'] == '99' || $luta['e_type'] == '99') {
+    if ($player->hp < 1 || $enemy->hp < 1 || $matou == 5 || $morreu == 5 || ($luta['p_type'] ?? null) == '99' || ($luta['e_type'] ?? null) == '99') {
         include(__DIR__ . "/healcost.php");
         if ($heal > 0 && $player->gold > $cost) {
             echo showAlert("<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('heal.php', 'swap')\">Clique aqui</a> para recuperar toda sua vida por <b>" . $cost . "</b> de ouro.", "white", "left");
         } elseif ($heal > 0 && $player->gold > 0) {
             echo showAlert("<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('heal.php', 'swap')\">Clique aqui</a> para recuperar parte da sua vida por <b>" . $cost2 . "</b> de ouro.", "white", "left");
         }
-    } elseif (($player->id == $luta['p_id'] && $luta['vez'] == 'p' || $player->id != $luta['p_id'] && $luta['vez'] == 'e') && $luta['status'] != 'z') {
+    } elseif (($player->id == ($luta['p_id'] ?? null) && ($luta['vez'] ?? null) == 'p' || $player->id != ($luta['p_id'] ?? null) && ($luta['vez'] ?? null) == 'e') && ($luta['status'] ?? null) != 'z') {
         //se for a vez do player
         echo '<table width="100%" height="43px" border="0px"><tr><td width="85%" bgcolor="#E1CBA4">';
         echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_duel.php?type=97', 'swap')\"><img src=\"static/images/magias/hit.png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 3;\" border=\"0\" /></a>";
@@ -968,7 +968,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
 
             echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_duel.php?type=" . $result['magia_id'] . "', 'swap')\">";
 
-            if ($bixo->type != $result['magia_id']) {
+            if ($bixo->type != ($result['magia_id'] ?? null)) {
                 echo '<img src="static/images/magias/black.png" style="border: 0px; padding-top: 3px; padding-left: 5px; position: absolute; z-index: 3;" title="header=[' . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . ']"/>';
                 echo '<img src="static/images/magias/' . $result['magia_id'] . '.png" style="border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;"/>';
             } else {
@@ -981,12 +981,12 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
         echo '</td><th width="15%" bgcolor="#E1CBA4">';
         echo '<center><font size="1px"><a href="swap_duel.php?type=96"><b>Fugir</b></a></font></center>';
         echo "</th></tr></table>";
-    } elseif ($luta['status'] != 'z') {
+    } elseif (($luta['status'] ?? null) != 'z') {
         echo '<table width="100%" height="43px" border="0px"><tr><td width="85%" bgcolor="#cccccc">';
         echo '<img src="static/images/magias/hit.png" style="border: 0px; padding-top: 3px; padding-left: 5px; z-index: 3;" border="0" />';
         $vermagia = $db->execute("select magias.magia_id, blueprint_magias.nome, blueprint_magias.descri, blueprint_magias.mana from `magias`, `blueprint_magias` where magias.magia_id=blueprint_magias.id and magias.used=? and magias.magia_id!=5 and magias.player_id=?", ["t", $player->id]);
         while ($result = $vermagia->fetchrow()) {
-            if ($bixo->type != $result['magia_id']) {
+            if ($bixo->type != ($result['magia_id'] ?? null)) {
                 echo '<img src="static/images/magias/black.png" style="border: 0px; padding-top: 3px; padding-left: 5px; position: absolute; z-index: 3;" title="header=[' . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . ']"/>';
                 echo '<img src="static/images/magias/' . $result['magia_id'] . '.png" style="border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;"/>';
             } else {
@@ -1001,7 +1001,7 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
 
     echo "</div>";
 
-    if (!$_GET['nolayout']) {
+    if (!($_GET['nolayout'] ?? null)) {
         include(__DIR__ . "/templates/private_footer.php");
     }
 
@@ -1009,29 +1009,29 @@ if ($_GET['luta'] || $verificaLuta->recordcount() > 0) {
 }
 
 include(__DIR__ . "/checkhp.php");
-if (!$_GET['nolayout']) {
+if (!($_GET['nolayout'] ?? null)) {
     include(__DIR__ . "/templates/private_header.php");
 } else {
     header("Content-Type: text/html; charset=utf-8", true);
 }
 
-if ($_GET['remove']) {
-    $checkDuelRemove = $db->execute("select `id` from `duels` where `status`='w' and `id`=? and (`p_id`=? or `e_id`=?)", [$_GET['remove'], $player->id, $player->id]);
+if ($_GET['remove'] ?? null) {
+    $checkDuelRemove = $db->execute("select `id` from `duels` where `status`='w' and `id`=? and (`p_id`=? or `e_id`=?)", [$_GET['remove'] ?? null, $player->id, $player->id]);
     if ($checkDuelRemove->recordcount() > 0) {
-        $db->execute("delete from `duels` where `id`=? and (`p_id`=? or `e_id`=?)", [$_GET['remove'], $player->id, $player->id]);
+        $db->execute("delete from `duels` where `id`=? and (`p_id`=? or `e_id`=?)", [$_GET['remove'] ?? null, $player->id, $player->id]);
         echo showAlert("Desafio removido com sucesso.", "green");
     } else {
         echo showAlert("Este desafio não existe.", "red");
     }
 }
 
-if ($_POST['desafiar']) {
-    $checkEnemy = $db->execute("select `id` from `players` where `username`=?", [$_POST['username']]);
+if ($_POST['desafiar'] ?? null) {
+    $checkEnemy = $db->execute("select `id` from `players` where `username`=?", [$_POST['username'] ?? null]);
     if ($checkEnemy->recordcount() > 0) {
-        $getEnemyId = $db->GetOne("select `id` from `players` where `username`=?", [$_POST['username']]);
+        $getEnemyId = $db->GetOne("select `id` from `players` where `username`=?", [$_POST['username'] ?? null]);
     }
 
-    if (!$_POST['username'] || $_POST['username'] == null) {
+    if (!($_POST['username'] ?? null) || ($_POST['username'] ?? null) == null) {
         echo showAlert("Digite o nome do jogador que você deseja desafiar.", "red");
     } elseif ($checkEnemy->recordcount() == 0) {
         echo showAlert("O jogador " . $_POST['username'] . " não existe.", "red");
@@ -1054,7 +1054,7 @@ if ($_POST['desafiar']) {
     }
 }
 
-if ($_GET['error'] == 'noresponse') {
+if (($_GET['error'] ?? null) == 'noresponse') {
     echo showAlert("Seu oponente não aceitou o desafio no período determinado.", "red");
 }
 
@@ -1079,7 +1079,7 @@ echo "</tr>";
 echo "</table>";
 echo "</form>";
 
-if (!$_GET['nolayout']) {
+if (!($_GET['nolayout'] ?? null)) {
     include(__DIR__ . "/templates/private_footer.php");
 }
 

@@ -9,10 +9,10 @@ include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
 
-switch ($_GET['act']) {
+switch ($_GET['act'] ?? null) {
 	case "confirm": {
 
-			if (!$_POST['market_id']) {
+			if (!($_POST['market_id'] ?? null)) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo 'Um erro desconhecido ocorreu. <a href="market.php">Voltar</a>.';
 				include(__DIR__ . "/templates/private_footer.php");
@@ -20,7 +20,7 @@ switch ($_GET['act']) {
 			}
 
 			$market_id = $_POST['market_id'];
-			$seleciona_market = $db->execute("select market.price, market.seller, market.serv, blueprint_items.id, blueprint_items.name, items.item_bonus, items.for, items.vit, items.agi, items.res from `market`, `blueprint_items`, `items` where market.ite_id=blueprint_items.id and market.market_id=items.id and market.market_id=?", [$_POST['market_id']]);
+			$seleciona_market = $db->execute("select market.price, market.seller, market.serv, blueprint_items.id, blueprint_items.name, items.item_bonus, items.for, items.vit, items.agi, items.res from `market`, `blueprint_items`, `items` where market.ite_id=blueprint_items.id and market.market_id=items.id and market.market_id=?", [$_POST['market_id'] ?? null]);
 
 			if ($seleciona_market->recordcount() == 0) {
 				include(__DIR__ . "/templates/private_header.php");
@@ -31,21 +31,21 @@ switch ($_GET['act']) {
 
 			$seleciona_market = $seleciona_market->fetchrow();
 
-			if ($seleciona_market['serv'] != $player->serv) {
+			if (($seleciona_market['serv'] ?? null) != $player->serv) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Você não pode comprar itens de outro servidor. <a href=\"market.php\">Voltar</a>.";
 				include(__DIR__ . "/templates/private_footer.php");
 				exit;
 			}
 
-			if ($seleciona_market['seller'] == $player->username) {
+			if (($seleciona_market['seller'] ?? null) == $player->username) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Você não pode comprar seus própios itens. <a href=\"market.php\">Voltar</a>.";
 				include(__DIR__ . "/templates/private_footer.php");
 				exit;
 			}
 
-			if ($seleciona_market['price'] > $player->gold) {
+			if (($seleciona_market['price'] ?? null) > $player->gold) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Você não possui dinheiro suficiente. <a href=\"market.php\">Voltar</a>.";
 				include(__DIR__ . "/templates/private_footer.php");
@@ -53,7 +53,7 @@ switch ($_GET['act']) {
 			}
 
 
-			$seleciona_seller = $db->execute("select `id` from `players` where `username`=?", [$seleciona_market['seller']]);
+			$seleciona_seller = $db->execute("select `id` from `players` where `username`=?", [$seleciona_market['seller'] ?? null]);
 			if ($seleciona_seller->recordcount() == 0) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo 'Erro no mercado. Contate o administrador sobre esse erro. <a href="market.php">Voltar</a>.';
@@ -66,7 +66,7 @@ switch ($_GET['act']) {
 			$query_buyer_gold = $db->execute("update `players` set `gold`=? where `id`=?", [$player->gold - $seleciona_market['price'], $player->id]);
 
 			$seleciona_seller = $seleciona_seller->fetchrow();
-			$query_seller_gold = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", [$seleciona_market['price'], $seleciona_seller['id']]);
+			$query_seller_gold = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", [$seleciona_market['price'] ?? null, $seleciona_seller['id'] ?? null]);
 
 			$logmsg = "Você vendeu um iten no mercado. <a href=\"profile.php?id=" . $player->username . '">' . $player->username . "</a> comprou seu/sua " . $seleciona_market['name'] . " e você ganhou " . $seleciona_market['price'] . " de ouro.";
 			addlog($seleciona_seller['id'], $logmsg, $db);
@@ -108,7 +108,7 @@ switch ($_GET['act']) {
 
 	case "buy": {
 
-			if (!$_GET['item']) {
+			if (!($_GET['item'] ?? null)) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo 'Um erro desconhecido ocorreu. <a href="market.php">Voltar</a>.';
 				include(__DIR__ . "/templates/private_footer.php");
@@ -126,7 +126,7 @@ switch ($_GET['act']) {
 				$marketataque = $market['effectiveness'] + ($market['item_bonus'] * 2);
 				echo "<fieldset>\n<legend>";
 
-				if ($market['for'] == 0) {
+				if (($market['for'] ?? null) == 0) {
 					$marketfor = "";
 					$marketfor2 = "";
 				} else {
@@ -134,7 +134,7 @@ switch ($_GET['act']) {
 					$marketfor2 = '+<font color="gray">' . $market['for'] . " <b>For</b></font><br/>";
 				}
 
-				if ($market['vit'] == 0) {
+				if (($market['vit'] ?? null) == 0) {
 					$marketvit = "";
 					$marketvit2 = "";
 				} else {
@@ -142,7 +142,7 @@ switch ($_GET['act']) {
 					$marketvit2 = '+<font color="green">' . $market['vit'] . " <b>Vit</b></font><br/>";
 				}
 
-				if ($market['agi'] == 0) {
+				if (($market['agi'] ?? null) == 0) {
 					$marketagi = "";
 					$marketagi2 = "";
 				} else {
@@ -150,7 +150,7 @@ switch ($_GET['act']) {
 					$marketagi2 = '+<font color="blue">' . $market['agi'] . " <b>Agi</b></font><br/>";
 				}
 
-				if ($market['res'] == 0) {
+				if (($market['res'] ?? null) == 0) {
 					$marketres = "";
 					$marketres2 = "";
 				} else {
@@ -161,13 +161,13 @@ switch ($_GET['act']) {
 
 				echo "<b>" . $market['name'] . " +" . $market['item_bonus'] . "" . $marketfor . "" . $marketvit . "" . $marketagi . "" . $marketres . "</b></legend>\n";
 
-				if ($market['item_bonus'] > 2 && $market['item_bonus'] < 6) {
+				if (($market['item_bonus'] ?? null) > 2 && ($market['item_bonus'] ?? null) < 6) {
 					echo "<table width=\"100%\" bgcolor=\"#ECD1BC\">\n";
-				} elseif ($market['item_bonus'] > 5 && $market['item_bonus'] < 9) {
+				} elseif (($market['item_bonus'] ?? null) > 5 && ($market['item_bonus'] ?? null) < 9) {
 					echo "<table width=\"100%\" bgcolor=\"#F2D0C7\">\n";
-				} elseif ($market['item_bonus'] == 9) {
+				} elseif (($market['item_bonus'] ?? null) == 9) {
 					echo "<table width=\"100%\" bgcolor=\"#EEB0B1\">\n";
-				} elseif ($market['item_bonus'] > 9) {
+				} elseif (($market['item_bonus'] ?? null) > 9) {
 					echo "<table width=\"100%\" bgcolor=\"#D9C6D9\">\n";
 				} else {
 					echo "<table width=\"100%\">\n";
@@ -177,43 +177,43 @@ switch ($_GET['act']) {
 				echo '<img src="static/images/itens/' . $market['img'] . '"/>';
 				echo '</td><td width="80%">';
 				echo $market['description'] . "\n<br />";
-				if ($market['type'] == 'ring' || $market['type'] == 'potion' || $market['type'] == 'addon') {
+				if (($market['type'] ?? null) == 'ring' || ($market['type'] ?? null) == 'potion' || ($market['type'] ?? null) == 'addon') {
 					echo "<b>Vocação:</b> ";
-				} elseif ($market['type'] == 'amulet') {
+				} elseif (($market['type'] ?? null) == 'amulet') {
 					echo "<b>Vitalidade:</b> " . $marketataque . " <b>Vocação:</b> ";
-				} elseif ($market['type'] == 'weapon') {
+				} elseif (($market['type'] ?? null) == 'weapon') {
 					echo "<b>Ataque:</b> " . $marketataque . " <b>Vocação:</b> ";
-				} elseif ($market['type'] == 'boots') {
+				} elseif (($market['type'] ?? null) == 'boots') {
 					echo "<b>Agilidade:</b> " . $marketataque . " <b>Vocação:</b> ";
 				} else {
 					echo "<b>Defesa:</b> " . $marketataque . " <b>Vocação:</b> ";
 				}
 
-				if ($market['voc'] == 1 && $market['needpromo'] == 'f') {
+				if (($market['voc'] ?? null) == 1 && ($market['needpromo'] ?? null) == 'f') {
 					echo "Caçador";
-				} elseif ($market['voc'] == 2 && $market['needpromo'] == 'f') {
+				} elseif (($market['voc'] ?? null) == 2 && ($market['needpromo'] ?? null) == 'f') {
 					echo "Espadachim";
-				} elseif ($market['voc'] == 3 && $market['needpromo'] == 'f') {
+				} elseif (($market['voc'] ?? null) == 3 && ($market['needpromo'] ?? null) == 'f') {
 					echo "Bruxo";
-				} elseif ($market['voc'] == 1 && $market['needpromo'] == 't') {
+				} elseif (($market['voc'] ?? null) == 1 && ($market['needpromo'] ?? null) == 't') {
 					echo "Arqueiro";
-				} elseif ($market['voc'] == 2 && $market['needpromo'] == 't') {
+				} elseif (($market['voc'] ?? null) == 2 && ($market['needpromo'] ?? null) == 't') {
 					echo "Guerreiro";
-				} elseif ($market['voc'] == 3 && $market['needpromo'] == 't') {
+				} elseif (($market['voc'] ?? null) == 3 && ($market['needpromo'] ?? null) == 't') {
 					echo "Mago";
-				} elseif ($market['voc'] == 0 && $market['needpromo'] == 't') {
+				} elseif (($market['voc'] ?? null) == 0 && ($market['needpromo'] ?? null) == 't') {
 					echo "Vocações superiores";
-				} elseif ($market['voc'] == 1 && $market['needpromo'] == 'p') {
+				} elseif (($market['voc'] ?? null) == 1 && ($market['needpromo'] ?? null) == 'p') {
 					echo "Arqueiro Royal";
-				} elseif ($market['voc'] == 2 && $market['needpromo'] == 'p') {
+				} elseif (($market['voc'] ?? null) == 2 && ($market['needpromo'] ?? null) == 'p') {
 					echo "Cavaleiro";
-				} elseif ($market['voc'] == 3 && $market['needpromo'] == 'p') {
+				} elseif (($market['voc'] ?? null) == 3 && ($market['needpromo'] ?? null) == 'p') {
 					echo "Arquimago";
-				} elseif ($market['voc'] == 0 && $market['needpromo'] == 'p') {
+				} elseif (($market['voc'] ?? null) == 0 && ($market['needpromo'] ?? null) == 'p') {
 					echo "Vocações supremas";
 				} else {
 					echo "Todas";
-					if ($market['type'] == 'shield') {
+					if (($market['type'] ?? null) == 'shield') {
 						echo ' <font size="1">(exceto arqueiros)</font>';
 					}
 				}
@@ -221,7 +221,7 @@ switch ($_GET['act']) {
 				echo ' <b>Vendedor:</b> <a href="profile.php?id=' . $market['seller'] . '">' . $market['seller'] . "</a>";
 
 				echo '</td><td width="15%">';
-				if ($market['type'] != 'ring' && $market['type'] != 'potion' && $market['type'] != 'addon') {
+				if (($market['type'] ?? null) != 'ring' && ($market['type'] ?? null) != 'potion' && ($market['type'] ?? null) != 'addon') {
 					echo "" . $marketfor2 . "" . $marketvit2 . "" . $marketagi2 . "" . $marketres2 . "";
 				}
 
@@ -230,15 +230,15 @@ switch ($_GET['act']) {
 
 
 				echo "</td></tr>\n";
-				if ($market['needlvl'] > 1) {
-					if ($player->level < $market['needlvl']) {
+				if (($market['needlvl'] ?? null) > 1) {
+					if ($player->level < ($market['needlvl'] ?? null)) {
 						echo "<table style=\"width:100%; background-color:#EEA2A2;\"><tr><td><center><b>Você precisa ter nível " . $market['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
 					} else {
 						echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter nível " . $market['needlvl'] . " ou mais para usar este item.</b></center></td></tr>\n";
 					}
 				}
 
-				if ($market['needpromo'] == "t") {
+				if (($market['needpromo'] ?? null) == "t") {
 					if ($player->promoted != "f") {
 						echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter uma vocação superior para usar este item.</b></center></td></tr>\n";
 					} else {
@@ -246,7 +246,7 @@ switch ($_GET['act']) {
 					}
 				}
 
-				if ($market['needpromo'] == "p") {
+				if (($market['needpromo'] ?? null) == "p") {
 					if ($player->promoted == "p") {
 						echo "<table style=\"width:100%; background-color:#BDF0A6;\"><tr><td><center><b>Você precisa ter uma vocação suprema para usar este item.</b></center></td></tr>\n";
 					} else {

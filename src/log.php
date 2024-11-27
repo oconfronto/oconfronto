@@ -20,7 +20,7 @@ echo "<tr><td align=\"center\" bgcolor=\"#E1CBA4\"><b>Logs de Usuário</b></td><
 $query0 = $db->execute("select `id`, `msg`, `status`, `time` from `user_log` where `player_id`=? order by `time` desc limit 10", [$player->id]);
 if ($query0->recordcount() > 0) {
 	while ($log0 = $query0->fetchrow()) {
-		$read0 = $db->execute("update `user_log` set `status`='read' where `player_id`=? and `status`='unread' and `id`=?", [$player->id, $log0['id']]);
+		$read0 = $db->execute("update `user_log` set `status`='read' where `player_id`=? and `status`='unread' and `id`=?", [$player->id, $log0['id'] ?? null]);
 
 		$valortempo = time() - $log0['time'];
 		if ($valortempo < 60) {
@@ -61,7 +61,7 @@ echo '<tr><td align="center" bgcolor="#E1CBA4"><b>Logs de Batalha</b></td></tr>'
 $query1 = $db->execute("select `id`, `msg`, `status`, `time` from `logbat` where `player_id`=? order by `time` desc limit 5", [$player->id]);
 if ($query1->recordcount() > 0) {
 	while ($log1 = $query1->fetchrow()) {
-		$read1 = $db->execute("update `logbat` set `status`='read' where `player_id`=? and `status`='unread' and `id`=?", [$player->id, $log1['id']]);
+		$read1 = $db->execute("update `logbat` set `status`='read' where `player_id`=? and `status`='unread' and `id`=?", [$player->id, $log1['id'] ?? null]);
 
 		$valortempo = time() - $log1['time'];
 		if ($valortempo < 60) {
@@ -103,11 +103,11 @@ echo '<tr><td align="center" bgcolor="#E1CBA4"><b>Logs de Ouro</b></td></tr>';
 $query2 = $db->execute("select * from `log_gold` where `player_id`=? order by `time` desc limit 5", [$player->id]);
 if ($query2->recordcount() > 0) {
 	while ($trans = $query2->fetchrow()) {
-		$read1 = $db->execute("update `log_gold` set `status`='read' where `player_id`=? and `status`='unread' and `id`=?", [$player->id, $trans['id']]);
+		$read1 = $db->execute("update `log_gold` set `status`='read' where `player_id`=? and `status`='unread' and `id`=?", [$player->id, $trans['id'] ?? null]);
 
 		echo "<tr>";
 
-		$auxiliar = $trans['action'] == "enviou" ? "para" : "de";
+		$auxiliar = ($trans['action'] ?? null) == "enviou" ? "para" : "de";
 
 		$valortempo = time() -  $trans['time'];
 		if ($valortempo < 60) {
@@ -125,9 +125,9 @@ if ($query2->recordcount() > 0) {
 		}
 
 		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . '] body=[]">';
-		if ($trans['action'] == "doou") {
+		if (($trans['action'] ?? null) == "doou") {
 			echo "<font size=\"1\">Você enviou <b>" . $trans['value'] . "</b> de ouro para o clã <b><a href=\"guild_profile.php?id=" . $trans['name2'] . '">' . $trans['name2'] . "</a></b></font></div></td>";
-		} elseif ($trans['action'] == "ganhou") {
+		} elseif (($trans['action'] ?? null) == "ganhou") {
 			echo "<font size=\"1\">Você recebeu <b>" . $trans['value'] . "</b> de ouro para o clã <b><a href=\"guild_profile.php?id=" . $trans['name2'] . '">' . $trans['name2'] . "</a></b></font></div></td>";
 		} else {
 			echo "<font size=\"1\">Você " . $trans['action'] . " <b>" . $trans['value'] . "</b> de ouro " . $auxiliar . ' <b><a href="profile.php?id=' . $trans['name2'] . '">' . $trans['name2'] . "</a></b></font></div></td>";
@@ -156,12 +156,12 @@ echo '<tr><td align="center" bgcolor="#E1CBA4"><b>Logs de Itens</b></td></tr>';
 $query3 = $db->execute("select * from `log_item` where `player_id`=? order by `time` desc limit 5", [$player->id]);
 if ($query3->recordcount() > 0) {
 	while ($trans = $query3->fetchrow()) {
-		$read1 = $db->execute("update `log_item` set `status`='read' where `player_id`=? and `status`='unread' and `id`=?", [$player->id, $trans['id']]);
+		$read1 = $db->execute("update `log_item` set `status`='read' where `player_id`=? and `status`='unread' and `id`=?", [$player->id, $trans['id'] ?? null]);
 
 		echo "<tr>";
 
 
-		$auxiliar = $trans['action'] == "enviou" ? "para" : "de";
+		$auxiliar = ($trans['action'] ?? null) == "enviou" ? "para" : "de";
 
 		$valortempo = time() -  $trans['time'];
 		if ($valortempo < 60) {
@@ -179,9 +179,9 @@ if ($query3->recordcount() > 0) {
 		}
 
 		echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . '] body=[]">';
-		if ($trans['action'] == "devolveu") {
+		if (($trans['action'] ?? null) == "devolveu") {
 			echo '<font size="1">O administrador devolveu seu/sua <b>' . $trans['value'] . '</b> para <b><a href="profile.php?id=' . $trans['name2'] . '">' . $trans['name2'] . "</a></b></font></div></td>";
-		} elseif ($trans['action'] == "recuperou") {
+		} elseif (($trans['action'] ?? null) == "recuperou") {
 			echo '<font size="1">O administrador recuperou seu/sua <b>' . $trans['value'] . '</b> que estava com <b><a href="profile.php?id=' . $trans['name2'] . '">' . $trans['name2'] . "</a></b></font></div></td>";
 		} else {
 			echo "<font size=\"1\">Você " . $trans['action'] . " " . $trans['value'] . " " . $auxiliar . ' <b><a href="profile.php?id=' . $trans['name2'] . '">' . $trans['name2'] . "</a></b>" . $trans['aditional'] . "</font></div></td>";
@@ -209,7 +209,7 @@ echo '<tr><td align="center" bgcolor="#E1CBA4"><b>Logs da Conta</b></td></tr>';
 $query4 = $db->execute("select `id`, `msg`, `status`, `time` from `account_log` where `player_id`=? order by `time` desc limit 5", [$player->acc_id]);
 if ($query4->recordcount() > 0) {
 	while ($log0 = $query4->fetchrow()) {
-		$read0 = $db->execute("update `account_log` set `status`='read' where `player_id`=? and `status`='unread' and `id`=?", [$player->acc_id, $log0['id']]);
+		$read0 = $db->execute("update `account_log` set `status`='read' where `player_id`=? and `status`='unread' and `id`=?", [$player->acc_id, $log0['id'] ?? null]);
 
 		$valortempo = time() - $log0['time'];
 		if ($valortempo < 60) {

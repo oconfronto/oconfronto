@@ -21,7 +21,7 @@ if ($verificacao->recordcount() == 0) {
 	exit;
 }
 
-if ($quest['quest_status'] < 4) {
+if (($quest['quest_status'] ?? null) < 4) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Aviso</b></legend>\n";
 	echo "<i>Um erro ocorreu. Contate o administrador.</i><br/>\n";
@@ -31,7 +31,7 @@ if ($quest['quest_status'] < 4) {
 	exit;
 }
 
-if ($quest['quest_status'] > 4) {
+if (($quest['quest_status'] ?? null) > 4) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Aviso</b></legend>\n";
 	echo "<i>Você já venceu Raderon.</i><br/>\n";

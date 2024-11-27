@@ -41,32 +41,32 @@ $player = check_user($db);
 				$auxiliar2 = "dia(s) atrás.";
 			}
 
-			$gettasks = $db->execute("select * from `tasks` where `id`=?", [$gettsk['task_id']]);
+			$gettasks = $db->execute("select * from `tasks` where `id`=?", [$gettsk['task_id'] ?? null]);
 			$task = $gettasks->fetchrow();
 
-			if ($task['obj_type'] == 'monster' && $task['obj_extra'] > 0) {
-				$mname = $db->GetOne("select `username` from `monsters` where `id`=?", [$task['obj_value']]);
-				$pcento = $db->GetOne("select `value` from `monster_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id']]);
+			if (($task['obj_type'] ?? null) == 'monster' && ($task['obj_extra'] ?? null) > 0) {
+				$mname = $db->GetOne("select `username` from `monsters` where `id`=?", [$task['obj_value'] ?? null]);
+				$pcento = $db->GetOne("select `value` from `monster_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id'] ?? null]);
 				$pcento = ceil(($pcento / $task['obj_extra']) * 100);
 				$msg = "Matar " . $task['obj_extra'] . "x o monstro " . $mname . ".<br/>";
-			} elseif ($task['obj_type'] == 'monster' && $task['obj_extra'] == 0) {
+			} elseif (($task['obj_type'] ?? null) == 'monster' && ($task['obj_extra'] ?? null) == 0) {
 				$pcento = ceil(($player->monsterkilled / $task['obj_value']) * 100);
 				$msg = "Matar " . $task['obj_value'] . " monstros.<br/>";
-			} elseif ($task['obj_type'] == 'pvp' && $task['obj_extra'] == 0) {
+			} elseif (($task['obj_type'] ?? null) == 'pvp' && ($task['obj_extra'] ?? null) == 0) {
 				$pcento = ceil(($player->kills / $task['obj_value']) * 100);
 				$msg = "Matar " . $task['obj_value'] . " usuários.<br/>";
-			} elseif ($task['obj_type'] == 'level') {
+			} elseif (($task['obj_type'] ?? null) == 'level') {
 				$pcento = ceil(($player->level / $task['obj_value']) * 100);
 				$msg = "Alcançar o nível " . $task['obj_value'] . ".<br/>";
 			}
 
 
-			if ($task['win_type'] == 'gold') {
+			if (($task['win_type'] ?? null) == 'gold') {
 				$win = "<b>Recompensa:</b> " . $task['win_value'] . " moedas de ouro.<br/>";
-			} elseif ($task['win_type'] == 'exp') {
+			} elseif (($task['win_type'] ?? null) == 'exp') {
 				$win = "<b>Recompensa:</b> " . $task['win_value'] . " pontos de experiência.<br/>";
-			} elseif ($task['win_type'] == 'item') {
-				$itname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$task['win_value']]);
+			} elseif (($task['win_type'] ?? null) == 'item') {
+				$itname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$task['win_value'] ?? null]);
 				$win = "<b>Recompensa:</b> " . $itname . ".<br/>";
 			}
 

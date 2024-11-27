@@ -29,32 +29,32 @@ if ($guildquery->recordcount() == 0) {
 include(__DIR__ . "/templates/private_header.php");
 
 //Guild Leader Admin check
-if ($player->username != $guild['leader'] && $player->username != $guild['vice']) {
+if ($player->username != ($guild['leader'] ?? null) && $player->username != ($guild['vice'] ?? null)) {
     echo "Você não pode acessar esta página.";
     echo '<br/><a href="home.php">Voltar</a>.';
 } else {
 
-    if (isset($_POST['username']) && ($_POST['submit'])) {
+    if (($_POST['username'] ?? null) && ($_POST['submit'] ?? null)) {
 
-        $queryuser = $db->execute("select `id`, `username`, `guild` from `players` where `username`=?", [$_POST['username']]);
+        $queryuser = $db->execute("select `id`, `username`, `guild` from `players` where `username`=?", [$_POST['username'] ?? null]);
 
         if ($queryuser->recordcount() == 0) {
             $errmsg .= "Este usuário não existe!<p />";
             $error = 1;
-        } elseif ($_POST['username'] == $guild['leader']) {
+        } elseif (($_POST['username'] ?? null) == ($guild['leader'] ?? null)) {
             $errmsg .= "Você não pode expulsar o lider do clã!<p />";
             $error = 1;
-        } elseif ($_POST['username'] == $guild['vice']) {
+        } elseif (($_POST['username'] ?? null) == ($guild['vice'] ?? null)) {
             $errmsg .= "Você não pode expulsar o vice-lider do clã!<p />";
             $error = 1;
         } else {
             $member = $queryuser->fetchrow();
-            if ($member['guild'] != $guild['id']) {
+            if (($member['guild'] ?? null) != ($guild['id'] ?? null)) {
                 $errmsg .= "O usuário " . $member['username'] . " não faz parte do clã " . $guild['name'] . "!<p />";
                 $error = 1;
             } else {
-                $query = $db->execute("update `guilds` set `members`=? where `id`=?", [$guild['members'] - 1, $guild['id']]);
-                $query1 = $db->execute("update `players` set `guild`=? where `username`=?", [NULL, $member['username']]);
+                $query = $db->execute("update `guilds` set `members`=? where `id`=?", [$guild['members'] - 1, $guild['id'] ?? null]);
+                $query1 = $db->execute("update `players` set `guild`=? where `username`=?", [NULL, $member['username'] ?? null]);
                 $logmsg = "Você foi expulso do clã: " . $guild['name'] . ".";
                 addlog($member['id'], $logmsg, $db);
                 $msg .= "Você expulsou " . $member['username'] . " do clã.<p />";
@@ -65,9 +65,9 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 ?>
 
     <fieldset>
-        <legend><b><?= $guild['name'] ?> :: Expulsar Membro</b></legend>
+        <legend><b><?= $guild['name'] ?? null ?> :: Expulsar Membro</b></legend>
         <form method="POST" action="guild_admin_kick.php">
-            <b>Usuário:</b> <?php $query = $db->execute("select `id`, `username` from `players` where `guild`=?", [$guild['id']]);
+            <b>Usuário:</b> <?php $query = $db->execute("select `id`, `username` from `players` where `guild`=?", [$guild['id'] ?? null]);
                             echo "<select name=\"username\"><option value=''>Selecione</option>";
                             while ($result = $query->fetchrow()) {
                                 echo sprintf('<option value="%s">%s</option>', $result["username"], $result[\USERNAME]);

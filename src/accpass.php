@@ -11,24 +11,24 @@ $acc = check_acc($db);
 $sucess1 = 0;
 $sucess2 = 0;
 
-if ($_POST['changepassword']) {
+if ($_POST['changepassword'] ?? null) {
     //Check password
-    if (!$_POST['password']) {
+    if (!($_POST['password'] ?? null)) {
         $errmsg .= "Você precisa preencher todos os campos!";
         $error = 1;
-    } elseif (!$_POST['password2']) {
+    } elseif (!($_POST['password2'] ?? null)) {
         $errmsg .= "Você precisa preencher todos os campos!";
         $error = 1;
-    } elseif (!$_POST['oldpassword']) {
+    } elseif (!($_POST['oldpassword'] ?? null)) {
         $errmsg .= "Você precisa preencher todos os campos!";
         $error = 1;
     } elseif ($acc->password != encodePassword($_POST['oldpassword'])) {
         $errmsg .= "Sua senha atual está incorreta!";
         $error = 1;
-    } elseif ($_POST['password'] != $_POST['password2']) {
+    } elseif (($_POST['password'] ?? null) != ($_POST['password2'] ?? null)) {
         $errmsg .= "Você não digitou as duas senhas corretamente!";
         $error = 1;
-    } elseif (strlen((string) $_POST['password']) < 4) {
+    } elseif (strlen((string) ($_POST['password'] ?? null)) < 4) {
         $errmsg .= "Sua senha deve ter mais que 3 caracteres.";
         $error = 1;
     }

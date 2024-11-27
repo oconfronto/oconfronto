@@ -4,27 +4,27 @@ declare(strict_types=1);
 
 session_start();
 
-if ($_GET['action'] == "chatheartbeat") {
+if (($_GET['action'] ?? null) == "chatheartbeat") {
 	chatHeartbeat();
 }
 
-if ($_GET['action'] == "sendchat") {
+if (($_GET['action'] ?? null) == "sendchat") {
 	sendChat();
 }
 
-if ($_GET['action'] == "closechat") {
+if (($_GET['action'] ?? null) == "closechat") {
 	closeChat();
 }
 
-if ($_GET['action'] == "startchatsession") {
+if (($_GET['action'] ?? null) == "startchatsession") {
 	startChatSession();
 }
 
-if (!isset($_SESSION['chatHistory'])) {
+if (!($_SESSION['chatHistory'] ?? null)) {
 	$_SESSION['chatHistory'] = [];
 }
 
-if (!isset($_SESSION['openChatBoxes'])) {
+if (!($_SESSION['openChatBoxes'] ?? null)) {
 	$_SESSION['openChatBoxes'] = [];
 }
 
@@ -42,8 +42,8 @@ function chatHeartbeat(): void
 
 	while ($chat = $query->fetchrow()) {
 
-		if (!isset($_SESSION['openChatBoxes'][$chat['from']]) && isset($_SESSION['chatHistory'][$chat['from']])) {
-			$items = $_SESSION['chatHistory'][$chat['from']];
+		if (!($_SESSION['openChatBoxes'][$chat['from']] ?? null) && ($_SESSION['chatHistory'][$chat['from']] ?? null)) {
+			$items = ($_SESSION['chatHistory'] ?? null)[$chat['from'] ?? null];
 		}
 
 		$chat['message'] = sanitize($chat['message']);
@@ -51,20 +51,20 @@ function chatHeartbeat(): void
 		$items .= <<<EOD
 					   {
 			"s": "0",
-			"f": "{$chat['from']}",
-			"m": "{$chat['message']}"
+			"f": "{$chat['from'] ?? null}",
+			"m": "{$chat['message'] ?? null}"
 	   },
 EOD;
 
-		if (!isset($_SESSION['chatHistory'][$chat['from']])) {
+		if (!($_SESSION['chatHistory'][$chat['from']] ?? null)) {
 			$_SESSION['chatHistory'][$chat['from']] = '';
 		}
 
-		$_SESSION['chatHistory'][$chat['from']] .= <<<EOD
+		($_SESSION['chatHistory'] ?? null)[$chat['from'] ?? null] .= <<<EOD
 						   {
 			"s": "0",
-			"f": "{$chat['from']}",
-			"m": "{$chat['message']}"
+			"f": "{$chat['from'] ?? null}",
+			"m": "{$chat['message'] ?? null}"
 	   },
 EOD;
 
@@ -73,8 +73,8 @@ EOD;
 	}
 
 	if (!empty($_SESSION['openChatBoxes'])) {
-		foreach ($_SESSION['openChatBoxes'] as $chatbox => $time) {
-			if (!isset($_SESSION['tsChatBoxes'][$chatbox])) {
+		foreach ($_SESSION['openChatBoxes'] ?? null as $chatbox => $time) {
+			if (!($_SESSION['tsChatBoxes'][$chatbox] ?? null)) {
 
 				$now = time() - strtotime((string) $time);
 
@@ -103,11 +103,11 @@ EOD;
 },
 EOD;
 
-					if (!isset($_SESSION['chatHistory'][$chatbox])) {
+					if (!($_SESSION['chatHistory'][$chatbox] ?? null)) {
 						$_SESSION['chatHistory'][$chatbox] = '';
 					}
 
-					$_SESSION['chatHistory'][$chatbox] .= <<<EOD
+					($_SESSION['chatHistory'] ?? null)[$chatbox] .= <<<EOD
 		{
 "s": "2",
 "f": "{$chatbox}",
@@ -149,7 +149,7 @@ function startChatSession(): void
 {
 	$items = '';
 	if (!empty($_SESSION['openChatBoxes'])) {
-		foreach ($_SESSION['openChatBoxes'] as $chatbox => $void) {
+		foreach ($_SESSION['openChatBoxes'] ?? null as $chatbox => $void) {
 			$items .= chatBoxSession($chatbox);
 		}
 	}
@@ -165,7 +165,7 @@ function startChatSession(): void
 ?>
 	{
 	"username": "<?php echo str_replace(" ", "_", $player->username); ?>",
-	"level": "<?php echo $_SESSION['level']; ?>",
+	"level": "<?php echo $_SESSION['level'] ?? null; ?>",
 	"items": [
 	<?php echo $items; ?>
 	]
@@ -189,11 +189,11 @@ function sendChat(): void
 
 	$messagesan = sanitize($message);
 
-	if (!isset($_SESSION['chatHistory'][str_replace(" ", "_", $_POST['to'])])) {
+	if (!($_SESSION['chatHistory'][str_replace(" ", "_", $_POST['to'])] ?? null)) {
 		$_SESSION['chatHistory'][str_replace(" ", "_", $_POST['to'])] = '';
 	}
 
-	$_SESSION['chatHistory'][str_replace(" ", "_", $_POST['to'])] .= <<<EOD
+	($_SESSION['chatHistory'] ?? null)[str_replace(" ", "_", $_POST['to'])] .= <<<EOD
 					   {
 			"s": "1",
 			"f": "{$to}",

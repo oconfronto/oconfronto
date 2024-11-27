@@ -6,13 +6,13 @@ include(__DIR__ . "/lib.php");
 define("PAGENAME", "Login");
 $acc = check_acc($db);
 
-if (!$_GET['id']) {
+if (!($_GET['id'] ?? null)) {
     header("Location: characters.php");
     exit;
 }
 
-$loginban = $db->GetOne("select `ban` from `players` where `id`=?", [$_GET['id']]);
-$youracc = $db->execute("select * from `players` where `id`=? and `acc_id`=?", [$_GET['id'], $acc->id]);
+$loginban = $db->GetOne("select `ban` from `players` where `id`=?", [$_GET['id'] ?? null]);
+$youracc = $db->execute("select * from `players` where `id`=? and `acc_id`=?", [$_GET['id'] ?? null, $acc->id]);
 if ($loginban > time()) {
     include(__DIR__ . "/templates/acc_header.php");
     $time = $loginban - time();

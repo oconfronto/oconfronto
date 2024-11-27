@@ -20,18 +20,18 @@ if ($guildquery->recordcount() == 0) {
 include(__DIR__ . "/templates/private_header.php");
 
 //Guild Leader Admin check
-if ($player->username != $guild['leader'] && $player->username != $guild['vice']) {
+if ($player->username != ($guild['leader'] ?? null) && $player->username != ($guild['vice'] ?? null)) {
 	echo "Você não pode acessar esta página.<br/>";
 	echo '<a href="home.php">Principal</a>.';
 } else {
 
-	if ($_GET['remove']) {
-		if ($guild['vice'] == NULL || $guild['vice'] == '') {
+	if ($_GET['remove'] ?? null) {
+		if (($guild['vice'] ?? null) == NULL || ($guild['vice'] ?? null) == '') {
 			$msg .= "Seu clã não possui um vice lider.";
 		} else {
-			$db->execute("update `guilds` set `vice`=NULL where `id`=?", [$guild['id']]);
+			$db->execute("update `guilds` set `vice`=NULL where `id`=?", [$guild['id'] ?? null]);
 
-			if ($player->username == $guild['leader']) {
+			if ($player->username == ($guild['leader'] ?? null)) {
 				$msg .= "Você removeu os privilégios de vice-lider de " . $guild['vice'] . ".";
 			} else {
 				echo "Você abandonou seu cargo de vice-liderança no clã: " . $guild['name'] . "<br/>";
@@ -43,33 +43,33 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 	}
 
 
-	if (isset($_POST['username']) && ($_POST['submit'])) {
+	if (($_POST['username'] ?? null) && ($_POST['submit'] ?? null)) {
 
 		$username = $_POST['username'];
-		$query = $db->execute("select `id`, `username`, `guild` from `players` where `username`=? and `serv`=?", [$username, $guild['serv']]);
+		$query = $db->execute("select `id`, `username`, `guild` from `players` where `username`=? and `serv`=?", [$username, $guild['serv'] ?? null]);
 
 		if ($query->recordcount() == 0) {
 			$errmsg .= "Este usuário não existe!<p />";
 			$error = 1;
-		} elseif ($username == $guild['leader']) {
+		} elseif ($username == ($guild['leader'] ?? null)) {
 			$errmsg .= "Este usuário é o lider do clã!";
 			$error = 1;
-		} elseif ($username == $guild['vice']) {
+		} elseif ($username == ($guild['vice'] ?? null)) {
 			$errmsg .= "Este usuário já é o vice-lider do clã!";
 			$error = 1;
 		} else {
 			$member = $query->fetchrow();
-			if ($member['guild'] != $guild['id']) {
+			if (($member['guild'] ?? null) != ($guild['id'] ?? null)) {
 				$errmsg .= sprintf('O usuário %s não faz parte do clã: ', $username) . $member['guild'] . "!<p />";
 				$error = 1;
 			} else {
-				if ($guild['vice'] == NULL || $guild['vice'] == '') {
+				if (($guild['vice'] ?? null) == NULL || ($guild['vice'] ?? null) == '') {
 					$msg .= sprintf('Você nomeou %s como vice-lider do clã.', $username);
 				} else {
 					$msg .= sprintf('Você nomeou %s como vice-lider do clã.<br/>O antigo vice-lider, ', $username) . $guild['vice'] . "  agora é um membro comum.";
 				}
 
-				$query = $db->execute("update `guilds` set `vice`=? where `id`=?", [$username, $guild['id']]);
+				$query = $db->execute("update `guilds` set `vice`=? where `id`=?", [$username, $guild['id'] ?? null]);
 				$logmsg = "Você foi nomeado vice-lider do clã: " . $guild['name'] . ".";
 				addlog($member['id'], $logmsg, $db);
 			}
@@ -84,21 +84,21 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 		$guild = $guildquery->fetchrow();
 	}
 
-	if ($guild['vice'] == NULL || $guild['vice'] == '') {
+	if (($guild['vice'] ?? null) == NULL || ($guild['vice'] ?? null) == '') {
 		$viceatual1 = "Ninguém.";
 	} else {
 		$viceatual1 = $guild['vice'];
 		$viceatual2 = '<br/><a href="guild_admin_vice.php?remove=' . $guild['vice'] . "\">Remover Vice-Liderança de " . $guild['vice'] . "</a>.";
 	}
 
-	if ($player->username == $guild['leader']) {
+	if ($player->username == ($guild['leader'] ?? null)) {
 		echo "<fieldset>";
 		echo "<legend><b>" . $guild['name'] . " :: Nomear Vice-Lider</b></legend>";
 		echo '<form method="POST" action="guild_admin_vice.php">';
 		echo '<table width="100%" border="0"><tr>';
 		echo '<td width="60%">';
 		echo "<b>Usuário:</b>";
-		$query = $db->execute("select `id`, `username` from `players` where `guild`=?", [$guild['id']]);
+		$query = $db->execute("select `id`, `username` from `players` where `guild`=?", [$guild['id'] ?? null]);
 		echo "<select name=\"username\"><option value=''>Selecione</option>";
 		while ($result = $query->fetchrow()) {
 			echo sprintf('<option value="%s">%s</option>', $result["username"], $result["username"]);
@@ -114,7 +114,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 		echo "<p><center>" . $msg . '<font color="red">' . $errmsg . "</font></center></p>";
 		echo "</fieldset>";
 		echo '<a href="guild_admin.php">Voltar</a>.';
-	} elseif ($player->username == $guild['vice']) {
+	} elseif ($player->username == ($guild['vice'] ?? null)) {
 		echo "<fieldset>";
 		echo "<legend><b>" . $guild['name'] . " :: Vice-Lider</b></legend>";
 		echo "<br/><center><input type=\"button\" value=\"Abandonar cargo de Vice-Liderança.\" onclick=\"window.location.href='guild_admin_vice.php?remove=" . $guild['vice'] . "'\"></center><br/>";

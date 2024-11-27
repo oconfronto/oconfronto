@@ -10,15 +10,15 @@ $msg = null;
 $query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);
 $reino = $query->fetchrow();
 
-if ($reino['imperador'] == $player->id) {
-	if ($_POST['submit'] && ($_POST['tax'] == 0 || $_POST['tax'] == 10 || $_POST['tax'] == 15 || $_POST['tax'] == 20)) {
-		if ($_POST['tax'] == 0) {
+if (($reino['imperador'] ?? null) == $player->id) {
+	if (($_POST['submit'] ?? null) && (($_POST['tax'] ?? null) == 0 || ($_POST['tax'] ?? null) == 10 || ($_POST['tax'] ?? null) == 15 || ($_POST['tax'] ?? null) == 20)) {
+		if (($_POST['tax'] ?? null) == 0) {
 			$tax = '0';
-		} elseif ($_POST['tax'] == 10) {
+		} elseif (($_POST['tax'] ?? null) == 10) {
 			$tax = '0.01';
-		} elseif ($_POST['tax'] == 15) {
+		} elseif (($_POST['tax'] ?? null) == 15) {
 			$tax = '0.015';
-		} elseif ($_POST['tax'] == 20) {
+		} elseif (($_POST['tax'] ?? null) == 20) {
 			$tax = '0.02';
 		}
 
@@ -78,22 +78,22 @@ if ($reino['imperador'] == $player->id) {
 	echo "<b>Nova Taxa:</b> ";
 
 	echo '<select name="tax">';
-	if ($reino['tax'] == '0') {
+	if (($reino['tax'] ?? null) == '0') {
 		echo '<option value="0" selected="selected">0%</option>';
 		echo '<option value="10">0.010%</option>';
 		echo '<option value="15">0.015%</option>';
 		echo '<option value="20">0.020%</option>';
-	} elseif ($reino['tax'] == '0.01') {
+	} elseif (($reino['tax'] ?? null) == '0.01') {
 		echo '<option value="0">0%</option>';
 		echo '<option value="10" selected="selected">0.010%</option>';
 		echo '<option value="15">0.015%</option>';
 		echo '<option value="20">0.020%</option>';
-	} elseif ($reino['tax'] == '0.015') {
+	} elseif (($reino['tax'] ?? null) == '0.015') {
 		echo '<option value="0">0%</option>';
 		echo '<option value="10">0.010%</option>';
 		echo '<option value="15" selected="selected">0.015%</option>';
 		echo '<option value="20">0.020%</option>';
-	} elseif ($reino['tax'] == '0.02') {
+	} elseif (($reino['tax'] ?? null) == '0.02') {
 		echo '<option value="0">0%</option>';
 		echo '<option value="10">0.010%</option>';
 		echo '<option value="15">0.015%</option>';

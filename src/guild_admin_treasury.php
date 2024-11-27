@@ -31,12 +31,12 @@ if ($query->recordcount() == 0) {
 include(__DIR__ . "/templates/private_header.php");
 
 //Guild Leader Admin check
-if ($player->username != $guild['leader'] && $player->username != $guild['vice']) {
+if ($player->username != ($guild['leader'] ?? null) && $player->username != ($guild['vice'] ?? null)) {
 	echo "<p />Você não pode acessar esta página.<p />";
 	echo '<a href="home.php">Principal</a><p />';
 } else {
 
-	if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['submit'])) {
+	if (($_POST['username'] ?? null) && ($_POST['amount'] ?? null) && ($_POST['submit'] ?? null)) {
 
 		$query = $db->execute("select * from `players` where `username`=?", [$username]);
 
@@ -49,17 +49,17 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 		} elseif (!is_numeric($amount)) {
 			$errmsg .= "Você não pode enviar esta quantia de dinheiro!<p />";
 			$error = 1;
-		} elseif ($amount > $guild['gold']) {
+		} elseif ($amount > ($guild['gold'] ?? null)) {
 			$errmsg .= "Seu clã não possui esta quantia de dinheiro!<p />";
 			$error = 1;
 		} else {
 			$member = $query->fetchrow();
-			if ($member['guild'] != $guild['id']) {
+			if (($member['guild'] ?? null) != ($guild['id'] ?? null)) {
 				$errmsg .= sprintf('O usuário %s não é membro do clã ', $username) . $guild['name'] . "!<p />";
 				$error = 1;
 			} else {
 				$query = $db->execute("update `guilds` set `gold`=? where `id`=?", [$guild['gold'] - $amount, $player->guild]);
-				$query1 = $db->execute("update `players` set `gold`=? where `username`=?", [$member['gold'] + $amount, $member['username']]);
+				$query1 = $db->execute("update `players` set `gold`=? where `username`=?", [$member['gold'] + $amount, $member['username'] ?? null]);
 				$logmsg = sprintf('Você recebeu <b>%s</b> de ouro do clã: <b>', $amount) . $guild['name'] . "</b>.";
 				addlog($member['id'], $logmsg, $db);
 
@@ -80,7 +80,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 ?>
 
 	<fieldset>
-		<legend><b><?= $guild['name'] ?> :: Transferir Ouro</b></legend>
+		<legend><b><?= $guild['name'] ?? null ?> :: Transferir Ouro</b></legend>
 		<form method="POST" action="guild_admin_treasury.php">
 			<table>
 				<tr>
@@ -99,8 +99,8 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 	<font color=red><?= $errmsg ?></font>
 	<p />
 	<fieldset>
-		<legend><b><?= $guild['name'] ?> :: Saldo</b></legend>
-		Existe <b><?= $guild['gold'] ?> de ouro</b> no tesouro do clã.
+		<legend><b><?= $guild['name'] ?? null ?> :: Saldo</b></legend>
+		Existe <b><?= $guild['gold'] ?? null ?> de ouro</b> no tesouro do clã.
 	</fieldset>
 	<a href="guild_admin.php">Voltar</a>.
 

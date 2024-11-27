@@ -21,7 +21,7 @@ $msg2 = "";
 $error = 0;
 $erro1 = 0;
 $erro2 = 0;
-if ($_POST['register']) {
+if ($_POST['register'] ?? null) {
 
 	$pat[0] = "/^\s+/";
 	$pat[1] = "/\s{2,}/";
@@ -29,12 +29,12 @@ if ($_POST['register']) {
 	$rep[0] = "";
 	$rep[1] = " ";
 	$rep[2] = "";
-	$nomedeusuari0 = ucwords((string) preg_replace($pat, (string) $rep, strtolower((string) $_POST['username'])));
+	$nomedeusuari0 = ucwords((string) preg_replace($pat, (string) $rep, strtolower((string) ($_POST['username'] ?? null))));
 
 	//Check if username has already been used
 	$query = $db->execute("select `id` from `players` where `username`=?", [$nomedeusuari0]);
 	//Check username
-	if (!$_POST['username']) { //If username isn't filled in...
+	if (!($_POST['username'] ?? null)) { //If username isn't filled in...
 		$msg1 .= "Você precisa digitar um nome de usuário!<br />\n"; //Add to error message
 		$error = 1; //Set error check
 		$erro1 = 1;
@@ -49,7 +49,7 @@ if ($_POST['register']) {
 		$error = 1;
 		//Set error check
 		$erro1 = 1;
-	} elseif (preg_match("/^[A-Za-z[:space:]\-]+$/", (string) $_POST['username']) === 0 || preg_match("/^[A-Za-z[:space:]\-]+$/", (string) $_POST['username']) === false) {
+	} elseif (preg_match("/^[A-Za-z[:space:]\-]+$/", (string) ($_POST['username'] ?? null)) === 0 || preg_match("/^[A-Za-z[:space:]\-]+$/", (string) ($_POST['username'] ?? null)) === false) {
 		//If username contains illegal characters...
 		$msg1 .= "Seu nome de usuário não pode conter <b>números</b> ou <b>caracteres especiais</b>!<br />\n";
 		//Add to error message
@@ -63,13 +63,13 @@ if ($_POST['register']) {
 		$erro1 = 1;
 	}
 
-	if ($_POST['voc'] == 'none') {
+	if (($_POST['voc'] ?? null) == 'none') {
 		$msg2 .= "Você precisa escolher uma vocação!";
 		$error = 1;
 		$erro2 = 1;
 	}
 
-	if ($_POST['voc'] != 'archer' && $_POST['voc'] != 'knight' && $_POST['voc'] != 'mage' && $_POST['voc'] != 'none') {
+	if (($_POST['voc'] ?? null) != 'archer' && ($_POST['voc'] ?? null) != 'knight' && ($_POST['voc'] ?? null) != 'mage' && ($_POST['voc'] ?? null) != 'none') {
 		$msg2 .= "Você precisa escolher uma vocação!";
 		$error = 1; //Set error check
 		$erro2 = 1;
@@ -83,8 +83,8 @@ if ($_POST['register']) {
 		$rep[0] = "";
 		$rep[1] = " ";
 		$rep[2] = "";
-		$nomedeusuario = ucwords((string) preg_replace($pat, (string) $rep, strtolower((string) $_POST['username'])));
-		$nomedeusuario2 = ucwords(strtolower((string) $_POST['username']));
+		$nomedeusuario = ucwords((string) preg_replace($pat, (string) $rep, strtolower((string) ($_POST['username'] ?? null))));
+		$nomedeusuario2 = ucwords(strtolower((string) ($_POST['username'] ?? null)));
 
 		$checkvip = $db->execute("select `vip` from `players` where `acc_id`=? and `vip`>? limit 1", [$acc->id, time()]);
 		if ($checkvip->recordcount() > 0) {
@@ -107,15 +107,15 @@ if ($_POST['register']) {
 		$playerid = $db->execute("select `id` from `players` where `username`=?", [$nomedeusuario]);
 		$player = $playerid->fetchrow();
 
-		if ($_POST['voc'] == 'archer') {
+		if (($_POST['voc'] ?? null) == 'archer') {
 			$insert['player_id'] = $player['id'];
 			$insert['item_id'] = 81;
 			$query = $db->autoexecute('items', $insert, 'INSERT');
-		} elseif ($_POST['voc'] == 'knight') {
+		} elseif (($_POST['voc'] ?? null) == 'knight') {
 			$insert['player_id'] = $player['id'];
 			$insert['item_id'] = 8;
 			$query = $db->autoexecute('items', $insert, 'INSERT');
-		} elseif ($_POST['voc'] == 'mage') {
+		} elseif (($_POST['voc'] ?? null) == 'mage') {
 			$insert['player_id'] = $player['id'];
 			$insert['item_id'] = 92;
 			$query = $db->autoexecute('items', $insert, 'INSERT');
@@ -148,7 +148,7 @@ if ($_POST['register']) {
 		echo $msg2;
 	}
 
-	if ($_POST['register']) {
+	if ($_POST['register'] ?? null) {
 		if ($msg1 === "") {
 			$certo1 = 1;
 		}

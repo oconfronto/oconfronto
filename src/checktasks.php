@@ -7,25 +7,25 @@ $taskaddprize = 0;
 $gettasks = $db->execute("select * from `tasks` where `needlvl`<=?", [$player->level]);
 if ($gettasks->recordcount() > 0) {
 	while ($task = $gettasks->fetchrow()) {
-		$checkcompleted = $db->execute("select * from `completed_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id']]);
+		$checkcompleted = $db->execute("select * from `completed_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id'] ?? null]);
 		if ($checkcompleted->recordcount() == 0) {
-			if ($task['obj_type'] == 'monster' && $task['obj_extra'] > 0) {
-				$checktaskkills = $db->GetOne("select `value` from `monster_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id']]);
-				if ($checktaskkills >= $task['obj_extra']) {
+			if (($task['obj_type'] ?? null) == 'monster' && ($task['obj_extra'] ?? null) > 0) {
+				$checktaskkills = $db->GetOne("select `value` from `monster_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id'] ?? null]);
+				if ($checktaskkills >= ($task['obj_extra'] ?? null)) {
 					$insert['player_id'] = $player->id;
 					$insert['task_id'] = $task['id'];
 					$insert['time'] = time();
 					$query = $db->autoexecute('completed_tasks', $insert, 'INSERT');
 
-					$mname = $db->GetOne("select `username` from `monsters` where `id`=?", [$task['obj_value']]);
+					$mname = $db->GetOne("select `username` from `monsters` where `id`=?", [$task['obj_value'] ?? null]);
 					$tarefaconcluida = "Matar " . $task['obj_extra'] . "x o monstro " . $mname . ".";
 
-					$db->execute("delete from `monster_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id']]);
+					$db->execute("delete from `monster_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id'] ?? null]);
 
 					$taskaddprize = 5;
 				}
-			} elseif ($task['obj_type'] == 'monster' && $task['obj_extra'] == 0) {
-				if ($player->monsterkilled >= $task['obj_value']) {
+			} elseif (($task['obj_type'] ?? null) == 'monster' && ($task['obj_extra'] ?? null) == 0) {
+				if ($player->monsterkilled >= ($task['obj_value'] ?? null)) {
 					$insert['player_id'] = $player->id;
 					$insert['task_id'] = $task['id'];
 					$insert['time'] = time();
@@ -34,8 +34,8 @@ if ($gettasks->recordcount() > 0) {
 					$tarefaconcluida = "Matar " . $task['obj_value'] . " monstros.";
 					$taskaddprize = 5;
 				}
-			} elseif ($task['obj_type'] == 'pvp' && $task['obj_extra'] == 0) {
-				if ($player->kills >= $task['obj_value']) {
+			} elseif (($task['obj_type'] ?? null) == 'pvp' && ($task['obj_extra'] ?? null) == 0) {
+				if ($player->kills >= ($task['obj_value'] ?? null)) {
 					$insert['player_id'] = $player->id;
 					$insert['task_id'] = $task['id'];
 					$insert['time'] = time();
@@ -44,8 +44,8 @@ if ($gettasks->recordcount() > 0) {
 					$tarefaconcluida = "Matar " . $task['obj_value'] . " usuários.";
 					$taskaddprize = 5;
 				}
-			} elseif ($task['obj_type'] == 'level') {
-				if ($player->level >= $task['obj_value']) {
+			} elseif (($task['obj_type'] ?? null) == 'level') {
+				if ($player->level >= ($task['obj_value'] ?? null)) {
 					$insert['player_id'] = $player->id;
 					$insert['task_id'] = $task['id'];
 					$insert['time'] = time();
@@ -58,8 +58,8 @@ if ($gettasks->recordcount() > 0) {
 		}
 
 		if ($taskaddprize == 5) {
-			if ($task['win_type'] == 'gold') {
-				$db->execute("update `players` set `gold`=`gold`+? where `id`=?", [$task['win_value'], $player->id]);
+			if (($task['win_type'] ?? null) == 'gold') {
+				$db->execute("update `players` set `gold`=`gold`+? where `id`=?", [$task['win_value'] ?? null, $player->id]);
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Parabéns, você completou a tarefa: <i>" . $tarefaconcluida . "</i><br/>";
 				echo "Você ganhou " . $task['win_value'] . ' moedas de ouro por este motivo.<br/><a href="home.php">Voltar</a>.';
@@ -67,7 +67,7 @@ if ($gettasks->recordcount() > 0) {
 				exit;
 			}
 
-			if ($task['win_type'] == 'exp') {
+			if (($task['win_type'] ?? null) == 'exp') {
 				$addexp = $task['win_value'];
 				$maxexp = maxExp($player->level);
 				while ($addexp + $player->exp >= maxExp($player->level)) {
@@ -92,11 +92,11 @@ if ($gettasks->recordcount() > 0) {
 				exit;
 			}
 
-			if ($task['win_type'] == 'item') {
+			if (($task['win_type'] ?? null) == 'item') {
 				$insert['player_id'] = $player->id;
 				$insert['item_id'] = $task['win_value'];
 				$query = $db->autoexecute('items', $insert, 'INSERT');
-				$itname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$task['win_value']]);
+				$itname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$task['win_value'] ?? null]);
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Parabéns, você completou a tarefa: <i>" . $tarefaconcluida . "</i><br/>";
 				echo "Você ganhou um(a) " . $itname . ' por este motivo.<br/><a href="home.php">Voltar</a>.';

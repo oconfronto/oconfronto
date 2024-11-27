@@ -20,7 +20,7 @@ if ($player->hp <= 0 && $player->deadtime > time()) {
 
 	$time = ceil($player->deadtime - time());
 	$time_remaining = ceil($time / 60);
-	if (!$_GET['nolayout']) {
+	if (!($_GET['nolayout'] ?? null)) {
 		include(__DIR__ . "/templates/private_header.php");
 	}
 
@@ -85,7 +85,7 @@ if ($player->hp <= 0 && $player->deadtime > time()) {
 	echo "</fieldset>";
 
 
-	if (!$_GET['nolayout']) {
+	if (!($_GET['nolayout'] ?? null)) {
 		include(__DIR__ . "/templates/private_footer.php");
 	}
 

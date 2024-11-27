@@ -8,10 +8,10 @@ define("PAGENAME", "Deleta Personagem");
 $acc = check_acc($db);
 include(__DIR__ . "/templates/acc-header.php");
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
-    if (isset($_POST['ddl_char']) && $_POST['ddl_char'] != 'none') {
+if (($_SERVER['REQUEST_METHOD'] ?? null) === 'POST' && ($_POST['register'] ?? null)) {
+    if (($_POST['ddl_char'] ?? null) && ($_POST['ddl_char'] ?? null) != 'none') {
         $nomedeusuari0 = $_POST['ddl_char'];
-        $conf_delete = trim((string) $_POST['conf_delete']);
+        $conf_delete = trim((string) ($_POST['conf_delete'] ?? null));
 
         // Verifica se o campo de confirmação não está vazio
         if ($conf_delete === '' || $conf_delete === '0') {

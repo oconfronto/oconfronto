@@ -19,7 +19,7 @@ while ($count = $countstats->fetchrow()) {
 
 
 include(__DIR__ . '/barclass.php');
-if (isset($_REQUEST['exp'])) {
+if ($_REQUEST['exp'] ?? null) {
 	$bar = new barGen();	// Load the class
 	$bar->setWidth(450);	// Set the width
 	$bar->setHeight(12);	// Set the height
@@ -28,7 +28,7 @@ if (isset($_REQUEST['exp'])) {
 
 	$bar->setFillColor(184, 148, 1);
 	$bar->setData(maxExp($player->level), $player->exp);
-} elseif (isset($_REQUEST['hp'])) {
+} elseif ($_REQUEST['hp'] ?? null) {
 	$bar = new barGen();	// Load the class
 	$bar->setWidth(150);	// Set the width
 	$bar->setHeight(12);	// Set the height
@@ -37,7 +37,7 @@ if (isset($_REQUEST['exp'])) {
 
 	$bar->setFillColor(167, 3, 1);
 	$bar->setData($player->maxhp, $player->hp);
-} elseif (isset($_REQUEST['mana'])) {
+} elseif ($_REQUEST['mana'] ?? null) {
 	$bar = new barGen();	// Load the class
 	$bar->setWidth(150);	// Set the width
 	$bar->setHeight(12);	// Set the height
@@ -46,7 +46,7 @@ if (isset($_REQUEST['exp'])) {
 
 	$bar->setFillColor(9, 42, 83);
 	$bar->setData($player->maxmana, $player->mana);
-} elseif (isset($_REQUEST['energy'])) {
+} elseif ($_REQUEST['energy'] ?? null) {
 	$bar = new barGen();	// Load the class
 	$bar->setWidth(150);	// Set the width
 	$bar->setHeight(12);	// Set the height
@@ -55,7 +55,7 @@ if (isset($_REQUEST['exp'])) {
 
 	$bar->setFillColor(0, 81, 0);
 	$bar->setData($player->maxenergy, $player->energy);
-} elseif (isset($_REQUEST['for'])) {
+} elseif ($_REQUEST['for'] ?? null) {
 	$bar = new barGen();	// Load the class
 	$bar->setWidth(130);	// Set the width
 	$bar->setHeight(12);	// Set the height
@@ -64,7 +64,7 @@ if (isset($_REQUEST['exp'])) {
 
 	$bar->setFillColor(120, 120, 120);
 	$bar->setData(($player->vitality + $player->agility + $player->resistance + $player->strength + $pbonusfor + $pbonusvit + $pbonusagi + $pbonusres), ($player->strength + $pbonusfor));
-} elseif (isset($_REQUEST['vit'])) {
+} elseif ($_REQUEST['vit'] ?? null) {
 	$bar = new barGen();	// Load the class
 	$bar->setWidth(130);	// Set the width
 	$bar->setHeight(12);	// Set the height
@@ -73,7 +73,7 @@ if (isset($_REQUEST['exp'])) {
 
 	$bar->setFillColor(0, 128, 0);
 	$bar->setData(($player->vitality + $player->agility + $player->resistance + $player->strength + $pbonusfor + $pbonusvit + $pbonusagi + $pbonusres), $player->vitality + $pbonusvit);
-} elseif (isset($_REQUEST['agi'])) {
+} elseif ($_REQUEST['agi'] ?? null) {
 	$bar = new barGen();	// Load the class
 	$bar->setWidth(130);	// Set the width
 	$bar->setHeight(12);	// Set the height
@@ -82,7 +82,7 @@ if (isset($_REQUEST['exp'])) {
 
 	$bar->setFillColor(0, 0, 255);
 	$bar->setData(($player->vitality + $player->agility + $player->resistance + $player->strength + $pbonusfor + $pbonusvit + $pbonusagi + $pbonusres), $player->agility + $pbonusagi);
-} elseif (isset($_REQUEST['res'])) {
+} elseif ($_REQUEST['res'] ?? null) {
 	$bar = new barGen();	// Load the class
 	$bar->setWidth(130);	// Set the width
 	$bar->setHeight(12);	// Set the height
@@ -91,7 +91,7 @@ if (isset($_REQUEST['exp'])) {
 
 	$bar->setFillColor(255, 0, 0);
 	$bar->setData(($player->vitality + $player->agility + $player->resistance + $player->strength + $pbonusfor + $pbonusvit + $pbonusagi + $pbonusres), $player->resistance + $pbonusres);
-} elseif (isset($_REQUEST['man'])) {
+} elseif ($_REQUEST['man'] ?? null) {
 	$bar = new barGen();	// Load the class
 	$bar->setWidth(130);	// Set the width
 	$bar->setHeight(12);	// Set the height

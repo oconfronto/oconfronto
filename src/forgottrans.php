@@ -13,22 +13,22 @@ include(__DIR__ . "/templates/private_header.php");
 $soma1 = random_int(1, 70);
 $soma2 = random_int(1, 10);
 
-if (isset($_POST['submit'])) {
-    $getaccount = $db->execute("select `id` from `accounts` where `id`=? and `email`=?", [$player->acc_id, $_POST['email']]);
+if ($_POST['submit'] ?? null) {
+    $getaccount = $db->execute("select `id` from `accounts` where `id`=? and `email`=?", [$player->acc_id, $_POST['email'] ?? null]);
 
-    if ($_POST['email'] != $_POST['email1']) {
+    if (($_POST['email'] ?? null) != ($_POST['email1'] ?? null)) {
         print "Os e-mails digitados são diferentes. <a href='forgottrans.php'>Voltar</a>.";
         include(__DIR__ . "/templates/footer.php");
         exit;
     }
 
-    if ($_POST['email'] != $acc->email) {
+    if (($_POST['email'] ?? null) != $acc->email) {
         print "O e-mail digitado não confere com o e-mail de sua conta. <a href='forgottrans.php'>Voltar</a>.";
         include(__DIR__ . "/templates/footer.php");
         exit;
     }
 
-    if (($_POST['seguranca']) != ($_SESSION['v1'] + $_SESSION['v2'])) {
+    if (($_POST['seguranca'] ?? null) != ($_SESSION['v1'] + $_SESSION['v2'])) {
         print "O código de segurança está incorreto. <a href='forgottrans.php'>Voltar</a>.";
         include(__DIR__ . "/templates/footer.php");
         exit;

@@ -10,10 +10,10 @@ include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
 
 $username = ($_POST['username']);
-$password = strtolower((string) $_POST['passcode']);
+$password = strtolower((string) ($_POST['passcode'] ?? null));
 $amount = ($_POST['amount']);
 
-if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['passcode']) && ($_POST['submit'])) {
+if (($_POST['username'] ?? null) && ($_POST['amount'] ?? null) && ($_POST['passcode'] ?? null) && ($_POST['submit'] ?? null)) {
     $destinatario = $db->execute("select * from `players` where `username`=?", [$username]);
     $member = $destinatario->fetchrow();
     if ($destinatario->recordcount() == 0) {
@@ -26,7 +26,7 @@ if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['passcode']) && (
         exit;
     }
 
-    if ($player->serv != $member['serv']) {
+    if ($player->serv != ($member['serv'] ?? null)) {
         include(__DIR__ . "/templates/private_header.php");
         echo "<fieldset><legend><b>Banco</b></legend>";
         echo "Este usuário pertence a outro servidor.";
@@ -86,7 +86,7 @@ if (isset($_POST['username']) && ($_POST['amount']) && ($_POST['passcode']) && (
         exit;
     }
 
-    $query = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", [$amount, $member['id']]);
+    $query = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", [$amount, $member['id'] ?? null]);
     $query1 = $db->execute("update `players` set `gold`=`gold`-? where `id`=?", [$amount, $player->id]);
     $insert['player_id'] = $player->id;
     $insert['name1'] = $player->username;

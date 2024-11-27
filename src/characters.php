@@ -13,11 +13,11 @@ $aviso = 0;
 $playerstrans = $db->execute("select * from `pending` where `pending_id`=4 and `pending_other`=?", [$acc->id]);
 if ($playerstrans->recordcount() > 0) {
     $change = $playerstrans->fetchrow();
-    $coconta = $db->GetOne("select `conta` from `accounts` where `id`=?", [$change['player_id']]);
+    $coconta = $db->GetOne("select `conta` from `accounts` where `id`=?", [$change['player_id'] ?? null]);
 
-    if ($change['pending_time'] < time()) {
-        $trocaperso = $db->execute("update `players` set `acc_id`=?, `transpass`='f' where `username`=?", [$change['player_id'], $change['pending_status']]);
-        $query = $db->execute("delete from `pending` where `id`=?", [$change['id']]);
+    if (($change['pending_time'] ?? null) < time()) {
+        $trocaperso = $db->execute("update `players` set `acc_id`=?, `transpass`='f' where `username`=?", [$change['player_id'] ?? null, $change['pending_status'] ?? null]);
+        $query = $db->execute("delete from `pending` where `id`=?", [$change['id'] ?? null]);
         echo '<span id="aviso-v">O personagem <b>' . $change['pending_status'] . "</b> foi transferido para a conta <b>" . $coconta . "</b>.</span>";
         $insert['player_id'] = $acc->id;
         $insert['msg'] = "O personagem <b>" . $change['pending_status'] . "</b> foi transferido para a conta <b>" . $coconta . "</b>.";
@@ -54,11 +54,11 @@ if ($playerstrans->recordcount() > 0) {
 $playerstrans2 = $db->execute("select * from `pending` where `pending_id`=4 and `player_id`=?", [$acc->id]);
 if ($playerstrans2->recordcount() > 0) {
     $change2 = $playerstrans2->fetchrow();
-    $coconta = $db->GetOne("select `conta` from `accounts` where `id`=?", [$change2['player_id']]);
+    $coconta = $db->GetOne("select `conta` from `accounts` where `id`=?", [$change2['player_id'] ?? null]);
 
-    if ($change2['pending_time'] < time()) {
-        $trocachare = $db->execute("update `players` set `acc_id`=?, `transpass`='f' where `username`=?", [$change2['player_id'], $change2['pending_status']]);
-        $query = $db->execute("delete from `pending` where `id`=?", [$change2['id']]);
+    if (($change2['pending_time'] ?? null) < time()) {
+        $trocachare = $db->execute("update `players` set `acc_id`=?, `transpass`='f' where `username`=?", [$change2['player_id'] ?? null, $change2['pending_status'] ?? null]);
+        $query = $db->execute("delete from `pending` where `id`=?", [$change2['id'] ?? null]);
         echo '<span id="aviso-v">O personagem <b>' . $change2['pending_status'] . "</b> foi transferido para sua conta.</span>";
 
         $insert['player_id'] = $acc->id;
@@ -97,8 +97,8 @@ if ($playerstrans2->recordcount() > 0) {
 $query04876 = $db->execute("select * from `pending` where `pending_id`=1 and `player_id`=?", [$acc->id]);
 if ($query04876->recordcount() > 0) {
     $change = $query04876->fetchrow();
-    if ($change['pending_time'] < time()) {
-        $trocaemail = $db->execute("update `accounts` set `email`=? where `id`=?", [$change['pending_status'], $acc->id]);
+    if (($change['pending_time'] ?? null) < time()) {
+        $trocaemail = $db->execute("update `accounts` set `email`=? where `id`=?", [$change['pending_status'] ?? null, $acc->id]);
         $query = $db->execute("delete from `pending` where `pending_id`=1 and `player_id`=?", [$acc->id]);
         echo '<span id="aviso-v">Seu e-mail foi alterado para: <b>' . $change['pending_status'] . "</b>.</span>";
         $insert['player_id'] = $acc->id;
@@ -210,21 +210,21 @@ if ($query->recordcount() == 0) {
 } elseif ($query->recordcount() <= 3) {
     echo '<p><table align="center" width="95%"><tr>';
     while ($member = $query->fetchrow()) {
-        $dire = ($member['avatar'] == "anonimo.gif") ? "static/" : "";
+        $dire = (($member['avatar'] ?? null) == "anonimo.gif") ? "static/" : "";
         echo "<td><table align=\"center\" style=\"height:132px; border:1px solid #444; padding:3px;\" onmouseover=\"this.bgColor='#cccccc';\" onmouseout=\"this.bgColor='#000000';\" onclick='window.location=\"login.php?id=" . $member['id'] . "\"'>";
         echo "<tr><td>";
         echo '<center><a href="login.php?id=' . $member['id'] . '"><img src="' . $dire . '' . $member['avatar'] . '" alt="' . $member['username'] . '" width="85px" height="80px"/></a></center>';
         echo "</td></tr>";
 
-        if (strlen((string) $member['username']) < 8) {
+        if (strlen((string) ($member['username'] ?? null)) < 8) {
             echo '<tr><td><center><b><font size="3px">' . $member['username'] . "</font></b></center></td></tr>";
-        } elseif (strlen((string) $member['username']) < 12) {
+        } elseif (strlen((string) ($member['username'] ?? null)) < 12) {
             echo '<tr><td><center><b><font size="2px">' . $member['username'] . "</font></b></center></td></tr>";
         } else {
             echo '<tr><td><center><b><font size="1px">' . $member['username'] . "</font></b></center></td></tr>";
         }
 
-        if ($member['ban'] > time()) {
+        if (($member['ban'] ?? null) > time()) {
             echo '<tr><td><center><font size="1px" color="red"><b>Banido</b></font></center></td></tr>';
         } else {
             echo "<tr><td><center><font size=\"1px\">nível " . $member['level'] . "</font></center></td></tr>";
@@ -237,21 +237,21 @@ if ($query->recordcount() == 0) {
 } else {
     echo '<p><div id="jMyCarousel" class="jMyCarousel"><ul>';
     while ($member = $query->fetchrow()) {
-        $dire = ($member['avatar'] == "anonimo.gif") ? "static/" : "";
+        $dire = (($member['avatar'] ?? null) == "anonimo.gif") ? "static/" : "";
         echo "<li><table align=\"center\" style=\"height:132px; border:1px solid #444; padding:3px;\" onmouseover=\"this.bgColor='#cccccc';\" onmouseout=\"this.bgColor='#000000';\" onclick='window.location=\"login.php?id=" . $member['id'] . "\"'>";
         echo "<tr><td>";
         echo '<center><a href="login.php?id=' . $member['id'] . '"><img src="' . $dire . '' . $member['avatar'] . '" alt="' . $member['username'] . '" width="85px" height="80px"/></a></center>';
         echo "</td></tr>";
 
-        if (strlen((string) $member['username']) < 8) {
+        if (strlen((string) ($member['username'] ?? null)) < 8) {
             echo '<tr><td><center><b><font size="3px">' . $member['username'] . "</font></b></center></td></tr>";
-        } elseif (strlen((string) $member['username']) < 12) {
+        } elseif (strlen((string) ($member['username'] ?? null)) < 12) {
             echo '<tr><td><center><b><font size="2px">' . $member['username'] . "</font></b></center></td></tr>";
         } else {
             echo '<tr><td><center><b><font size="1px">' . $member['username'] . "</font></b></center></td></tr>";
         }
 
-        if ($member['ban'] > time()) {
+        if (($member['ban'] ?? null) > time()) {
             echo '<tr><td><center><font size="1px" color="red"><b>Banido</b></font></center></td></tr>';
         } else {
             echo "<tr><td><center><font size=\"1px\">nível " . $member['level'] . "</font></center></td></tr>";

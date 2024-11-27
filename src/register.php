@@ -8,8 +8,8 @@ define("PAGENAME", "Criar Conta");
 // Use a more secure method for generating random strings
 $string = bin2hex(random_bytes(16));
 
-if (isset($_GET['r'])) {
-    $_SESSION['ref'] = htmlspecialchars((string) $_GET['r'], ENT_QUOTES, 'UTF-8');
+if ($_GET['r'] ?? null) {
+    $_SESSION['ref'] = htmlspecialchars((string) ($_GET['r'] ?? null), ENT_QUOTES, 'UTF-8');
 }
 
 $usaar = $_SESSION['ref'] ?? "";
@@ -35,7 +35,7 @@ $msg3 = "";
 $msg4 = "";
 $msg5 = "";
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? null) === 'POST' && ($_POST['register'] ?? null)) {
     // Process form submission
     $conta2 = $_POST['conta2'] ?? '';
     $user_pass2 = $_POST['user_pass2'] ?? '';
@@ -315,7 +315,7 @@ if ($msg1 !== "") {
     echo $msg5;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? null) === 'POST' && ($_POST['register'] ?? null)) {
     if ($msg1 === "") {
         $certo1 = 1;
     }

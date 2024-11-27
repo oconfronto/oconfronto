@@ -26,12 +26,12 @@ $player = check_user($db);
 	$query0 = $db->execute("select * from `log_item` where `player_id`=? order by `time` desc", [$player->id]);
 	if ($query0->recordcount() > 0) {
 		while ($trans = $query0->fetchrow()) {
-			$read1 = $db->execute("update `log_item` set `status`='read' where `player_id`=? and `status`='unread' and `id`=?", [$player->id, $trans['id']]);
+			$read1 = $db->execute("update `log_item` set `status`='read' where `player_id`=? and `status`='unread' and `id`=?", [$player->id, $trans['id'] ?? null]);
 
 			echo "<tr>";
 
 
-			$auxiliar = $trans['action'] == "enviou" ? "para" : "de";
+			$auxiliar = ($trans['action'] ?? null) == "enviou" ? "para" : "de";
 
 			$valortempo = time() -  $trans['time'];
 			if ($valortempo < 60) {
@@ -49,9 +49,9 @@ $player = check_user($db);
 			}
 
 			echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[Log] body=[" . $valortempo2 . " " . $auxiliar2 . ']">';
-			if ($trans['action'] == "devolveu") {
+			if (($trans['action'] ?? null) == "devolveu") {
 				echo '<font size="1">O administrador devolveu seu/sua <b>' . $trans['value'] . '</b> para <b><a href="profile.php?id=' . $trans['name2'] . '">' . $trans['name2'] . "</a></b></font></div></td>";
-			} elseif ($trans['action'] == "recuperou") {
+			} elseif (($trans['action'] ?? null) == "recuperou") {
 				echo '<font size="1">O administrador recuperou seu/sua <b>' . $trans['value'] . '</b> que estava com <b><a href="profile.php?id=' . $trans['name2'] . '">' . $trans['name2'] . "</a></b></font></div></td>";
 			} else {
 				echo "<font size=\"1\">Você " . $trans['action'] . " " . $trans['value'] . " " . $auxiliar . ' <b><a href="profile.php?id=' . $trans['name2'] . '">' . $trans['name2'] . "</a></b>" . $trans['aditional'] . "</font></div></td>";

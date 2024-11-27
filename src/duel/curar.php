@@ -5,10 +5,10 @@ declare(strict_types=1);
 $selectmana = $db->GetOne("select `mana` from `blueprint_magias` where `id`=4");
 $mana = $player->reino == '1' || $player->vip > time() ? $selectmana - 5 : $selectmana;
 
-$log = (isset($duellog[0]) && is_string($duellog[0])) ? explode(", ", $duellog[0]) : [];
+$log = (($duellog[0] ?? null) && is_string($duellog[0])) ? explode(", ", $duellog[0]) : [];
 
 if ($player->mana < $mana) {
-    if ($log === [] || $log[0] != 6) {
+    if ($log === [] || ($log[0] ?? null) != 6) {
         $duellog = ["6, " . $player->username . ""];
     }
 

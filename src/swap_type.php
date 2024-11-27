@@ -5,13 +5,13 @@ declare(strict_types=1);
 include(__DIR__ . "/lib.php");
 $player = check_user($db);
 
-if ($_GET['type'] != 96 && $_GET['type'] < 98 && $_GET['type'] > 0) {
-	$db->execute("update `bixos` set `type`=? where `hp`>0 and `player_id`=?", [$_GET['type'], $player->id]);
-} elseif ($_GET['type'] == 96) {
-	$db->execute("update `bixos` set `type`=? where `hp`>0 and `player_id`=?", [$_GET['type'], $player->id]);
+if (($_GET['type'] ?? null) != 96 && ($_GET['type'] ?? null) < 98 && ($_GET['type'] ?? null) > 0) {
+	$db->execute("update `bixos` set `type`=? where `hp`>0 and `player_id`=?", [$_GET['type'] ?? null, $player->id]);
+} elseif (($_GET['type'] ?? null) == 96) {
+	$db->execute("update `bixos` set `type`=? where `hp`>0 and `player_id`=?", [$_GET['type'] ?? null, $player->id]);
 	header("Location: monster.php?act=attack");
 	exit;
-} elseif ($_GET['alterar']) {
+} elseif ($_GET['alterar'] ?? null) {
 	$modefastbattle = $db->execute("select * from `other` where `value`=? and `player_id`=?", ['fastbattle', $player->id]);
 	if ($modefastbattle->recordcount() < 1) {
 		$insert['player_id'] = $player->id;
@@ -28,9 +28,9 @@ if ($_GET['type'] != 96 && $_GET['type'] < 98 && $_GET['type'] > 0) {
 
 	header("Location: monster.php?act=attack");
 	exit;
-} elseif ($_GET['descarregar']) {
+} elseif ($_GET['descarregar'] ?? null) {
 
-	if ($_GET['times']) {
+	if ($_GET['times'] ?? null) {
 		$vezes = floor($_GET['times']);
 		if ($vezes > 1 && $player->energy >= ($vezes * 10)) {
 			$enemyid = $db->GetOne("select `id` from `bixos` where `hp`>0 and `player_id`=?", [$player->id]);

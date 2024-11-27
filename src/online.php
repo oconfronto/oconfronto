@@ -5,7 +5,7 @@ declare(strict_types=1);
 include(__DIR__ . "/lib.php");
 define("PAGENAME", "Chat");
 $player = check_user($db);
-if ($_GET['act'] == 'showmsg') {
+if (($_GET['act'] ?? null) == 'showmsg') {
 	header('Content-type: text/html; charset=utf-8');
 	$check = $db->execute("select * from `pending` where `pending_id`=31 and `player_id`=?", [$player->id]);
 	if ($check->recordcount() == 0) {
@@ -14,7 +14,7 @@ if ($_GET['act'] == 'showmsg') {
 	} else {
 		$user = $check->fetchrow();
 
-		if ($user['pending_status'] == 'reino') {
+		if (($user['pending_status'] ?? null) == 'reino') {
 			$countmsgs = $db->execute("select * from `user_chat` where `reino`=? order by `time` asc", [$player->reino]);
 			$getmsgs = $db->execute("select * from `user_chat` where `reino`=? order by `time` asc limit 13", [$player->reino]);
 		} else {
@@ -27,7 +27,7 @@ if ($_GET['act'] == 'showmsg') {
 	}
 
 	if ($getmsgs->recordcount() == 0) {
-		if (($player->guild == NULL || $player->guild == 0) && $user['pending_status'] == 'cla') {
+		if (($player->guild == NULL || $player->guild == 0) && ($user['pending_status'] ?? null) == 'cla') {
 			echo "<font size=\"1\"><center><b>Você não possui um clã.</center></font>";
 		} else {
 			echo '<font size="1"><center><b>Nenhuma mensagem recente.</center></font>';
@@ -36,7 +36,7 @@ if ($_GET['act'] == 'showmsg') {
 		$firstmsg = 0;
 		while ($msg = $getmsgs->fetchrow()) {
 
-			$ignorado = $db->execute("select * from `ignored` where `uid`=? and `bid`=?", [$player->id, $msg['player_id']]);
+			$ignorado = $db->execute("select * from `ignored` where `uid`=? and `bid`=?", [$player->id, $msg['player_id'] ?? null]);
 			if ($ignorado->recordcount() == 0) {
 				echo antiBreak('<font size="1px"><font color="grey">' . date('H:i', $msg['time']) . "</font> " . showName($msg['player_id'], $db) . ": " . $msg['msg'] . "</font><br/>", "50");
 				if ($firstmsg == 0) {
@@ -52,9 +52,9 @@ if ($_GET['act'] == 'showmsg') {
 			} else {
 				$user = $check->fetchrow();
 
-				if ($user['pending_status'] == 'reino') {
+				if (($user['pending_status'] ?? null) == 'reino') {
 					$db->execute("delete from `user_chat` where `time`=? and `reino`=?", [$firsttime, $player->reino]);
-				} elseif ($user['pending_status'] == 'reino') {
+				} elseif (($user['pending_status'] ?? null) == 'reino') {
 					$db->execute("delete from `user_chat` where `time`=? and `guild`=?", [$firsttime, $player->guild]);
 				}
 			}
@@ -64,10 +64,10 @@ if ($_GET['act'] == 'showmsg') {
 	exit;
 }
 
-if ($_POST['submit'] && ($_POST['status'] && $_POST['style'])) {
-	if ($_POST['status'] == 'onl') {
+if (($_POST['submit'] ?? null) && (($_POST['status'] ?? null) && ($_POST['style'] ?? null))) {
+	if (($_POST['status'] ?? null) == 'onl') {
 		$db->execute("delete from `pending` where `pending_id`=30 and `player_id`=?", [$player->id]);
-	} elseif ($_POST['status'] == 'ocp') {
+	} elseif (($_POST['status'] ?? null) == 'ocp') {
 
 		$check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", [$player->id]);
 		if ($check->recordcount() == 0) {
@@ -79,7 +79,7 @@ if ($_POST['submit'] && ($_POST['status'] && $_POST['style'])) {
 		} else {
 			$db->execute("update `pending` set `pending_status`='ocp' where `pending_id`=30 and `player_id`=?", [$player->id]);
 		}
-	} elseif ($_POST['status'] == 'inv') {
+	} elseif (($_POST['status'] ?? null) == 'inv') {
 
 		$check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", [$player->id]);
 		if ($check->recordcount() == 0) {
@@ -93,9 +93,9 @@ if ($_POST['submit'] && ($_POST['status'] && $_POST['style'])) {
 		}
 	}
 
-	if ($_POST['style'] == 'chat') {
+	if (($_POST['style'] ?? null) == 'chat') {
 		$db->execute("delete from `pending` where `pending_id`=31 and `player_id`=?", [$player->id]);
-	} elseif ($_POST['style'] == 'reino') {
+	} elseif (($_POST['style'] ?? null) == 'reino') {
 
 		$check = $db->execute("select * from `pending` where `pending_id`=31 and `player_id`=?", [$player->id]);
 		if ($check->recordcount() == 0) {
@@ -107,7 +107,7 @@ if ($_POST['submit'] && ($_POST['status'] && $_POST['style'])) {
 		} else {
 			$db->execute("update `pending` set `pending_status`='reino' where `pending_id`=31 and `player_id`=?", [$player->id]);
 		}
-	} elseif ($_POST['style'] == 'cla') {
+	} elseif (($_POST['style'] ?? null) == 'cla') {
 
 		$check = $db->execute("select * from `pending` where `pending_id`=31 and `player_id`=?", [$player->id]);
 		if ($check->recordcount() == 0) {
@@ -157,7 +157,7 @@ if ($check->recordcount() == 0) {
 } else {
 	$user = $check->fetchrow();
 
-	if ($user['pending_status'] == 'reino') {
+	if (($user['pending_status'] ?? null) == 'reino') {
 		echo "Chat do Reino";
 	} else {
 		echo "Chat do Clã";
@@ -196,7 +196,7 @@ if ($check->recordcount() == 0) {
 } else {
 	$user = $check->fetchrow();
 
-	if ($user['pending_status'] == 'ocp') {
+	if (($user['pending_status'] ?? null) == 'ocp') {
 		echo '<option value="onl">Online</option>';
 		echo '<option value="ocp" selected="selected">Ocupado</option>';
 		echo "<option value=\"inv\">Invisível</option>";
@@ -221,7 +221,7 @@ if ($check->recordcount() == 0) {
 } else {
 	$user = $check->fetchrow();
 
-	if ($user['pending_status'] == 'reino') {
+	if (($user['pending_status'] ?? null) == 'reino') {
 		echo '<option value="chat">Geral</option>';
 		echo '<option value="reino" selected="selected">Reino</option>';
 		echo "<option value=\"cla\">Clã</option>";
@@ -252,7 +252,7 @@ if ($check->recordcount() == 0) {
 } else {
 	$user = $check->fetchrow();
 
-	if ($user['pending_status'] == 'reino') {
+	if (($user['pending_status'] ?? null) == 'reino') {
 		echo "Usuários do reino online";
 	} else {
 		echo "Usuários do clã online";
@@ -277,14 +277,14 @@ while ($online = $query->fetchrow()) {
 	} else {
 		$user = $check->fetchrow();
 
-		if ($user['pending_status'] == 'reino') {
-			$getname = $db->execute("select `id` from `players` where `id`=? and `reino`=? order by `username` asc", [$online['player_id'], $player->reino]);
+		if (($user['pending_status'] ?? null) == 'reino') {
+			$getname = $db->execute("select `id` from `players` where `id`=? and `reino`=? order by `username` asc", [$online['player_id'] ?? null, $player->reino]);
 			while ($member = $getname->fetchrow()) {
 				echo "" . showName($member['id'], $db) . " | ";
 				$totalon += 1;
 			}
 		} else {
-			$getname = $db->execute("select `id` from `players` where `id`=? and `guild`=? order by `username` asc", [$online['player_id'], $player->guild]);
+			$getname = $db->execute("select `id` from `players` where `id`=? and `guild`=? order by `username` asc", [$online['player_id'] ?? null, $player->guild]);
 			while ($member = $getname->fetchrow()) {
 				echo "" . showName($member['id'], $db) . " | ";
 				$totalon += 1;

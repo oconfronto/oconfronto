@@ -22,19 +22,19 @@ function displayItem($db, $player, $itemType): void
         } else {
             while ($showeditexs = $showitenx->fetchrow()) {
                 // Convert integer values to strings before passing to htmlspecialchars
-                $showitfor2 = $showeditexs['for'] > 0 ? "+<font color=gray>" . htmlspecialchars((string) $showeditexs['for']) . " For</font><br/>" : "";
-                $showitvit2 = $showeditexs['vit'] > 0 ? "+<font color=green>" . htmlspecialchars((string) $showeditexs['vit']) . " Vit</font><br/>" : "";
-                $showitagi2 = $showeditexs['agi'] > 0 ? "+<font color=blue>" . htmlspecialchars((string) $showeditexs['agi']) . " Agi</font><br/>" : "";
-                $showitres2 = $showeditexs['res'] > 0 ? "+<font color=red>" . htmlspecialchars((string) $showeditexs['res']) . " Res</font>" : "";
+                $showitfor2 = ($showeditexs['for'] ?? null) > 0 ? "+<font color=gray>" . htmlspecialchars((string) ($showeditexs['for'] ?? null)) . " For</font><br/>" : "";
+                $showitvit2 = ($showeditexs['vit'] ?? null) > 0 ? "+<font color=green>" . htmlspecialchars((string) ($showeditexs['vit'] ?? null)) . " Vit</font><br/>" : "";
+                $showitagi2 = ($showeditexs['agi'] ?? null) > 0 ? "+<font color=blue>" . htmlspecialchars((string) ($showeditexs['agi'] ?? null)) . " Agi</font><br/>" : "";
+                $showitres2 = ($showeditexs['res'] ?? null) > 0 ? "+<font color=red>" . htmlspecialchars((string) ($showeditexs['res'] ?? null)) . " Res</font>" : "";
 
                 $itemClass = 'bg_item1';
-                if ($showeditexs['item_bonus'] > 9) {
+                if (($showeditexs['item_bonus'] ?? null) > 9) {
                     $itemClass = 'bg_item5';
-                } elseif ($showeditexs['item_bonus'] == 9) {
+                } elseif (($showeditexs['item_bonus'] ?? null) == 9) {
                     $itemClass = 'bg_item4';
-                } elseif ($showeditexs['item_bonus'] > 5) {
+                } elseif (($showeditexs['item_bonus'] ?? null) > 5) {
                     $itemClass = 'bg_item3';
-                } elseif ($showeditexs['item_bonus'] > 2) {
+                } elseif (($showeditexs['item_bonus'] ?? null) > 2) {
                     $itemClass = 'bg_item2';
                 }
 
@@ -44,7 +44,7 @@ function displayItem($db, $player, $itemType): void
 
                 echo sprintf("<div class='%s'>", $itemClass);
                 echo sprintf('<div title="header=[%s] body=[%s]">', $showitname, $showitinfo);
-                echo '<img src="static/images/itens/' . htmlspecialchars((string) $showeditexs['img']) . '"/>';
+                echo '<img src="static/images/itens/' . htmlspecialchars((string) ($showeditexs['img'] ?? null)) . '"/>';
                 echo "</div></div>";
             }
         }

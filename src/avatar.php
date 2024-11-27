@@ -12,7 +12,7 @@ include(__DIR__ . "/templates/private_header.php");
 
 
 $get = $db->execute(sprintf("select * from `players` where `username` = '%s' and subname > '0'", $player->username));
-if ($get->recordcount() > 0 && $_POST['subname'] == "alterar") {
+if ($get->recordcount() > 0 && ($_POST['subname'] ?? null) == "alterar") {
 	$subtitle = $_POST['subtitle'];
 	$sub_color = $_POST['categoria_color'];
 	$numero = "10";
@@ -22,7 +22,7 @@ if ($get->recordcount() > 0 && $_POST['subname'] == "alterar") {
 	} elseif (!empty($subtitle) && !empty($sub_color)) {
 		if ($sub_color == "red" || $sub_color == "blue" || $sub_color == "green" || $sub_color == "black") {
 
-			if ($_POST['clean'] == 'yes') {
+			if (($_POST['clean'] ?? null) == 'yes') {
 				$sub_final = "1";
 				echo showAlert("Subnick foi removido", "green");
 			} else {
@@ -39,17 +39,17 @@ if ($get->recordcount() > 0 && $_POST['subname'] == "alterar") {
 	}
 }
 
-if ($_POST['upload']) {
-	if (!$_POST['avatar']) {
+if ($_POST['upload'] ?? null) {
+	if (!($_POST['avatar'] ?? null)) {
 		$errmsg .= "Por favor preencha todos os campos!";
 		$error = 1;
-	} elseif ($_POST['avatar'] && (@GetImageSize($_POST['avatar']) === [] || @GetImageSize($_POST['avatar']) === false)) {
+	} elseif (($_POST['avatar'] ?? null) && (@GetImageSize($_POST['avatar']) === [] || @GetImageSize($_POST['avatar']) === false)) {
 		$errmsg .= "O endereço desta imagem não é válido!";
 		$error = 1;
 	}
 
 	if ($error == 0) {
-		$avat = $_POST['avatar'] ?: "anonimo.gif";
+		$avat = $_POST['avatar'] ?? null ?: "anonimo.gif";
 		$query = $db->execute("update `players` set `avatar`=? where `id`=?", [$avat, $player->id]);
 		$msg .= "Você alterou seu avatar com sucesso!";
 		// Espera 1.5 segundos antes de atualizar a página

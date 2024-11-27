@@ -20,7 +20,7 @@ if ($player->level < 240) {
 }
 
 if ($player->voc == "knight") {
-	if ($_GET['act'] == "pay") {
+	if (($_GET['act'] ?? null) == "pay") {
 		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 12]);
 		if ($verificacao->recordcount() == 0) {
 			if ($player->gold - 2000000 < 0) {
@@ -60,7 +60,7 @@ if ($player->voc == "knight") {
 	$quest = $verificacao->fetchrow();
 
 	if ($verificacao->recordcount() == 0) {
-		if ($_GET['next'] == 1) {
+		if (($_GET['next'] ?? null) == 1) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
 			echo "<i>É sobre uma guerreiro incrível, porém não me lembro muito bem. Acho que 2 milhões ajudarão a refrescar minha memória.</i><br/>\n";
@@ -70,7 +70,7 @@ if ($player->voc == "knight") {
 			exit;
 		}
 
-		if ($_GET['next'] == 2) {
+		if (($_GET['next'] ?? null) == 2) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
 			echo "<i>Deseja pagar 2000000 de ouro para ouvir mais sore este guerreiro?</i><br/>\n";
@@ -80,7 +80,7 @@ if ($player->voc == "knight") {
 			exit;
 		}
 
-		if ($_GET['next'] == 3) {
+		if (($_GET['next'] ?? null) == 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
 			echo "<i>Tudo bem, talvez mais tarde.</i><br/>\n";
@@ -99,8 +99,8 @@ if ($player->voc == "knight") {
 		exit;
 	}
 
-	if ($quest['quest_status'] == 1) {
-		if ($_GET['next'] == 1) {
+	if (($quest['quest_status'] ?? null) == 1) {
+		if (($_GET['next'] ?? null) == 1) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
 			echo "<i>Seu nome é Friden o destemido guerreiro banhado pelo sangue do dragão!<br/>Derrote Friden e obtenha sua espada que também foi banhada pelo sangue do dragão, e você poderá se tornar um grandioso Guerreiro, porém devo avisar-lhe que não é uma tarefa fácil. Friden tem muitos admiradores e amigos, cuidado para não encontralos em sua jornada.</i><br/>\n";
@@ -110,7 +110,7 @@ if ($player->voc == "knight") {
 			exit;
 		}
 
-		if ($_GET['next'] == 2) {
+		if (($_GET['next'] ?? null) == 2) {
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [2, $player->id, 12]);
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
@@ -121,7 +121,7 @@ if ($player->voc == "knight") {
 			exit;
 		}
 
-		if ($_GET['next'] == 3) {
+		if (($_GET['next'] ?? null) == 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
 			echo "<i>Tudo bem, treine um pouco mais e mais tarde você poderá buscar por Friden.</i><br/>\n";
@@ -140,8 +140,8 @@ if ($player->voc == "knight") {
 		exit;
 	}
 
-	if ($quest['quest_status'] == 2) {
-		if ($_GET['next'] == 3) {
+	if (($quest['quest_status'] ?? null) == 2) {
+		if (($_GET['next'] ?? null) == 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Você conseguiu despistar Alexia, mas deverá enfrentá-la mais tarde.</i><br/>\n";
@@ -160,11 +160,11 @@ if ($player->voc == "knight") {
 		exit;
 	}
 
-	if ($quest['quest_status'] == 3 || $quest['quest_status'] == 4) {
-		if ($_GET['next'] == 1) {
+	if (($quest['quest_status'] ?? null) == 3 || ($quest['quest_status'] ?? null) == 4) {
+		if (($_GET['next'] ?? null) == 1) {
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [4, $player->id, 12]);
 			header("Location: bquest.php");
-		} elseif ($_GET['next'] == 3) {
+		} elseif (($_GET['next'] ?? null) == 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Você conseguiu despistar Ramthysts, mas deverá enfrentá-lo mais tarde.</i><br/>\n";
@@ -183,11 +183,11 @@ if ($player->voc == "knight") {
 		}
 	}
 
-	if ($quest['quest_status'] == 5 || $quest['quest_status'] == 6) {
-		if ($_GET['next'] == 1) {
+	if (($quest['quest_status'] ?? null) == 5 || ($quest['quest_status'] ?? null) == 6) {
+		if (($_GET['next'] ?? null) == 1) {
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [6, $player->id, 12]);
 			header("Location: bquest.php");
-		} elseif ($_GET['next'] == 3) {
+		} elseif (($_GET['next'] ?? null) == 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Você conseguiu despistar Friden, mas deverá enfrentá-lo mais tarde.</i><br/>\n";
@@ -207,7 +207,7 @@ if ($player->voc == "knight") {
 	}
 
 
-	if ($quest['quest_status'] == 7) {
+	if (($quest['quest_status'] ?? null) == 7) {
 		$query = $db->execute("update `players` set `promoted`=? where `id`=?", ['p', $player->id]);
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [90, $player->id, 12]);
 		include(__DIR__ . "/templates/private_header.php");
@@ -219,7 +219,7 @@ if ($player->voc == "knight") {
 		exit;
 	}
 
-	if ($quest['quest_status'] == 90) {
+	if (($quest['quest_status'] ?? null) == 90) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
 		echo "<i>Você já terminou esta missão!</i><br/>\n";
@@ -230,7 +230,7 @@ if ($player->voc == "knight") {
 	}
 } elseif ($player->voc == "mage") {
 
-	if ($_GET['act'] == "pay") {
+	if (($_GET['act'] ?? null) == "pay") {
 		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 12]);
 		if ($verificacao->recordcount() == 0) {
 			if ($player->gold - 2000000 < 0) {
@@ -270,7 +270,7 @@ if ($player->voc == "knight") {
 	$quest = $verificacao->fetchrow();
 
 	if ($verificacao->recordcount() == 0) {
-		if ($_GET['next'] == 1) {
+		if (($_GET['next'] ?? null) == 1) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Você segue e encontra um gigantesco coliseu, e ao redor vê vários dos mais famosos magos da região. Este torneio não será nada fácil. Você realmente deseja participar?</i><br/>\n";
@@ -280,7 +280,7 @@ if ($player->voc == "knight") {
 			exit;
 		}
 
-		if ($_GET['next'] == 2) {
+		if (($_GET['next'] ?? null) == 2) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Você precisará pagar 2000000 de ouro para participar do torneio. Acredite, valerá a pena!</i><br/>\n";
@@ -290,7 +290,7 @@ if ($player->voc == "knight") {
 			exit;
 		}
 
-		if ($_GET['next'] == 3) {
+		if (($_GET['next'] ?? null) == 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Tudo bem, talvez mais tarde.</i><br/>\n";
@@ -310,8 +310,8 @@ if ($player->voc == "knight") {
 		exit;
 	}
 
-	if ($quest['quest_status'] == 1) {
-		if ($_GET['next'] == 1) {
+	if (($quest['quest_status'] ?? null) == 1) {
+		if (($_GET['next'] ?? null) == 1) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Seu nome é Friden o destemido guerreiro banhado pelo sangue do dragão!<br/>Derrote Friden e obtenha sua espada que também foi banhada pelo sangue do dragão, e você poderá se tornar um grandioso Guerreiro, porém devo avisar-lhe que não é uma tarefa fácil. Friden tem muitos admiradores e amigos, cuidado para não encontralos em sua jornada.</i><br/>\n";
@@ -321,7 +321,7 @@ if ($player->voc == "knight") {
 			exit;
 		}
 
-		if ($_GET['next'] == 2) {
+		if (($_GET['next'] ?? null) == 2) {
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [2, $player->id, 12]);
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
@@ -332,7 +332,7 @@ if ($player->voc == "knight") {
 			exit;
 		}
 
-		if ($_GET['next'] == 3) {
+		if (($_GET['next'] ?? null) == 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Tudo bem, treine um pouco mais e volte mais tarde.</i><br/>\n";
@@ -351,8 +351,8 @@ if ($player->voc == "knight") {
 		exit;
 	}
 
-	if ($quest['quest_status'] == 2) {
-		if ($_GET['next'] == 1) {
+	if (($quest['quest_status'] ?? null) == 2) {
+		if (($_GET['next'] ?? null) == 1) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Seu primerio oponente é Detros. Este mago é famoso pela sua incrível velocidade que tem ao lançar feitiços.</i><br/>\n";
@@ -362,7 +362,7 @@ if ($player->voc == "knight") {
 			exit;
 		}
 
-		if ($_GET['next'] == 3) {
+		if (($_GET['next'] ?? null) == 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Você abandonou o coliseu e acabou deixando uma má impressão entre os magos.</i><br/>\n";
@@ -381,11 +381,11 @@ if ($player->voc == "knight") {
 		exit;
 	}
 
-	if ($quest['quest_status'] == 3 || $quest['quest_status'] == 4) {
-		if ($_GET['next'] == 1) {
+	if (($quest['quest_status'] ?? null) == 3 || ($quest['quest_status'] ?? null) == 4) {
+		if (($_GET['next'] ?? null) == 1) {
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [4, $player->id, 12]);
 			header("Location: bquest.php");
-		} elseif ($_GET['next'] == 3) {
+		} elseif (($_GET['next'] ?? null) == 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Você abandonou o coliseu e acabou deixando uma má impressão entre os magos.</i><br/>\n";
@@ -404,11 +404,11 @@ if ($player->voc == "knight") {
 		}
 	}
 
-	if ($quest['quest_status'] == 5 || $quest['quest_status'] == 6) {
-		if ($_GET['next'] == 1) {
+	if (($quest['quest_status'] ?? null) == 5 || ($quest['quest_status'] ?? null) == 6) {
+		if (($_GET['next'] ?? null) == 1) {
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [6, $player->id, 12]);
 			header("Location: bquest.php");
-		} elseif ($_GET['next'] == 3) {
+		} elseif (($_GET['next'] ?? null) == 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Você abandonou o coliseu e acabou deixando uma má impressão entre os magos.</i><br/>\n";
@@ -428,7 +428,7 @@ if ($player->voc == "knight") {
 	}
 
 
-	if ($quest['quest_status'] == 7) {
+	if (($quest['quest_status'] ?? null) == 7) {
 		$query = $db->execute("update `players` set `promoted`=? where `id`=?", ['p', $player->id]);
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [90, $player->id, 12]);
 		include(__DIR__ . "/templates/private_header.php");
@@ -440,7 +440,7 @@ if ($player->voc == "knight") {
 		exit;
 	}
 
-	if ($quest['quest_status'] == 90) {
+	if (($quest['quest_status'] ?? null) == 90) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Missão</b></legend>\n";
 		echo "<i>Você já terminou esta missão!</i><br/>\n";
@@ -450,7 +450,7 @@ if ($player->voc == "knight") {
 		exit;
 	}
 } elseif ($player->voc == "archer") {
-	if ($_GET['act'] == "pay") {
+	if (($_GET['act'] ?? null) == "pay") {
 		$verificacao = $db->execute("select * from `quests` where `player_id`=? and `quest_id`=?", [$player->id, 12]);
 		if ($verificacao->recordcount() == 0) {
 			if ($player->gold - 2000000 < 0) {
@@ -490,7 +490,7 @@ if ($player->voc == "knight") {
 	$quest = $verificacao->fetchrow();
 
 	if ($verificacao->recordcount() == 0) {
-		if ($_GET['next'] == 1) {
+		if (($_GET['next'] ?? null) == 1) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
 			echo "<i>É sobre o famoso arqueiro Baltazar, porém não me lembro muito bem. Acho que 2 milhões ajudarão a refrescar minha memória.</i><br/>\n";
@@ -500,7 +500,7 @@ if ($player->voc == "knight") {
 			exit;
 		}
 
-		if ($_GET['next'] == 2) {
+		if (($_GET['next'] ?? null) == 2) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
 			echo "<i>Deseja pagar 2000000 de ouro para ouvir mais sore Baltazar?</i><br/>\n";
@@ -510,7 +510,7 @@ if ($player->voc == "knight") {
 			exit;
 		}
 
-		if ($_GET['next'] == 3) {
+		if (($_GET['next'] ?? null) == 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
 			echo "<i>Tudo bem, talvez mais tarde.</i><br/>\n";
@@ -529,8 +529,8 @@ if ($player->voc == "knight") {
 		exit;
 	}
 
-	if ($quest['quest_status'] == 1) {
-		if ($_GET['next'] == 1) {
+	if (($quest['quest_status'] ?? null) == 1) {
+		if (($_GET['next'] ?? null) == 1) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
 			echo "<i>O arco de Baltazar foi banhado pelo sangue de demônios, é a arma perfeita.<br/>Porém, os demônios estão sempre próximos a Baltazar, você terá de enfrentá-los em sua jornada.</i><br/>\n";
@@ -540,7 +540,7 @@ if ($player->voc == "knight") {
 			exit;
 		}
 
-		if ($_GET['next'] == 2) {
+		if (($_GET['next'] ?? null) == 2) {
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [2, $player->id, 12]);
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
@@ -551,7 +551,7 @@ if ($player->voc == "knight") {
 			exit;
 		}
 
-		if ($_GET['next'] == 3) {
+		if (($_GET['next'] ?? null) == 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
 			echo "<i>Tudo bem, treine um pouco mais e mais tarde você poderá buscar por Baltazar, mas não demore demais, ou ele poderá acabar indo embora.</i><br/>\n";
@@ -570,8 +570,8 @@ if ($player->voc == "knight") {
 		exit;
 	}
 
-	if ($quest['quest_status'] == 2) {
-		if ($_GET['next'] == 3) {
+	if (($quest['quest_status'] ?? null) == 2) {
+		if (($_GET['next'] ?? null) == 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Você fugiu, mas sabe que deverá enfrentar o demônio se quiser continuar.</i><br/>\n";
@@ -590,11 +590,11 @@ if ($player->voc == "knight") {
 		exit;
 	}
 
-	if ($quest['quest_status'] == 3 || $quest['quest_status'] == 4) {
-		if ($_GET['next'] == 1) {
+	if (($quest['quest_status'] ?? null) == 3 || ($quest['quest_status'] ?? null) == 4) {
+		if (($_GET['next'] ?? null) == 1) {
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [4, $player->id, 12]);
 			header("Location: bquest.php");
-		} elseif ($_GET['next'] == 3) {
+		} elseif (($_GET['next'] ?? null) == 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Você fugiu, mas sabe que deverá enfrentar o demônio se quiser continuar.</i><br/>\n";
@@ -613,11 +613,11 @@ if ($player->voc == "knight") {
 		}
 	}
 
-	if ($quest['quest_status'] == 5 || $quest['quest_status'] == 6) {
-		if ($_GET['next'] == 1) {
+	if (($quest['quest_status'] ?? null) == 5 || ($quest['quest_status'] ?? null) == 6) {
+		if (($_GET['next'] ?? null) == 1) {
 			$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [6, $player->id, 12]);
 			header("Location: bquest.php");
-		} elseif ($_GET['next'] == 3) {
+		} elseif (($_GET['next'] ?? null) == 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Missão</b></legend>\n";
 			echo "<i>Você conseguiu despistar Baltazar, mas deverá enfrentá-lo mais tarde.</i><br/>\n";
@@ -637,7 +637,7 @@ if ($player->voc == "knight") {
 	}
 
 
-	if ($quest['quest_status'] == 7) {
+	if (($quest['quest_status'] ?? null) == 7) {
 		$query = $db->execute("update `players` set `promoted`=? where `id`=?", ['p', $player->id]);
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [90, $player->id, 12]);
 		include(__DIR__ . "/templates/private_header.php");
@@ -649,7 +649,7 @@ if ($player->voc == "knight") {
 		exit;
 	}
 
-	if ($quest['quest_status'] == 90) {
+	if (($quest['quest_status'] ?? null) == 90) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Thomas Shevard</b></legend>\n";
 		echo "<i>Você já terminou esta missão!</i><br/>\n";

@@ -30,7 +30,7 @@ if ($verificaring->recordcount() == 0) {
 }
 
 
-switch ($_GET['act']) {
+switch ($_GET['act'] ?? null) {
 
 	case "who":
 		include(__DIR__ . "/templates/private_header.php");
@@ -220,8 +220,8 @@ if ($verificacao1->recordcount() == 0) {
 	exit;
 }
 
-if ($quest1['quest_status'] > 100) {
-	if ($quest1['quest_status'] < time()) {
+if (($quest1['quest_status'] ?? null) > 100) {
+	if (($quest1['quest_status'] ?? null) < time()) {
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [2, $player->id, 7]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Missão</b></legend>\n";
@@ -244,7 +244,7 @@ if ($quest1['quest_status'] > 100) {
 	exit;
 }
 
-if ($quest1['quest_status'] == 2) {
+if (($quest1['quest_status'] ?? null) == 2) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
 	echo "<i>Parece que Gadudj fugiu com seu jeweled ring! Você terá que procurar e matá-lo para recuperar seu anel.</i><br><br>";
@@ -254,7 +254,7 @@ if ($quest1['quest_status'] == 2) {
 	exit;
 }
 
-if ($quest1['quest_status'] == 90) {
+if (($quest1['quest_status'] ?? null) == 90) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Missão</b></legend>\n";
 	echo "<i>Você já terminou esta missão.</i>";

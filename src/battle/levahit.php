@@ -6,7 +6,7 @@ $magiaatual = $db->execute("select `magia`, `turnos` from `bixos` where `player_
 $magiaatual2 = $magiaatual->fetchrow();
 
 $misschance2 = intval(random_int(0, 100));
-if ($misschance2 <= $enemy->miss || $magiaatual2['magia'] == 6 || $magiaatual2['magia'] == 9) {
+if ($misschance2 <= $enemy->miss || ($magiaatual2['magia'] ?? null) == 6 || ($magiaatual2['magia'] ?? null) == 9) {
 	array_unshift($_SESSION['battlelog'], "6, " . ucfirst($enemy->prepo) . " " . $enemy->username . " tentou te atacar mas errou!");
 } else {
 
@@ -14,19 +14,19 @@ if ($misschance2 <= $enemy->miss || $magiaatual2['magia'] == 6 || $magiaatual2['
 	$monsterdamage = random_int(intval($enemy->mindmg), intval($enemy->maxdmg));
 	$monsterdamage = random_int(intval($enemy->mindmg), intval($enemy->maxdmg));
 
-	if ($magiaatual2['magia'] == 2) {
+	if (($magiaatual2['magia'] ?? null) == 2) {
 		$porcento = $monsterdamage / 100;
 		$porcento = ceil($porcento * 15);
 		$monsterdamage += $porcento;
-	} elseif ($magiaatual2['magia'] == 11) {
+	} elseif (($magiaatual2['magia'] ?? null) == 11) {
 		$monsterdamage = ceil($monsterdamage / 2);
-	} elseif ($magiaatual2['magia'] == 7) {
+	} elseif (($magiaatual2['magia'] ?? null) == 7) {
 		$porcento = $monsterdamage / 100;
 		$porcento = ceil($porcento * 20);
 		$monsterdamage -= $porcento;
 	}
 
-	if ($magiaatual2['magia'] == 10) {
+	if (($magiaatual2['magia'] ?? null) == 10) {
 		if (($bixo->hp - $monsterdamage) < 1) {
 			$db->execute("update `bixos` set `hp`=0 where `player_id`=?", [$player->id]);
 			array_unshift($_SESSION['battlelog'], "2, " . ucfirst($enemy->prepo) . " " . $enemy->username . " tentou te atacar mas seu ataque voltou e ele perdeu " . $monsterdamage . " de vida.");

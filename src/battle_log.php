@@ -52,14 +52,14 @@ $player = check_user($db);
 <body onload="divDown()">
 	<?php
 
-	if (!$_GET['id']) {
+	if (!($_GET['id'] ?? null)) {
 		echo "Um erro ocorreu.";
 		echo "</body>";
 		echo "</html>";
 		exit;
 	}
 
-	$query = $db->execute("select * from `log_battle` where `id`=? and `player_id`=?", [$_GET['id'], $player->id]);
+	$query = $db->execute("select * from `log_battle` where `id`=? and `player_id`=?", [$_GET['id'] ?? null, $player->id]);
 	if ($query->recordcount() < 1) {
 		echo "Log não encontrado.";
 		echo "</body>";
@@ -69,7 +69,7 @@ $player = check_user($db);
 
 	$log = $query->fetchrow();
 	echo '<br/><center><div id="logdebatalha" align="left" class="scroll" style="background-color:#FFFDE0; overflow: auto; width:95%; height:270px; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
-	echo $log['log'];
+	echo $log['log'] ?? null;
 	echo "</div></center>";
 	echo "</body>";
 	echo "</html>";

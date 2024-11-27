@@ -12,18 +12,18 @@ $error = 0;
 $errormsg = "";
 $showerror2 = 0;
 
-if (isset($_POST['forgot'])) {
-    $verForgot = $db->execute("select * from `accounts` where `email`=? and `conta`=?", [$_POST['emailf'], $_POST['username']]);
+if ($_POST['forgot'] ?? null) {
+    $verForgot = $db->execute("select * from `accounts` where `email`=? and `conta`=?", [$_POST['emailf'] ?? null, $_POST['username'] ?? null]);
 
-    if (!$_POST['username'] && !$_POST['emailf']) {
+    if (!($_POST['username'] ?? null) && !($_POST['emailf'] ?? null)) {
         $errormsg = "Preencha todos os campos.";
         $showerror2 = 3;
         $error = 1;
-    } elseif (!$_POST['username']) {
+    } elseif (!($_POST['username'] ?? null)) {
         $errormsg = "O campo conta é obrigatório.";
         $showerror2 = 1;
         $error = 1;
-    } elseif (!$_POST['emailf']) {
+    } elseif (!($_POST['emailf'] ?? null)) {
         $errormsg = "O campo e-mail é obrigatório.";
         $showerror2 = 2;
         $error = 1;

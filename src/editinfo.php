@@ -11,37 +11,37 @@ include(__DIR__ . "/templates/acc-header.php");
 $error = 0;
 $checkshowmail = $db->execute("select * from `other` where `value`=? and `player_id`=?", ["showmail", $acc->id]);
 
-if ($_POST['submit']) {
-    if ((!$_POST['rlname'] | !$_POST['showmail'] | !$_POST['remember'] | !$_POST['sex']) !== 0) {
+if ($_POST['submit'] ?? null) {
+    if ((!($_POST['rlname'] ?? null) | !($_POST['showmail'] ?? null) | !($_POST['remember'] ?? null) | !($_POST['sex'] ?? null)) !== 0) {
         $errmsg .= "Por favor preencha todos os campos!";
         $error = 1;
-    } elseif (strlen((string) $_POST['rlname']) < 3) {
+    } elseif (strlen((string) ($_POST['rlname'] ?? null)) < 3) {
         $errmsg .= "Seu nome deve ter mais que três caracteres!";
         $error = 1;
-    } elseif ($_POST['showmail'] != 1 && $_POST['showmail'] != 2) {
+    } elseif (($_POST['showmail'] ?? null) != 1 && ($_POST['showmail'] ?? null) != 2) {
         $errmsg .= "Um erro desconhecido ocorreu.";
         $error = 1;
-    } elseif ($_POST['remember'] != 1 && $_POST['remember'] != 2) {
+    } elseif (($_POST['remember'] ?? null) != 1 && ($_POST['remember'] ?? null) != 2) {
         $errmsg .= "Um erro desconhecido ocorreu.";
         $error = 1;
-    } elseif ($_POST['sex'] != 1 && $_POST['sex'] != 2 && $_POST['sex'] != 3) {
+    } elseif (($_POST['sex'] ?? null) != 1 && ($_POST['sex'] ?? null) != 2 && ($_POST['sex'] ?? null) != 3) {
         $errmsg .= "Um erro desconhecido ocorreu.";
         $error = 1;
     }
 
     if ($error == 0) {
 
-        if ($_POST['sex'] == 2) {
+        if (($_POST['sex'] ?? null) == 2) {
             $sexx = "m";
-        } elseif ($_POST['sex'] == 3) {
+        } elseif (($_POST['sex'] ?? null) == 3) {
             $sexx = "f";
         } else {
             $sexx = "n";
         }
 
-        $rememberr = $_POST['remember'] == 2 ? "t" : "f";
+        $rememberr = ($_POST['remember'] ?? null) == 2 ? "t" : "f";
 
-        if ($_POST['showmail'] == 2) {
+        if (($_POST['showmail'] ?? null) == 2) {
             if ($checkshowmail->recordcount() < 1) {
                 $insert['player_id'] = $acc->id;
                 $insert['value'] = "showmail";
@@ -51,7 +51,7 @@ if ($_POST['submit']) {
             $deleteshowmail = $db->execute("delete from `other` where `value`=? and `player_id`=?", ["showmail", $acc->id]);
         }
 
-        $query = $db->execute("update `accounts` set `name`=?, `sex`=?, `remember`=? where `id`=?", [$_POST['rlname'], $sexx, $rememberr, $acc->id]);
+        $query = $db->execute("update `accounts` set `name`=?, `sex`=?, `remember`=? where `id`=?", [$_POST['rlname'] ?? null, $sexx, $rememberr, $acc->id]);
         echo '<span id="aviso-a"></span>';
         echo "<br/><p><center><b>Informações pessoais alteradas com sucesso! <a href=\"characters.php\">Voltar</a>.</b></center></p><br/>";
         include(__DIR__ . "/templates/acc-footer.php");

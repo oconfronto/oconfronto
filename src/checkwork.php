@@ -42,7 +42,7 @@ if ($checkhuntee->recordcount() > 0) {
 
 	$timeleftforhunt = (($hunt['start'] + ($hunt['hunttime'] * 3600)) - time());
 	$time_remaining = ceil($timeleftforhunt / 60);
-	$huntmonstername = $db->GetOne("select `username` from `monsters` where `id`=?", [$hunt['hunttype']]);
+	$huntmonstername = $db->GetOne("select `username` from `monsters` where `id`=?", [$hunt['hunttype'] ?? null]);
 
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset>";

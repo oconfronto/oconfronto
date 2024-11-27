@@ -11,12 +11,12 @@ $dungeonPoints = $dungeonPoints->recordcount();
 
 $dungeonVerificaPremiacoes = $db->execute("select * from `dungeon_status` where `player_id`=? and `status`<90 and `fail`=0", [$player->id]);
 while ($dungeonInfo = $dungeonVerificaPremiacoes->fetchrow()) {
-    $getAllDungeonInfo = $db->execute("select * from `dungeon` where `id`=?", [$dungeonInfo['dungeon_id']]);
+    $getAllDungeonInfo = $db->execute("select * from `dungeon` where `id`=?", [$dungeonInfo['dungeon_id'] ?? null]);
     $AllDungeonInfo = $getAllDungeonInfo->fetchrow();
 
-    $divideDungeonMosters = explode(", ", (string) $AllDungeonInfo['monsters']);
+    $divideDungeonMosters = explode(", ", (string) ($AllDungeonInfo['monsters'] ?? null));
     if (($dungeonInfo['start'] + $AllDungeonInfo['time']) < time()) {
-        $db->execute("update `dungeon_status` set `fail`='2', `status`=? where `dungeon_id`=? and `player_id`=?", [(time() + 86400), $dungeonInfo['dungeon_id'], $player->id]);
+        $db->execute("update `dungeon_status` set `fail`='2', `status`=? where `dungeon_id`=? and `player_id`=?", [(time() + 86400), $dungeonInfo['dungeon_id'] ?? null, $player->id]);
         include(__DIR__ . "/templates/private_header.php");
         echo "O tempo para a dungeon " . $AllDungeonInfo['name'] . " se esgotou!<br/>Você deverá esperar 1 dia para participar dela novamente.";
         echo '<br/><a href="dungeon.php">Continuar</a>.';
@@ -24,14 +24,14 @@ while ($dungeonInfo = $dungeonVerificaPremiacoes->fetchrow()) {
         exit;
     }
 
-    if (count($divideDungeonMosters) == $dungeonInfo['status']) {
-        $db->execute("update `dungeon_status` set `status`=90, `finish`=? where `dungeon_id`=? and `player_id`=?", [time(), $dungeonInfo['dungeon_id'], $player->id]);
+    if (count($divideDungeonMosters) == ($dungeonInfo['status'] ?? null)) {
+        $db->execute("update `dungeon_status` set `status`=90, `finish`=? where `dungeon_id`=? and `player_id`=?", [time(), $dungeonInfo['dungeon_id'] ?? null, $player->id]);
         include(__DIR__ . "/templates/private_header.php");
         echo "<b>Você completou a dungeon " . $AllDungeonInfo['name'] . ", parabéns guerreiro!</b><br/>";
         echo "Você adiquiriu 1 dungeon point por completar esta arena.<br/>";
         echo "<br/><i>Os seguintes prêmios foram adicionados ao seu inventário:</i><br/>";
         echo "<ul>";
-        $itid = explode(", ", (string) $AllDungeonInfo['prize']);
+        $itid = explode(", ", (string) ($AllDungeonInfo['prize'] ?? null));
         foreach ($itid as $key_value) {
             if ($key_value > 999) {
                 $db->execute("update `players` set `gold`=`gold`+? where `id`=?", [$key_value, $player->id]);
@@ -45,13 +45,13 @@ while ($dungeonInfo = $dungeonVerificaPremiacoes->fetchrow()) {
                 $insert['item_id'] = $item['id'];
                 $query = $db->autoexecute('items', $insert, 'INSERT');
 
-                if ($item['type'] == 'amulet') {
+                if (($item['type'] ?? null) == 'amulet') {
                     echo "" . $item['name'] . ' <font size="1px">(Vitalidade: ' . $item['effectiveness'] . ")</font><br/ >";
-                } elseif ($item['type'] == 'boots') {
+                } elseif (($item['type'] ?? null) == 'boots') {
                     echo $itnames .= "" . $item['name'] . ' <font size="1px">(Agilidade: ' . $item['effectiveness'] . ")</font><br/ >";
-                } elseif ($item['type'] == 'weapon') {
+                } elseif (($item['type'] ?? null) == 'weapon') {
                     echo "" . $item['name'] . ' <font size="1px">(Ataque: ' . $item['effectiveness'] . ")</font><br/ >";
-                } elseif ($item['type'] == 'shield') {
+                } elseif (($item['type'] ?? null) == 'shield') {
                     echo "" . $item['name'] . ' <font size="1px">(Defesa: ' . $item['effectiveness'] . ")<br/ ><i>Arqueiros não podem usar escudos</i>.</font><br/ >";
                 } else {
                     echo "" . $item['name'] . ' <font size="1px">(Defesa: ' . $item['effectiveness'] . ")</font><br/ >";
@@ -68,22 +68,22 @@ while ($dungeonInfo = $dungeonVerificaPremiacoes->fetchrow()) {
     }
 }
 
-if ($_GET['id']) {
-    $checkverid = $db->execute("select * from `dungeon` where `id`=?", [$_GET['id']]);
+if ($_GET['id'] ?? null) {
+    $checkverid = $db->execute("select * from `dungeon` where `id`=?", [$_GET['id'] ?? null]);
     if ($checkverid->recordcount() > 0) {
 
         $checkverid2 = $db->execute("select * from `dungeon_status` where `player_id`=? and `status`<90 and `fail`=0", [$player->id]);
         if ($checkverid2->recordcount() == 0) {
             $datta = $checkverid->fetchrow();
 
-            $checkverid3 = $db->execute("select * from `dungeon_status` where `dungeon_id`=? and `player_id`=? and `status`<=90 and `fail`=0", [$_GET['id'], $player->id]);
+            $checkverid3 = $db->execute("select * from `dungeon_status` where `dungeon_id`=? and `player_id`=? and `status`<=90 and `fail`=0", [$_GET['id'] ?? null, $player->id]);
             if ($checkverid3->recordcount() == 0) {
 
-                $checkverid4 = $db->execute("select * from `dungeon_status` where `dungeon_id`=? and `player_id`=? and `status`>?", [$_GET['id'], $player->id, time()]);
+                $checkverid4 = $db->execute("select * from `dungeon_status` where `dungeon_id`=? and `player_id`=? and `status`>?", [$_GET['id'] ?? null, $player->id, time()]);
                 if ($checkverid4->recordcount() == 0) {
 
-                    if ($dungeonPoints >= $datta['level']) {
-                        if (!$_GET['comfirm']) {
+                    if ($dungeonPoints >= ($datta['level'] ?? null)) {
+                        if (!($_GET['comfirm'] ?? null)) {
                             include(__DIR__ . "/templates/private_header.php");
                             echo showAlert("<table width=\"100%\"><tr><td>Você tem certeza que deseja participar da arena <b>" . $datta['name'] . "</b>?<br/>O guerreiro que for derrotado em uma da batalhas da arena será eliminado<br/>e não poderá repeti-la nas próximas 24 horas.<br/>Você terá de completá-la em no máximo " . ($datta['time'] / 60) . " minutos para receber seu prêmio.</td><td><center><p><a href=\"dungeon.php?id=" . $_GET['id'] . '&comfirm=true">Participar</a><br/><a href="dungeon.php"><font size="1px">Voltar</font></a></p></center></td></tr></table>', "", "left");
                             include(__DIR__ . "/templates/private_footer.php");
@@ -152,11 +152,11 @@ if ($getitems->recordcount() == 0) {
         echo '<tr><td style="background-color: #FFFDE0;">';
         echo '<table width="100%"><tr>';
         echo '<td width="20%"><center><img src="static/images/itens/medalha.gif" style="padding-top: 5px;" border="0px"/></center></td>';
-        $verstatus = $db->getone("select `status` from `dungeon_status` where `dungeon_id`=? and `player_id`=?", [$vipti['id'], $player->id]);
-        $verstart = $db->getone("select `start` from `dungeon_status` where `dungeon_id`=? and `player_id`=?", [$vipti['id'], $player->id]);
+        $verstatus = $db->getone("select `status` from `dungeon_status` where `dungeon_id`=? and `player_id`=?", [$vipti['id'] ?? null, $player->id]);
+        $verstart = $db->getone("select `start` from `dungeon_status` where `dungeon_id`=? and `player_id`=?", [$vipti['id'] ?? null, $player->id]);
         if ($verstatus > 90) {
             if (time() > $verstatus) {
-                $db->execute("delete from `dungeon_status` where `dungeon_id`=? and `player_id`=?", [$vipti['id'], $player->id]);
+                $db->execute("delete from `dungeon_status` where `dungeon_id`=? and `player_id`=?", [$vipti['id'] ?? null, $player->id]);
                 echo '<td width="80%"><center><a href="dungeon.php?id=' . $vipti['id'] . '">Participar</a><br/><font size="1px">Min. ' . $vipti['level'] . " dungeon points.<br/>Tempo max. " . ($vipti['time'] / 60) . " minutos.</font></center></td>";
             } else {
                 $horas = ceil(($verstatus - time()) / 3600);
@@ -178,22 +178,22 @@ if ($getitems->recordcount() == 0) {
 
         echo "</tr></table>";
         echo '</td><td style="background-color: #FFFDE0;">';
-        $itid = explode(", ", (string) $vipti['monsters']);
+        $itid = explode(", ", (string) ($vipti['monsters'] ?? null));
         $itcount = 1;
         foreach ($itid as $key_value) {
             $itinfo = $db->execute("select * from `monsters` where `id`=?", [$key_value]);
             $item = $itinfo->fetchrow();
 
-            $dungeoncomfirma = $db->execute("select * from `dungeon_status` where `status`<=90 and `dungeon_id`=? and `player_id`=?", [$vipti['id'], $player->id]);
+            $dungeoncomfirma = $db->execute("select * from `dungeon_status` where `status`<=90 and `dungeon_id`=? and `player_id`=?", [$vipti['id'] ?? null, $player->id]);
             if ($dungeoncomfirma->recordcount() > 0) {
                 $info = $dungeoncomfirma->fetchrow();
 
-                if ($info['status'] >= $itcount || $checkverstatus['status'] == 90) {
+                if (($info['status'] ?? null) >= $itcount || ($checkverstatus['status'] ?? null) == 90) {
                     echo "" . $itcount . "º <s>" . $item['username'] . ' <font size="1px">(Nível: ' . $item['level'] . ")</font></s><br/ >";
                 } elseif (($info['status'] + 1) < $itcount) {
                     echo '<font color="gray">' . $itcount . "º " . $item['username'] . ' <font size="1px">(Nível: ' . $item['level'] . ")</font></font><br/ >";
                 } else {
-                    echo "" . $itcount . "º <a href=\"monster.php?act=attack&id=" . (((int)$item['id']) * $player->id) . '">' . $item['username'] . '</a> <font size="1px">(Nível: ' . $item['level'] . ")</font><br/ >";
+                    echo "" . $itcount . "º <a href=\"monster.php?act=attack&id=" . (((int)($item['id'] ?? null)) * $player->id) . '">' . $item['username'] . '</a> <font size="1px">(Nível: ' . $item['level'] . ")</font><br/ >";
                 }
             } else {
                 echo "" . $itcount . "º " . $item['username'] . ' <font size="1px">(Nível: ' . $item['level'] . ")</font><br/ >";
@@ -204,7 +204,7 @@ if ($getitems->recordcount() == 0) {
 
         echo '</td><td style="background-color: #FFFDE0;">';
 
-        $itid = explode(", ", (string) $vipti['prize']);
+        $itid = explode(", ", (string) ($vipti['prize'] ?? null));
         foreach ($itid as $key_value) {
             if ($key_value > 999) {
                 echo "" . $key_value . " moedas de ouro.<br/>";
@@ -212,13 +212,13 @@ if ($getitems->recordcount() == 0) {
                 $itinfo = $db->execute("select * from `blueprint_items` where `id`=?", [$key_value]);
                 $item = $itinfo->fetchrow();
 
-                if ($item['type'] == 'amulet') {
+                if (($item['type'] ?? null) == 'amulet') {
                     echo "" . $item['name'] . ' <font size="1px">(Vitalidade: ' . $item['effectiveness'] . ")</font><br/ >";
-                } elseif ($item['type'] == 'boots') {
+                } elseif (($item['type'] ?? null) == 'boots') {
                     echo $itnames .= "" . $item['name'] . ' <font size="1px">(Agilidade: ' . $item['effectiveness'] . ")</font><br/ >";
-                } elseif ($item['type'] == 'weapon') {
+                } elseif (($item['type'] ?? null) == 'weapon') {
                     echo "" . $item['name'] . ' <font size="1px">(Ataque: ' . $item['effectiveness'] . ")</font><br/ >";
-                } elseif ($item['type'] == 'shield') {
+                } elseif (($item['type'] ?? null) == 'shield') {
                     echo "" . $item['name'] . ' <font size="1px">(Defesa: ' . $item['effectiveness'] . ")<br/ ><i>Arqueiros não podem usar escudos</i>.</font><br/ >";
                 } else {
                     echo "" . $item['name'] . ' <font size="1px">(Defesa: ' . $item['effectiveness'] . ")</font><br/ >";
@@ -251,12 +251,12 @@ if ($query1->recordcount() > 0) {
             $auxiliar2 = "dia(s) atrás.";
         }
 
-        $DungeonLogName = $db->getone("select `name` from `dungeon` where `id`=?", [$log1['dungeon_id']]);
+        $DungeonLogName = $db->getone("select `name` from `dungeon` where `id`=?", [$log1['dungeon_id'] ?? null]);
 
         echo "<tr>";
-        if ($log1['fail'] == '2') {
+        if (($log1['fail'] ?? null) == '2') {
             echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">Você começou a dungeon: " . $DungeonLogName . ", porém não a completou em tempo suficiente.</font></div></td>";
-        } elseif ($log1['fail'] == '1') {
+        } elseif (($log1['fail'] ?? null) == '1') {
             echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">Você morreu enquanto participava da " . $DungeonLogName . " e falhou na conquista pelo prêmio.</font></div></td>";
         } else {
             echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">Você finalizou a dungeon \"" . $DungeonLogName . '" em ' . ceil(($log1['finish'] - $log1['start']) / 60) . " minuto(s).</font></div></td>";

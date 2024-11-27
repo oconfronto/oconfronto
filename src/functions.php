@@ -17,7 +17,7 @@ class OCv2
         }
 
         $row = $query->FetchRow();
-        return $row ? $row[$data4] : false;
+        return $row ? $row[$data4] ?? null : false;
     }
 
     public function totaldados(string $data, $data2 = false, $data3 = true, $vl = false)
@@ -85,16 +85,16 @@ function encodeSession(string $account_id): string
 
 function check_acc(&$db): \stdClass
 {
-    if (!isset($_SESSION['Login'])) {
+    if (!($_SESSION['Login'] ?? null)) {
         session_unset();
         session_destroy();
         header("Location: index.php");
         exit;
     }
 
-    $query = $db->execute("SELECT * FROM `accounts` WHERE `id`=? AND `conta`=?", [$_SESSION['Login']['account_id'], $_SESSION['Login']['account']]);
+    $query = $db->execute("SELECT * FROM `accounts` WHERE `id`=? AND `conta`=?", [($_SESSION['Login'] ?? null)['account_id'] ?? null, ($_SESSION['Login'] ?? null)['account'] ?? null]);
     $accarray = $query->FetchRow();
-    if ($query->RecordCount() != 1 || encodeSession($accarray['password']) != $_SESSION['Login']['key']) {
+    if ($query->RecordCount() != 1 || encodeSession($accarray['password']) != (($_SESSION['Login'] ?? null)['key'] ?? null)) {
         session_unset();
         session_destroy();
         header("Location: index.php");
@@ -113,24 +113,24 @@ function check_acc(&$db): \stdClass
 //Function to check if user is logged in, and if so, return user data as an object
 function check_user(&$db)
 {
-    if (!isset($_SESSION['Login'])) {
+    if (!($_SESSION['Login'] ?? null)) {
         session_unset();
         session_destroy();
         header("Location: index.php");
         exit;
     }
 
-    $query = $db->execute("SELECT * FROM `accounts` WHERE `id`=? AND `conta`=?", [$_SESSION['Login']['account_id'], $_SESSION['Login']['account']]);
+    $query = $db->execute("SELECT * FROM `accounts` WHERE `id`=? AND `conta`=?", [($_SESSION['Login'] ?? null)['account_id'] ?? null, ($_SESSION['Login'] ?? null)['account'] ?? null]);
     $accarray = $query->FetchRow();
-    if ($query->RecordCount() != 1 || encodeSession($accarray['password']) != (isset($_SESSION['Login']['key']) ? $_SESSION['Login']['key'] : '')) {
+    if ($query->RecordCount() != 1 || encodeSession($accarray['password']) != ($_SESSION['Login']['key'] ?? null ? ($_SESSION['Login'] ?? null)['key'] ?? null : '')) {
         session_unset();
         session_destroy();
         header("Location: index.php");
         exit;
     }
 
-    if ($_SESSION['Login']['player_id']) {
-        $query = $db->execute("SELECT * FROM `players` WHERE `id`=? AND `acc_id`=?", [$_SESSION['Login']['player_id'], $_SESSION['Login']['account_id']]);
+    if (($_SESSION['Login'] ?? null)['player_id'] ?? null) {
+        $query = $db->execute("SELECT * FROM `players` WHERE `id`=? AND `acc_id`=?", [($_SESSION['Login'] ?? null)['player_id'] ?? null, ($_SESSION['Login'] ?? null)['account_id'] ?? null]);
         $playerarray = $query->FetchRow();
         if ($query->RecordCount() == 1) {
             $player = new stdClass();
@@ -167,12 +167,12 @@ function maxHp(&$db, $phpid, $level, $reino = '1', $vip = '0'): float
     $bonus = 0;
     $queryBonuz = $db->execute("SELECT `item_id`, `vit`, `item_bonus` FROM `items` WHERE `player_id`=? AND `status`='equipped'", [$phpid]);
     while ($itemBonus = $queryBonuz->FetchRow()) {
-        if ($itemBonus['vit'] > 0) {
+        if (($itemBonus['vit'] ?? null) > 0) {
             $bonus += ($itemBonus['vit'] * 20);
         } else {
-            $itemBonusType = $db->GetOne("SELECT `type` FROM `blueprint_items` WHERE `id`=?", [$itemBonus['item_id']]);
+            $itemBonusType = $db->GetOne("SELECT `type` FROM `blueprint_items` WHERE `id`=?", [$itemBonus['item_id'] ?? null]);
             if ($itemBonusType == 'amulet') {
-                $itemBonusValue = $db->GetOne("SELECT `effectiveness` FROM `blueprint_items` WHERE `id`=?", [$itemBonus['item_id']]);
+                $itemBonusValue = $db->GetOne("SELECT `effectiveness` FROM `blueprint_items` WHERE `id`=?", [$itemBonus['item_id'] ?? null]);
                 $bonus += (($itemBonusValue + ($itemBonus['item_bonus'] * 2)) * 20);
             }
         }
@@ -237,14 +237,14 @@ function maxEnergy($level, $vip = '0'): float
 function unread_messages($id, &$db)
 {
     $query = $db->GetOne("SELECT COUNT(*) AS `count` FROM `mail` WHERE `to`=? AND `status`='unread'", [$id]);
-    return $query['count'];
+    return $query['count'] ?? null;
 }
 
 //Gets new log messages
 function unread_log($id, &$db)
 {
     $query = $db->GetOne("SELECT COUNT(*) AS `count` FROM `user_log` WHERE `player_id`=? AND `status`='unread'", [$id]);
-    return $query['count'];
+    return $query['count'] ?? null;
 }
 
 //Insert a log message into the user logs
@@ -287,7 +287,7 @@ function textLimit($string, $length, $lineBreak = null, string $replacer = '...'
 {
     // Limitar o texto e adicionar reticências, se necessário
     if (strlen((string) $string) > $length) {
-        $string = (preg_match('/^(.*)\W.*$/', substr((string) $string, 0, $length + 1), $matches) ? $matches[1] : substr((string) $string, 0, $length)) . $replacer;
+        $string = (preg_match('/^(.*)\W.*$/', substr((string) $string, 0, $length + 1), $matches) ? $matches[1] ?? null : substr((string) $string, 0, $length)) . $replacer;
     }
 
     // Adicionar quebras de linha a cada X caracteres, se o parâmetro $lineBreak for passado
@@ -317,7 +317,7 @@ $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
 function item_count($id, $item, &$db)
 {
     $query = $db->GetOne("SELECT COUNT(*) AS `count` FROM `items` WHERE `item_id`=? AND `player_id`=?", [$item, $id]);
-    return $query['count'];
+    return $query['count'] ?? null;
 }
 
 
@@ -380,7 +380,7 @@ function parseInt($string): string|int
 {
     //	return intval($string); 
     if (preg_match('/(\d+)/', (string) $string, $array)) {
-        return $array[1];
+        return $array[1] ?? null;
     }
 
     return 0;
@@ -414,9 +414,9 @@ function showName($name, &$db, $status = 'on', $link = 'on'): string
                     $return .= "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $user) . "')\"><img src=\"static/images/online.png\" border=\"0px\"></a>";
                 } else {
                     $stattus = $check->FetchRow();
-                    if ($stattus['pending_status'] == 'ocp') {
+                    if (($stattus['pending_status'] ?? null) == 'ocp') {
                         $return .= "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $user) . "')\"><img src=\"static/images/ocupado.png\" border=\"0px\"></a>";
-                    } elseif ($stattus['pending_status'] == 'inv') {
+                    } elseif (($stattus['pending_status'] ?? null) == 'inv') {
                         $return .= '<img src="static/images/invisivel.png" border="0px">';
                     }
                 }

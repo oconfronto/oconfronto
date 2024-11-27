@@ -52,7 +52,7 @@
 
 <body>
     <?php
-    if (isset($_GET['r'])) {
+    if ($_GET['r'] ?? null) {
         $_SESSION['ref'] = $_GET['r'];
         $linkref = $_GET['r'];
     } else {

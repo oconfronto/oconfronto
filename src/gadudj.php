@@ -21,7 +21,7 @@ if ($verificacao->recordcount() == 0) {
 	exit;
 }
 
-if ($quest['quest_status'] != 2) {
+if (($quest['quest_status'] ?? null) != 2) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Aviso</b></legend>\n";
 	echo "<i>Um erro ocorreu. Contate o administrador.</i><br/>\n";

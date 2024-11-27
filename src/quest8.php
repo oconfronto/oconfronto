@@ -35,7 +35,7 @@ if ($verificacao3->recordcount() < 1) {
 	exit;
 }
 
-switch ($_GET['act']) {
+switch ($_GET['act'] ?? null) {
 
 	case "question":
 		include(__DIR__ . "/templates/private_header.php");
@@ -92,7 +92,7 @@ if ($verificacao1->recordcount() == 0) {
 	exit;
 }
 
-if ($quest1['quest_status'] == 1) {
+if (($quest1['quest_status'] ?? null) == 1) {
 	$contaorbs = $db->execute("select * from `items` where `player_id`=? and `item_id`=?", [$player->id, 156]);
 
 	if ($contaorbs->recordcount() >= 2) {
@@ -116,7 +116,7 @@ if ($quest1['quest_status'] == 1) {
 	exit;
 }
 
-if ($quest1['quest_status'] == 80) {
+if (($quest1['quest_status'] ?? null) == 80) {
 	$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [90, $player->id, 17]);
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
@@ -127,7 +127,7 @@ if ($quest1['quest_status'] == 80) {
 	exit;
 }
 
-if ($quest1['quest_status'] == 90) {
+if (($quest1['quest_status'] ?? null) == 90) {
 	header("Location: quest9.php");
 }
 

@@ -21,31 +21,31 @@ if ($guildquery->recordcount() == 0) {
 
 include(__DIR__ . "/templates/private_header.php");
 //Guild Leader Admin check
-if ($player->username != $guild['leader'] && $player->username != $guild['vice']) {
+if ($player->username != ($guild['leader'] ?? null) && $player->username != ($guild['vice'] ?? null)) {
 	echo "Você não pode acessar esta página. <a href=\"home.php\">Voltar</a>.";
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
 
 //Guild Leader Admin check
-if ($guild['msgs'] > 3) {
+if (($guild['msgs'] ?? null) > 3) {
 	echo "Seu clã já enviou mensagens demais hoje.<br>Máximo de 3 mensagens por dia. <a href=\"home.php\">Voltar</a>.";
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
 
-if ($_POST['submit']) {
-	if (!$_POST['subject']) {
+if ($_POST['submit'] ?? null) {
+	if (!($_POST['subject'] ?? null)) {
 		$errmsg .= "<font color=red>Você precisa adicionar um titulo para sua mensagem.</font>";
 		$error = 1;
 	}
 
-	if (!$_POST['body']) {
+	if (!($_POST['body'] ?? null)) {
 		$errmsg .= "<font color=red>Você precisa escrever uma mensagem.</font>";
 		$error = 1;
 	}
 
-	if (strlen((string) $_POST['body']) > 5000) {
+	if (strlen((string) ($_POST['body'] ?? null)) > 5000) {
 		$errmsg .= "<font color=red>Sua mensagem deve ter menos que 5000 caracteres.</font>";
 		$error = 1;
 	}
@@ -54,9 +54,9 @@ if ($_POST['submit']) {
 	if ($error == 0) {
 		$mensagem = "<div style='width:100%; background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px' align='center'><font size=1><b>Esta mensagem foi enviada para todos os membros do clã: " . $guild['name'] . ".</b></font></div><br/>" . $_POST['body'] . "";
 
-		$database = $db->execute("select `id` from `players` where `guild`=?", [$guild['id']]);
+		$database = $db->execute("select `id` from `players` where `guild`=?", [$guild['id'] ?? null]);
 		while ($member = $database->fetchrow()) {
-			$query = $db->execute("insert into `mail` (`to`, `from`, `body`, `subject`, `time`) values (?, ?, ?, ?, ?)", [$member['id'], $player->id, $mensagem, $_POST['subject'], time()]);
+			$query = $db->execute("insert into `mail` (`to`, `from`, `body`, `subject`, `time`) values (?, ?, ?, ?, ?)", [$member['id'] ?? null, $player->id, $mensagem, $_POST['subject'] ?? null, time()]);
 		}
 
 		$query = $db->execute("update `guilds` set `msgs`=? where `id`=?", [$guild['msgs'] + 1, $player->guild]);
@@ -68,12 +68,12 @@ if ($_POST['submit']) {
 ?>
 
 <fieldset>
-	<legend><b><?= $guild['name'] ?> :: Enviar mensagem</b></legend>
+	<legend><b><?= $guild['name'] ?? null ?> :: Enviar mensagem</b></legend>
 	<form method="POST" action="guild_admin_msg.php">
 		<table width="100%" border="0">
 			<tr>
 				<td width="20%"><b>Para:</b></td>
-				<td width="80%">Membros do Clã <?= $guild['name'] ?></td>
+				<td width="80%">Membros do Clã <?= $guild['name'] ?? null ?></td>
 			</tr>
 			<tr>
 				<td width="20%"><b>Assunto:</b></td>

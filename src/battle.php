@@ -11,16 +11,16 @@ include(__DIR__ . "/checkwork.php");
 $valor547 = $player->level / 1.25;
 $diflvl = ceil($valor547);
 
-switch ($_GET['act']) {
+switch ($_GET['act'] ?? null) {
 	case "attack":
-		if (!$_GET['username']) //No username entered
+		if (!($_GET['username'] ?? null)) //No username entered
 		{
 			header("Location: battle.php");
 			break;
 		}
 
 		//Otherwise, get player data:
-		$query = $db->execute("select * from `players` where `username`=?", [$_GET['username']]);
+		$query = $db->execute("select * from `players` where `username`=?", [$_GET['username'] ?? null]);
 		if ($query->recordcount() == 0) //Player doesn't exist
 		{
 			include(__DIR__ . "/templates/private_header.php");
@@ -279,7 +279,7 @@ switch ($_GET['act']) {
 		}
 
 		//Player In Same Guild
-		if ($enemy->guild == $player->guild && $player->guild != NULL && !$_GET['comfirm']) {
+		if ($enemy->guild == $player->guild && $player->guild != NULL && !($_GET['comfirm'] ?? null)) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "Este usuário é membro do mesmo clã que você.<br/>Tem certeza que deseja atacá-lo?<br/><br/><a href=\"battle.php?act=attack&username=" . $enemy->username . '&comfirm=true">Atacar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="battle.php">Voltar</a>';
 			include(__DIR__ . "/templates/private_footer.php");
@@ -287,7 +287,7 @@ switch ($_GET['act']) {
 		}
 
 		//Player In Same Guild
-		if ($enemy->guild != NULL && $player->guild != NULL && !$_GET['comfirm']) {
+		if ($enemy->guild != NULL && $player->guild != NULL && !($_GET['comfirm'] ?? null)) {
 			$ganguesaliadas = $db->execute("select `id` from `guild_aliance` where `guild_na`=? and `aled_na`=?", [$player->guild, $enemy->guild]);
 			if ($ganguesaliadas->recordcount() > 0) {
 				include(__DIR__ . "/templates/private_header.php");
@@ -299,7 +299,7 @@ switch ($_GET['act']) {
 
 		//Player is friend
 		$checkfriendname = $db->execute("select * from `friends` where `fname`=? and `uid`=?", [$enemy->username, $player->id]);
-		if ($checkfriendname->recordcount() > 0 && !$_GET['comfirm']) {
+		if ($checkfriendname->recordcount() > 0 && !($_GET['comfirm'] ?? null)) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "Este usuário é seu amigo.<br/>Tem certeza que deseja atacá-lo?<br/><br/><a href=\"battle.php?act=attack&username=" . $enemy->username . '&comfirm=true">Atacar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="battle.php">Voltar</a>';
 			include(__DIR__ . "/templates/private_footer.php");
@@ -348,7 +348,7 @@ switch ($_GET['act']) {
 		$everificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", [$enemy->id, time()]);
 		if ($everificpotion->recordcount() > 0) {
 			$selct = $everificpotion->fetchrow();
-			$getpotion = $db->execute("select * from `for_use` where `item_id`=?", [$selct['item_id']]);
+			$getpotion = $db->execute("select * from `for_use` where `item_id`=?", [$selct['item_id'] ?? null]);
 			$potbonus = $getpotion->fetchrow();
 			$enemy->strength = ceil($enemy->strength + (($enemy->strength / 100) * ($potbonus['for'])));
 			$enemy->vitality = ceil($enemy->vitality + (($enemy->vitality / 100) * ($potbonus['vit'])));
@@ -384,7 +384,7 @@ switch ($_GET['act']) {
 		$pverificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", [$player->id, time()]);
 		if ($pverificpotion->recordcount() > 0) {
 			$selct = $pverificpotion->fetchrow();
-			$getpotion = $db->execute("select * from `for_use` where `item_id`=?", [$selct['item_id']]);
+			$getpotion = $db->execute("select * from `for_use` where `item_id`=?", [$selct['item_id'] ?? null]);
 			$potbonus = $getpotion->fetchrow();
 			$player->strength = ceil($player->strength + (($player->strength / 100) * ($potbonus['for'])));
 			$player->vitality = ceil($player->vitality + (($player->vitality / 100) * ($potbonus['vit'])));
@@ -801,8 +801,8 @@ switch ($_GET['act']) {
 				$auxiliar = "hora(s)";
 			}
 
-			$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id']]);
-			$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id']]);
+			$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
+			$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
 			echo '<div style="background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px"><center><b>' . $potname . ":</b> " . $valortempo . " " . $auxiliar . " restante(s).<br/>" . $potdesc . "</center></div>";
 		}
 
@@ -816,40 +816,40 @@ switch ($_GET['act']) {
 
 	case "search":
 		//Check in case somebody entered 0
-		$_GET['fromlevel'] = ($_GET['fromlevel'] == 0) ? "" : $_GET['fromlevel'];
-		$_GET['tolevel'] = ($_GET['tolevel'] == 0) ? "" : $_GET['tolevel'];
+		$_GET['fromlevel'] = (($_GET['fromlevel'] ?? null) == 0) ? "" : $_GET['fromlevel'] ?? null;
+		$_GET['tolevel'] = (($_GET['tolevel'] ?? null) == 0) ? "" : $_GET['tolevel'] ?? null;
 
 		//Construct query
 		$search = "select `id`, `username`, `level`, `voc`, `promoted` from `players` where `id`!= " . $player->id . " and `hp`>0 and `died`<3 and `reino`!='0' and ";
 
-		$search .= ($_GET['fromlevel'] != "") ? "`level` >= " . $_GET['fromlevel'] . " and " : "";
-		$search .= ($_GET['tolevel'] != "") ? "`level` <= " . $_GET['tolevel'] . " and " : "";
+		$search .= (($_GET['fromlevel'] ?? null) != "") ? "`level` >= " . $_GET['fromlevel'] . " and " : "";
+		$search .= (($_GET['tolevel'] ?? null) != "") ? "`level` <= " . $_GET['tolevel'] . " and " : "";
 
-		if ($_GET['username'] != NULL) {
+		if (($_GET['username'] ?? null) != NULL) {
 			$search .= "`username` LIKE  '%" . $_GET['username'] . "%' and ";
 		}
 
-		if ($_GET['voc'] == "1") {
+		if (($_GET['voc'] ?? null) == "1") {
 			$search .= "`voc` = 'archer' ";
-		} elseif ($_GET['voc'] == "2") {
+		} elseif (($_GET['voc'] ?? null) == "2") {
 			$search .= "`voc` = 'knight' ";
-		} elseif ($_GET['voc'] == "3") {
+		} elseif (($_GET['voc'] ?? null) == "3") {
 			$search .= "`voc` = 'mage' ";
 		} else {
 			$search .= "`voc` != '' ";
 		}
 
-		if ($_GET['promo'] == 't') {
+		if (($_GET['promo'] ?? null) == 't') {
 			$search .= "and `promoted` = 't' or `promoted` = 's' or `promoted` = 'r' ";
-		} elseif ($_GET['promo'] == 'p') {
+		} elseif (($_GET['promo'] ?? null) == 'p') {
 			$search .= "and `promoted` = 'p' ";
 		}
 
-		if ($_GET['reino'] == '1') {
+		if (($_GET['reino'] ?? null) == '1') {
 			$search .= "and `reino` = '1' ";
-		} elseif ($_GET['reino'] == '2') {
+		} elseif (($_GET['reino'] ?? null) == '2') {
 			$search .= "and `reino` = '2' ";
-		} elseif ($_GET['reino'] == '3') {
+		} elseif (($_GET['reino'] ?? null) == '3') {
 			$search .= "and `reino` = '3' ";
 		}
 
@@ -879,8 +879,8 @@ switch ($_GET['act']) {
 				$auxiliar = "hora(s)";
 			}
 
-			$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id']]);
-			$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id']]);
+			$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
+			$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
 			echo '<div style="background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px"><center><b>' . $potname . ":</b> " . $valortempo . " " . $auxiliar . " restante(s).<br/>" . $potdesc . "</center></div>";
 		}
 
@@ -889,41 +889,41 @@ switch ($_GET['act']) {
 		echo "<legend><b>Procurar por alguém</b></legend>\n";
 		echo "<form method=\"get\" action=\"battle.php\">\n<input type=\"hidden\" name=\"act\" value=\"search\" />\n";
 		echo "<table width=\"100%\">\n";
-		echo "<tr>\n<td width=\"35%\">Nome:</td>\n<td width=\"65%\"><input type=\"text\" name=\"username\" size=\"16\" value=\"" . stripslashes((string) $_GET['username']) . "\"/></td>\n</tr>\n";
-		echo "<tr>\n<td width=\"35%\">Nível:</td>\n<td width=\"65%\"><input type=\"text\" name=\"fromlevel\" size=\"4\" value=\"" . stripslashes((string) $_GET['fromlevel']) . "\" /> á <input type=\"text\" name=\"tolevel\" size=\"4\" value=\"" . stripslashes((string) $_GET['tolevel']) . "\" /></td>\n</tr>\n";
+		echo "<tr>\n<td width=\"35%\">Nome:</td>\n<td width=\"65%\"><input type=\"text\" name=\"username\" size=\"16\" value=\"" . stripslashes((string) ($_GET['username'] ?? null)) . "\"/></td>\n</tr>\n";
+		echo "<tr>\n<td width=\"35%\">Nível:</td>\n<td width=\"65%\"><input type=\"text\" name=\"fromlevel\" size=\"4\" value=\"" . stripslashes((string) ($_GET['fromlevel'] ?? null)) . "\" /> á <input type=\"text\" name=\"tolevel\" size=\"4\" value=\"" . stripslashes((string) ($_GET['tolevel'] ?? null)) . "\" /></td>\n</tr>\n";
 
 		echo "<tr>\n<td width=\"35%\">Reino:</td>\n<td width=\"65%\"><select name=\"reino\">\n<option value=\"0\"";
-		echo ($_GET['reino'] == 0 || !$_GET['reino']) ? ' selected="selected"' : "";
+		echo (($_GET['reino'] ?? null) == 0 || !($_GET['reino'] ?? null)) ? ' selected="selected"' : "";
 		echo '>Selecione</option><option value="1"';
-		echo ($_GET['reino'] == 1) ? ' selected="selected"' : "";
+		echo (($_GET['reino'] ?? null) == 1) ? ' selected="selected"' : "";
 		echo ">Cathal</option>\n<option value=\"2\"";
-		echo ($_GET['reino'] == 2) ? ' selected="selected"' : "";
+		echo (($_GET['reino'] ?? null) == 2) ? ' selected="selected"' : "";
 		echo ">Eroda</option>\n<option value=\"3\"";
-		echo ($_GET['reino'] == 3) ? ' selected="selected"' : "";
+		echo (($_GET['reino'] ?? null) == 3) ? ' selected="selected"' : "";
 		echo ">Turkic</option>\n</select></td>\n</tr>\n";
 
 		echo "<tr>\n<td width=\"35%\">Vocação:</td>\n<td width=\"65%\"><select name=\"voc\">\n<option value=\"0\"";
-		echo ($_GET['voc'] == 0) ? ' selected="selected"' : "";
+		echo (($_GET['voc'] ?? null) == 0) ? ' selected="selected"' : "";
 		echo '>Selecione</option><option value="1"';
-		echo ($_GET['voc'] == 1) ? ' selected="selected"' : "";
+		echo (($_GET['voc'] ?? null) == 1) ? ' selected="selected"' : "";
 		echo ">Arqueiro</option>\n<option value=\"2\"";
-		echo ($_GET['voc'] == 2) ? ' selected="selected"' : "";
+		echo (($_GET['voc'] ?? null) == 2) ? ' selected="selected"' : "";
 		echo ">Guerreiro</option>\n<option value=\"3\"";
-		echo ($_GET['voc'] == 3) ? ' selected="selected"' : "";
+		echo (($_GET['voc'] ?? null) == 3) ? ' selected="selected"' : "";
 		echo ">Mago</option></select> ";
 
 		echo "<select name=\"promo\">\n<option value=\"any\"";
-		echo ($_GET['promo'] == 'any' || !$_GET['promo']) ? ' selected="selected"' : "";
+		echo (($_GET['promo'] ?? null) == 'any' || !($_GET['promo'] ?? null)) ? ' selected="selected"' : "";
 		echo '>Selecione</option><option value="t"';
-		echo ($_GET['promo'] == 't') ? ' selected="selected"' : "";
+		echo (($_GET['promo'] ?? null) == 't') ? ' selected="selected"' : "";
 		echo ">Vocação Superior</option>\n<option value=\"p\"";
-		echo ($_GET['promo'] == 'p') ? ' selected="selected"' : "";
+		echo (($_GET['promo'] ?? null) == 'p') ? ' selected="selected"' : "";
 		echo ">Vocação Suprema</option>\n</select></td>\n</tr>\n";
 
 		echo "<tr><td></td><td><br /><input type=\"submit\" value=\"Procurar\" /></td></tr>\n";
 		echo "</table>\n";
 		echo "</form>\n</fieldset>\n";
-		if (!$_GET['reino'] || $_GET['reino'] == $player->reino) {
+		if (!($_GET['reino'] ?? null) || ($_GET['reino'] ?? null) == $player->reino) {
 			if ($player->reino == 1) {
 				$reinno = "Cathal";
 			} elseif ($player->reino == 2) {
@@ -944,29 +944,29 @@ switch ($_GET['act']) {
 		{
 			$bool = 1;
 			while ($result = $query->fetchrow()) {
-				$checkquerywork = $db->GetOne("select `status` from `work` where `player_id`=? order by `start` DESC", [$result['id']]);
+				$checkquerywork = $db->GetOne("select `status` from `work` where `player_id`=? order by `start` DESC", [$result['id'] ?? null]);
 				if ($checkquerywork != "t") {
 					echo '<tr class="row' . $bool . "\">\n";
 					echo '<td width="35%"><a href="profile.php?id=' . $result['username'] . '">' . $result['username'] . "</a></td>\n";
 					echo '<td width="15%">' . $result['level'] . "</td>\n";
 					echo '<td width="20%">';
-					if ($result['voc'] == 'archer' && $result['promoted'] == 'f') {
+					if (($result['voc'] ?? null) == 'archer' && ($result['promoted'] ?? null) == 'f') {
 						echo "Caçador";
-					} elseif ($result['voc'] == 'knight' && $result['promoted'] == 'f') {
+					} elseif (($result['voc'] ?? null) == 'knight' && ($result['promoted'] ?? null) == 'f') {
 						echo "Espadachim";
-					} elseif ($result['voc'] == 'mage' && $result['promoted'] == 'f') {
+					} elseif (($result['voc'] ?? null) == 'mage' && ($result['promoted'] ?? null) == 'f') {
 						echo "Bruxo";
-					} elseif ($result['voc'] == 'archer' && ($result['promoted'] == 't' || $result['promoted'] == 's' || $result['promoted'] == 'r')) {
+					} elseif (($result['voc'] ?? null) == 'archer' && (($result['promoted'] ?? null) == 't' || ($result['promoted'] ?? null) == 's' || ($result['promoted'] ?? null) == 'r')) {
 						echo "Arqueiro";
-					} elseif ($result['voc'] == 'knight' && ($result['promoted'] == 't' || $result['promoted'] == 's' || $result['promoted'] == 'r')) {
+					} elseif (($result['voc'] ?? null) == 'knight' && (($result['promoted'] ?? null) == 't' || ($result['promoted'] ?? null) == 's' || ($result['promoted'] ?? null) == 'r')) {
 						echo "Guerreiro";
-					} elseif ($result['voc'] == 'mage' && ($result['promoted'] == 't' || $result['promoted'] == 's' || $result['promoted'] == 'r')) {
+					} elseif (($result['voc'] ?? null) == 'mage' && (($result['promoted'] ?? null) == 't' || ($result['promoted'] ?? null) == 's' || ($result['promoted'] ?? null) == 'r')) {
 						echo "Mago";
-					} elseif ($result['voc'] == 'archer' && $result['promoted'] == 'p') {
+					} elseif (($result['voc'] ?? null) == 'archer' && ($result['promoted'] ?? null) == 'p') {
 						echo "Besteiro";
-					} elseif ($result['voc'] == 'knight' && $result['promoted'] == 'p') {
+					} elseif (($result['voc'] ?? null) == 'knight' && ($result['promoted'] ?? null) == 'p') {
 						echo "Cavaleiro";
-					} elseif ($result['voc'] == 'mage' && $result['promoted'] == 'p') {
+					} elseif (($result['voc'] ?? null) == 'mage' && ($result['promoted'] ?? null) == 'p') {
 						echo "Arquimago";
 					}
 
@@ -1004,8 +1004,8 @@ switch ($_GET['act']) {
 				$auxiliar = "hora(s)";
 			}
 
-			$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id']]);
-			$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id']]);
+			$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
+			$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
 			echo '<div style="background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px"><center><b>' . $potname . ":</b> " . $valortempo . " " . $auxiliar . " restante(s).<br/>" . $potdesc . "</center></div>";
 		}
 
@@ -1044,7 +1044,7 @@ switch ($_GET['act']) {
 		echo "<tr><td></td><td><br /><input type=\"submit\" value=\"Procurar\" /></td></tr>\n";
 		echo "</table>\n";
 		echo "</form>\n</fieldset>\n";
-		if (!$_GET['reino'] || $_GET['reino'] == $player->reino) {
+		if (!($_GET['reino'] ?? null) || ($_GET['reino'] ?? null) == $player->reino) {
 			if ($player->reino == 1) {
 				$reinno = "Cathal";
 			} elseif ($player->reino == 2) {
@@ -1080,7 +1080,7 @@ switch ($_GET['act']) {
 
 			$bool = 1;
 			while ($pw = $serchwanted->fetchrow()) {
-				$wantedinfo = $db->execute("select * from `players` where `id`=?", [$pw['player_id']]);
+				$wantedinfo = $db->execute("select * from `players` where `id`=?", [$pw['player_id'] ?? null]);
 				while ($wanted = $wantedinfo->fetchrow()) {
 					echo '<tr class="row' . $bool . '">';
 					echo '<td width="33%"><a href="profile.php?id=' . $wanted['username'] . '">' . $wanted['username'] . "</a></td>";

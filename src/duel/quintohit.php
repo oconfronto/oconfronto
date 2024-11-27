@@ -5,16 +5,16 @@ declare(strict_types=1);
 $selectmana = $db->GetOne("select `mana` from `blueprint_magias` where `id`=8");
 $mana = $player->reino == '1' || $player->vip > time() ? $selectmana - 5 : $selectmana;
 
-$log = explode(", ", (string) $duellog[0]);
+$log = explode(", ", (string) ($duellog[0] ?? null));
 if ($player->mana < $mana) {
-    if ($log[0] != 6) {
+    if (($log[0] ?? null) != 6) {
         array_unshift($duellog, "6, " . $player->username . "");
     }
 
     $otroatak = 5;
 } else {
 
-    if ($player->id == $luta['p_id']) {
+    if ($player->id == ($luta['p_id'] ?? null)) {
         $magia = $luta['p_magia'];
         $emagia = $luta['e_magia'];
     } else {

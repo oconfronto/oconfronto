@@ -20,12 +20,12 @@ include(__DIR__ . "/includes/actions/transfer-items.php");
 
 include(__DIR__ . "/templates/private_header.php");
 
-if ($_GET['sellit']) {
-	$query = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.img, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", [$player->id, $_GET['sellit']]);
+if ($_GET['sellit'] ?? null) {
+	$query = $db->execute("select items.id, items.item_id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.img, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", [$player->id, $_GET['sellit'] ?? null]);
 
 	if ($query->recordcount() > 0) {
 		$sell = $query->fetchrow(); //Get item info
-		if ($sell['item_bonus'] > 10) {
+		if (($sell['item_bonus'] ?? null) > 10) {
 			$valordavenda = floor(($sell['price'] / 2) + (($sell['item_bonus'] * $sell['price']) / 5) + 3000000);
 		} else {
 			$valordavenda = floor(($sell['price'] / 2) + (($sell['item_bonus'] * $sell['price']) / 5));
@@ -38,25 +38,25 @@ if ($_GET['sellit']) {
 		echo "<td width=\"100%\" align=\"center\">Este item não existe!</td>";
 		echo "</tr></table>";
 		echo "</div>";
-	} elseif ($sell['item_id'] == 111 || $sell['item_id'] == 116 || $sell['item_id'] == 163 || $sell['item_id'] == 168) {
+	} elseif (($sell['item_id'] ?? null) == 111 || ($sell['item_id'] ?? null) == 116 || ($sell['item_id'] ?? null) == 163 || ($sell['item_id'] ?? null) == 168) {
 		echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
 		echo "<td width=\"100%\" align=\"center\">Você não pode vender este item!</td>";
 		echo "</tr></table>";
 		echo "</div>";
-	} elseif ($sell['type'] == 'stone') {
+	} elseif (($sell['type'] ?? null) == 'stone') {
 		echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
 		echo "<td width=\"100%\" align=\"center\">Você não pode vender pedras.</td>";
 		echo "</tr></table>";
 		echo "</div>";
-	} elseif ($sell['status'] == 'equipped') {
+	} elseif (($sell['status'] ?? null) == 'equipped') {
 		echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
 		echo "<td width=\"100%\" align=\"center\">Você não pode vender um item que está em uso.</td>";
 		echo "</tr></table>";
 		echo "</div>";
-	} elseif ($_GET['sellit'] > 0 && $_GET['comfirm'] != true) {
+	} elseif (($_GET['sellit'] ?? null) > 0 && ($_GET['comfirm'] ?? null) != true) {
 		echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
 		echo '<td width="10%" align="center"><img src="static/images/itens/' . $sell['img'] . '" border="0"></td>';
@@ -64,12 +64,12 @@ if ($_GET['sellit']) {
 		echo "<td width=\"35%\" align=\"right\"><a href=\"inventory.php\">Não, obrigado.</a><br/><b><a href=\"inventory.php?sellit=" . $_GET['sellit'] . '&comfirm=true">Desejo vender o item.</a></b></td>';
 		echo "</tr></table>";
 		echo "</div>";
-	} elseif ($_GET['sellit'] > 0 && $_GET['comfirm'] == true) {
-		if ($sell['mark'] == 't') {
-			$db->execute("delete from `market` where `market_id`=?", [$_GET['sellit']]);
+	} elseif (($_GET['sellit'] ?? null) > 0 && ($_GET['comfirm'] ?? null) == true) {
+		if (($sell['mark'] ?? null) == 't') {
+			$db->execute("delete from `market` where `market_id`=?", [$_GET['sellit'] ?? null]);
 		}
 
-		$db->execute("delete from `items` where `id`=?", [$_GET['sellit']]);
+		$db->execute("delete from `items` where `id`=?", [$_GET['sellit'] ?? null]);
 		$db->execute("update `players` set `gold`=`gold`+? where `id`=?", [$valordavenda, $player->id]);
 
 		echo '<div style="background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
@@ -80,19 +80,19 @@ if ($_GET['sellit']) {
 	}
 }
 
-if ($_GET['mature']) {
-	$querymature = $db->execute("select items.id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.img, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", [$player->id, $_GET['mature']]);
+if ($_GET['mature'] ?? null) {
+	$querymature = $db->execute("select items.id, items.item_bonus, items.status, items.mark, blueprint_items.name, blueprint_items.price, blueprint_items.img, blueprint_items.type from `blueprint_items`, `items` where items.item_id=blueprint_items.id and items.player_id=? and items.id=?", [$player->id, $_GET['mature'] ?? null]);
 
 	if ($querymature->recordcount() > 0) {
 		$mature = $querymature->fetchrow();
 
-		if ($mature['item_bonus'] == 0) {
+		if (($mature['item_bonus'] ?? null) == 0) {
 			$precol = ceil($mature['price'] / 3.5);
-		} elseif ($mature['item_bonus'] == 1) {
+		} elseif (($mature['item_bonus'] ?? null) == 1) {
 			$precol = ceil(($mature['price'] / 3.5) * 1.3);
-		} elseif ($mature['item_bonus'] == 2) {
+		} elseif (($mature['item_bonus'] ?? null) == 2) {
 			$precol = ceil(($mature['price'] / 3.5) * 1.7);
-		} elseif ($mature['item_bonus'] == 3) {
+		} elseif (($mature['item_bonus'] ?? null) == 3) {
 			$precol = ceil(($mature['price'] / 3.5) * 2);
 		} else {
 			$precol = ceil(($mature['price'] / 3.5) * ($mature['item_bonus'] / 1.85));
@@ -105,32 +105,32 @@ if ($_GET['mature']) {
 		echo "<td width=\"100%\" align=\"center\">Este item não existe!</td>";
 		echo "</tr></table>";
 		echo "</div>";
-	} elseif ($mature['item_bonus'] > 8) {
+	} elseif (($mature['item_bonus'] ?? null) > 8) {
 		echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
 		echo "<td width=\"100%\" align=\"center\">Seu item já está maturado ao máximo! (+9)</td>";
 		echo "</tr></table>";
 		echo "</div>";
-	} elseif ($mature['mark'] == 't') {
+	} elseif (($mature['mark'] ?? null) == 't') {
 		echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
 		echo "<td width=\"100%\" align=\"center\">Você não pode maturar itens a venda no mercado.</td>";
 		echo "</tr></table>";
 		echo "</div>";
-	} elseif ($mature['type'] == 'addon' || $mature['type'] == 'potion' || $mature['type'] == 'stone' || $mature['type'] == 'ring') {
+	} elseif (($mature['type'] ?? null) == 'addon' || ($mature['type'] ?? null) == 'potion' || ($mature['type'] ?? null) == 'stone' || ($mature['type'] ?? null) == 'ring') {
 		echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
 		echo "<td width=\"100%\" align=\"center\">Você não pode maturar este tipo de item.</td>";
 		echo "</tr></table>";
 		echo "</div>";
-	} elseif ($mature['price'] < 1000) {
+	} elseif (($mature['price'] ?? null) < 1000) {
 		echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
 		echo "<td width=\"100%\" align=\"center\">Você não pode maturar este item.";
 		echo "<br/>Itens com preços mais baixos que mil moedas de ouro não podem ser maturados.";
 		echo "</td></tr></table>";
 		echo "</div>";
-	} elseif ($_GET['mature'] > 0 && $_GET['comfirm'] != true) {
+	} elseif (($_GET['mature'] ?? null) > 0 && ($_GET['comfirm'] ?? null) != true) {
 		echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 		echo '<table width="100%" align="center"><tr>';
 		echo '<td width="10%" align="center"><img src="static/images/itens/' . $mature['img'] . '" border="0"></td>';
@@ -138,7 +138,7 @@ if ($_GET['mature']) {
 		echo "<td width=\"35%\" align=\"right\"><a href=\"inventory.php\">Não, obrigado.</a><br/><b><a href=\"inventory.php?mature=" . $_GET['mature'] . '&comfirm=true">Desejo maturar o item.</a></b></td>';
 		echo "</tr></table>";
 		echo "</div>";
-	} elseif ($_GET['mature'] > 0 && $_GET['comfirm'] == true) {
+	} elseif (($_GET['mature'] ?? null) > 0 && ($_GET['comfirm'] ?? null) == true) {
 
 		if ($precol > $player->gold) {
 			echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
@@ -149,7 +149,7 @@ if ($_GET['mature']) {
 		} else {
 
 
-			if ($mature['type'] == 'amulet' && $mature['status'] == 'equipped') {
+			if (($mature['type'] ?? null) == 'amulet' && ($mature['status'] ?? null) == 'equipped') {
 				$addhp = 40;
 				$extramana = 10;
 			} else {
@@ -157,7 +157,7 @@ if ($_GET['mature']) {
 				$extramana = 0;
 			}
 
-			$db->execute("update `items` set `item_bonus`=? where `id`=?", [$mature['item_bonus'] + 1, $mature['id']]);
+			$db->execute("update `items` set `item_bonus`=? where `id`=?", [$mature['item_bonus'] + 1, $mature['id'] ?? null]);
 			$db->execute("update `players` set `hp`=`hp`+?, `maxhp`=`maxhp`+?, `mana`=`mana`+?, `maxmana`=`maxmana`+?, `extramana`=`extramana`+?, `gold`=`gold`-? where `id`=?", [$addhp, $addhp, $extramana, $extramana, $extramana, $precol, $player->id]);
 
 			echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
@@ -212,57 +212,57 @@ while ($bag = $backpackquery->fetchrow()) {
 
 
 
-	if ($bag['item_bonus'] > 2 && $bag['item_bonus'] < 6) {
+	if (($bag['item_bonus'] ?? null) > 2 && ($bag['item_bonus'] ?? null) < 6) {
 		$colorbg = "itembg2";
-	} elseif ($bag['item_bonus'] > 5 && $bag['item_bonus'] < 9) {
+	} elseif (($bag['item_bonus'] ?? null) > 5 && ($bag['item_bonus'] ?? null) < 9) {
 		$colorbg = "itembg3";
-	} elseif ($bag['item_bonus'] == 9) {
+	} elseif (($bag['item_bonus'] ?? null) == 9) {
 		$colorbg = "itembg4";
-	} elseif ($bag['item_bonus'] > 9) {
+	} elseif (($bag['item_bonus'] ?? null) > 9) {
 		$colorbg = "itembg5";
 	} else {
 		$colorbg = "itembg1";
 	}
 
-	if ($bag['for'] == 0) {
+	if (($bag['for'] ?? null) == 0) {
 		$showitfor = "";
 		$showitfor2 = "";
 	} else {
 		$showitfor2 = "+<font color=gray>" . $bag['for'] . " For</font><br/>";
 	}
 
-	if ($bag['vit'] == 0) {
+	if (($bag['vit'] ?? null) == 0) {
 		$showitvit = "";
 		$showitvit2 = "";
 	} else {
 		$showitvit2 = "+<font color=green>" . $bag['vit'] . " Vit</font><br/>";
 	}
 
-	if ($bag['agi'] == 0) {
+	if (($bag['agi'] ?? null) == 0) {
 		$showitagi = "";
 		$showitagi2 = "";
 	} else {
 		$showitagi2 = "+<font color=blue>" . $bag['agi'] . " Agi</font><br/>";
 	}
 
-	if ($bag['res'] == 0) {
+	if (($bag['res'] ?? null) == 0) {
 		$showitres = "";
 		$showitres2 = "";
 	} else {
 		$showitres2 = "+<font color=red>" . $bag['res'] . " Res</font>";
 	}
 
-	if ($bag['type'] == 'amulet') {
+	if (($bag['type'] ?? null) == 'amulet') {
 		$nametype = "Vitalidade";
-	} elseif ($bag['type'] == 'weapon') {
+	} elseif (($bag['type'] ?? null) == 'weapon') {
 		$nametype = "Ataque";
-	} elseif ($bag['type'] == 'boots') {
+	} elseif (($bag['type'] ?? null) == 'boots') {
 		$nametype = "Agilidade";
 	} else {
 		$nametype = "Defesa";
 	}
 
-	if ($bag['type'] != 'addon' && $bag['type'] != 'ring') {
+	if (($bag['type'] ?? null) != 'addon' && ($bag['type'] ?? null) != 'ring') {
 		$newefec = ($bag['effectiveness']) + ($bag['item_bonus'] * 2);
 		$showitname = "" . $bag['name'] . " + " . $bag['item_bonus'] . "";
 	} else {
@@ -270,17 +270,17 @@ while ($bag = $backpackquery->fetchrow()) {
 	}
 
 	$need = NULL;
-	if ($bag['needlvl'] > 1) {
+	if (($bag['needlvl'] ?? null) > 1) {
 		$lvlbonus = $player->vip > time() ? 10 : 0;
 
-		if ($bag['needlvl'] > ($player->level + $lvlbonus)) {
+		if (($bag['needlvl'] ?? null) > ($player->level + $lvlbonus)) {
 			$need .= "<br/><font color=red><b>Requer nível " . $bag['needlvl'] . ".</b></font>";
 		} else {
 			$need .= "<br/><b>Requer nível " . $bag['needlvl'] . ".</b>";
 		}
 	}
 
-	if ($bag['needpromo'] == "t") {
+	if (($bag['needpromo'] ?? null) == "t") {
 		if ($player->promoted != "f") {
 			$need .= "<br/><b>Voc superior.</b>";
 		} else {
@@ -288,7 +288,7 @@ while ($bag = $backpackquery->fetchrow()) {
 		}
 	}
 
-	if ($bag['needpromo'] == "p") {
+	if (($bag['needpromo'] ?? null) == "p") {
 		if ($player->promoted == "p") {
 			$need .= "<br/><b>Voc suprema.</b>";
 		} else {
@@ -296,9 +296,9 @@ while ($bag = $backpackquery->fetchrow()) {
 		}
 	}
 
-	if ($bag['type'] == 'addon') {
+	if (($bag['type'] ?? null) == 'addon') {
 		$showitinfo = "<table width=100%><tr><td width=100%><font size=1px>" . $bag['description'] . "</font></td></tr></table>";
-	} elseif ($bag['type'] == 'ring') {
+	} elseif (($bag['type'] ?? null) == 'ring') {
 		$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>" . $bag['description'] . "" . $need . "</font></td><td width=35%><font size=1px>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></table>";
 	} else {
 		$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>" . $nametype . ": " . $newefec . "" . $need . "</font></td><td width=35%><font size=1px>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></table>";
@@ -437,19 +437,19 @@ if ($player->level < $setting->activate_level) {
 			$bonus4 = "";
 			$bonus5 = "";
 
-			if ($item['for'] > 0) {
+			if (($item['for'] ?? null) > 0) {
 				$bonus2 = " +" . $item['for'] . "F";
 			}
 
-			if ($item['vit'] > 0) {
+			if (($item['vit'] ?? null) > 0) {
 				$bonus3 = " +" . $item['vit'] . "V";
 			}
 
-			if ($item['agi'] > 0) {
+			if (($item['agi'] ?? null) > 0) {
 				$bonus4 = " +" . $item['agi'] . "A";
 			}
 
-			if ($item['res'] > 0) {
+			if (($item['res'] ?? null) > 0) {
 				$bonus5 = " +" . $item['res'] . "R";
 			}
 

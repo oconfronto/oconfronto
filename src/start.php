@@ -12,8 +12,8 @@ if ($query->recordcount() == 0) {
     $get = $query->fetchrow();
 }
 
-if (($get['pending_status'] > 1 && $get['pending_status'] < 90) && ($_GET['act'] > 1 && $_GET['act'] <= 90)) {
-    if ($_GET['act'] == 90 && !$_GET['comfirm']) {
+if ((($get['pending_status'] ?? null) > 1 && ($get['pending_status'] ?? null) < 90) && (($_GET['act'] ?? null) > 1 && ($_GET['act'] ?? null) <= 90)) {
+    if (($_GET['act'] ?? null) == 90 && !($_GET['comfirm'] ?? null)) {
         define("PAGENAME", "Tutorial");
         include(__DIR__ . "/templates/private_header.php");
         echo "<center>Você tem certeza que deseja pular o turorial? Ele levará menos de 5 minutos para ser concluído, irá mostrar as dicas básicas do jogo e ainda o ajudará a configurar seu personagem pela primeira vez.<br/><br/>";
@@ -22,13 +22,13 @@ if (($get['pending_status'] > 1 && $get['pending_status'] < 90) && ($_GET['act']
         exit;
     }
 
-    $db->execute("update `pending` set `pending_status`=? where `pending_id`=2 and `player_id`=?", [$_GET['act'], $player->id]);
+    $db->execute("update `pending` set `pending_status`=? where `pending_id`=2 and `player_id`=?", [$_GET['act'] ?? null, $player->id]);
     header("Location: home.php");
     exit;
 }
 
-if ($get['pending_status'] == 1 || $player->reino == 0) {
-    if (isset($_GET['reino']) && $_GET['reino'] == 1) {
+if (($get['pending_status'] ?? null) == 1 || $player->reino == 0) {
+    if (($_GET['reino'] ?? null) && ($_GET['reino'] ?? null) == 1) {
         $db->execute("update `players` set `reino`='1' where `id`=?", [$player->id]);
         $db->execute("update `pending` set `pending_status`=2 where `pending_id`=2 and `player_id`=?", [$player->id]);
         define("PAGENAME", "Reino Cathal");
@@ -39,7 +39,7 @@ if ($get['pending_status'] == 1 || $player->reino == 0) {
         exit;
     }
 
-    if (isset($_GET['reino']) && $_GET['reino'] == 2) {
+    if (($_GET['reino'] ?? null) && ($_GET['reino'] ?? null) == 2) {
         $db->execute("update `players` set `reino`='2' where `id`=?", [$player->id]);
         $db->execute("update `pending` set `pending_status`=2 where `pending_id`=2 and `player_id`=?", [$player->id]);
         define("PAGENAME", "Reino Eroda");
@@ -50,7 +50,7 @@ if ($get['pending_status'] == 1 || $player->reino == 0) {
         exit;
     }
 
-    if (isset($_GET['reino']) && $_GET['reino'] == 3) {
+    if (($_GET['reino'] ?? null) && ($_GET['reino'] ?? null) == 3) {
         $db->execute("update `players` set `reino`='3', `hp`=?, `maxhp`=? where `id`=?", [maxHp($db, $player->id, ($player->level - 1), 3, $player->vip), maxHp($db, $player->id, ($player->level - 1), 3, $player->vip), $player->id]);
         $db->execute("update `pending` set `pending_status`=2 where `pending_id`=2 and `player_id`=?", [$player->id]);
         define("PAGENAME", "Reino Turkic");
@@ -91,7 +91,7 @@ if ($get['pending_status'] == 1 || $player->reino == 0) {
     exit;
 }
 
-if ($get['pending_status'] == 2) {
+if (($get['pending_status'] ?? null) == 2) {
     define("PAGENAME", "Tutorial");
     include(__DIR__ . "/templates/private_header.php");
     echo "Sempre existiu <u>muita rivalidade</u> entre os 3 reinos, mas como se isso não fosse suficiente, os mais diversos tipos de monstros rodeiam as florestas deste mundo.<br/><br/>";
@@ -101,12 +101,12 @@ if ($get['pending_status'] == 2) {
     exit;
 }
 
-if ($get['pending_status'] == 3) {
+if (($get['pending_status'] ?? null) == 3) {
     header("Location: stat_points.php");
     exit;
 }
 
-if ($get['pending_status'] == 4) {
+if (($get['pending_status'] ?? null) == 4) {
     $userAgent = ${$_SERVER}['HTTP_USER_AGENT'];
     function isMobile($userAgent): int|false
     {
@@ -122,17 +122,17 @@ if ($get['pending_status'] == 4) {
     exit;
 }
 
-if ($get['pending_status'] == 5) {
+if (($get['pending_status'] ?? null) == 5) {
     header("Location: home.php");
     exit;
 }
 
-if ($get['pending_status'] == 6) {
+if (($get['pending_status'] ?? null) == 6) {
     header("Location: monster.php");
     exit;
 }
 
-if ($get['pending_status'] == 7) {
+if (($get['pending_status'] ?? null) == 7) {
     define("PAGENAME", "Tutorial");
     include(__DIR__ . "/templates/private_header.php");
     echo "Você já aprendeu a lutar, mas aqui também será necessário conquistar os demais guerreiros. Amigos e aliados lhe trarão benefícios durante sua jornada, por isso não deixe de visitar o <u>chat</u> e o <u>fórum</u>.<br/><br/>";
@@ -147,7 +147,7 @@ if ($get['pending_status'] == 7) {
     exit;
 }
 
-if ($get['pending_status'] == 8) {
+if (($get['pending_status'] ?? null) == 8) {
     define("PAGENAME", "Tutorial");
     include(__DIR__ . "/templates/private_header.php");
     $reino = $db->GetOne("select `nome` from `reinos` where `id`=?", [$player->reino]);

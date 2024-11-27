@@ -26,22 +26,22 @@ if ($tutorial->recordcount() == 0) {
     }
 
     $tut = $checatutoriallido->fetchrow();
-    if (($tut['pending_status'] == 1 || $player->reino == 0) && $currentfile !== 'start.php') {
+    if ((($tut['pending_status'] ?? null) == 1 || $player->reino == 0) && $currentfile !== 'start.php') {
         header("Location: start.php");
         exit;
     }
 
-    if ($tut['pending_status'] == 2 && $currentfile !== 'start.php') {
+    if (($tut['pending_status'] ?? null) == 2 && $currentfile !== 'start.php') {
         header("Location: start.php");
         exit;
     }
 
-    if ($tut['pending_status'] == 3 && $currentfile !== 'stat_points.php') {
+    if (($tut['pending_status'] ?? null) == 3 && $currentfile !== 'stat_points.php') {
         header("Location: stat_points.php");
         exit;
     }
 
-    if ($tut['pending_status'] == 4) {
+    if (($tut['pending_status'] ?? null) == 4) {
         if (isMobile($userAgent)) {
             if ($currentfile !== 'inventory_mobile.php') {
                 header("Location: inventory_mobile.php");
@@ -51,16 +51,16 @@ if ($tutorial->recordcount() == 0) {
             header("Location: inventory.php");
             exit;
         }
-    } elseif ($tut['pending_status'] == 5 && $currentfile !== 'home.php') {
+    } elseif (($tut['pending_status'] ?? null) == 5 && $currentfile !== 'home.php') {
         header("Location: home.php");
         exit;
-    } elseif ($tut['pending_status'] == 6 && $currentfile !== 'monster.php') {
+    } elseif (($tut['pending_status'] ?? null) == 6 && $currentfile !== 'monster.php') {
         header("Location: monster.php");
         exit;
-    } elseif ($tut['pending_status'] == 7 && $currentfile !== 'start.php') {
+    } elseif (($tut['pending_status'] ?? null) == 7 && $currentfile !== 'start.php') {
         header("Location: start.php");
         exit;
-    } elseif ($tut['pending_status'] == 8 && $currentfile !== 'start.php') {
+    } elseif (($tut['pending_status'] ?? null) == 8 && $currentfile !== 'start.php') {
         header("Location: start.php");
         exit;
     }
@@ -307,9 +307,9 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                                 $auxiliar = "hora(s)";
                             }
 
-                            $potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id']]);
-                            $potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id']]);
-                            $potimg = $db->GetOne("select `img` from `blueprint_items` where `id`=?", [$selct['item_id']]);
+                            $potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
+                            $potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
+                            $potimg = $db->GetOne("select `img` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
 
 
                         ?>
@@ -376,7 +376,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                             } else {
                                 $bool = "o";
                                 while ($friend = $query->fetchrow()) {
-                                    $name = $db->GetOne("select `id` from `players` where `username`=?", [$friend['fname']]);
+                                    $name = $db->GetOne("select `id` from `players` where `username`=?", [$friend['fname'] ?? null]);
                                     $friendlevel = $db->getone("select `level` from `players` where `id`=?", [$name]);
 
                                     echo '<tr class="amig' . $bool . '">';
@@ -392,9 +392,9 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                                             echo "<th><center><a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", showName($name, $db, 'off', 'off')) . "')\"><img src=\"static/images/images/on.png\" border=\"0px\"></a></center></th>";
                                         } else {
                                             $stattus = $check->fetchrow();
-                                            if ($stattus['pending_status'] == 'ocp') {
+                                            if (($stattus['pending_status'] ?? null) == 'ocp') {
                                                 echo "<th><center><a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", showName($name, $db, 'off', 'off')) . "')\"><img src=\"static/images/images/ocp.png\" border=\"0px\"></a></center></th>";
-                                            } elseif ($stattus['pending_status'] == 'inv') {
+                                            } elseif (($stattus['pending_status'] ?? null) == 'inv') {
                                                 echo '<th><center><img src="static/images/images/off.png" border="0px"></center></th>';
                                             }
                                         }

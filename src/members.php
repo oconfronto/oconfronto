@@ -12,21 +12,21 @@ $page = (intval($_GET['page']) == 0) ? 1 : intval($_GET['page']); //Start on pag
 
 $begin = ($limit * $page) - $limit; //Starting point for query
 
-if ($_GET['voctype'] == 'archer') {
+if (($_GET['voctype'] ?? null) == 'archer') {
 	$searchvoc = "and `voc`='archer'";
-} elseif ($_GET['voctype'] == 'knight') {
+} elseif (($_GET['voctype'] ?? null) == 'knight') {
 	$searchvoc = "and `voc`='knight'";
-} elseif ($_GET['voctype'] == 'mage') {
+} elseif (($_GET['voctype'] ?? null) == 'mage') {
 	$searchvoc = "and `voc`='mage'";
 } else {
 	$searchvoc = "";
 }
 
-if ($_GET['reino'] == 1) {
+if (($_GET['reino'] ?? null) == 1) {
 	$searchrei = "and `reino`='1'";
-} elseif ($_GET['reino'] == 2) {
+} elseif (($_GET['reino'] ?? null) == 2) {
 	$searchrei = "and `reino`='2'";
-} elseif ($_GET['reino'] == 3) {
+} elseif (($_GET['reino'] ?? null) == 3) {
 	$searchrei = "and `reino`='3'";
 } else {
 	$searchrei = "";
@@ -36,7 +36,7 @@ $total_players = $db->getone(sprintf("select count(ID) as `count` from `players`
 
 include(__DIR__ . "/templates/private_header.php");
 
-if ($_GET['error']) {
+if ($_GET['error'] ?? null) {
 	echo showAlert("Usuário não encontrado.", "red");
 }
 
@@ -58,15 +58,15 @@ if (($total_players % $limit) != 0) {
 echo "</select>";
 echo "</center></td>";
 
-if (!$_GET['orderby']) {
+if (!($_GET['orderby'] ?? null)) {
 	$selecum = "selected";
-} elseif ($_GET['orderby'] == "level") {
+} elseif (($_GET['orderby'] ?? null) == "level") {
 	$selecum = "selected";
-} elseif ($_GET['orderby'] == "gold") {
+} elseif (($_GET['orderby'] ?? null) == "gold") {
 	$selecdois = "selected";
-} elseif ($_GET['orderby'] == "kills") {
+} elseif (($_GET['orderby'] ?? null) == "kills") {
 	$selectres = "selected";
-} elseif ($_GET['orderby'] == "monsterkilled") {
+} elseif (($_GET['orderby'] ?? null) == "monsterkilled") {
 	$selecquatro = "selected";
 } else {
 	$selecum = "selected";
@@ -75,15 +75,15 @@ if (!$_GET['orderby']) {
 echo '<td width="32%"><center><b>Ordem:</b>&nbsp;<select name="orderby"><option value="level" ' . $selecum . ">Nível</option><option value=\"gold\" " . $selecdois . '>Ouro</option><option value="kills" ' . $selectres . '>Assassinatos</option><option value="monsterkilled" ' . $selecquatro . ">Monstros mortos</option></select></center></td>";
 
 
-if (!$_GET['reino']) {
+if (!($_GET['reino'] ?? null)) {
 	$selecum = "selected";
-} elseif ($_GET['reino'] == 0) {
+} elseif (($_GET['reino'] ?? null) == 0) {
 	$selecum = "selected";
-} elseif ($_GET['reino'] == 1) {
+} elseif (($_GET['reino'] ?? null) == 1) {
 	$selecdois = "selected";
-} elseif ($_GET['reino'] == 2) {
+} elseif (($_GET['reino'] ?? null) == 2) {
 	$selectres = "selected";
-} elseif ($_GET['reino'] == 3) {
+} elseif (($_GET['reino'] ?? null) == 3) {
 	$selecquatro = "selected";
 } else {
 	$selecum = "selected";
@@ -91,15 +91,15 @@ if (!$_GET['reino']) {
 
 echo '<td width="23%"><center><b>Reino:</b>&nbsp;<select name="reino"><option value="0" ' . $selecum . '>Qualquer</option><option value="1" ' . $selecdois . '>Cathal</option><option value="2" ' . $selectres . '>Eroda</option><option value="3" ' . $selecquatro . ">Turkic</option></select></center></td>";
 
-if (!$_GET['voctype']) {
+if (!($_GET['voctype'] ?? null)) {
 	$selvocum = "selected";
-} elseif ($_GET['voctype'] == "all") {
+} elseif (($_GET['voctype'] ?? null) == "all") {
 	$selvocum = "selected";
-} elseif ($_GET['voctype'] == "archer") {
+} elseif (($_GET['voctype'] ?? null) == "archer") {
 	$selvocdois = "selected";
-} elseif ($_GET['voctype'] == "knight") {
+} elseif (($_GET['voctype'] ?? null) == "knight") {
 	$selvoctres = "selected";
-} elseif ($_GET['voctype'] == "mage") {
+} elseif (($_GET['voctype'] ?? null) == "mage") {
 	$selvocquatro = "selected";
 } else {
 	$selvocum = "selected";
@@ -110,15 +110,15 @@ echo '<td width="6%"><center><input type="submit" id="link" class="aff" value="I
 echo "</tr></table>";
 echo "</form>";
 
-if (!$_GET['orderby']) {
+if (!($_GET['orderby'] ?? null)) {
 	$ordenarpor = "order by `level` desc, `exp` desc";
-} elseif ($_GET['orderby'] == "level") {
+} elseif (($_GET['orderby'] ?? null) == "level") {
 	$ordenarpor = "order by `level` desc, `exp` desc";
-} elseif ($_GET['orderby'] == "gold") {
+} elseif (($_GET['orderby'] ?? null) == "gold") {
 	$ordenarpor = "order by `gold`+`bank` desc";
-} elseif ($_GET['orderby'] == "kills") {
+} elseif (($_GET['orderby'] ?? null) == "kills") {
 	$ordenarpor = "order by `kills` desc";
-} elseif ($_GET['orderby'] == "monsterkilled") {
+} elseif (($_GET['orderby'] ?? null) == "monsterkilled") {
 	$ordenarpor = "order by `monsterkilled` desc";
 } else {
 	$ordenarpor = "order by `level` desc, `exp` desc";
@@ -144,7 +144,7 @@ if ($query->recordcount() > 0) {
 		echo '<td height="64px"><div style="position: relative;">';
 		echo '<img src="' . $member['avatar'] . '" width="64px" height="64px" style="position: absolute; top: 1; left: 1;" alt="' . $member['username'] . '" border="0">';
 
-		$checkranknosite = $db->execute("select `time` from `user_online` where `player_id`=?", [$member['id']]);
+		$checkranknosite = $db->execute("select `time` from `user_online` where `player_id`=?", [$member['id'] ?? null]);
 		if ($checkranknosite->recordcount() > 0) {
 			echo "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $member['username']) . "')\"><img src=\"static/images/online1.png\" width=\"64px\" height=\"64px\" style=\"position: absolute; top: 1; left: 1;\" alt=\"" . $member['username'] . '" border="0px"></a>';
 		}
@@ -152,37 +152,37 @@ if ($query->recordcount() > 0) {
 		echo "</div></td>";
 
 		echo "<td>";
-		if ($member['guild'] != NULL) {
-			$gtag = $db->GetOne("select `tag` from `guilds` where `id`=?", [$member['guild']]);
+		if (($member['guild'] ?? null) != NULL) {
+			$gtag = $db->GetOne("select `tag` from `guilds` where `id`=?", [$member['guild'] ?? null]);
 			echo "[" . $gtag . "] ";
 		}
 
 		echo '<a href="profile.php?id=' . $member['username'] . '">';
-		echo ($member['username'] == $player->username) ? "<b>" : "";
-		echo $member['username'];
-		echo ($member['username'] == $player->username) ? "</b>" : "";
+		echo (($member['username'] ?? null) == $player->username) ? "<b>" : "";
+		echo $member['username'] ?? null;
+		echo (($member['username'] ?? null) == $player->username) ? "</b>" : "";
 		echo "</a></td>\n";
 
 		echo "<td>" . $member['level'] . "</td>\n";
 		echo "<td>";
 
-		if ($member['voc'] == 'archer' && $member['promoted'] == 'f') {
+		if (($member['voc'] ?? null) == 'archer' && ($member['promoted'] ?? null) == 'f') {
 			echo "Caçador";
-		} elseif ($member['voc'] == 'knight' && $member['promoted'] == 'f') {
+		} elseif (($member['voc'] ?? null) == 'knight' && ($member['promoted'] ?? null) == 'f') {
 			echo "Espadachim";
-		} elseif ($member['voc'] == 'mage' && $member['promoted'] == 'f') {
+		} elseif (($member['voc'] ?? null) == 'mage' && ($member['promoted'] ?? null) == 'f') {
 			echo "Bruxo";
-		} elseif ($member['voc'] == 'archer' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
+		} elseif (($member['voc'] ?? null) == 'archer' && (($member['promoted'] ?? null) == 't' || ($member['promoted'] ?? null) == 's' || ($member['promoted'] ?? null) == 'r')) {
 			echo "Arqueiro";
-		} elseif ($member['voc'] == 'knight' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
+		} elseif (($member['voc'] ?? null) == 'knight' && (($member['promoted'] ?? null) == 't' || ($member['promoted'] ?? null) == 's' || ($member['promoted'] ?? null) == 'r')) {
 			echo "Guerreiro";
-		} elseif ($member['voc'] == 'mage' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
+		} elseif (($member['voc'] ?? null) == 'mage' && (($member['promoted'] ?? null) == 't' || ($member['promoted'] ?? null) == 's' || ($member['promoted'] ?? null) == 'r')) {
 			echo "Mago";
-		} elseif ($member['voc'] == 'archer' && $member['promoted'] == 'p') {
+		} elseif (($member['voc'] ?? null) == 'archer' && ($member['promoted'] ?? null) == 'p') {
 			echo "Arqueiro Royal";
-		} elseif ($member['voc'] == 'knight' && $member['promoted'] == 'p') {
+		} elseif (($member['voc'] ?? null) == 'knight' && ($member['promoted'] ?? null) == 'p') {
 			echo "Cavaleiro";
-		} elseif ($member['voc'] == 'mage' && $member['promoted'] == 'p') {
+		} elseif (($member['voc'] ?? null) == 'mage' && ($member['promoted'] ?? null) == 'p') {
 			echo "Arquimago";
 		}
 

@@ -18,11 +18,11 @@ if ($verificacao->recordcount() == 0) {
 	header("Location: home.php");
 }
 
-if ($quest['quest_status'] != 2 && $quest['quest_status'] != 4 && $quest['quest_status'] != 6) {
+if (($quest['quest_status'] ?? null) != 2 && ($quest['quest_status'] ?? null) != 4 && ($quest['quest_status'] ?? null) != 6) {
 	header("Location: home.php");
 }
 
-if ($quest['quest_status'] == 2) {
+if (($quest['quest_status'] ?? null) == 2) {
 	$questnivel = 1;
 	if ($player->voc == 'knight') {
 		$enemy->username = "Alexia";
@@ -38,7 +38,7 @@ if ($quest['quest_status'] == 2) {
 	$enemy->agility = 530;
 	$enemy->hp = 5000;
 	$enemy->mtexp = 10000;
-} elseif ($quest['quest_status'] == 4) {
+} elseif (($quest['quest_status'] ?? null) == 4) {
 	$questnivel = 2;
 	if ($player->voc == 'knight') {
 		$enemy->username = "Ramthysts";
@@ -54,7 +54,7 @@ if ($quest['quest_status'] == 2) {
 	$enemy->agility = 540;
 	$enemy->hp = 5500;
 	$enemy->mtexp = 12000;
-} elseif ($quest['quest_status'] == 6) {
+} elseif (($quest['quest_status'] ?? null) == 6) {
 	$questnivel = 3;
 	if ($player->voc == 'knight') {
 		$enemy->username = "Friden";

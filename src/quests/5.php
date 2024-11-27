@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-if ($missao['quest_status'] == 1) {
-	$db->execute("update `quests` set `quest_status`='2' where `id`=?", [$missao['id']]);
+if (($missao['quest_status'] ?? null) == 1) {
+	$db->execute("update `quests` set `quest_status`='2' where `id`=?", [$missao['id'] ?? null]);
 	$a = "<i>Meu nome é Hastakk, sou um treinador de guerreiros. Eu não costumo me apresentar assim, mas algo me diz que há algo muito especial em você.</i>";
 	$b = '<a href="tavern.php?p=quests&start=' . $quest['id'] . '">Continuar</a>';
-} elseif ($missao['quest_status'] == 2) {
-	if ($missao['pago'] == 't') {
+} elseif (($missao['quest_status'] ?? null) == 2) {
+	if (($missao['pago'] ?? null) == 't') {
 		//define quantos usuários deve matar
-		if ($missao['extra'] == null) {
-			$db->execute("update `quests` set `extra`=? where `id`=?", [$player->kills + 15, $missao['id']]);
+		if (($missao['extra'] ?? null) == null) {
+			$db->execute("update `quests` set `extra`=? where `id`=?", [$player->kills + 15, $missao['id'] ?? null]);
 			$remaining = 15;
 		} else {
 			//define quantos usuários faltam ser mortos
@@ -19,7 +19,7 @@ if ($missao['quest_status'] == 1) {
 
 		//verifica se já não matou todos os usuários
 		if ($remaining < 1) {
-			$db->execute("update `quests` set `quest_status`='3' where `id`=?", [$missao['id']]);
+			$db->execute("update `quests` set `quest_status`='3' where `id`=?", [$missao['id'] ?? null]);
 			$a = "<i>Você já matou todos os usuários necessários.</i>";
 			$b = '<a href="tavern.php?p=quests&start=' . $quest['id'] . '">Continuar</a>.';
 		} else {
@@ -30,14 +30,14 @@ if ($missao['quest_status'] == 1) {
 		$a = "<i>Gostaria de começar seu treinamento por " . $quest['cost'] . " de ouro?<br>Se eu te treinar, você poderá adquirir até três níveis!</i>";
 		$b = '<a href="tavern.php?p=quests&start=' . $quest['id'] . '&pay=true">Pagar</a>';
 	}
-} elseif ($missao['quest_status'] == 3) {
+} elseif (($missao['quest_status'] ?? null) == 3) {
 	//d o prêmio
 	$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [maxMana(($player->level + 2), $player->extramana), maxMana(($player->level + 2), $player->extramana), $player->id]);
 	$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", [maxEnergy(($player->level + 2), $player->vip), $player->id]);
 	$db->execute("update `players` set `magic_points`=?, `stat_points`=?, `level`=?, `maxhp`=?, `exp`=0, `hp`=? where `id`=?", [$player->magic_points + 3, $player->stat_points + 9, $player->level + 3, maxHp($db, $player->id, ($player->level + 2), $player->reino, $player->vip), maxHp($db, $player->id, ($player->level + 2), $player->reino, $player->vip), $player->id]);
 
 	//finaliza a quest
-	$db->execute("update `quests` set `quest_status`='90' where `id`=?", [$missao['id']]);
+	$db->execute("update `quests` set `quest_status`='90' where `id`=?", [$missao['id'] ?? null]);
 	$a = "<i>Bom, espero que você tenha aprendido a matar.<br><b>(Você passou para o nível " . ($player->level + 3) . ")</b></i>";
 	$b = '<a href="tavern.php?p=quests">Voltar</a>';
 }

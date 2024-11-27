@@ -31,7 +31,7 @@ if ($player->maxhp != maxHp($db, $player->id, ($player->level - 1), $player->rei
 	$cost = 0;
 }
 
-if ($_GET['act'] == "reset") {
+if (($_GET['act'] ?? null) == "reset") {
 	if ($player->gold < $cost) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
@@ -77,7 +77,7 @@ if ($_GET['act'] == "reset") {
 	exit;
 }
 
-if ($_GET['act'] == "magiasreset") {
+if (($_GET['act'] ?? null) == "magiasreset") {
 	$magiaspreco = $db->execute("select `cost` from `blueprint_magias`");
 	$totalprecomagias = 0;
 	while ($mmagia = $magiaspreco->fetchrow()) {
@@ -104,7 +104,7 @@ if ($_GET['act'] == "magiasreset") {
 }
 
 
-if ($_GET['add']) {
+if ($_GET['add'] ?? null) {
 	$error = 0;
 
 	if ($player->stat_points == 0) {
@@ -149,7 +149,7 @@ if ($_GET['add']) {
 		exit;
 	}
 
-	if ($_GET['for'] < 0) {
+	if (($_GET['for'] ?? null) < 0) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo 'Você precisa adicionar quantias maiores que 0! <a href="stat_points.php">Voltar</a>.';
 		include(__DIR__ . "/templates/private_footer.php");
@@ -157,24 +157,7 @@ if ($_GET['add']) {
 		exit;
 	}
 
-	if ($_GET['vit'] < 0) {
-		include(__DIR__ . "/templates/private_header.php");
-		echo 'Você precisa adicionar quantias maiores que 0! <a href="stat_points.php">Voltar</a>.';
-		include(__DIR__ . "/templates/private_footer.php");
-		$error = 1;
-		exit;
-	}
-
-
-	if ($_GET['agi'] < 0) {
-		include(__DIR__ . "/templates/private_header.php");
-		echo 'Você precisa adicionar quantias maiores que 0! <a href="stat_points.php">Voltar</a>.';
-		include(__DIR__ . "/templates/private_footer.php");
-		$error = 1;
-		exit;
-	}
-
-	if ($_GET['res'] < 0) {
+	if (($_GET['vit'] ?? null) < 0) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo 'Você precisa adicionar quantias maiores que 0! <a href="stat_points.php">Voltar</a>.';
 		include(__DIR__ . "/templates/private_footer.php");
@@ -183,8 +166,25 @@ if ($_GET['add']) {
 	}
 
 
+	if (($_GET['agi'] ?? null) < 0) {
+		include(__DIR__ . "/templates/private_header.php");
+		echo 'Você precisa adicionar quantias maiores que 0! <a href="stat_points.php">Voltar</a>.';
+		include(__DIR__ . "/templates/private_footer.php");
+		$error = 1;
+		exit;
+	}
 
-	if ($_GET['for'] <= 0 && $_GET['vit'] <= 0 && $_GET['agi'] <= 0 && $_GET['res'] <= 0) {
+	if (($_GET['res'] ?? null) < 0) {
+		include(__DIR__ . "/templates/private_header.php");
+		echo 'Você precisa adicionar quantias maiores que 0! <a href="stat_points.php">Voltar</a>.';
+		include(__DIR__ . "/templates/private_footer.php");
+		$error = 1;
+		exit;
+	}
+
+
+
+	if (($_GET['for'] ?? null) <= 0 && ($_GET['vit'] ?? null) <= 0 && ($_GET['agi'] ?? null) <= 0 && ($_GET['res'] ?? null) <= 0) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo 'Você precisa adicionar quantias maiores que 0! <a href="stat_points.php">Voltar</a>.';
 		include(__DIR__ . "/templates/private_footer.php");
@@ -218,13 +218,13 @@ if ($_GET['add']) {
 		exit;
 	}
 
-	if ($_GET['for'] > 0) {
+	if (($_GET['for'] ?? null) > 0) {
 		$db->execute("update `players` set `stat_points`=?, `strength`=? where `id`=?", [$player->stat_points - $total1, $player->strength + $total1, $player->id]);
 		$player = check_user($db); //Get new stats
 		$msg1 = "Você aumentou " . $total1 . " ponto(s) de " . $antigaforca . "!";
 	}
 
-	if ($_GET['vit'] > 0) {
+	if (($_GET['vit'] ?? null) > 0) {
 		$addinghp = $total2 * 20;
 		$addingmana = $total2 * 5;
 		$db->execute("update `players` set `stat_points`=?, `vitality`=?, `hp`=?, `maxhp`=?, `mana`=?, `maxmana`=?, `extramana`=? where `id`=?", [$player->stat_points - $total2, $player->vitality + $total2, $player->hp + $addinghp, $player->maxhp + $addinghp, $player->mana + $addingmana, $player->maxmana + $addingmana, $player->extramana + $addingmana, $player->id]);
@@ -232,13 +232,13 @@ if ($_GET['add']) {
 		$msg2 = "Você aumentou " . $total2 . " ponto(s) de vitalidade!";
 	}
 
-	if ($_GET['agi'] > 0) {
+	if (($_GET['agi'] ?? null) > 0) {
 		$db->execute("update `players` set `stat_points`=?, `agility`=? where `id`=?", [$player->stat_points - $total3, $player->agility + $total3, $player->id]);
 		$player = check_user($db); //Get new stats
 		$msg3 = "Você aumentou " . $total3 . " ponto(s) de agilidade!";
 	}
 
-	if ($_GET['res'] > 0) {
+	if (($_GET['res'] ?? null) > 0) {
 		$db->execute("update `players` set `stat_points`=?, `resistance`=? where `id`=?", [$player->stat_points - $total4, $player->resistance + $total4, $player->id]);
 		$player = check_user($db); //Get new stats
 		$msg4 = "Você aumentou " . $total4 . " ponto(s) de resistência!";
@@ -248,7 +248,7 @@ if ($_GET['add']) {
 // Initialize message variables
 $msg1 = $msg2 = $msg3 = $msg4 = '';
 
-if ($_GET['add'] == 'Home') {
+if (($_GET['add'] ?? null) == 'Home') {
 	header("Location: showskills.php?voltar=true");
 	exit;
 }

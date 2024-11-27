@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-if ($_GET['gift']) {
-	$numgifts = $db->execute("select `id` from `items` where `player_id`=? and `id`=? and `item_id`=? and `mark`='f'", [$player->id, $_GET['gift'], 155]);
+if ($_GET['gift'] ?? null) {
+	$numgifts = $db->execute("select `id` from `items` where `player_id`=? and `id`=? and `item_id`=? and `mark`='f'", [$player->id, $_GET['gift'] ?? null, 155]);
 	if ($numgifts->recordcount() != 1) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -25,7 +25,7 @@ if ($_GET['gift']) {
 	}
 
 	$gifte = $numgifts->fetchrow();
-	$numgifts = $db->execute("delete from `items` where `id`=?", [$_GET['gift']]);
+	$numgifts = $db->execute("delete from `items` where `id`=?", [$_GET['gift'] ?? null]);
 	$itemchance =  random_int(1, 30);
 	if ($itemchance < 20) {
 		$sotona =  random_int(1, 30);

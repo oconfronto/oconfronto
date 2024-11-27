@@ -32,7 +32,7 @@ if ($setting->$unc3 == "t") {
 
 		if ($setting->$unc2 > 1000) {
 			// Deposit prize directly in the bank if prize is more than 1000 gold
-			$query = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", [$setting->$unc2, $ipwpwpwpa['player_id']]);
+			$query = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", [$setting->$unc2, $ipwpwpwpa['player_id'] ?? null]);
 			
 			// Log message to inform the player of their lottery winnings
 			$logmsg = "Você ganhou na loteria e <b>" . $setting->$unc2 . " de ouro</b> foram depositados na sua conta bancária.";
@@ -42,7 +42,7 @@ if ($setting->$unc3 == "t") {
 			$premiorecebido = "" . $setting->$unc2 . " de ouro";
 		} else {
 			// Fetch player level and item level requirement in advance to optimize database queries
-			$winner_data = $db->execute("SELECT level FROM players WHERE id = ?", [$ipwpwpwpa['player_id']])->fetchrow();
+			$winner_data = $db->execute("SELECT level FROM players WHERE id = ?", [$ipwpwpwpa['player_id'] ?? null])->fetchrow();
 			$item_data = $db->execute("SELECT needlvl, name FROM blueprint_items WHERE id = ?", [$setting->$unc2])->fetchrow();
 		
 			// Store player ID and item ID in the insert array for potential prize assignment
@@ -52,9 +52,9 @@ if ($setting->$unc3 == "t") {
 			// Check if prize is less than the gold conversion limit
 			if ($setting->$unc2 < PRIZE_CONVERSION_GOLD) {
 				// Check if the player's level is lower than the item level requirement
-				if ($winner_data['level'] < $item_data['needlvl']) {
+				if (($winner_data['level'] ?? null) < ($item_data['needlvl'] ?? null)) {
 					// If player's level is too low, convert prize to gold and deposit in bank
-					$query = $db->execute("UPDATE players SET bank = bank + ? WHERE id = ?", [PRIZE_CONVERSION_GOLD, $ipwpwpwpa['player_id']]);
+					$query = $db->execute("UPDATE players SET bank = bank + ? WHERE id = ?", [PRIZE_CONVERSION_GOLD, $ipwpwpwpa['player_id'] ?? null]);
 					
 					// Log message indicating that the prize was converted to gold due to insufficient player level
 					$logmsg = "Você ganhou na loteria mas seu nível é muito baixo para receber o premio. 50.000 de ouro foram depositados na sua conta bancária.";
@@ -75,7 +75,7 @@ if ($setting->$unc3 == "t") {
 			$premiorecebido = $ioeowkewttttee['name'];
 		}
 
-		$medalha7 = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=?", [$ipwpwpwpa['player_id'], "sortudo"]);
+		$medalha7 = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=?", [$ipwpwpwpa['player_id'] ?? null, "sortudo"]);
 		if ($medalha7->recordcount() < 1) {
 			$insert['player_id'] = $ipwpwpwpa['player_id'];
 			$insert['medalha'] = "Sortudo";
@@ -88,11 +88,11 @@ if ($setting->$unc3 == "t") {
 			$query = $db->autoexecute('log_friends', $insert, 'INSERT');
 		}
 
-		$peoeajjwwa = $db->execute("select `username` from `players` where `id`=?", [$ipwpwpwpa['player_id']]);
+		$peoeajjwwa = $db->execute("select `username` from `players` where `id`=?", [$ipwpwpwpa['player_id'] ?? null]);
 		$totkooowowow = $peoeajjwwa->fetchrow();
 
 
-		$query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc1), [$totkooowowow['username']]);
+		$query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc1), [$totkooowowow['username'] ?? null]);
 		$query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc7), [$premiorecebido]);
 		$query = $db->execute(sprintf("update `settings` set `value`=0 where `name`='%s'", $unc6));
 		$query = $db->execute(sprintf("update `settings` set `value`=0 where `name`='%s'", $unc5));
@@ -102,7 +102,7 @@ if ($setting->$unc3 == "t") {
 		exit;
 	}
 
-	if ($_POST['buy']) {
+	if ($_POST['buy'] ?? null) {
 		$error = 0;
 
 		if ($player->level < 25) {
@@ -123,7 +123,7 @@ if ($setting->$unc3 == "t") {
 			exit;
 		}
 
-		if ($_POST['amount'] < 1) {
+		if (($_POST['amount'] ?? null) < 1) {
 			include_once PRIVATE_HEADER;
 			echo "Você precisa digitar quantias maiores que 0! <a href=\"lottery.php\">Voltar</a>.";
 			
@@ -132,7 +132,7 @@ if ($setting->$unc3 == "t") {
 			exit;
 		}
 
-		if ($_POST['amount'] > 999) { //Added maximum purchase limit instead of 99 tickets at a time, to 999 tickets at a time.
+		if (($_POST['amount'] ?? null) > 999) { //Added maximum purchase limit instead of 99 tickets at a time, to 999 tickets at a time.
 			include_once PRIVATE_HEADER;
 			echo "Você pode comprar até 999 tickes por vez! <a href=\"lottery.php\">Voltar</a>.";
 			
@@ -220,7 +220,7 @@ if ($setting->$unc3 == "t") {
 	} elseif ($premiotype === 1) {
 		echo "<br/>";
 		echo "<fieldset><legend><b>" . $itchecked['name'] . " + 0</b></legend>\n";
-		if ($itchecked['optimized'] == 10) {
+		if (($itchecked['optimized'] ?? null) == 10) {
 			echo "<table width=\"100%\" bgcolor=\"#CEBBEE\">\n";
 		} else {
 			echo "<table width=\"100%\">\n";
@@ -230,33 +230,33 @@ if ($setting->$unc3 == "t") {
 		echo '<img src="static/images/itens/' . $itchecked['img'] . '"/>';
 		echo '</td><td width="68%">' . $itchecked['description'] . "<br />";
 		echo "<b>";
-		if ($itchecked['type'] == 'weapon') {
+		if (($itchecked['type'] ?? null) == 'weapon') {
 			echo "Ataque: ";
-		} elseif ($itchecked['type'] == 'amulet') {
+		} elseif (($itchecked['type'] ?? null) == 'amulet') {
 			echo "Vitalidade: ";
-		} elseif ($itchecked['type'] == 'boots') {
+		} elseif (($itchecked['type'] ?? null) == 'boots') {
 			echo "Agilidade: ";
 		} else {
 			echo "Defesa: ";
 		}
 
 		echo "</b>";
-		echo $itchecked['effectiveness'];
+		echo $itchecked['effectiveness'] ?? null;
 		echo '<td width="30%">';
 		echo "<b>Vocação:</b> ";
-		if ($itchecked['voc'] == 1 && $itchecked['needpromo'] == 'f') {
+		if (($itchecked['voc'] ?? null) == 1 && ($itchecked['needpromo'] ?? null) == 'f') {
 			echo "Arqueiro";
-		} elseif ($itchecked['voc'] == 2 && $itchecked['needpromo'] == 'f') {
+		} elseif (($itchecked['voc'] ?? null) == 2 && ($itchecked['needpromo'] ?? null) == 'f') {
 			echo "Cavaleiro";
-		} elseif ($itchecked['voc'] == 3 && $itchecked['needpromo'] == 'f') {
+		} elseif (($itchecked['voc'] ?? null) == 3 && ($itchecked['needpromo'] ?? null) == 'f') {
 			echo "Mago";
-		} elseif ($itchecked['voc'] == 1 && $itchecked['needpromo'] == 't') {
+		} elseif (($itchecked['voc'] ?? null) == 1 && ($itchecked['needpromo'] ?? null) == 't') {
 			echo "Paladino";
-		} elseif ($itchecked['voc'] == 2 && $itchecked['needpromo'] == 't') {
+		} elseif (($itchecked['voc'] ?? null) == 2 && ($itchecked['needpromo'] ?? null) == 't') {
 			echo "Cavaleiro de Elite";
-		} elseif ($itchecked['voc'] == 3 && $itchecked['needpromo'] == 't') {
+		} elseif (($itchecked['voc'] ?? null) == 3 && ($itchecked['needpromo'] ?? null) == 't') {
 			echo "Feiticeiro";
-		} elseif ($itchecked['voc'] == 0 && $itchecked['needpromo'] == 't') {
+		} elseif (($itchecked['voc'] ?? null) == 0 && ($itchecked['needpromo'] ?? null) == 't') {
 			echo "Vocações superiores";
 		} else {
 			echo "Todas";
@@ -265,11 +265,11 @@ if ($setting->$unc3 == "t") {
 		echo "</td>";
 		echo "</tr>";
 		echo "</table>";
-		if ($itchecked['needlvl'] > 45) {
+		if (($itchecked['needlvl'] ?? null) > 45) {
 			echo "<center><b><font color=\"red\">Você precisa ter nível " . $itchecked['needlvl'] . " ou mais para usar este item.</font></b></center>";
 		}
 
-		if ($itchecked['needring'] == 't') {
+		if (($itchecked['needring'] ?? null) == 't') {
 			echo "<center><b><font color=\"red\">Para usar este item você precisa estar usando um Jeweled Ring.</font></b></center>";
 		}
 

@@ -17,20 +17,20 @@ if ((time() - $newday) >= $newtime) {
 	$impostos = $db->execute("select `id`, `bank`, `reino` from `players` where `reino`!=0");
 
 	while ($player = $impostos->fetchrow()) {
-		$taxa = $db->GetOne("select `tax` from `reinos` where `id`=?", [$player['reino']]);
+		$taxa = $db->GetOne("select `tax` from `reinos` where `id`=?", [$player['reino'] ?? null]);
 		$taxa = floor($taxa * (0.1 * $player['bank']));
 
 		if ($taxa > 0) {
 
-			$db->execute("update `players` set `bank`=`bank`-? where `id`=?", [$taxa, $player['id']]);
-			$db->execute("update `reinos` set `ouro`=`ouro`+? where `id`=?", [$taxa, $player['reino']]);
+			$db->execute("update `players` set `bank`=`bank`-? where `id`=?", [$taxa, $player['id'] ?? null]);
+			$db->execute("update `reinos` set `ouro`=`ouro`+? where `id`=?", [$taxa, $player['reino'] ?? null]);
 
 			$msg = "Você pagou " . $taxa . " moedas de ouro em impostos para o reino.";
 			addlog($player['id'], $msg, $db);
 
-			if ($player['reino'] == 1) {
+			if (($player['reino'] ?? null) == 1) {
 				$totalreinoa += $taxa;
-			} elseif ($player['reino'] == 2) {
+			} elseif (($player['reino'] ?? null) == 2) {
 				$totalreinob += $taxa;
 			} else {
 				$totalreinoc += $taxa;

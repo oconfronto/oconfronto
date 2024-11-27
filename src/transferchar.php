@@ -6,7 +6,7 @@ include(__DIR__ . "/lib.php");
 define("PAGENAME", "Transferir Personagem");
 $acc = check_acc($db);
 
-if ($_GET['cancel']) {
+if ($_GET['cancel'] ?? null) {
     $cancel0 = $db->execute("select * from `pending` where `pending_id`=4 and `pending_other`=?", [$acc->id]);
     if ($cancel0->recordcount() > 0) {
         $dileti = $db->execute("delete from `pending` where `pending_id`=4 and `pending_other`=?", [$acc->id]);
@@ -35,7 +35,7 @@ if ($querynumplayers->recordcount() > 19) {
     exit;
 }
 
-if (!$_GET['id']) {
+if (!($_GET['id'] ?? null)) {
     include(__DIR__ . "/templates/acc-header.php");
     echo "<span id=\"aviso-a\"><font size=\"1px\">Digite o personagem que você deseja transferir para sua conta.</font></span>";
     echo '<p><form method="get" action="transferchar.php"><table width="90%" align="center"><tr><td width="37%"><b>Personagem:</b></td><td width="62%"><input type="text" name="id" class="inp" size="20"/></td></tr></table><br/><center><button type="submit" name="submit" value="Enviar" class="enviar"></button></center></form></p>';
@@ -43,9 +43,9 @@ if (!$_GET['id']) {
     exit;
 }
 
-$query0 = $db->execute("select * from `players` where `username`=?", [$_GET['id']]);
-$query1 = $db->execute("select * from `pending` where `pending_id`=4 and `pending_status`=?", [$_GET['id']]);
-$query2 = $db->execute("select * from `pending` where `pending_id`=4 and `pending_other`=?", [$char['acc_id']]);
+$query0 = $db->execute("select * from `players` where `username`=?", [$_GET['id'] ?? null]);
+$query1 = $db->execute("select * from `pending` where `pending_id`=4 and `pending_status`=?", [$_GET['id'] ?? null]);
+$query2 = $db->execute("select * from `pending` where `pending_id`=4 and `pending_other`=?", [$char['acc_id'] ?? null]);
 $query3 = $db->execute("select * from `pending` where `pending_id`=4 and `player_id`=?", [$acc->id]);
 if ($query0->recordcount() != 1) {
     include(__DIR__ . "/templates/acc-header.php");
@@ -56,7 +56,7 @@ if ($query0->recordcount() != 1) {
 }
 
 $char = $query0->fetchrow();
-if ($char['acc_id'] == $acc->id) {
+if (($char['acc_id'] ?? null) == $acc->id) {
     include(__DIR__ . "/templates/acc-header.php");
     echo '<span id="aviso-a"></span>';
     echo "<br/><p><center>Este personagem já pertence a sua conta. <a href=\"characters.php\">Voltar</a>.</center></p><br/>";
@@ -88,19 +88,19 @@ if ($query3->recordcount() > 0) {
     exit;
 }
 
-if ($_POST['submit']) {
-    $cconta = $db->GetOne("select `conta` from `accounts` where `id`=?", [$char['acc_id']]);
-    $ccontappassss = $db->GetOne("select `password` from `accounts` where `id`=?", [$char['acc_id']]);
+if ($_POST['submit'] ?? null) {
+    $cconta = $db->GetOne("select `conta` from `accounts` where `id`=?", [$char['acc_id'] ?? null]);
+    $ccontappassss = $db->GetOne("select `password` from `accounts` where `id`=?", [$char['acc_id'] ?? null]);
 
     $lock = 0;
     $tentativas = $db->GetOne("select `tries` from `login_tries` where `ip`=?", [$ip]);
-    if (!$_POST['conta'] || !$_POST['senhadaconta']) {
+    if (!($_POST['conta'] ?? null) || !($_POST['senhadaconta'] ?? null)) {
         $errmsg .= "Preencha todos os campos";
         $error = 1;
-    } elseif (!$_POST['transferpass'] && $char['transpass'] != 'f') {
+    } elseif (!($_POST['transferpass'] ?? null) && ($char['transpass'] ?? null) != 'f') {
         $errmsg .= "Preencha todos os campos";
         $error = 1;
-    } elseif ($_POST['conta'] != $cconta) {
+    } elseif (($_POST['conta'] ?? null) != $cconta) {
         $errmsg .= "A conta não confere com o personagem.";
         $error = 1;
         $lock = 1;
@@ -108,7 +108,7 @@ if ($_POST['submit']) {
         $errmsg .= "A senha não confere com o personagem.";
         $error = 1;
         $lock = 1;
-    } elseif ($_POST['transferpass'] != $char['transpass'] && $char['transpass'] != 'f') {
+    } elseif (($_POST['transferpass'] ?? null) != ($char['transpass'] ?? null) && ($char['transpass'] ?? null) != 'f') {
         $errmsg .= "A senha de transferência não confere com o personagem.";
         $error = 1;
         $lock = 1;
@@ -158,18 +158,18 @@ echo "</span>";
 ?>
 
 <p>
-<form method="POST" action="transferchar.php?id=<?php echo $_GET['id']; ?>">
+<form method="POST" action="transferchar.php?id=<?php echo $_GET['id'] ?? null; ?>">
     <table width="90%" align="center">
         <tr>
             <td width="27%"><b>Conta</b>:</td>
-            <td><input type="password" name="conta" class="inp" value="<?php echo $_POST['conta']; ?>" size="20" /></td>
+            <td><input type="password" name="conta" class="inp" value="<?php echo $_POST['conta'] ?? null; ?>" size="20" /></td>
         </tr>
         <tr>
             <td width="27%"><b>Senha</b>:</td>
-            <td><input type="password" name="senhadaconta" class="inp" value="<?php echo $_POST['senhadaconta']; ?>" size="20" /></td>
+            <td><input type="password" name="senhadaconta" class="inp" value="<?php echo $_POST['senhadaconta'] ?? null; ?>" size="20" /></td>
         </tr>
         <?php
-        if ($char['transpass'] != 'f') {
+        if (($char['transpass'] ?? null) != 'f') {
             echo "<tr><td width=\"27%\"><b>Senha de Transferência</b>:</td><td><input type=\"password\" name=\"transferpass\" class=\"inp\" value=\"" . $_POST['transferpass'] . '" size="20"/></td></tr>';
         }
         ?>

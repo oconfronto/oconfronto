@@ -51,7 +51,7 @@ if ($player->level < 400) {
 }
 
 
-switch ($_GET['act']) {
+switch ($_GET['act'] ?? null) {
 
 	case "question":
 		include(__DIR__ . "/templates/private_header.php");
@@ -120,8 +120,8 @@ if ($verificacao1->recordcount() == 0) {
 	exit;
 }
 
-if ($quest1['quest_status'] > 100) {
-	if ($quest1['quest_status'] < time()) {
+if (($quest1['quest_status'] ?? null) > 100) {
+	if (($quest1['quest_status'] ?? null) < time()) {
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [2, $player->id, 15]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Missão</b></legend>\n";
@@ -132,7 +132,7 @@ if ($quest1['quest_status'] > 100) {
 		exit;
 	}
 
-	if ($quest1['quest_status'] > time() && $player->level >= $quest2['quest_status']) {
+	if (($quest1['quest_status'] ?? null) > time() && $player->level >= ($quest2['quest_status'] ?? null)) {
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [80, $player->id, 15]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Missão</b></legend>\n";
@@ -155,7 +155,7 @@ if ($quest1['quest_status'] > 100) {
 	exit;
 }
 
-if ($quest1['quest_status'] == 2) {
+if (($quest1['quest_status'] ?? null) == 2) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
 	echo "<i>Parece que você falhou no seu desafio, mas estarei lhe dando outra chance. Deseja tentar novamente?</i><br><br>";
@@ -165,7 +165,7 @@ if ($quest1['quest_status'] == 2) {
 	exit;
 }
 
-if ($quest1['quest_status'] == 80) {
+if (($quest1['quest_status'] ?? null) == 80) {
 	$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [90, $player->id, 15]);
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Alexander, o Rei</b></legend>\n";
@@ -176,7 +176,7 @@ if ($quest1['quest_status'] == 80) {
 	exit;
 }
 
-if ($quest1['quest_status'] == 90) {
+if (($quest1['quest_status'] ?? null) == 90) {
 	header("Location: quest8.php");
 }
 

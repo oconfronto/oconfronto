@@ -36,7 +36,7 @@ if ($setting->$unc1 == "t") {
 		header("Location: tournament.php");
 	}
 
-	if ($_POST['join']) {
+	if ($_POST['join'] ?? null) {
 		$checasejaestainscrito = $db->execute("select `id` from `players` where `id`=? and `tour`='t' and `serv`=? and `tier`=?", [$player->id, $player->serv, $tier]);
 
 		if ($checasejaestainscrito->recordcount() > 0) {
@@ -136,7 +136,7 @@ if ($setting->$unc1 == "y") {
 	$chekka1 = $db->execute("select `id` from `players` where `tour`='t' and `serv`=? and `tier`=?", [$player->serv, $tier]);
 	if ($chekka1->recordcount() < 5) {
 		while ($aviso = $chekka1->fetchrow()) {
-			$devolveouropago = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", [$setting->$unc5, $aviso['id']]);
+			$devolveouropago = $db->execute("update `players` set `bank`=`bank`+? where `id`=?", [$setting->$unc5, $aviso['id'] ?? null]);
 			$logmsg = "O torneio para seu nível foi cancelado, pois não foram inscritos participantes suficientes.<br/>O ouro pago, " . $setting->$unc5 . ", foi depositado na sua conta bancária.";
 			addlog($aviso['id'], $logmsg, $db);
 		}
@@ -162,7 +162,7 @@ if ($setting->$unc1 == "y") {
 		if ($chekka3 == 1) {
 			$wqrpgfdin = $db->execute("select `id`, `username`, `bank`, `killed` from `players` where `tour`='t' and `serv`=? and `tier`=? and `killed`=0 limit 0,1", [$player->serv, $tier]);
 			$winneb1 = $wqrpgfdin->fetchrow();
-			$query = $db->execute("update `players` set `bank`=? where `id`=?", [$winneb1['bank'] + $setting->$unc6, $winneb1['id']]);
+			$query = $db->execute("update `players` set `bank`=? where `id`=?", [$winneb1['bank'] + $setting->$unc6, $winneb1['id'] ?? null]);
 			$logmsg = "Você venceu o torneio e <b>" . $setting->$unc6 . " de ouro</b> foram depositados na sua conta bancária.";
 			addlog($winneb1['id'], $logmsg, $db);
 			$insert['player_id'] = $winneb1['id'];
@@ -174,7 +174,7 @@ if ($setting->$unc1 == "y") {
 			$insert['time'] = time();
 			$query = $db->autoexecute('log_friends', $insert, 'INSERT');
 			$query = $db->execute("update `players` set `tour`='f', `killed`=0 where `serv`=? and `tier`=?", [$player->serv, $tier]);
-			$query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc8), [$winneb1['username']]);
+			$query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc8), [$winneb1['username'] ?? null]);
 			$query = $db->execute(sprintf("update `settings` set `value`=0 where `name`='%s'", $unc4));
 			$query = $db->execute(sprintf("update `settings` set `value`=0 where `name`='%s'", $unc7));
 			$query = $db->execute(sprintf("update `settings` set `value`='f' where `name`='%s'", $unc1));
@@ -185,7 +185,7 @@ if ($setting->$unc1 == "y") {
 		if ($chekka3 == 0) {
 			$wqweqwwin = $db->execute("select `id`, `username`, `bank`, `killed` from `players` where `tour`='t' and `serv`=? and `tier`=? order by `killed` desc limit 0,1", [$player->serv, $tier]);
 			$winneb2 = $wqweqwwin->fetchrow();
-			$query = $db->execute("update `players` set `bank`=? where `id`=?", [$winneb2['bank'] + $setting->$unc6, $winneb2['id']]);
+			$query = $db->execute("update `players` set `bank`=? where `id`=?", [$winneb2['bank'] + $setting->$unc6, $winneb2['id'] ?? null]);
 			$logmsg = "Você venceu o torneio e <b>" . $setting->$unc6 . " de ouro</b> foram depositados na sua conta bancária.";
 			addlog($winneb2['id'], $logmsg, $db);
 			$insert['player_id'] = $winneb2['id'];
@@ -193,7 +193,7 @@ if ($setting->$unc1 == "y") {
 			$insert['motivo'] = "Venceu o torneio de usuários de nível " . $setting->$unc2 . " á " . $setting->$unc3 . ".";
 			$query = $db->autoexecute('medalhas', $insert, 'INSERT');
 			$query = $db->execute("update `players` set `tour`='f', `killed`=0 where `serv`=? and `tier`=?", [$player->serv, $tier]);
-			$query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc8), [$winneb2['username']]);
+			$query = $db->execute(sprintf("update `settings` set `value`=? where `name`='%s'", $unc8), [$winneb2['username'] ?? null]);
 			$query = $db->execute(sprintf("update `settings` set `value`=0 where `name`='%s'", $unc4));
 			$query = $db->execute(sprintf("update `settings` set `value`=0 where `name`='%s'", $unc7));
 			$query = $db->execute(sprintf("update `settings` set `value`='f' where `name`='%s'", $unc1));
@@ -229,25 +229,25 @@ if ($setting->$unc1 == "y") {
 	echo "<table>";
 	$sdfsdfoiewfwe = $db->execute("select `id`, `username`, `level`, `killed`, `ban`, `hp` from `players` where `tour`='t' and `serv`=? and `tier`=? order by `level` desc", [$player->serv, $tier]);
 	while ($member = $sdfsdfoiewfwe->fetchrow()) {
-		if ($member['ban'] > time()) {
+		if (($member['ban'] ?? null) > time()) {
 			$logmsg = "Você foi desclassificado do torneio pois estava banido.";
 			addlog($member['id'], $logmsg, $db);
-			$query = $db->execute("update `players` set `tour`='f' where `id`=?", [$member['id']]);
-		} elseif ($member['hp'] < 1 && $member['killed'] == 0) {
+			$query = $db->execute("update `players` set `tour`='f' where `id`=?", [$member['id'] ?? null]);
+		} elseif (($member['hp'] ?? null) < 1 && ($member['killed'] ?? null) == 0) {
 			$logmsg = "Você foi desclassificado do torneio pois estava morto quando ele começou.";
 			addlog($member['id'], $logmsg, $db);
-			$query = $db->execute("update `players` set `tour`='f' where `id`=?", [$member['id']]);
-		} elseif ($member['level'] > $setting->$unc3) {
+			$query = $db->execute("update `players` set `tour`='f' where `id`=?", [$member['id'] ?? null]);
+		} elseif (($member['level'] ?? null) > $setting->$unc3) {
 			$logmsg = "Você foi desclassificado do torneio pois seu nível estava acima do permitido.";
 			addlog($member['id'], $logmsg, $db);
-			$query = $db->execute("update `players` set `tour`='f' where `id`=?", [$member['id']]);
+			$query = $db->execute("update `players` set `tour`='f' where `id`=?", [$member['id'] ?? null]);
 		} else {
 			echo "<tr>";
 			echo "<td><b>Usuário:</b> " . $member['username'] . "<td>";
 			echo "<td><b>Nível:</b> " . $member['level'] . "<td>";
-			if ($member['killed'] > 0) {
+			if (($member['killed'] ?? null) > 0) {
 				echo '<td><b>Status:</b> <font color="red">Eliminado</font><td>';
-			} elseif ($member['hp'] < 1 && $member['killed'] == 0) {
+			} elseif (($member['hp'] ?? null) < 1 && ($member['killed'] ?? null) == 0) {
 				echo '<td><b>Status:</b> <font color="red">Eliminado</font><td>';
 			} else {
 				echo "<td><b>Opções:</b> <a href=\"mail.php?act=compose&amp;to=" . $member['username'] . '">Mensagem</a> | <a href="battle.php?act=attack&amp;username=' . $member['username'] . '">Lutar</a><td>"';

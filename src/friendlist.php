@@ -14,8 +14,8 @@ $num_rows = $num_rows_query->recordcount();
 
 $zeroamigos = 0;
 $totalgkills = 0;
-if ($_GET['add']) {
-	$getfname = $db->GetOne("select `username` from `players` where `username`=?", [$_GET['add']]);
+if ($_GET['add'] ?? null) {
+	$getfname = $db->GetOne("select `username` from `players` where `username`=?", [$_GET['add'] ?? null]);
 	if ($getfname == $player->username) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "Você não pode adicionar você mesmo!<br><a href=\"friendlist.php\">Voltar á lista de amigos</a> | <a href=\"members.php\">Voltar á lista de membros</a>";
@@ -30,7 +30,7 @@ if ($_GET['add']) {
 		exit;
 	}
 
-	$quereya = $db->execute("select * from `friends` where `fname`=? and `uid`=?", [$_GET['add'], $player->acc_id]);
+	$quereya = $db->execute("select * from `friends` where `fname`=? and `uid`=?", [$_GET['add'] ?? null, $player->acc_id]);
 	if ($quereya->recordcount() > 0) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "Você já tem este usuário na sua lista de amigos!<br><a href=\"friendlist.php\">Voltar á lista de amigos</a> | <a href=\"members.php\">Voltar á lista de membros</a>";
@@ -38,7 +38,7 @@ if ($_GET['add']) {
 		exit;
 	}
 
-	$quereya = $db->execute("select `username` from `players` where `username`=?", [$_GET['add']]);
+	$quereya = $db->execute("select `username` from `players` where `username`=?", [$_GET['add'] ?? null]);
 	if ($quereya->recordcount() == 0) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "Este usuário não existe!<br><a href=\"friendlist.php\">Voltar á lista de amigos</a> | <a href=\"members.php\">Voltar á lista de membros</a>";
@@ -46,7 +46,7 @@ if ($_GET['add']) {
 		exit;
 	}
 
-	$amigoserver = $db->GetOne("select `serv` from `players` where `username`=?", [$_GET['add']]);
+	$amigoserver = $db->GetOne("select `serv` from `players` where `username`=?", [$_GET['add'] ?? null]);
 	if ($player->serv != $amigoserver) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "Este usuário pertence a outro servidor!<br><a href=\"friendlist.php\">Voltar á lista de amigos</a> | <a href=\"members.php\">Voltar á lista de membros</a>";
@@ -55,7 +55,7 @@ if ($_GET['add']) {
 	}
 
 	include(__DIR__ . "/templates/private_header.php");
-	$add = $db->GetOne("select `username` from `players` where `username`=?", [$_GET['add']]);
+	$add = $db->GetOne("select `username` from `players` where `username`=?", [$_GET['add'] ?? null]);
 	$asql = sprintf("INSERT INTO `friends` (`uid` ,`fname`)VALUES ('%s', '%s')", $player->acc_id, $add);
 	$aresult = $db->execute($asql);
 	if ($aresult) {
@@ -69,10 +69,10 @@ if ($_GET['add']) {
 	exit;
 }
 
-if ($_GET['delete']) {
-	$dsql = $db->execute("select * from `friends` where `uid`=? and `fname`=?", [$player->acc_id, $_GET['delete']]);
+if ($_GET['delete'] ?? null) {
+	$dsql = $db->execute("select * from `friends` where `uid`=? and `fname`=?", [$player->acc_id, $_GET['delete'] ?? null]);
 	if ($dsql->recordcount() > 0) {
-		$deletaoamigo = $db->execute("delete from `friends` where `uid`=? and `fname`=?", [$player->acc_id, $_GET['delete']]);
+		$deletaoamigo = $db->execute("delete from `friends` where `uid`=? and `fname`=?", [$player->acc_id, $_GET['delete'] ?? null]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo 'Amigo removido!<br><a href="friendlist.php">Voltar</a>.';
 		include(__DIR__ . "/templates/private_footer.php");
@@ -85,10 +85,10 @@ if ($_GET['delete']) {
 	exit;
 }
 
-if ($_GET['deleteinvite']) {
-	$dsql2 = $db->execute("select * from `group_invite` where `group_id`=? and `invited_id`=?", [$player->id, $_GET['deleteinvite']]);
+if ($_GET['deleteinvite'] ?? null) {
+	$dsql2 = $db->execute("select * from `group_invite` where `group_id`=? and `invited_id`=?", [$player->id, $_GET['deleteinvite'] ?? null]);
 	if ($dsql2->recordcount() > 0) {
-		$deletaoconviti = $db->execute("DELETE FROM `group_invite` WHERE `group_id`=? AND `invited_id`=?", [$player->id, $_GET['deleteinvite']]);
+		$deletaoconviti = $db->execute("DELETE FROM `group_invite` WHERE `group_id`=? AND `invited_id`=?", [$player->id, $_GET['deleteinvite'] ?? null]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo "Convite para grupo de caça removido.<br><a href=\"friendlist.php\">Voltar</a>.";
 		include(__DIR__ . "/templates/private_footer.php");
@@ -101,10 +101,10 @@ if ($_GET['deleteinvite']) {
 	exit;
 }
 
-if ($_GET['deleteconvite']) {
-	$dsql4 = $db->execute("select * from `group_invite` where `group_id`=? and `invited_id`=?", [$_GET['deleteconvite'], $player->id]);
+if ($_GET['deleteconvite'] ?? null) {
+	$dsql4 = $db->execute("select * from `group_invite` where `group_id`=? and `invited_id`=?", [$_GET['deleteconvite'] ?? null, $player->id]);
 	if ($dsql4->recordcount() > 0) {
-		$deletaoconviti = $db->execute("DELETE FROM `group_invite` WHERE `group_id`=? AND `invited_id`=?", [$_GET['deleteconvite'], $player->id]);
+		$deletaoconviti = $db->execute("DELETE FROM `group_invite` WHERE `group_id`=? AND `invited_id`=?", [$_GET['deleteconvite'] ?? null, $player->id]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo 'O convite foi recusado.<br><a href="friendlist.php">Voltar</a>.';
 		include(__DIR__ . "/templates/private_footer.php");
@@ -117,11 +117,11 @@ if ($_GET['deleteconvite']) {
 	exit;
 }
 
-if ($_GET['deletedogrupo']) {
-	$dsql3 = $db->execute("select * from `groups` where `id`=? and `player_id`=?", [$player->id, $_GET['deletedogrupo']]);
+if ($_GET['deletedogrupo'] ?? null) {
+	$dsql3 = $db->execute("select * from `groups` where `id`=? and `player_id`=?", [$player->id, $_GET['deletedogrupo'] ?? null]);
 	if ($dsql3->recordcount() > 0) {
 
-		if ($player->id == $_GET['deletedogrupo']) {
+		if ($player->id == ($_GET['deletedogrupo'] ?? null)) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "Você não pode se expulsar do seu própio grupo.<br><a href=\"friendlist.php\">Voltar</a>.";
 			include(__DIR__ . "/templates/private_footer.php");
@@ -131,7 +131,7 @@ if ($_GET['deletedogrupo']) {
 		$logmsg = '<a href="profile.php?id=' . $player->username . '">' . $player->username . "</a> te expulsou do grupo de caça.";
 		addlog($_GET['deletedogrupo'], $logmsg, $db);
 
-		$deletegrpomember = $db->execute("DELETE FROM `groups` WHERE `id`=? AND `player_id`=?", [$player->id, $_GET['deletedogrupo']]);
+		$deletegrpomember = $db->execute("DELETE FROM `groups` WHERE `id`=? AND `player_id`=?", [$player->id, $_GET['deletedogrupo'] ?? null]);
 		include(__DIR__ . "/templates/private_header.php");
 		echo "Usuário removido do seu grupo de caça.<br><a href=\"friendlist.php\">Voltar</a>.";
 		include(__DIR__ . "/templates/private_footer.php");
@@ -146,8 +146,8 @@ if ($_GET['deletedogrupo']) {
 
 ?>
 <?php
-if ($_GET['addgroup']) {
-	$verificaantesdegrupo1 = $db->execute("select `id`, `username`, `level` from `players` where `username`=?", [$_GET['addgroup']]);
+if ($_GET['addgroup'] ?? null) {
+	$verificaantesdegrupo1 = $db->execute("select `id`, `username`, `level` from `players` where `username`=?", [$_GET['addgroup'] ?? null]);
 	if ($verificaantesdegrupo1->recordcount() == 0) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "Amigo não encontrado!<br /><a href=\"friendlist.php\">Voltar</a>.";
@@ -163,28 +163,28 @@ if ($_GET['addgroup']) {
 		exit;
 	}
 
-	if ($groupfriend['level'] < 30) {
+	if (($groupfriend['level'] ?? null) < 30) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "O usuário que você deseja convidar possui nível inferior é 30.<br /><a href=\"friendlist.php\">Voltar</a>.";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
 
-	if ($groupfriend['level'] > ($player->level + 30)) {
+	if (($groupfriend['level'] ?? null) > ($player->level + 30)) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "A diferença de nível entre você e seu amigo é maior que 30 níveis.<br /><a href=\"friendlist.php\">Voltar</a>.";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
 
-	if ($groupfriend['level'] < ($player->level - 30)) {
+	if (($groupfriend['level'] ?? null) < ($player->level - 30)) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "A diferença de nível entre você e seu amigo é maior que 30 níveis.<br /><a href=\"friendlist.php\">Voltar</a>.";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
 
-	$checkseeamigo = $db->execute("select * from `friends` WHERE `uid`=? and `fname`=?", [$player->acc_id, $groupfriend['username']]);
+	$checkseeamigo = $db->execute("select * from `friends` WHERE `uid`=? and `fname`=?", [$player->acc_id, $groupfriend['username'] ?? null]);
 	if ($checkseeamigo->recordcount() == 0) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "O usuário " . $groupfriend['username'] . " não é seu amigo.<br /><a href=\"friendlist.php\">Voltar</a>.";
@@ -192,7 +192,7 @@ if ($_GET['addgroup']) {
 		exit;
 	}
 
-	$checkseteminvitegrupo = $db->execute("select * from `group_invite` WHERE `invited_id`=? and `group_id`=?", [$groupfriend['id'], $player->id]);
+	$checkseteminvitegrupo = $db->execute("select * from `group_invite` WHERE `invited_id`=? and `group_id`=?", [$groupfriend['id'] ?? null, $player->id]);
 	if ($checkseteminvitegrupo->recordcount() > 0) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "Um convite já foi enviado ao seu amigo.<br /><a href=\"friendlist.php\">Voltar</a>.";
@@ -200,7 +200,7 @@ if ($_GET['addgroup']) {
 		exit;
 	}
 
-	$checksetemgrupo = $db->execute("select * from `groups` WHERE `player_id`=?", [$groupfriend['id']]);
+	$checksetemgrupo = $db->execute("select * from `groups` WHERE `player_id`=?", [$groupfriend['id'] ?? null]);
 	if ($checksetemgrupo->recordcount() > 0) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "Seu amigo já está em um grupo de caça.<br /><a href=\"friendlist.php\">Voltar</a>.";
@@ -256,14 +256,14 @@ include(__DIR__ . "/templates/private_header.php");
 
 		while ($friend = $query->fetchrow()) {
 
-			$queryromulo = $db->execute("select `id`, `username`, `gm_rank`, `level`, `avatar`, `voc`, `promoted` from `players` where `username`=?", [$friend['fname']]);
+			$queryromulo = $db->execute("select `id`, `username`, `gm_rank`, `level`, `avatar`, `voc`, `promoted` from `players` where `username`=?", [$friend['fname'] ?? null]);
 			$member = $queryromulo->fetchrow();
 			echo "<tr>\n";
 
 			echo '<td height="64px"><div style="position: relative;">';
 			echo '<img src="' . $member['avatar'] . '" width="64px" height="64px" style="position: absolute; top: 1; left: 1;" alt="' . $member['username'] . '" border="0">';
 
-			$checkranknosite = $db->execute("select `time` from `user_online` where `player_id`=?", [$member['id']]);
+			$checkranknosite = $db->execute("select `time` from `user_online` where `player_id`=?", [$member['id'] ?? null]);
 			if ($checkranknosite->recordcount() > 0) {
 				echo "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $member['username']) . "')\"><img src=\"static/images/online1.png\" width=\"64px\" height=\"64px\" style=\"position: absolute; top: 1; left: 1;\" alt=\"" . $member['username'] . '" border="0px"></a>';
 			}
@@ -271,29 +271,29 @@ include(__DIR__ . "/templates/private_header.php");
 			echo "</div></td>";
 
 			echo '<td><a href="profile.php?id=' . $member['username'] . '">';
-			echo ($member['username'] == $player->username) ? "<b>" : "";
-			echo $member['username'];
-			echo ($member['username'] == $player->username) ? "</b>" : "";
+			echo (($member['username'] ?? null) == $player->username) ? "<b>" : "";
+			echo $member['username'] ?? null;
+			echo (($member['username'] ?? null) == $player->username) ? "</b>" : "";
 			echo "</a></td>\n";
 			echo "<td>" . $member['level'] . "</td>\n";
 			echo "<td>";
-			if ($member['voc'] == 'archer' && $member['promoted'] == 'f') {
+			if (($member['voc'] ?? null) == 'archer' && ($member['promoted'] ?? null) == 'f') {
 				echo "Caçador";
-			} elseif ($member['voc'] == 'knight' && $member['promoted'] == 'f') {
+			} elseif (($member['voc'] ?? null) == 'knight' && ($member['promoted'] ?? null) == 'f') {
 				echo "Espadachim";
-			} elseif ($member['voc'] == 'mage' && $member['promoted'] == 'f') {
+			} elseif (($member['voc'] ?? null) == 'mage' && ($member['promoted'] ?? null) == 'f') {
 				echo "Bruxo";
-			} elseif ($member['voc'] == 'archer' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
+			} elseif (($member['voc'] ?? null) == 'archer' && (($member['promoted'] ?? null) == 't' || ($member['promoted'] ?? null) == 's' || ($member['promoted'] ?? null) == 'r')) {
 				echo "Arqueiro";
-			} elseif ($member['voc'] == 'knight' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
+			} elseif (($member['voc'] ?? null) == 'knight' && (($member['promoted'] ?? null) == 't' || ($member['promoted'] ?? null) == 's' || ($member['promoted'] ?? null) == 'r')) {
 				echo "Guerreiro";
-			} elseif ($member['voc'] == 'mage' && ($member['promoted'] == 't' || $member['promoted'] == 's' || $member['promoted'] == 'r')) {
+			} elseif (($member['voc'] ?? null) == 'mage' && (($member['promoted'] ?? null) == 't' || ($member['promoted'] ?? null) == 's' || ($member['promoted'] ?? null) == 'r')) {
 				echo "Mago";
-			} elseif ($member['voc'] == 'archer' && $member['promoted'] == 'p') {
+			} elseif (($member['voc'] ?? null) == 'archer' && ($member['promoted'] ?? null) == 'p') {
 				echo "Arqueiro Royal";
-			} elseif ($member['voc'] == 'knight' && $member['promoted'] == 'p') {
+			} elseif (($member['voc'] ?? null) == 'knight' && ($member['promoted'] ?? null) == 'p') {
 				echo "Cavaleiro";
-			} elseif ($member['voc'] == 'mage' && $member['promoted'] == 'p') {
+			} elseif (($member['voc'] ?? null) == 'mage' && ($member['promoted'] ?? null) == 'p') {
 				echo "Arquimago";
 			}
 
@@ -345,7 +345,7 @@ if ($procuraseugrupo->recordcount() == 0) {
 		echo '<td><font size="1">Gerou ' . $grupoaceito['exp'] . " de experiência.</font></td>";
 		$totalgkills += $grupoaceito['kills'];
 
-		if ($player->id == $grupoaceito['id']) {
+		if ($player->id == ($grupoaceito['id'] ?? null)) {
 			echo '<td><font size="1"><a href="group_leave.php?id=' . $iddddoseugrupo . '">Sair do Grupo</a></font></td>';
 		} elseif ($player->id == $iddddoseugrupo) {
 			echo '<td><font size="1"><a href="friendlist.php?deletedogrupo=' . $grupoaceito['id'] . '">Expulsar do Grupo</a></font></td>';
@@ -359,7 +359,7 @@ if ($procuraseugrupo->recordcount() == 0) {
 	$procuraconvidados = $db->execute("select * from `group_invite` WHERE `group_id`=?", [$iddddoseugrupo]);
 	if ($procuraconvidados->recordcount() > 0) {
 		while ($convidado = $procuraconvidados->fetchrow()) {
-			$exibeconvidadosinfo = $db->execute("select `id`, `username`, `level`, `avatar`, `voc`, `promoted` from `players` where `id`=?", [$convidado['invited_id']]);
+			$exibeconvidadosinfo = $db->execute("select `id`, `username`, `level`, `avatar`, `voc`, `promoted` from `players` where `id`=?", [$convidado['invited_id'] ?? null]);
 			$invited = $exibeconvidadosinfo->fetchrow();
 			echo "<tr>";
 			echo '<td><a href="profile.php?id=' . $invited['username'] . '">' . $invited['username'] . "</a></td>";
@@ -406,9 +406,9 @@ if ($convitex1->recordcount() > 0) {
 	echo "</tr>";
 
 	while ($convitex2 = $convitex1->fetchrow()) {
-		$lidernamy = $db->GetOne("select `username` from `players` where `id`=?", [$convitex2['group_id']]);
-		$liderlevy = $db->GetOne("select `level` from `players` where `id`=?", [$convitex2['group_id']]);
-		$lidergorupmembis = $db->execute("select * from `groups` WHERE `id`=?", [$convitex2['group_id']]);
+		$lidernamy = $db->GetOne("select `username` from `players` where `id`=?", [$convitex2['group_id'] ?? null]);
+		$liderlevy = $db->GetOne("select `level` from `players` where `id`=?", [$convitex2['group_id'] ?? null]);
+		$lidergorupmembis = $db->execute("select * from `groups` WHERE `id`=?", [$convitex2['group_id'] ?? null]);
 
 		echo "<tr>";
 		echo '<td><a href="profile.php?id=' . $lidernamy . '">' . $lidernamy . "</a></td>";

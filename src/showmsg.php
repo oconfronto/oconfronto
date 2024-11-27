@@ -129,7 +129,7 @@ if ($player->stat_points > 0 && $msgtype == 1) {
 		$query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);
 		$reino = $query->fetchrow();
 
-		if ($reino['worktime'] > time() && $sorteia == 5) {
+		if (($reino['worktime'] ?? null) > time() && $sorteia == 5) {
 			$valortempo = $reino['worktime'] - time();
 			if ($valortempo < 60) {
 				$valortempo2 = $valortempo;
@@ -145,13 +145,13 @@ if ($player->stat_points > 0 && $msgtype == 1) {
 				$auxiliar2 = "dia(s)";
 			}
 
-			if ($player->vip > time() && $reino['work'] > '0.15' || $player->vip < time()) {
+			if ($player->vip > time() && ($reino['work'] ?? null) > '0.15' || $player->vip < time()) {
 				echo "Bônus salarial de " . ceil($reino['work'] * 100) . "% por " . $valortempo2 . " " . $auxiliar2 . ".";
 				$messaged = 1;
 			}
 		}
 
-		if ($reino['gates'] > time() && $sorteia == 6) {
+		if (($reino['gates'] ?? null) > time() && $sorteia == 6) {
 			$valortempo = $reino['worktime'] - time();
 			if ($valortempo < 60) {
 				$valortempo2 = $valortempo;
@@ -167,13 +167,13 @@ if ($player->stat_points > 0 && $msgtype == 1) {
 				$auxiliar2 = "dia(s)";
 			}
 
-			if ($player->vip > time() && $reino['work'] > '0.15' || $player->vip < time()) {
+			if ($player->vip > time() && ($reino['work'] ?? null) > '0.15' || $player->vip < time()) {
 				echo "Os portões do reino estão abertos! <a href=\"monster.php\">Clique aqui</a> para lutar contra monstros especiais.";
 				$messaged = 1;
 			}
 		}
 
-		if (strstr((string) $_SERVER["HTTP_USER_AGENT"], "MSIE") && $sorteia == 7) {
+		if (strstr((string) ($_SERVER["HTTP_USER_AGENT"] ?? null), "MSIE") && $sorteia == 7) {
 			echo "Seu navegador pode não suportar o jogo. Experimente Firefox ou Chrome.";
 			$messaged = 1;
 		}
@@ -189,10 +189,10 @@ if ($player->stat_points > 0 && $msgtype == 1) {
 } elseif ($msgtype == 5 && $gwar->recordcount() > 0 && $messaged === 0) {
 	$war = $gwar->fetchrow();
 
-	if ($war['guild_id'] == $player->guild) {
-		$guildname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['enemy_id']]);
+	if (($war['guild_id'] ?? null) == $player->guild) {
+		$guildname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['enemy_id'] ?? null]);
 	} else {
-		$guildname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['guild_id']]);
+		$guildname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['guild_id'] ?? null]);
 	}
 
 	$valortempo = $war['time'] - time();
@@ -206,25 +206,25 @@ if ($player->stat_points > 0 && $msgtype == 1) {
 		$auxiliar = "hora(s)";
 	}
 
-	if ($war['time'] > time()) {
+	if (($war['time'] ?? null) > time()) {
 		echo "O seu clã atacará o clã " . $guildname . " em " . $valortempo . " " . $auxiliar . '. <a href="view_war.php?id=' . $war['id'] . '">Clique aqui</a> para ver a guerra.';
 		$messaged = 1;
-	} elseif ($war['time'] < time()) {
+	} elseif (($war['time'] ?? null) < time()) {
 		echo '<a href="view_war.php?id=' . $war['id'] . "\">Clique aqui</a> e veja como seu clã se saiu na guerra contra o clã " . $guildname . ".";
 		$messaged = 1;
 	} elseif ($otherwar->recordcount() > 0) {
 		$war = $otherwar->fetchrow();
-		$guildname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['guild_id']]);
-		$enemyname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['enemy_id']]);
+		$guildname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['guild_id'] ?? null]);
+		$enemyname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['enemy_id'] ?? null]);
 		echo "O clã " . $guildname . " irá atacar o clã " . $enemyname . " em " . $valortempo . " " . $auxiliar . '. <a href="view_war.php?id=' . $war['id'] . '">Clique aqui</a> para ver a guerra.';
 		$messaged = 1;
 	}
 } elseif ($msgtype == 5 && $otherwar->recordcount() > 0 && $messaged === 0) {
 	$war = $otherwar->fetchrow();
-	$guildname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['guild_id']]);
-	$enemyname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['enemy_id']]);
+	$guildname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['guild_id'] ?? null]);
+	$enemyname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['enemy_id'] ?? null]);
 
-	if ($war['time'] > time()) {
+	if (($war['time'] ?? null) > time()) {
 		$valortempo = $war['time'] - time();
 		if ($valortempo < 60) {
 			$auxiliar = "segundo(s)";

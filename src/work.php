@@ -20,7 +20,7 @@ $query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);
 $reino = $query->fetchrow();
 
 $bonnus = 0;
-if ($reino['worktime'] > time()) {
+if (($reino['worktime'] ?? null) > time()) {
 	$bonnus = $reino['work'];
 }
 
@@ -73,7 +73,7 @@ if ($player->level >= 180) {
 	$ganha = 20 * (1 + $bonnus);
 }
 
-if ($_GET['act'] == "cancel") {
+if (($_GET['act'] ?? null) == "cancel") {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset>";
 	echo "<legend><b>Trabalho</b></legend>";
@@ -84,7 +84,7 @@ if ($_GET['act'] == "cancel") {
 	exit;
 }
 
-if ($_GET['act'] == "remove") {
+if (($_GET['act'] ?? null) == "remove") {
 	$query = $db->execute("update `work` set `status`='a' where `player_id`=? and `status`='t'", [$player->id]);
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset>";
@@ -98,10 +98,10 @@ if ($_GET['act'] == "remove") {
 
 include(__DIR__ . "/checkwork.php");
 
-if (($_POST['time']) && ($_POST['submit'])) {
+if (($_POST['time'] ?? null) && ($_POST['submit'] ?? null)) {
 
 
-	if (!is_numeric($_POST['time']) || $_POST['time'] > 12) {
+	if (!is_numeric($_POST['time']) || ($_POST['time'] ?? null) > 12) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset>";
 		echo "<legend><b>Trabalhar</b></legend>";
@@ -111,7 +111,7 @@ if (($_POST['time']) && ($_POST['submit'])) {
 		exit;
 	}
 
-	if ($player->reino != '2' && $player->vip < time() && ($player->level < 80 && $_POST['time'] > 8 || $player->level < 100 && $_POST['time'] > 9 || $player->level < 120 && $_POST['time'] > 10 || $player->level < 140 && $_POST['time'] > 11)) {
+	if ($player->reino != '2' && $player->vip < time() && ($player->level < 80 && ($_POST['time'] ?? null) > 8 || $player->level < 100 && ($_POST['time'] ?? null) > 9 || $player->level < 120 && ($_POST['time'] ?? null) > 10 || $player->level < 140 && ($_POST['time'] ?? null) > 11)) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset>";
 		echo "<legend><b>Trabalhar</b></legend>";
@@ -121,7 +121,7 @@ if (($_POST['time']) && ($_POST['submit'])) {
 		exit;
 	}
 
-	if (($player->reino == '2' || $player->vip > time()) && ($player->level < 80 && $_POST['time'] > 9 || $player->level < 100 && $_POST['time'] > 10 || $player->level < 120 && $_POST['time'] > 11 || $player->level < 140 && $_POST['time'] > 12)) {
+	if (($player->reino == '2' || $player->vip > time()) && ($player->level < 80 && ($_POST['time'] ?? null) > 9 || $player->level < 100 && ($_POST['time'] ?? null) > 10 || $player->level < 120 && ($_POST['time'] ?? null) > 11 || $player->level < 140 && ($_POST['time'] ?? null) > 12)) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset>";
 		echo "<legend><b>Trabalhar</b></legend>";
@@ -184,7 +184,7 @@ if ($player->level < 40) {
 $query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);
 $reino = $query->fetchrow();
 
-if ($reino['worktime'] > time() || $player->vip > time()) {
+if (($reino['worktime'] ?? null) > time() || $player->vip > time()) {
 	$valortempo = $reino['worktime'] - time();
 	if ($valortempo < 60) {
 		$valortempo2 = $valortempo;
@@ -200,7 +200,7 @@ if ($reino['worktime'] > time() || $player->vip > time()) {
 		$auxiliar2 = "dia(s)";
 	}
 
-	if ($player->vip > time() && $reino['work'] < '0.15') {
+	if ($player->vip > time() && ($reino['work'] ?? null) < '0.15') {
 		echo showAlert("<i>Sendo vip você também tem 15% de bônus salárial.</i>");
 	} else {
 		echo showAlert("<i>Membros do seu reino ainda terão " . ceil($reino['work'] * 100) . "% de bônus salárial por " . $valortempo2 . " " . $auxiliar2 . ".</i>");
@@ -309,7 +309,7 @@ if ($query1->recordcount() > 0) {
 		}
 
 		echo "<tr>";
-		if ($log1['status'] == 'a') {
+		if (($log1['status'] ?? null) == 'a') {
 			echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">Você começou a trabalhar como " . $log1['worktype'] . " mas abandonou seu trabalho.</font></div></td>";
 		} else {
 			echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">Você trabalhou como " . $log1['worktype'] . " por " . $log1['worktime'] . " horas e ganhou " . ($log1['worktime'] * $log1['gold']) . " moedas de ouro.</font></div></td>";

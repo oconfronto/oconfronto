@@ -6,7 +6,7 @@ $selectmana = $db->GetOne("select `mana` from `blueprint_magias` where `id`=4");
 $mana = $player->reino == '1' || $player->vip > time() ? $selectmana - 5 : $selectmana;
 
 // Initialize $battlelog if it's not set
-if (!isset($_SESSION['battlelog']) || !is_array($_SESSION['battlelog'])) {
+if (!($_SESSION['battlelog'] ?? null) || !is_array($_SESSION['battlelog'])) {
 	$_SESSION['battlelog'] = [];
 }
 
@@ -14,7 +14,7 @@ if (!isset($_SESSION['battlelog']) || !is_array($_SESSION['battlelog'])) {
 $log = empty($_SESSION['battlelog']) ? [] : explode(", ", $_SESSION['battlelog'][0] ?? '');
 
 if ($player->mana < $mana) {
-	if ($log === [] || $log[1] !== "Você tentou lançar um feitiço mas está sem mana suficiente.") {
+	if ($log === [] || ($log[1] ?? null) !== "Você tentou lançar um feitiço mas está sem mana suficiente.") {
 		array_unshift($_SESSION['battlelog'], "5, Você tentou lançar um feitiço mas está sem mana suficiente.");
 	}
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-if ($_POST['transferitems']) {
+if ($_POST['transferitems'] ?? null) {
 	$verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `quest_status`=90 and `player_id`=?", [$player->id]);
 	if ($verifikeuser->recordcount() == 0) {
 		include(__DIR__ . "/templates/private_header.php");
@@ -17,7 +17,7 @@ if ($_POST['transferitems']) {
 		exit;
 	}
 
-	if (!$_POST['username']) {
+	if (!($_POST['username'] ?? null)) {
 		$error = 1;
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -28,7 +28,7 @@ if ($_POST['transferitems']) {
 		exit;
 	}
 
-	if (!$_POST['itselected']) {
+	if (!($_POST['itselected'] ?? null)) {
 		$error = 1;
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -39,7 +39,7 @@ if ($_POST['transferitems']) {
 		exit;
 	}
 
-	if (!$_POST['passcode']) {
+	if (!($_POST['passcode'] ?? null)) {
 		$error = 1;
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -50,7 +50,7 @@ if ($_POST['transferitems']) {
 		exit;
 	}
 
-	if (strtolower((string) $_POST['passcode']) !== strtolower($player->transpass)) {
+	if (strtolower((string) ($_POST['passcode'] ?? null)) !== strtolower($player->transpass)) {
 		$error = 1;
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -61,7 +61,7 @@ if ($_POST['transferitems']) {
 		exit;
 	}
 
-	if ($_POST['username'] == $player->username) {
+	if (($_POST['username'] ?? null) == $player->username) {
 		$error = 1;
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -73,11 +73,11 @@ if ($_POST['transferitems']) {
 	}
 
 
-	$quhjdjn = $db->execute("select items.item_bonus, items.status, items.mark, blueprint_items.id, blueprint_items.name, blueprint_items.type from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.id=? and items.player_id=?", [$_POST['itselected'], $player->id]);
+	$quhjdjn = $db->execute("select items.item_bonus, items.status, items.mark, blueprint_items.id, blueprint_items.name, blueprint_items.type from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.id=? and items.player_id=?", [$_POST['itselected'] ?? null, $player->id]);
 	$item5 = $quhjdjn->fetchrow();
 
 
-	$checkuser = $db->execute("select `id`, `username`, `serv` from `players` where `username`=?", [$_POST['username']]);
+	$checkuser = $db->execute("select `id`, `username`, `serv` from `players` where `username`=?", [$_POST['username'] ?? null]);
 	$destination = $checkuser->fetchrow();
 
 
@@ -92,7 +92,7 @@ if ($_POST['transferitems']) {
 		exit;
 	}
 
-	if ($item5['status'] == 'equipped') {
+	if (($item5['status'] ?? null) == 'equipped') {
 		$error = 1;
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -103,7 +103,7 @@ if ($_POST['transferitems']) {
 		exit;
 	}
 
-	if ($item5['mark'] == 't') {
+	if (($item5['mark'] ?? null) == 't') {
 		$error = 1;
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -114,7 +114,7 @@ if ($_POST['transferitems']) {
 		exit;
 	}
 
-	if ($item5['type'] == 'stone') {
+	if (($item5['type'] ?? null) == 'stone') {
 		$error = 1;
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -136,7 +136,7 @@ if ($_POST['transferitems']) {
 		exit;
 	}
 
-	if ($player->serv != $destination['serv']) {
+	if ($player->serv != ($destination['serv'] ?? null)) {
 		$error = 1;
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
@@ -149,7 +149,7 @@ if ($_POST['transferitems']) {
 
 
 	if ($error == 0) {
-		$sendit = $db->execute("update `items` set `player_id`=? where `id`=?", [$destination['id'], $_POST['itselected']]);
+		$sendit = $db->execute("update `items` set `player_id`=? where `id`=?", [$destination['id'] ?? null, $_POST['itselected'] ?? null]);
 
 		$insert['player_id'] = $player->id;
 		$insert['name1'] = $player->username;

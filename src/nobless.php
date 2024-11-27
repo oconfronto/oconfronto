@@ -16,7 +16,7 @@ include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkhp.php");
 include(__DIR__ . "/checkwork.php");
 
-if ($_GET['act']) {
+if ($_GET['act'] ?? null) {
 	if ($player->died >= 3) {
 		$query = $db->execute("update `players` set `died`=? where `id`=?", [0, $player->id]);
 		include(__DIR__ . "/templates/private_header.php");

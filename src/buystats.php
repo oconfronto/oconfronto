@@ -21,7 +21,7 @@ if ($player->buystats >= 15) {
 
 $heal = $player->buystats + 1;
 $cost = $heal * 1500;
-if ($_GET['act']) {
+if ($_GET['act'] ?? null) {
 	if ($player->gold < $cost) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";

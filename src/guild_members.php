@@ -45,13 +45,13 @@ include(__DIR__ . "/templates/private_header.php");
 		while ($member = $query->fetchrow()) {
 			echo "<tr>\n";
 			echo '<td><a href="profile.php?id=' . $member['username'] . '">';
-			echo ($member['username'] == $player->username) ? "<b>" : "";
-			echo $member['username'];
-			echo ($member['username'] == $player->username) ? "</b>" : "";
+			echo (($member['username'] ?? null) == $player->username) ? "<b>" : "";
+			echo $member['username'] ?? null;
+			echo (($member['username'] ?? null) == $player->username) ? "</b>" : "";
 			echo "</a></td>\n";
 			echo "<td>" . $member['level'] . "</td>\n";
 			echo "<td>";
-			if ($member['hp'] < 1) {
+			if (($member['hp'] ?? null) < 1) {
 				echo '<font color="red">Morto</font>';
 			} else {
 				echo '<font color="green">Vivo</font>';

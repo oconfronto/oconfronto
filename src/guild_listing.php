@@ -29,20 +29,20 @@ if ($player->guild == NULL || $player->guild == 0) {
 echo '<table width="100%">';
 $query = $db->execute("select * from `pwar` where `time`>? and (`status`='t' or `status`='g' or `status`='e') order by `time` desc limit 5", [time() - 172800]);
 while ($war = $query->fetchrow()) {
-	$guildname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['guild_id']]);
-	$enyname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['enemy_id']]);
+	$guildname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['guild_id'] ?? null]);
+	$enyname = $db->GetOne("select `name` from `guilds` where `id`=?", [$war['enemy_id'] ?? null]);
 
-	if ($war['status'] == 'g') {
+	if (($war['status'] ?? null) == 'g') {
 		echo "<tr onclick=\"window.location.href='view_war.php?id=" . $war['id'] . "'\"><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\">";
 		echo "<center><font size=\"1px\"><b>O clã <a href=\"guild_profile.php?id=" . $war['guild_id'] . '">' . $guildname . "</a> ganhou a batalha contra o clã <a href=\"guild_profile.php?id=" . $war['enemy_id'] . '">' . $enyname . "</a> e ganhou " . $war['bet'] . " moedas de ouro.</b></font></center>";
 		echo "</td></tr>";
-	} elseif ($war['status'] == 'e') {
+	} elseif (($war['status'] ?? null) == 'e') {
 		echo "<tr onclick=\"window.location.href='view_war.php?id=" . $war['id'] . "'\"><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\">";
 		echo "<center><font size=\"1px\"><b>O clã <a href=\"guild_profile.php?id=" . $war['enemy_id'] . '">' . $enyname . "</a> ganhou a batalha contra o clã <a href=\"guild_profile.php?id=" . $war['guild_id'] . '">' . $guildname . "</a> e ganhou " . $war['bet'] . " moedas de ouro.</b></font></center>";
 		echo "</td></tr>";
-	} elseif ($war['status'] == 't' && time() < $war['time']) {
+	} elseif (($war['status'] ?? null) == 't' && time() < ($war['time'] ?? null)) {
 		$i = 0;
-		$array = explode(", ", (string) $war['players_guild']);
+		$array = explode(", ", (string) ($war['players_guild'] ?? null));
 		foreach ($array as $value) {
 			$i += 1;
 		}
@@ -78,12 +78,12 @@ if ($query->recordcount() == 0) {
 	echo "<p><i><center>Nenhum clã registrado no momento.</center></i></p>";
 } else {
 	while ($guild = $query->fetchrow()) {
-		$dire = ($guild['img'] == "default_guild.png") ? "static/" : "";
+		$dire = (($guild['img'] ?? null) == "default_guild.png") ? "static/" : "";
 		echo '<table width="100%">';
 		echo "<tr>";
 		echo '<td width="135px" class="brown"><center><a href="guild_profile.php?id=' . $guild['id'] . '"><img src="' . $dire . $guild['img'] . '" alt="' . $guild['name'] . '"  width="128" height="128" border="0"></a></center></td>';
 		echo '<td class="salmon"><center><b><a href="guild_profile.php?id=' . $guild['id'] . '">' . $guild['name'] . "</a></b></center>";
-		$guilddes = stripslashes((string) $guild['blurb']);
+		$guilddes = stripslashes((string) ($guild['blurb'] ?? null));
 		$guilddes = $bbcode->parse($guilddes);
 		$guilddes = strip_tags((string) $guilddes);
 		echo textLimit($guilddes, 300, 80);
@@ -93,11 +93,11 @@ if ($query->recordcount() == 0) {
 		echo '<table width="100%">';
 		echo "<tr>";
 		echo '<td align=center><font size="1"><b>Reino</b><br/>';
-		if ($guild['reino'] == 1) {
+		if (($guild['reino'] ?? null) == 1) {
 			echo "Cathal";
-		} elseif ($guild['reino'] == 2) {
+		} elseif (($guild['reino'] ?? null) == 2) {
 			echo "Eroda";
-		} elseif ($guild['reino'] == 3) {
+		} elseif (($guild['reino'] ?? null) == 3) {
 			echo "Turkic";
 		} else {
 			echo "Nenhum";
@@ -113,11 +113,11 @@ if ($query->recordcount() == 0) {
 		echo "</tr>";
 		echo "<tr>";
 		echo "<td align=center>";
-		$checkquery = $db->execute("select count(*) inv_count from guild_invites where player_id =? and guild_id =?", [$player->id, $guild['id']]);
+		$checkquery = $db->execute("select count(*) inv_count from guild_invites where player_id =? and guild_id =?", [$player->id, $guild['id'] ?? null]);
 		$check = $checkquery->fetchrow();
-		if ($check['inv_count'] > 0) {
+		if (($check['inv_count'] ?? null) > 0) {
 			echo '<font size="1"><a href="guild_join.php?id=' . $guild['id'] . '">Participar</a></font>';
-		} elseif ($player->guild == $guild['id'] && $player->username != $guild['leader'] && $player->username != $guild['vice']) {
+		} elseif ($player->guild == ($guild['id'] ?? null) && $player->username != ($guild['leader'] ?? null) && $player->username != ($guild['vice'] ?? null)) {
 			echo '<font size="1"><a href="guild_leave.php">Abandonar</a></font>';
 		}
 

@@ -14,21 +14,21 @@ include(__DIR__ . "/templates/private_header.php");
 
 
 if ($player->transpass != "f") {
-    if ($_POST['changetrans']) {
+    if ($_POST['changetrans'] ?? null) {
         //Check trans
-        if (!$_POST['trans']) {
+        if (!($_POST['trans'] ?? null)) {
             $errmsg2 .= "Você precisa preencher todos os campos!";
             $error2 = 1;
-        } elseif (!$_POST['trans2']) {
+        } elseif (!($_POST['trans2'] ?? null)) {
             $errmsg2 .= "Você precisa preencher todos os campos!";
             $error2 = 1;
-        } elseif (!$_POST['pass2']) {
+        } elseif (!($_POST['pass2'] ?? null)) {
             $errmsg2 .= "Você precisa preencher todos os campos!";
             $error2 = 1;
-        } elseif (!$_POST['oldtrans']) {
+        } elseif (!($_POST['oldtrans'] ?? null)) {
             $errmsg2 .= "Você precisa preencher todos os campos!";
             $error2 = 1;
-        } elseif ($player->transpass != $_POST['oldtrans']) {
+        } elseif ($player->transpass != ($_POST['oldtrans'] ?? null)) {
             $errmsg2 .= "Sua senha de transferência atual está incorreta!";
             $error2 = 1;
         } elseif ($acc->password == encodePassword($_POST['trans'])) {
@@ -37,13 +37,13 @@ if ($player->transpass != "f") {
         } elseif ($acc->password != encodePassword($_POST['pass2'])) {
             $errmsg2 .= "A senha de sua conta está incorreta!";
             $error2 = 1;
-        } elseif ($_POST['trans'] != $_POST['trans2']) {
+        } elseif (($_POST['trans'] ?? null) != ($_POST['trans2'] ?? null)) {
             $errmsg2 .= "Você não digitou as duas senhas corretamente!";
             $error2 = 1;
-        } elseif (strlen((string) $_POST['trans']) < 4) {
+        } elseif (strlen((string) ($_POST['trans'] ?? null)) < 4) {
             $errmsg2 .= "Sua senha de transferência não pode ter menos de 4 caracteres.";
             $error2 = 1;
-        } elseif (strlen((string) $_POST['trans']) > 30) {
+        } elseif (strlen((string) ($_POST['trans'] ?? null)) > 30) {
             $errmsg2 .= "Sua senha de transferência não pode ter mais de 30 caracteres.";
             $error2 = 1;
         }
@@ -54,7 +54,7 @@ if ($player->transpass != "f") {
             $insert['time'] = time();
             $query = $db->autoexecute('account_log', $insert, 'INSERT');
 
-            $query = $db->execute("update `players` set `transpass`=? where `id`=?", [$_POST['trans'], $player->id]);
+            $query = $db->execute("update `players` set `transpass`=? where `id`=?", [$_POST['trans'] ?? null, $player->id]);
             echo "<fieldset><legend><b>Sucesso</b></legend>Você alterou sua senha de transferência.<br/><a href=\"home.php\">Voltar</a>.</fieldset>";
             include(__DIR__ . "/templates/private_footer.php");
             exit;

@@ -9,10 +9,10 @@ $player = check_user($db);
 $query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);
 $reino = $query->fetchrow();
 
-if (($reino['poll'] + 604800) < time() && $reino['imperador'] > 0) {
-	$db->execute("update `reinos` set `imperador`=0, `poll`=? where `id`=?", [(time() + 172800), $reino['id']]);
+if (($reino['poll'] + 604800) < time() && ($reino['imperador'] ?? null) > 0) {
+	$db->execute("update `reinos` set `imperador`=0, `poll`=? where `id`=?", [(time() + 172800), $reino['id'] ?? null]);
 
-	$query = $db->execute("select `id` from `players` where `reino`=?", [$reino['id']]);
+	$query = $db->execute("select `id` from `players` where `reino`=?", [$reino['id'] ?? null]);
 	while ($member = $query->fetchrow()) {
 		$logmsg = "O reinado de uma semana de " . showName($reino['imperador'], $db, 'off') . " acabou, e as eleições para novo imperador estão abertas.";
 		addlog($member['id'], $logmsg, $db);
@@ -29,10 +29,10 @@ if (($reino['poll'] + 604800) < time() && $reino['imperador'] > 0) {
 
 include(__DIR__ . "/templates/private_header.php");
 
-if ($reino['imperador'] == 0 && $_POST['vote']) {
+if (($reino['imperador'] ?? null) == 0 && ($_POST['vote'] ?? null)) {
 	$verifica = $db->execute("select * from `reino_votes` where `player_id`=?", [$player->id]);
 	if ($verifica->recordcount() == 0) {
-		$votes = $db->execute("select * from `reino_tovote` where `player_id`=?", [$_POST['vote']]);
+		$votes = $db->execute("select * from `reino_tovote` where `player_id`=?", [$_POST['vote'] ?? null]);
 		if ($votes->recordcount() == 1) {
 			$insert['player_id'] = $player->id;
 			$insert['vote_id'] = $_POST['vote'];
@@ -83,7 +83,7 @@ echo "</td></tr>";
 echo "</table>";
 echo "<br/>";
 
-if ($reino['imperador'] == $player->id) {
+if (($reino['imperador'] ?? null) == $player->id) {
 	echo '<table width="100%">';
 	echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Administração - " . $reino['nome'] . "</b></center></td></tr>";
 	echo "<tr><td>";
@@ -101,7 +101,7 @@ if ($reino['imperador'] == $player->id) {
 echo '<table width="100%">';
 echo '<tr><td width="45%">';
 
-if ($reino['imperador'] != 0) {
+if (($reino['imperador'] ?? null) != 0) {
 	echo '<table width="100%">';
 	echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Possíveis sucessores do Imperador</b></center></td></tr>";
 
@@ -119,20 +119,20 @@ if ($reino['imperador'] != 0) {
 	echo '<center><font size="1px">' . $temponext . " dia(s) para a próxima eleição.</font></center>";
 } else {
 
-	if ($reino['imperador'] == 0 && time() > $reino['poll']) {
-		$total = $db->execute("select `vote_id` from `reino_votes` where `reino_id`=? group by `vote_id` order by count(*) desc limit 1", [$reino['id']]);
+	if (($reino['imperador'] ?? null) == 0 && time() > ($reino['poll'] ?? null)) {
+		$total = $db->execute("select `vote_id` from `reino_votes` where `reino_id`=? group by `vote_id` order by count(*) desc limit 1", [$reino['id'] ?? null]);
 		$total = $total->fetchrow();
 
-		$db->execute("update `reinos` set `imperador`=? where `id`=?", [$total['vote_id'], $reino['id']]);
-		$db->execute("delete from `reino_votes` where `reino_id`=?", [$reino['id']]);
-		$db->execute("delete from `reino_tovote` where `reino_id`=?", [$reino['id']]);
+		$db->execute("update `reinos` set `imperador`=? where `id`=?", [$total['vote_id'] ?? null, $reino['id'] ?? null]);
+		$db->execute("delete from `reino_votes` where `reino_id`=?", [$reino['id'] ?? null]);
+		$db->execute("delete from `reino_tovote` where `reino_id`=?", [$reino['id'] ?? null]);
 
 		$insert['reino'] = $reino['id'];
 		$insert['log'] = "" . $reino['nome'] . " acaba de ganhar um novo imperador: " . showName($total['vote_id'], $db, 'off') . ".";
 		$insert['time'] = time();
 		$db->autoexecute('log_reino', $insert, 'INSERT');
 
-		$query = $db->execute("select `id` from `players` where `id`!=? and `reino`=?", [$total['vote_id'], $reino['id']]);
+		$query = $db->execute("select `id` from `players` where `id`!=? and `reino`=?", [$total['vote_id'] ?? null, $reino['id'] ?? null]);
 		while ($member = $query->fetchrow()) {
 			$logmsg = "" . showName($total['vote_id'], $db, 'off') . " agora é o novo Imperador do Reino.";
 			addlog($member['id'], $logmsg, $db);
@@ -146,16 +146,16 @@ if ($reino['imperador'] != 0) {
 	echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Eleição do novo Imperador</b></center></td></tr>";
 	echo '<td class="salmon">';
 
-	$votes = $db->execute("select * from `reino_tovote` where `reino_id`=?", [$reino['id']]);
+	$votes = $db->execute("select * from `reino_tovote` where `reino_id`=?", [$reino['id'] ?? null]);
 	if ($votes->recordcount() == 0) {
-		$query = $db->execute("select `id` from `players` where `reino`=? order by `uptime`+(`posts` * 420)+(`akills` * 30)-(`kills` * 10) desc limit 5", [$reino['id']]);
+		$query = $db->execute("select `id` from `players` where `reino`=? order by `uptime`+(`posts` * 420)+(`akills` * 30)-(`kills` * 10) desc limit 5", [$reino['id'] ?? null]);
 		while ($member = $query->fetchrow()) {
 			$insert['player_id'] = $member['id'];
 			$insert['reino_id'] = $reino['id'];
 			$db->autoexecute('reino_tovote', $insert, 'INSERT');
 		}
 
-		$db->execute("update `reinos` set `poll`=? where `id`=?", [time() + 172800, $reino['id']]);
+		$db->execute("update `reinos` set `poll`=? where `id`=?", [time() + 172800, $reino['id'] ?? null]);
 		$query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);
 		$reino = $query->fetchrow();
 	}
@@ -164,7 +164,7 @@ if ($reino['imperador'] != 0) {
 	echo '<table width="100%">';
 	echo '<tr class="salmon"><td width="70%">';
 
-	$votes = $db->execute("select * from `reino_tovote` where `reino_id`=?", [$reino['id']]);
+	$votes = $db->execute("select * from `reino_tovote` where `reino_id`=?", [$reino['id'] ?? null]);
 	while ($vote = $votes->fetchrow()) {
 		echo '<input type="radio" name="vote" value="' . $vote['player_id']  . '"> ' . showName($vote['player_id'], $db, 'off') . "<br/>";
 	}

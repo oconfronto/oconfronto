@@ -16,7 +16,7 @@ while($count = $countlocked->fetchrow())
 $lockedgold += $lockedgold + $count['prize'];
 } */
 
-if (isset($_POST['deposit'])) {
+if ($_POST['deposit'] ?? null) {
     $deposita = (new OCv2($db))->tirarCMoeda($_POST['deposit']);
     if (!is_numeric($deposita)) {
         $msg = showAlert("Esta quantia de ouro não é válida!", "red");
@@ -31,7 +31,7 @@ if (isset($_POST['deposit'])) {
             $player = check_user($db); //Get new stats so new amount of gold is displayed on left menu
         }
     }
-} elseif (isset($_POST['withdraw'])) {
+} elseif ($_POST['withdraw'] ?? null) {
     $saca = (new OCv2($db))->tirarCMoeda($_POST['withdraw']);
     if (!is_numeric($saca)) {
         $msg = showAlert("Esta quantia de ouro não é válida!", "red");

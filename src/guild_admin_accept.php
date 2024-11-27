@@ -9,24 +9,24 @@ include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checkguild.php");
 
 
-if (!$_GET['id']) {
+if (!($_GET['id'] ?? null)) {
 	header("Location: home.php");
 } else {
-	$query = $db->execute("select * from `guild_paliance` where `id`=?", [$_GET['id']]);
+	$query = $db->execute("select * from `guild_paliance` where `id`=?", [$_GET['id'] ?? null]);
 	if ($query->recordcount() == 0) {
 		header("Location: home.php");
 	} else {
 		$guild = $query->fetchrow();
 	}
 
-	$guildquery = $db->execute("select `leader`, `vice` from `guilds` where `id`=?", [$guild['aled_na']]);
+	$guildquery = $db->execute("select `leader`, `vice` from `guilds` where `id`=?", [$guild['aled_na'] ?? null]);
 	$check = $guildquery->fetchrow();
 
-	$checkjaaly1 = $db->execute("select `id` from `guild_aliance` where `guild_na`=? and `aled_na`=?", [$guild['guild_na'], $guild['aled_na']]);
-	$checkjaaly2 = $db->execute("select `id` from `guild_enemy` where `guild_na`=? and `enemy_na`=?", [$guild['guild_na'], $guild['aled_na']]);
+	$checkjaaly1 = $db->execute("select `id` from `guild_aliance` where `guild_na`=? and `aled_na`=?", [$guild['guild_na'] ?? null, $guild['aled_na'] ?? null]);
+	$checkjaaly2 = $db->execute("select `id` from `guild_enemy` where `guild_na`=? and `enemy_na`=?", [$guild['guild_na'] ?? null, $guild['aled_na'] ?? null]);
 
 	include(__DIR__ . "/templates/private_header.php");
-	if ($player->username != $check['leader'] && $player->username != $check['vice']) {
+	if ($player->username != ($check['leader'] ?? null) && $player->username != ($check['vice'] ?? null)) {
 		echo "Você não pode acessar esta página.<br/>";
 		echo '<a href="home.php">Principal</a>';
 	} elseif ($checkjaaly1->recordcount() > 0) {
@@ -46,18 +46,18 @@ if (!$_GET['id']) {
 		$insert['time'] = time();
 		$query = $db->autoexecute('guild_aliance', $insert, 'INSERT');
 
-		$query = $db->execute("delete from `guild_paliance` where `id`=?", [$_GET['id']]);
+		$query = $db->execute("delete from `guild_paliance` where `id`=?", [$_GET['id'] ?? null]);
 
-		$msg1 = $db->GetOne("select `name` from `guilds` where `id`=?", [$guild['guild_na']]);
-		$msg2 = $db->GetOne("select `name` from `guilds` where `id`=?", [$guild['aled_na']]);
+		$msg1 = $db->GetOne("select `name` from `guilds` where `id`=?", [$guild['guild_na'] ?? null]);
+		$msg2 = $db->GetOne("select `name` from `guilds` where `id`=?", [$guild['aled_na'] ?? null]);
 
-		$log1 = $db->execute("select `id` from `players` where `guild`=?", [$guild['guild_na']]);
+		$log1 = $db->execute("select `id` from `players` where `guild`=?", [$guild['guild_na'] ?? null]);
 		while ($p1 = $log1->fetchrow()) {
 			$logmsg1 = "Agora seu clã é aliado do clã <a href=\"guild_profile.php?id=" . $guild['aled_na'] . '">' . $msg1 . "</a>.";
 			addlog($p1['id'], $logmsg1, $db);
 		}
 
-		$log2 = $db->execute("select `id` from `players` where `guild`=?", [$guild['aled_na']]);
+		$log2 = $db->execute("select `id` from `players` where `guild`=?", [$guild['aled_na'] ?? null]);
 		while ($p2 = $log2->fetchrow()) {
 			$logmsg2 = "Agora seu clã é aliado do clã <a href=\"guild_profile.php?id=" . $guild['guild_na'] . '">' . $msg2 . "</a>.";
 			addlog($p2['id'], $logmsg2, $db);

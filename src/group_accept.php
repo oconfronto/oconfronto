@@ -7,10 +7,10 @@ define("PAGENAME", "Grupos de Caça");
 $player = check_user($db);
 
 
-if (!$_GET['id']) {
+if (!($_GET['id'] ?? null)) {
 	header("Location: home.php");
 } else {
-	$query = $db->execute("select * from `group_invite` where `group_id`=? and `invited_id`=?", [$_GET['id'], $player->id]);
+	$query = $db->execute("select * from `group_invite` where `group_id`=? and `invited_id`=?", [$_GET['id'] ?? null, $player->id]);
 	if ($query->recordcount() == 0) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "Grupo de caça não encontrado.<br/>";
@@ -20,9 +20,9 @@ if (!$_GET['id']) {
 	}
 
 	$group = $query->fetchrow();
-	$countamembros = $db->execute("select * from `groups` where `id`=?", [$_GET['id']]);
-	$leaderlevel = $db->GetOne("select `level` from `players` where `id`=?", [$_GET['id']]);
-	$leadername = $db->GetOne("select `username` from `players` where `id`=?", [$_GET['id']]);
+	$countamembros = $db->execute("select * from `groups` where `id`=?", [$_GET['id'] ?? null]);
+	$leaderlevel = $db->GetOne("select `level` from `players` where `id`=?", [$_GET['id'] ?? null]);
+	$leadername = $db->GetOne("select `username` from `players` where `id`=?", [$_GET['id'] ?? null]);
 
 	include(__DIR__ . "/templates/private_header.php");
 	if (($player->level + 30) < $leaderlevel) {
@@ -42,9 +42,9 @@ if (!$_GET['id']) {
 		$insert['player_id'] = $player->id;
 		$query = $db->autoexecute('groups', $insert, 'INSERT');
 
-		$query = $db->execute("delete from `group_invite` where `group_id`=? and `invited_id`=?", [$_GET['id'], $player->id]);
+		$query = $db->execute("delete from `group_invite` where `group_id`=? and `invited_id`=?", [$_GET['id'] ?? null, $player->id]);
 
-		$log1 = $db->execute("select `player_id` from `groups` where `id`=? and `player_id`!=?", [$_GET['id'], $player->id]);
+		$log1 = $db->execute("select `player_id` from `groups` where `id`=? and `player_id`!=?", [$_GET['id'] ?? null, $player->id]);
 		while ($p1 = $log1->fetchrow()) {
 			$logmsg1 = 'Agora <a href="profile.php?id=' . $player->username . '">' . $player->username . "</a> faz parte do grupo de caça de <a href=\"profile.php?id=" . $leadername . '">' . $leadername . "</a>.";
 			addlog($p1['player_id'], $logmsg1, $db);

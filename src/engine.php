@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 session_start();
 
-if ($_GET['header']) {
+if ($_GET['header'] ?? null) {
 	header('Content-type: text/html; charset=utf-8');
 	include(__DIR__ . "/config.php");
 	include(__DIR__ . "/functions.php");
@@ -12,7 +12,7 @@ if ($_GET['header']) {
 
 $ipp = $_SERVER['REMOTE_ADDR'];
 
-if ($_SESSION['Login']['player_id'] > 0) {
+if ((($_SESSION['Login'] ?? null)['player_id'] ?? null) > 0) {
 	$player = check_user($db);
 	$checknosite = $db->execute("select `time` from `user_online` where `player_id`=?", [$player->id]);
 
@@ -30,8 +30,8 @@ if ($_SESSION['Login']['player_id'] > 0) {
 
 	$querydelete = $db->execute("select * from `user_online` where `time`<?", [time() - 15]);
 	while ($delete = $querydelete->fetchrow()) {
-		$db->execute("update `players` set `uptime`=`uptime`+? where `id`=?", [$delete['time'] - $delete['login'], $delete['player_id']]);
-		$db->execute("delete from `user_online` where `id`=?", [$delete['id']]);
+		$db->execute("update `players` set `uptime`=`uptime`+? where `id`=?", [$delete['time'] - $delete['login'], $delete['player_id'] ?? null]);
+		$db->execute("delete from `user_online` where `id`=?", [$delete['id'] ?? null]);
 	}
 
 	$mailcount = $db->execute("select `id` from `mail` where `to`=? and `status`='unread'", [$player->id]);
@@ -41,7 +41,7 @@ if ($_SESSION['Login']['player_id'] > 0) {
 
 	$queryloginfriend = $db->execute("select `fname` from `friends` where `uid`=?", [$player->acc_id]);
 	while ($loginfriend = $queryloginfriend->fetchrow()) {
-		$frienddeide = $db->GetOne("select `id` from `players` where `username`=?", [$loginfriend['fname']]);
+		$frienddeide = $db->GetOne("select `id` from `players` where `username`=?", [$loginfriend['fname'] ?? null]);
 		$veruserfrindlogin = $db->execute("select `id` from `user_online` where `player_id`=? and `login`>?", [$frienddeide, (time() - 20)]);
 
 		if ($veruserfrindlogin->recordcount() == 1) {
@@ -51,9 +51,9 @@ if ($_SESSION['Login']['player_id'] > 0) {
 
 	$verificarLog = $db->execute("select `id`, `msg` from `user_log` where `player_id`=? order by time desc limit 3", [$player->id]);
 	while ($showLog = $verificarLog->fetchrow()) {
-		$verificarLogStatus = $db->execute("select `id` from `user_log` where `id`=? and `show`<='3'", [$showLog['id']]);
+		$verificarLogStatus = $db->execute("select `id` from `user_log` where `id`=? and `show`<='3'", [$showLog['id'] ?? null]);
 		if ($verificarLogStatus->recordcount() == 1) {
-			$db->execute("update `user_log` set `show`=`show`+1 where `id`=?", [$showLog['id']]);
+			$db->execute("update `user_log` set `show`=`show`+1 where `id`=?", [$showLog['id'] ?? null]);
 			echo showAlert("" . $showLog['msg'] . "");
 			break;
 		}
@@ -62,10 +62,10 @@ if ($_SESSION['Login']['player_id'] > 0) {
 	$verificaLuta = $db->execute("select `e_id`, `p_id` from `duels` where `status`=? and (`p_id`=? or `e_id`=?)", [$player->id, $player->id, $player->id]);
 	if ($verificaLuta->recordcount() > 0) {
 		$alertLuta = $verificaLuta->fetchrow();
-		if ($alertLuta['p_id'] == $player->id) {
-			$enemyname = $db->GetOne("select `username` from `players` where `id`=?", [$alertLuta['e_id']]);
+		if (($alertLuta['p_id'] ?? null) == $player->id) {
+			$enemyname = $db->GetOne("select `username` from `players` where `id`=?", [$alertLuta['e_id'] ?? null]);
 		} else {
-			$enemyname = $db->GetOne("select `username` from `players` where `id`=?", [$alertLuta['p_id']]);
+			$enemyname = $db->GetOne("select `username` from `players` where `id`=?", [$alertLuta['p_id'] ?? null]);
 		}
 
 		echo showAlert("" . $enemyname . " está aguardando por você no duelo, <a href=\"duel.php?luta=true&new=true\">clique aqui</a> para iniciar a luta");

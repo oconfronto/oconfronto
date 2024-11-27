@@ -11,15 +11,15 @@ if ($misschance <= $player->miss) {
 	$magiaatual = $db->execute("select `magia`, `turnos` from `bixos` where `player_id`=?", [$player->id]);
 	$magiaatual2 = $magiaatual->fetchrow();
 
-	if ($magiaatual2['magia'] == 1) {
+	if (($magiaatual2['magia'] ?? null) == 1) {
 		$porcento = $totalpak / 100;
 		$porcento = ceil($porcento * 15);
 		$totalpak += $porcento;
-	} elseif ($magiaatual2['magia'] == 2) {
+	} elseif (($magiaatual2['magia'] ?? null) == 2) {
 		$porcento = $totalpak / 100;
 		$porcento = ceil($porcento * 45);
 		$totalpak += $porcento;
-	} elseif ($magiaatual2['magia'] == 12) {
+	} elseif (($magiaatual2['magia'] ?? null) == 12) {
 		$porcento = $totalpak / 100;
 		$porcento = ceil($porcento * 35);
 		$totalpak += $porcento;

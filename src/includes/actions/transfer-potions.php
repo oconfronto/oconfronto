@@ -16,7 +16,7 @@ function showError($message) {
 	exit;
 }
 
-if (isset($_GET['transpotion']) && !isset($_POST['mandap'])) {
+if (($_GET['transpotion'] ?? null) && !($_POST['mandap'] ?? null)) {
 	include_once $header;
 	echo "<fieldset><legend><b>Enviar Poções</b></legend>\n";
 	echo '<form method="post" action="inventory.php?transpotion=true"><table><tr><td><b>Desejo enviar:</b></td><td><select name="potion"><option value="none" selected="selected">Selecione</option><option value="hp">Health Potions</option><option value="bhp">Big Health Potions</option><option value="mana">Mana Potions</option><option value="energy">Energy Potions</option></select></td></tr>';
@@ -28,46 +28,46 @@ if (isset($_GET['transpotion']) && !isset($_POST['mandap'])) {
 	exit;
 }
 
-if (isset($_GET['transpotion']) && isset($_POST['mandap'])) {
+if (($_GET['transpotion'] ?? null) && ($_POST['mandap'] ?? null)) {
 	$required_fields = ['potion', 'quantia', 'passcode', 'to'];
 	foreach ($required_fields as $field) {
-		if (!isset($_POST[$field]) || empty($_POST[$field])) {
+		if (!($_POST[$field] ?? null) || empty($_POST[$field])) {
 			showError("Você precisa preencher todos os campos!");
 		}
 	}
 
-	if (!isset($player->transpass) || $_POST['passcode'] !== $player->transpass) {
+	if (!isset($player->transpass) || ($_POST['passcode'] ?? null) !== $player->transpass) {
 		showError("Sua senha de transferência está incorreta.");
 	}
 
-	if (!isset($_POST['quantia']) || !is_numeric($_POST['quantia']) || $_POST['quantia'] < 1) {
+	if (!($_POST['quantia'] ?? null) || !is_numeric($_POST['quantia']) || ($_POST['quantia'] ?? null) < 1) {
 		showError("A quantia de poções digitada não é uma quantia válida.");
 	}
 
-	if ($_POST['potion'] != "hp" && $_POST['potion'] != "bhp" && $_POST['potion'] != "mana" && $_POST['potion'] != "energy") {
+	if (($_POST['potion'] ?? null) != "hp" && ($_POST['potion'] ?? null) != "bhp" && ($_POST['potion'] ?? null) != "mana" && ($_POST['potion'] ?? null) != "energy") {
 		showError("Selecione um tipo de poção para enviar.");
 	}
 
-	$veruser = $db->execute("select `id`, `username`, `serv` from `players` where `username`=?", [$_POST['to']]);
+	$veruser = $db->execute("select `id`, `username`, `serv` from `players` where `username`=?", [$_POST['to'] ?? null]);
 	if ($veruser->recordcount() == 0) {
 		showError("O usuário " . $_POST['to'] . " não existe.");
 	}
 
 	$memberto = $veruser->fetchrow();
-	if ($player->serv != $memberto['serv']) {
+	if ($player->serv != ($memberto['serv'] ?? null)) {
 		showError("Este usuário pertence a outro servidor.");
 	}
 
-	if ($_POST['potion'] == "hp") {
+	if (($_POST['potion'] ?? null) == "hp") {
 		$pid = 136;
 		$tipo = "Health Potion";
-	} elseif ($_POST['potion'] == "bhp") {
+	} elseif (($_POST['potion'] ?? null) == "bhp") {
 		$pid = 148;
 		$tipo = "Big Health Potion";
-	} elseif ($_POST['potion'] == "mana") {
+	} elseif (($_POST['potion'] ?? null) == "mana") {
 		$pid = 150;
 		$tipo = "Mana Potion";
-	} elseif ($_POST['potion'] == "energy") {
+	} elseif (($_POST['potion'] ?? null) == "energy") {
 		$pid = 137;
 		$tipo = "Energy Potion";
 	}
@@ -97,7 +97,7 @@ if (isset($_GET['transpotion']) && isset($_POST['mandap'])) {
 	$query = $db->autoexecute('log_item', $insert, 'INSERT');
 	$logmsg = "O usuário <b>" . $player->username . "</b> lhe enviou <b>" . $quantia . " " . $tipo . "s</b>.";
 	addlog($memberto['id'], $logmsg, $db);
-	$mandapocoes = $db->execute("update `items` set `player_id`=? where `player_id`=? and `item_id`=? and `mark`='f' LIMIT ?", [$memberto['id'], $player->id, $pid, $quantia]);
+	$mandapocoes = $db->execute("update `items` set `player_id`=? where `player_id`=? and `item_id`=? and `mark`='f' LIMIT ?", [$memberto['id'] ?? null, $player->id, $pid, $quantia]);
 	include_once $header;
 	echo "<fieldset><legend><b>Sucesso</b></legend>\n";
 	echo "Você acaba de enviar " . $quantia . " " . $tipo . "s para " . $memberto['username'] . ".<br />";

@@ -9,29 +9,29 @@ $player = check_user($db);
 $query = $db->execute("select * from `reinos` where `id`=?", [$player->reino]);
 $reino = $query->fetchrow();
 
-if ($reino['imperador'] == $player->id) {
-	if ($_POST['submit']) {
+if (($reino['imperador'] ?? null) == $player->id) {
+	if ($_POST['submit'] ?? null) {
 		$query = $db->execute("select `id` from `players` where `id`!=? and `reino`=?", [$player->id, $player->reino]);
-		if ($_POST['work'] == 10 || $_POST['work'] == 15 || $_POST['work'] == 20) {
-			if ($_POST['work'] == 10) {
+		if (($_POST['work'] ?? null) == 10 || ($_POST['work'] ?? null) == 15 || ($_POST['work'] ?? null) == 20) {
+			if (($_POST['work'] ?? null) == 10) {
 				$work = '0.1';
 				$preco = ceil(300 * ($query->recordcount() + 1));
-			} elseif ($_POST['work'] == 15) {
+			} elseif (($_POST['work'] ?? null) == 15) {
 				$work = '0.15';
 				$preco = ceil(400 * ($query->recordcount() + 1));
-			} elseif ($_POST['work'] == 20) {
+			} elseif (($_POST['work'] ?? null) == 20) {
 				$work = '0.2';
 				$preco = ceil(500 * ($query->recordcount() + 1));
 			}
 
-			if ($preco > $reino['ouro']) {
+			if ($preco > ($reino['ouro'] ?? null)) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Seu reino não possui ouro suficiente para esta mudança. <a href=\"reino.php\">Voltar</a>.";
 				include(__DIR__ . "/templates/private_footer.php");
 				exit;
 			}
 
-			if ($reino['worktime'] > time()) {
+			if (($reino['worktime'] ?? null) > time()) {
 				header("Location: reino_work.php?success=false");
 				exit;
 			}
@@ -54,9 +54,9 @@ if ($reino['imperador'] == $player->id) {
 	}
 
 	include(__DIR__ . "/templates/private_header.php");
-	if ($_GET['success'] == 'true') {
+	if (($_GET['success'] ?? null) == 'true') {
 		echo showAlert("Bônus salarial adicionado com sucesso.", "green");
-	} elseif ($_GET['success'] == 'false') {
+	} elseif (($_GET['success'] ?? null) == 'false') {
 		echo showAlert("Um bônus salarial já está ativo.", "red");
 	} else {
 		echo showAlert($reino['ouro'] . " moedas de ouro nos cofres do reino.");
@@ -90,22 +90,22 @@ if ($reino['imperador'] == $player->id) {
 
 	echo "<font size=\"1px\">Você pode usar o dinheiro dos cofres do reino para<br/>aumentar o salário dos trabalhadores do reino por 5 dias.</font>";
 
-	if ($reino['gates'] > time()) {
+	if (($reino['gates'] ?? null) > time()) {
 		echo "<p><b>Bônus saláriais de " . ($reino['work'] * 100) . "% já estão ativos.</b></p>";
 	} else {
 		echo '<p><form method="POST" action="reino_work.php">';
 		echo "<b>Bônus de:</b> ";
 
 		echo '<select name="work">';
-		if ($reino['work'] == '0.1' || $reino['work'] == '0') {
+		if (($reino['work'] ?? null) == '0.1' || ($reino['work'] ?? null) == '0') {
 			echo '<option value="10" selected="selected">10%</option>';
 			echo '<option value="15">15%</option>';
 			echo '<option value="20">20%</option>';
-		} elseif ($reino['work'] == '0.15') {
+		} elseif (($reino['work'] ?? null) == '0.15') {
 			echo '<option value="10">10%</option>';
 			echo '<option value="15" selected="selected">15%</option>';
 			echo '<option value="20">20%</option>';
-		} elseif ($reino['work'] == '0.2') {
+		} elseif (($reino['work'] ?? null) == '0.2') {
 			echo '<option value="10">10%</option>';
 			echo '<option value="15">15%</option>';
 			echo '<option value="20" selected="selected">20%</option>';

@@ -5,7 +5,7 @@ declare(strict_types=1);
 $selectmana = $db->GetOne("select `mana` from `blueprint_magias` where `id`=3");
 $mana = $player->reino == '1' || $player->vip > time() ? $selectmana - 5 : $selectmana;
 
-$log = explode(", ", (string) $_SESSION['battlelog'][0]);
+$log = explode(", ", (string) (($_SESSION['battlelog'] ?? null)[0] ?? null));
 
 $pak0 = random_int(intval($player->mindmg), intval($player->maxdmg));
 $pak1 = random_int(intval($player->mindmg), intval($player->maxdmg));
@@ -14,22 +14,22 @@ $totalpak = ceil($pak0 + $pak1);
 $magiaatual = $db->execute("select `magia`, `turnos` from `bixos` where `player_id`=?", [$player->id]);
 $magiaatual2 = $magiaatual->fetchrow();
 
-if ($magiaatual2['magia'] == 1) {
+if (($magiaatual2['magia'] ?? null) == 1) {
 	$porcento = $totalpak / 100;
 	$porcento = ceil($porcento * 15);
 	$totalpak += $porcento;
-} elseif ($magiaatual2['magia'] == 2) {
+} elseif (($magiaatual2['magia'] ?? null) == 2) {
 	$porcento = $totalpak / 100;
 	$porcento = ceil($porcento * 45);
 	$totalpak += $porcento;
-} elseif ($magiaatual2['magia'] == 12) {
+} elseif (($magiaatual2['magia'] ?? null) == 12) {
 	$porcento = $totalpak / 100;
 	$porcento = ceil($porcento * 35);
 	$totalpak += $porcento;
 }
 
 if ($player->mana < $mana) {
-	if ($log[1] !== "Você tentou lançar um feitiço mas está sem mana suficiente.") {
+	if (($log[1] ?? null) !== "Você tentou lançar um feitiço mas está sem mana suficiente.") {
 		array_unshift($_SESSION['battlelog'], "5, Você tentou lançar um feitiço mas está sem mana suficiente.");
 	}
 

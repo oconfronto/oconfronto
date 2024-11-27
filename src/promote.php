@@ -47,7 +47,7 @@ if ($player->level < 80) {
 }
 
 //aqui possui as ações.
-switch ($_GET['act']) {
+switch ($_GET['act'] ?? null) {
 	case "pay":
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Treinador</b></legend>\n";
@@ -106,7 +106,7 @@ switch ($_GET['act']) {
 			exit;
 		}
 
-		if ($statux['quest_status'] != 1) {
+		if (($statux['quest_status'] ?? null) != 1) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Treinador</b></legend>\n";
 			echo "<i>Um erro desconhecido ocorreu! Contate o administrador.</i><br/><br/>\n";
@@ -153,7 +153,7 @@ switch ($_GET['act']) {
 			exit;
 		}
 
-		if ($statux['quest_status'] != 2) {
+		if (($statux['quest_status'] ?? null) != 2) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Treinador</b></legend>\n";
 			echo "<i>Um erro desconhecido ocorreu! Contate o administrador.</i><br/><br/>\n";
@@ -200,7 +200,7 @@ switch ($_GET['act']) {
 			exit;
 		}
 
-		if ($statux['quest_status'] != 3) {
+		if (($statux['quest_status'] ?? null) != 3) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Treinador</b></legend>\n";
 			echo "<i>Um erro desconhecido ocorreu! Contate o administrador.</i><br/><br/>\n";
@@ -247,7 +247,7 @@ switch ($_GET['act']) {
 			exit;
 		}
 
-		if ($statux['quest_status'] != 4) {
+		if (($statux['quest_status'] ?? null) != 4) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<fieldset><legend><b>Treinador</b></legend>\n";
 			echo "<i>Um erro desconhecido ocorreu! Contate o administrador.</i><br/><br/>\n";
@@ -302,7 +302,7 @@ if ($verificacao->recordcount() == 0) {
 	exit;
 }
 
-if ($quest['quest_status'] == 1) {
+if (($quest['quest_status'] ?? null) == 1) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Treinador</b></legend>\n";
 	echo "<i>Seu primeiro desafio é conseguir um <b>Wind Orb</b>. Você pode obtelo matando Decapitadores ou comprando no mercado.</i><br/><br/>\n";
@@ -312,7 +312,7 @@ if ($quest['quest_status'] == 1) {
 	exit;
 }
 
-if ($quest['quest_status'] == 2) {
+if (($quest['quest_status'] ?? null) == 2) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Treinador</b></legend>\n";
 	echo "<i>Seu segundo desafio é conseguir um <b>Earth Orb</b>. Você pode obtelo matando Guerreiros Zumbi ou comprando no mercado.</i><br/><br/>\n";
@@ -322,7 +322,7 @@ if ($quest['quest_status'] == 2) {
 	exit;
 }
 
-if ($quest['quest_status'] == 3) {
+if (($quest['quest_status'] ?? null) == 3) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Treinador</b></legend>\n";
 	echo "<i>Seu terceiro desafio é conseguir um <b>Water Orb</b>. Você pode obtelo matando Taurens ou comprando no mercado.</i><br/><br/>\n";
@@ -332,7 +332,7 @@ if ($quest['quest_status'] == 3) {
 	exit;
 }
 
-if ($quest['quest_status'] == 4) {
+if (($quest['quest_status'] ?? null) == 4) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Treinador</b></legend>\n";
 	echo "<i>Seu ultimo desafio é conseguir um <b>Fire Orb</b>. Você pode obtelo matando Menderiels ou comprando no mercado.</i><br/><br/>\n";

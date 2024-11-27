@@ -18,7 +18,7 @@ if ($query->recordcount() == 0) {
 
 include(__DIR__ . "/templates/private_header.php");
 
-if ($_GET['act'] == "go") {
+if (($_GET['act'] ?? null) == "go") {
 	$leader = $db->GetOne("select `leader` from `guilds` where `id`=?", [$player->guild]);
 	$vice = $db->GetOne("select `vice` from `guilds` where `id`=?", [$player->guild]);
 

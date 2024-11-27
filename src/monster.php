@@ -27,7 +27,7 @@ include(__DIR__ . "/checkwork.php");
 
 header("Content-Type: text/html; charset=utf-8", true);
 
-if (!isset($_SESSION['battlelog']) || !is_array($_SESSION['battlelog'])) {
+if (!($_SESSION['battlelog'] ?? null) || !is_array($_SESSION['battlelog'])) {
 	$_SESSION['battlelog'] = [];
 }
 
@@ -37,13 +37,13 @@ $fugiu = 0;
 $fastturno = 0;
 $fastmagia = 0;
 
-switch ($_GET['act']) {
+switch ($_GET['act'] ?? null) {
 	case "attack":
 
 		$selectbixo = $db->execute("select * from `bixos` where `player_id`=?", [$player->id]);
 		if ($selectbixo->recordcount() == 0) {
 
-			if (!$_GET['id']) {
+			if (!($_GET['id'] ?? null)) {
 				header("Location: monster.php");
 				break;
 			} else {
@@ -72,7 +72,7 @@ switch ($_GET['act']) {
 						$quest = 1;
 					} else {
 
-						if ($_GET['times']) {
+						if ($_GET['times'] ?? null) {
 							$vezes = floor(intval($_GET['times']));
 							if ($vezes > 1 && $player->energy >= ($vezes * 10)) {
 								$insert['player_id'] = $player->id;
@@ -396,7 +396,7 @@ switch ($_GET['act']) {
 		$verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", [$player->id, time()]);
 		if ($verificpotion->recordcount() > 0) {
 			$selct = $verificpotion->fetchrow();
-			$getpotion = $db->execute("select * from `for_use` where `item_id`=?", [$selct['item_id']]);
+			$getpotion = $db->execute("select * from `for_use` where `item_id`=?", [$selct['item_id'] ?? null]);
 			$potbonus = $getpotion->fetchrow();
 			$player->strength = ceil($player->strength + (($player->strength / 100) * ($potbonus['for'])));
 			$player->vitality = ceil($player->vitality + (($player->vitality / 100) * ($potbonus['vit'])));
@@ -686,17 +686,17 @@ switch ($_GET['act']) {
 				$checktasks = $db->execute("select * from `tasks` where `needlvl`<=? and `obj_type`='monster' and `obj_value`=?", [$player->level, $enemy->id]);
 				if ($checktasks->recordcount() > 0) {
 					while ($task = $checktasks->fetchrow()) {
-						$checkstatus = $db->execute("select * from `completed_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id']]);
+						$checkstatus = $db->execute("select * from `completed_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id'] ?? null]);
 						if ($checkstatus->recordcount() == 0) {
 
-							$addtaskkill = $db->execute("select * from `monster_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id']]);
+							$addtaskkill = $db->execute("select * from `monster_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id'] ?? null]);
 							if ($addtaskkill->recordcount() == 0) {
 								$insert['player_id'] = $player->id;
 								$insert['task_id'] = $task['id'];
 								$insert['value'] = $bixo->mul;
 								$query = $db->autoexecute('monster_tasks', $insert, 'INSERT');
 							} else {
-								$db->execute("update `monster_tasks` set `value`=`value`+? where `player_id`=? and `task_id`=?", [$bixo->mul, $player->id, $task['id']]);
+								$db->execute("update `monster_tasks` set `value`=`value`+? where `player_id`=? and `task_id`=?", [$bixo->mul, $player->id, $task['id'] ?? null]);
 							}
 						}
 					}
@@ -727,13 +727,13 @@ switch ($_GET['act']) {
 				}
 
 				if ($expfull == 1) {
-					$expgroup2 = $db->execute("select * from `groups` where `id`=?", [$goupid['id']]);
+					$expgroup2 = $db->execute("select * from `groups` where `id`=?", [$goupid['id'] ?? null]);
 					$expfull = $expgroup2->recordcount() > 1 ? 1 : 5;
 				}
 
 
 				if ($expfull == 1) {
-					$totalgrupoquery = $db->execute("select * from `groups` where `id`=?", [$goupid['id']]);
+					$totalgrupoquery = $db->execute("select * from `groups` where `id`=?", [$goupid['id'] ?? null]);
 					if ($totalgrupoquery->recordcount() > 0) {
 						while ($gbbbonus = $totalgrupoquery->fetchrow()) {
 							$grupototalbonus += $gbbbonus['kills'] * $bixo->mul;
@@ -760,31 +760,31 @@ switch ($_GET['act']) {
 					$query = $db->execute("update `groups` set `exp`=`exp`+?, `kills`=`kills`+? where `player_id`=?", [$expdomonstro, $bixo->mul, $player->id]);
 					$expdomonstro = ceil($expdomonstro / $expgroup2->recordcount());
 					while ($pexp = $expgroup2->fetchrow()) {
-						$pinfoquery = $db->execute("select * from `players` where `id`=?", [$pexp['player_id']]);
+						$pinfoquery = $db->execute("select * from `players` where `id`=?", [$pexp['player_id'] ?? null]);
 						$pinfo = $pinfoquery->fetchrow();
 
 						if ($expdomonstro + $pinfo['exp'] >= maxExp($pinfo['level'])) //Player gained a level!
 						{
 							$newexp = $expdomonstro + $pinfo['exp'] - maxExp($pinfo['level']);
 
-							$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [maxMana($pinfo['level'], $pinfo['extramana']), maxMana($pinfo['level'], $pinfo['extramana']), $pinfo['id']]);
-							$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", [maxEnergy($pinfo['level'], $pinfo['vip']), $pinfo['id']]);
+							$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [maxMana($pinfo['level'], $pinfo['extramana']), maxMana($pinfo['level'], $pinfo['extramana']), $pinfo['id'] ?? null]);
+							$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", [maxEnergy($pinfo['level'], $pinfo['vip']), $pinfo['id'] ?? null]);
 
 							$svexp = "difficulty_" . $player->serv . "";
 
-							$db->execute("update `players` set `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=?, `maxhp`=?, `exp`=?, `magic_points`=`magic_points`+1, `groupmonsterkilled`=`groupmonsterkilled`+? where `id`=?", [maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), $newexp, $bixo->mul, $pinfo['id']]);
+							$db->execute("update `players` set `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=?, `maxhp`=?, `exp`=?, `magic_points`=`magic_points`+1, `groupmonsterkilled`=`groupmonsterkilled`+? where `id`=?", [maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), $newexp, $bixo->mul, $pinfo['id'] ?? null]);
 
-							if ($pinfo['id'] != $player->id) {
+							if (($pinfo['id'] ?? null) != $player->id) {
 								$logwinlvlmsg = "Você avançou um nível enquanto <a href=\"profile.php?id=" . $player->username . '">' . $player->username . "</a> matava monstros.";
 								addlog($pinfo['id'], $logwinlvlmsg, $db);
 							}
 
-							if ($pinfo['id'] == $player->id) {
+							if (($pinfo['id'] ?? null) == $player->id) {
 								$newlevell = 5;
 							}
 						} else {
 							//Update player
-							$query = $db->execute("update `players` set `exp`=`exp`+?, `groupmonsterkilled`=`groupmonsterkilled`+? where `id`=?", [$expdomonstro, $bixo->mul, $pinfo['id']]);
+							$query = $db->execute("update `players` set `exp`=`exp`+?, `groupmonsterkilled`=`groupmonsterkilled`+? where `id`=?", [$expdomonstro, $bixo->mul, $pinfo['id'] ?? null]);
 						}
 					}
 
@@ -914,7 +914,7 @@ switch ($_GET['act']) {
 			exit;
 		}
 
-		if (!$_GET['nolayout']) {
+		if (!($_GET['nolayout'] ?? null)) {
 			$player = check_user($db);
 			include(__DIR__ . "/templates/private_header.php");
 		}
@@ -940,8 +940,8 @@ switch ($_GET['act']) {
 				$auxiliar = "hora(s)";
 			}
 
-			$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id']]);
-			$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id']]);
+			$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
+			$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
 			$output .= '<div style="background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px"><center><b>' . $potname . ":</b> " . $valortempo . " " . $auxiliar . " restante(s).<br/>" . $potdesc . "</center></div>";
 		}
 
@@ -978,32 +978,32 @@ switch ($_GET['act']) {
 
 			echo "</table>";
 
-			if ($magiaatual2['magia'] != 0) {
-				if ($magiaatual2['magia'] == 1) {
+			if (($magiaatual2['magia'] ?? null) != 0) {
+				if (($magiaatual2['magia'] ?? null) == 1) {
 					echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 					echo "<center>Ataque 15% mais forte por " . $magiaatual2['turnos'] . " turno(s).</center>";
 					echo "</div>";
-				} elseif ($magiaatual2['magia'] == 2) {
+				} elseif (($magiaatual2['magia'] ?? null) == 2) {
 					echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 					echo "<center>Ataque 45% mais forte por " . $magiaatual2['turnos'] . " turno(s).<br/>Resistencia 15% mais baixa por " . $magiaatual2['turnos'] . " turno(s).</center>";
 					echo "</div>";
-				} elseif ($magiaatual2['magia'] == 6 || $magiaatual2['magia'] == 9) {
+				} elseif (($magiaatual2['magia'] ?? null) == 6 || ($magiaatual2['magia'] ?? null) == 9) {
 					echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 					echo "<center>Feitiço de defesa por " . $magiaatual2['turnos'] . " turno(s).</center>";
 					echo "</div>";
-				} elseif ($magiaatual2['magia'] == 7) {
+				} elseif (($magiaatual2['magia'] ?? null) == 7) {
 					echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 					echo "<center>Defesa 20% mais alta por " . $magiaatual2['turnos'] . " turno(s).</center>";
 					echo "</div>";
-				} elseif ($magiaatual2['magia'] == 10) {
+				} elseif (($magiaatual2['magia'] ?? null) == 10) {
 					echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 					echo "<center>Seu escudo místico está ativo por " . $magiaatual2['turnos'] . " turno(s).</center>";
 					echo "</div>";
-				} elseif ($magiaatual2['magia'] == 11) {
+				} elseif (($magiaatual2['magia'] ?? null) == 11) {
 					echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 					echo "<center>O monstro está tonto por " . $magiaatual2['turnos'] . " turno(s).</center>";
 					echo "</div>";
-				} elseif ($magiaatual2['magia'] == 12) {
+				} elseif (($magiaatual2['magia'] ?? null) == 12) {
 					echo '<div style="background-color:#45E61D; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 					echo "<center>Ataque 35% mais forte por " . $magiaatual2['turnos'] . " turno(s).</center>";
 					echo "</div>";
@@ -1021,12 +1021,12 @@ switch ($_GET['act']) {
 			$_SESSION['statuslog'] = $output;
 		}
 
-		echo $_SESSION['statuslog'];
+		echo $_SESSION['statuslog'] ?? null;
 
 		echo '<div id="logdebatalha" class="scroll" style="background-color:#FFFDE0; overflow: auto; height:220px; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 
 		if (is_array($_SESSION['battlelog'])) {
-			foreach ($_SESSION['battlelog'] as $log) {
+			foreach ($_SESSION['battlelog'] ?? null as $log) {
 				if (is_string($log)) {
 					$log_parts = explode(", ", $log);
 					if (count($log_parts) >= 2) {
@@ -1078,7 +1078,7 @@ switch ($_GET['act']) {
 
 				echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_type.php?type=" . $result['magia_id'] . "', 'swap')\">";
 
-				if ($bixo->type != $result['magia_id']) {
+				if ($bixo->type != ($result['magia_id'] ?? null)) {
 					echo '<img src="static/images/magias/black.png" style="border: 0px; padding-top: 3px; padding-left: 5px; position: absolute; z-index: 3;" title="header=[' . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . ']"/>';
 					echo '<img src="static/images/magias/' . $result['magia_id'] . '.png" style="border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;"/>';
 				} else {
@@ -1103,7 +1103,7 @@ switch ($_GET['act']) {
 		}
 
 		echo "</div>";
-		if (!$_GET['nolayout']) {
+		if (!($_GET['nolayout'] ?? null)) {
 			include(__DIR__ . "/templates/private_footer.php");
 		}
 
@@ -1115,7 +1115,7 @@ switch ($_GET['act']) {
 		$tolevel = round($player->level * 1.8);
 		($sql = $db->execute(sprintf("select * from monsters where level>=1 and level<='%s' and evento!='n' and evento!='t' order by level asc", $tolevel))) || die($db->errormsg());
 
-		if (!$_GET['nolayout']) {
+		if (!($_GET['nolayout'] ?? null)) {
 			include(__DIR__ . "/templates/private_header.php");
 		}
 
@@ -1129,7 +1129,7 @@ switch ($_GET['act']) {
 			}
 		}
 
-		if ($_GET['run'] == 'success') {
+		if (($_GET['run'] ?? null) == 'success') {
 			echo showAlert("Você fugiu de sua luta com sucesso!");
 		}
 
@@ -1148,8 +1148,8 @@ switch ($_GET['act']) {
 				$auxiliar = "hora(s)";
 			}
 
-			$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id']]);
-			$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id']]);
+			$potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
+			$potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
 			echo '<div style="background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px"><center><b>' . $potname . ":</b> " . $valortempo . " " . $auxiliar . " restante(s).<br/>" . $potdesc . "</center></div>";
 		}
 
@@ -1245,7 +1245,7 @@ switch ($_GET['act']) {
 		}
 
 		echo "</table>\n";
-		if (!$_GET['nolayout']) {
+		if (!($_GET['nolayout'] ?? null)) {
 			include(__DIR__ . "/templates/private_footer.php");
 		}
 

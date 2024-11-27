@@ -25,7 +25,7 @@ include(__DIR__ . "/templates/private_header.php");
 $price = (500 * $guild['members']);
 
 //Guild Leader Admin check
-if ($player->username != $guild['leader'] && $player->username != $guild['vice']) {
+if ($player->username != ($guild['leader'] ?? null) && $player->username != ($guild['vice'] ?? null)) {
     echo "<p />Você não pode acessar esta página.<p />";
     echo '<a href="home.php">Principal</a><p />';
 } else {
@@ -45,13 +45,13 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
         $auxiliar2 = "dia(s)";
     }
 
-    if ($_POST['submit']) {
+    if ($_POST['submit'] ?? null) {
 
         $arredonda = floor($_POST['days']);
         $maximodedias = ($guild['pagopor'] + ($arredonda * 86400)) - time();
         $price2 = ceil($price * $_POST['days']);
 
-        if (!$_POST['days']) {
+        if (!($_POST['days'] ?? null)) {
             $errmsg .= "Você precisa preencher todos os campos.";
             $error = 1;
         } elseif (!is_numeric($_POST['days'])) {
@@ -60,7 +60,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
         } elseif ($arredonda < 1) {
             $errmsg .= "Este número de dias não é válido.";
             $error = 1;
-        } elseif ($price2 > $guild['gold']) {
+        } elseif ($price2 > ($guild['gold'] ?? null)) {
             $errmsg .= "Seu clã não possui ouro suficiente para pagar por " . $arredonda . " dia(s).";
             $error = 1;
         } elseif ($maximodedias > 5183999) {
@@ -70,7 +70,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 
         if ($error == 0) {
             $tempoadicional = $guild['pagopor'] + ($arredonda * 86400);
-            $query = $db->execute("update `guilds` set `gold`=?, `pagopor`=? where `id`=?", [$guild['gold'] - $price2, $tempoadicional, $guild['id']]);
+            $query = $db->execute("update `guilds` set `gold`=?, `pagopor`=? where `id`=?", [$guild['gold'] - $price2, $tempoadicional, $guild['id'] ?? null]);
             $msg .= "Seu clã acaba de ser pago por mais " . $arredonda . " dia(s).";
         }
     }
@@ -78,7 +78,7 @@ if ($player->username != $guild['leader'] && $player->username != $guild['vice']
 ?>
     <?= $msg ?><font color=red><?= $errmsg ?></font>
     <fieldset>
-        <legend><b><?= $guild['name'] ?> :: Pagar pelo clã</b></legend>
+        <legend><b><?= $guild['name'] ?? null ?> :: Pagar pelo clã</b></legend>
         <form method="POST" action="guild_admin_pay.php">
             <b>Pagar por mais:</b> <input type="text" name="days" size="3" maxlength="3" /> dias.
             <p />

@@ -15,7 +15,7 @@ while ($hours = $counthours->fetchrow()) {
 	$totaltime += $totaltime + $hours['hunttime'];
 }
 
-if ($_GET['act'] == "cancel") {
+if (($_GET['act'] ?? null) == "cancel") {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset>";
 	echo "<legend><b>Caça</b></legend>";
@@ -27,7 +27,7 @@ if ($_GET['act'] == "cancel") {
 }
 
 
-if ($_GET['act'] == "remove") {
+if (($_GET['act'] ?? null) == "remove") {
 	$query = $db->execute("update `hunt` set `status`='a' where `player_id`=? and `status`='t'", [$player->id]);
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset>";
@@ -42,9 +42,9 @@ if ($_GET['act'] == "remove") {
 include(__DIR__ . "/checkwork.php");
 
 
-if (($_POST['cacatime']) && ($_POST['cacastart'])) {
+if (($_POST['cacatime'] ?? null) && ($_POST['cacastart'] ?? null)) {
 
-	if (!is_numeric($_POST['cacatime']) || $_POST['cacatime'] > 12) {
+	if (!is_numeric($_POST['cacatime']) || ($_POST['cacatime'] ?? null) > 12) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset>";
 		echo "<legend><b>Caçar</b></legend>";
@@ -54,7 +54,7 @@ if (($_POST['cacatime']) && ($_POST['cacastart'])) {
 		exit;
 	}
 
-	if ($player->reino != '2' && $player->vip < time() && ($player->level < 40 && $_POST['cacatime'] > 2 || $player->level < 60 && $_POST['cacatime'] > 2.5 || $player->level < 80 && $_POST['cacatime'] > 3 || $player->level < 120 && $_POST['cacatime'] > 3.5 || $player->level < 140 && $_POST['cacatime'] > 4)) {
+	if ($player->reino != '2' && $player->vip < time() && ($player->level < 40 && ($_POST['cacatime'] ?? null) > 2 || $player->level < 60 && ($_POST['cacatime'] ?? null) > 2.5 || $player->level < 80 && ($_POST['cacatime'] ?? null) > 3 || $player->level < 120 && ($_POST['cacatime'] ?? null) > 3.5 || $player->level < 140 && ($_POST['cacatime'] ?? null) > 4)) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset>";
 		echo "<legend><b>Caçar</b></legend>";
@@ -64,7 +64,7 @@ if (($_POST['cacatime']) && ($_POST['cacastart'])) {
 		exit;
 	}
 
-	if (($player->reino == '2' || $player->vip > time()) && ($player->level < 40 && $_POST['cacatime'] > 2.5 || $player->level < 60 && $_POST['cacatime'] > 3 || $player->level < 80 && $_POST['cacatime'] > 3.5 || $player->level < 120 && $_POST['cacatime'] > 4 || $player->level < 140 && $_POST['cacatime'] > 5)) {
+	if (($player->reino == '2' || $player->vip > time()) && ($player->level < 40 && ($_POST['cacatime'] ?? null) > 2.5 || $player->level < 60 && ($_POST['cacatime'] ?? null) > 3 || $player->level < 80 && ($_POST['cacatime'] ?? null) > 3.5 || $player->level < 120 && ($_POST['cacatime'] ?? null) > 4 || $player->level < 140 && ($_POST['cacatime'] ?? null) > 5)) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset>";
 		echo "<legend><b>Caçar</b></legend>";
@@ -107,7 +107,7 @@ if (($_POST['cacatime']) && ($_POST['cacastart'])) {
 
 	$monster = $checkmonster->fetchrow();
 
-	if ($monster['level'] >= $player->level && $monster['level'] != 1) {
+	if (($monster['level'] ?? null) >= $player->level && ($monster['level'] ?? null) != 1) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset>";
 		echo "<legend><b>Caçar</b></legend>";
@@ -154,7 +154,7 @@ echo '<td width="15%"><b>Monstro:</b></td>';
 $query = $db->execute("select `id`, `username` from `monsters` where `level`<=? and `evento`!='n' and `evento`!='t' order by `level` desc limit 1", [$player->level]);
 echo "<td>";
 $result = $query->fetchrow();
-echo $result["username"];
+echo $result["username"] ?? null;
 echo ".</td>";
 
 echo "</tr><tr>";
@@ -252,9 +252,9 @@ if ($query1->recordcount() > 0) {
 			$auxiliar2 = "dia(s) atrás.";
 		}
 
-		$huntmonstername = $db->GetOne("select `username` from `monsters` where `id`=?", [$log1['hunttype']]);
-		$huntmonsterlevel = $db->GetOne("select `level` from `monsters` where `id`=?", [$log1['hunttype']]);
-		$huntmonstermtexp = $db->GetOne("select `mtexp` from `monsters` where `id`=?", [$log1['hunttype']]);
+		$huntmonstername = $db->GetOne("select `username` from `monsters` where `id`=?", [$log1['hunttype'] ?? null]);
+		$huntmonsterlevel = $db->GetOne("select `level` from `monsters` where `id`=?", [$log1['hunttype'] ?? null]);
+		$huntmonstermtexp = $db->GetOne("select `mtexp` from `monsters` where `id`=?", [$log1['hunttype'] ?? null]);
 
 
 		$expwin1 = $huntmonsterlevel * 6;
@@ -270,7 +270,7 @@ if ($query1->recordcount() > 0) {
 		$huntgold = ceil(($goldwin * 7) * $log1['hunttime']);
 
 		echo "<tr>";
-		if ($log1['status'] == 'a') {
+		if (($log1['status'] ?? null) == 'a') {
 			echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">Você começou a caçar " . $huntmonstername . " mas abandonou sua caça.</font></div></td>";
 		} else {
 			echo "<td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\"><div title=\"header=[" . $valortempo2 . " " . $auxiliar2 . "] body=[]\"><font size=\"1\">Você caçou " . $huntmonstername . " por " . $log1['hunttime'] . " horas e ganhou " . ((($huntmonstermtexp) * 20) * $log1['hunttime']) . " pontos de esperiência e " . $huntgold . " moedas de ouro.</font></div></td>";

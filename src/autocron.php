@@ -33,7 +33,7 @@ if ($diff >= 60) {
 
 $diff = ($now - $cron['interest_last']);
 
-if ($diff >= $cron['interest_time']) {
+if ($diff >= ($cron['interest_time'] ?? null)) {
 	$db->execute("update `players` set `died`=0");
 	$db->execute("update `players` set `bank`=`bank`+(`bank` / 100)* ? where `bank`+`gold` < ?", [$setting->bank_interest_rate, $setting->bank_limit]);
 	$db->execute("update `players` set `alerts`=`alerts`-1 where `alerts`>0 and `alerts`<999");
@@ -43,7 +43,7 @@ if ($diff >= $cron['interest_time']) {
 
 	$friendlogs = $db->execute("select `username`, `level`, `last_level` from `players` where `level`>`last_level`");
 	while ($flog = $friendlogs->fetchrow()) {
-		$db->execute("update `players` set `last_level`=`level` where `username`=?", [$flog['username']]);
+		$db->execute("update `players` set `last_level`=`level` where `username`=?", [$flog['username'] ?? null]);
 
 		$upo = ceil($flog['level'] - $flog['last_level']);
 		$plural = $upo == 1 ? "nível" : "níveis";
@@ -58,7 +58,7 @@ if ($diff >= $cron['interest_time']) {
 	$db->execute("update `settings` set `value`=0 where `name`='wanteds'");
 }
 
-$diff = isset($cron['tuesday_next']) ? ($now - $cron['tuesday_next']) : 0;
+$diff = $cron['tuesday_next'] ?? null ? ($now - $cron['tuesday_next']) : 0;
 if ($diff >= 0 && $setting->lottery_1 == 'f') {
 	$next = strtotime("next Tuesday");
 	$db->execute("update `cron` set `value`=? where `name`=?", [$next, "tuesday_next"]);
@@ -72,19 +72,19 @@ if ($diff >= 0 && $setting->lottery_1 == 'f') {
 	$win = $win[random_int(0, (count($win) - 1))];
 	$win = explode("-", $win);
 
-	while ($setting->win_id_1 == $win[0]) {
+	while ($setting->win_id_1 == ($win[0] ?? null)) {
 		$win = ["140-2500", "132-2500", "5000000-500", "173-2000", "175-2500", "172-2000", "174-1500"];
 		$win = $win[random_int(0, (count($win) - 1))];
 		$win = explode("-", $win);
 	}
 
 	$db->execute("update `settings` set `value`=? where `name`=?", [$lottotime, "end_lotto_1"]);
-	$db->execute("update `settings` set `value`=? where `name`=?", [$win[0], "win_id_1"]);
-	$db->execute("update `settings` set `value`=? where `name`=?", [$win[1], "lottery_price_1"]);
+	$db->execute("update `settings` set `value`=? where `name`=?", [$win[0] ?? null, "win_id_1"]);
+	$db->execute("update `settings` set `value`=? where `name`=?", [$win[1] ?? null, "lottery_price_1"]);
 	$db->execute("update `settings` set `value`=? where `name`=?", ["t", "lottery_1"]);
 }
 
-$diff = isset($cron['friday_next']) ? ($now - $cron['friday_next']) : 0;
+$diff = $cron['friday_next'] ?? null ? ($now - $cron['friday_next']) : 0;
 if ($diff >= 0) {
 	$next = strtotime("next Friday");
 	$db->execute("update `cron` set `value`=? where `name`=?", [$next, "friday_next"]);
@@ -114,8 +114,8 @@ if ($diff >= 0) {
 	$db->execute("update `settings` set `value`=? where `name`=?", [$tourtime, "end_tour_5_2"]);
 }
 
-$diff = isset($cron['oneweek_last']) ? ($now - $cron['oneweek_last']) : 0;
-if (isset($cron['oneweek_time']) && $diff >= $cron['oneweek_time']) {
+$diff = $cron['oneweek_last'] ?? null ? ($now - $cron['oneweek_last']) : 0;
+if (($cron['oneweek_time'] ?? null) && $diff >= ($cron['oneweek_time'] ?? null)) {
 	$db->execute("update `players` set `totalbet`=0");
 	$db->execute("update `cron` set `value`=? where `name`=?", [$now, "oneweek_last"]);
 }
@@ -142,33 +142,33 @@ $db->execute('DELETE FROM `account_log` WHERE `time` < ' . $duassemana);
 $updategeralwork = $db->execute("SELECT * FROM `work` WHERE `status`='t' AND (`start`+(`worktime`*3600)) < ?", [time()]);
 
 while ($newwork = $updategeralwork->fetchrow()) {
-	$db->execute("update `work` set `status`='f' where `id`=?", [$newwork['id']]);
-	$db->execute("update `players` set `gold`=`gold`+?, `energy`=`energy`/? where `id`=?", [($newwork['gold'] * $newwork['worktime']), $newwork['worktime'], $newwork['player_id']]);
+	$db->execute("update `work` set `status`='f' where `id`=?", [$newwork['id'] ?? null]);
+	$db->execute("update `players` set `gold`=`gold`+?, `energy`=`energy`/? where `id`=?", [($newwork['gold'] * $newwork['worktime']), $newwork['worktime'] ?? null, $newwork['player_id'] ?? null]);
 	$worklog = "Seu trabalho como " . $newwork['worktype'] . " terminou! Você recebeu <b>" . ($newwork['gold'] * $newwork['worktime']) . " moedas de ouro</b>.";
 	addlog($newwork['player_id'], $worklog, $db);
 }
 
 $updategeralhunt = $db->execute("select * from `hunt` where `status`='t' and (`start`+(`hunttime`*3600))<?", [time()]);
 while ($newhunt = $updategeralhunt->fetchrow()) {
-	$db->execute("update `hunt` set `status`='f' where `id`=?", [$newhunt['id']]);
+	$db->execute("update `hunt` set `status`='f' where `id`=?", [$newhunt['id'] ?? null]);
 
-	$automlevel = $db->GetOne("select `level` from `monsters` where `id`=?", [$newhunt['hunttype']]);
-	$automname = $db->GetOne("select `username` from `monsters` where `id`=?", [$newhunt['hunttype']]);
+	$automlevel = $db->GetOne("select `level` from `monsters` where `id`=?", [$newhunt['hunttype'] ?? null]);
+	$automname = $db->GetOne("select `username` from `monsters` where `id`=?", [$newhunt['hunttype'] ?? null]);
 
 	//Seleciona o nível do player.
-	$autoplevel = $db->GetOne("select `level` from `players` where `id`=?", [$newhunt['player_id']]);
+	$autoplevel = $db->GetOne("select `level` from `players` where `id`=?", [$newhunt['player_id'] ?? null]);
 
 	//Seleciona a experiência atual do player
-	$autopexp = $db->GetOne("select `exp` from `players` where `id`=?", [$newhunt['player_id']]);
+	$autopexp = $db->GetOne("select `exp` from `players` where `id`=?", [$newhunt['player_id'] ?? null]);
 
 	//QUANTIDADE DE EXP QUE DEVE SER ADICIONADA AO PLAYER
-	$autommtexp = $db->GetOne("select `mtexp` from `monsters` where `id`=?", [$newhunt['hunttype']]);
+	$autommtexp = $db->GetOne("select `mtexp` from `monsters` where `id`=?", [$newhunt['hunttype'] ?? null]);
 	$expdomonstro = ceil((($autommtexp) * 20) * $newhunt['hunttime']);
 
 	while ($expdomonstro + $autopexp >= maxExp($autoplevel)) {
 
 		//Atualiza player...
-		$query = $db->execute("update `players` set `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=`maxhp`+30, `maxhp`=`maxhp`+30, `exp`=0, `magic_points`=`magic_points`+1, `monsterkilled`=`monsterkilled`+20 where `id`=?", [$newhunt['player_id']]);
+		$query = $db->execute("update `players` set `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=`maxhp`+30, `maxhp`=`maxhp`+30, `exp`=0, `magic_points`=`magic_points`+1, `monsterkilled`=`monsterkilled`+20 where `id`=?", [$newhunt['player_id'] ?? null]);
 
 		//atualiza variaveis
 		$usedexp = maxExp($autoplevel) - $autopexp;
@@ -178,19 +178,19 @@ while ($newhunt = $updategeralhunt->fetchrow()) {
 		$autoplevel += 1;
 	}
 
-	$db->execute("update `players` set `exp`=`exp`+? where `id`=?", [$expdomonstro, $newhunt['player_id']]);
+	$db->execute("update `players` set `exp`=`exp`+? where `id`=?", [$expdomonstro, $newhunt['player_id'] ?? null]);
 
-	$autopextramp = $db->GetOne("select `extramana` from `players` where `id`=?", [$newhunt['player_id']]);
+	$autopextramp = $db->GetOne("select `extramana` from `players` where `id`=?", [$newhunt['player_id'] ?? null]);
 
 	$dividecinco = ($autoplevel / 5);
 	$dividecinco = floor($dividecinco);
 	$ganha = 100 + ($dividecinco * 15) + $autopextramp;
-	$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [$ganha, $ganha, $newhunt['player_id']]);
+	$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [$ganha, $ganha, $newhunt['player_id'] ?? null]);
 
 	$fdividevinte = ($autoplevel / 20);
 	$fdividevinte = floor($fdividevinte);
 	$fganha = 100 + ($fdividevinte * 10);
-	$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", [$fganha, $newhunt['player_id']]);
+	$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", [$fganha, $newhunt['player_id'] ?? null]);
 
 
 	$expwin1 = $automlevel * 6;
@@ -206,7 +206,7 @@ while ($newhunt = $updategeralhunt->fetchrow()) {
 	$autohuntgold = ceil(($goldwin * 7) * $newhunt['hunttime']);
 
 
-	$db->execute("update `players` set `gold`=`gold`+?, `energy`=`energy`/?, `hp`=`hp`/? where `id`=?", [$autohuntgold, ceil(($newhunt['hunttime'] + 1) * 1.2), ceil(($newhunt['hunttime'] + 2) / 2.5), $newhunt['player_id']]);
+	$db->execute("update `players` set `gold`=`gold`+?, `energy`=`energy`/?, `hp`=`hp`/? where `id`=?", [$autohuntgold, ceil(($newhunt['hunttime'] + 1) * 1.2), ceil(($newhunt['hunttime'] + 2) / 2.5), $newhunt['player_id'] ?? null]);
 
 	$huntlog = "Sua caça(" . $automname . ") terminou! Você recebeu <b>" . ceil((($autommtexp) * 20) * $newhunt['hunttime']) . " pontos de experiência</b> e <b>" . $autohuntgold . " moedas de ouro</b>.";
 	addlog($newhunt['player_id'], $huntlog, $db);
