@@ -7,10 +7,6 @@ $parts = explode('/', (string) $currentfile);
 $currentfile = $parts[count($parts) - 1];
 
 $userAgent = $_SERVER['HTTP_USER_AGENT'];
-function isMobile($userAgent): int|false
-{
-    return preg_match('/Mobile|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/', (string) $userAgent);
-}
 
 $tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=90 and `player_id`=?", [$player->id]);
 if ($tutorial->recordcount() == 0) {

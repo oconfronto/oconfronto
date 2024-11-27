@@ -108,10 +108,6 @@ if (($get['pending_status'] ?? null) == 3) {
 
 if (($get['pending_status'] ?? null) == 4) {
     $userAgent = ${$_SERVER}['HTTP_USER_AGENT'];
-    function isMobile($userAgent): int|false
-    {
-        return preg_match('/Mobile|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/', (string) $userAgent);
-    }
 
     if (isMobile($userAgent)) {
         header("Location: inventory_mobile.php");

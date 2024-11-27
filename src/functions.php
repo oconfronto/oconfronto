@@ -517,3 +517,8 @@ function getAvatarPath($avatar)
 {
     return ($avatar == "anonimo.gif") ? "static/" . $avatar : $avatar;
 }
+
+function isMobile($userAgent): int|false
+{
+    return preg_match('/Mobile|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/', (string) $userAgent);
+}
