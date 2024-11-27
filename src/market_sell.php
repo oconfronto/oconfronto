@@ -356,7 +356,7 @@ switch ($_GET['act'] ?? null) {
 			$bonus05 = ($gettheitemuniqiditem['res'] ?? null) > 0 ? ' <font color="red">+' . $gettheitemuniqiditem['res'] . "R</font>" : "";
 
 			echo '<tr class="row' . $bool . "\">
-				<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><img src=\"static/images/itens/{$gettheitemuniqiditem['img'] ?? null}\" alt=\"{$gettheitemuniqiditem['name'] ?? null}\"></td>
+				<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><img src=\"static/images/itens/{$gettheitemuniqiditem['img']}\" alt=\"{$gettheitemuniqiditem['name']}\"></td>
 				<td style='text-align: center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'>" . $gettheitemuniqiditem['name'] . "" . $bonus01 . "" . $bonus02 . "" . $bonus03 . "" . $bonus04 . "" . $bonus05 . "</td>
 				<td style='text-align:center;padding:10px;border:1px solid #B9892F;vertical-align: middle;'><a href=\"market_sell.php?act=sell&item=" . $gettheitemuniqiditem['id'] . '">Vender</a></td></tr>';
 

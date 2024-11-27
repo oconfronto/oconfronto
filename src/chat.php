@@ -51,8 +51,8 @@ function chatHeartbeat(): void
 		$items .= <<<EOD
 					   {
 			"s": "0",
-			"f": "{$chat['from'] ?? null}",
-			"m": "{$chat['message'] ?? null}"
+			"f": "{$chat['from']}",
+			"m": "{$chat['message']}"
 	   },
 EOD;
 
@@ -63,8 +63,8 @@ EOD;
 		($_SESSION['chatHistory'] ?? null)[$chat['from'] ?? null] .= <<<EOD
 						   {
 			"s": "0",
-			"f": "{$chat['from'] ?? null}",
-			"m": "{$chat['message'] ?? null}"
+			"f": "{$chat['from']}",
+			"m": "{$chat['message']}"
 	   },
 EOD;
 
