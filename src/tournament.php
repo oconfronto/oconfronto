@@ -250,7 +250,7 @@ if ($setting->$unc1 == "y") {
 			} elseif ($member['hp'] < 1 && $member['killed'] == 0) {
 				echo '<td><b>Status:</b> <font color="red">Eliminado</font><td>';
 			} else {
-				echo "<td><b>Opções:</b> <a href=\"mail.php?act=compose&amp;to=" . $member['username'] . '">Mensagem</a> | <a href="battle.php?act=attack&amp;username=' . $member['username'] . '">Lutar</a><td>";
+				echo "<td><b>Opções:</b> <a href=\"mail.php?act=compose&amp;to=" . $member['username'] . '">Mensagem</a> | <a href="battle.php?act=attack&amp;username=' . $member['username'] . '">Lutar</a><td>"';
 			}
 
 			echo "</tr>";

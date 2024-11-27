@@ -10,7 +10,10 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Oconfronto\\Oconfronto\\": "src/"
+            "App\\": "src/"
         }
+    },
+    "require-dev": {
+        "rector/rector": "0.17.13"
     }
 }
