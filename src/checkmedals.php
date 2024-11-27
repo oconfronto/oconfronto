@@ -266,16 +266,16 @@ if ($medalha->recordcount() < 1) {
     if ($age >= 90) {
         $insert['player_id'] = $player->id;
         $insert['medalha'] = "Veterano";
-        $insert['motivo'] = "Jogador é mais de 3 meses.";
+        $insert['motivo'] = "Jogador há mais de 3 meses.";
         $insert['type'] = '1';
         $query = $db->autoexecute('medalhas', $insert, 'INSERT');
 
         $insert['fname'] = $player->username;
-        $insert['log'] = '<a href="profile.php?id=' . $player->username . '">' . $player->username . "</a> ganhou uma medalha por jogar a mais de 3 meses.";
+        $insert['log'] = '<a href="profile.php?id=' . $player->username . '">' . $player->username . "</a> ganhou uma medalha por jogar há mais de 3 meses.";
         $insert['time'] = time();
         $query = $db->autoexecute('log_friends', $insert, 'INSERT');
 
-        echo "Parabéns, você já é jogador a mais de 3 meses.<br/>";
+        echo "Parabéns, você já é jogador há mais de 3 meses.<br/>";
         echo 'Uma medalha de bronze foi adicionada ao seu perfil por este motivo.<br/><a href="home.php">Voltar</a>.';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
@@ -291,16 +291,16 @@ if ($medalha->recordcount() < 1) {
     if ($age >= 180) {
         $insert['player_id'] = $player->id;
         $insert['medalha'] = "Veterano";
-        $insert['motivo'] = "Jogador é mais de 6 meses.";
+        $insert['motivo'] = "Jogador há mais de 6 meses.";
         $insert['type'] = '2';
         $query = $db->autoexecute('medalhas', $insert, 'INSERT');
 
         $insert['fname'] = $player->username;
-        $insert['log'] = '<a href="profile.php?id=' . $player->username . '">' . $player->username . "</a> ganhou uma medalha por jogar a mais de 6 meses.";
+        $insert['log'] = '<a href="profile.php?id=' . $player->username . '">' . $player->username . "</a> ganhou uma medalha por jogar há mais de 6 meses.";
         $insert['time'] = time();
         $query = $db->autoexecute('log_friends', $insert, 'INSERT');
 
-        echo "Parabéns, você já é jogador a mais de 6 meses.<br/>";
+        echo "Parabéns, você já é jogador há mais de 6 meses.<br/>";
         echo 'Uma medalha de prata foi adicionada ao seu perfil por este motivo.<br/><a href="home.php">Voltar</a>.';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
@@ -316,16 +316,16 @@ if ($medalha->recordcount() < 1) {
     if ($age >= 365) {
         $insert['player_id'] = $player->id;
         $insert['medalha'] = "Veterano";
-        $insert['motivo'] = "Jogador é mais de 1 ano.";
+        $insert['motivo'] = "Jogador há mais de 1 ano.";
         $insert['type'] = '3';
         $query = $db->autoexecute('medalhas', $insert, 'INSERT');
 
         $insert['fname'] = $player->username;
-        $insert['log'] = '<a href="profile.php?id=' . $player->username . '">' . $player->username . "</a> ganhou uma medalha por jogar a mais de 1 ano.";
+        $insert['log'] = '<a href="profile.php?id=' . $player->username . '">' . $player->username . "</a> ganhou uma medalha por jogar há mais de 1 ano.";
         $insert['time'] = time();
         $query = $db->autoexecute('log_friends', $insert, 'INSERT');
 
-        echo "Parabéns, você já é jogador a mais de 1 ano.<br/>";
+        echo "Parabéns, você já é jogador há mais de 1 ano.<br/>";
         echo 'Uma medalha de ouro foi adicionada ao seu perfil por este motivo.<br/><a href="home.php">Voltar</a>.';
         include(__DIR__ . "/templates/private_footer.php");
         exit;
