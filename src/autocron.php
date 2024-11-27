@@ -65,16 +65,16 @@ if ($diff >= 0 && $setting->lottery_1 == 'f') {
 
 	$day = random_int(2, 3);
 	$hour = ["10:00:00", "12:00:00", "14:00:00", "16:00:00", "18:00:00", "20:00:00"];
-	$hour = $hour[random_int(0, (count($hour) - 1))];
+	$hour = $hour[random_int(0, count($hour) - 1)];
 	$lottotime = strtotime("+" . $day . " day " . $hour . "");
 
 	$win = ["140-2500", "132-2500", "5000000-500", "173-2000", "175-2500", "172-2000", "174-1500"];
-	$win = $win[random_int(0, (count($win) - 1))];
+	$win = $win[random_int(0, count($win) - 1)];
 	$win = explode("-", $win);
 
 	while ($setting->win_id_1 == ($win[0] ?? null)) {
 		$win = ["140-2500", "132-2500", "5000000-500", "173-2000", "175-2500", "172-2000", "174-1500"];
-		$win = $win[random_int(0, (count($win) - 1))];
+		$win = $win[random_int(0, count($win) - 1)];
 		$win = explode("-", $win);
 	}
 
@@ -91,13 +91,13 @@ if ($diff >= 0) {
 
 	$day = random_int(1, 2);
 	$hour = ["14:00:00", "16:00:00", "18:00:00", "20:00:00"];
-	$hour = $hour[random_int(0, (count($hour) - 1))];
+	$hour = $hour[random_int(0, count($hour) - 1)];
 	$tourtime = strtotime("+" . $day . " day " . $hour . "");
 
 	while ($setting->end_tour_1_1 == $tourtime) {
 		$day = random_int(1, 2);
 		$hour = ["14:00:00", "16:00:00", "18:00:00", "20:00:00"];
-		$hour = $hour[random_int(0, (count($hour) - 1))];
+		$hour = $hour[random_int(0, count($hour) - 1)];
 		$tourtime = strtotime("+" . $day . " day " . $hour . "");
 	}
 
@@ -197,7 +197,7 @@ while ($newhunt = $updategeralhunt->fetchrow()) {
 	$expwin2 = (($autoplevel - $automlevel) > 0) ? $expwin1 - (($autoplevel - $automlevel) * 3) : $expwin1 + (($autoplevel - $automlevel) * 3);
 	$expwin2 = ($expwin2 <= 0) ? 1 : $expwin2;
 	$expwin3 = round(0.5 * $expwin2);
-	$expwin = random_int(intval($expwin3), intval($expwin2));
+	$expwin = random_int(min(intval($expwin3), intval($expwin2)), max(intval($expwin3), intval($expwin2)));
 	$goldwin = round(0.9 * $expwin);
 	if ($setting->eventoouro > time()) {
 		$goldwin = round($goldwin * 2);

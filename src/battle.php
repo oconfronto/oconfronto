@@ -559,7 +559,10 @@ switch ($_GET['act'] ?? null) {
 				if ($misschance <= $attacking->miss) {
 					$output .= $attacking->username . " tentou atacar " . $defending->username . " mas errou!<br />";
 				} else {
-					$damage = random_int(intval($attacking->mindmg), intval($attacking->maxdmg)); //Calculate random damage				
+					// Calculate random damage
+					$min = min(intval($attacking->mindmg), intval($attacking->maxdmg));
+					$max = max(intval($attacking->mindmg), intval($attacking->maxdmg));
+					$damage = random_int($min, $max);
 					$defending->hp -= $damage;
 					$output .= ($player->username == $defending->username) ? '<font color="red">' : '<font color="green">';
 					$output .= $attacking->username . " atacou " . $defending->username . " e tirou " . $damage . " de vida! (";
@@ -587,7 +590,10 @@ switch ($_GET['act'] ?? null) {
 				if ($misschance <= $defending->miss) {
 					$output .= $defending->username . " tentou atacar " . $attacking->username . " mas errou!<br />";
 				} else {
-					$damage = random_int(intval($defending->mindmg), intval($defending->maxdmg)); //Calculate random damage
+					// Calculate random damage for defending
+					$min = min(intval($defending->mindmg), intval($defending->maxdmg));
+					$max = max(intval($defending->mindmg), intval($defending->maxdmg));
+					$damage = random_int($min, $max);
 					$attacking->hp -= $damage;
 					$output .= ($player->username == $defending->username) ? '<font color="green">' : '<font color="red">';
 					$output .= $defending->username . " atacou " . $attacking->username . " e tirou " . $damage . " de vida! (";
@@ -620,7 +626,7 @@ switch ($_GET['act'] ?? null) {
 			$exploss2 = (($player->level - $enemy->level) > 0) ? ($enemy->level - $player->level) * 4 : 0;
 			$exploss = $exploss1 + $exploss2;
 			$goldloss = intval(0.35 * $player->gold);
-			$goldloss = intval(random_int(1, $goldloss));
+			$goldloss = random_int(1, max(1, $goldloss));
 			if ($goldloss < 1) {
 				$goldloss = 0;
 			}
@@ -674,9 +680,9 @@ switch ($_GET['act'] ?? null) {
 			$expwin2 = (($player->level - $enemy->level) > 0) ? $expwin1 - (($player->level - $enemy->level) * 3) : $expwin1 + (($player->level - $enemy->level) * 3);
 			$expwin2 = ($expwin2 <= 0) ? 1 : $expwin2;
 			$expwin3 = round(0.9 * $expwin2);
-			$expwin = ceil(random_int(intval($expwin3), intval($expwin2)));
+			$expwin = ceil(random_int(min(intval($expwin3), intval($expwin2)), max(intval($expwin3), intval($expwin2))));
 			$goldwin = ceil(0.35 * $enemy->gold);
-			$goldwin = random_int(1, intval($goldwin));
+			$goldwin = random_int(1, max(1, intval($goldwin)));
 			if ($goldwin < 1) {
 				$goldwin = 0;
 			}

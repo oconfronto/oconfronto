@@ -262,7 +262,11 @@ while ($enemy->hp > 0 && $player->hp > 0 && $battlerounds > 0) {
 		if ($misschance <= $attacking->miss) {
 			$output .= $attacking->username . " tentou atacar " . $defending->username . " mas errou!<br />";
 		} else {
-			$damage = random_int(intval($attacking->mindmg), intval($attacking->maxdmg)); //Calculate random damage				
+			// Calculate damage for attacking
+			$min_dmg = min(intval($attacking->mindmg), intval($attacking->maxdmg));
+			$max_dmg = max(intval($attacking->mindmg), intval($attacking->maxdmg));
+			$damage = random_int($min_dmg, $max_dmg);
+
 			$defending->hp -= $damage;
 			$output .= ($player->username == $defending->username) ? '<font color="red">' : '<font color="green">';
 			$output .= $attacking->username . " atacou " . $defending->username . " e tirou <b>" . $damage . "</b> de vida! (";
@@ -290,7 +294,11 @@ while ($enemy->hp > 0 && $player->hp > 0 && $battlerounds > 0) {
 		if ($misschance <= $defending->miss) {
 			$output .= $defending->username . " tentou atacar " . $attacking->username . " mas errou!<br />";
 		} else {
-			$damage = random_int(intval($defending->mindmg), intval($defending->maxdmg)); //Calculate random damage
+			// Calculate damage for defending
+			$min_def = min(intval($defending->mindmg), intval($defending->maxdmg));
+			$max_def = max(intval($defending->mindmg), intval($defending->maxdmg));
+			$damage = random_int($min_def, $max_def);
+
 			$attacking->hp -= $damage;
 			$output .= ($player->username == $defending->username) ? '<font color="green">' : '<font color="red">';
 			$output .= $defending->username . " atacou " . $attacking->username . " e tirou <b>" . $damage . "</b> de vida! (";
@@ -337,7 +345,7 @@ if ($player->hp <= 0) {
 	$expwin2 = (($player->level - $enemy->level) > 0) ? $expwin1 - (($player->level - $enemy->level) * 3) : $expwin1 + (($player->level - $enemy->level) * 3);
 	$expwin2 = ($expwin2 <= 0) ? 1 : $expwin2;
 	$expwin3 = round(0.5 * $expwin2);
-	$expwin = ceil(random_int(intval($expwin3), intval($expwin2)));
+	$expwin = ceil(random_int(min(intval($expwin3), intval($expwin2)), max(intval($expwin3), intval($expwin2))));
 	$goldwin = round(0.8 * $expwin);
 	$goldwin = round($goldwin * 1.35);
 	if ($setting->eventoouro > time()) {

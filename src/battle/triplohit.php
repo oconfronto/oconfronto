@@ -7,8 +7,10 @@ $mana = $player->reino == '1' || $player->vip > time() ? $selectmana - 5 : $sele
 
 $log = explode(", ", (string) (($_SESSION['battlelog'] ?? null)[0] ?? null));
 
-$pak0 = random_int(intval($player->mindmg), intval($player->maxdmg));
-$pak1 = random_int(intval($player->mindmg), intval($player->maxdmg));
+$min = min(intval($player->mindmg), intval($player->maxdmg));
+$max = max(intval($player->mindmg), intval($player->maxdmg));
+$pak0 = random_int($min, $max);
+$pak1 = random_int($min, $max);
 $totalpak = ceil($pak0 + $pak1);
 
 $magiaatual = $db->execute("select `magia`, `turnos` from `bixos` where `player_id`=?", [$player->id]);

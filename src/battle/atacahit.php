@@ -6,7 +6,9 @@ $misschance = intval(random_int(0, 100));
 if ($misschance <= $player->miss) {
 	array_unshift($_SESSION['battlelog'], "5, Você tentou atacar " . $enemy->prepo . " " . $enemy->username . " mas errou!");
 } else {
-	$totalpak = random_int(intval($player->mindmg), intval($player->maxdmg));
+	$min = min(intval($player->mindmg), intval($player->maxdmg));
+	$max = max(intval($player->mindmg), intval($player->maxdmg));
+	$totalpak = random_int($min, $max);
 
 	$magiaatual = $db->execute("select `magia`, `turnos` from `bixos` where `player_id`=?", [$player->id]);
 	$magiaatual2 = $magiaatual->fetchrow();
