@@ -449,7 +449,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                             </li>
                             <li><a href='#'><span><b>Comunidade</b></span></a>
                                 <ul>
-                                    <li><a href="online.php">Chat</a></li>
+                                    <li><a href="https://discord.gg/rwuy3npeum" target="_blank">Discord</a></li>
                                     <li><a href="guild_listing.php">Clãs</a></li>
                                     <li><a href="members.php">Ranking</a></li>
                                     <li><a href="mail.php">Mensagens (<?php echo $mailcount->recordcount(); ?>)</a></li>
