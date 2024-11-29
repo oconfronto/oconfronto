@@ -22,6 +22,9 @@ if (($quest['quest_status'] ?? null) != 2 && ($quest['quest_status'] ?? null) !=
 	header("Location: home.php");
 }
 
+// Initialize enemy object before using it
+$enemy = new stdClass();
+
 if (($quest['quest_status'] ?? null) == 2) {
 	$questnivel = 1;
 	if ($player->voc == 'knight') {
