@@ -410,7 +410,7 @@ INSERT INTO `blueprint_items` (`id`, `name`, `description`, `type`, `effectivene
 (238, 'Anel de Selo do Vampiro', 'Um anel sombrio, adornado com uma gema vermelha, que concede ao portador habilidades de manipulação da sombra e a capacidade de drenar vitalidade de seus inimigos.', 'ring', 0, 10000000, 'Vampires_Signet_Ring.gif', 0, 700, 't', 'f', 't'),
 (239, 'Anel do Chifre', 'Um anel rústico, esculpido a partir de chifres antigos, que confere ao portador força e resistência sobrenaturais em combate.', 'ring', 0, 10000000, 'Horn_Ring.gif', 0, 800, 't', 'f', 't'),
 (240, 'Anel da Irritação', 'Um anel peculiar que emana energia mágica, capaz de criar proteções temporárias ao redor do portador, repelindo ataques mágicos e físicos.', 'ring', 0, 10000000, 'Enchanted_Blister_Ring.gif', 0, 900, 't', 'f', 't'),
-(241, 'Manto das Almas', 'Armadura etérea que protege contra ataques espirituais e potencia habilidades mágicas.', 'armor', 96, 21000000, 'Soulmantle.gif', 0, 195, 't', 'f', 't');
+(241, 'Manto das Almas', 'Armadura etérea que protege contra ataques espirituais e potencia habilidades mágicas.', 'armor', 96, 2100000, 'Soulmantle.gif', 0, 195, 't', 'f', 't');
 
 -- --------------------------------------------------------
 
