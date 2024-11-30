@@ -142,7 +142,7 @@ if ($query->recordcount() > 0) {
 		echo '<tr class="row' . $bool . "\">\n";
 
 		echo '<td height="64px"><div style="position: relative;">';
-		echo '<img src="' . $member['avatar'] . '" width="64px" height="64px" style="position: absolute; top: 1; left: 1;" alt="' . $member['username'] . '" border="0">';
+		echo '<img src="' . ($member['avatar'] == "anonimo.gif" ? "static/" . $member['avatar'] : $member['avatar']) . '" width="64px" height="64px" style="position: absolute; top: 1; left: 1;" alt="' . $member['username'] . '" border="0">';
 
 		$checkranknosite = $db->execute("select `time` from `user_online` where `player_id`=?", [$member['id'] ?? null]);
 		if ($checkranknosite->recordcount() > 0) {
