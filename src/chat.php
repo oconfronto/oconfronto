@@ -30,10 +30,9 @@ if (!($_SESSION['openChatBoxes'] ?? null)) {
 
 function chatHeartbeat(): void
 {
-
 	include(__DIR__ . "/lib.php");
 	$player = check_user($db);
-
+	
 	$sql = "select * from chat where (chat.to = '" . str_replace(" ", "_", $player->username) . "' AND recd = 0) order by id ASC";
 	$query = $db->execute($sql);
 	$items = '';
@@ -41,31 +40,30 @@ function chatHeartbeat(): void
 	$chatBoxes = [];
 
 	while ($chat = $query->fetchrow()) {
+		if (!isset($_SESSION['chatHistory'][$chat['from']])) {
+			$_SESSION['chatHistory'][$chat['from']] = '';
+		}
 
-		if (!($_SESSION['openChatBoxes'][$chat['from']] ?? null) && ($_SESSION['chatHistory'][$chat['from']] ?? null)) {
-			$items = ($_SESSION['chatHistory'] ?? null)[$chat['from'] ?? null];
+		if (!isset($_SESSION['openChatBoxes'][$chat['from']]) && !empty($_SESSION['chatHistory'][$chat['from']])) {
+			$items = $_SESSION['chatHistory'][$chat['from']];
 		}
 
 		$chat['message'] = sanitize($chat['message']);
 
 		$items .= <<<EOD
-					   {
+		{
 			"s": "0",
 			"f": "{$chat['from']}",
 			"m": "{$chat['message']}"
-	   },
+		},
 EOD;
 
-		if (!($_SESSION['chatHistory'][$chat['from']] ?? null)) {
-			$_SESSION['chatHistory'][$chat['from']] = '';
-		}
-
-		($_SESSION['chatHistory'] ?? null)[$chat['from'] ?? null] .= <<<EOD
-						   {
+		$_SESSION['chatHistory'][$chat['from']] .= <<<EOD
+		{
 			"s": "0",
 			"f": "{$chat['from']}",
 			"m": "{$chat['message']}"
-	   },
+		},
 EOD;
 
 		unset($_SESSION['tsChatBoxes'][$chat['from']]);
@@ -73,9 +71,8 @@ EOD;
 	}
 
 	if (!empty($_SESSION['openChatBoxes'])) {
-		foreach ($_SESSION['openChatBoxes'] ?? null as $chatbox => $time) {
-			if (!($_SESSION['tsChatBoxes'][$chatbox] ?? null)) {
-
+		foreach ($_SESSION['openChatBoxes'] as $chatbox => $time) {
+			if (!isset($_SESSION['tsChatBoxes'][$chatbox])) {
 				$now = time() - strtotime((string) $time);
 
 				$mes = date("M", strtotime((string) $time));
@@ -103,12 +100,12 @@ EOD;
 },
 EOD;
 
-					if (!($_SESSION['chatHistory'][$chatbox] ?? null)) {
+					if (!isset($_SESSION['chatHistory'][$chatbox])) {
 						$_SESSION['chatHistory'][$chatbox] = '';
 					}
 
-					($_SESSION['chatHistory'] ?? null)[$chatbox] .= <<<EOD
-		{
+					$_SESSION['chatHistory'][$chatbox] .= <<<EOD
+{
 "s": "2",
 "f": "{$chatbox}",
 "m": "{$message}"
@@ -181,32 +178,46 @@ function sendChat(): void
 {
 	include(__DIR__ . "/lib.php");
 	$player = check_user($db);
+	
+	if (empty($_POST['to']) || empty($_POST['message'])) {
+		echo "0";
+		exit(0);
+	}
+	
 	$from = str_replace(" ", "_", $player->username);
 	$to = str_replace(" ", "_", $_POST['to']);
 	$message = $_POST['message'];
 
-	$_SESSION['openChatBoxes'][str_replace(" ", "_", $_POST['to'])] = date('d-m-Y H:i:s', time());
-
-	$messagesan = sanitize($message);
-
-	if (!($_SESSION['chatHistory'][str_replace(" ", "_", $_POST['to'])] ?? null)) {
-		$_SESSION['chatHistory'][str_replace(" ", "_", $_POST['to'])] = '';
+	if (!isset($_SESSION['chatHistory'][$to])) {
+		$_SESSION['chatHistory'][$to] = '';
 	}
 
-	($_SESSION['chatHistory'] ?? null)[str_replace(" ", "_", $_POST['to'])] .= <<<EOD
-					   {
-			"s": "1",
-			"f": "{$to}",
-			"m": "{$messagesan}"
-	   },
+	$_SESSION['openChatBoxes'][$to] = date('Y-m-d H:i:s');
+	
+	$messagesan = sanitize($message);
+	
+	$_SESSION['chatHistory'][$to] .= <<<EOD
+	{
+		"s": "1",
+		"f": "{$to}",
+		"m": "{$messagesan}"
+	},
 EOD;
 
+	unset($_SESSION['tsChatBoxes'][$to]);
 
-	unset($_SESSION['tsChatBoxes'][str_replace(" ", "_", $_POST['to'])]);
-
-	$sql = "insert into chat (chat.from,chat.to,message,sent) values ('" . $db->qstr($from) . "', '" . $db->qstr($to) . "','" . $db->qstr($message) . "',NOW())";
+	$sql = "insert into chat (chat.from, chat.to, message, sent) values (" . 
+		   $db->qstr($from) . ", " . 
+		   $db->qstr($to) . ", " . 
+		   $db->qstr($message) . ", NOW())";
+		   
 	$query = $db->execute($sql);
-	echo "1";
+	
+	if ($query) {
+		echo "1";
+	} else {
+		echo "0";
+	}
 	exit(0);
 }
 
