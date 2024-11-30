@@ -46,32 +46,33 @@ if ($player->username != ($guild['leader'] ?? null) && $player->username != ($gu
     }
 
     if ($_POST['submit'] ?? null) {
-
-        $arredonda = floor($_POST['days']);
-        $maximodedias = ($guild['pagopor'] + ($arredonda * 86400)) - time();
-        $price2 = ceil($price * $_POST['days']);
-
-        if (!($_POST['days'] ?? null)) {
-            $errmsg .= "Você precisa preencher todos os campos.";
-            $error = 1;
-        } elseif (!is_numeric($_POST['days'])) {
+        // Convert days to float before using floor()
+        $days = filter_var($_POST['days'] ?? '', FILTER_VALIDATE_FLOAT);
+        
+        if ($days === false) {
             $errmsg .= "Este número de dias não é válido.";
             $error = 1;
-        } elseif ($arredonda < 1) {
-            $errmsg .= "Este número de dias não é válido.";
-            $error = 1;
-        } elseif ($price2 > ($guild['gold'] ?? null)) {
-            $errmsg .= "Seu clã não possui ouro suficiente para pagar por " . $arredonda . " dia(s).";
-            $error = 1;
-        } elseif ($maximodedias > 5183999) {
-            $errmsg .= "Você não pode deixar sue clã pago por mais de 60 dias.";
-            $error = 1;
-        }
+        } else {
+            $arredonda = floor($days);
+            $maximodedias = ($guild['pagopor'] + ($arredonda * 86400)) - time();
+            $price2 = ceil($price * $arredonda);
 
-        if ($error == 0) {
-            $tempoadicional = $guild['pagopor'] + ($arredonda * 86400);
-            $query = $db->execute("update `guilds` set `gold`=?, `pagopor`=? where `id`=?", [$guild['gold'] - $price2, $tempoadicional, $guild['id'] ?? null]);
-            $msg .= "Seu clã acaba de ser pago por mais " . $arredonda . " dia(s).";
+            if ($arredonda < 1) {
+                $errmsg .= "Este número de dias não é válido.";
+                $error = 1;
+            } elseif ($price2 > ($guild['gold'] ?? null)) {
+                $errmsg .= "Seu clã não possui ouro suficiente para pagar por " . $arredonda . " dia(s).";
+                $error = 1;
+            } elseif ($maximodedias > 5183999) {
+                $errmsg .= "Você não pode deixar seu clã pago por mais de 60 dias.";
+                $error = 1;
+            }
+
+            if ($error == 0) {
+                $tempoadicional = $guild['pagopor'] + ($arredonda * 86400);
+                $query = $db->execute("update `guilds` set `gold`=?, `pagopor`=? where `id`=?", [$guild['gold'] - $price2, $tempoadicional, $guild['id'] ?? null]);
+                $msg .= "Seu clã acaba de ser pago por mais " . $arredonda . " dia(s).";
+            }
         }
     }
 
