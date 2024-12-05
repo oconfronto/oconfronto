@@ -222,14 +222,12 @@ $totallevel = $enemy->level + $player->level;
 $enemy->maxdmg = ($forcadomonstro - ($resistenciadoplayer / $divideres));
 $enemy->maxdmg -= intval($enemy->maxdmg * ($player->leveldiff / $totallevel));
 $enemy->maxdmg = ($enemy->maxdmg <= 2) ? 2 : $enemy->maxdmg; //Set 2 as the minimum damage
-$enemy->mindmg = 1; //Set base minimum damage
-$enemy->mindmg = min($enemy->mindmg, $enemy->maxdmg - 1); //Ensure mindmg is less than maxdmg
+$enemy->mindmg = (($enemy->maxdmg - 4) < 1) ? 1 : ($enemy->maxdmg - 4); //Set a minimum damage range of maxdmg-4
 
 $player->maxdmg = ($forcadoplayer - ($resistenciadomonstro / 1.20));
 $player->maxdmg -= intval($player->maxdmg * ($enemy->leveldiff / $totallevel));
 $player->maxdmg = ($player->maxdmg <= 2) ? 2 : $player->maxdmg; //Set 2 as the minimum damage
-$player->mindmg = 1; //Set base minimum damage
-$player->mindmg = min($player->mindmg, $player->maxdmg - 1); //Ensure mindmg is less than maxdmg
+$player->mindmg = (($player->maxdmg - 4) < 1) ? 1 : ($player->maxdmg - 4); //Set a minimum damage range of maxdmg-4
 
 //Calculate battle 'combos' - how many times in a row a player can attack (dependent on agility)
 $enemy->combo = ceil($agilidadedomonstro / $especagi);
@@ -267,8 +265,18 @@ while ($enemy->hp > 0 && $player->hp > 0 && $battlerounds > 0) {
 		if ($misschance <= $attacking->miss) {
 			$output .= $attacking->username . " tentou atacar " . $defending->username . " mas errou!<br />";
 		} else {
-			// Calculate damage
-			$damage = random_int(max(1, $attacking->mindmg), max(2, $attacking->maxdmg));
+			// Calculate damage with proper integer conversion
+			$min_dmg = intval(max(1, $attacking->mindmg));
+			$max_dmg = intval(max(2, $attacking->maxdmg));
+			
+			// Ensure min is less than max
+			if ($min_dmg > $max_dmg) {
+				$temp = $min_dmg;
+				$min_dmg = $max_dmg;
+				$max_dmg = $temp;
+			}
+			
+			$damage = random_int($min_dmg, $max_dmg);
 
 			$defending->hp -= $damage;
 			$output .= ($player->username == $defending->username) ? '<font color="red">' : '<font color="green">';
@@ -297,8 +305,18 @@ while ($enemy->hp > 0 && $player->hp > 0 && $battlerounds > 0) {
 		if ($misschance <= $defending->miss) {
 			$output .= $defending->username . " tentou atacar " . $attacking->username . " mas errou!<br />";
 		} else {
-			// Calculate damage
-			$damage = random_int(max(1, $defending->mindmg), max(2, $defending->maxdmg));
+			// Calculate damage with proper integer conversion
+			$min_dmg = intval(max(1, $defending->mindmg));
+			$max_dmg = intval(max(2, $defending->maxdmg));
+			
+			// Ensure min is less than max
+			if ($min_dmg > $max_dmg) {
+				$temp = $min_dmg;
+				$min_dmg = $max_dmg;
+				$max_dmg = $temp;
+			}
+			
+			$damage = random_int($min_dmg, $max_dmg);
 
 			$attacking->hp -= $damage;
 			$output .= ($player->username == $defending->username) ? '<font color="green">' : '<font color="red">';
