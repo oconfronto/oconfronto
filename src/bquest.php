@@ -265,9 +265,17 @@ while ($enemy->hp > 0 && $player->hp > 0 && $battlerounds > 0) {
 		if ($misschance <= $attacking->miss) {
 			$output .= $attacking->username . " tentou atacar " . $defending->username . " mas errou!<br />";
 		} else {
-			// Calculate damage for attacking
-			$min_dmg = min(intval($attacking->mindmg), intval($attacking->maxdmg));
-			$max_dmg = max(intval($attacking->mindmg), intval($attacking->maxdmg));
+			// Ensure min damage is less than max damage
+			$min_dmg = intval($attacking->mindmg);
+			$max_dmg = intval($attacking->maxdmg);
+
+			// Swap if min is greater than max
+			if ($min_dmg > $max_dmg) {
+				$temp = $min_dmg;
+				$min_dmg = $max_dmg;
+				$max_dmg = $temp;
+			}
+
 			$damage = random_int($min_dmg, $max_dmg);
 
 			$defending->hp -= $damage;
@@ -281,7 +289,7 @@ while ($enemy->hp > 0 && $player->hp > 0 && $battlerounds > 0) {
 			if ($defending->hp <= 0) {
 				$player = ($especagi >= $enemy->agility) ? $attacking : $defending;
 				$enemy = ($especagi >= $enemy->agility) ? $defending : $attacking;
-				break 2; //Break out of the for and while loop, but not the switch structure
+				break 2;
 			}
 		}
 
@@ -297,9 +305,17 @@ while ($enemy->hp > 0 && $player->hp > 0 && $battlerounds > 0) {
 		if ($misschance <= $defending->miss) {
 			$output .= $defending->username . " tentou atacar " . $attacking->username . " mas errou!<br />";
 		} else {
-			// Calculate damage for defending
-			$min_def = min(intval($defending->mindmg), intval($defending->maxdmg));
-			$max_def = max(intval($defending->mindmg), intval($defending->maxdmg));
+			// Ensure min damage is less than max damage
+			$min_def = intval($defending->mindmg);
+			$max_def = intval($defending->maxdmg);
+
+			// Swap if min is greater than max
+			if ($min_def > $max_def) {
+				$temp = $min_def;
+				$min_def = $max_def;
+				$max_def = $temp;
+			}
+
 			$damage = random_int($min_def, $max_def);
 
 			$attacking->hp -= $damage;
@@ -313,7 +329,7 @@ while ($enemy->hp > 0 && $player->hp > 0 && $battlerounds > 0) {
 			if ($attacking->hp <= 0) {
 				$player = ($especagi >= $enemy->agility) ? $attacking : $defending;
 				$enemy = ($especagi >= $enemy->agility) ? $defending : $attacking;
-				break 2; //Break out of the for and while loop, but not the switch structure
+				break 2;
 			}
 		}
 
