@@ -350,8 +350,8 @@ if ($player->hp <= 0) {
 	$exploss1 = $player->level * 7;
 	$exploss2 = (($player->level - $enemy->level) > 0) ? ($enemy->level - $player->level) * 4 : 0;
 	$exploss = $exploss1 + $exploss2;
-	$goldloss = intval(0.4 * $player->gold);
-	$goldloss = intval(random_int(1, $goldloss));
+	$goldloss = max(1, intval(0.4 * $player->gold));
+	$goldloss = random_int(1, $goldloss);
 	$output .= "<br/><div style=\"background-color:#EEA2A2; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\"><b><u>Você foi morto por " . $enemy->username . "!</u></b></div>";
 	$output .= "<div style=\"background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px\">Você perdeu <b>" . $exploss . "</b> de EXP e <b>" . $goldloss . "</b> de ouro.</div>";
 	$exploss3 = (($player->exp - $exploss) <= 0) ? $player->exp : $exploss;
