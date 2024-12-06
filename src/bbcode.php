@@ -2,33 +2,6 @@
 
 declare(strict_types=1);
 
-function remoteFileExists($url)
-{
-    $curl = curl_init($url);
-
-    //don't fetch the actual page, you only want to check the connection is ok
-    curl_setopt($curl, CURLOPT_NOBODY, true);
-
-    //do request
-    $result = curl_exec($curl);
-
-    $ret = false;
-
-    //if request did not fail
-    if ($result !== false) {
-        //if request was ok, check response code
-        $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-        if ($statusCode == 200) {
-            $ret = true;
-        }
-    }
-
-    curl_close($curl);
-
-    return $ret;
-}
-
 // Função SmileEmoticons
 function FunSmile($text, $smile = '0')
 {
@@ -72,12 +45,7 @@ class bbcode
         while (stripos($text, '[img]') !== false && stripos($text, '[/img]') !== false) {
             $img = substr($text, stripos($text, '[img]') + 5, stripos($text, '[/img]') - stripos($text, '[img]') - 5);
 
-            $exists = remoteFileExists($img);
-            if ($exists) {
-                $text = str_ireplace('[img]' . $img . '[/img]', '<img style="max-width:460px; width: expression(this.width > 460 ? 460: true);" src="' . $img . '">', $text);
-            } else {
-                $text = str_ireplace('[img]' . $img . '[/img]', '[Imagem Invlida]', $text);
-            }
+            $text = str_ireplace('[img]' . $img . '[/img]', '<img style="max-width:460px;" src="' . $img . '">', $text);
         }
 
         //BBCODE "NEGRITO [B]"
