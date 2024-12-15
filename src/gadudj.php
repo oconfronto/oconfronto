@@ -48,6 +48,8 @@ if ($player->hp == 0) {
 	exit;
 }
 
+// Initialize enemy object
+$enemy = new stdClass();
 
 $enemy->prepo = "o";
 $enemy->username = "Gadudj";
