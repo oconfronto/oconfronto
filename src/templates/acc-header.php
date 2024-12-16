@@ -62,11 +62,7 @@
 
         <div id="topo"></div>
 
-        <?php
-        include(__DIR__ . "/../notice_board.php");
-        ?>
-
-        <div id="box">
+        <div style="position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;width: fit-content;height: fit-content;">
             <div class="bg-top"></div>
             <div class="bg-fundo">
                 <div id="barra-top">

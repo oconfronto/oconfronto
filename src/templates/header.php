@@ -13,9 +13,6 @@
 
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" />
     <link rel="stylesheet" href="static/assets/countdown/jquery.countdown.css" />
-    <!--[if lt IE 9]>
-    <script src="static/http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
 
     <script type="text/javascript" src="static/js/jquery.js"></script>
     <script type="text/javascript" src="static/jMyCarousel.js"></script>
@@ -63,11 +60,7 @@
 
         <div id="topo"></div>
 
-        <?php
-        include(__DIR__ . "/../notice_board.php");
-        ?>
-
-        <div id="box">
+        <div style="position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;width: fit-content;height: fit-content;">
             <div class="bg-top"></div>
             <div class="bg-fundo">
                 <div id="barra-top">
