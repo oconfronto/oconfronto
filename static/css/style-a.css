@@ -3,7 +3,6 @@ body {
   padding: 0;
   padding-top: 20px;
   padding-bottom: 20px;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 13px;
   background-color: #ffffff;
   background: url("../images/dot.jpg") center top repeat-x #ffffff;
@@ -11,19 +10,16 @@ body {
 
 a:link {
   color: #8c6b2f;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   text-decoration: none;
 }
 
 a:visited {
   color: #745927;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   text-decoration: none;
 }
 
 a:hover {
   color: #745927;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   text-decoration: underline;
 }
 
@@ -236,7 +232,6 @@ fieldset {
 
 td {
   vertical-align: top;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 13px;
 }
 

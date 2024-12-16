@@ -1,6 +1,5 @@
 .dvHdr {
   width: auto;
-  font-family: arial;
   border: 2px solid #b08250;
   border-radius: 8px 8px 0px 0px;
   padding: 3px;
@@ -21,7 +20,6 @@
   border-radius: 0px 0px 8px 8px;
   width: auto;
   max-width: 150px;
-  font-family: arial;
   margin-left: 3px;
   font-size: 13px;
   padding: 3px;

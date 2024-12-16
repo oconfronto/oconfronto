@@ -27,7 +27,7 @@ echo "<center><i>Existem diversas formas de se obter experiência. Escolha uma d
 
 echo "<a href=\"battle.php\" style=\"text-decoration: none;\"><div class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\">";
 echo "<br/>";
-echo '<center><span style="font-size:21px; font-weight:bold; font-family:Arial;">Batalhar</font></center>';
+echo '<center><span style="font-size:21px; font-weight:bold;">Batalhar</font></center>';
 echo '<div align="right">Contra jogadores</div>';
 echo "</div></a>";
 
@@ -39,19 +39,19 @@ if ($player->level < 55) {
 	echo "<br/>";
 }
 
-echo '<center><span style="font-size:21px; font-weight:bold; font-family:Arial;">Batalhar</font></center>';
+echo '<center><span style="font-size:21px; font-weight:bold;">Batalhar</font></center>';
 echo '<div align="right">Contra monstros</div>';
 echo "</div></a>";
 
 echo "<a href=\"hunt.php\" style=\"text-decoration: none;\"><div class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\">";
 echo "<br/>";
-echo "<center><span style=\"font-size:21px; font-weight:bold; font-family:Arial;\">Caçar</font></center>";
+echo "<center><span style=\"font-size:21px; font-weight:bold;\">Caçar</font></center>";
 echo "<div align=\"right\">Caçar monstros</div>";
 echo "</div></a>";
 
 echo "<a href=\"duel.php\" style=\"text-decoration: none;\"><div class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\">";
 echo "<br/>";
-echo '<center><span style="font-size:21px; font-weight:bold; font-family:Arial;">Duelar</font></center>';
+echo '<center><span style="font-size:21px; font-weight:bold;">Duelar</font></center>';
 echo '<div align="right">Contra jogadores</div>';
 echo "</div></a>";
 

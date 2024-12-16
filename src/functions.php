@@ -323,7 +323,6 @@ function item_count($id, $item, &$db)
 
 function show_prog_bar($width, $percent, string $show, $type = 'green', string $color = '#000'): string
 {
-    $font = 'Tahoma';
     $font_size = '8px';
     $font_weight = 'bold';
 
@@ -334,7 +333,7 @@ function show_prog_bar($width, $percent, string $show, $type = 'green', string $
     $return .= '<div name="progress">';
     $return .= '<div style="background: url(\'static/images/bars//progress.gif\') no-repeat; height: 13px; width: 1px; display: block; float: left"><!-- --></div>';
     $return .= '<div style="background: url(\'static/images/bars//bg.gif\'); height: 13px; width: ' . $width . 'px; display: block; float: left">';
-    $return .= '<span style="background: url(\'static/images/bars/on_' . strtolower((string) $type) . ".gif'); display: block; float: left; width: " . $result . 'px; height: 11px; margin: 1px 0; font-size: ' . $font_size . "; font-family: '" . $font . "'; line-height: 11px; font-weight: " . $font_weight . '; text-align: right; color: ' . $color . '; letter-spacing: 1px;">&nbsp;' . $show . '&nbsp;</span>';
+    $return .= '<span style="background: url(\'static/images/bars/on_' . strtolower((string) $type) . ".gif'); display: block; float: left; width: " . $result . 'px; height: 11px; margin: 1px 0; font-size: ' . $font_size . "'; line-height: 11px; font-weight: " . $font_weight . '; text-align: right; color: ' . $color . '; letter-spacing: 1px;">&nbsp;' . $show . '&nbsp;</span>';
 
     $return .= '</div>';
     $return .= '<div style="background: url(\'static/images/bars//progress.gif\') no-repeat; height: 13px; width: 1px; display: block; float: left"><!-- --></div>';

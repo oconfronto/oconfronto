@@ -74,6 +74,12 @@ if ($tutorial->recordcount() == 0) {
 
     <title>O Confronto :: <?php echo PAGENAME ?></title>
     <link rel="icon" type="image/x-icon" href="static/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+    <style>
+		body {
+			font-family: 'Pixelify Sans', sans-serif;
+		}
+	</style>
     <link href="static/css/styles.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="static/css/css.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="static/css/boxover.css" />

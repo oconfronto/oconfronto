@@ -10,12 +10,16 @@ $player = check_user($db);
 <head>
 	<title>O Confronto :: Log de Batalha</title>
 	<link rel="icon" type="image/x-icon" href="static/favicon.ico">
-
+	<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+	<style>
+		body {
+			font-family: 'Pixelify Sans', sans-serif;
+		}
+	</style>
 	<style type="text/css">
 		body {
 			margin: 0em auto;
 			padding: 0em;
-			font-family: Verdana, Arial, Helvetica, sans-serif;
 			font-size: 0.8em;
 			background: url("../images/dot.jpg") center top repeat-x #FFFFFF;
 
@@ -23,19 +27,16 @@ $player = check_user($db);
 
 		a:link {
 			color: #8C6B2F;
-			font-family: Verdana, Arial, Helvetica, sans-serif;
 			text-decoration: none;
 		}
 
 		a:visited {
 			color: #745927;
-			font-family: Verdana, Arial, Helvetica, sans-serif;
 			text-decoration: none;
 		}
 
 		a:hover {
 			color: #745927;
-			font-family: Verdana, Arial, Helvetica, sans-serif;
 			text-decoration: underline;
 		}
 	</style>

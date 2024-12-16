@@ -10,7 +10,7 @@ ul.menubar .submenu {
   list-style: none;
   width: 172px;
   background: url("../images/menubg.png") repeat-x top;
-  font: bold 12px Verdana, Helvetica, sans-serif;
+  font: bold 12px;
   color: white;
   float: left;
 }

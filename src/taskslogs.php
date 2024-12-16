@@ -10,6 +10,12 @@ $player = check_user($db);
 <head>
 	<title>O Confronto :: Logs de Tarefas</title>
 	<link rel="icon" type="image/x-icon" href="static/favicon.ico">
+	<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+	<style>
+		body {
+			font-family: 'Pixelify Sans', sans-serif;
+		}
+	</style>
 	<link rel="stylesheet" type="text/css" href="static/css/style-a.css" />
 	<link rel="stylesheet" type="text/css" href="static/css/boxover.css" />
 	<script type="text/javascript" src="static/js/boxover.js"></script>

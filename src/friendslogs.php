@@ -10,6 +10,12 @@ $player = check_user($db);
 <head>
 	<title>O Confronto :: Logs de Amigos</title>
 	<link rel="icon" type="image/x-icon" href="static/favicon.ico">
+	<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+	<style>
+		body {
+			font-family: 'Pixelify Sans', sans-serif;
+		}
+	</style>
 	<?php
 	$checknocur = $db->execute("select * from `other` where `value`=? and `player_id`=?", ["cursor", $player->id]);
 	if ($checknocur->recordcount() > 0) {

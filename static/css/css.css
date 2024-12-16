@@ -10,7 +10,6 @@ body {
   color: #633113;
   background: #ddc89c;
   font-size: 12px;
-  font-family: Arial;
   margin: 0;
 }
 
@@ -44,19 +43,16 @@ body {
 
 a:link {
   color: #8c6b2f;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   text-decoration: none;
 }
 
 a:visited {
   color: #745927;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   text-decoration: none;
 }
 
 a:hover {
   color: #745927;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   text-decoration: underline;
 }
 
@@ -566,7 +562,7 @@ fieldset {
 }
 
 blockquote {
-  font: 0.9em, "Times New Roman", Times, serif;
+  font: 0.9em;
   width: 350px;
   background: url("../images/close-quote.gif") no-repeat right bottom;
   padding-left: 18px;
@@ -577,7 +573,7 @@ blockquote {
 blockquote:first-letter {
   background: url("../images/open-quote.gif") no-repeat left top;
   padding-left: 18px;
-  font: 1em Georgia, "Times New Roman", Times, serif;
+  font: 1em;
 }
 
 .potionimg {

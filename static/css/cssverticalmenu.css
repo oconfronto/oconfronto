@@ -13,7 +13,7 @@
 
 .glossymenu li a {
   background: white url("../images/glossyback.jpg") repeat-x bottom left;
-  font: bold 12px Verdana, Helvetica, sans-serif;
+  font: bold 12px;
   color: white;
   display: block;
   width: auto;
