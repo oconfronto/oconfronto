@@ -83,8 +83,8 @@ if ($tutorial->recordcount() == 0) {
 		unicode-range: U+0000-002F, U+003A-FFFF;
 		}
 
-		body {
-			font-family: 'Pixelify Sans Without Digits', monospace, sans-serif;
+		* {
+			font-family: 'Pixelify Sans Without Digits', monospace, sans-serif !important;
 		}
 	</style>
     <link href="static/css/styles.css" rel="stylesheet" type="text/css">

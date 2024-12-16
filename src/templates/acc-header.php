@@ -17,8 +17,8 @@
 		unicode-range: U+0000-002F, U+003A-FFFF;
 		}
 
-		body {
-			font-family: 'Pixelify Sans Without Digits', monospace, sans-serif;
+		* {
+			font-family: 'Pixelify Sans Without Digits', monospace, sans-serif !important;
 		}
 	</style>
     <link rel="stylesheet" type="text/css" href="static/css/index.css" />
@@ -72,9 +72,8 @@
 
 <body>
     <div id="tudo">
-
         <div id="topo"></div>
-
+        <img src="static/images/logo-dark.png" style="position: absolute; top: 2rem; left: 0; right: 0; margin: auto;" />
         <div style="position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;width: fit-content;height: fit-content;">
             <div class="bg-top"></div>
             <div class="bg-fundo">

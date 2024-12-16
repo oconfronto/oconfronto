@@ -19,8 +19,8 @@ $player = check_user($db);
 		unicode-range: U+0000-002F, U+003A-FFFF;
 		}
 
-		body {
-			font-family: 'Pixelify Sans Without Digits', monospace, sans-serif;
+		* {
+			font-family: 'Pixelify Sans Without Digits', monospace, sans-serif !important;
 		}
 	</style>
 	<style type="text/css">
