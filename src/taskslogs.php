@@ -10,10 +10,17 @@ $player = check_user($db);
 <head>
 	<title>O Confronto :: Logs de Tarefas</title>
 	<link rel="icon" type="image/x-icon" href="static/favicon.ico">
-	<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+
 	<style>
+		@font-face {
+		font-family: 'Pixelify Sans Without Digits';
+		src: url('static/fonts/PixelifySans.ttf') format('truetype');
+		/* Include all characters except digits */
+		unicode-range: U+0000-002F, U+003A-FFFF;
+		}
+
 		body {
-			font-family: 'Pixelify Sans', sans-serif;
+			font-family: 'Pixelify Sans Without Digits', monospace, sans-serif;
 		}
 	</style>
 	<link rel="stylesheet" type="text/css" href="static/css/style-a.css" />
