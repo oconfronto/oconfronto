@@ -5,13 +5,7 @@
 </tr>
 </table>
 
-<div id="rodape">
-    <a href="http://facebook.com/ocrpg" target="_blank"><img src="static/images/facebook.png" style="width:25px;height:25px;margin-top:3px;margin-left:30px;position:absolute;" border="0px">
 
-        <center><a href="regras.php">Regras</a> - <a href="creditos.php">Creditos</a><br />
-            <font size="1px">Copyright (c) 2008-2012 OC Productions</font>
-        </center>
-</div>
 </div>
 
 <?php
