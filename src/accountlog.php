@@ -8,6 +8,7 @@ $acc = check_acc($db);
 <html>
 
 <head>
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
 	<title>O Confronto :: Logs da Conta</title>
 	<link rel="stylesheet" type="text/css" href="static/css/style-a.css" />
 	<link rel="stylesheet" type="text/css" href="static/css/boxover.css" />

@@ -1245,7 +1245,7 @@ CREATE TABLE IF NOT EXISTS `players` (
   `died` int(11) NOT NULL DEFAULT '0',
   `ref` int(11) NOT NULL DEFAULT '0',
   `guild` varchar(255) COLLATE latin1_general_ci NOT NULL DEFAULT '',
-  `avatar` varchar(255) COLLATE latin1_general_ci NOT NULL DEFAULT 'anonimo.gif',
+  `avatar` varchar(255) COLLATE latin1_general_ci NOT NULL DEFAULT '',
   `validkey` varchar(255) COLLATE latin1_general_ci NOT NULL DEFAULT '',
   `transpass` varchar(25) COLLATE latin1_general_ci NOT NULL DEFAULT 'f',
   `ban` int(11) NOT NULL DEFAULT '0',

@@ -1,16 +1,38 @@
 /* game */
 html,
 body {
-  height: 100%;
+  height: 100dvh;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+html {
+  background: url(../images/private_background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 body {
-  width: 100%;
-  margin: 0px;
-  color: #633113;
+  -moz-box-shadow: 0px 1px 16px 4px rgba(0,0,0,0.50);
+  -webkit-box-shadow: 0px 1px 16px 4px rgba(0,0,0,0.50);
+  align-items: center;
   background: #ddc89c;
+  border-left: 3px solid #5e0000;
+  border-right: 3px solid #5e0000;
+  box-shadow: 0px 1px 16px 4px rgba(0,0,0,0.50);
+  color: #633113;
+  display: flex;
+  flex-direction: column;
   font-size: 12px;
-  margin: 0;
+  margin: auto;
+  width: 800px;
+}
+
+@media (max-width: 768px) {
+  body {
+    width: 100%;
+  }
 }
 
 #nvbarra {
@@ -32,13 +54,13 @@ body {
 }
 
 .conteudo {
+  background: #FAF0E3;
   font-size: 13px;
-  width: 96%;
-  padding: 10px;
-  min-height: 100%;
-  top: 40px;
-  bottom: 0;
-  positon: relative;
+  width: 100%;
+  padding: 1rem;
+  position: relative;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 a:link {
@@ -54,29 +76,6 @@ a:visited {
 a:hover {
   color: #745927;
   text-decoration: underline;
-}
-
-div#tudo {
-  position: relative;
-  width: 1006px;
-
-  text-align: left;
-  margin: 0 auto;
-  border-left: 3px solid #5e0000;
-  border-right: 3px solid #5e0000;
-  -webkit-box-shadow: 20px 0 50px #867b61, -10px 0 20px #867b61;
-  -moz-box-shadow: 20px 0 50px #867b61, -10px 0 20px #867b61;
-  box-shadow: 20px 0 50px #867b61, -10px 0 20px #867b61;
-}
-
-.lol {
-  background: no-repeat top #faf0e3;
-  background-position: 0px -30px;
-  width: 100%;
-  height: 100%;
-  align: center;
-  bottom: 0;
-  padding-top: 231px;
 }
 
 /* menu esquerdo */
@@ -302,8 +301,8 @@ div#tudo {
 /* avatar */
 .avatar {
   background-color: #f2e1ce;
-  width: 195px;
-  height: 195px;
+  width: 128px;
+  height: 128px;
   margin: 5px;
   padding: 4px;
 }
@@ -312,8 +311,8 @@ div#tudo {
   margin: -5px;
   padding: -4px;
   border: 5px solid #570708;
-  width: 195px;
-  height: 195px;
+  width: 128px;
+  height: 128px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
@@ -438,20 +437,21 @@ div#tudo {
 }
 
 /* rodapé */
-#rodape {
-  color: #f9eecd;
+footer {
+  margin-top: auto;
+  color: #8c6b2f;
   width: 100%;
   height: 30px;
   padding-top: 5px;
   padding-bottom: 5px;
-  /* background: url('../images/rodape.png'); */
+  text-align: center;
 }
 
-#rodape a {
+footer a {
   color: #f9eecd;
 }
 
-#rodape a:hover {
+footer a:hover {
   color: #f9eecd;
 }
 
