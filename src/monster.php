@@ -11,6 +11,7 @@ $player = check_user($db);
 // in the future by a dedicated function to handle these adjustments more coherently.
 $rate_xp = 21;
 $rate_gold = 10;
+$rate_dropItem = 1;
 
 $verificaLuta = $db->execute("select `id` from `duels` where `status`='s' and (`p_id`=? or `e_id`=?)", [$player->id, $player->id]);
 if ($verificaLuta->recordcount() > 0) {
@@ -681,7 +682,14 @@ switch ($_GET['act'] ?? null) {
 		if ($bixo->hp < 1 || $matou == 5) {
 			if ($bixo->type != 98 && $bixo->type != 99) {
 
-				include(__DIR__ . "/battle/loot.php");
+				// Here, the DROP rate after a event adjusted
+				if ($setting->eventoDrop > time()) {
+					$rateDrop = $rate_dropItem * 2;
+				} else {
+					$rateDrop = $rate_dropItem;
+				}
+
+				include(__DIR__ . "/battle/loot_v2.php");
 
 				$checktasks = $db->execute("select * from `tasks` where `needlvl`<=? and `obj_type`='monster' and `obj_value`=?", [$player->level, $enemy->id]);
 				if ($checktasks->recordcount() > 0) {

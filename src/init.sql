@@ -1518,6 +1518,7 @@ INSERT INTO `settings` (`name`, `value`) VALUES
 ('energy_potion', '50'),
 ('eventoexp', '1351468994'),
 ('eventoouro', '1351468994'),
+('eventoDrop', '1351468994'),
 ('hospital_rate', '1'),
 ('index_log_error', 'no'),
 ('index_log_ip', 'no'),
