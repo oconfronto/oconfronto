@@ -4,6 +4,7 @@ body {
   height: 100dvh;
   overflow-y: hidden;
   overflow-x: hidden;
+
 }
 
 html {
@@ -18,8 +19,6 @@ body {
   -webkit-box-shadow: 0px 1px 16px 4px rgba(0,0,0,0.50);
   align-items: center;
   background: #ddc89c;
-  border-left: 3px solid #5e0000;
-  border-right: 3px solid #5e0000;
   box-shadow: 0px 1px 16px 4px rgba(0,0,0,0.50);
   color: #633113;
   display: flex;
@@ -27,6 +26,9 @@ body {
   font-size: 12px;
   margin: auto;
   width: 800px;
+  position: fixed;
+  left: 0;
+  right: 0;
 }
 
 @media (max-width: 768px) {

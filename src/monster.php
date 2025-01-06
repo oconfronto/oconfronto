@@ -960,9 +960,11 @@ switch ($_GET['act'] ?? null) {
 
 			echo '<table width="100%">';
 			echo "<tr>";
-			echo '<td width="8%">';
-			echo '<center><img src="' . getAvatarPath($player->avatar) . '" width="42px" height="42px" alt="' . $player->username . '" border="1px"></center>';
-			echo "</td>";
+			if (!isMobile($_SERVER['HTTP_USER_AGENT'])) {
+				echo '<td width="8%">';
+				echo '<center><img src="' . getAvatarPath($player->avatar) . '" width="42px" height="42px" alt="' . $player->username . '" border="1px"></center>';
+				echo "</td>";
+			}
 
 			echo '<td width="26%">';
 			echo "<font size=\"1px\"><b>Usuário:</b> " . $player->username . "</font><br />";

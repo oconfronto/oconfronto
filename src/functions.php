@@ -331,12 +331,12 @@ function show_prog_bar($width, $percent, string $show, $type = 'green', string $
     $result = (($percent * $width) / 100);
     $return = '';
     $return .= '<div name="progress">';
-    $return .= '<div style="background: url(\'static/images/bars//progress.gif\') no-repeat; height: 13px; width: 1px; display: block; float: left"><!-- --></div>';
-    $return .= '<div style="background: url(\'static/images/bars//bg.gif\'); height: 13px; width: ' . $width . 'px; display: block; float: left">';
-    $return .= '<span style="background: url(\'static/images/bars/on_' . strtolower((string) $type) . ".gif'); display: block; float: left; width: " . $result . 'px; height: 11px; margin: 1px 0; font-size: ' . $font_size . "'; line-height: 11px; font-weight: " . $font_weight . '; text-align: right; color: ' . $color . '; letter-spacing: 1px;">&nbsp;' . $show . '&nbsp;</span>';
+    $return .= '<div style="height: 16px; font-size: 12px; width: 1px; display: block; float: left; color: white;"><!-- --></div>';
+    $return .= '<div style="background: black; height: 16px; width: ' . $width . 'px; display: block; float: left; color: white;">';
+    $return .= '<span style="background: ' . strtolower((string) $type) . "; display: block; float: left; width: " . $result . 'px; height: 16px; margin: 1px 0; font-size: ' . $font_size . "'; line-height: 16px; font-weight: " . $font_weight . '; text-align: right; color: ' . $color . '; letter-spacing: 1px;">&nbsp;' . $show . '&nbsp;</span>';
 
     $return .= '</div>';
-    $return .= '<div style="background: url(\'static/images/bars//progress.gif\') no-repeat; height: 13px; width: 1px; display: block; float: left"><!-- --></div>';
+    $return .= '<div style="background: black; height: 16px; width: 1px; display: block; float: left"><!-- --></div>';
     return $return . '</div>';
 }
 
