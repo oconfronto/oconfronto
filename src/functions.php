@@ -514,7 +514,7 @@ function send_mail($from_name, $mail_to, $subject, $body)
 
 function getAvatarPath($avatar)
 {
-    return ($avatar == "anonimo.gif") ? "static/" . $avatar : $avatar;
+    return $avatar ? $avatar : "static/anonimo.gif";
 }
 
 function isMobile($userAgent): int|false
