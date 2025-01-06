@@ -8,6 +8,14 @@ $currentfile = $parts[count($parts) - 1];
 
 $userAgent = $_SERVER['HTTP_USER_AGENT'];
 
+require_once __DIR__ . '/../classes/RunicCaptcha.php';
+$captcha = new RunicCaptcha();
+$captchaStatus = $captcha->needsCaptcha();
+if (isset($captchaStatus['needs_captcha']) && $captchaStatus['needs_captcha']) {
+    header('Location: captcha.php');
+    exit;
+}
+
 $tutorial = $db->execute("select * from `pending` where `pending_id`=2 and `pending_status`=90 and `player_id`=?", [$player->id]);
 if ($tutorial->recordcount() == 0) {
     $checatutoriallido = $db->execute("select * from `pending` where `pending_id`=2 and `player_id`=?", [$player->id]);
