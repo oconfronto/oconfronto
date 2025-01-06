@@ -71,22 +71,23 @@ if ($tutorial->recordcount() == 0) {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="-1" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
 
     <title>O Confronto :: <?php echo PAGENAME ?></title>
     <link rel="icon" type="image/x-icon" href="static/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
     <style>
-		@font-face {
-		font-family: 'Pixelify Sans Without Digits';
-		src: url('static/fonts/PixelifySans.ttf') format('truetype');
-		/* Include all characters except digits */
-		unicode-range: U+0000-002F, U+003A-FFFF;
-		}
+        @font-face {
+            font-family: 'Pixelify Sans Without Digits';
+            src: url('static/fonts/PixelifySans.ttf') format('truetype');
+            /* Include all characters except digits */
+            unicode-range: U+0000-002F, U+003A-FFFF;
+        }
 
-		* {
-			font-family: 'Pixelify Sans Without Digits', monospace, sans-serif !important;
-		}
-	</style>
+        * {
+            font-family: 'Pixelify Sans Without Digits', monospace, sans-serif !important;
+        }
+    </style>
     <link href="static/css/styles.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="static/css/css.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="static/css/boxover.css" />
@@ -96,6 +97,8 @@ if ($tutorial->recordcount() == 0) {
     <link rel="stylesheet" type="text/css" href="static/css/private/magias.css" />
     <link rel="stylesheet" type="text/css" href="static/css/private/tabs.css" />
     <link rel="stylesheet" type="text/css" href="static/css/private/slidemenu.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/private/player-top.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/private/showit.css" />
     <link type="text/css" rel="stylesheet" media="all" href="static/css/chat.css" />
     <script type="text/javascript">
         function Ajax(page, usediv) {
@@ -266,9 +269,6 @@ if ($tutorial->recordcount() == 0) {
         gtag('config', 'G-5C9CTZE98D');
     </script>
 </head>
-<div id="applixir_vanishing_div" hidden style="z-index: 1000">
-    <iframe id="applixir_parent"></iframe>
-</div>
 <?php
 if ($currentfile === 'inventory.php') {
     echo "<body>";
@@ -287,228 +287,90 @@ $logcount4 = $db->execute("select `id` from `account_log` where `player_id`=? an
 $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2->recordcount() + $logcount3->recordcount() + $logcount4->recordcount();
 ?>
 
-<div id="tudo" style="position: relative;">
-    <img src="static/images/topo.jpg" style="position:absolute;width:100%;z-index: 0;">
-    <div class="msg">
-        <div class="ic-msg"></div><?php include(__DIR__ . "/../showmsg.php"); ?>
+<div style="position: relative; width: 100%;">
+    <div style="display: flex; width: 100%;">
+        <?php
+        $verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", [$player->id, time()]);
+        if ($verificpotion->recordcount() > 0) {
+            $selct = $verificpotion->fetchrow();
+            $valortempo = $selct['time'] - time();
+            if ($valortempo < 60) {
+                $auxiliar = "segundo(s)";
+            } elseif ($valortempo < 3600) {
+                $valortempo = ceil($valortempo / 60);
+                $auxiliar = "minuto(s)";
+            } elseif ($valortempo < 86400) {
+                $valortempo = ceil($valortempo / 3600);
+                $auxiliar = "hora(s)";
+            }
+
+            $potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
+            $potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
+            $potimg = $db->GetOne("select `img` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
+        ?>
+            <div
+                title="header=[<?php echo $potname; ?>] body=[<?php echo $potdesc; ?><br><font size=1><?php echo $valortempo; ?> <?php echo $auxiliar; ?> restante(s).</font>]">
+                <div class="potionimg"><a href="tavern.php?act=buy&id=182"><img
+                            src="static/images/itens/<?php echo $potimg; ?>" border=0></a>
+                </div>
+            </div>
+        <?php }
+        ?>
+
+        <?php include_once __DIR__ . "/player-top.php"; ?>
     </div>
-    <table class="lol">
-        <tr>
-            <td valign="top" width="220px">
-                <div class="left" style="position:relative;z-index: 1;">
-                    <div class="leftcon">
-
-                        <img src="static/images/menu/personagem.png"
-                            style="-webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;" border="0">
-
+    <div style="text-align: center; background: #00000011; padding: 0.5rem;">
+        <?php include(__DIR__ . "/../showmsg.php"); ?>
+    </div>
+        <div class='top-menu'>
+            <ul>
+                <li><a href='#'><b><?php echo $player->username ?></b></a>
+                    <ul>
+                        <li><a href='profile.php?id=<?php echo $player->username ?>'><?php echo $player->username ?></a></li>
+                        <li><a href="home.php">Principal</a></li>
+                        <li><a href="log.php">Log (<?php echo $logscount; ?>)</a></li>
                         <?php
-                        $verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", [$player->id, time()]);
-                        if ($verificpotion->recordcount() > 0) {
-                            $selct = $verificpotion->fetchrow();
-                            $valortempo = $selct['time'] - time();
-                            if ($valortempo < 60) {
-                                $auxiliar = "segundo(s)";
-                            } elseif ($valortempo < 3600) {
-                                $valortempo = ceil($valortempo / 60);
-                                $auxiliar = "minuto(s)";
-                            } elseif ($valortempo < 86400) {
-                                $valortempo = ceil($valortempo / 3600);
-                                $auxiliar = "hora(s)";
-                            }
-
-                            $potname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
-                            $potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
-                            $potimg = $db->GetOne("select `img` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
-
-
-                        ?>
-                            <div
-                                title="header=[<?php echo $potname; ?>] body=[<?php echo $potdesc; ?><br><font size=1><?php echo $valortempo; ?> <?php echo $auxiliar; ?> restante(s).</font>]">
-                                <div class="potionimg"><a href="tavern.php?act=buy&id=182"><img
-                                            src="static/images/itens/<?php echo $potimg; ?>" border=0></a>
-                                </div>
-                            </div>
-                        <?php }
-                        ?>
-                        <div class="avatar"><a href="avatar.php"><img src="<?php $dire = ($player->avatar == "anonimo.gif") ? "static/" . $player->avatar : $player->avatar;
-                                                                            echo $dire ?>"
-                                    border="0px"></a></div>
-
-
-
-                        <div class="bg-barras">
-                            <div class="ic-hp">
-                                <div class="bg-bar">
-                                    <div id="bar-hp" class="bg-hp"
-                                        style="width:<?php echo ceil(($player->hp * 100) / $player->maxhp); ?>%">
-                                        <span><?php echo $player->hp; ?> / <?php echo $player->maxhp; ?></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ic-mp">
-                                <div class="bg-bar">
-                                    <div id="bar-mp" class="bg-mp"
-                                        style="width:<?php echo ceil(($player->mana * 100) / $player->maxmana); ?>%">
-                                        <span><?php echo $player->mana; ?> / <?php echo $player->maxmana; ?></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ic-en">
-                                <div class="bg-bar">
-                                    <div id="bar-en" class="bg-en"
-                                        style="width:<?php echo ceil(($player->energy * 100) / $player->maxenergy); ?>%">
-                                        <span><?php echo $player->energy; ?> / <?php echo $player->maxenergy; ?></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <span id="mudar1"><img src="static/images/menu/on1.png" border="0px"></span>
-                        <div id="gaita1">
-                            <?php include(__DIR__ . "/../showit.php"); ?>
-
-                            <div class="moedas">
-                                <div class="ic-moeda"></div>
-                                <div id="player-gold" class="ouro"><?php echo number_format($player->gold, 0, '', '.') ?> moedas</div>
-                            </div>
-                        </div>
-
-                        <br />
-                        <span id="mudar2"><img src="static/images/menu/on2.png" border="0px"></span>
-                        <div id="gaita2">
-
-                            <?php
-                            echo '<table border="0px" cellpadding="0px" cellspacing="0px"  class="friend">';
-                            $query = $db->execute("select `fname` from `friends` WHERE `uid`=? order by `fname` asc", [$player->acc_id]);
-                            if ($query->recordcount() == 0) {
-                                echo "<tr class=\"amigo\"><th><center>Você não tem amigos.</center></th></tr>";
+                            if (isMobile($userAgent)) {
+                                echo '<li><a href="inventory_mobile.php">Inventário</a></li>';
                             } else {
-                                $bool = "o";
-                                while ($friend = $query->fetchrow()) {
-                                    $name = $db->GetOne("select `id` from `players` where `username`=?", [$friend['fname'] ?? null]);
-                                    $friendlevel = $db->getone("select `level` from `players` where `id`=?", [$name]);
-
-                                    echo '<tr class="amig' . $bool . '">';
-                                    echo "<th>&nbsp;<b>" . showName($name, $db, 'off', 'off') . "</b></th>";
-                                    echo "<th><b>Nv. " . $friendlevel . "</b></th>";
-
-
-                                    $online = $db->execute("select `time` from `user_online` where `player_id`=?", [$name]);
-                                    $ignorado = $db->execute("select * from `ignored` where `uid`=? and `bid`=?", [$name, $player->id]);
-                                    if ($online->recordcount() > 0 && $ignorado->recordcount() == 0) {
-                                        $check = $db->execute("select * from `pending` where `pending_id`=30 and `player_id`=?", [$name]);
-                                        if ($check->recordcount() == 0) {
-                                            echo "<th><center><a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", showName($name, $db, 'off', 'off')) . "')\"><img src=\"static/images/images/on.png\" border=\"0px\"></a></center></th>";
-                                        } else {
-                                            $stattus = $check->fetchrow();
-                                            if (($stattus['pending_status'] ?? null) == 'ocp') {
-                                                echo "<th><center><a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", showName($name, $db, 'off', 'off')) . "')\"><img src=\"static/images/images/ocp.png\" border=\"0px\"></a></center></th>";
-                                            } elseif (($stattus['pending_status'] ?? null) == 'inv') {
-                                                echo '<th><center><img src="static/images/images/off.png" border="0px"></center></th>';
-                                            }
-                                        }
-                                    } else {
-                                        echo '<th><center><img src="static/images/images/off.png" border="0px"></center></th>';
-                                    }
-
-                                    echo "</tr>";
-                                    $bool = ($bool === "o") ? "oo" : "o";
-                                }
+                                echo '<li><a href="inventory.php">Inventário</a></li>';
                             }
-
-                            echo "</table>";
-                            ?>
-                        </div>
-                        <br />
-
-                    </div>
-                </div>
-
-                <br /><br /><br />
-            </td>
-
-            <td valign="top">
-                <div style="margin-right:-2px;position:abosolute;">
-                    <div class='cssmenu'>
-                        <ul>
-                            <li><a href='#'><b><?php echo $player->username ?></b></a>
-                                <ul>
-                                    <li><a href='profile.php?id=<?php echo $player->username ?>'><?php echo $player->username ?></a></li>
-                                    <li><a href="home.php">Principal</a></li>
-                                    <li><a href="log.php">Log (<?php echo $logscount; ?>)</a></li>
-                                    <li><a href="inventory.php">Inventário</a></li>
-                                    <li><a href="bat.php">Batalhar</a></li>
-                                    <li><a href="work.php">Trabalhar</a></li>
-                                    <!-- <li><a href="earn.php">
-                                            <font color="gold">Ganhar ouro</font>
-                                        </a></li>
-                                    <li><a href="vip.php">
-                                            <font color="gold">Loja VIP</font>
-                                        </a></li> -->
-                                </ul>
-                            </li>
-                            <li><a href='#'><b>Reino</b></a>
-                                <ul>
-                                    <li><a href="reino.php">Castelo</a></li>
-                                    <li><a href="bank.php">Banco</a></li>
-                                    <li><a href="shop.php">Ferreiro</a></li>
-                                    <li><a href="market.php">Mercado</a></li>
-                                    <li><a href="dungeon.php">Arena</a></li>
-                                    <li><a href="tavern.php">Taverna</a></li>
-                                    <li><a href="hospital.php">Hospital</a></li>
-                                    <li><a href="lottery.php">Loteria</a></li>
-                                    <li><a href="tournament.php">Torneio</a></li>
-                                </ul>
-                            </li>
-                            <li><a href='#'><span><b>Comunidade</b></span></a>
-                                <ul>
-                                    <li><a href="https://discord.gg/rwuy3npeum" target="_blank">Discord</a></li>
-                                    <li><a href="guild_listing.php">Clãs</a></li>
-                                    <li><a href="members.php">Ranking</a></li>
-                                    <li><a href="mail.php">Mensagens (<?php echo $mailcount->recordcount(); ?>)</a></li>
-                                    <li><a href="friendlist.php">Amigos</a></li>
-                                </ul>
-                            </li>
-                            <li><a href='#'><span><b>Conta</b></span></a>
-                                <ul>
-                                    <li><a href="editinfo.php">Configurações</a></li>
-                                    <li><a href="logoutchar.php">Personagens</a></li>
-                                    <li><a href="logout.php">Sair</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="contop">
-                    <table width="100%">
-                        <tr>
-                            <td id="nv_atual" style="width: 15%;padding-top:5px;text-align:center;"><b>Nível:</b>
-                                <?php echo $player->level ?></td>
-
-                            <?php
-                            $style = 'display: none;';
-                            $progress = ($player->exp * 100) / maxExp($player->level);
-                            if (is_numeric($progress) && $progress > 0 && $progress <= 100) {
-                                $style = "width: " . round($progress) . "%; display: block;";
-                            }
-                            ?>
-
-                            <td style="width: 70%;">
-                                <div
-                                    title="header=[Experiência] body=[Exp: <?php echo number_format($player->exp); ?> / <?php echo number_format(maxExp($player->level)); ?>]">
-                                    <div id="ex-bg">
-                                        <span id="expbarText"><?php echo number_format($player->exp); ?> /
-                                            <?php echo number_format(maxExp($player->level)); ?>
-                                            (<?php echo number_format(($player->exp * 100) / maxExp($player->level)); ?>%)</span>
-                                        <div id="expbar" style="<?= $style ?>"></div>
-                                    </div>
-                                </div>
-                            </td>
-                </div>
-            <td id="nv_futuro" style="width: 15%;padding-top:5px;text-align:center;"><b>Nível:</b> <?php echo $player->level + 1 ?>
-        </tr>
-    </table>
+                        ?>
+                        <li><a href="bat.php">Batalhar</a></li>
+                        <li><a href="work.php">Trabalhar</a></li>
+                    </ul>
+                </li>
+                <li><a href='#'><b>Reino</b></a>
+                    <ul>
+                        <li><a href="reino.php">Castelo</a></li>
+                        <li><a href="bank.php">Banco</a></li>
+                        <li><a href="shop.php">Ferreiro</a></li>
+                        <li><a href="market.php">Mercado</a></li>
+                        <li><a href="dungeon.php">Arena</a></li>
+                        <li><a href="tavern.php">Taverna</a></li>
+                        <li><a href="hospital.php">Hospital</a></li>
+                        <li><a href="lottery.php">Loteria</a></li>
+                        <li><a href="tournament.php">Torneio</a></li>
+                    </ul>
+                </li>
+                <li><a href='#'><span><b>Comunidade</b></span></a>
+                    <ul>
+                        <li><a href="https://discord.gg/rwuy3npeum" target="_blank">Discord</a></li>
+                        <li><a href="guild_listing.php">Clãs</a></li>
+                        <li><a href="members.php">Ranking</a></li>
+                        <li><a href="mail.php">Mensagens (<?php echo $mailcount->recordcount(); ?>)</a></li>
+                        <li><a href="friendlist.php">Amigos</a></li>
+                    </ul>
+                </li>
+                <li><a href='#'><span><b>Conta</b></span></a>
+                    <ul>
+                        <li><a href="editinfo.php">Configurações</a></li>
+                        <li><a href="logoutchar.php">Personagens</a></li>
+                        <li><a href="logout.php">Sair</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
 </div>
 <div class="conteudo">
 

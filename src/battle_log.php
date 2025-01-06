@@ -8,6 +8,7 @@ $player = check_user($db);
 <html>
 
 <head>
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
 	<title>O Confronto :: Log de Batalha</title>
 	<link rel="icon" type="image/x-icon" href="static/favicon.ico">
 

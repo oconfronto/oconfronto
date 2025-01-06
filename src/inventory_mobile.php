@@ -292,7 +292,7 @@ if ($_GET['unequip'] ?? null) {
     exit;
 }
 
-echo '<div id="main_container">';
+echo '<div id="main_container" style="font-size: 0.75rem;">';
 echo '<div id="inventory">';
 displayItems($player->id, 'equipped', 'Itens Equipados');
 displayItems($player->id, 'unequipped', 'Itens na Mochila');
