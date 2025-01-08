@@ -3,6 +3,7 @@ html {
   /* min-height:100%; */
   background-size: cover;
   background-color: #000000;
+  overflow: hidden;
 }
 
 body {
