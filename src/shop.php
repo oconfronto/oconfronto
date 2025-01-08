@@ -36,7 +36,7 @@ switch ($_GET['act'] ?? null) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
 			echo "<i>Desculpe, mas você não pode pagar por isto!</i><br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+			echo "<a href=\"inventory_mobile.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
 			include(__DIR__ . "/templates/private_footer.php");
 			break;
 		}
@@ -45,7 +45,7 @@ switch ($_GET['act'] ?? null) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
 			echo "<i>Desculpe, mas arqueiros não podem usar escudos!</i><br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+			echo "<a href=\"inventory_mobile.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
 			include(__DIR__ . "/templates/private_footer.php");
 			break;
 		}
@@ -54,7 +54,7 @@ switch ($_GET['act'] ?? null) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
 			echo "<i>Desculpe, mas você não pode comprar esse tipo de item!</i><br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+			echo "<a href=\"inventory_mobile.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
 			include(__DIR__ . "/templates/private_footer.php");
 			break;
 		}
@@ -64,7 +64,7 @@ switch ($_GET['act'] ?? null) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
 			echo "<i>Desculpe, mas você não pode comprar esse tipo de item!</i><br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+			echo "<a href=\"inventory_mobile.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
 			include(__DIR__ . "/templates/private_footer.php");
 			break;
 		}
@@ -74,7 +74,7 @@ switch ($_GET['act'] ?? null) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
 			echo "<i>Desculpe, mas você não pode comprar esse tipo de item!</i><br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+			echo "<a href=\"inventory_mobile.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
 			include(__DIR__ . "/templates/private_footer.php");
 			break;
 		}
@@ -83,7 +83,7 @@ switch ($_GET['act'] ?? null) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
 			echo "<i>Desculpe, mas eu não vendo este tipo de item!</i><br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+			echo "<a href=\"inventory_mobile.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
 			include(__DIR__ . "/templates/private_footer.php");
 			break;
 		}
@@ -92,7 +92,7 @@ switch ($_GET['act'] ?? null) {
 			include(__DIR__ . "/templates/private_header.php");
 			echo "<b>Ferreiro:</b><br />\n";
 			echo "<i>Desculpe, mas eu não vendo este tipo de item!</i><br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+			echo "<a href=\"inventory_mobile.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
 			include(__DIR__ . "/templates/private_footer.php");
 			break;
 		}
@@ -105,7 +105,7 @@ switch ($_GET['act'] ?? null) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "<b>Ferreiro:</b><br />\n";
 				echo "<i>Desculpe, mas eu não vendo este tipo de item!</i><br /><br />\n";
-				echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+				echo "<a href=\"inventory_mobile.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
 				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
@@ -125,7 +125,7 @@ switch ($_GET['act'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<b>Ferreiro:</b><br />\n";
 		echo "<i>Obrigado, aproveite sua nova <b>" . $item['name'] . "</b>!</i><br /><br />\n";
-		echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+		echo "<a href=\"inventory_mobile.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
 		include(__DIR__ . "/templates/private_footer.php");
 		break;
 
@@ -133,7 +133,7 @@ switch ($_GET['act'] ?? null) {
 		if (($_POST['comfirm'] ?? null) && ($_POST['actione'] ?? null) == 'vendeer') {
 			include(__DIR__ . "/templates/private_header.php");
 			if (!($_POST['id'] ?? null)) {
-				echo "Você precisa selecionar algum item para vender.<br/><a href=\"inventory.php\">Voltar</a>.";
+				echo "Você precisa selecionar algum item para vender.<br/><a href=\"inventory_mobile.php\">Voltar</a>.";
 				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
@@ -175,7 +175,7 @@ switch ($_GET['act'] ?? null) {
 			}
 
 			if ($totalsell > 0) {
-				echo "<b>Vendendo:</b> " . $totalsell . " item(s) por " . $totalprico . " de ouro.<br/><br/><input type=\"submit\" name=\"multiconfirm\" value=\"Desejo vender todos estes itens\" />  <a href=\"inventory.php\">Voltar</a>.\n";
+				echo "<b>Vendendo:</b> " . $totalsell . " item(s) por " . $totalprico . " de ouro.<br/><br/><input type=\"submit\" name=\"multiconfirm\" value=\"Desejo vender todos estes itens\" />  <a href=\"inventory_mobile.php\">Voltar</a>.\n";
 				echo "</form>\n";
 			}
 
@@ -183,7 +183,7 @@ switch ($_GET['act'] ?? null) {
 			break;
 		} elseif (($_POST['comfirm'] ?? null) && ($_POST['actione'] ?? null) != 'vendeer') {
 			include(__DIR__ . "/templates/private_header.php");
-			echo "Selecione uma ação.<br/><a href=\"inventory.php\">Voltar</a>.";
+			echo "Selecione uma ação.<br/><a href=\"inventory_mobile.php\">Voltar</a>.";
 			include(__DIR__ . "/templates/private_footer.php");
 			break;
 		} elseif ($_POST['multiconfirm'] ?? null) {
@@ -227,7 +227,7 @@ switch ($_GET['act'] ?? null) {
 			}
 
 			$query = $db->execute("update `players` set `gold`=? where `id`=?", [$player->gold + $totalprico2, $player->id]);
-			echo '<br/><a href="inventory.php">Voltar</a>.';
+			echo '<br/><a href="inventory_mobile.php">Voltar</a>.';
 			include(__DIR__ . "/templates/private_footer.php");
 			break;
 		} else {
@@ -245,7 +245,7 @@ switch ($_GET['act'] ?? null) {
 			if ($query->recordcount() == 0) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Este item não existe!";
-				echo '<a href="inventory.php">Voltar</a>.';
+				echo '<a href="inventory_mobile.php">Voltar</a>.';
 				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
@@ -260,7 +260,7 @@ switch ($_GET['act'] ?? null) {
 			if (($sell['item_id'] ?? null) == 111 || ($sell['item_id'] ?? null) == 116) {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Você não pode vender este item, caso contrário não poderá terminar sua missão.<br />\n";
-				echo '<a href="inventory.php">Voltar</a>.';
+				echo '<a href="inventory_mobile.php">Voltar</a>.';
 				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
@@ -268,7 +268,7 @@ switch ($_GET['act'] ?? null) {
 			if (($sell['type'] ?? null) == 'stone') {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Você não pode vender pedras.<br />\n";
-				echo '<a href="inventory.php">Voltar</a>.';
+				echo '<a href="inventory_mobile.php">Voltar</a>.';
 				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
@@ -276,7 +276,7 @@ switch ($_GET['act'] ?? null) {
 			if (($sell['status'] ?? null) == 'equipped') {
 				include(__DIR__ . "/templates/private_header.php");
 				echo "Você não pode vender um item que está em uso.<br />\n";
-				echo '<a href="inventory.php">Voltar</a>.';
+				echo '<a href="inventory_mobile.php">Voltar</a>.';
 				include(__DIR__ . "/templates/private_footer.php");
 				break;
 			}
@@ -304,7 +304,7 @@ switch ($_GET['act'] ?? null) {
 
 			include(__DIR__ . "/templates/private_header.php");
 			echo "Você vendeu seu/sua <b>" . $sell['name'] . "</b> por <b>" . $valordavenda . "</b> de ouro.<br /><br />\n";
-			echo "<a href=\"inventory.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
+			echo "<a href=\"inventory_mobile.php\">Retornar ao inventário</a> | <a href=\"shop.php\">Retornar a loja</a>";
 			include(__DIR__ . "/templates/private_footer.php");
 		}
 

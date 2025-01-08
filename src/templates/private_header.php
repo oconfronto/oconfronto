@@ -51,8 +51,9 @@ if ($tutorial->recordcount() == 0) {
                 header("Location: inventory_mobile.php");
                 exit;
             }
-        } elseif ($currentfile !== 'inventory.php') {
-            header("Location: inventory.php");
+        } elseif ($currentfile !== 'inventory_mobile.php') {
+            // header("Location: inventory.php");
+            header("Location: inventory_mobile.php");
             exit;
         }
     } elseif (($tut['pending_status'] ?? null) == 5 && $currentfile !== 'home.php') {
@@ -175,7 +176,7 @@ if ($tutorial->recordcount() == 0) {
     // Exemplo de inclusão condicional do script no cabeçalho
 
     // Verifica se a página atual é 'inventory.php'
-    if ($currentfile === 'inventory.php') {
+    if ($currentfile === 'inventory_mobile.php') {
     ?>
         <script type="text/javascript">
             // onload event
@@ -215,23 +216,23 @@ if ($tutorial->recordcount() == 0) {
                             var itid = itclassname.split(' ')[1];
                             window.location.href = 'equipit.php?itid=' + itid;
                         } else {
-                            window.location.href = 'inventory.php';
+                            window.location.href = 'inventory_mobile.php';
                         }
                     } else if (REDIPS.drag.target_cell !== REDIPS.drag.source_cell) {
                         var itclassname = rd.obj_old.className;
                         var itid = itclassname.split(' ')[1];
 
                         if (rd.target_cell.className == 'sell') {
-                            window.location.href = 'inventory.php?sellit=' + itid;
+                            window.location.href = 'inventory_mobile.php?sellit=' + itid;
                         } else if (rd.target_cell.className == 'mature') {
-                            window.location.href = 'inventory.php?mature=' + itid;
+                            window.location.href = 'inventory_mobile.php?mature=' + itid;
                         } else {
                             var tileclassname = rd.target_cell.className;
                             var tileid = tileclassname.split(' ')[1];
                             window.location.href = 'moveit.php?itid=' + itid + '&tile=' + tileid;
                         }
                     } else {
-                        window.location.href = 'inventory.php';
+                        window.location.href = 'inventory_mobile.php';
                     }
                 }
             }
@@ -278,7 +279,7 @@ if ($tutorial->recordcount() == 0) {
     </script>
 </head>
 <?php
-if ($currentfile === 'inventory.php') {
+if ($currentfile === 'inventory_mobile.php') {
     echo "<body>";
 } elseif ($currentfile === 'stat_points.php') {
     echo '<body onload="testee(' . $player->stat_points . ');">';
@@ -341,7 +342,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
                             if (isMobile($userAgent)) {
                                 echo '<li><a href="inventory_mobile.php">Inventário</a></li>';
                             } else {
-                                echo '<li><a href="inventory.php">Inventário</a></li>';
+                                echo '<li><a href="inventory_mobile.php">Inventário</a></li>';
                             }
                         ?>
                         <li><a href="bat.php">Batalhar</a></li>

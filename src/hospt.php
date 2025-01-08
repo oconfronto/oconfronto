@@ -23,7 +23,7 @@ if ($_POST['submit'] ?? null) {
 		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
 		echo "<i>Você só pode vender poções a partir do nível 20.<br/></i>";
 		echo "</fieldset>\n";
-		echo '<a href="inventory.php">Voltar ao inventário.</a>';
+		echo '<a href="inventory_mobile.php">Voltar ao inventário.</a>';
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
@@ -33,7 +33,7 @@ if ($_POST['submit'] ?? null) {
 		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
 		echo "<i>O valor que você inseriu não é valido.<br/></i>";
 		echo "</fieldset>\n";
-		echo '<a href="inventory.php">Voltar ao inventário.</a>';
+		echo '<a href="inventory_mobile.php">Voltar ao inventário.</a>';
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
@@ -44,7 +44,7 @@ if ($_POST['submit'] ?? null) {
 		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
 		echo "<i>O valor que você inseriu não é valido.<br/></i>";
 		echo "</fieldset>\n";
-		echo '<a href="inventory.php">Voltar ao inventário.</a>';
+		echo '<a href="inventory_mobile.php">Voltar ao inventário.</a>';
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
@@ -54,7 +54,7 @@ if ($_POST['submit'] ?? null) {
 		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
 		echo "<i>O valor que você inseriu não é valido.<br/></i>";
 		echo "</fieldset>\n";
-		echo '<a href="inventory.php">Voltar ao inventário.</a>';
+		echo '<a href="inventory_mobile.php">Voltar ao inventário.</a>';
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
@@ -64,7 +64,7 @@ if ($_POST['submit'] ?? null) {
 		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
 		echo "<i>O valor que você inseriu não é valido.<br/></i>";
 		echo "</fieldset>\n";
-		echo '<a href="inventory.php">Voltar ao inventário.</a>';
+		echo '<a href="inventory_mobile.php">Voltar ao inventário.</a>';
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
@@ -87,7 +87,7 @@ if ($_POST['submit'] ?? null) {
 		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
 		echo "<i>Você não possui " . $pocoesdevida . " poções de vida.<br/></i>";
 		echo "</fieldset>\n";
-		echo '<a href="inventory.php">Voltar ao inventário.</a>';
+		echo '<a href="inventory_mobile.php">Voltar ao inventário.</a>';
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
@@ -98,7 +98,7 @@ if ($_POST['submit'] ?? null) {
 		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
 		echo "<i>Você não possui " . $bigpocoesdevida . " poções grandes de vida.<br/></i>";
 		echo "</fieldset>\n";
-		echo '<a href="inventory.php">Voltar ao inventário.</a>';
+		echo '<a href="inventory_mobile.php">Voltar ao inventário.</a>';
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
@@ -109,7 +109,7 @@ if ($_POST['submit'] ?? null) {
 		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
 		echo "<i>Você não possui " . $pocoesdeenergia . " poções de energia.<br/></i>";
 		echo "</fieldset>\n";
-		echo '<a href="inventory.php">Voltar ao inventário.</a>';
+		echo '<a href="inventory_mobile.php">Voltar ao inventário.</a>';
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
@@ -120,7 +120,7 @@ if ($_POST['submit'] ?? null) {
 		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
 		echo "<i>Você não possui " . $pocoesdeenergia . " poções de mana.<br/></i>";
 		echo "</fieldset>\n";
-		echo '<a href="inventory.php">Voltar ao inventário.</a>';
+		echo '<a href="inventory_mobile.php">Voltar ao inventário.</a>';
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}
@@ -150,7 +150,7 @@ if ($_POST['submit'] ?? null) {
 	echo "<i>Você vendeu " . $pocoesdemana . " poções de mana por " . number_format($ganha222) . " de ouro.<br/></i>";
 	echo "<i>Você faturou: " . number_format($ganha3) . " de ouro.<br/></i>";
 	echo "</fieldset>\n";
-	echo '<a href="inventory.php">Voltar ao inventário.</a>';
+	echo '<a href="inventory_mobile.php">Voltar ao inventário.</a>';
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
 }
@@ -177,7 +177,7 @@ if ($_GET['act'] ?? null) {
 			echo "<fieldset><legend><b>Vender poções</b></legend>\n";
 			echo "<i>Você só pode vender poções a partir do nível 20.<br/></i>";
 			echo "</fieldset>\n";
-			echo '<a href="inventory.php">Voltar ao inventário.</a>';
+			echo '<a href="inventory_mobile.php">Voltar ao inventário.</a>';
 			include(__DIR__ . "/templates/private_footer.php");
 			exit;
 		}
@@ -200,7 +200,7 @@ if ($_GET['act'] ?? null) {
 			echo "<fieldset><legend><b>Vender poções</b></legend>\n";
 			echo "<i>Você não possui poções para vender.<br/></i>";
 			echo "</fieldset>\n";
-			echo '<a href="inventory.php">Voltar ao inventário.</a>';
+			echo '<a href="inventory_mobile.php">Voltar ao inventário.</a>';
 			include(__DIR__ . "/templates/private_footer.php");
 			exit;
 		}
@@ -215,7 +215,7 @@ if ($_GET['act'] ?? null) {
 		echo "Quero vender: <input type=\"text\" name=\"sellmp\" size=\"3\" value=\"0\"> poções de mana. (1,000 de ouro cada)";
 		echo '<br/><br/><input type="submit" name="submit" value="Vender">';
 		echo "</form></fieldset>\n";
-		echo '<a href="inventory.php">Voltar ao inventário.</a>';
+		echo '<a href="inventory_mobile.php">Voltar ao inventário.</a>';
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
 	}

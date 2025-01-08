@@ -259,7 +259,7 @@ switch ($_GET['act'] ?? null) {
 				echo '<br/><a href="hospt.php?act=potion&pid=' . $item2['id'] . '">Usar</a>';
 			}
 
-			echo "</td></tr></table></td><td><font size=\"1\"><a href=\"hospt.php?act=sell\">Vender Poções</a><br/><a href=\"inventory.php?transpotion=true\">Transferir Poções</a></font></td></tr></table>";
+			echo "</td></tr></table></td><td><font size=\"1\"><a href=\"hospt.php?act=sell\">Vender Poções</a><br/><a href=\"inventory_mobile.php?transpotion=true\">Transferir Poções</a></font></td></tr></table>";
 			echo "</fieldset>";
 
 			echo '<a href="monster.php">Voltar</a>';

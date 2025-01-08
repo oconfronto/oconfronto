@@ -22,7 +22,7 @@ if ($_POST['transferitems'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você precisa preencher todos os campos!<br />";
-		echo '<a href="inventory.php">Voltar</a>.';
+		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
@@ -33,7 +33,7 @@ if ($_POST['transferitems'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você precisa preencher todos os campos!<br />";
-		echo '<a href="inventory.php">Voltar</a>.';
+		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
@@ -44,7 +44,7 @@ if ($_POST['transferitems'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você precisa preencher todos os campos!<br />";
-		echo '<a href="inventory.php">Voltar</a>.';
+		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
@@ -55,7 +55,7 @@ if ($_POST['transferitems'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Sua senha de transferência está incorreta.<br />";
-		echo '<a href="inventory.php">Voltar</a>.';
+		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
@@ -66,7 +66,7 @@ if ($_POST['transferitems'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você não pode enviar um item para você mesmo!<br />";
-		echo '<a href="inventory.php">Voltar</a>.';
+		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
@@ -86,7 +86,7 @@ if ($_POST['transferitems'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você não possui este item.<br />";
-		echo '<a href="inventory.php">Voltar</a>.';
+		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
@@ -97,7 +97,7 @@ if ($_POST['transferitems'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você não pode enviar um item que está sendo usado.<br />";
-		echo '<a href="inventory.php">Voltar</a>.';
+		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
@@ -108,7 +108,7 @@ if ($_POST['transferitems'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você não pode enviar um item que está à venda no mercado.<br />";
-		echo '<a href="inventory.php">Voltar</a>.';
+		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
@@ -119,7 +119,7 @@ if ($_POST['transferitems'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você não pode enviar pedras.<br />";
-		echo '<a href="inventory.php">Voltar</a>.';
+		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
@@ -130,7 +130,7 @@ if ($_POST['transferitems'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "O usuário " . $_POST['username'] . " não existe.<br />";
-		echo '<a href="inventory.php">Voltar</a>.';
+		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
@@ -141,7 +141,7 @@ if ($_POST['transferitems'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Este usuário pertence a outro servidor.<br />";
-		echo '<a href="inventory.php">Voltar</a>.';
+		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
@@ -176,7 +176,7 @@ if ($_POST['transferitems'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Sucesso</b></legend>\n";
 		echo "Você enviou um(a) <b>" . $item5['name'] . " +" . $item5['item_bonus'] . "</b> com sucesso para o usuário: <b>" . $_POST['username'] . "</b>.<br />";
-		echo '<a href="inventory.php">Voltar</a>.';
+		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
