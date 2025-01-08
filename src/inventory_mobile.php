@@ -375,11 +375,36 @@ function displayItemMobile(array $item, $type, $player, int $bool): string
 function fetchItems($playerId, $status)
 {
     global $db;
-    return $db->execute("SELECT items.id, items.item_id, items.item_bonus, items.for, items.vit, items.agi, items.res, items.status, 
-                        blueprint_items.name, blueprint_items.img, blueprint_items.effectiveness, blueprint_items.type, blueprint_items.description, blueprint_items.price
-                        FROM `items` 
-                        JOIN `blueprint_items` ON items.item_id=blueprint_items.id 
-                        WHERE items.player_id=? AND items.status=? AND blueprint_items.type !='potion' AND blueprint_items.type!='stone' AND items.mark='f' ORDER BY items.tile", [$playerId, $status]);
+    return $db->execute("
+        SELECT 
+            items.id, 
+            items.item_id, 
+            items.item_bonus, 
+            items.for, 
+            items.vit, 
+            items.agi, 
+            items.res, 
+            items.status, 
+            blueprint_items.name, 
+            blueprint_items.img, 
+            blueprint_items.effectiveness, 
+            blueprint_items.type, 
+            blueprint_items.description, 
+            blueprint_items.price,
+            blueprint_items.needlvl,
+            blueprint_items.needpromo,
+            blueprint_items.voc
+        FROM `items` 
+        JOIN `blueprint_items` ON items.item_id=blueprint_items.id 
+        WHERE 
+            items.player_id=? 
+            AND items.status=? 
+            AND blueprint_items.type !='potion' 
+            AND blueprint_items.type!='stone' 
+            AND items.mark='f' 
+        ORDER BY items.tile"
+        , [$playerId, $status]
+    );
 }
 
 function fetchPlayers($playerId)
@@ -727,7 +752,18 @@ function displayItemCard(array $item, $type, $player, int $bool): string
                     <img class="item-card-help" src="static/images/help.gif" alt="Descrição">
                 </div>
                 <img src="static/images/itens/' . $item['img'] . '" alt="' . $item['name'] . '">
-                <div class="item-name">' . $item['name'] . ' ' . $bonus1 . ' ' . $bonus2 . ' ' . $bonus3 . ' ' . $bonus4 . ' ' . $bonus5 . '</div>
+                <div class="item-name">' 
+                    . $item['name'] . '<br>' .
+                    'Lv: ' . $item['needlvl'] . 
+                    ' | Voc: ' . returnClassOfItem($item['voc']) .
+                    ($item['needpromo'] == 't' ? '<br><font color="red">(Voc.Sup Exigida)</font>') .
+                    ($item['needring'] == 't' ? ' <br><font color="red">[Nec.Anel]</font>') .
+                    '<br> ' . $bonus1 . 
+                    ' ' . $bonus2 . 
+                    ' ' . $bonus3 . 
+                    ' ' . $bonus4 . 
+                    ' ' . $bonus5 . 
+                '</div>
                 <div class="item-attribute">' . $atributo . '</div>
                 <div class="item-actions">' . implode('<br>', $options) . '</div>
             </div>';
@@ -746,6 +782,28 @@ function displayItemsAsCards($playerId, $status, $title): void
         echo "</div>";
     } else {
         echo "<div style='text-align:center'><p>Nenhum item encontrado.</p></div>";
+    }
+}
+
+function returnClassOfItem($vocationId)
+{
+    //'archer','knight','mage'
+    switch ($vocationId) {
+        case 'archer':
+            return 'Arqueiro';
+            break;
+        
+        case 'mage':
+            return 'Mago';
+            break;
+
+        case 'knight':
+            return 'Guerreiro';
+            break;
+
+        default:
+            return 'Todas'
+            break;
     }
 }
 
