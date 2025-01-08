@@ -72,7 +72,7 @@
     ?>
     <div id="tudo">
         <div id="topo"></div>
-        <img src="static/images/logo-dark.png" style="position: absolute; top: 2rem; left: 0; right: 0; margin: auto;" />
+        <img src="static/images/logo-dark.png" style="position: absolute; top: 2rem; left: 0; right: 0; margin: auto; width: 360px;" />
         <div style="position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;width: fit-content;height: fit-content;">
             <div class="bg-top"></div>
             <div class="bg-fundo">
