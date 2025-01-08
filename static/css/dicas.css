@@ -1,7 +1,6 @@
 body {
   margin: 0em auto;
   padding: 0em;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 0.8em;
   background: url("../images/dot.jpg") center top repeat-x #ffffff;
 }
@@ -10,12 +9,10 @@ a:link,
 a.menu1:active,
 a.menu1:visited {
   color: #8c6b2f;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   text-decoration: none;
 }
 a:hover {
   color: #745927;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   text-decoration: underline;
 }
 

@@ -1,0 +1,160 @@
+player-top {
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  width: 100%;
+
+  .avatar-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  level-element {
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    font-family: monospace;
+    font-size: 1rem;
+    font-weight: bold;
+    justify-content: center;
+    padding: 4px;
+    position: absolute;
+    right: 0;
+  }
+
+  img.avatar-top {
+    height: 128px;
+    width: 128px;
+  }
+
+  name-container {
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    bottom: 0;
+    box-sizing: border-box;
+    color: white;
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
+    padding: 4px;
+    position: absolute;
+    width: 100%;
+  }
+
+  bar-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 8px;
+  }
+
+  gold-and-inventory {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+
+    > .inventory-button {
+      background-image: url("../../images/bag.gif");
+      background-repeat: no-repeat;
+      background-size: contain;
+      height: 24px;
+      width: 24px;
+    }
+  }
+
+  gold-counter {
+    align-items: center;
+    color: #333;
+    display: flex;
+    font-family: monospace;
+    font-size: 1rem;
+    font-weight: bold;
+    gap: 0.25rem;
+    justify-content: center;
+
+    &::before {
+      align-items: center;
+      background: orange;
+      border-radius: 9999px;
+      color: gold;
+      content: "/";
+      display: flex;
+      font-size: 0.75rem;
+      height: 1rem;
+      justify-content: center;
+      width: 1rem;
+    }
+  }
+
+  .bar {
+    align-items: center;
+    box-sizing: border-box;
+    color: white;
+    display: flex;
+    font-family: monospace;
+    font-size: 0.75rem;
+    justify-content: space-between;
+    padding: 2px 8px;
+    width: 100%;
+  }
+
+  health-bar {
+    background: linear-gradient(
+      90deg,
+      #dc2626 0%,
+      #dc2626 var(--percentage),
+      #450a0a var(--percentage)
+    );
+
+    &::before {
+      content: "HP";
+      display: block;
+    }
+  }
+
+  magic-bar {
+    background: linear-gradient(
+      90deg,
+      #2563eb 0%,
+      #2563eb var(--percentage),
+      #082f49 var(--percentage)
+    );
+
+    &::before {
+      content: "MP";
+      display: block;
+    }
+  }
+
+  stamina-bar {
+    background: linear-gradient(
+      90deg,
+      #16a34a 0%,
+      #16a34a var(--percentage),
+      #1a2e05 var(--percentage)
+    );
+
+    &::before {
+      content: "SP";
+      display: block;
+    }
+  }
+
+  experience-bar {
+    background: linear-gradient(
+      90deg,
+      #7c3aed 0%,
+      #7c3aed var(--percentage),
+      #2e1065 var(--percentage)
+    );
+
+    &::before {
+      content: "XP";
+      display: block;
+    }
+  }
+}

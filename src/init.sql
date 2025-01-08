@@ -40,8 +40,20 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `sex` enum('m','f','n') NOT NULL DEFAULT 'n',
   `ref` varchar(11) NOT NULL DEFAULT '',
   `creditos` int(11) NOT NULL DEFAULT '0',
+  `last_captcha_time` int(11) NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1433 ;
+
+-- Create account_bans table
+CREATE TABLE IF NOT EXISTS account_bans (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    account_id INT NOT NULL,
+    ban_until INT NOT NULL,  -- Using UNIX timestamp instead of DATETIME
+    reason VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE,
+    UNIQUE KEY unique_account_ban (account_id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1245,7 +1257,7 @@ CREATE TABLE IF NOT EXISTS `players` (
   `died` int(11) NOT NULL DEFAULT '0',
   `ref` int(11) NOT NULL DEFAULT '0',
   `guild` varchar(255) COLLATE latin1_general_ci NOT NULL DEFAULT '',
-  `avatar` varchar(255) COLLATE latin1_general_ci NOT NULL DEFAULT 'anonimo.gif',
+  `avatar` varchar(255) COLLATE latin1_general_ci NOT NULL DEFAULT '',
   `validkey` varchar(255) COLLATE latin1_general_ci NOT NULL DEFAULT '',
   `transpass` varchar(25) COLLATE latin1_general_ci NOT NULL DEFAULT 'f',
   `ban` int(11) NOT NULL DEFAULT '0',
@@ -1518,6 +1530,7 @@ INSERT INTO `settings` (`name`, `value`) VALUES
 ('energy_potion', '50'),
 ('eventoexp', '1351468994'),
 ('eventoouro', '1351468994'),
+('eventoDrop', '1351468994'),
 ('hospital_rate', '1'),
 ('index_log_error', 'no'),
 ('index_log_ip', 'no'),

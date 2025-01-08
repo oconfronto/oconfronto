@@ -3,7 +3,6 @@ body, html
 
 	margin: 0;
 	padding: 0;
-	font-family:"Palatino Linotype", "Times New Roman", Times, serif;
 	text-align: center;
 	color: #513F2C;
 	background-color: #000;
@@ -103,7 +102,6 @@ h2
 	text-align: right;
 	margin-right:3px;
 	color: #000;
-	font-family:"Verdana", serif;
 	font-weight: bold;
 	font-size:0.6em;
 }
@@ -111,7 +109,6 @@ h2
 .charvaluesSub
 {
 	color: #540400;
-	font-family:"Verdana", serif;
 	font-weight: bold;
 	font-size:0.6em;
 }
@@ -509,7 +506,6 @@ a.submenuitem:hover
 	position: relative;
 	top:7px;
 	color: #5A4317;
-	/*font-family:"Verdana", serif;*/
 	font-size:0.9em;
 	text-decoration: none;
 	font-weight:bold;

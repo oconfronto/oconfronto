@@ -1,17 +1,40 @@
 /* game */
 html,
 body {
-  height: 100%;
+  height: 100dvh;
+  overflow-y: hidden;
+  overflow-x: hidden;
+
+}
+
+html {
+  background: url(../images/private_background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 body {
-  width: 100%;
-  margin: 0px;
-  color: #633113;
+  -moz-box-shadow: 0px 1px 16px 4px rgba(0,0,0,0.50);
+  -webkit-box-shadow: 0px 1px 16px 4px rgba(0,0,0,0.50);
+  align-items: center;
   background: #ddc89c;
+  box-shadow: 0px 1px 16px 4px rgba(0,0,0,0.50);
+  color: #633113;
+  display: flex;
+  flex-direction: column;
   font-size: 12px;
-  font-family: Arial;
-  margin: 0;
+  margin: auto;
+  width: 800px;
+  position: fixed;
+  left: 0;
+  right: 0;
+}
+
+@media (max-width: 768px) {
+  body {
+    width: 100%;
+  }
 }
 
 #nvbarra {
@@ -33,54 +56,98 @@ body {
 }
 
 .conteudo {
+  background: #ddc89c;
   font-size: 13px;
-  width: 96%;
-  padding: 10px;
-  min-height: 100%;
-  top: 40px;
-  bottom: 0;
-  positon: relative;
+  width: 100%;
+  padding: 1rem;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.item-card {
+  background-color: #f4e2bd;
+  border: 1px solid #b9892f;
+  width: 80px; /* Fixed the width */
+  padding: 5px; /* Fixed the padding */
+  margin: 5px; /* Fixed the margin */
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px 2px #d3bc89;
+  display: inline-block;
+  text-align: center;  
+  height: 220px; /* Fixed the height */
+}
+
+.item-card img {
+  border-radius: 5px;
+  height: 40px; /* Fixed the height */
+  width: 40px; /* Fixed the width */
+}
+
+.item-card .item-name {
+  font-size: 10px; /* Fixed the font size */
+  margin-top: 10px;
+  color: #633113;
+  font-weight: bold;
+}
+
+.item-card .item-description {
+  font-size: 10px; /* Fixed the font size */
+  margin-top: 3px;
+  color: #745927;
+  
+}
+
+.item-card-help {  
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.item-card .item-attribute {
+  font-size: 10px; /* Fixed the font size */
+  margin-top: 3px;
+  min-height: 20px;
+  margin-bottom: 5px;
+  color: #745927;
+}
+
+
+
+.item-card .item-actions a {
+  font-size: 10px; /* Fixed the font size */
+  padding: 3px; /* Fixed the padding */
+  background-color: #ac785a;
+  border-radius: 5px;
+  color: #fff;
+  display: block;
+  text-decoration: none;  
+}
+
+.item-card .item-actions a:hover {
+  background-color: #de9469;
+}
+
+@media (max-width: 768px) {
+  .conteudo {
+    font-size: 13px;
+    padding: 1rem;
+  }
 }
 
 a:link {
   color: #8c6b2f;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   text-decoration: none;
 }
 
 a:visited {
   color: #745927;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   text-decoration: none;
 }
 
 a:hover {
   color: #745927;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   text-decoration: underline;
-}
-
-div#tudo {
-  position: relative;
-  width: 1006px;
-
-  text-align: left;
-  margin: 0 auto;
-  border-left: 3px solid #5e0000;
-  border-right: 3px solid #5e0000;
-  -webkit-box-shadow: 20px 0 50px #867b61, -10px 0 20px #867b61;
-  -moz-box-shadow: 20px 0 50px #867b61, -10px 0 20px #867b61;
-  box-shadow: 20px 0 50px #867b61, -10px 0 20px #867b61;
-}
-
-.lol {
-  background: no-repeat top #faf0e3;
-  background-position: 0px -30px;
-  width: 100%;
-  height: 100%;
-  align: center;
-  bottom: 0;
-  padding-top: 231px;
 }
 
 /* menu esquerdo */
@@ -306,8 +373,8 @@ div#tudo {
 /* avatar */
 .avatar {
   background-color: #f2e1ce;
-  width: 195px;
-  height: 195px;
+  width: 128px;
+  height: 128px;
   margin: 5px;
   padding: 4px;
 }
@@ -316,8 +383,8 @@ div#tudo {
   margin: -5px;
   padding: -4px;
   border: 5px solid #570708;
-  width: 195px;
-  height: 195px;
+  width: 128px;
+  height: 128px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
@@ -442,20 +509,21 @@ div#tudo {
 }
 
 /* rodapé */
-#rodape {
-  color: #f9eecd;
+footer {
+  margin-top: auto;
+  color: #8c6b2f;
   width: 100%;
   height: 30px;
   padding-top: 5px;
   padding-bottom: 5px;
-  /* background: url('../images/rodape.png'); */
+  text-align: center;
 }
 
-#rodape a {
+footer a {
   color: #f9eecd;
 }
 
-#rodape a:hover {
+footer a:hover {
   color: #f9eecd;
 }
 
@@ -566,7 +634,7 @@ fieldset {
 }
 
 blockquote {
-  font: 0.9em, "Times New Roman", Times, serif;
+  font: 0.9em;
   width: 350px;
   background: url("../images/close-quote.gif") no-repeat right bottom;
   padding-left: 18px;
@@ -577,7 +645,7 @@ blockquote {
 blockquote:first-letter {
   background: url("../images/open-quote.gif") no-repeat left top;
   padding-left: 18px;
-  font: 1em Georgia, "Times New Roman", Times, serif;
+  font: 1em;
 }
 
 .potionimg {

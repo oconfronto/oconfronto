@@ -8,8 +8,22 @@ $player = check_user($db);
 <html>
 
 <head>
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
 	<title>O Confronto :: Logs de Itens</title>
 	<link rel="icon" type="image/x-icon" href="static/favicon.ico">
+
+	<style>
+		@font-face {
+		font-family: 'Pixelify Sans Without Digits';
+		src: url('static/fonts/PixelifySans.ttf') format('truetype');
+		/* Include all characters except digits */
+		unicode-range: U+0000-002F, U+003A-FFFF;
+		}
+
+		* {
+			font-family: 'Pixelify Sans Without Digits', monospace, sans-serif !important;
+		}
+	</style>
 	<link rel="stylesheet" type="text/css" href="static/css/style-a.css" />
 	<link rel="stylesheet" type="text/css" href="static/css/boxover.css" />
 	<script type="text/javascript" src="static/js/boxover.js"></script>

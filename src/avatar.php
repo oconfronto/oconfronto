@@ -49,7 +49,7 @@ if ($_POST['upload'] ?? null) {
 	}
 
 	if ($error == 0) {
-		$avat = $_POST['avatar'] ?? null ?: "anonimo.gif";
+		$avat = $_POST['avatar'] ?? null;
 		$query = $db->execute("update `players` set `avatar`=? where `id`=?", [$avat, $player->id]);
 		$msg .= "Você alterou seu avatar com sucesso!";
 		// Espera 1.5 segundos antes de atualizar a página
@@ -87,7 +87,7 @@ if ($procuramengperfil->recordcount() == 0) {
 <table width="100%">
 	<tr>
 		<td width="25%">
-			<center><img src="<?php $dire = ($player->avatar == "anonimo.gif") ? "static/" . $player->avatar : $player->avatar;
+			<center><img src="<?php $dire = $player->avatar ? $player->avatar : "static/anonimo.gif";
 								echo $dire ?>" width="120px" height="120px"
 					alt="<?php echo $player->username ?>" border="1px"></center>
 		</td>

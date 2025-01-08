@@ -80,7 +80,7 @@
         		});
 
         		jQuery(document).bind('keydown', 'Alt+5', function(evt) {
-        			window.location = "inventory.php";
+        			window.location = "inventory_mobile.php";
         		});
 
         	}

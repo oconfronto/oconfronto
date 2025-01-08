@@ -1,7 +1,7 @@
 .countdownHolder {
   width: 350px;
   margin: 0 auto;
-  font: 30px/1.5 "Open Sans Condensed", sans-serif;
+  font: 30px/1.5;
   text-align: center;
   letter-spacing: -3px;
 }

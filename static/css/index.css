@@ -1,5 +1,5 @@
 html {
-  background: url("../images/bg.jpg") no-repeat center center;
+  background: url("../images/bg.png") no-repeat center center;
   /* min-height:100%; */
   background-size: cover;
   background-color: #000000;
@@ -8,7 +8,6 @@ html {
 body {
   /* Workaround for some mobile browsers */
   /* min-height: 100%; */
-  font-family: "KlavikaBoldBold", sans-serif;
   font-size: 12px;
   color: #fff;
 }
@@ -232,7 +231,6 @@ a {
 }
 
 #barra-vermelha {
-  font-family: "KlavikaBoldBold", sans-serif;
   font-size: 12px;
   padding-top: 3px;
   color: #ffef8f;
@@ -245,7 +243,6 @@ a {
 }
 
 #aviso-a {
-  font-family: "KlavikaBoldBold", sans-serif;
   font-size: 12px;
   padding-left: 10px;
   color: #ffffff;
@@ -259,7 +256,6 @@ a {
 }
 
 #aviso-v {
-  font-family: "KlavikaBoldBold", sans-serif;
   font-size: 12px;
   padding-left: 10px;
   color: #ffffff;

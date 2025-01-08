@@ -99,35 +99,35 @@ if ($_GET['itid'] ?? null) {
                 $ddckitexs = $ckitexs->fetchrow();
                 if ($ckitexs->recordcount() == 0) {
                     include(__DIR__ . "/templates/private_header.php");
-                    echo 'Um erro desconhecido ocorreu. <a href="inventory.php">Voltar</a>.';
+                    echo 'Um erro desconhecido ocorreu. <a href="inventory_mobile.php">Voltar</a>.';
                     include(__DIR__ . "/templates/private_footer.php");
                     exit;
                 }
 
                 if (($ddckitexs['voc'] ?? null) == '1' && $player->voc != 'archer') {
                     include(__DIR__ . "/templates/private_header.php");
-                    echo "Você não pode usar este item. <a href=\"inventory.php\">Voltar</a>.";
+                    echo "Você não pode usar este item. <a href=\"inventory_mobile.php\">Voltar</a>.";
                     include(__DIR__ . "/templates/private_footer.php");
                     exit;
                 }
 
                 if (($ddckitexs['voc'] ?? null) == '2' && $player->voc != 'knight') {
                     include(__DIR__ . "/templates/private_header.php");
-                    echo "Você não pode usar este item. <a href=\"inventory.php\">Voltar</a>.";
+                    echo "Você não pode usar este item. <a href=\"inventory_mobile.php\">Voltar</a>.";
                     include(__DIR__ . "/templates/private_footer.php");
                     exit;
                 }
 
                 if (($ddckitexs['voc'] ?? null) == '3' && $player->voc != 'mage') {
                     include(__DIR__ . "/templates/private_header.php");
-                    echo "Você não pode usar este item. <a href=\"inventory.php\">Voltar</a>.";
+                    echo "Você não pode usar este item. <a href=\"inventory_mobile.php\">Voltar</a>.";
                     include(__DIR__ . "/templates/private_footer.php");
                     exit;
                 }
 
                 if (($ddckitexs['type'] ?? null) == 'shield' && $player->voc == 'archer') {
                     include(__DIR__ . "/templates/private_header.php");
-                    echo "Arqueiros não podem usar escudos. <a href=\"inventory.php\">Voltar</a>.";
+                    echo "Arqueiros não podem usar escudos. <a href=\"inventory_mobile.php\">Voltar</a>.";
                     include(__DIR__ . "/templates/private_footer.php");
                     exit;
                 }
@@ -136,35 +136,35 @@ if ($_GET['itid'] ?? null) {
 
                 if (($ddckitexs['needlvl'] ?? null) > ($player->level + $lvlbonus)) {
                     include(__DIR__ . "/templates/private_header.php");
-                    echo "Você não tem nível suficiente para usar este item. <a href=\"inventory.php\">Voltar</a>.";
+                    echo "Você não tem nível suficiente para usar este item. <a href=\"inventory_mobile.php\">Voltar</a>.";
                     include(__DIR__ . "/templates/private_footer.php");
                     exit;
                 }
 
                 if (($ddckitexs['type'] ?? null) == 'addon') {
                     include(__DIR__ . "/templates/private_header.php");
-                    echo "Você não pode usar este item. <a href=\"inventory.php\">Voltar</a>.";
+                    echo "Você não pode usar este item. <a href=\"inventory_mobile.php\">Voltar</a>.";
                     include(__DIR__ . "/templates/private_footer.php");
                     exit;
                 }
 
                 if (($ddckitexs['mark'] ?? null) == 't') {
                     include(__DIR__ . "/templates/private_header.php");
-                    echo "Você não pode usar um item que está à venda no mercado. <a href=\"inventory.php\">Voltar</a>.";
+                    echo "Você não pode usar um item que está à venda no mercado. <a href=\"inventory_mobile.php\">Voltar</a>.";
                     include(__DIR__ . "/templates/private_footer.php");
                     exit;
                 }
 
                 if (($ddckitexs['needpromo'] ?? null) == 't' && $player->promoted == 'f') {
                     include(__DIR__ . "/templates/private_header.php");
-                    echo "Apenas usuários de vocação superior podem usar este item. <a href=\"inventory.php\">Voltar</a>.";
+                    echo "Apenas usuários de vocação superior podem usar este item. <a href=\"inventory_mobile.php\">Voltar</a>.";
                     include(__DIR__ . "/templates/private_footer.php");
                     exit;
                 }
 
                 if (($ddckitexs['needpromo'] ?? null) == 'p' && $player->promoted != 'p') {
                     include(__DIR__ . "/templates/private_header.php");
-                    echo "Apenas usuários de vocação suprema podem usar este item. <a href=\"inventory.php\">Voltar</a>.";
+                    echo "Apenas usuários de vocação suprema podem usar este item. <a href=\"inventory_mobile.php\">Voltar</a>.";
                     include(__DIR__ . "/templates/private_footer.php");
                     exit;
                 }
@@ -246,5 +246,5 @@ if ($_GET['itid'] ?? null) {
 }
 
 
-header("Location: inventory.php");
+header("Location: inventory_mobile.php");
 exit;

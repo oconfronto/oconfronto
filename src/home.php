@@ -20,10 +20,8 @@ if ($tutorial->recordcount() == 0) {
     }
 }
 
-
 include(__DIR__ . "/checkbattle.php");
 include(__DIR__ . "/checktasks.php");
-
 include(__DIR__ . "/templates/private_header.php");
 include(__DIR__ . "/checkmedals.php");
 
@@ -39,308 +37,205 @@ if ($tutorial->recordcount() > 0) {
 
 include(__DIR__ . "/checkquest.php");
 
-//VERIFICANDO ULTIMO ITEM RECEBIDO E NOTIFICANDO //
-if ($query2 = $db->execute(sprintf('select * from `items` where `player_id`= %s and `item_event` = 1', $player->id))) {
+// Check last received item and notify
+$query2 = $db->execute(sprintf('select * from `items` where `player_id`= %s and `item_event` = 1', $player->id));
+if ($query2) {
     while ($row = $query2->fetchrow()) {
         $id = $row['id'];
         $item_id = $row['item_id'];
         $item_bonus = $row['item_bonus'];
-        if ($query3 = $db->execute('select * from `blueprint_items` where `id`= ' . $item_id)) {
+        
+        $query3 = $db->execute('select * from `blueprint_items` where `id`= ' . $item_id);
+        if ($query3) {
             while ($row2 = $query3->fetchrow()) {
                 $item_name = $row2['name'];
             }
-
             echo showAlert("Você acaba de ganhar o Item <u>" . $item_name . " +" . $item_bonus . "</u> do Evento Convide Amigos, Parabéns !", "green");
             $db->execute("update `items` set `item_event`=? where `id`=? ", ['0', $id]);
         }
     }
 }
 
-// FIM DO MEU CODE LINDO //	
-
-
-echo '<table width="100%">';
-echo '<tr><td width="60%">';
-echo '<table width="100%">';
-echo '<tr><td class="brown" width="100%"><center><b>' . $player->username . "</b></center></td></tr>";
-
-echo '<tr><td class="salmon" height="80px">';
-echo "<table style='padding:14px;'  width=\"100%\">";
-
-echo "<tr><td width=\"20%\"><b>Vocação:</b></td><td width=\"55%\">";
-
-if ($player->voc == 'archer' && $player->promoted == 'f') {
-    echo "Caçador";
-} elseif ($player->voc == 'knight' && $player->promoted == 'f') {
-    echo "Espadachim";
-} elseif ($player->voc == 'mage' && $player->promoted == 'f') {
-    echo "Bruxo";
-} elseif ($player->voc == 'archer' && ($player->promoted == 't' || $player->promoted == 's' || $player->promoted == 'r')) {
-    echo "Arqueiro";
-} elseif ($player->voc == 'knight' && ($player->promoted == 't' || $player->promoted == 's' || $player->promoted == 'r')) {
-    echo "Guerreiro";
-} elseif ($player->voc == 'mage' && ($player->promoted == 't' || $player->promoted == 's' || $player->promoted == 'r')) {
-    echo "Mago";
-} elseif ($player->voc == 'archer' && $player->promoted == 'p') {
-    echo "Arqueiro Royal";
-} elseif ($player->voc == 'knight' && $player->promoted == 'p') {
-    echo "Cavaleiro";
-} elseif ($player->voc == 'mage' && $player->promoted == 'p') {
-    echo "Arquimago";
+// Helper function to get vocation name
+function getVocationName($voc, $promoted) {
+    $vocations = [
+        'archer' => [
+            'f' => 'Caçador',
+            't' => 'Arqueiro',
+            's' => 'Arqueiro',
+            'r' => 'Arqueiro',
+            'p' => 'Arqueiro Royal'
+        ],
+        'knight' => [
+            'f' => 'Espadachim',
+            't' => 'Guerreiro',
+            's' => 'Guerreiro',
+            'r' => 'Guerreiro',
+            'p' => 'Cavaleiro'
+        ],
+        'mage' => [
+            'f' => 'Bruxo',
+            't' => 'Mago',
+            's' => 'Mago',
+            'r' => 'Mago',
+            'p' => 'Arquimago'
+        ]
+    ];
+    
+    return $vocations[$voc][$promoted] ?? 'Desconhecido';
 }
 
-echo '</td><th rowspan="4" width="25%">';
-echo '<center><font size="1px">Ranking</font><br/>';
+// Helper function to get kingdom name
+function getKingdomName($reino) {
+    $kingdoms = [
+        1 => 'Cathal',
+        2 => 'Eroda',
+        3 => 'Turkic'
+    ];
+    return $kingdoms[$reino] ?? 'Nenhum';
+}
+
+// Get registration month in Portuguese
+$mes = date("M", $player->registered);
+$mes_ano = [
+    "Jan" => "Janeiro",
+    "Feb" => "Fevereiro",
+    "Mar" => "Março",
+    "Apr" => "Abril",
+    "May" => "Maio",
+    "Jun" => "Junho",
+    "Jul" => "Julho",
+    "Aug" => "Agosto",
+    "Sep" => "Setembro",
+    "Oct" => "Outubro",
+    "Nov" => "Novembro",
+    "Dec" => "Dezembro"
+];
+
+// Get clan name
+$nomecla = $db->GetOne("select `name` from `guilds` where `id`=?", [$player->guild]);
+
+// Get player ranking
 $sql = "select id from players where gm_rank<10 and serv=" . $player->serv . " order by level desc, exp desc";
 $dados = $db->execute($sql);
+$ranking = 0;
 $i = 1;
 while ($linha = $dados->fetchrow()) {
     if (($linha['id'] ?? null) == $player->id) {
-        echo '' . $i;
+        $ranking = $i;
     }
-
     ++$i;
 }
 
-echo "º";
-echo "</center>";
-echo "</th></tr>";
+?>
 
-echo "<tr><td><b>Reino:</b></td><td>";
-if ($player->reino == 1) {
-    echo "Cathal";
-} elseif ($player->reino == 2) {
-    echo "Eroda";
-} elseif ($player->reino == 3) {
-    echo "Turkic";
-} else {
-    echo "Nenhum";
-}
+<!-- Main Content -->
+<table width="100%">
+    <tr style="display: flex; flex-wrap: wrap;">
+        <td width="60%" style="flex: 3;">
+            <table width="100%">
+                <tr>
+                    <td class="brown" width="100%">
+                        <center><b><?= $player->username ?></b></center>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="salmon" height="80px">
+                        <table style='padding:14px;' width="100%">
+                            <tr>
+                                <td width="20%"><b>Vocação:</b></td>
+                                <td width="55%"><?= getVocationName($player->voc, $player->promoted) ?></td>
+                                <th rowspan="4" width="25%">
+                                    <center>
+                                        <font size="1px">Ranking</font><br/>
+                                        <?= $ranking ?>º
+                                    </center>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td><b>Reino:</b></td>
+                                <td><?= getKingdomName($player->reino) ?></td>
+                            </tr>
+                            <tr>
+                                <td><b>Clã:</b></td>
+                                <td>
+                                    <?php if ($nomecla): ?>
+                                        <a href="guild_home.php"><?= $nomecla ?></a>
+                                    <?php else: ?>
+                                        Nenhum
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Registrado:</b></td>
+                                <td>
+                                    <?= date("d", $player->registered) ?> de <?= $mes_ano[$mes] ?> de <?= date("Y, g:i A", $player->registered) ?>.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="<?= $player->magic_points > 29 ? 'red' : 'on' ?>">
+                        <center id="vl_pontosMisticos">
+                            <font size="1px"><b>Pontos místicos:</b> <?= $player->magic_points ?></font>
+                        </center>
+                    </td>
+                </tr>
+                
+                <!-- Spells Section -->
+                <tr>
+                    <td>
+                        <br/>
+                        <table width="100%">
+                            <tr>
+                                <td class="brown" width="80%">
+                                    <center><b>Magias</b></center>
+                                </td>
+                                <td class="brown" width="20%">
+                                    <center>
+                                        <font size="1px">
+                                            <a href="stat_points.php?act=magiasreset">Reorganizar</a>
+                                        </font>
+                                    </center>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div id="comfirm" style="background-color: #FFFDE0; padding: 5px; text-align: center;" height="100px">
+                                        <?php include(__DIR__ . "/showspells.php"); ?>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        
+        <!-- Right Column -->
+        <td width="40%" style="flex: 2;">
+            <?php include(__DIR__ . "/templates/player-stats.php"); ?>
+        </td>
+    </tr>
+</table>
 
-echo "</td></tr>";
+<br/>
 
-$nomecla = $db->GetOne("select `name` from `guilds` where `id`=?", [$player->guild]);
-echo "<tr><td><b>Clã:</b></td><td>";
-if ($nomecla != NULL) {
-    echo '<a href="guild_home.php">' . $nomecla . "</a>";
-} else {
-    echo "Nenhum";
-}
+<!-- Tasks and Friends Section -->
+<table width="100%">
+    <tr>
+        <td width="50%">
+            <?php include(__DIR__ . "/templates/player-tasks.php"); ?>
+        </td>
+        <td width="50%">
+            <?php include(__DIR__ . "/templates/player-friends.php"); ?>
+        </td>
+    </tr>
+</table>
 
-echo "</td></tr>";
-
-$mes = date("M", $player->registered);
-$mes_ano["Jan"] = "Janeiro";
-$mes_ano["Feb"] = "Fevereiro";
-$mes_ano["Mar"] = "Março";
-$mes_ano["Apr"] = "Abril";
-$mes_ano["May"] = "Maio";
-$mes_ano["Jun"] = "Junho";
-$mes_ano["Jul"] = "Julho";
-$mes_ano["Aug"] = "Agosto";
-$mes_ano["Sep"] = "Setembro";
-$mes_ano["Oct"] = "Outubro";
-$mes_ano["Nov"] = "Novembro";
-$mes_ano["Dec"] = "Dezembro";
-
-echo "<tr><td><b>Registrado:</b></td><td>" . date("d", $player->registered) . " de " . $mes_ano[$mes] . " de " . date("Y, g:i A", $player->registered) . ".</td></tr>";
-echo "</table>";
-echo "</td></tr>";
-if ($player->magic_points > 29) {
-    echo '<tr><td class="red">';
-} else {
-    echo '<tr><td class="on">';
-}
-
-echo "<center id=\"vl_pontosMisticos\"><font size=\"1px\"><b>Pontos místicos:</b> " . $player->magic_points . "</font></center>";
-echo "</td></tr>";
-echo "<tr><td>";
-echo '<br/><table width="100%">';
-echo '<tr><td class="brown" width="80%"><center><b>Magias</b></center></td><td class="brown" width="20%"><center><font size="1px"><a href="stat_points.php?act=magiasreset">Reorganizar</a></font></center></td></tr>';
-echo '<tr><td colspan="2">';
-echo '<div id="comfirm" style="background-color: #FFFDE0; padding: 5px; text-align: center;" height="100px">';
-include(__DIR__ . "/showspells.php");
-echo "</div>";
-echo "</td></tr>";
-echo "</table>";
-echo "</td></tr>";
-echo "</table>";
-echo "</td>";
-echo '<td width="40%">';
-echo '<table width="100%">';
-echo "<tr><td class=\"brown\" width=\"100%\" colspan=\"2\"><center><b>Pontos de Status</b><img src=\"static/images/help.gif\" title=\"header=[Pontos de Status] body=[<font size='1px'>São utilizados para aumentar sua agilidade, vitalidade, etc. A cada nível que você passar você ganha 3 pontos de status. Quando isso ocorrer não se esqueça de utilizá-los!</font>]\"></center></td></tr>";
-echo '<tr><td class="salmon" height="80px" colspan="2"><div id="skills">';
-include(__DIR__ . "/showskills.php");
-echo "</div></td></tr>";
-echo "<tr><td ";
-if ($player->stat_points > 8) {
-    echo 'class="red"';
-} else {
-    echo 'class="on"';
-}
-
-echo '><center><font size="1px"><b><a href="stat_points.php">Distribuir pontos</a></b></font></center>';
-echo "</td>";
-if ($player->level > 79 && $player->buystats == 0) {
-    echo '<td class="red">';
-} else {
-    echo '<td class="on">';
-}
-
-echo '<center><font size="1px"><b><a href="buystats.php">Treinar</a></b></font></center>';
-echo "</td></tr>";
-echo '<tr><td  colspan="2">';
-echo '<br/><table width="100%">';
-echo '<tr><td class="brown" width="100%"><center><b>Estender Mana</b></center></td></tr>';
-echo "<tr>";
-echo '<td class="salmon" height="100px"><div id="maxmana">';
-$magiascount = $db->execute("select * from `magias` where `player_id`=?", [$player->id]);
-if ($magiascount->recordcount() < 11) {
-    echo "<br/><br/><center>Apenas jogadores que possuem todas as magias liberadas podem estender sua mana.</center><br/><br/>";
-} else {
-    echo '<br/><center><img src="static/images/man.png"><img src="static/bargen.php?man">';
-    if ($player->magic_points > 0) {
-        echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_spells.php?estender=true', 'maxmana')\"><img src=\"static/images/addstat.png\" border=\"0px\"></a>";
-    } else {
-        echo '<img src="static/images/none.png" border="0px">';
-    }
-
-    echo "</center>";
-    echo "<center><font size=\"1px\">Estenda 2 pontos da sua mana<br/>máxima por 1 ponto místico.<br/><br/><b>Você " . $player->magic_points . " tem ponto(s) místico(s).</b></font></center>";
-}
-
-echo "</div></td>";
-echo "</tr>";
-echo "</table>";
-echo "</td></tr>";
-echo "</table>";
-echo "</td></tr>";
-echo "</table>";
-/*	echo "</td></tr>";
-echo "</table>"; */
-
-
-echo "<br/>";
-
-echo '<table width="100%">';
-echo '<tr><td width="50%">';
-echo '<table width="100%">';
-echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Tarefas e Missões</b><img src=\"static/images/help.gif\" title=\"header=[Tarefas] body=[<font size='1px'>Tarefas são maneiras divertidas de se beneficiar no jogo. Apenas siga alguma das tarefas abaixo e seja recompensado com ouro, itens ou até mesmo ponto de experiência!</font>]\"></center></td></tr>";
-$gettasks = $db->execute("select * from `tasks` where `needlvl`<=? order by `needlvl` asc", [$player->level]);
-if ($gettasks->recordcount() < 1) {
-    echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa disponível.</font></center></td></tr>";
-} else {
-    $query = $db->execute("select * from `allquests`");
-    while ($quest = $query->fetchrow()) {
-        $q .= '<table width="100%" border="0px"><tr>';
-        $q .= '<td width="70%"><b>' . $quest['name'] . "</b><br/><i>" . $quest['desc'] . "</i><br/><br/></td>";
-
-        //verifica se a missão está disponível ou se foi completa
-        $qStatus = $db->GetOne("select `quest_status` from `quests` where `player_id`=? and `quest_id`=?", [$player->id, $quest['id'] ?? null]);
-        if ($qStatus != 90 && ($quest['lvl'] ?? null) <= $player->level) {
-            $mostra = true;
-            if (($quest['to_lvl'] ?? null) < $player->level && ($quest['to_lvl'] ?? null) > 0) {
-                $mostra = false;
-            }
-
-            if ($mostra) {
-                if ($qStatus > 0) {
-                    echo '<tr><th class="red" width="100%"><table width="100%" border="0"><tr><td width="80%"><font size="1px">' . $quest['name'] . '</font></td><th width="20%" align="right"><font size="1px"><a href="tavern.php?p=quests&start=' . $quest['id'] . '">Continuar</a></font></th></tr></table></th></tr>';
-                } else {
-                    echo '<tr><th class="red" width="100%"><table width="100%" border="0"><tr><td width="80%"><font size="1px">' . $quest['name'] . '</font></td><th width="20%" align="right"><font size="1px"><a href="tavern.php?p=quests&start=' . $quest['id'] . '">Participar</a></font></th></tr></table></th></tr>';
-                }
-            }
-        }
-    }
-
-    while ($task = $gettasks->fetchrow()) {
-        $checkcompleted = $db->execute("select * from `completed_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id'] ?? null]);
-        if ($checkcompleted->recordcount() == 0) {
-            if (($task['obj_type'] ?? null) == 'monster' && ($task['obj_extra'] ?? null) > 0) {
-                $mname = $db->GetOne("select `username` from `monsters` where `id`=?", [$task['obj_value'] ?? null]);
-                $pcento = $db->GetOne("select `value` from `monster_tasks` where `player_id`=? and `task_id`=?", [$player->id, $task['id'] ?? null]);
-                $pcento = ceil(($pcento / $task['obj_extra']) * 100);
-                $msg = "Matar " . $task['obj_extra'] . "x o monstro " . $mname . ".<br/>";
-            } elseif (($task['obj_type'] ?? null) == 'monster' && ($task['obj_extra'] ?? null) == 0) {
-                $pcento = ceil(($player->monsterkilled / $task['obj_value']) * 100);
-                $msg = "Matar " . $task['obj_value'] . " monstros.<br/>";
-            } elseif (($task['obj_type'] ?? null) == 'pvp' && ($task['obj_extra'] ?? null) == 0) {
-                $pcento = ceil(($player->kills / $task['obj_value']) * 100);
-                $msg = "Matar " . $task['obj_value'] . " usuários.<br/>";
-            } elseif (($task['obj_type'] ?? null) == 'level') {
-                $pcento = ceil(($player->level / $task['obj_value']) * 100);
-                $msg = "Alcançar o nível " . $task['obj_value'] . ".<br/>";
-            }
-
-
-            if (($task['win_type'] ?? null) == 'gold') {
-                $win = "<b>Recompensa:</b> " . $task['win_value'] . " moedas de ouro.<br/>";
-            } elseif (($task['win_type'] ?? null) == 'exp') {
-                $win = "<b>Recompensa:</b> " . $task['win_value'] . " pontos de experiência.<br/>";
-            } elseif (($task['win_type'] ?? null) == 'item') {
-                $itname = $db->GetOne("select `name` from `blueprint_items` where `id`=?", [$task['win_value'] ?? null]);
-                $win = "<b>Recompensa:</b> " . $itname . ".<br/>";
-            }
-
-            echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><div title=\"header=[Tarefa] body=[" . $pcento . '% concluida.]"><font size="1px">' . $msg . "" . $win . "</font></div></td></tr>";
-        }
-    }
-
-    $countcompleted = $db->execute("select `id` from `completed_tasks` where `player_id`=?", [$player->id]);
-    if ($gettasks->recordcount() == $countcompleted->recordcount()) {
-        echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhuma tarefa disponível.</font></center></td></tr>";
-    }
-}
-
-echo "</table>";
-echo '<center><font size="1"><a href="tavern.php?p=tasks">Exibir todas as tarefas</a></font></center>';
-echo "</td>";
-echo '<td width="50%">';
-echo '<table width="100%">';
-echo "<tr><td class=\"brown\" width=\"100%\"><center><b>Amigos</b><img src=\"static/images/help.gif\" title=\"header=[Amigos] body=[<font size='1px'>Seus amigos são importantes no jogo. Além de poder caçar com eles você sempre ficará informado do que seu amigo está fazendo no jogo, portanto, vá logo para o chat ou o fórum do jogo e comece novas amizades!</font>]\"></center></td></tr>";
-
-$countfriends = $db->execute("select * from `friends` where `uid`=?", [$player->acc_id]);
-if ($countfriends->recordcount() == 0) {
-    echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Você não tem amigos.</font></center></td></tr>";
-} else {
-
-    $getflogs = $db->execute("select log_friends.log, log_friends.time from `log_friends`, `friends` where friends.uid=? and log_friends.fname=friends.fname order by log_friends.time desc limit 5", [$player->acc_id]);
-    if ($getflogs->recordcount() < 1) {
-        echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><center><font size=\"1px\">Nenhum registro recente.</font></center></td></tr>";
-    } else {
-        while ($pfriend = $getflogs->fetchrow()) {
-
-            $valortempo = time() -  $pfriend['time'];
-            if ($valortempo < 60) {
-                $valortempo2 = $valortempo;
-                $auxiliar2 = "segundo(s) atrás.";
-            } elseif ($valortempo < 3600) {
-                $valortempo2 = ceil($valortempo / 60);
-                $auxiliar2 = "minuto(s) atrás.";
-            } elseif ($valortempo < 86400) {
-                $valortempo2 = ceil($valortempo / 3600);
-                $auxiliar2 = "hora(s) atrás.";
-            } elseif ($valortempo > 86400) {
-                $valortempo2 = ceil($valortempo / 86400);
-                $auxiliar2 = "dia(s) atrás.";
-            }
-
-            echo "<tr><td class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" width=\"100%\"><div title=\"header=[Log] body=[" . $valortempo2 . " " . $auxiliar2 . ']"><font size="1px">' . $pfriend['log'] . "</font></div></td></tr>";
-        }
-    }
-}
-
-echo "</table>";
-if ($countfriends->recordcount() > 0) {
-    $countgetflogs = $db->execute("select log_friends.log from `log_friends`, `friends` where friends.uid=? and log_friends.fname=friends.fname", [$player->acc_id]);
-    if ($countgetflogs->recordcount() > 5) {
-        echo "<center><font size=\"1\"><a href=\"#\" onclick=\"javascript:window.open('friendslogs.php', '_blank','top=100, left=100, height=350, width=520, status=no, menubar=no, resizable=no, scrollbars=yes, toolbar=no, location=no, directories=no');\">Exibir mais logs de amigos</a></font></center>";
-    }
-}
-
-echo "</td></tr>";
-echo "</table>";
-
+<?php
+// Update user record if needed
 $totalon = $db->execute("select `player_id` from `user_online`");
 if ($totalon->recordcount() > $setting->user_record) {
     $query = $db->execute("update `settings` set `value`=? where `name`='user_record'", [$totalon->recordcount()]);

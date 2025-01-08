@@ -1,22 +1,24 @@
-.cssmenu {
+.top-menu {
   border: none;
   border: 0px;
   margin: 0px;
   padding: 0px;
 }
-.cssmenu ul {
-  background: url("../images/menu/barramenu.png");
+.top-menu ul {
+  background: #991b1b;
   height: 36px;
   list-style: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.cssmenu li {
-  float: left;
-  padding: 0px 0px 0px 15px;
+.top-menu li {
+  flex: 1;
+  text-align: center;
 }
-.cssmenu li a {
-  width: 100px;
+.top-menu li a {
   color: #f9eecd;
   display: block;
   line-height: 36px;
@@ -27,16 +29,16 @@
   white-space: nowrap;
   overflow: hidden;
 }
-.cssmenu li a:hover {
-  background: url("../images/menu/menuhover3.png") no-repeat;
+.top-menu li a:hover {
+  background: #b91c1c;
   color: #ffffff;
   text-decoration: none;
 }
-.cssmenu ul li:hover a {
+.top-menu ul li:hover a {
   color: #ffffff;
   text-decoration: none;
 }
-.cssmenu li ul {
+.top-menu li ul {
   display: none;
   border-radius: 15px !important;
   height: auto;
@@ -49,10 +51,10 @@
   opacity: 0.9;
   filter: alpha(opacity=70);
 }
-.cssmenu li:hover ul {
+.top-menu li:hover ul {
   display: block;
 }
-.cssmenu li li {
+.top-menu li li {
   display: block;
   float: none;
   margin: 0px;
@@ -61,10 +63,10 @@
   background: #000;
   /*this is where the rounded corners for the dropdown disappears*/
 }
-.cssmenu li:hover li a {
+.top-menu li:hover li a {
   background: none;
 }
-.cssmenu li ul a {
+.top-menu li ul a {
   width: 175px; /*gambiarra arrumar vermelho */
   display: block;
   height: 36px;
@@ -74,8 +76,8 @@
   padding: 0px 10px 0px 15px;
   text-align: left;  
 }
-.cssmenu li ul a:hover,
-.cssmenu li ul li:hover a {
+.top-menu li ul a:hover,
+.top-menu li ul li:hover a {
   border: 0px;
   color: #ffffff;
   text-decoration: none;

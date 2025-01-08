@@ -1,6 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="-1" />
@@ -8,6 +9,19 @@
     <title>O Confronto :: <?php echo PAGENAME ?></title>
 
     <link rel="icon" type="image/x-icon" href="static/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+    <style>
+		@font-face {
+		font-family: 'Pixelify Sans Without Digits';
+		src: url('static/fonts/PixelifySans.ttf') format('truetype');
+		/* Include all characters except digits */
+		unicode-range: U+0000-002F, U+003A-FFFF;
+		}
+
+		* {
+			font-family: 'Pixelify Sans Without Digits', monospace, sans-serif !important;
+		}
+	</style>
     <link rel="stylesheet" type="text/css" href="static/css/index.css" />
     <link rel="stylesheet" type="text/css" href="static/example2.css" />
 
@@ -59,14 +73,9 @@
 
 <body>
     <div id="tudo">
-
         <div id="topo"></div>
-
-        <?php
-        include(__DIR__ . "/../notice_board.php");
-        ?>
-
-        <div id="box">
+        <img src="static/images/logo-dark.png" style="position: absolute; top: 2rem; left: 0; right: 0; margin: auto;" />
+        <div style="position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;width: fit-content;height: fit-content;">
             <div class="bg-top"></div>
             <div class="bg-fundo">
                 <div id="barra-top">

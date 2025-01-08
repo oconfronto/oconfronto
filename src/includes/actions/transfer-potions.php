@@ -10,7 +10,7 @@ function showError($message) {
 	include_once $header;
 	echo "<fieldset><legend><b>Erro</b></legend>\n";
 	echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . "<br />";
-	echo '<a href="inventory.php">Voltar</a>.';
+	echo '<a href="inventory_mobile.php">Voltar</a>.';
 	echo "</fieldset>";
 	include_once $footer;
 	exit;
@@ -19,11 +19,11 @@ function showError($message) {
 if (($_GET['transpotion'] ?? null) && !($_POST['mandap'] ?? null)) {
 	include_once $header;
 	echo "<fieldset><legend><b>Enviar Poções</b></legend>\n";
-	echo '<form method="post" action="inventory.php?transpotion=true"><table><tr><td><b>Desejo enviar:</b></td><td><select name="potion"><option value="none" selected="selected">Selecione</option><option value="hp">Health Potions</option><option value="bhp">Big Health Potions</option><option value="mana">Mana Potions</option><option value="energy">Energy Potions</option></select></td></tr>';
+	echo '<form method="post" action="inventory_mobile.php?transpotion=true"><table><tr><td><b>Desejo enviar:</b></td><td><select name="potion"><option value="none" selected="selected">Selecione</option><option value="hp">Health Potions</option><option value="bhp">Big Health Potions</option><option value="mana">Mana Potions</option><option value="energy">Energy Potions</option></select></td></tr>';
 	echo '<tr><td><b>Quantia:</b></td><td><input type="text" name="quantia" size="4"/></td></tr>';
 	echo "<tr><td><b>Senha de Transferência:</b></td><td><input type=\"password\" name=\"passcode\" size=\"20\"/></td></tr>";
 	echo '<tr><td><b>Para:</b></td><td><input type="text" name="to"/> <input type="submit" name="mandap" value="Enviar" /></td></tr></table>';
-	echo '</form></fieldset><a href="inventory.php">Voltar</a>.';
+	echo '</form></fieldset><a href="inventory_mobile.php">Voltar</a>.';
 	include_once $footer;
 	exit;
 }
@@ -101,7 +101,7 @@ if (($_GET['transpotion'] ?? null) && ($_POST['mandap'] ?? null)) {
 	include_once $header;
 	echo "<fieldset><legend><b>Sucesso</b></legend>\n";
 	echo "Você acaba de enviar " . $quantia . " " . $tipo . "s para " . $memberto['username'] . ".<br />";
-	echo '<a href="inventory.php">Voltar</a>.';
+	echo '<a href="inventory_mobile.php">Voltar</a>.';
 	echo "</fieldset>";
 	include_once $footer;
 	exit;

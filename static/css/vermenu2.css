@@ -10,7 +10,7 @@ ul.menubar .submenu {
   width: 170px;
   margin-top: -10px;
   background: url("../images/menu/menuoff2.png") repeat-x top;
-  font: bold 12px Verdana, Helvetica, sans-serif;
+  font: bold 12px;
   color: white;
   float: left;
 }

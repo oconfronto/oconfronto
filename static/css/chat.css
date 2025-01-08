@@ -21,7 +21,6 @@
 }
 
 .chatboxcontent {
-  font-family: arial, sans-serif;
   font-size: 13px;
   color: #333333;
   height: 200px;
@@ -83,7 +82,6 @@
   text-decoration: none;
   color: white;
   font-weight: bold;
-  font-family: Verdana, Arial, "Bitstream Vera Sans", sans-serif;
 }
 
 .chatboxtitle {

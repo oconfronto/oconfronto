@@ -41,7 +41,7 @@ if ($_POST['forgot'] ?? null) {
         $message .= "<div style=\"padding:10px;margin-bottom:4px;background-color:#CEA663\">\n";
         $message .= '<a href="' . $domain . '" target="_blank"><img alt="O Confronto" height="30" src="static/' . $domain . "/images/logo.gif\" style=\"display:block;border:0\" width=\"175\"></a>\n";
         $message .= "</div>\n";
-        $message .= "<div style=\"font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;font-size:13px;margin:14px\">\n";
+        $message .= "<div style=\"font-size:13px;margin:14px\">\n";
         $message .= "<p>Parece que você solicitou uma nova senha para a conta <b>" . $recu['conta'] . "</b>.<br/>\n";
         $message .= 'Para gerar uma nova senha, <a href="' . $domain . "/newpass.php?email=" . $recu['email'] . "&string=" . $recu['validkey'] . "\" target=\"_blank\">clique aqui</a>.</p>\n";
         $message .= "<p>Se você não solicitou uma nova senha apenas ignore este email.</p>\n";

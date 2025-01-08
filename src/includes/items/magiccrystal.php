@@ -16,7 +16,7 @@ if ($numgoldbars->recordcount() > 2) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Atenção</b></legend>\n";
 	echo "Os três cristais mágicos que você possuía em seu inventário parecem ter se misturado e formado um novo anel.<br />";
-	echo '<a href="inventory.php">Voltar</a>.';
+	echo '<a href="inventory_mobile.php">Voltar</a>.';
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
