@@ -47,7 +47,7 @@ function displayItem($db, $player, $itemType): void
     <equipment-container>
         <?php displayItem($db, $player, 'helmet'); ?>
     </equipment-container>
-    <a href="inventory.php" class="inventory-button"><img src="static/images/bag.gif" alt="inventory"></a>
+    <a href="inventory_mobile.php" class="inventory-button"><img src="static/images/bag.gif" alt="inventory"></a>
     <equipment-container>
         <?php displayItem($db, $player, 'weapon'); ?>
     </equipment-container>

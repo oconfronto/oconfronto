@@ -78,5 +78,5 @@ if (($_GET['itid'] ?? null) && ($_GET['tile'] ?? null)) {
 	}
 }
 
-header("Location: inventory.php");
+header("Location: inventory_mobile.php");
 exit;

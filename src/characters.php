@@ -205,62 +205,38 @@ if ($aviso != 1) {
 }
 
 $query = $db->execute("select `id`, `username`, `level`, `avatar`, `ban`, `serv` from `players` where `acc_id`=? order by `level` desc", [$acc->id]);
+
 if ($query->recordcount() == 0) {
     echo "<br/><p><center><b>Você ainda não possui nenhum personagem.</b></center></p><br/>";
-} elseif ($query->recordcount() <= 3) {
-    echo '<p><table align="center" width="95%"><tr>';
-    while ($member = $query->fetchrow()) {
-        $dire = $member['avatar'] ? $member['avatar'] : "static/anonimo.gif";
-        echo "<td><table align=\"center\" style=\"height:132px; border:1px solid #444; padding:3px;\" onmouseover=\"this.bgColor='#cccccc';\" onmouseout=\"this.bgColor='#000000';\" onclick='window.location=\"login.php?id=" . $member['id'] . "\"'>";
-        echo "<tr><td>";
-        echo '<center><a href="login.php?id=' . $member['id'] . '"><img src="' . $dire . '' . $member['avatar'] . '" alt="' . $member['username'] . '" width="85px" height="80px"/></a></center>';
-        echo "</td></tr>";
-
-        if (strlen((string) ($member['username'] ?? null)) < 8) {
-            echo '<tr><td><center><b><font size="3px">' . $member['username'] . "</font></b></center></td></tr>";
-        } elseif (strlen((string) ($member['username'] ?? null)) < 12) {
-            echo '<tr><td><center><b><font size="2px">' . $member['username'] . "</font></b></center></td></tr>";
-        } else {
-            echo '<tr><td><center><b><font size="1px">' . $member['username'] . "</font></b></center></td></tr>";
-        }
-
-        if (($member['ban'] ?? null) > time()) {
-            echo '<tr><td><center><font size="1px" color="red"><b>Banido</b></font></center></td></tr>';
-        } else {
-            echo "<tr><td><center><font size=\"1px\">nível " . $member['level'] . "</font></center></td></tr>";
-        }
-
-        echo "</table></td>";
-    }
-
-    echo "</tr></table></p>";
 } else {
-    echo '<p><div id="jMyCarousel" class="jMyCarousel"><ul>';
+    echo '<div style="max-height: 225px; overflow-y: auto;"><table align="center" width="95%">';
     while ($member = $query->fetchrow()) {
         $dire = $member['avatar'] ? $member['avatar'] : "static/anonimo.gif";
-        echo "<li><table align=\"center\" style=\"height:132px; border:1px solid #444; padding:3px;\" onmouseover=\"this.bgColor='#cccccc';\" onmouseout=\"this.bgColor='#000000';\" onclick='window.location=\"login.php?id=" . $member['id'] . "\"'>";
-        echo "<tr><td>";
-        echo '<center><a href="login.php?id=' . $member['id'] . '"><img src="' . $dire . '' . $member['avatar'] . '" alt="' . $member['username'] . '" width="85px" height="80px"/></a></center>';
-        echo "</td></tr>";
-
+        echo "<tr><td><table align=\"center\" style=\"width:100%; height:100px; border:1px solid #444; padding:3px; margin-bottom: 10px;\" onmouseover=\"this.bgColor='#cccccc';\" onmouseout=\"this.bgColor='#000000';\" onclick='window.location=\"login.php?id=" . $member['id'] . "\"'>";
+        echo "<tr><td style=\"width: 100px;\">";
+        echo '<div style="display: flex; align-items: center;">';
+        echo '<div><a href="login.php?id=' . $member['id'] . '"><img src="' . $dire . '" alt="' . $member['username'] . '" width="85px" height="80px"/></a></div>';
+        echo '<div style="margin-left: 10px;">';
+        
         if (strlen((string) ($member['username'] ?? null)) < 8) {
-            echo '<tr><td><center><b><font size="3px">' . $member['username'] . "</font></b></center></td></tr>";
+            echo '<div><b><font size="3px">' . $member['username'] . "</font></b></div>";
         } elseif (strlen((string) ($member['username'] ?? null)) < 12) {
-            echo '<tr><td><center><b><font size="2px">' . $member['username'] . "</font></b></center></td></tr>";
+            echo '<div><b><font size="2px">' . $member['username'] . "</font></b></div>";
         } else {
-            echo '<tr><td><center><b><font size="1px">' . $member['username'] . "</font></b></center></td></tr>";
+            echo '<div><b><font size="1px">' . $member['username'] . "</font></b></div>";
         }
 
         if (($member['ban'] ?? null) > time()) {
-            echo '<tr><td><center><font size="1px" color="red"><b>Banido</b></font></center></td></tr>';
+            echo '<div><font size="1px" color="red"><b>Banido</b></font></div>';
         } else {
-            echo "<tr><td><center><font size=\"1px\">nível " . $member['level'] . "</font></center></td></tr>";
+            echo '<div><font size="1px">nível ' . $member['level'] . '</font></div>';
         }
 
-        echo "</table></li>";
+        echo '</div></div>';
+        echo "</td></tr>";
+        echo "</table></td></tr>";
     }
-
-    echo "</ul></div></p>";
+    echo "</table></div>";
 }
 
 echo '<span id="aviso-v"><table width="95%" align="center"><tr>';

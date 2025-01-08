@@ -114,7 +114,7 @@ if (($get['pending_status'] ?? null) == 4) {
         exit;
     }
 
-    header("Location: inventory.php");
+    header("Location: inventory_mobile.php");
     exit;
 }
 

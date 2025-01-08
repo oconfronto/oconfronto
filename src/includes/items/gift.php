@@ -8,7 +8,7 @@ if ($_GET['gift'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Item não encontrado.<br />";
-		echo '<a href="inventory.php">Voltar</a>.';
+		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
@@ -18,7 +18,7 @@ if ($_GET['gift'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você não possui nível suficiente para abrir o presente.<br />";
-		echo '<a href="inventory.php">Voltar</a>.';
+		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
@@ -44,7 +44,7 @@ if ($_GET['gift'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Presente</b></legend>\n";
 		echo "Você abriu seu presente e encontrou um(a) " . $giftitem['name'] . ".<br />";
-		echo '<a href="inventory.php">Voltar</a>.';
+		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		exit;
@@ -68,7 +68,7 @@ if ($_GET['gift'] ?? null) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Presente</b></legend>\n";
 	echo "Você abriu seu presente e encontrou " . $ganhagold . " de ouro.<br />";
-	echo '<a href="inventory.php">Voltar</a>.';
+	echo '<a href="inventory_mobile.php">Voltar</a>.';
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");
 	exit;
