@@ -45,8 +45,9 @@ lockY = 0;
 function init() {
   oDv.appendChild(dvHdr);
   oDv.appendChild(dvBdy);
-  oDv.style.position = "absolute";
+  oDv.style.position = "fixed";
   oDv.style.visibility = "hidden";
+  oDv.style.zIndex = "3";
   document.body.appendChild(oDv);
 }
 
