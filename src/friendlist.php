@@ -239,6 +239,7 @@ include(__DIR__ . "/templates/private_header.php");
 <fieldset>
 	<legend><b>Amigos</b></legend>
 	<?php
+
 	$query = $db->execute("select `fname` from `friends` WHERE `uid`=? order by `fname` asc", [$player->acc_id]);
 	if ($query->recordcount() == 0) {
 		echo "<br/><center><b><font size=\"1\">Você não tem amigos.</font></b></center><br/>";
@@ -261,7 +262,7 @@ include(__DIR__ . "/templates/private_header.php");
 			echo "<tr>\n";
 
 			echo '<td height="64px"><div style="position: relative;">';
-			echo '<img src="' . $member['avatar'] ? "static/" . $member['avatar'] : $member['avatar']) . '" width="64px" height="64px" style="position: absolute; top: 1; left: 1;" alt="' . $member['username'] . '" border="0">';
+			echo '<img src="' . ($member['avatar'] ? "static/" . $member['avatar'] : $member['avatar']) . '" width="64px" height="64px" style="position: absolute; top: 1; left: 1;" alt="' . $member['username'] . '" border="0">';
 
 			$checkranknosite = $db->execute("select `time` from `user_online` where `player_id`=?", [$member['id'] ?? null]);
 			if ($checkranknosite->recordcount() > 0) {

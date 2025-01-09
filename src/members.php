@@ -40,6 +40,47 @@ if ($_GET['error'] ?? null) {
 	echo showAlert("Usuário não encontrado.", "red");
 }
 
+echo '<style>
+@media only screen and (max-width: 600px) {
+	table.brown, table.salmon {
+		width: 100%;
+		font-size: 14px;
+	}
+	table.brown td, table.salmon td {
+		display: block;
+		width: 100%;
+	}
+	table.brown select, table.salmon select, table.brown input, table.salmon input {
+		width: 100%;
+	}
+	table.brown td center, table.salmon td center {
+		text-align: left;
+	}
+	table.brown th, table.salmon th {
+		display: none;
+	}
+	table.brown tr, table.salmon tr {
+		display: block;
+		margin-bottom: 10px;
+	}
+	table.brown tr.row1, table.brown tr.row2 {
+		display: block;
+		margin-bottom: 10px;
+	}
+	table.brown tr.row1 td, table.brown tr.row2 td {
+		display: block;
+		width: 100%;
+	}
+	table.brown tr.row1 td div, table.brown tr.row2 td div {
+		position: relative;
+	}
+	table.brown tr.row1 td div img, table.brown tr.row2 td div img {
+		width: 100%;
+		height: auto;
+	}
+}
+</style>';
+
 echo "<form method=\"get\" action=\"members.php\">\n";
 echo "<table width=\"100%\" class=\"brown\"  style='border:1px solid #b6804e;height:28px;'><tr>";
 echo '<td width="16%"><center>';
@@ -130,18 +171,18 @@ $query = $db->execute(sprintf("select `id`, `username`, `gm_rank`, `level`, `gui
 if ($query->recordcount() > 0) {
 	echo '<br/><table width="100%" border="0">';
 	echo "<tr>";
-	echo '<th width="10%"><b>Imagem</b></td>';
-	echo "<th width=\"35%\"><b>Usuário</b></td>";
-	echo '<th width="20%"><b>Nivel</b></td>';
-	echo "<th width=\"20%\"><b>Vocação</b></td>";
-	echo "<th width=\"15%\"><b>Opções</b></td>";
+	echo '<th><b>Imagem</b></td>';
+	echo "<th><b>Usuário</b></td>";
+	echo '<th><b>Nivel</b></td>';
+	echo "<th><b>Vocação</b></td>";
+	echo "<th><b>Opções</b></td>";
 	echo "</tr>";
 
 	$bool = 1;
 	while ($member = $query->fetchrow()) {
 		echo '<tr class="row' . $bool . "\">\n";
 
-		echo '<td height="64px"><div style="position: relative;">';
+		echo '<td style="height:64px"><div style="position: relative;">';
 		echo '<img src="' . ($member['avatar'] ? $member['avatar'] : "static/anonimo.gif") . '" width="64px" height="64px" style="position: absolute; top: 1; left: 1;" alt="' . $member['username'] . '" border="0">';
 
 		$checkranknosite = $db->execute("select `time` from `user_online` where `player_id`=?", [$member['id'] ?? null]);
@@ -218,3 +259,4 @@ echo "</table>";
 echo "</form></p>";
 
 include(__DIR__ . "/templates/private_footer.php");
+
