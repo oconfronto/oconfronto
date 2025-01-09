@@ -552,7 +552,7 @@ function displayItemCard(array $item, $type, array $player, int $bool): string
                 </div>
                 <img src="static/images/itens/' . $item['img'] . '" alt="' . $item['name'] . '">
                 <div class="item-name">'. $item['name'] . $bonus1 . '<br>
-                    Lv: ' . LevelRequerid($player, $item) . ' | Voc: ' . returnClassOfItem($item['voc'], $player['voc']) . ($item['needpromo'] == 't' ? '<br><font color="red">(Voc.Sup Exigida)</font>':"") . ($item['needring'] == 't' ? ' <br><font color="red">[Nec.Anel]</font>':"") .
+                    Lv: ' . LevelRequired($player, $item) . ' | Voc: ' . returnClassOfItem($item['voc'], $player['voc']) . ($item['needpromo'] == 't' ? '<br><font color="red">(Voc.Sup Exigida)</font>':"") . ($item['needring'] == 't' ? ' <br><font color="red">[Nec.Anel]</font>':"") .
                     '<br>' . $bonus2 . 
                     ' ' . $bonus3 . 
                     ' ' . $bonus4 . 
@@ -601,7 +601,7 @@ function returnClassOfItem($vocationId, $playervoc)
     }
 }
 
-function LevelRequerid(array $p, array $i){   
+function LevelRequired(array $p, array $i){   
 
     if ((int)$p['level'] > (int)$i['needlvl']) {
 
