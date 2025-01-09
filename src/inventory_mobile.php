@@ -393,6 +393,7 @@ function fetchItems($playerId, $status)
             blueprint_items.price,
             blueprint_items.needlvl,
             blueprint_items.needpromo,
+            blueprint_items.needring,
             blueprint_items.voc
         FROM `items` 
         JOIN `blueprint_items` ON items.item_id=blueprint_items.id 
@@ -802,7 +803,7 @@ function returnClassOfItem($vocationId)
             break;
 
         default:
-            return 'Todas'
+            return 'Todas';
             break;
     }
 }
