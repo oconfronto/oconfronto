@@ -603,7 +603,7 @@ function returnClassOfItem($vocationId, $playervoc)
 
 function LevelRequired(array $p, array $i){   
 
-    if ((int)$p['level'] > (int)$i['needlvl']) {
+    if ((int)$p['level'] >= (int)$i['needlvl']) {
 
         return $i['needlvl'];
     }
