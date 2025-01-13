@@ -64,7 +64,7 @@ switch ($_GET['act'] ?? null) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Thoy Magor</b></legend>\n";
 		echo "<i>Você tem certeza disso? Raderon é muito forte!</i><br>\n";
-		echo "<a href=\"raderon.php\">Sim</a> | <a href=\"quest1.php\">Não</a>.";
+		echo "<a href=\"raderon.php?act=attack\">Sim</a> | <a href=\"quest1.php\">Não</a>.";
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
 		break;
