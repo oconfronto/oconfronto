@@ -320,7 +320,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
             <div
                 title="header=[<?php echo $potname; ?>] body=[<?php echo $potdesc; ?><br><font size=1><?php echo $valortempo; ?> <?php echo $auxiliar; ?> restante(s).</font>]">
                 <div class="potionimg"><a href="tavern.php?act=buy&id=182"><img
-                            src="static/images/itens/<?php echo $potimg; ?>" border=0></a>
+                            src="static/images/itens/<?php echo $potimg; ?>" border="0" style="margin-top: -2px; width: 21px;"></a>
                 </div>
             </div>
         <?php }
