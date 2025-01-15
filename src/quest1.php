@@ -39,6 +39,7 @@ switch ($_GET['act'] ?? null) {
 		echo "<a href=\"quest1.php?act=what\">Oquê?</a> | <a href=\"home.php\">Voltar</a>.";
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 
 	case "what":
@@ -49,6 +50,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="quest1.php?act=pay">Eu pago!</a> | <a href="home.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 
 	case "pay":
@@ -58,6 +60,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="quest1.php?act=confirmpay">Sim</a> | <a href="home.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 
 	case "raderon":
@@ -67,6 +70,7 @@ switch ($_GET['act'] ?? null) {
 		echo "<a href=\"raderon.php?act=attack\">Sim</a> | <a href=\"quest1.php\">Não</a>.";
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 
 	case "who":
@@ -76,6 +80,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="quest1.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 
 	case "confirmpay":
@@ -157,6 +162,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="quest1.php">Continuar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 
 		break;
 
@@ -204,7 +210,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="quest1.php">Continuar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
-
+		exit;
 		break;
 
 	case "continue3":
@@ -251,7 +257,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="quest1.php">Continuar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
-
+		exit;
 		break;
 
 
@@ -305,7 +311,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="home.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
-
+		exit;
 		break;
 }
 ?>

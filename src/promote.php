@@ -55,6 +55,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="promote.php?act=confirmpay">Sim eu estou</a> | <a href="home.php">Deixar para depois</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 
 	case "confirmpay":
@@ -136,7 +137,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="promote.php">Continuar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
-
+		exit;
 		break;
 
 	case "continue2":
@@ -183,7 +184,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="promote.php">Continuar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
-
+		exit;
 		break;
 
 	case "continue3":
@@ -230,7 +231,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="promote.php">Continuar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
-
+		exit;
 		break;
 
 	case "continue4":
@@ -278,7 +279,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="home.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
-
+		exit;
 		break;
 }
 ?>
@@ -335,7 +336,7 @@ if (($quest['quest_status'] ?? null) == 3) {
 if (($quest['quest_status'] ?? null) == 4) {
 	include(__DIR__ . "/templates/private_header.php");
 	echo "<fieldset><legend><b>Treinador</b></legend>\n";
-	echo "<i>Seu ultimo desafio é conseguir um <b>Fire Orb</b>. Você pode obtelo matando Menderiels ou comprando no mercado.</i><br/><br/>\n";
+	echo "<i>Seu ultimo desafio é conseguir um <b>Fire Orb</b>. Você pode obtelo matando Múmia ou comprando no mercado.</i><br/><br/>\n";
 	echo "<a href=\"promote.php?act=continue4\">Finalizar missão</a> | <a href=\"home.php\">Voltar</a>.";
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");

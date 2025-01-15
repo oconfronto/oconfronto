@@ -9,7 +9,7 @@ $player = check_user($db);
 // Temporary variables created to facilitate adjustments in this current file.
 // These values ($rate_xp and $rate_gold) are placeholders and will be replaced 
 // in the future by a dedicated function to handle these adjustments more coherently.
-$rate_xp = 21;
+$rate_xp = 2000;
 $rate_gold = 10;
 $rate_dropItem = 1;
 
@@ -202,7 +202,8 @@ switch ($_GET['act'] ?? null) {
 				if (!($_GET['nolayout'] ?? false)) {
 					include(__DIR__ . "/templates/private_footer.php");
 				}
-
+				
+				exit;
 				break;
 			}
 
@@ -220,7 +221,7 @@ switch ($_GET['act'] ?? null) {
 					if (!($_GET['nolayout'] ?? false)) {
 						include(__DIR__ . "/templates/private_footer.php");
 					}
-
+					exit;
 					break;
 				} elseif ($enemy->id == 49 && $bixoexpec1->recordcount() < 1) {
 					$db->execute("delete from `bixos` where `player_id`=?", [$player->id]);
@@ -233,7 +234,7 @@ switch ($_GET['act'] ?? null) {
 					if (!($_GET['nolayout'] ?? false)) {
 						include(__DIR__ . "/templates/private_footer.php");
 					}
-
+					exit;
 					break;
 				}
 			}
@@ -252,7 +253,7 @@ switch ($_GET['act'] ?? null) {
 					if (!($_GET['nolayout'] ?? false)) {
 						include(__DIR__ . "/templates/private_footer.php");
 					}
-
+					exit;
 					break;
 				}
 			}
@@ -327,48 +328,10 @@ switch ($_GET['act'] ?? null) {
 				if (!($_GET['nolayout'] ?? false)) {
 					include(__DIR__ . "/templates/private_footer.php");
 				}
-
+				exit;
 				break;
 			}
-
-			// if ($player->monsterkill >= $setting->securyty_capcha)
-			// {
-			// 	require_once('recaptchalib.php');
-			// 	$publickey = "6Ldm1zIpAAAAAJynGMOaMybgnv3XdrGRVP5WxRM-";
-			// 	$privatekey = "6Ldm1zIpAAAAAEEZlEPLlMFU3nQxQLbmICK9XE95";
-
-			// 	$resp = null;
-			// 	$error = null;
-
-			// 	# was there a reCAPTCHA response?
-			// 	if ($_POST["recaptcha_response_field"]) {
-			// 			$resp = recaptcha_check_answer ($privatekey,
-			// 						$_SERVER["REMOTE_ADDR"],
-			// 						$_POST["recaptcha_challenge_field"],
-			// 						$_POST["recaptcha_response_field"]);
-
-			// 		if ($resp->is_valid) {
-			//         			$query = $db->execute("update `players` set `monsterkill`=0 where `id`=?", array($player->id));
-			// 			header("Location: monster.php?act=attack&id=" . $_GET['id'] . "");
-			// 			} else {
-			// 			$error = $resp->error;
-			// 			}
-			// 	}
-
-			// 	if (!($_GET['nolayout'] ?? false)){ include("templates/private_header.php"); }
-			// 	echo "<fieldset>";
-			// 	echo "<legend><b>Antes de atacar, digite o código abaixo:</b></legend>";
-			// 	echo "<form action=\"\" method=\"post\"><center>";
-			// 	echo recaptcha_get_html($publickey, $error);
-			// 	echo "</center>";
-			// 	echo "</fieldset>";
-			// 	echo "<input type=\"submit\" value=\"Atacar " . $enemy->prepo . " " . $enemy->username . "\" /> <a href=\"monster.php\">Voltar</a>.";
-			// 	echo "</form>";
-			// 	if (!($_GET['nolayout'] ?? false)){ include("templates/private_footer.php"); }
-			// 	break;
-			// }
 		}
-
 
 		//Get player's bonuses from equipment
 		$query = $db->query("select blueprint_items.effectiveness, blueprint_items.name, items.item_bonus from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type='weapon' and items.status='equipped'", [$player->id]);
@@ -778,25 +741,32 @@ switch ($_GET['act'] ?? null) {
 							$db->execute("update `players` set `mana`=?, `maxmana`=? where `id`=?", [maxMana($pinfo['level'], $pinfo['extramana']), maxMana($pinfo['level'], $pinfo['extramana']), $pinfo['id'] ?? null]);
 							$db->execute("update `players` set `maxenergy`=? where `id`=? and `maxenergy`<200", [maxEnergy($pinfo['level'], $pinfo['vip']), $pinfo['id'] ?? null]);
 
-							$svexp = "difficulty_" . $player->serv . "";
-
-							$db->execute("update `players` set `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=?, `maxhp`=?, `exp`=?, `magic_points`=`magic_points`+1, `groupmonsterkilled`=`groupmonsterkilled`+? where `id`=?", [maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), $newexp, $bixo->mul, $pinfo['id'] ?? null]);
+							// $svexp = "difficulty_" . $player->serv . "";
 
 							if (($pinfo['id'] ?? null) != $player->id) {
+								$db->execute("update `players` set `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=?, `maxhp`=?, `exp`=?, `magic_points`=`magic_points`+1, `groupmonsterkilled`=`groupmonsterkilled`+? where `id`=?", [maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), maxHp($db, $pinfo['id'], $pinfo['level'], $pinfo['reino'], $pinfo['vip']), $newexp, $bixo->mul, $pinfo['id'] ?? null]);
 								$logwinlvlmsg = "Você avançou um nível enquanto <a href=\"profile.php?id=" . $player->username . '">' . $player->username . "</a> matava monstros.";
 								addlog($pinfo['id'], $logwinlvlmsg, $db);
 							}
 
 							if (($pinfo['id'] ?? null) == $player->id) {
+								$db->execute("update `players` set `stat_points`=`stat_points`+3, `level`=`level`+1, `hp`=?, `maxhp`=?, `exp`=?, `magic_points`=`magic_points`+1, `energy`=`energy`-?, `gold`=?, `monsterkill`=`monsterkill`+1, `monsterkilled`=`monsterkilled`+? where `id`=?", [maxHp($db, $player->id, $player->level, $player->reino, $player->vip), maxHp($db, $player->id, $player->level, $player->reino, $player->vip), $newexp, (10 * $bixo->mul), $player->gold + $goldwin, $bixo->mul, $player->id]);
 								$newlevell = 5;
 							}
 						} else {
-							//Update player
-							$query = $db->execute("update `players` set `exp`=`exp`+?, `groupmonsterkilled`=`groupmonsterkilled`+? where `id`=?", [$expdomonstro, $bixo->mul, $pinfo['id'] ?? null]);
+							//Update player							
+							if (($pinfo['id'] ?? null) != $player->id) {
+								$query = $db->execute("update `players` set `exp`=`exp`+?, `groupmonsterkilled`=`groupmonsterkilled`+? where `id`=?", [$expdomonstro, $bixo->mul, $pinfo['id'] ?? null]);
+							}
+
+							if (($pinfo['id'] ?? null) == $player->id) {
+								$query = $db->execute("update `players` set `exp`=`exp`+?, `gold`=`gold`+?, `hp`=?, `mana`=?, `energy`=`energy`-?, `monsterkill`=`monsterkill`+1, `monsterkilled`=`monsterkilled`+? where `id`=?", [$expdomonstro, $goldwin, $player->hp, $player->mana, (10 * $bixo->mul), $bixo->mul, $player->id]);
+							}							
 						}
 					}
+										
+					// $query = $db->execute("update `players` set `gold`=`gold`+?, `hp`=?, `mana`=?, `energy`=`energy`-?, `monsterkill`=`monsterkill`+1 where `id`=?", [$goldwin, $player->hp, $player->mana, (10 * $bixo->mul), $player->id]);
 
-					$query = $db->execute("update `players` set `gold`=`gold`+?, `hp`=?, `mana`=?, `energy`=`energy`-?, `monsterkill`=`monsterkill`+1 where `id`=?", [$goldwin, $player->hp, $player->mana, (10 * $bixo->mul), $player->id]);
 				} elseif ($expdomonstro + $player->exp >= maxExp($player->level)) {
 					//Player gained a level!
 					//Update player, gained a level
@@ -826,27 +796,6 @@ switch ($_GET['act'] ?? null) {
 					$insert['item_id'] = 160;
 					$addlootitemwin = $db->autoexecute('items', $insert, 'INSERT');
 				}
-
-
-				/* $output .= "verdungeon";
-			$checkdDungeon = $db->getone("select `dungeon_id` from `dungeon_status` where `status`<90 and `fail`=0 and `player_id`=?", array($player->id));
-			if (($checkdDungeon != null) and ($checkdDungeon != 0)){
-			$output .= "if1";
-				$getDungeonMonsters = $db->execute("select `monsters` from `dungeon` where `id`=?", array($checkdDungeon));
-				if ($getDungeonMonsters->recordcount() > 0)
-				{
-				$output .= "if2";
-						$splitDungeonMosters = explode(", ", $getDungeonMonsters);
-						$dungeonSaveStatus = $db->getone("select `status` from `dungeon_status` where `status`<90 and `fail`=0 and `player_id`=?", array($player->id));
-						
-						$output .= "<br/>" . substr($splitDungeonMosters[$dungeonSaveStatus], 11) . " / " . $enemy->id . "";
-						if (substr($splitDungeonMosters[$dungeonSaveStatus], 11) == $enemy->id)
-						{
-							$db->execute("update `dungeon_status` set `status`=`status`+1 where `status`<90 and `fail`=0 and `player_id`=?", array($player->id));
-							$output .= "ok";
-						}
-				}
-			} */
 
 				if ($enemy->username == 'Zeus') {
 					$medalha10 = $db->execute("select * from `medalhas` where `player_id`=? and `medalha`=?", [$player->id, 'Lendário']);
@@ -1033,6 +982,58 @@ switch ($_GET['act'] ?? null) {
 
 		echo $_SESSION['statuslog'] ?? null;
 
+		include(__DIR__ . "/healcost.php");
+
+		if ($bixo->hp <= 0 || $matou == 5) {
+
+			echo '<div style="margin-top:25px;background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
+			echo '<table width="100%"><tr><td width="68%">';
+			echo "<button accesskey=\"a\" class=\"battle-option2\" onclick=\"window.location.href='monster.php?act=attack&id=" . ($bixo->id * $player->id) . "'\">Atacar outr" . $enemy->prepo . " " . $enemy->username . "</button> ";
+			if ($heal > 0 && $player->gold > $cost) {
+				echo "<button accesskey=\"r\" class=\"battle-option2\" onclick=\"javascript:LoadPage('heal.php', 'swap')\">Recuperar vida (" . number_format($cost) . " de ouro)</button> ";
+			} elseif ($heal > 0 && $player->gold > 0) {
+				echo "<button accesskey=\"r\" class=\"battle-option2\" onclick=\"javascript:LoadPage('heal.php', 'swap')\">Recuperar vida (" . number_format($cost2) . " de ouro)</button> ";
+			}
+
+			echo '<button accesskey=\"v\" class="battle-option2" onclick="window.location.href=\'monster.php\'">Voltar</button>';
+
+			echo '</td><td width="2%"></td><td width="30%">';
+			$modefastbattle = $db->execute("select * from `other` where `value`=? and `player_id`=?", ['fastbattle', $player->id]);
+			if ($modefastbattle->recordcount() > 0) {
+				echo "<center><font size=\"1px\"><b><button class=\"battle-option3\" onclick=\"window.location.href='swap_type.php?alterar=true'\">Desativar Luta Rápida</button></b></font></center>";
+			}
+
+			echo "</tr></table>";
+			echo "</div>";
+		} elseif (($bixo->type == 98 || $bixo->type == 99) && $bixo->hp > 0 || $player->hp <= 0 || $morreu == 5) {
+			echo showAlert("<button class=\"battle-option2\" onclick=\"javascript:LoadPage('heal.php', 'swap')\">Recuperar toda sua vida por <b>" . number_format($cost) . '</b> de ouro</button><button class="battle-option2" onclick="window.location.href=\'monster.php\'">Voltar</button>', "white", "left");
+		} else {
+			echo '<div style="margin-top:25px;background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
+			echo '<table  width="100%" height="43px" border="0px"><tr><td width="75%">';
+			echo "<button class=\"battle-option\" onclick=\"javascript:LoadPage('swap_type.php?type=97', 'swap')\">Atacar</button>";
+
+
+			$vermagia = $db->execute("select magias.magia_id, blueprint_magias.nome, blueprint_magias.descri, blueprint_magias.mana from `magias`, `blueprint_magias` where magias.magia_id=blueprint_magias.id and magias.used=? and magias.magia_id!=5 and magias.player_id=?", ['t', $player->id]);
+			while ($result = $vermagia->fetchrow()) {
+
+				echo "<button style=\"background-color: #8B4513; color: #FFF; border: 1px solid #000; cursor: pointer;\" onclick=\"javascript:LoadPage('swap_type.php?type=" . $result['magia_id'] . "', 'swap')\">";
+
+				if ($bixo->type != ($result['magia_id'] ?? null)) {
+					echo '<img src="static/images/magias/black.png" style="border: 0px; padding-top: 3px; padding-left: 5px; position: absolute; z-index: 3;" title="header=[' . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . ']"/>';
+					echo '<img src="static/images/magias/' . $result['magia_id'] . '.png" style="border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;"/>';
+				} else {
+					echo '<img src="static/images/magias/' . $result['magia_id'] . '.png" style="border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;" title="header=[' . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . ']"/>';
+				}
+
+				echo "</button>";
+			}
+
+			echo '</td><td width="25%">';
+			echo "<center><font size=\"1px\"><b><button class=\"battle-option2\" onclick=\"window.location.href='swap_type.php?alterar=true'\">Luta Rápida</button></b><button style=\"margin-top:5px;margin-left:5px;\" class=\"battle-option2\" onclick=\"window.location.href='swap_type.php?type=96'\">Fugir</button></font></center>";
+			echo "</td></tr></table>";
+			echo "</div>";
+		}
+
 		echo '<div id="logdebatalha" class="scroll" style="background-color:#FFFDE0; overflow: auto; height:220px; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
 
 		if (is_array($_SESSION['battlelog'])) {
@@ -1044,7 +1045,7 @@ switch ($_GET['act'] ?? null) {
 						$color = ['1' => 'green', '2' => 'red', '3' => 'blue', '4' => 'purple'][$log_parts[0]] ?? 'black';
 
 						echo sprintf('<div style="text-align: %s">', $alignment);
-						echo sprintf('<font color="%s">%s</font>', $color, $log_parts[1]);
+						echo sprintf('<font color="%s" style="font-size: 12px;">%s</font>', $color, $log_parts[1]);
 						echo "</div>";
 					}
 				}
@@ -1052,56 +1053,6 @@ switch ($_GET['act'] ?? null) {
 		}
 
 		echo "</div>";
-
-
-		include(__DIR__ . "/healcost.php");
-		if ($bixo->hp <= 0 || $matou == 5) {
-
-			echo '<div style="background-color:#FFFDE0; padding:5px; border: 1px solid #DEDEDE; margin-bottom:10px">';
-			echo '<table width="100%"><tr><td width="75%">';
-			echo "<b>Opções:</b> <a href=\"monster.php?act=attack&id=" . ($bixo->id * $player->id) . '">Atacar outr' . $enemy->prepo . " " . $enemy->username . "</a> | ";
-			if ($heal > 0 && $player->gold > $cost) {
-				echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('heal.php', 'swap')\">Recuperar vida</a> <font size=\"1\">(" . number_format($cost) . " de ouro)</font> | ";
-			} elseif ($heal > 0 && $player->gold > 0) {
-				echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('heal.php', 'swap')\">Recuperar vida</a> <font size=\"1\">(" . number_format($cost2) . " de ouro)</font> | ";
-			}
-
-			echo '<a href="monster.php">Voltar</a>';
-
-			echo '</td><td width="25%">';
-			$modefastbattle = $db->execute("select * from `other` where `value`=? and `player_id`=?", ['fastbattle', $player->id]);
-			if ($modefastbattle->recordcount() > 0) {
-				echo "<center><font size=\"1px\"><b><a href=\"swap_type.php?alterar=true\">Desativar Luta Rápida</a></b></font></center>";
-			}
-
-			echo "</tr></table>";
-			echo "</div>";
-		} elseif (($bixo->type == 98 || $bixo->type == 99) && $bixo->hp > 0 || $player->hp <= 0 || $morreu == 5) {
-			echo showAlert("<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('heal.php', 'swap')\">Clique aqui</a> para recuperar toda sua vida por <b>" . number_format($cost) . '</b> de ouro. | <a href="monster.php">Voltar</a>', "white", "left");
-		} else {
-			echo '<table width="100%" height="43px" border="0px"><tr><td width="85%" bgcolor="#E1CBA4">';
-			echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_type.php?type=97', 'swap')\"><img src=\"static/images/magias/hit.png\" style=\"border: 0px; padding-top: 3px; padding-left: 5px; z-index: 3;\" border=\"0\" /></a>";
-
-
-			$vermagia = $db->execute("select magias.magia_id, blueprint_magias.nome, blueprint_magias.descri, blueprint_magias.mana from `magias`, `blueprint_magias` where magias.magia_id=blueprint_magias.id and magias.used=? and magias.magia_id!=5 and magias.player_id=?", ['t', $player->id]);
-			while ($result = $vermagia->fetchrow()) {
-
-				echo "<a href=\"javascript:void(0)\" onclick=\"javascript:LoadPage('swap_type.php?type=" . $result['magia_id'] . "', 'swap')\">";
-
-				if ($bixo->type != ($result['magia_id'] ?? null)) {
-					echo '<img src="static/images/magias/black.png" style="border: 0px; padding-top: 3px; padding-left: 5px; position: absolute; z-index: 3;" title="header=[' . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . ']"/>';
-					echo '<img src="static/images/magias/' . $result['magia_id'] . '.png" style="border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;"/>';
-				} else {
-					echo '<img src="static/images/magias/' . $result['magia_id'] . '.png" style="border: 0px; padding-top: 3px; padding-left: 5px; z-index: 2;" title="header=[' . $result['nome'] . "] body=[" . $result['descri'] . " <b>Mana:</b> " . $result['mana'] . ']"/>';
-				}
-
-				echo "</a>";
-			}
-
-			echo '</td><td width="15%" bgcolor="#E1CBA4">';
-			echo "<center><font size=\"1px\"><b><a href=\"swap_type.php?alterar=true\">Luta Rápida</a></b><br/><a href=\"swap_type.php?type=96\">Fugir</a></font></center>";
-			echo "</td></tr></table>";
-		}
 
 		if (floor($player->energy / 10) > 1) {
 			$modefastbattle = $db->execute("select * from `other` where `value`=? and `player_id`=?", ['fastbattle', $player->id]);
@@ -1116,7 +1067,7 @@ switch ($_GET['act'] ?? null) {
 		if (!($_GET['nolayout'] ?? null)) {
 			include(__DIR__ . "/templates/private_footer.php");
 		}
-
+		exit;
 		break;
 
 
@@ -1242,22 +1193,22 @@ switch ($_GET['act'] ?? null) {
 
 
 		echo showAlert("<i>Você pode enfrentar monstros do nível 1 á " . $tolevel . ".</i>");
-		echo "<table width=\"100%\">\n";
-		echo "<tr><th width=\"50%\">Nome</th><th width=\"20%\">Nível</th><th width=\"30%\">Batalha</a></th></tr>\n";
+		echo "</br></br><table width=\"100%\">";
+		echo "<tr><th width=\"50%\">Nome</th><th width=\"20%\">Nível</th><th width=\"30%\">Batalha</a></th></tr>";
 		$bool = 1;
 		while ($result = $sql->fetchrow()) {
-			echo '<tr class="row' . $bool . "\">\n";
-			echo '<td width="50%">' . $result['username'] . "</td>\n";
-			echo '<td width="20%">' . $result['level'] . "</td>\n";
-			echo '<td width="30%"><a href="monster.php?act=attack&id=' . ($result['id'] * $player->id) . "\">Atacar</a></td>\n";
-			echo "</tr>\n";
+			echo '<tr class="row' . $bool . "\">";
+			echo '<td width="50%">' . $result['username'] . "</td>";
+			echo '<td width="20%">' . $result['level'] . "</td>";
+			echo '<td width="30%"><button class="battle-option2" onclick="window.location.href=\'monster.php?act=attack&id=' . ($result['id'] * $player->id) . '\'">Atacar</button></td>';
+			echo "</tr>";
 			$bool = ($bool == 1) ? 2 : 1;
 		}
 
-		echo "</table>\n";
+		echo "</table>";
 		if (!($_GET['nolayout'] ?? null)) {
 			include(__DIR__ . "/templates/private_footer.php");
 		}
-
+		exit;
 		break;
 }

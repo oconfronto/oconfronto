@@ -1152,3 +1152,72 @@ blockquote:first-letter {
   -khtml-border-radius: 3px;
   -icab-border-radius: 3px;
 }
+
+.battle-option:hover {
+  background: rgba(139, 69, 19, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.battle-option {
+  padding: 12px;
+  border: 2px solid #8b4513;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: rgba(139, 69, 19, 0.1);
+  font-size: 1.1em;
+  color: #4a2f1d;
+  border-radius: 5px;
+}
+
+.battle-option2:hover {
+  background: rgba(139, 69, 19, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.battle-option2 {
+  padding: 5px;
+  border: 2px solid #8b4513;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: rgba(139, 69, 19, 0.1);
+  font-size: 1.1em;
+  color: #4a2f1d;
+  border-radius: 5px;
+  margin-top: 5px; /* Center the button */
+  margin-left: 5px; /* Center the button */
+}
+
+@media (max-width: 768px) {
+  .battle-option2 {
+    display: block; /* Ensure buttons break line on small screens */
+    width: 95%; /* Make buttons take full width */
+  }  
+}
+
+.battle-option3:hover {
+  background: rgba(139, 69, 19, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.battle-option3 {
+  padding: 5px;
+  border: 2px solid #8b4513;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: rgba(139, 69, 19, 0.1);
+  font-size: 1.1em;
+  color: #4a2f1d;
+  border-radius: 5px;  
+  margin-top: 5px; /* Center the button */
+}
+
+@media (max-width: 768px) {
+  .battle-option3 {
+    display: block; /* Ensure buttons break line on small screens */
+    width: 100%; /* Make buttons take full width */
+    margin-top: 5px; /* Center the button */
+  }
+}

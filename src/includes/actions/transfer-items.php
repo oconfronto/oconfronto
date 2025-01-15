@@ -173,12 +173,12 @@ if ($_POST['transferitems'] ?? null) {
 
 		$logmsg = "O usuário <b>" . $player->username . "</b> lhe enviou um(a) <b>" . $item5['name'] . " +" . $item5['item_bonus'] . "</b>.";
 		addlog($destination['id'], $logmsg, $db);
-		include(__DIR__ . "/templates/private_header.php");
+		include(__DIR__ . "/../../templates/private_header.php");
 		echo "<fieldset><legend><b>Sucesso</b></legend>\n";
 		echo "Você enviou um(a) <b>" . $item5['name'] . " +" . $item5['item_bonus'] . "</b> com sucesso para o usuário: <b>" . $_POST['username'] . "</b>.<br />";
 		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
-		include(__DIR__ . "/templates/private_footer.php");
+		include(__DIR__ . "/../../templates/private_footer.php");
 		exit;
 	}
 }

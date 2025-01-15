@@ -270,7 +270,11 @@ try {
                     // Generate options
                     const runeOptions = document.getElementById('runeOptions');
                     runeOptions.innerHTML = '';
-                    Object.entries(data.options).forEach(([id, name]) => {
+                    
+                    // Shuffle the options
+                    const shuffledOptions = Object.entries(data.options).sort(() => Math.random() - 0.5);
+                    
+                    shuffledOptions.forEach(([id, name]) => {
                         const option = document.createElement('div');
                         option.className = 'rune-option';
                         option.onclick = () => validateAnswer(id);

@@ -50,6 +50,7 @@ if ($player->mana < $mana) {
 			$db->execute("update `bixos` set `hp`=`hp`-? where `player_id`=?", [$totalpak, $player->id]);
 		}
 
+		$player->mana -= $mana; //Correção de bug onde não reduzia a mana em um ataque duplo fatal.
 		$db->execute("update `players` set `mana`=`mana`-? where `id`=?", [$mana, $player->id]);
 		array_unshift($_SESSION['battlelog'], "3, Você deu um ataque duplo n" . $enemy->prepo . " " . $enemy->username . " e tirou " . $totalpak . " pontos de vida.");
 		$db->execute("update `bixos` set `vez`='e' where `player_id`=?", [$player->id]);

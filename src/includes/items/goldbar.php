@@ -11,11 +11,11 @@ if ($numgoldbars->recordcount() > 2) {
 	$insert['item_id'] = 158;
 	$addgoldhelm = $db->autoexecute('items', $insert, 'INSERT');
 
-	include(__DIR__ . "/templates/private_header.php");
+	include(__DIR__ . "/../../templates/private_header.php");
 	echo "<fieldset><legend><b>Atenção</b></legend>\n";
 	echo "As três barras de ouro que você possuía em seu inventário parecem ter se misturado e formado um novo elmo.<br />";
 	echo '<a href="inventory_mobile.php">Voltar</a>.';
 	echo "</fieldset>";
-	include(__DIR__ . "/templates/private_footer.php");
+	include(__DIR__ . "/../../templates/private_footer.php");
 	exit;
 }

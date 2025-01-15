@@ -13,11 +13,11 @@ if ($numgoldbars->recordcount() > 2) {
 	$ringid = $db->Insert_ID();
 	$db->execute("update `items` set `for`=`for`+?, `vit`=`vit`+?, `agi`=`agi`+?, `res`=`res`+? where `id`=?", [40, 40, 40, 40, $ringid]);
 
-	include(__DIR__ . "/templates/private_header.php");
+	include(__DIR__ . "/../../templates/private_header.php");
 	echo "<fieldset><legend><b>Atenção</b></legend>\n";
 	echo "Os três cristais mágicos que você possuía em seu inventário parecem ter se misturado e formado um novo anel.<br />";
 	echo '<a href="inventory_mobile.php">Voltar</a>.';
 	echo "</fieldset>";
-	include(__DIR__ . "/templates/private_footer.php");
+	include(__DIR__ . "/../../templates/private_footer.php");
 	exit;
 }
