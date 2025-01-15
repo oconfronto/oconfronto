@@ -37,6 +37,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="quest6.php?act=aceptcastle">Aceitar</a> / <a href="quest6.php?act=declinecastle">Recusar</a>';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 
 
@@ -47,6 +48,7 @@ switch ($_GET['act'] ?? null) {
 		echo "<a href=\"home.php\">Página Principal</a>.";
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 
 	case "aceptcastle":
@@ -74,7 +76,7 @@ switch ($_GET['act'] ?? null) {
 		echo "<a href=\"quest6.php?act=go\">Ir ao império de Rashar</a> / <a href=\"home.php\">Voltar</a>.";
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
-
+		exit;
 		break;
 
 	case "go":
@@ -92,6 +94,7 @@ switch ($_GET['act'] ?? null) {
 			echo "<a href=\"home.php\">Página Principal</a>.";
 			echo "</fieldset>";
 			include(__DIR__ . "/templates/private_footer.php");
+			exit;
 		}
 
 		break;
@@ -108,6 +111,7 @@ switch ($_GET['act'] ?? null) {
 				echo "<a href=\"home.php\">Voltar</a> / <a href=\"quest6.php?act=abort\">Abandonar missão</a>";
 				echo "</fieldset>";
 				include(__DIR__ . "/templates/private_footer.php");
+				exit;
 			} else {
 				include(__DIR__ . "/templates/private_header.php");
 				$upxxdateeaaa = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [90, $player->id, 13]);
@@ -123,6 +127,7 @@ switch ($_GET['act'] ?? null) {
 				echo "<a href=\"quest6.php?act=backalex\">Voltar à Alexander</a>";
 				echo "</fieldset>";
 				include(__DIR__ . "/templates/private_footer.php");
+				exit;
 			}
 		}
 
@@ -140,6 +145,7 @@ switch ($_GET['act'] ?? null) {
 			echo "<a href=\"home.php\">Página Principal</a>.";
 			echo "</fieldset>";
 			include(__DIR__ . "/templates/private_footer.php");
+			exit;
 		} else {
 			header("Location: home.php");
 		}
@@ -158,6 +164,7 @@ switch ($_GET['act'] ?? null) {
 			echo "<a href=\"quest7.php\">Continuar</a> / <a href=\"home.php\">Página Principal</a>.";
 			echo "</fieldset>";
 			include(__DIR__ . "/templates/private_footer.php");
+			exit;
 		} else {
 			header("Location: home.php");
 		}
@@ -171,6 +178,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="home.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 
 	case "abort":
@@ -182,6 +190,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="home.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 }
 ?>

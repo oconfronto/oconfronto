@@ -16,6 +16,10 @@ location ~ \.php$ {
     fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     add_header X-Debug-Message "Trying to access: $document_root$fastcgi_script_name" always;
     add_header X-Script-Filename $document_root$fastcgi_script_name always;
+
+    # Ajuste de buffers para evitar erros
+    fastcgi_buffers 16 16k;
+    fastcgi_buffer_size 32k;  
 }
 
 location /static/ {

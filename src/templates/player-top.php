@@ -1,6 +1,6 @@
 <player-top>
     <a href="avatar.php" class="avatar-container">
-        <level-element>
+        <level-element id="player-level">
             <?php echo $player->level ?>
         </level-element>
         <img
@@ -12,7 +12,7 @@
     </a>
     <bar-container>
         <gold-and-inventory>
-            <gold-counter>
+            <gold-counter id="player-gold">                
                 <?php echo number_format($player->gold, 0, '', '.') ?>
             </gold-counter>
             <?php
@@ -23,18 +23,21 @@
             ?>
         </gold-and-inventory>
         <health-bar
+            id="bar-hp"
             class="bar"
             style="--percentage: <?php echo ceil(($player->hp * 100) / $player->maxhp); ?>%;"
         >
             <?php echo $player->hp; ?> / <?php echo $player->maxhp; ?>
         </health-bar>
         <magic-bar
+            id="bar-mp"
             class="bar"
             style="--percentage: <?php echo ceil(($player->mana * 100) / $player->maxmana); ?>%;"
         >
             <?php echo $player->mana; ?> / <?php echo $player->maxmana; ?>
         </magic-bar>
         <stamina-bar
+            id="bar-en"
             class="bar"
             style="--percentage: <?php echo ceil(($player->energy * 100) / $player->maxenergy); ?>%;"
         >
@@ -42,6 +45,7 @@
         </stamina-bar>
         
         <experience-bar
+            id="bar-exp"
             class="bar"
             style="--percentage: <?php echo ceil(($player->exp * 100) / maxExp($player->level)); ?>%;"
         >

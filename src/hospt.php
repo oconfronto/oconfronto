@@ -81,7 +81,7 @@ if ($_POST['submit'] ?? null) {
 	$query4 = $db->execute("select `id` from `items` where `player_id`=? and `item_id`=150 and `mark`='f' order by rand()", [$player->id]);
 	$numerodepocoes4 = $query4->recordcount();
 
-	$pocoesdevida = floor($_POST['sellhp']);
+	$pocoesdevida = (int)$_POST['sellhp'];
 	if ($pocoesdevida > $numerodepocoes) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
@@ -92,7 +92,7 @@ if ($_POST['submit'] ?? null) {
 		exit;
 	}
 
-	$bigpocoesdevida = floor($_POST['sellbhp']);
+	$bigpocoesdevida = (int)$_POST['sellbhp'];
 	if ($bigpocoesdevida > $numerodepocoes3) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
@@ -103,7 +103,7 @@ if ($_POST['submit'] ?? null) {
 		exit;
 	}
 
-	$pocoesdeenergia = floor($_POST['sellep']);
+	$pocoesdeenergia = (int)$_POST['sellep'];
 	if ($pocoesdeenergia > $numerodepocoes2) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Vender poções</b></legend>\n";
@@ -114,7 +114,7 @@ if ($_POST['submit'] ?? null) {
 		exit;
 	}
 
-	$pocoesdemana = floor($_POST['sellmp']);
+	$pocoesdemana = (int)$_POST['sellmp'];
 	if ($pocoesdemana > $numerodepocoes4) {
 		include(__DIR__ . "/templates/private_header.php");
 		echo "<fieldset><legend><b>Vender poções</b></legend>\n";

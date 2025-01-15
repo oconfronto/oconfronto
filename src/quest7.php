@@ -60,6 +60,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="quest7.php?act=acept">Aceitar</a> / <a href="quest7.php?act=decline">Recusar</a>';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 
 
@@ -70,6 +71,7 @@ switch ($_GET['act'] ?? null) {
 		echo "<a href=\"home.php\">Página Principal</a>.";
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 
 	case "acept":
@@ -97,7 +99,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="home.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
-
+		exit;
 		break;
 
 	case "retry":

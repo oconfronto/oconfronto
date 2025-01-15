@@ -44,6 +44,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="quest9.php?act=acept">Aceitar Desafio</a> / <a href="quest9.php?act=decline">Recusar</a>';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 
 
@@ -54,6 +55,7 @@ switch ($_GET['act'] ?? null) {
 		echo "<a href=\"home.php\">Página Principal</a>.";
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 
 	case "acept":
@@ -77,7 +79,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="quest9.php">Procurar por Zanoth</a> / <a href="home.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
-
+		exit;
 		break;
 
 	case "noready":
@@ -89,6 +91,7 @@ switch ($_GET['act'] ?? null) {
 			echo "<a href=\"home.php\">Página Principal</a>.";
 			echo "</fieldset>";
 			include(__DIR__ . "/templates/private_footer.php");
+			exit;
 		} else {
 			header("Location: home.php");
 		}
@@ -115,6 +118,7 @@ switch ($_GET['act'] ?? null) {
 			echo '<a href="home.php">Voltar</a>.';
 			echo "</fieldset>";
 			include(__DIR__ . "/templates/private_footer.php");
+			exit;
 		} else {
 			header("Location: home.php");
 		}
@@ -172,6 +176,7 @@ if (($quest1['quest_status'] ?? null) == 80) {
 		echo "<a href=\"home.php\">Voltar</a> / <a href=\"quest9.php?act=abort\">Abandonar missão</a>";
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 	} else {
 
 		$query = $db->execute("update `quests` set `quest_status`=? where `player_id`=? and `quest_id`=?", [90, $player->id, 18]);

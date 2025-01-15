@@ -65,11 +65,11 @@ if ($_GET['gift'] ?? null) {
 
 	$ganhagold = ceil($itemchance * $ganhagold);
 	$query = $db->execute("update `players` set `gold`=`gold`+? where `id`=?", [$ganhagold, $player->id]);
-	include(__DIR__ . "/templates/private_header.php");
+	include(__DIR__ . "/../../templates/private_header.php");
 	echo "<fieldset><legend><b>Presente</b></legend>\n";
 	echo "Você abriu seu presente e encontrou " . $ganhagold . " de ouro.<br />";
 	echo '<a href="inventory_mobile.php">Voltar</a>.';
 	echo "</fieldset>";
-	include(__DIR__ . "/templates/private_footer.php");
+	include(__DIR__ . "/../../templates/private_footer.php");
 	exit;
 }

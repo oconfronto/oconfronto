@@ -170,76 +170,7 @@ if ($tutorial->recordcount() == 0) {
     <script src="static/js/jquery.tabs.js"></script>
 
 
-    <script type="text/javascript" src="static/js/drag.js"></script>
-    <!-- initialize drag and drop -->
-    <?php
-    // Exemplo de inclusão condicional do script no cabeçalho
-
-    // Verifica se a página atual é 'inventory.php'
-    if ($currentfile === 'inventory_mobile.php') {
-    ?>
-        <script type="text/javascript">
-            // onload event
-            window.onload = function() {
-                // Verifica se é um dispositivo móvel
-                var isMobile = /Mobi|Android/i.test(navigator.userAgent);
-                if (isMobile) {
-                    // Redireciona para uma página diferente para dispositivos móveis
-                    var btnMobile = document.getElementById('btn_mobile');
-                    if (btnMobile) {
-                        btnMobile.style.display = 'flex';
-                    }
-                }
-
-                rd = REDIPS.drag; // referência à classe REDIPS.drag
-                // inicialização
-                rd.init();
-
-                rd.mark.exception.amulet = 'amulet';
-                rd.mark.exception.helmet = 'helmet';
-                rd.mark.exception.weapon = 'weapon';
-                rd.mark.exception.armor = 'armor';
-                rd.mark.exception.shield = 'shield';
-                rd.mark.exception.ring = 'ring';
-                rd.mark.exception.legs = 'legs';
-                rd.mark.exception.boots = 'boots';
-
-                // esta função (manipulador de eventos) é chamada após o elemento ser solto
-                REDIPS.drag.myhandler_dropped = function() {
-                    var obj_old = REDIPS.drag.obj_old; // referência ao objeto original
-                    var target_cell = REDIPS.drag.target_cell; // referência à célula de destino			
-
-                    // se o elemento DIV foi colocado em uma célula permitida
-                    if (rd.target_cell.className.indexOf(rd.mark.exception[rd.obj.id]) !== -1) {
-                        if (REDIPS.drag.target_cell !== REDIPS.drag.source_cell) {
-                            var itclassname = rd.obj_old.className;
-                            var itid = itclassname.split(' ')[1];
-                            window.location.href = 'equipit.php?itid=' + itid;
-                        } else {
-                            window.location.href = 'inventory_mobile.php';
-                        }
-                    } else if (REDIPS.drag.target_cell !== REDIPS.drag.source_cell) {
-                        var itclassname = rd.obj_old.className;
-                        var itid = itclassname.split(' ')[1];
-
-                        if (rd.target_cell.className == 'sell') {
-                            window.location.href = 'inventory_mobile.php?sellit=' + itid;
-                        } else if (rd.target_cell.className == 'mature') {
-                            window.location.href = 'inventory_mobile.php?mature=' + itid;
-                        } else {
-                            var tileclassname = rd.target_cell.className;
-                            var tileid = tileclassname.split(' ')[1];
-                            window.location.href = 'moveit.php?itid=' + itid + '&tile=' + tileid;
-                        }
-                    } else {
-                        window.location.href = 'inventory_mobile.php';
-                    }
-                }
-            }
-        </script>
-    <?php
-    }
-    ?>
+    
 
     <script type="text/javascript" src="static/js/ajax.js"></script>
     <script type="text/javascript" src="static/js/boxover.js"></script>
@@ -279,6 +210,7 @@ if ($tutorial->recordcount() == 0) {
     </script>
 </head>
 <?php
+
 if ($currentfile === 'inventory_mobile.php') {
     echo "<body>";
 } elseif ($currentfile === 'stat_points.php') {
@@ -328,10 +260,10 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
 
         <?php include_once __DIR__ . "/player-top.php"; ?>
     </div>
-    <div style="text-align: center; background: #00000011; padding: 0.5rem;">
+    <!-- <div style="text-align: center; background: #00000011; padding: 0.5rem;">
         <?php include(__DIR__ . "/../showmsg.php"); ?>
-    </div>
-        <div class='top-menu'>
+    </div> -->
+        <div style="margin-top:20px;" class='top-menu'>
             <ul>
                 <li><a href='#'><b><?php echo $player->username ?></b></a>
                     <ul>
@@ -386,7 +318,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
     <script>
         var refreshId = setInterval(function() {
             $('#usr').load('engine.php?header=true');
-        }, 2500);
+        }, 1500);
     </script>
 
     <div id="usr"><?php include(__DIR__ . "/../engine.php"); ?></div>

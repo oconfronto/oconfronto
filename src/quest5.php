@@ -44,6 +44,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="quest5.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 
 	case "help":
@@ -53,6 +54,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="quest5.php?act=acept">Aceito</a> | <a href="quest5.php?act=decline">Recuso</a> | <a href="home.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 
 	case "decline":
@@ -62,6 +64,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="home.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
+		exit;
 		break;
 
 	case "begin":
@@ -84,7 +87,7 @@ switch ($_GET['act'] ?? null) {
 		echo '<a href="quest5.php">Continuar</a> | <a href="home.php">Voltar</a>.';
 		echo "</fieldset>";
 		include(__DIR__ . "/templates/private_footer.php");
-
+		exit;
 		break;
 
 	case "acept":
@@ -154,6 +157,7 @@ if (($quest1['quest_status'] ?? null) == 1) {
 	echo '<a href="quest5.php">Continuar</a> | <a href="home.php">Voltar</a>.';
 	echo "</fieldset>";
 	include(__DIR__ . "/templates/private_footer.php");
+	exit;
 }
 
 if (($quest1['quest_status'] ?? null) > 170) {
