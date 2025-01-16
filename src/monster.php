@@ -9,7 +9,7 @@ $player = check_user($db);
 // Temporary variables created to facilitate adjustments in this current file.
 // These values ($rate_xp and $rate_gold) are placeholders and will be replaced 
 // in the future by a dedicated function to handle these adjustments more coherently.
-$rate_xp = 2000;
+$rate_xp = 20;
 $rate_gold = 10;
 $rate_dropItem = 1;
 
