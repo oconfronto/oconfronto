@@ -229,7 +229,7 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
 ?>
 
 <div style="position: relative; width: 100%;">
-    <div style="display: flex; width: 100%;">
+    <div style="display: flex; width: 100%; position: relative;">
         <?php
         $verificpotion = $db->execute("select * from `in_use` where `player_id`=? and `time`>?", [$player->id, time()]);
         if ($verificpotion->recordcount() > 0) {
@@ -249,10 +249,12 @@ $logscount = $logcount0->recordcount() + $logcount1->recordcount() + $logcount2-
             $potdesc = $db->GetOne("select `description` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
             $potimg = $db->GetOne("select `img` from `blueprint_items` where `id`=?", [$selct['item_id'] ?? null]);
         ?>
-            <div
+            <div style="position: relative; top: 0; right: 0; z-index: 10;"
                 title="header=[<?php echo $potname; ?>] body=[<?php echo $potdesc; ?><br><font size=1><?php echo $valortempo; ?> <?php echo $auxiliar; ?> restante(s).</font>]">
-                <div class="potionimg"><a href="tavern.php?act=buy&id=182"><img
-                            src="static/images/itens/<?php echo $potimg; ?>" border="0" style="margin-top: -2px; width: 21px;"></a>
+                <div class="potionimg" style="display: flex; justify-content: center; align-items: center;">
+                    <a href="tavern.php?act=buy&id=182">
+                        <img src="static/images/itens/<?php echo $potimg; ?>">
+                    </a>
                 </div>
             </div>
         <?php }
