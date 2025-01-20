@@ -280,13 +280,13 @@ if ($player->level < $setting->activate_level) {
 	echo '<table width="100%">';
 	echo '<form method="POST" action="inventory_mobile.php">';
 	echo "<tr><td width=\"40%\">Usuário:</td><td><input autocomplete='off' type=\"text\" name=\"username\" size=\"20\"/></td></tr>";
-	echo '<tr><td width="40%">Item:</td><td>';
+    echo '<tr><td width="40%">Item:</td><td>';    
 
 	$queoppa = $db->execute("select items.id, items.item_bonus, items.item_id, items.mark, items.for, items.vit, items.agi, items.res, blueprint_items.name from `items`, `blueprint_items` where blueprint_items.id=items.item_id and items.player_id=? and blueprint_items.type!='stone' and blueprint_items.type!='potion' and items.mark='f' order by blueprint_items.type, blueprint_items.name asc", [$player->id]);
 	if ($queoppa->recordcount() == 0) {
 		echo "<b>Você não possui itens.</b>";
 	} else {
-		echo '<select name="itselected">';
+        echo '<select name="itselected" style="width: 34ch;">';
 		while ($item = $queoppa->fetchrow()) {
 			$bonus1 = " (+" . $item['item_bonus'] . ") ";
 			$bonus2 = "";
@@ -363,7 +363,7 @@ function fetchItems($playerId, $status)
             AND blueprint_items.type !='potion' 
             AND blueprint_items.type!='stone' 
             AND items.mark='f' 
-        ORDER BY items.tile"
+        ORDER BY items.tile,blueprint_items.voc, blueprint_items.type"
         , [$playerId, $status]
     );
 }
@@ -629,6 +629,32 @@ function displayItemsAsCards($playerId, $status, $title): void
     }
 }
 
+function displayItemsByType($playerId, $status, $title): void
+{
+    $items = fetchItems($playerId, $status);
+    $player = fetchPlayers($playerId)->fetchrow();
+    $types = [];
+    echo sprintf("<div style='text-align:center'><h3>%s</h3></div>", $title);
+    if ($items->recordcount() > 0) {
+        while ($item = $items->fetchrow()) {
+            $types[$item['type']][] = $item;
+        }
+        
+        foreach ($types as $type => $items) {
+            echo sprintf("<div style='text-align:center'><h3>%s</h3></div>", ucfirst($type));
+            echo "<div class='items-container' style='text-align: center; overflow-x: auto; white-space: nowrap;'>";
+            foreach ($items as $item) {
+                echo displayItemCard($item, $status, $player, 1);
+            }
+            echo "</div>";
+        }
+        echo "</div>";
+    } else {
+        echo "<div style='text-align:center'><p>Nenhum item encontrado.</p></div>";
+    }    
+    echo "</div>";
+}
+
 if ($_GET['maturar'] ?? null) {
     // lógica de maturação de itens
     $itemId = $_GET['maturar'];
@@ -655,7 +681,8 @@ if ($_GET['unequip'] ?? null) {
 
 
 displayItemsAsCards($player->id, 'equipped', 'Itens Equipados');
-displayItemsAsCards($player->id, 'unequipped', 'Itens na Mochila');
+displayItemsByType($player->id, 'unequipped', 'Itens na Mochila');
+
 echo "</div>";
 echo "</div>";
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 if ($_POST['transferitems'] ?? null) {
 	$verifikeuser = $db->execute("select `id` from `quests` where `quest_id`=4 and `quest_status`=90 and `player_id`=?", [$player->id]);
 	if ($verifikeuser->recordcount() == 0) {
-		include(__DIR__ . "/templates/private_header.php");
+		include(__DIR__ . "/../../templates/private_header.php");
 		echo "<fieldset><legend><b>Enviar Itens</b></legend>";
 		echo "Você precisa chegar ao nível 40 e completar uma missão para utilizar esta função.";
 		if ($player->level > 39) {
@@ -13,62 +13,62 @@ if ($_POST['transferitems'] ?? null) {
 		}
 
 		echo "</fieldset>";
-		include(__DIR__ . "/templates/private_footer.php");
+		include(__DIR__ . "/../../templates/private_footer.php");
 		exit;
 	}
 
 	if (!($_POST['username'] ?? null)) {
 		$error = 1;
-		include(__DIR__ . "/templates/private_header.php");
+		include(__DIR__ . "/../../templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você precisa preencher todos os campos!<br />";
 		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
-		include(__DIR__ . "/templates/private_footer.php");
+		include(__DIR__ . "/../../templates/private_footer.php");
 		exit;
 	}
 
 	if (!($_POST['itselected'] ?? null)) {
 		$error = 1;
-		include(__DIR__ . "/templates/private_header.php");
+		include(__DIR__ . "/../../templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você precisa preencher todos os campos!<br />";
 		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
-		include(__DIR__ . "/templates/private_footer.php");
+		include(__DIR__ . "/../../templates/private_footer.php");
 		exit;
 	}
 
 	if (!($_POST['passcode'] ?? null)) {
 		$error = 1;
-		include(__DIR__ . "/templates/private_header.php");
+		include(__DIR__ . "/../../templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você precisa preencher todos os campos!<br />";
 		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
-		include(__DIR__ . "/templates/private_footer.php");
+		include(__DIR__ . "/../../templates/private_footer.php");
 		exit;
 	}
 
 	if (strtolower((string) ($_POST['passcode'] ?? null)) !== strtolower($player->transpass)) {
 		$error = 1;
-		include(__DIR__ . "/templates/private_header.php");
+		include(__DIR__ . "/../../templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Sua senha de transferência está incorreta.<br />";
 		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
-		include(__DIR__ . "/templates/private_footer.php");
+		include(__DIR__ . "/../../templates/private_footer.php");
 		exit;
 	}
 
 	if (($_POST['username'] ?? null) == $player->username) {
 		$error = 1;
-		include(__DIR__ . "/templates/private_header.php");
+		include(__DIR__ . "/../../templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você não pode enviar um item para você mesmo!<br />";
 		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
-		include(__DIR__ . "/templates/private_footer.php");
+		include(__DIR__ . "/../../templates/private_footer.php");
 		exit;
 	}
 
@@ -83,67 +83,67 @@ if ($_POST['transferitems'] ?? null) {
 
 	if ($quhjdjn->recordcount() == 0) {
 		$error = 1;
-		include(__DIR__ . "/templates/private_header.php");
+		include(__DIR__ . "/../../templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você não possui este item.<br />";
 		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
-		include(__DIR__ . "/templates/private_footer.php");
+		include(__DIR__ . "/../../templates/private_footer.php");
 		exit;
 	}
 
 	if (($item5['status'] ?? null) == 'equipped') {
 		$error = 1;
-		include(__DIR__ . "/templates/private_header.php");
+		include(__DIR__ . "/../../templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você não pode enviar um item que está sendo usado.<br />";
 		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
-		include(__DIR__ . "/templates/private_footer.php");
+		include(__DIR__ . "/../../templates/private_footer.php");
 		exit;
 	}
 
 	if (($item5['mark'] ?? null) == 't') {
 		$error = 1;
-		include(__DIR__ . "/templates/private_header.php");
+		include(__DIR__ . "/../../templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você não pode enviar um item que está à venda no mercado.<br />";
 		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
-		include(__DIR__ . "/templates/private_footer.php");
+		include(__DIR__ . "/../../templates/private_footer.php");
 		exit;
 	}
 
 	if (($item5['type'] ?? null) == 'stone') {
 		$error = 1;
-		include(__DIR__ . "/templates/private_header.php");
+		include(__DIR__ . "/../../templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Você não pode enviar pedras.<br />";
 		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
-		include(__DIR__ . "/templates/private_footer.php");
+		include(__DIR__ . "/../../templates/private_footer.php");
 		exit;
 	}
 
 	if ($checkuser->recordcount() == 0) {
 		$error = 1;
-		include(__DIR__ . "/templates/private_header.php");
+		include(__DIR__ . "/../../templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "O usuário " . $_POST['username'] . " não existe.<br />";
 		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
-		include(__DIR__ . "/templates/private_footer.php");
+		include(__DIR__ . "/../../templates/private_footer.php");
 		exit;
 	}
 
 	if ($player->serv != ($destination['serv'] ?? null)) {
 		$error = 1;
-		include(__DIR__ . "/templates/private_header.php");
+		include(__DIR__ . "/../../templates/private_header.php");
 		echo "<fieldset><legend><b>Erro</b></legend>\n";
 		echo "Este usuário pertence a outro servidor.<br />";
 		echo '<a href="inventory_mobile.php">Voltar</a>.';
 		echo "</fieldset>";
-		include(__DIR__ . "/templates/private_footer.php");
+		include(__DIR__ . "/../../templates/private_footer.php");
 		exit;
 	}
 
