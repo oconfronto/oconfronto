@@ -72,6 +72,7 @@ echo "<li><a href=\"#tab2\">Comentários</a></li>";
 echo '<li><a href="#tab3">Medalhas</a></li>';
 echo '<li><a href="#tab4">Amigos</a></li>';
 echo "<li><a href=\"#tab5\">Estatísticas</a></li>";
+echo "<li><a href=\"#tab6\">arsenal</a></li>";
 echo "</ul>";
 
 echo '<div class="tab_container">';
@@ -80,12 +81,14 @@ echo '<div id="tab1" class="tab_content">';
 echo '<table width="100%">';
 echo "<tr><th>";
 
-echo '<table width="120px" height="120px" align="center"><tr><td>';
+$imagep = ($profile['avatar'] ?? null) ? $profile['avatar'] : "static/anonimo.gif";
+
+echo '<table style="width: 120px; height: 220px;"><tr><td>';
 echo '<div style="position: relative;">';
-echo '<img src="' . $profile['avatar'] . '" width="120px" height="120px" style="position: absolute; top: 1; left: 1;" alt="' . $profile['username'] . '" border="1">';
+echo '<img src="' . $imagep . '" width="120px" height="120px" style="position: absolute; top: 1px; left: 1px;" alt="' . $profile['username'] . '" border="1">';
 $checkranknosite = $db->execute("select `time` from `user_online` where `player_id`=?", [$profile['id'] ?? null]);
 if ($checkranknosite->recordcount() > 0) {
-	echo "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $profile['username']) . "')\"><img src=\"static/images/online2.png\" width=\"120px\" height=\"120px\" style=\"position: absolute; top: 1; left: 1;\" alt=\"" . $profile['username'] . '" border="1px"></a>';
+	echo "<a href=\"javascript:void(0)\" onclick=\"javascript:chatWith('" . str_replace(" ", "_", $profile['username']) . "')\"><img src=\"static/images/online2.png\" width=\"120px\" height=\"120px\" style=\"position: absolute; top: 1px; left: 1px;\" alt=\"" . $profile['username'] . '" border="1px"></a>';
 }
 
 echo "</div>";
@@ -413,7 +416,14 @@ echo "<br/><b>Mortes:</b> " . $profile['deaths'] . "";
 echo "<br/><br/><b>Pontuação total:</b> " . ceil(($profile['kills'] * 6) + ($profile['monsterkilled'] / 3) + ($profile['groupmonsterkilled'] / 12) - ($profile['deaths'] * 35)) . "";
 
 echo "</div>";
-echo "</div><br/>";
+echo '<div id="tab6" class="tab_content">';
 
+$player = new stdClass();
+$player->id = $profile['id'];
+
+include(__DIR__ . "/showit2.php");
+
+echo "</div>";
+echo "</div><br/>";
 include(__DIR__ . "/templates/private_footer.php");
 ?>

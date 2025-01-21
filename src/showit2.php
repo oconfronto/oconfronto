@@ -57,7 +57,7 @@ if ($showitenx->recordcount() == 0) {
 	$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Vitalidade: " . $newefec . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 	echo '<div title="header=[' . $showitname . "] body=[" . $showitinfo . ']">';
-	echo '<div id="' . $showeditexs['type'] . '" class="drag ' . $showeditexs['id'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
+	echo '<div id="' . $showeditexs['type'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
 	echo "</div>";
 
 	echo "</td>";
@@ -116,7 +116,7 @@ if ($showitenx->recordcount() == 0) {
 	$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Defesa: " . $newefec . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 	echo '<div title="header=[' . $showitname . "] body=[" . $showitinfo . ']">';
-	echo '<div id="' . $showeditexs['type'] . '" class="drag ' . $showeditexs['id'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
+	echo '<div id="' . $showeditexs['type'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
 	echo "</div>";
 
 	echo "</td>";
@@ -184,7 +184,7 @@ if ($showitenx->recordcount() == 0) {
 	$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Ataque: " . $newefec . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 	echo '<div title="header=[' . $showitname . "] body=[" . $showitinfo . ']">';
-	echo '<div id="' . $showeditexs['type'] . '" class="drag ' . $showeditexs['id'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
+	echo '<div id="' . $showeditexs['type'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
 	echo "</div>";
 
 	echo "</td>";
@@ -243,7 +243,7 @@ if ($showitenx->recordcount() == 0) {
 	$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Defesa: " . $newefec . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 	echo '<div title="header=[' . $showitname . "] body=[" . $showitinfo . ']">';
-	echo '<div id="' . $showeditexs['type'] . '" class="drag ' . $showeditexs['id'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
+	echo '<div id="' . $showeditexs['type'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
 	echo "</div>";
 
 	echo "</td>";
@@ -302,7 +302,7 @@ if ($showitenx->recordcount() == 0) {
 	$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Defesa: " . $newefec . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 	echo '<div title="header=[' . $showitname . "] body=[" . $showitinfo . ']">';
-	echo '<div id="' . $showeditexs['type'] . '" class="drag ' . $showeditexs['id'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
+	echo '<div id="' . $showeditexs['type'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
 	echo "</div>";
 
 	echo "</td>";
@@ -350,7 +350,7 @@ if ($showitenx->recordcount() == 0) {
 
 	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>" . $showeditexs['description'] . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 	echo '<div title="header=[' . $showeditexs['name'] . "] body=[" . $showitinfo . ']">';
-	echo '<div id="' . $showeditexs['type'] . '" class="drag ' . $showeditexs['id'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
+	echo '<div id="' . $showeditexs['type'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
 	echo "</div>";
 
 	echo "</td>";
@@ -409,7 +409,7 @@ if ($showitenx->recordcount() == 0) {
 	$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Defesa: " . $newefec . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 	echo '<div title="header=[' . $showitname . "] body=[" . $showitinfo . ']">';
-	echo '<div id="' . $showeditexs['type'] . '" class="drag ' . $showeditexs['id'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
+	echo '<div id="' . $showeditexs['type'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
 	echo "</div>";
 
 	echo "</td>";
@@ -468,7 +468,7 @@ if ($showitenx->recordcount() == 0) {
 	$showitname = "" . $showeditexs['name'] . " + " . $showeditexs['item_bonus'] . "";
 	$showitinfo = "<table width=100%><tr><td width=65%><font size=1px>Agilidade: " . $newefec . "</font></td><td width=35%><font size=1>" . $showitfor2 . "" . $showitvit2 . "" . $showitagi2 . "" . $showitres2 . "</font></td></tr></table>";
 	echo '<div title="header=[' . $showitname . "] body=[" . $showitinfo . ']">';
-	echo '<div id="' . $showeditexs['type'] . '" class="drag ' . $showeditexs['id'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
+	echo '<div id="' . $showeditexs['type'] . '"><img src="static/images/itens/' . $showeditexs['img'] . '" border="0"></div>';
 	echo "</div>";
 
 	echo "</td>";
